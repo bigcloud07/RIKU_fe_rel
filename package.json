@@ -49,12 +49,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview:vite": "vite preview",
+    "start": "vite preview",
     "dev:webpack": "react-scripts start",
     "build:webpack": "react-scripts build",
     "test": "react-scripts test",
     "lint": "eslint .",
-    "start": "echo 'Please use dev:vite or dev:webpack'",
+    
     "postinstall": "npm rebuild rollup"
   },
   "eslintConfig": {
