@@ -112,6 +112,7 @@ const Main_change: React.FC<MainData> = () => {
 
           const result = response.data.result;
           console.log(response.data)
+          console.log(response.data.result.location)
           // 상태를 각 ContentList에 맞게 분리하여 저장
           setMaindata({
             regularRun: {
