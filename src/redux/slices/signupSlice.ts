@@ -8,7 +8,7 @@ interface SignupState {
   name: string;
   collegeName: string;
   departmentName: string;
-  telNum: string;
+  telNum: string|null;
 }
 
 const initialState: SignupState = {
@@ -17,7 +17,7 @@ const initialState: SignupState = {
   name: '',
   collegeName: '',
   departmentName: '',
-  telNum: '',
+  telNum: null,
 };
 
 const signupSlice = createSlice({
@@ -39,7 +39,7 @@ const signupSlice = createSlice({
     setDepartmentName: (state, action: PayloadAction<string>) => {
       state.departmentName = action.payload;
     },
-    setTelNum: (state, action: PayloadAction<string>) => {
+    setTelNum: (state, action: PayloadAction<string|null>) => {
       state.telNum = action.payload;
     },
   },
