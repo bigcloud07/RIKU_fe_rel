@@ -231,7 +231,7 @@ const FlashRunList: React.FC = () => {
       }}
     >
       {/* 상단 바 */}
-      <div className="relative m-8">
+      <div className="relative m-8 mb-14">
         {/* 백 아이콘 */}
         <button
           onClick={() => navigate("/main")}
