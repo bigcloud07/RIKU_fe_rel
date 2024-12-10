@@ -60,24 +60,25 @@ const ContentList: React.FC<ContentListProps> = ({ imgurl, location, path, event
         {eventName}
       </div>
       <div className="relative" onClick={handleClick} >
-        <object
-          data={imgurl}
+        <img
+          src={imgurl}
           className="brightness-[0.7]"
+          onClick={handleClick}
         />
-        <object
-          data={getCircleSrc(poststatus)}
-
+        <img
+          src={getCircleSrc(poststatus)}
+          onClick={handleClick}
           className="absolute w-[160px] h-[160px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
         />
         <object
           data={getstatusbox(poststatus)}
-          
+          onClick={handleClick}
           className="absolute left-[28%] top-[55%]"
         />
-        <div className="absolute top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-base font-bold">
+        <div className="absolute top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-base font-bold" onClick={handleClick}>
           {location}
         </div>
-        <div className="absolute top-[47%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-base">
+        <div className="absolute top-[47%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-base" onClick={handleClick}>
           {run_date}
         </div>
       </div>
