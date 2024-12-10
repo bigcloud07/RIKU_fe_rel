@@ -43,6 +43,11 @@ interface MainData {
 
 
 const Main_change: React.FC<MainData> = () => {
+  
+
+  const handleClosedAlert = () => {
+    alert("다음 학기에 만나요!");
+  };
 
 
   const [maindata, setMaindata] = useState<MainData>({
@@ -167,13 +172,14 @@ const Main_change: React.FC<MainData> = () => {
         <div className="grid grid-cols-2 grid-rows-2 w-[375px] mt-7 gap-0 justify-center content-center">
           <ContentList
             eventName="정규런"
-            path="/run"
+            path=""
             location={maindata?.regularRun?.location}
             run_date={maindata?.regularRun?.date}
             imgurl={defaultTrainimg}
             circleimg={runcircleclosed}
             statusimg={runclosedstatus}
             poststatus='CLOSED'
+            
           />
           <ContentList
             eventName="번개런"
@@ -186,7 +192,7 @@ const Main_change: React.FC<MainData> = () => {
           />
           <ContentList
             eventName="훈련"
-            path="/training"
+            path=""
             location={maindata?.training?.location}
             run_date={maindata?.training?.date}
             imgurl={defaultTrainimg}
@@ -196,7 +202,7 @@ const Main_change: React.FC<MainData> = () => {
           />
           <ContentList
             eventName="행사"
-            path="/event"
+            path=""
             location={maindata?.event?.location}
             run_date={maindata?.event?.date}
             imgurl={defaultTrainimg}

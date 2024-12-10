@@ -25,7 +25,11 @@ const ContentList: React.FC<ContentListProps> = ({ imgurl, location, path, event
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(path);
+        
+          navigate(path);
+        
+        
+        
     };
 
     const getCircleSrc = (status: string) => {
@@ -55,7 +59,7 @@ const ContentList: React.FC<ContentListProps> = ({ imgurl, location, path, event
             <div className="w-full text-left text-xl font-bold mb-1 ml-6">
                 {eventName}
             </div>
-            <div className="relative" onClick={handleClick}>
+            <div className="relative" onClick={handleClick} >
                 <img
                     src={imgurl}
                     alt="runimage"
