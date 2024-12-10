@@ -52,9 +52,9 @@ const EventCard: React.FC<EventCardProps> = ({
       </div>
       <div className="flex flex-col self-start text-right ml-1">
         <div className="mt-2">
-          <img
-            src={statusImages[status] || runclosed} // 유효하지 않은 값에 대해 기본값 사용
-            alt={status}
+          <object
+            data={statusImages[status] || runclosed} // 유효하지 않은 값에 대해 기본값 사용
+            
             className="ml-1 w-74.2px h-32px inline-block"
           />
         </div>
@@ -65,9 +65,9 @@ const EventCard: React.FC<EventCardProps> = ({
           삭제
         </button> */}
       </div>
-      <img
-        src={imageUrl || flashrunimage}
-        alt={title}
+      <object
+        data={imageUrl || flashrunimage}
+        
         className="absolute bottom-0 left-0 w-full h-[144px] object-cover rounded-b-lg"
       />
     </div>

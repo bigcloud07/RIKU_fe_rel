@@ -238,7 +238,7 @@ const FlashRunList: React.FC = () => {
           className="absolute left-[-125px] top-1/2 transform -translate-y-1/2 bg-none border-none cursor-pointer"
           aria-label="뒤로가기"
         >
-          <img src={BackIcon} alt="뒤로가기" />
+          <object data={BackIcon} />
         </button>
 
         {/* 제목 */}

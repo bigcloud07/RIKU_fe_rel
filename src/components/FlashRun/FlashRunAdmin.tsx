@@ -115,23 +115,23 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   return (
     <div className="flex flex-col items-center text-center px-5 justify-center">
       <div>
-        <img src={postimgurl || flashrunimage} alt="flashrunimg" className="w-[373px] rounded-b-xl mb-2" />
+        <object data={postimgurl || flashrunimage} className="w-[373px] rounded-b-xl mb-2" />
       </div>
       <div className="flex flex-col items-center mt-2.5">
-        <img src={FlashRunlogo} alt="flashrunlogo" />
+        <object data={FlashRunlogo}  />
         <div className="text-lg font-semibold mt-2">{title}</div>
       </div>
       <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
         <div className="flex items-center my-1.5">
-          <img src={place} alt="place-icon" className="w-6 h-6 mr-2" />
+          <object data={place}  className="w-6 h-6 mr-2" />
           <span>{location}</span>
         </div>
         <div className="flex items-center my-1.5">
-          <img src={time} alt="time-icon" className="w-6 h-6 mr-2" />
+          <object data={time} className="w-6 h-6 mr-2" />
           <span>{date}</span>
         </div>
         <div className="flex items-center my-1.5">
-          <img src={people} alt="people-icon" className="w-6 h-6 mr-2" />
+          <object data={people} className="w-6 h-6 mr-2" />
           <span>{participantsNum}명 참여 중</span>
         </div>
       </div>
