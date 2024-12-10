@@ -163,10 +163,10 @@ const Main_change: React.FC<MainData> = () => {
   return (
     <>
       <div className="flex flex-col items-center my-2.5">
-        <img src={toplogo} alt="Riku-logo" />
+        <object data={toplogo}/>
       </div>
       <div className="flex flex-col items-center">
-        <img src={RikuMainPhoto} alt="rikumain" className='rounded-xl' />
+        <object data={RikuMainPhoto} className='rounded-xl' />
       </div>
       <div className="flex flex-col items-center justify-center pb-24">
         <div className="grid grid-cols-2 grid-rows-2 w-[375px] mt-7 gap-0 justify-center content-center">
