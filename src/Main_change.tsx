@@ -121,8 +121,8 @@ const Main_change: React.FC<MainData> = () => {
           // 상태를 각 ContentList에 맞게 분리하여 저장
           setMaindata({
             regularRun: {
-              location: "See you",
-              date: "next time",
+              location: "Next",
+              date: "Semester",
               
             },
             flashRun: {
@@ -138,12 +138,12 @@ const Main_change: React.FC<MainData> = () => {
               poststatus:result[0].postStatus,
             },
             training: {
-              location: "See you",
-              date: "next time",
+              location: "Next",
+              date: "Semester",
             },
             event: {
-              location: "See you",
-              date: "next time",
+              location: "Next",
+              date: "Semester",
             },
           }
           
