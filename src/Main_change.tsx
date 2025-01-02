@@ -51,10 +51,10 @@ const Main_change: React.FC<MainData> = () => {
 
 
   const [maindata, setMaindata] = useState<MainData>({
-    regularRun: { location: "다음학기에~", date: "..." },
-    flashRun: { location: "N/A", date: "..." },
-    training: { location: "주말훈련", date: "11/15" },
-    event: { location: "행사X", date: "..." },
+    regularRun: { location: "Next", date: "Semester" },
+    flashRun: { location: "번개런이", date: "없습니다" },
+    training: { location: "Next", date: "Semester" },
+    event: { location: "Next", date: "Semester" },
   });
   const [isFloatingButtonOpen, setIsFloatingButtonOpen] = useState(false);
 

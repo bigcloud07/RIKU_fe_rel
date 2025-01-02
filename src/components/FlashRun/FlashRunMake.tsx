@@ -227,9 +227,9 @@ function FlashRunMake() {
         />
         <div className="my-2">날짜 및 시간</div>
         <DateNtime onDateTimeChange={handleDateTimeChange} />
-        <div className="my-2">세부사항</div>
+        <div className="mb-2 mt-4">세부사항</div>
         <textarea
-          className="my-2 w-full p-2 border rounded-lg"
+          className="my-2 w-full p-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
           rows={10}
           placeholder="세부사항을 입력하세요"
           value={content}

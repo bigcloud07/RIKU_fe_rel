@@ -52,7 +52,7 @@ export function DateNtime({ onDateTimeChange }: DateNtimeProps) {
   };
 
   return (
-    <div className="my-2 max-w-[375px] mx-auto bg-white p-4 rounded-lg shadow-lg">
+    <div className="my-2 max-w-[375px] mx-auto bg-white p-4 rounded-lg border-solid">
       {/* 시간 입력 필드 */}
       <div className="mb-4">
         <input
