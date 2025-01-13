@@ -14,6 +14,7 @@ import SchoolInputInfo from './components/createAccount/SchoolInfoInput';
 import TelNumberInput from './components/createAccount/TelNumberInput';
 import FlashRunList from './components/FlashRun/FlashRunList';
 import TabNavigationUI from './components/TabNavigationUI';
+import AdminPage from './components/AdminPage/AdminPage';
 import Main_change from './Main_change'
 
 import { Provider } from 'react-redux';
@@ -37,8 +38,7 @@ function App() {
             <Route path="/run/post/:postId" element={<FlashRunDetail />} />
             <Route path="/run/make" element={<FlashRunMake />} />
             <Route path='/tab/*' element={<TabNavigationUI/>} />
-            <Route path='/main' element={<Main_change/>}/>
-            
+            <Route path='/admin' element={<AdminPage/>}/>
           </Routes>
         </div>
       </Router>

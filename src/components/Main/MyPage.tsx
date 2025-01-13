@@ -94,6 +94,20 @@ function MyPage() {
     alert("열심히 기능 준비중입니다!");
   };
 
+  //'운영진 페이지' 버튼 클릭시 수행할 함수
+  function handleToAdminPageClick()
+  {
+    if(userInfo.userRole === "ADMIN") //회원 정보가 운영진(ADMIN)일 경우
+    {
+      alert("운영진으로 확인되셨습니다. 운영진 페이지로 이동합니다");
+      navigate('/admin')
+    }
+    else //운영진 페이지에 접근 권한이 없는 사람이라면
+    {
+      alert("회원님은 운영진이 아니므로 해당 페이지에 접근 권한이 없으십니다!");
+    }
+  }
+
   //처음 렌더링 될 때만 유저 정보 불러오기
   useEffect(() => {
     fetchUserInfo();
@@ -159,7 +173,7 @@ function MyPage() {
 
       {/* '운영진 페이지' 버튼 */}
       <div className="w-full max-w-sm mt-2">
-        {renderButton("운영진 페이지", rightArrow_Icon, handleNoticeClick)}
+        {renderButton("운영진 페이지", rightArrow_Icon, handleToAdminPageClick)}
       </div>
 
     </div>
