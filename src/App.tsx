@@ -15,6 +15,7 @@ import TelNumberInput from './components/createAccount/TelNumberInput';
 import FlashRunList from './components/FlashRun/FlashRunList';
 import TabNavigationUI from './components/TabNavigationUI';
 import Main_change from './Main_change'
+import NewMain from './components/MainPage/NewMain'
 
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
@@ -38,6 +39,7 @@ function App() {
             <Route path="/run/make" element={<FlashRunMake />} />
             <Route path='/tab/*' element={<TabNavigationUI/>} />
             <Route path='/main' element={<Main_change/>}/>
+            <Route path='/maintest' element={<NewMain/>}/>
             
           </Routes>
         </div>
