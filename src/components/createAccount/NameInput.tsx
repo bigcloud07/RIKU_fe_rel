@@ -31,7 +31,7 @@ function NameInput() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between items-center bg-white px-6 py-10">
+    <div className="min-h-screen flex flex-col justify-between items-center bg-whiteSmoke px-6 py-10">
       {/* Header 부분(뒤로가기 버튼과 Progress 번호 있는 곳) */}
       <div className="flex justify-between items-center w-full max-w-sm">
         <button onClick={() => navigate(-1)} className="text-black text-lg">

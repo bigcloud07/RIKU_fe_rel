@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import riku_logo from '../../assets/riku_logo.png'; //라이쿠 로고 불러오기
 import { Link, useNavigate } from 'react-router-dom'; // Link 컴포넌트 import
-import profile_Img from '../../assets/marathon_finisher.png'; //이미지 불러오기
+import profile_Img from '../../assets/default_profile.png'; //이미지 불러오기
 import rightArrow_Icon from '../../assets/right_arrow.svg'; //라이쿠 로고 불러오기
 import customAxios from '../../apis/customAxios';
 
@@ -44,7 +44,7 @@ function MyPage() {
   const navigate = useNavigate(); //useNavigate 훅을 사용해 navigate 함수 생성
 
   //마이페이지에 표시할 유저의 정보를 저장하는 state(서버에서 받아와서 해당 정보를 업데이트할 예정)
-  const [userInfo, setUserInfo] = useState({"studentId": "201911291", "userName": "허준호", "userProfileImg": null, "userRole": "살려주세요"});
+  const [userInfo, setUserInfo] = useState({"studentId": "201911291", "userName": "허준호", "userProfileImg": null, "userRole": "살려주세요", "point": 0, "activity": 0});
 
   //유저 정보를 가져오는 메소드 fetchUserInfo
   async function fetchUserInfo()
@@ -71,7 +71,9 @@ function MyPage() {
           "studentId": response.data.result.studentId,
           "userName": response.data.result.userName,
           "userProfileImg": response.data.result.userProfileImg,
-          "userRole": formattedUserRole
+          "userRole": formattedUserRole,
+          "point": 0,
+          "activity": 0
         }
         setUserInfo(data);
       }
@@ -91,6 +93,20 @@ function MyPage() {
   {
     alert("열심히 기능 준비중입니다!");
   };
+
+  //'운영진 페이지' 버튼 클릭시 수행할 함수
+  function handleToAdminPageClick()
+  {
+    if(userInfo.userRole === "ADMIN") //회원 정보가 운영진(ADMIN)일 경우
+    {
+      alert("운영진으로 확인되셨습니다. 운영진 페이지로 이동합니다");
+      navigate('/admin')
+    }
+    else //운영진 페이지에 접근 권한이 없는 사람이라면
+    {
+      alert("회원님은 운영진이 아니므로 해당 페이지에 접근 권한이 없으십니다!");
+    }
+  }
 
   //처음 렌더링 될 때만 유저 정보 불러오기
   useEffect(() => {
@@ -123,11 +139,18 @@ function MyPage() {
         {/* 포인트와 활동 내역 섹션 */}
         <div className="flex justify-around mt-6 pt-4 border-t-2">
           <div className="text-center">
-            <p className="text-2xl font-bold text-gray-800">{600}</p>
+            <p className="text-2xl font-bold text-gray-800">{userInfo.point}</p>
             <p className="text-sm text-gray-500">포인트</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-gray-800">{15}</p>
+            {
+              //활동내역 갯수가 0 이하인 경우를 따진다
+              userInfo.activity <= 0 ? (
+                <p className="text-2xl font-bold text-gray-800">-</p>
+              ) : (
+                <p className="text-2xl font-bold text-gray-800">{userInfo.activity}</p>
+              )
+            }
             <p className="text-sm text-gray-500">활동 내역</p>
           </div>
         </div>
@@ -150,7 +173,7 @@ function MyPage() {
 
       {/* '운영진 페이지' 버튼 */}
       <div className="w-full max-w-sm mt-2">
-        {renderButton("운영진 페이지", rightArrow_Icon, handleNoticeClick)}
+        {renderButton("운영진 페이지", rightArrow_Icon, handleToAdminPageClick)}
       </div>
 
     </div>
