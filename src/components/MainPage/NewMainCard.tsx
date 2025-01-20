@@ -35,3 +35,5 @@ const NewMainCard: React.FC<CardProps> = ({ title, date, status, imageUrl, event
 };
 
 export default NewMainCard;
+
+
