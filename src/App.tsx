@@ -21,6 +21,7 @@ import NewFlashRunCard from "./components/NewFlashRun/NewEventCard"
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import NewFlashRunList from './components/NewFlashRun/NewFlashRunList';
+import PastRuns from './components/NewFlashRun/PastRuns';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
             <Route path='/maintest' element={<NewMain/>}/>
             <Route path='/flashRuntest' element={<NewFlashRunList/>} />
             <Route path='/flashRuncard' element={<NewFlashRunCard/>} />
+            <Route path='/pastruns' element={<PastRuns/>} />
             
           </Routes>
         </div>

@@ -2,6 +2,7 @@ import React from "react";
 import BacbBtnimg from "../../assets/BackBtn.svg"
 import NewEventCard from "./NewEventCard";
 import NewTodayRun from "./NewTodayRun";
+import PastRuns from "./PastRuns";
 
 const NewFlashRunList: React.FC = () => {
 
@@ -34,7 +35,14 @@ const NewFlashRunList: React.FC = () => {
 
             {/* 지난 러닝 */}
             <div>지난 러닝</div>
-            <div>카드 내용</div>
+            <div className="grid grid-cols-3 grid-rows-2 gap-4">
+                <PastRuns/>
+                <PastRuns/>
+                <PastRuns/>
+                <PastRuns/>
+                <PastRuns/>
+                <PastRuns/>
+            </div>
         </div>
     )
 }
