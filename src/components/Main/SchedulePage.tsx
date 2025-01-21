@@ -195,7 +195,7 @@ function SchedulePage() {
   }, [isFloatingButtonOpen]); //isFloatingButtonOpen state값이 바뀔 때마다 적용
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-white px-6 py-10 pb-16">
+    <div className="min-h-screen flex flex-col items-center bg-white pt-20 px-6 py-10 pb-16">
       {/* 캘린더 상단의 화살표로 월을 조절하는 부분 */}
       <div className="flex flex-col items-center justify-center space-y-0 mb-4">
         <span className="text-xs font-light text-black">{pointDate.getFullYear()}</span>
