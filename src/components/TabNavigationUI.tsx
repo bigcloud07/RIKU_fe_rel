@@ -6,12 +6,15 @@ import SchedulePage from './Main/SchedulePage';
 import Main from './MainPage/Main';
 import RankingPage from './Main/RankingPage';
 import Main_change from '../Main_change';
+import ActionBar from '../components/ActionBar';
 
 //하단의 탭을 이용해서 오고가는 TabNavigationUI
 function TabNavigationUI()
 {       
     return (
         <div>
+            {/* 상단 액션 바 */}
+            <ActionBar/>
             <Routes>
                 <Route path='/main' element={<Main_change/>}/>
                 <Route path='/schedule-page' element={<SchedulePage/>}/>

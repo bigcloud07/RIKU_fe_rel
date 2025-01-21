@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import riku_logo from '../../assets/riku_logo.png'; //라이쿠 로고 불러오기
 import { Link, useNavigate } from 'react-router-dom'; // Link 컴포넌트 import
 import profile_Img from '../../assets/default_profile.png'; //이미지 불러오기
 import rightArrow_Icon from '../../assets/right_arrow.svg'; //라이쿠 로고 불러오기
@@ -116,8 +115,8 @@ function MyPage() {
   
   //Tailwind를 사용하여 스타일링 진행
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-white p-4">
-      <div className="w-full max-w-sm text-left mt-6 mb-6">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-white pt-20 p-4">
+      <div className="w-full max-w-sm text-left mt-2 mb-6">
         <span className="text-2xl font-bold">마이페이지</span>
       </div>
       <div className="bg-gray-50 p-6 rounded-xl w-full max-w-sm shadow-lg">

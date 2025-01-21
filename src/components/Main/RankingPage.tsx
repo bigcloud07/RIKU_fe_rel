@@ -8,7 +8,7 @@ import rightArrow_Icon from '../../assets/right_arrow.svg'; //라이쿠 로고 �
 function RankingPage() {
 
   return (
-    <div>
+    <div className="pt-20">
         <span className="text-xl">랭킹 페이지입니다!</span>
         <span className="text-xl">열심히 준비중입니다~</span>
     </div>

@@ -122,7 +122,7 @@ function AdminPage() {
         <span className="text-sm font-bold">참고 사항: 표의 제목을 누르실 경우, 각 항목에 대해 정렬하여 조회하실 수 있습니다</span>
       </div>
       <div className="overflow-x-auto">
-        <table className="table-auto w-full text-left border-collapse">
+        <table className="table-auto w-[1220px] text-left border-collapse">
           {/*표 상단의 header 부분 렌더링*/}
           <thead>
             <tr>
