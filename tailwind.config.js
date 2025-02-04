@@ -7,7 +7,21 @@ module.exports = {
   ],
   theme: {
     extend: {
-      
+      keyframes: {
+        "fade-up": { //랭킹 페이지에서 y축 방향으로 아래에서 위로 떠오르는 것을 표현하기 위한 keyframes
+          "0%": {opacity: "0", transform: "translateY(40px)"},
+          "100%": {opacity: "1", transform: "translateY(0)"},
+        }
+      },
+      animation: {
+        "fade-up": "fade-up 0.7s ease-out forwards"
+      },
+      // animation-delay 추가 (Tailwind가 인식하도록 설정)
+      animationDelay: {
+        '300': '0.3s',
+        '600': '0.6s',
+        '1000': '1s',
+      },
       colors: { // 커스텀 색상 설정
         kuDarkGreen: '#366943',
         kuCoolGray: '#B2B3B4',
@@ -31,7 +45,19 @@ module.exports = {
       
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities, theme }) {
+      const animationDelay = theme("animationDelay");
+      const utilities = Object.fromEntries(
+        Object.entries(animationDelay).map(([key, value]) => [
+          `.animation-delay-${key}`,
+          { "animation-delay": value },
+        ])
+      );
+
+      addUtilities(utilities, ["responsive", "hover"]);
+    },
+  ],
 };
 
 
