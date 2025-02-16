@@ -1,5 +1,6 @@
 import React from 'react';
 import CutText from './CutText';
+import { useNavigate } from 'react-router-dom';
 
 interface RunCardProps {
     place: string;
@@ -7,15 +8,19 @@ interface RunCardProps {
     status: string;
     image: string; //이미지 경로(상대경로로 전달)
     bgColor: string;
+    path:string;
     onClick?: ()=>void; //클릭 이벤트 핸들러(선택적으로 전달)
 }
 
 //그리드에 들어갈 콘텐츠
 function GridContent(props: RunCardProps) {
-    const {onClick, place, date, status, image, bgColor} = props; //props를 받아와서 구조 파괴
-
+    const {onClick, place, date, status, image, bgColor, path} = props; //props를 받아와서 구조 파괴
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate(path);
+    }
     return (
-        <div className="relative flex flex-col items-center bg-white rounded-xl" onClick={onClick}>
+        <div className="relative flex flex-col items-center bg-white rounded-xl" onClick={handleClick}>
             {/* 원형 배경 이미지 */}
             <div
                 className={`relative w-32 h-32 rounded-full overflow-hidden flex items-center justify-center`}

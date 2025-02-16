@@ -23,6 +23,7 @@ interface MainData {
   flashRun: EventData; // 번개런 데이터
   training: EventData; // 훈련 데이터
   event: EventData; // 행사 데이터
+  onClick?: () => void // 클릭 이벤트 핸들러
 }
 
 const NewMain: React.FC = () => {
@@ -198,7 +199,7 @@ const NewMain: React.FC = () => {
           status={maindata.flashRun.poststatus}
           imageUrl={maindata.flashRun.postimgurl || NewMainImage}
           event_type="번개런"
-          onClick={handleCardClick}
+          path="/run"
         />
         <NewMainCard
           title="반포한강공원"
