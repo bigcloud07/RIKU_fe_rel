@@ -1,5 +1,6 @@
 import React from "react";
 import NewOpenStatus from "../../assets/Main-img/NewOpenStatus.svg";
+import { useNavigate } from "react-router-dom";
 
 interface CardProps {
   title: string;
@@ -7,11 +8,17 @@ interface CardProps {
   status: string;
   imageUrl: string;
   event_type: string;
+  path: string;
+  onClick?: ()=>void;
 }
 
-const NewMainCard: React.FC<CardProps> = ({ title, date, status, imageUrl, event_type }) => {
+const NewMainCard: React.FC<CardProps> = ({ title, date, status, imageUrl, event_type, path }) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(path);
+  }
   return (
-    <div className="w-[160px] h-[236px] bg-kuLightGray rounded-lg overflow-hidden relative">
+    <div className="w-[160px] h-[236px] bg-kuLightGray rounded-lg overflow-hidden relative" onClick={handleClick}>
       {/* 이미지 영역 */}
       <div className="w-full h-[120px]">
         <img

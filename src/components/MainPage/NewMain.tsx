@@ -23,6 +23,7 @@ interface MainData {
   flashRun: EventData; // 번개런 데이터
   training: EventData; // 훈련 데이터
   event: EventData; // 행사 데이터
+  onClick?: () => void // 클릭 이벤트 핸들러
 }
 
 const NewMain: React.FC = () => {
@@ -43,7 +44,7 @@ const NewMain: React.FC = () => {
 
   const navigate = useNavigate();
   const images = [img1, img2, img3, img4];
-
+  
   // 슬라이드 변경 로직
   useEffect(() => {
     const timer = setInterval(() => {
@@ -144,9 +145,15 @@ const NewMain: React.FC = () => {
     setCurrentIndex(index);
   };
 
+  //그리드 레이아웃에 있는 동그라미 버튼(GridContent)를 눌렀을 시의 동작 수행
+  const handleCardClick = () => {
+    navigate('/run');
+  };
+
   const handleRunMake = () => {
     navigate("/run/make");
   };
+
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -192,6 +199,7 @@ const NewMain: React.FC = () => {
           status={maindata.flashRun.poststatus}
           imageUrl={maindata.flashRun.postimgurl || NewMainImage}
           event_type="번개런"
+          path="/run"
         />
         <NewMainCard
           title="반포한강공원"
