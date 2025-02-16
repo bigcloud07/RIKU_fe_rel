@@ -14,7 +14,6 @@ import SchoolInputInfo from './components/createAccount/SchoolInfoInput';
 import TelNumberInput from './components/createAccount/TelNumberInput';
 import FlashRunList from './components/FlashRun/FlashRunList';
 import TabNavigationUI from './components/TabNavigationUI';
-import Main_change from './legacy/Main_change'
 import NewMain from './components/MainPage/NewMain'
 import NewFlashRunCard from "./components/NewFlashRun/NewEventCard"
 
@@ -43,7 +42,7 @@ function App() {
             <Route path='/tab/*' element={<TabNavigationUI/>} />
             <Route path='/main' element={<NewMain/>}/>
             <Route path='/flashRuntest' element={<NewFlashRunList/>} />
-            <Route path='/flashRuncard' element={<NewFlashRunCard/>} />
+            {/* <Route path='/flashRuncard' element={<NewFlashRunCard/>} /> */}
             <Route path='/pastruns' element={<PastRuns/>} />
             
           </Routes>
