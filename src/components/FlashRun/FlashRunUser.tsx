@@ -3,12 +3,13 @@ import FlashRunlogo from "../../assets/FlashRunDetail/flashrunlogo.svg";
 import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
 import time from "../../assets/FlashRunDetail/time.svg";
-import backiconWhite from "../../assets/back-icon-white.svg"
 import TabButton from "./TapButton";
 import AttendanceList from "./AttendanceList";
 import customAxios from "../../apis/customAxios";
 import flashrunimage from "../../assets/Run-img/flashrunimage.jpg"; // 번개런 기본이미지
 import { Link, useNavigate } from "react-router-dom";
+import BackBtnimg from "../../assets/BackBtn.svg"
+import pacermark from "../../assets/pacer-mark.svg"
 
 interface Participant {
   id: number;
@@ -156,31 +157,34 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
 
   return (
     <div className="flex flex-col items-center text-center px-5 justify-center">
-      <div>
-        <img src={postimgurl || flashrunimage} alt="flashrunimg" className="w-[373px] mb-2 rounded-b-xl" />
-        <img
-          src={backiconWhite}
-          alt="back-icon"
-          className="absolute top-2 left-2 w-6 h-6 cursor-pointer z-10"
-          
-        />
-      </div>
-      <div className="flex flex-col items-center mt-2.5">
-        <img src={FlashRunlogo} alt="flashrunlogo" />
-        <div className="text-lg font-semibold mt-2">{title}</div>
-      </div>
-      <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
-        <div className="flex items-center my-1.5">
-          <img src={place} alt="place-icon" className="w-6 h-6 mr-2" />
-          <span>{location}</span>
-        </div>
-        <div className="flex items-center my-1.5">
-          <img src={time} alt="time-icon" className="w-6 h-6 mr-2" />
-          <span>{date}</span>
-        </div>
-        <div className="flex items-center my-1.5">
-          <img src={people} alt="people-icon" className="w-6 h-6 mr-2" />
-          <span>{participantsNum}명 참여 중</span>
+      {/* 상단바 */}
+      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
+            <img src={BackBtnimg} className="absolute left-[24px]"></img>
+            번개런
+            </div>
+      {/* 러닝 포스팅 사진 */}
+      <div className="relative w-[375px] pb-[90px]">
+        <object data={postimgurl || flashrunimage} className="w-[375px]" />
+        {/* 번개런 정보 */}
+        <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
+          <div className="flex flex-col items-center mt-[14px]">
+            <object data={FlashRunlogo}  />
+            <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
+          </div>
+          <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
+            <div className="flex items-center my-1.5">
+              <object data={place}  className="w-[24px] h-[24px] mr-2" />
+              <span>{location}</span>
+            </div>
+            <div className="flex items-center my-1.5">
+              <object data={time} className="w-[24px] h-[24px] mr-2" />
+              <span>{date}</span>
+            </div>
+            <div className="flex items-center my-1.5">
+              <object data={people} className="w-[24px] h-[24px] mr-2" />
+              <span>{participantsNum}명 참여 중</span>
+            </div>
+          </div>
         </div>
       </div>
       <TabButton
@@ -192,9 +196,10 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
         <>
           <div className="flex justify-center items-center w-[327px] h-14 bg-[#F0F4DD] rounded-lg text-sm font-normal mt-5">
             <div className="flex items-center">
-              <div className="flex justify-center items-center bg-[#B4D34D] w-6 h-6 rounded-full relative mr-2">
+              <div className="flex justify-center items-center bg-kuBlue w-6 h-6 rounded-full relative mr-2">
                 <span className="text-white text-xs font-bold">
-                  {userName.charAt(0)}
+                  {userName.charAt(1)}
+                  <div className="absolute top-[-15px] left-[-19px] w-[32.78px] h-[32px]"><img src={pacermark}/></div>
                 </span>
               </div>
               {userName}

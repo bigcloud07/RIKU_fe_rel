@@ -14,11 +14,16 @@ import SchoolInputInfo from './components/createAccount/SchoolInfoInput';
 import TelNumberInput from './components/createAccount/TelNumberInput';
 import FlashRunList from './components/FlashRun/FlashRunList';
 import TabNavigationUI from './components/TabNavigationUI';
+
+import NewMain from './components/MainPage/NewMain'
+import NewFlashRunCard from "./components/NewFlashRun/NewEventCard"
 import AdminPage from './components/AdminPage/AdminPage';
-import Main_change from './Main_change'
+
 
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+import NewFlashRunList from './components/NewFlashRun/NewFlashRunList';
+import PastRuns from './components/NewFlashRun/PastRuns';
 
 function App() {
   return (
@@ -38,6 +43,10 @@ function App() {
             <Route path="/run/post/:postId" element={<FlashRunDetail />} />
             <Route path="/run/make" element={<FlashRunMake />} />
             <Route path='/tab/*' element={<TabNavigationUI/>} />
+            <Route path='/main' element={<NewMain/>}/>
+            <Route path='/flashRuntest' element={<NewFlashRunList/>} />
+            {/* <Route path='/flashRuncard' element={<NewFlashRunCard/>} /> */}
+            <Route path='/pastruns' element={<PastRuns/>} />
             <Route path='/admin' element={<AdminPage/>}/>
           </Routes>
         </div>
