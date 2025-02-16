@@ -233,27 +233,42 @@ const NewMain: React.FC = () => {
         />
       </button>
 
-      {/* 플로팅 버튼 옵션 */}
+      {/* 플로팅 버튼이 열렸을 때 나타나는 옵션들 */}
       {isFloatingButtonOpen && (
-        <div
-          onClick={() => setIsFloatingButtonOpen(false)}
-          className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out flex justify-end items-end p-8 z-40"
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="fixed bottom-40 right-10 flex flex-col space-y-4 pointer-events-auto"
-          >
+        <div onClick={() => setIsFloatingButtonOpen(false)} className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out flex justify-end items-end p-8 z-40">
+          <div onClick={(e) => e.stopPropagation()} className="fixed bottom-40 right-10 flex flex-col space-y-4 pointer-events-auto">
+            {/* 첫 번째 버튼 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${
-                showFirstButton
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-4 opacity-0"
-              }`}
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${showFirstButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                }`}
               onClick={handleRunMake}
             >
               번개런 일정 추가하기
             </button>
-            {/* 나머지 버튼 생략 */}
+
+            {/* 두 번째 버튼 */}
+            <button
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${showSecondButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                }`}
+            >
+              정규런 일정 추가하기
+            </button>
+
+            {/* 세 번째 버튼 */}
+            <button
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${showThirdButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                }`}
+            >
+              훈련 일정 추가하기
+            </button>
+
+            {/* 세 번째 버튼 */}
+            <button
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${showFourthButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                }`}
+            >
+              행사 일정 추가하기
+            </button>
           </div>
         </div>
       )}
