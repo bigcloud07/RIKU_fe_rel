@@ -28,9 +28,10 @@ const NavBar: React.FC = () => {
 
 
   return (
-    <div className="w-full">
+    <div className="w-[375px]">
       {/* 네비게이션 바 */}
-      <nav className="fixed bottom-0 left-0 right-0 flex justify-between items-center w-full h-16 border-t-[1.5px] border-gray-300 bg-white z-[1000] pl-8 pr-8 pb-1">
+      <nav className="fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-between items-center w-[375px] h-16 border-t-[1.5px] border-gray-300 bg-white z-[1000] pl-8 pr-8 pb-1">
+
         {/* 홈 아이콘 */}
         <div
           className="flex flex-col items-center cursor-pointer"

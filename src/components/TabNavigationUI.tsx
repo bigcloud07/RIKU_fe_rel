@@ -5,7 +5,7 @@ import MyPage from './Main/MyPage';
 import SchedulePage from './Main/SchedulePage';
 import Main from './MainPage/Main';
 import RankingPage from './Main/RankingPage';
-import Main_change from '../Main_change';
+import Main_change from '../legacy/Main_change';
 
 //하단의 탭을 이용해서 오고가는 TabNavigationUI
 function TabNavigationUI()

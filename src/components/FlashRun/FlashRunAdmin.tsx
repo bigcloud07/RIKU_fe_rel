@@ -7,6 +7,8 @@ import TabButton from "./TapButton";
 import AttendanceList from "./AttendanceList";
 import customAxios from "../../apis/customAxios";
 import flashrunimage from "../../assets/Run-img/flashrunimage.jpg"; // 번개런 기본이미지
+import BackBtnimg from "../../assets/BackBtn.svg"
+import pacermark from "../../assets/pacer-mark.svg"
 
 interface Participant {
   id: number;
@@ -114,27 +116,37 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   
   return (
     <div className="flex flex-col items-center text-center px-5 justify-center">
-      <div>
-        <object data={postimgurl || flashrunimage} className="w-[373px] rounded-b-xl mb-2" />
-      </div>
-      <div className="flex flex-col items-center mt-2.5">
-        <object data={FlashRunlogo}  />
-        <div className="text-lg font-semibold mt-2">{title}</div>
-      </div>
-      <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
-        <div className="flex items-center my-1.5">
-          <object data={place}  className="w-6 h-6 mr-2" />
-          <span>{location}</span>
+      {/* 상단바 */}
+      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
+            <img src={BackBtnimg} className="absolute left-[24px]"></img>
+            번개런
+            </div>
+      {/* 러닝 포스팅 사진 */}
+      <div className="relative w-[375px] pb-[200px]">
+        <object data={postimgurl || flashrunimage} className="w-[375px]" />
+        {/* 번개런 정보 */}
+        <div className="absolute top-[220px] w-[375px] rounded-t-[20px] bg-white">
+          <div className="flex flex-col items-center mt-[14px]">
+            <object data={FlashRunlogo}  />
+            <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
+          </div>
+          <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
+            <div className="flex items-center my-1.5">
+              <object data={place}  className="w-[24px] h-[24px] mr-2" />
+              <span>{location}</span>
+            </div>
+            <div className="flex items-center my-1.5">
+              <object data={time} className="w-[24px] h-[24px] mr-2" />
+              <span>{date}</span>
+            </div>
+            <div className="flex items-center my-1.5">
+              <object data={people} className="w-[24px] h-[24px] mr-2" />
+              <span>{participantsNum}명 참여 중</span>
+            </div>
+          </div>
         </div>
-        <div className="flex items-center my-1.5">
-          <object data={time} className="w-6 h-6 mr-2" />
-          <span>{date}</span>
-        </div>
-        <div className="flex items-center my-1.5">
-          <object data={people} className="w-6 h-6 mr-2" />
-          <span>{participantsNum}명 참여 중</span>
-        </div>
       </div>
+      
       <TabButton
         leftLabel="소개"
         rightLabel="명단"
@@ -144,9 +156,10 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         <>
           <div className="flex justify-center items-center w-[327px] h-14 bg-[#F0F4DD] rounded-lg text-sm font-normal mt-5">
             <div className="flex items-center">
-              <div className="flex justify-center items-center bg-[#B4D34D] w-6 h-6 rounded-full relative mr-2">
-                <span className="text-white text-xs font-bold">
-                  {userName.charAt(0)}
+              <div className="flex justify-center items-center bg-kuBlue w-[30px] h-[30px] rounded-full relative mr-2">
+                <span className="text-white text-xs font-bold relative">
+                  {userName.charAt(1)}
+                  <div className="absolute top-[-20px] left-[-25px] w-[32.78px] h-[32px]"><img src={pacermark}/></div>
                 </span>
               </div>
               {userName}

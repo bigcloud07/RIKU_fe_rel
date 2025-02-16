@@ -1,12 +1,12 @@
 import React from 'react';
-import ContentList from './ContentList';
+import ContentList from '../ContentList';
 import toplogo from './assets/Main-img/toplogo.svg';
 import RikuMainPhoto from './assets/Main-img/RikuMainPhoto.svg';
-import NavBar from './components/NavBar';
+import NavBar from '../components/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import plusBtn from './assets/plus_Icon.svg'; //라이쿠 로고 불러오기
-import customAxios from './apis/customAxios';
+import customAxios from '../apis/customAxios';
 import defaultTrainimg from './assets/basicImg.png'; // 게시물 디폴트 이미지
 import RunprogCircle from './assets/basicImg.png';
 import RunInProgress from './assets/Run-img/run-InProgress.svg';
