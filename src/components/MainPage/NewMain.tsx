@@ -29,7 +29,7 @@ interface MainData {
 const NewMain: React.FC = () => {
   const [maindata, setMaindata] = useState<MainData>({
     regularRun: { location: "Next", date: "Semester" },
-    flashRun: { location: "번개런이", date: "없습니다" },
+    flashRun: { location: "없습니다", date: "번개런이" },
     training: { location: "Next", date: "Semester" },
     event: { location: "Next", date: "Semester" },
   });
