@@ -96,13 +96,14 @@ function MyPage() {
   //'운영진 페이지' 버튼 클릭시 수행할 함수
   function handleToAdminPageClick()
   {
-    if(userInfo.userRole === "ADMIN") //회원 정보가 운영진(ADMIN)일 경우
+    if(userInfo.userRole === "운영진") //회원 정보가 운영진(ADMIN)일 경우
     {
       alert("운영진으로 확인되셨습니다. 운영진 페이지로 이동합니다");
       navigate('/admin')
     }
     else //운영진 페이지에 접근 권한이 없는 사람이라면
     {
+      console.log(userInfo.userRole);
       alert("회원님은 운영진이 아니므로 해당 페이지에 접근 권한이 없으십니다!");
     }
   }
