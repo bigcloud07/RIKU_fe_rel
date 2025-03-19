@@ -46,26 +46,27 @@ function StudentidInput() {
 
     //학번이 유효한 형태인 경우
     if (isValidID) {
-      // //학번 중복 확인을 서버 요청을 통해 먼저 진행해야 한다 (try-catch 구문 활용)
-      // try {
-      //   const response = await axios.get(`/validate/loginId?loginId=${studentID}`);
-      //   // 서버로부터 성공적인 응답을 받은 경우 처리
-      //   alert('학번이 중복되지 않습니다! 다음으로 넘어갑니다');
-        
-      // } catch(error) {
-      //   // 오류가 발생한 경우 처리
-      //   if (axios.isAxiosError(error)) {
-      //     alert('An error occurred while validating the Login ID: ' + (error.response?.data?.message || error.message));
-      //   } else {
-      //     alert('An unexpected error occurred');
-      //   }
-      // }
-
-      alert("학번이 유효합니다!");
-      //redux 저장소에 studentID 저장
-      dispatch(setStudentID(studentID));
-      navigate('/password-input'); //'/next-step'라는 값을 가진 컴포넌트로 이동한다 (navigating)
-      
+      //학번 중복 확인을 서버 요청을 통해 먼저 진행해야 한다 (try-catch 구문 활용)
+      try {
+        const response = await axios.get(`/users/check-id?studentId=${studentID}`);
+        //중복 확인 검사 성공했을 경우에만 (result 값이 false여야 함)
+        if(response.data.result === false) {
+          alert("학번이 유효합니다! 다음 단계로 넘어갑니다.");
+          //redux 저장소에 studentID 저장
+          dispatch(setStudentID(studentID));
+          navigate('/password-input'); //'/next-step'라는 값을 가진 컴포넌트로 이동한다 (navigating)
+        } else {
+          //중복 검사 실패 (겹치는 놈 있음)
+          alert('이미 가입된 학번입니다. 다른 학번으로 가입을 다시 시도해 주세요.');
+        }
+      } catch(error) {
+        // 오류가 발생한 경우 처리
+        if (axios.isAxiosError(error)) {
+          alert('An error occurred while validating the Login ID: ' + (error.response?.data?.message || error.message));
+        } else {
+          alert('An unexpected error occurred');
+        }
+      }
     } else {
       alert("학번을 다시 확인해주세요.");
     }
