@@ -97,7 +97,7 @@ function MyPage() {
   {
     const accessToken = JSON.parse(localStorage.getItem('accessToken') || ''); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
 
-    const url = '/users/profile';
+    const url = '/user/profile';
 
     try {
       const response = await customAxios.get(
