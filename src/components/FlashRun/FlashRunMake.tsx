@@ -177,27 +177,9 @@ function FlashRunMake() {
 
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        minHeight: "100vh",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "100%",
-          maxWidth: "600px",
-          padding: "0 20px",
-          marginBottom: "20px",
-          position: "relative",
-        }}
-      >
-        <div className="relative flex items-center justify-center py-4 mt-4">
+    <div className="flex flex-col items-center min-h-screen">
+      <div className="flex items-center justify-center w-full max-w-[600px] px-5 mb-5 relative bg-kuDarkGreen">
+        <div className="relative flex items-center justify-center py-4 mt-4 ">
           <button
             onClick={() => navigate(-1)}
             aria-label="뒤로가기"
@@ -209,7 +191,7 @@ function FlashRunMake() {
               className="w-6 left-3 h-6"
             />
           </button>
-          <div className="text-2xl font-semibold">번개런 만들기</div>
+          <div className="text-2xl font-semibold">번개런</div>
         </div>
       </div>
       <div>

@@ -39,7 +39,7 @@ function TelNumberInput() {
 
     //해당 구역에 axios 요청을 진행할 것임(서버에 입력된 회원 정보를 저장해야 함)
     try {
-      const response = await customAxios.post('/users/signup', data)
+      const response = await customAxios.post('/user/signup', data)
       if(response.data.isSuccess === true)
       {
         alert('정상적으로 회원 가입이 완료되었습니다');

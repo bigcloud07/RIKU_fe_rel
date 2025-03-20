@@ -16,7 +16,7 @@ import FlashRunList from './components/FlashRun/FlashRunList';
 import TabNavigationUI from './components/TabNavigationUI';
 
 import NewMain from './components/MainPage/NewMain'
-import NewFlashRunCard from "./components/NewFlashRun/NewEventCard"
+import NewFlashRunDetail from './components/NewFlashRun/NewFlashRunDetail'
 import AdminPage from './components/AdminPage/AdminPage';
 
 
@@ -24,6 +24,8 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import NewFlashRunList from './components/NewFlashRun/NewFlashRunList';
 import PastRuns from './components/NewFlashRun/PastRuns';
+import NewRegularRunList from './components/NewRegularRun/NewRegularRunList';
+import NewRegularRunMake from './components/NewRegularRun/NewRegularRunMake';
 
 function App() {
   return (
@@ -46,8 +48,11 @@ function App() {
             <Route path='/main' element={<NewMain/>}/>
             <Route path='/flashRuntest' element={<NewFlashRunList/>} />
             {/* <Route path='/flashRuncard' element={<NewFlashRunCard/>} /> */}
+            <Route path='/flashRunAdmintest' element={<NewFlashRunDetail/>}/>
             <Route path='/pastruns' element={<PastRuns/>} />
             <Route path='/admin' element={<AdminPage/>}/>
+            <Route path='/regular' element={<NewRegularRunList/>}/>
+            <Route path='/regular/make' element={<NewRegularRunMake/>}/>
           </Routes>
         </div>
       </Router>

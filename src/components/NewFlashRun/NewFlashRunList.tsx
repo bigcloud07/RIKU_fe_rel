@@ -1,59 +1,104 @@
-import React from "react";
-import BacbBtnimg from "../../assets/BackBtn.svg"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import BacbBtnimg from "../../assets/BackBtn.svg";
 import NewEventCard from "./NewEventCard";
 import NewTodayRun from "./NewTodayRun";
 import PastRuns from "./PastRuns";
 import NavBar from "../NavBar";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { useNavigate } from "react-router-dom";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper/modules";
+import customAxios from "../../apis/customAxios";
+
+interface RunData {
+    id: number;
+    title: string;
+    date: string;
+    participants: number;
+    postStatus: "NOW" | "CANCELED" | "CLOSED";
+    postImageUrl: string;
+}
 
 const NewFlashRunList: React.FC = () => {
+    const [todayRuns, setTodayRuns] = useState<RunData[]>([]);
+    const [upcomingRuns, setUpcomingRuns] = useState<RunData[]>([]);
+    const [pastRuns, setPastRuns] = useState<RunData[]>([]);
+    const navigate = useNavigate();
 
-    return(
+    const handleBackHome = () => {
+        navigate('/tab/main')
+    }
+
+    useEffect(() => {
+        const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
+
+        const fetchRunData = async () => {
+            try {
+                const response = await customAxios.get(`/run/regular`, {
+                    headers: { Authorization: `${token}` },
+                  });
+                  setTodayRuns(response.data.todayRuns || []);
+                  setUpcomingRuns(response.data.upcomingRuns || []);
+                  setPastRuns(response.data.pastRuns || []);
+                  
+            } catch (error) {
+                console.error("Error fetching run data:", error);
+            }
+        };
+
+        fetchRunData();
+    }, []);
+
+    return (
         <div className="flex flex-col justify-center items-center">
             {/* 상단바 */}
-            <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
-            <img src={BacbBtnimg} className="absolute left-[24px]"></img>
-            번개런
+            <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
+                <img src={BacbBtnimg} className="absolute left-[24px] cursor-pointer" alt="Back" onClick={handleBackHome} />
+                번개런
             </div>
 
-            {/* 오늘의 러닝 */}
+            {/* 오늘의 러닝 (슬라이드 적용) */}
             <div className="relative bg-kuDarkGreen w-[375px] h-[268px]">
-                <div className="absolute top-0 left-0 w-full h-full grid place-items-center">
-                    <div className="w-[114px] h-[32px] bg-white text-kuDarkGreen text-[16px] text-center font-bold grid place-items-center rounded-xl ">오늘의 러닝</div>
-                    <div><NewTodayRun/></div>
-                </div>
-                <div className="absolute flex justify-center top-[268px] rounded-full bg-white/80 w-[8px] h-[8px]">
+                <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center">
+                    <div className="w-[114px] h-[32px] bg-white text-kuDarkGreen text-[16px] text-center font-bold rounded-xl flex items-center justify-center">오늘의 러닝</div>
+                    <Swiper spaceBetween={10} slidesPerView={1} pagination={{ clickable: true }} modules={[Pagination]}>
+                        {todayRuns.map((run) => (
+                            <SwiperSlide key={run.id}>
+                                <NewTodayRun title={run.title} date={run.date} participants={run.participants} postImageUrl={run.postImageUrl} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </div>
             </div>
 
             {/* 예정된 러닝 */}
-            <div className="relative w-[375px] h-[63px]">
-                <div className="absolute left-[20px] top-[22px] text-[20px] font-semibold">예정된 러닝</div>
-            </div>
-            <div className="flex flex-col space-y-[12px]">
-                <NewEventCard/>
-                <NewEventCard/>
-                <NewEventCard/>
+            <div className="w-[375px] mt-4">
+                <h2 className="text-[20px] font-semibold ml-5">예정된 러닝</h2>
+                <div className="flex flex-col space-y-[12px]">
+                    {upcomingRuns.map((run) => (
+                        <NewEventCard key={run.id} location={run.title} postimg={run.postImageUrl} runDate={run.date} runState={run.postStatus} />
+                    ))}
+                </div>
             </div>
 
             {/* 분리 바 */}
             <div className="w-[375px] h-[8px] bg-kuLightGray mt-[32px]"></div>
 
             {/* 지난 러닝 */}
-            <div className="relative w-[375px] h-[45px]">
-                <div className="absolute top-[24px] left-[20px] text-[20px] font-semibold">지난 러닝</div>
+            <div className="w-[375px] mt-4">
+                <h2 className="text-[20px] font-semibold ml-5">지난 러닝</h2>
+                <div className="grid grid-cols-3 grid-rows-2 gap-x-[12px] gap-y-[16px] mt-[20px]">
+                    {pastRuns.map((run) => (
+                        <PastRuns key={run.id} title={run.title} date={run.date} participants={run.participants} postImageUrl={run.postImageUrl} />
+                    ))}
+                </div>
             </div>
-            <div className="grid grid-cols-3 grid-rows-2 gap-x-[12px] gap-y-[16px] mt-[20px]">
-                <PastRuns/>
-                <PastRuns/>
-                <PastRuns/>
-                <PastRuns/>
-                <PastRuns/>
-                <PastRuns/>
-            </div>
-            <div className="flex items-center justify-center bg-kuLightGray w-[335px] h-[32px] rounded-xl text-[14px] text-black/60 font-semibold text-center mt-[24px] mb-[56px]">N개 더보기</div>
-            <NavBar/>
+            
+            <NavBar />
         </div>
-    )
-}
+    );
+};
 
-export default NewFlashRunList
+export default NewFlashRunList;

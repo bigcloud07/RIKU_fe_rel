@@ -171,6 +171,18 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         </>
       )}
       {activeTab === "명단" && <AttendanceList users={currentParticipants} />}
+
+      {/* 구분선 */}
+      <div><hr className="border-t border-kuLightGray mt-[32px] w-[375px]" /></div>
+
+      {/* 댓글창 */}
+      <div className="mt-[20px] font-bold">댓글</div>
+      <div className="relative w-[335px] h-[319px] bg-whiteSmoke rounded-[12px] mt-[16px]">
+        <div className="absolute bottom-[16px] left-[56px] w-[263px] h-[32px] rounded-[8px] bg-kuLightGray">
+          <textarea className="w-full h-full items-center" placeholder="댓글 추가..."></textarea>
+        </div>
+      </div>
+      {/* 시작하기 버튼 */}
       <button
         className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${
           isFinished
