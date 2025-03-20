@@ -39,7 +39,7 @@ function LoginPage() {
       "password": password
     }
 
-    const url = '/users/login';
+    const url = '/user/login';
 
     try {
       const response = await customAxios.post(url, data);

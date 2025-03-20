@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setStudentID } from '../../redux/slices/signupSlice' //Action Creator를 import 해온다!
 
 import axios from 'axios'; //axios(서버와의 통신을 위한 라이브러리) import!
+import customAxios from '../../apis/customAxios';
 
 //학번의 유효성을 검사하는 메소드 validateStudentID
 function validateStudentID(id: string) {
@@ -48,7 +49,8 @@ function StudentidInput() {
     if (isValidID) {
       //학번 중복 확인을 서버 요청을 통해 먼저 진행해야 한다 (try-catch 구문 활용)
       try {
-        const response = await axios.get(`/users/check-id?studentId=${studentID}`);
+        const response = await customAxios.get(`/user/check-id?studentId=${studentID}`);
+        console.log("결과: ", response);
         //중복 확인 검사 성공했을 경우에만 (result 값이 false여야 함)
         if(response.data.result === false) {
           alert("학번이 유효합니다! 다음 단계로 넘어갑니다.");
