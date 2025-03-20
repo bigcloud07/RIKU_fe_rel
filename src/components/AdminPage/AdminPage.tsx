@@ -6,13 +6,13 @@ import riku_logo from '../../assets/riku_logo_loginPage.svg'; //라이쿠 로고
 
 //회원 정보와 관련된 객체 정보를 정의한 Member interface
 interface Member {
-  studentID: string;
-  name: string;
-  collegeName: string;
-  departmentName: string;
-  telNum: string | null;
+  studentId: string;
+  userName: string;
+  college: string;
+  major: string;
+  phone: string | null;
   point: number;
-  activity_count: number;
+  attendanceCount: number;
   userRole: string;
 }
 
@@ -25,42 +25,67 @@ function AdminPage() {
   //필요한 state 정의
   const [members, setMembers] = useState<Member[]>([]);
   const [editedMembers, setEditedMembers] = useState<Member[]>([]);
+  const [roleChangedMembers, setRoleChangedMembers] = useState<Member[]>([]); //역할 바뀐 놈들 저장
   const [sortConfig, setSortConfig] = useState<{ key: keyof Member; sortDirection: 'asc' | 'desc' } | null>(null);
 
-  //임시로 사용할 dummyData
-  const dummyData = [
-    { studentID: "201911291", name: "허준호", collegeName: "공과대학", departmentName: "컴퓨터공학부", telNum: "010-1111-2222", point: 140, activity_count: 7, userRole: "ADMIN" },
-    { studentID: "201812345", name: "김민수", collegeName: "인문대학", departmentName: "국어국문학과", telNum: "010-3333-4444", point: 120, activity_count: 5, userRole: "ADMIN" },
-    { studentID: "202013579", name: "박지연", collegeName: "사회과학대학", departmentName: "심리학과", telNum: null, point: 85, activity_count: 3, userRole: "MEMBER" },
-    { studentID: "202110123", name: "이수현", collegeName: "자연과학대학", departmentName: "물리학과", telNum: "010-5555-6666", point: 100, activity_count: 6, userRole: "MEMBER" },
-    { studentID: "202214567", name: "정우영", collegeName: "경영대학", departmentName: "경영학과", telNum: "010-7777-8888", point: 200, activity_count: 10, userRole: "MEMBER" },
-    { studentID: "201914321", name: "최지훈", collegeName: "공과대학", departmentName: "기계공학부", telNum: "010-9999-0000", point: 95, activity_count: 4, userRole: "MEMBER" },
-    { studentID: "202312345", name: "한예슬", collegeName: "예술대학", departmentName: "연극영화학과", telNum: "010-1234-5678", point: 75, activity_count: 2, userRole: "MEMBER" },
-    { studentID: "202045678", name: "문성호", collegeName: "의과대학", departmentName: "간호학과", telNum: null, point: 180, activity_count: 8, userRole: "ADMIN" },
-    { studentID: "202156789", name: "송지훈", collegeName: "공과대학", departmentName: "전자공학부", telNum: "010-8765-4321", point: 110, activity_count: 6, userRole: "NEW_MEMBER" },
-    { studentID: "201800123", name: "장미라", collegeName: "자연과학대학", departmentName: "화학과", telNum: "010-5678-9101", point: 90, activity_count: 5, userRole: "NEW_MEMBER" },
-  ];
+  //회원 정보 불러올 함수 fetchMembers()
+  async function fetchMembers() {
+    const accessToken = JSON.parse(localStorage.getItem('accessToken') || ''); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
+    const url = '/admin';
+
+    try {
+      const response = await customAxios.get(
+        url, //요청 url
+        {
+          headers: {
+            Authorization: accessToken //accessToken을 헤더로 추가해서 요청 보냄
+          }
+        }
+      );
+
+      let fetchedMembers = response.data.result.map((user: Member) => ({
+        studentId: user.studentId,
+        userName: user.userName,
+        college: user.college,
+        major: user.major,
+        phone: user.phone,
+        point: user.point,
+        attendanceCount: user.attendanceCount,
+        userRole: user.userRole,
+      }));
+
+      setMembers(fetchedMembers);
+      setEditedMembers(fetchedMembers);
+
+    } catch(error) {
+      alert('회원 정보를 가져 오는 데 실패했습니다')
+      
+    }
+  }
 
   //API를 이용해서 서버로부터 데이터를 가져오는 작업
   useEffect(() => {
-    // async function fetchMembers() {
-    //   try {
-    //     const response = await customAxios.get('/api/members'); //추후 해당하는 api 엔드포인트로 교체할 예정
-    //     setMembers(response.data)
-    //     setEditedMembers(response.data);
-    //   } catch(error) {
-    //     alert('회원 정보를 가져 오는 데 실패했습니다')
-    //   }
-    // }
-    setMembers(dummyData);
-    setEditedMembers(dummyData);
+    // setMembers(dummyData);
+    // setEditedMembers(dummyData);
+    console.log("바뀐 놈: ", editedMembers);
+    fetchMembers();
   }, []);
 
   //회원 등급(userRole)을 바꾸기 위한 드롭다운 핸들링 함수 handleRoleChange
   function handleRoleChange(index: number, newRole: string) {
     const updatedMembers = [...editedMembers];
-    updatedMembers[index] = { ...updatedMembers[index], userRole: newRole };
+    const changedMember = { ...updatedMembers[index], userRole: newRole }; //바뀐 친구들
+    updatedMembers[index] = changedMember;
+
+    //이미 변경된 회원이 있다면 기존 정보를 제거하고 새 정보로 업데이트 해야 함
+    const updatedRoleChangedMembers = roleChangedMembers.filter(
+      member => member.studentId !== changedMember.studentId
+    );
+    updatedRoleChangedMembers.push(changedMember);
+
+    //상태 업데이트~
     setEditedMembers(updatedMembers);
+    setRoleChangedMembers(updatedRoleChangedMembers);
   };
 
   //회원 정보들을 정렬하기 위한 handleSort
@@ -94,8 +119,27 @@ function AdminPage() {
   //저장하는 프로세스를 핸들링하는 메소드 handleSave
   async function handleSave(){
     try {
-      await axios.put('/api/members', editedMembers); //추후 해당하는 api 엔드포인트로 교체할 예정
-      alert('성공적으로 회원 정보 수정이 완료 되었습니다!');
+      const accessToken = JSON.parse(localStorage.getItem('accessToken') || ''); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
+      const url = '/admin';
+      //roleChangedMembers 배열의 요소들에서 studentId, userName만을 추출
+      const payload = roleChangedMembers.map(({studentId, userRole}) => ({ studentId, userRole }));
+      console.log("바뀐 회원 정보: ", payload);
+      //바뀐 친구가 없다면(roleChangedMembers에 들어간 놈이 아무것도 없다면..)
+      if(payload.length === 0) {
+        alert('현재 바뀐 정보가 없습니다.');
+      } else {
+        await customAxios.put(
+          url, 
+          payload,
+          {
+            headers: {
+              Authorization: accessToken //accessToken을 헤더로 추가해서 요청 보냄
+            }
+          }
+        ); //추후 해당하는 api 엔드포인트로 교체할 예정
+        alert('성공적으로 회원 정보 수정이 완료 되었습니다!');
+        navigate('/tab/my-page')
+      }
     } catch (error) {
       console.error('수정 사항을 저장하는 데 오류가 발생했습니다', error);
       alert('수정 사항을 저장하는 데 오류가 발생했습니다!');
@@ -115,10 +159,10 @@ function AdminPage() {
   return (
     <div className="container mx-auto p-6">
       <div className="flex items-center mb-8">
-        <img src={riku_logo} alt="Logo" className="h-10 mr-4" />
+        <img src={riku_logo} alt="Logo" className="h-10 mr-4"/>
         <span className="text-2xl font-bold">회원 정보 관리</span>
       </div>
-      <div className="flex items-center ml-4 mb-4">
+      <div className="flex items-center ml-4 mbs-4">
         <span className="text-sm font-bold">참고 사항: 표의 제목을 누르실 경우, 각 항목에 대해 정렬하여 조회하실 수 있습니다</span>
       </div>
       <div className="overflow-x-auto">
@@ -132,13 +176,13 @@ function AdminPage() {
                   className="px-4 py-2 border-b cursor-pointer"
                   onClick={() => handleSort(
                     [
-                      'studentID',
-                      'name',
-                      'collegeName',
-                      'departmentName',
-                      'telNum',
+                      'studentId',
+                      'userName',
+                      'college',
+                      'major',
+                      'phone',
                       'point',
-                      'activity_count',
+                      'attendanceCount',
                       'userRole',
                     ][index] as keyof Member
                   )}
@@ -151,14 +195,14 @@ function AdminPage() {
           {/*표 하단의 회원 정보 출력하는 부분 렌더링*/}
           <tbody>
             {editedMembers.map((member, index) => (
-              <tr key={member.studentID}>
-                <td className="px-4 py-2 border-b">{member.studentID}</td>
-                <td className="px-4 py-2 border-b">{member.name}</td>
-                <td className="px-4 py-2 border-b">{member.collegeName}</td>
-                <td className="px-4 py-2 border-b">{member.departmentName}</td>
-                <td className="px-4 py-2 border-b">{member.telNum}</td>
+              <tr key={index}>
+                <td className="px-4 py-2 border-b">{member.studentId}</td>
+                <td className="px-4 py-2 border-b">{member.userName}</td>
+                <td className="px-4 py-2 border-b">{member.college}</td>
+                <td className="px-4 py-2 border-b">{member.major}</td>
+                <td className="px-4 py-2 border-b">{member.phone}</td>
                 <td className="px-4 py-2 border-b">{member.point}</td>
-                <td className="px-4 py-2 border-b">{member.activity_count}</td>
+                <td className="px-4 py-2 border-b">{member.attendanceCount}</td>
                 <td className="px-4 py-2 border-b">
                   <select
                     value={member.userRole}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Link 컴포넌트 import
 import duganadi_Img from '../../assets/RankingPage/dueganadi.png'; //이미지 불러오기
+import defaultProfileImg from '../../assets/default_profile.png'; //기본 프로필 이미지 불러오기
 import rikuHorn_left from '../../assets/RankingPage/rikuHorn_left.svg';
 import rikuHorn_right from '../../assets/RankingPage/rikuHorn_right.svg';
 import rightArrow_Icon from '../../assets/right_arrow.svg'; //라이쿠 로고 불러오기
@@ -8,30 +9,39 @@ import customAxios from '../../apis/customAxios';
 
 //랭킹 페이지에서 보여줄 간단한 회원 정보에 관한 SimpleUserInfo interface
 interface SimpleUserInfo {
-  name: string;
-  profileImg: string; // 우선은 File이 아닌 string(URL)로 가정
-  point: number;
-  rank: number;
+  userId: number;
+  userName: string;
+  userProfileImg: string | null; // 우선은 File이 아닌 string(URL)로 가정
+  totalPoints: number;
 }
 
 //랭킹 페이지
 function RankingPage() {
 
-  const [userRankInfo, setUserRankInfo] = useState<SimpleUserInfo[]>([]);
+  //상위 10명 정보를 저장한 top10_Info (현재는 걍 더미 데이터 넣어 놓음)
+  const [top10_Info, setTop10_Info] = useState<SimpleUserInfo[]>(
+  [
+    { userId: 1, userName: "김영희", userProfileImg: "https://via.placeholder.com/48", totalPoints: 700 },
+    { userId: 2, userName: "나원허", userProfileImg: "https://via.placeholder.com/48", totalPoints: 600 },
+    { userId: 3, userName: "다원허", userProfileImg: "https://via.placeholder.com/48", totalPoints: 500 },
+    { userId: 4, userName: "라원허", userProfileImg: "https://via.placeholder.com/48", totalPoints: 400 },
+    { userId: 5, userName: "마원허", userProfileImg: "https://via.placeholder.com/48", totalPoints: 350 },
+    { userId: 6, userName: "사원허", userProfileImg: "https://via.placeholder.com/48", totalPoints: 320 },
+    { userId: 7, userName: "아원허", userProfileImg: "https://via.placeholder.com/48", totalPoints: 320 },
+    { userId: 8, userName: "자원허", userProfileImg: "https://via.placeholder.com/48", totalPoints: 320 },
+    { userId: 9, userName: "차원허", userProfileImg: "https://via.placeholder.com/48", totalPoints: 320 },
+    { userId: 10, userName: "카원허", userProfileImg: "https://via.placeholder.com/48", totalPoints: 320 }
+  ]
+  );
 
-  //자신의 랭킹 정보 myRankInfo
-  const [myRankInfo, setMyRankInfo] = useState<SimpleUserInfo>(
-    { name: "나원허", profileImg: "https://via.placeholder.com/48", point: 111, rank: 12}
-  )
-  //우선은 테스트를 위한 dummydata (userRankings_dummy)
-  const [userRankings_dummy, setUserRankings_dummy] = useState<SimpleUserInfo[]>([
-    { name: "김철수", profileImg: "https://via.placeholder.com/48", point: 245, rank: 4 },
-    { name: "이영희", profileImg: "https://via.placeholder.com/48", point: 220, rank: 5 },
-    { name: "박지성", profileImg: "https://via.placeholder.com/48", point: 198, rank: 6 },
-    { name: "나원허", profileImg: "https://via.placeholder.com/48", point: 137, rank: 7 },
-    { name: "허주노", profileImg: "https://via.placeholder.com/48", point: 136, rank: 8 },
-    { name: "허원나", profileImg: "https://via.placeholder.com/48", point: 133, rank: 9 }
-  ])
+  //자신의 정보 myInfo
+  const [myInfo, setMyInfo] = useState<SimpleUserInfo>(
+    { userName: "나원허", userProfileImg: "https://via.placeholder.com/48", totalPoints: 111, userId: 1}
+  );
+
+  //자신의 랭킹 정보 myRankingInfo
+  const [myRankingInfo, setMyRankingInfo] = useState<number>(12);
+
 
   //"전체 보기" 클릭 시 수행할 함수
   function handleSeeAllBtnClick()
@@ -41,9 +51,52 @@ function RankingPage() {
 
   //초기에 랭킹 정보를 가져와야 한다. 해당 기능을 수행하는 메소드 fetchRankingInfo()
   async function fetchRankingInfo() {
+    const accessToken = JSON.parse(localStorage.getItem('accessToken') || ''); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
 
+    const url = '/ranking';
+
+    try {
+      const response = await customAxios.get(
+        url, //요청 url
+        {
+          headers: {
+            Authorization: accessToken //accessToken을 헤더로 추가해서 요청 보냄
+          }
+        }
+      );
+
+      //공동 순위 처리에 용이하도록 userId는 서버에서 받아온 정보가 아닌 순위대로 ++하는 idx로 선언(추후 공동 순위 처리 로직이 추가로 삽입됨)
+      let idx: number = 1;
+
+      //상위 10명의 정보를 넣어둘 배열 top10 (response.data.result의 "top10"에서 정보를 가져온다)
+      let top10: SimpleUserInfo[] = response.data.result.top10?.map((user: SimpleUserInfo) => ({
+        userId: idx++,
+        userName: user.userName,
+        userProfileImg: user.userProfileImg || null,
+        totalPoints: user.totalPoints,
+      })); 
+
+      //공동 순위 처리해야 함
+      for(let i:number = 0; i < top10.length; i++) {
+        //이전 totalPoints랑 지금 totalPoints가 같다면
+        if(i > 0 && top10[i-1].totalPoints === top10[i].totalPoints) {
+          top10[i].userId = top10[i-1].userId;
+        }
+      }
+
+      let my: SimpleUserInfo = response.data.result.userPoints; //사용자 정보를 불러와서 저장
+      let myRank: number = response.data.result.userRanking; //사용자 랭킹 정보를 불러와서 저장
+
+      //불러온 정보들 바탕으로 set
+      setTop10_Info(top10);
+      setMyInfo(my);
+      setMyRankingInfo(myRank);
+      
+    } catch (error) {
+      alert('서버 요청 중 오류 발생!');
+      console.error('요청 실패: ', error);
+    }
   }
-
 
   //처음 렌더링 될 때만 회원 랭킹 정보 불러오기
   useEffect(() => {
@@ -73,8 +126,8 @@ function RankingPage() {
 
             {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
             <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
-              <span className="block text-center text-lg font-bold text-black">기처리</span>
-              <span className="block text-center text-sm text-kuDarkGreen font-semibold">178P</span>
+              <span className="block text-center text-lg font-bold text-black">{top10_Info[1].userName}</span>
+              <span className="block text-center text-sm text-kuDarkGreen font-semibold">{top10_Info[1].totalPoints}P</span>
             </div>
           </div>
 
@@ -94,8 +147,8 @@ function RankingPage() {
 
               {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
               <div className="w-full bg-kuBeige rounded-xl pt-4 pb-14">
-                <span className="block text-center text-lg font-bold text-black">김고은</span>
-                <span className="block text-center text-sm text-kuDarkGreen font-semibold">233P</span>
+                <span className="block text-center text-lg font-bold text-black">{top10_Info[0].userName}</span>
+                <span className="block text-center text-sm text-kuDarkGreen font-semibold">{top10_Info[0].totalPoints}P</span>
               </div>
             </div>
           </div>
@@ -110,8 +163,8 @@ function RankingPage() {
 
             {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
             <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
-              <span className="block text-center text-lg font-bold text-black">남궁민</span>
-              <span className="block text-center text-sm text-kuDarkGreen font-semibold">143P</span>
+              <span className="block text-center text-lg font-bold text-black">{top10_Info[2].userName}</span>
+              <span className="block text-center text-sm text-kuDarkGreen font-semibold">{top10_Info[2].totalPoints}P</span>
             </div>
           </div>
         </div>
@@ -121,33 +174,33 @@ function RankingPage() {
       <div className="w-full max-w-sm text-left m-4">
         <span className="text-xl font-bold pr-4 text-whiteSmoke">이번달 내 순위</span>
         <span className="text-xl font-bold pr-4 text-whiteSmoke">|</span>
-        <span className="text-xl font-bold text-kuLightGreen">{myRankInfo.rank}</span>
+        <span className="text-xl font-bold text-kuLightGreen">{myRankingInfo}</span>
       </div>
 
       {/* 자신의 랭킹을 표시하는 카드 섹션 */}
       <div className="w-full max-w-sm bg-kuLightGray rounded-xl flex flex-row justify-between items-center px-3 py-2 mb-6">
         <div className="flex flex-row flex-start items-center">
-          <span className="text-kuDarkGray text-base font-bold mr-4">{myRankInfo.rank}</span>
-          <img src={duganadi_Img} alt="myProfileImg" className="w-16 h-16 rounded-full mr-4"/>
-          <span className="text-black text-xl font-bold">{myRankInfo.name}</span>
+          <span className="text-kuDarkGray text-base font-bold mr-4">{myRankingInfo}</span>
+          <img src={defaultProfileImg} alt="myProfileImg" className="w-16 h-16 rounded-full mr-4"/>
+          <span className="text-black text-xl font-bold">{myInfo.userName}</span>
         </div>
-        <span className="text-kuDarkGreen text-xl font-bold mr-3">{myRankInfo.point}P</span>
+        <span className="text-kuDarkGreen text-xl font-bold mr-3">{myInfo.totalPoints}P</span>
       </div>
 
       {/* 그 밑의 4위부터 회원들 랭킹 프로필 카드 (받아온 랭킹 정보를 바탕으로 map 함수로 return할 것임) */}
-      {userRankings_dummy.map((user, index) => (
+      {top10_Info.slice(3).map((user, index) => (
         <div
           key={index}
           className="w-full max-w-sm bg-kuWarmGray rounded-xl flex flex-row justify-between items-center px-3 py-2 mb-2"
         >
           {/* 왼쪽 영역: 순위, 프로필 이미지, 이름 */}
           <div className="flex flex-row items-center">
-            <span className="text-kuDarkGray text-sm font-bold mr-4">{index + 4}</span>
-            <img src={duganadi_Img} alt={`${user.name} Profile`} className="w-12 h-12 rounded-full mr-4"/>
-            <span className="text-black text-base">{user.name}</span>
+            <span className="text-kuDarkGray text-sm font-bold mr-4">{user.userId}</span>
+            <img src={defaultProfileImg} alt={`${user.userName} Profile`} className="w-12 h-12 rounded-full mr-4"/>
+            <span className="text-black text-base">{user.userName}</span>
           </div>
           {/* 오른쪽 영역: 포인트 */}
-          <span className="text-kuDarkGreen text-base font-semibold mr-3">{user.point}P</span>
+          <span className="text-kuDarkGreen text-base font-semibold mr-3">{user.totalPoints}P</span>
         </div>
       ))}
 
@@ -158,7 +211,6 @@ function RankingPage() {
       >
         <span className="text-black text-base font-normal">전체보기</span>
       </div>
-      
     </div>
   );
 }

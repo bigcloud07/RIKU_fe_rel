@@ -7,7 +7,7 @@ import { RootState } from '../../redux/store'
 
 import customAxios from '../../apis/customAxios' //커스텀 axios 컴포넌트 가져오기
 
-//비밀번호를 입력하는 화면인 PasswordInput
+//전화번호 입력하는 화면인 TelNumberInput
 function TelNumberInput() {
   const navigate = useNavigate(); //제출 후에 다음 화면으로 넘어가기 위해 useNavigate() hook 활용!
 
@@ -23,7 +23,7 @@ function TelNumberInput() {
   };
 
   //서버에 회원가입 request 진행(POST 요청)
-  const signUpRequest = async () => {
+  const signUpRequest = async (phone: string) => {
 
     //post 요청 보낼 data 세팅
     const data = {
@@ -32,7 +32,7 @@ function TelNumberInput() {
       "name": signupState.name,
       "college": signupState.collegeName,
       "major": signupState.departmentName,
-      "phone": signupState.telNum
+      "phone": phone
     }
     
     console.log('구성된 데이터: ', data);
@@ -61,9 +61,8 @@ function TelNumberInput() {
     } else {
       alert("전화번호가 입력되었습니다. 이대로 진행합니다");
     }
-    dispatch(setTelNum(telNum)); //redux 저장소에 저장
     
-    signUpRequest(); //회원가입 수행
+    signUpRequest(telNum); //회원가입 수행
     
   };
 

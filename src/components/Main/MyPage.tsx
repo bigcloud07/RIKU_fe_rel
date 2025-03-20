@@ -4,10 +4,22 @@ import profile_Img from '../../assets/default_profile.png'; //이미지 불러�
 import rightArrow_Icon from '../../assets/right_arrow.svg'; //라이쿠 로고 불러오기
 import customAxios from '../../apis/customAxios';
 
+import { 
+  format, 
+  addMonths, 
+  subMonths, 
+  startOfMonth, 
+  endOfMonth, 
+  startOfWeek, 
+  endOfWeek, 
+  addDays,
+  parseISO,
+} from 'date-fns';
+
 // 재사용 가능한 버튼 컴포넌트
 function renderButton(text: string, iconSrc: string, onClick: () => void) {
   return (
-    <button onClick={onClick} className="w-full flex justify-between items-center p-4">
+    <button onClick={onClick} className="w-full flex justify-between items-center p-2">
       <span className="text-xl font-normal text-gray-800">{text}</span>
       <img src={iconSrc} alt="Right Arrow Icon" className="h-5 w-5" />
     </button>
@@ -37,6 +49,25 @@ function getUserRole(role: string) {
   }
 }
 
+//한 달 달력에 들어갈 내용(날짜(Date))들의 배열을 만든다.
+function makeCalendarDays(pointDate: Date) {
+  const monthStart = startOfMonth(pointDate); //현재 달의 시작 날짜
+  const monthEnd = endOfMonth(pointDate); //현재 달의 마지막 날짜
+  const startDate = startOfWeek(monthStart); //현재 달의 시작 날짜가 포함된 주의 시작 날짜(그니까, 전 달의 날짜가 나올수도 있음!)
+  const endDate = endOfWeek(monthEnd); //현재 달의 마지막 날짜가 포함된 주의 끝 날짜(그니까, 다음 달의 날짜가 나올수도 있음!)
+
+  let calendarDays = [];
+  let start = startDate;
+
+  while(start <= endDate) //start가 endDate보다 작거나 같은 동안엔 반복문을 지속한다
+  {
+      calendarDays.push(start); //calendarDays 배열의 끝에 start 값 추가
+      start = addDays(start, 1); //날짜를 하루 더해준다(이것을 통해 start를 업데이트 한다)
+  }
+
+  return calendarDays;
+}
+
 //로그인 페이지
 function MyPage() {
 
@@ -44,6 +75,22 @@ function MyPage() {
 
   //마이페이지에 표시할 유저의 정보를 저장하는 state(서버에서 받아와서 해당 정보를 업데이트할 예정)
   const [userInfo, setUserInfo] = useState({"studentId": "201911291", "userName": "허준호", "userProfileImg": null, "userRole": "살려주세요", "point": 0, "activity": 0});
+  const [attendChecked, setAttendChecked] = useState(false);
+
+  //오늘 날짜 기준으로 한달 치 날짜 만들기 (추후, "출석체크" 캘린더에서 사용할 예정)
+  const [pointDate, setPointDate] = useState(new Date());
+  const calendarDaysList = makeCalendarDays(pointDate);
+  let weeks: Date[][] = [];
+  let week: Date[] = [];
+  calendarDaysList.forEach(day => {
+    if (week.length < 7) {
+      week.push(day);
+    } else {
+      weeks.push(week);
+      week = [day];
+    }
+  });
+  if (week.length > 0) weeks.push(week);
 
   //유저 정보를 가져오는 메소드 fetchUserInfo
   async function fetchUserInfo()
@@ -96,15 +143,27 @@ function MyPage() {
   //'운영진 페이지' 버튼 클릭시 수행할 함수
   function handleToAdminPageClick()
   {
-    if(userInfo.userRole === "ADMIN") //회원 정보가 운영진(ADMIN)일 경우
+    if(userInfo.userRole === "운영진") //회원 정보가 운영진(ADMIN)일 경우
     {
       alert("운영진으로 확인되셨습니다. 운영진 페이지로 이동합니다");
       navigate('/admin')
     }
     else //운영진 페이지에 접근 권한이 없는 사람이라면
     {
+      console.log(userInfo.userRole);
       alert("회원님은 운영진이 아니므로 해당 페이지에 접근 권한이 없으십니다!");
     }
+  }
+
+  //"출석하기" 버튼 state 활성,비활성 관리
+  function isAttendCheckBtnValid() {
+    return attendChecked;
+  }
+
+  //"출석하기" 버튼 클릭 시 이벤트 수행
+  function handleAttendCheckBtn() {
+    alert("출석 완료했습니다!");
+    setAttendChecked(!attendChecked);
   }
 
   //처음 렌더링 될 때만 유저 정보 불러오기
@@ -115,11 +174,11 @@ function MyPage() {
   
   //Tailwind를 사용하여 스타일링 진행
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-white pt-20 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-white pt-20 p-4 pb-20">
       <div className="w-full max-w-sm text-left mt-2 mb-6">
         <span className="text-2xl font-bold">마이페이지</span>
       </div>
-      <div className="bg-gray-50 p-6 rounded-xl w-full max-w-sm shadow-lg">
+      <div className="bg-whiteSmoke p-6 mb-4 rounded-xl w-full max-w-sm">
 
         {/*프로필 이미지와 이름 섹션*/}
         <div className="flex items-center mb-4">
@@ -155,8 +214,42 @@ function MyPage() {
         </div>
       </div>
 
+      {/* 오늘의 출석 세션 */}
+      <div className="bg-whiteSmoke p-4 rounded-xl w-full max-w-sm text-center items-center">
+        <p className="text-lg font-extrabold text-gray-800">오늘의 출석</p>
+        <p className="text-sm text-gray-500">출석하면 +5P!</p>
+
+        {/* 중첩 map 함수를 사용해서 출석체크 달력을 출력할 것이다 */}
+        {weeks.map((week, index) => (
+          <div key={index} className="grid grid-cols-7 mt-4 mb-4 text-center w-full max-w-sm">
+            {week.map((day, subIndex) => {
+              return (
+                <div key={subIndex} className="flex flex-col items-center">
+                  <span className="text-base font-normal">{day.getDate()}</span>
+                  {/* 마지막 줄이 아닌 경우에만 선을 추가 */}
+                  {index < weeks.length - 1 && (
+                    <div className="w-full h-px bg-gray-200 mt-4" />
+                  )}
+              </div>
+              );
+            })}
+          </div>
+        ))}
+
+        {/* 로그인 버튼 */}
+        <button 
+          className={`w-full mt-4 mb-2 py-3 ${
+            !isAttendCheckBtnValid() ? 'bg-kuDarkGreen hover:bg-kuGreen text-white' : 'bg-kuLightGray text-gray-900 cursor-not-allowed'
+          } font-bold rounded-md transition-colors`}
+          onClick={handleAttendCheckBtn}
+          disabled={isAttendCheckBtnValid()}
+        >
+          { attendChecked ? '출석 완료' : '출석하기' }
+        </button>
+      </div>
+
       {/* '공지사항' 버튼 */}
-      <div className="w-full max-w-sm mt-8">
+      <div className="w-full max-w-sm mt-4">
         {renderButton("공지사항", rightArrow_Icon, handleNoticeClick)}
       </div>
 

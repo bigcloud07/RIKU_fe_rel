@@ -43,28 +43,55 @@ function LoginPage() {
 
     try {
       const response = await customAxios.post(url, data);
-      if(response.data.isSuccess === true)
-      {
+      // 성공적인 응답 처리
+      if (response.data.isSuccess) {
         console.log(response.data.result.jwtInfo.accessToken);
         alert(`로그인에 성공했습니다! 회원의 학번: ${response.data.result.studentId}`);
+        
         localStorage.setItem('accessToken', JSON.stringify(response.data.result.jwtInfo.accessToken));
         localStorage.setItem('MyId', JSON.stringify(response.data.result.userId));
-        navigate('/tab/main'); //버튼 클릭 시 '/tab'으로 이동
+        
+        navigate('/tab/main'); // 로그인 성공 시 메인 페이지로 이동
       } else {
+        // 요청 실패 처리
         alert(`로그인 실패, 사유: ${response.data.responseMessage}`);
       }
     } catch(error) {
-      // AxiosError 타입으로 확인
       if (axios.isAxiosError(error)) {
-        if (error.code === 'ERR_BAD_REQUEST') {
-          alert('ERR_BAD_REQUEST 발생: 잘못된 요청입니다.');
-        } else if (error.response?.status === 400) {
-          alert('400 Bad Request: 잘못된 요청입니다.');
+        if (error.response) {
+          const { responseCode, responseMessage, result } = error.response.data;
+    
+          // 요청 값 오류 (responseCode 2020)인 경우
+          if (responseCode === 2020 && result?.errors?.length > 0) {
+            let errorMessages = "유효하지 않은 입력입니다:\n";
+    
+            result.errors.forEach((err: { fieldName: any; rejectValue: any; message: any; }) => {
+              console.warn(`오류 필드: ${err.fieldName}, 거부 값: ${err.rejectValue}, 메시지: ${err.message}`);
+              errorMessages += `- ${err.fieldName}: ${err.message} (입력 값: ${err.rejectValue})\n`;
+            });
+    
+            alert(errorMessages); // 모든 오류를 한 번에 출력
+            return;
+          }
+    
+          // 일반적인 400 Bad Request 처리
+          if (error.response.status === 400) {
+            alert('400 Bad Request: 요청 데이터가 올바르지 않습니다.');
+            return;
+          }
+    
+          // 서버 오류(500 등)
+          alert(`서버 오류 발생! 상태 코드: ${error.response.status}`);
+        } else if (error.request) {
+          // 요청이 전송되었지만 응답이 없는 경우
+          alert('서버에서 응답이 없습니다. 네트워크 상태를 확인하고 다시 시도해 주세요.');
         } else {
-          alert('기타 Axios 오류! 다시 시도해 주십시오');
+          // 기타 Axios 요청 관련 에러
+          alert(`예상치 못한 오류 발생: ${error.message}`);
         }
       } else {
-        alert('예상치 못한 오류 발생! 다시 시도해 주십시오');
+        // Axios 외의 오류 처리
+        alert('알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.');
       }
     }
   }
