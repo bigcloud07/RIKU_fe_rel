@@ -49,17 +49,12 @@ function SchedulePage() {
     const formattedPointDate = format(pointDate, 'yyyy-MM-dd'); //pointDate(기준이 되는 날짜) 포맷팅
     const accessToken = JSON.parse(localStorage.getItem('accessToken') || ''); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
 
-    //보낼 데이터
-    const data = {
-      "date" : formattedPointDate
-    }
-
-    const url = '/calendar/monthly';
+    //url에 날짜를 'yyyy-MM-dd' 형식으로 담아서 보내야 함
+    const url = `/calendar/monthly?date=${formattedPointDate}`;
 
     try {
-      const response = await customAxios.post(
+      const response = await customAxios.get(
         url, //요청 url
-        data, //요청 데이터
         {
           headers: {
             Authorization: accessToken //accessToken을 헤더로 추가해서 요청 보냄
@@ -84,17 +79,12 @@ function SchedulePage() {
     const formattedSelectedDate = format(selectedDate, 'yyyy-MM-dd'); // selectedDate(선택된 날짜) 포맷팅
     const accessToken = JSON.parse(localStorage.getItem('accessToken') || '') //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
 
-    //보낼 데이터
-    const data = {
-      "date" : formattedSelectedDate
-    }
-
-    const url = '/calendar/daily';
+    //url에 날짜를 'yyyy-MM-dd' 형식으로 담아서 보내야 함
+    const url = `/calendar/daily?date=${formattedSelectedDate}`;
 
     try {
-      const response = await customAxios.post(
+      const response = await customAxios.get(
         url, //요청 url
-        data, //요청 데이터
         {
           headers: {
             Authorization: accessToken //accessToken을 헤더로 추가해서 요청 보냄
