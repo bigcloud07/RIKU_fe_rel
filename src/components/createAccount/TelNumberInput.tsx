@@ -32,7 +32,7 @@ function TelNumberInput() {
       "name": signupState.name,
       "college": signupState.collegeName,
       "major": signupState.departmentName,
-      "phone": phone
+      "phone": phone === '' ? null : phone // 전화번호(phone) 값이 비어있는 경우엔 null을 반환
     }
     
     console.log('구성된 데이터: ', data);
