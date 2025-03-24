@@ -74,7 +74,7 @@ function MyPage() {
   const navigate = useNavigate(); //useNavigate 훅을 사용해 navigate 함수 생성
 
   //마이페이지에 표시할 유저의 정보를 저장하는 state(서버에서 받아와서 해당 정보를 업데이트할 예정)
-  const [userInfo, setUserInfo] = useState({"studentId": "201911291", "userName": "허준호", "userProfileImg": null, "userRole": "살려주세요", "point": 0, "activity": 0});
+  const [userInfo, setUserInfo] = useState({"studentId": "", "userName": "", "userProfileImg": null, "userRole": "", "point": 0, "activity": 0});
   const [attendChecked, setAttendChecked] = useState(false);
 
   //오늘 날짜 기준으로 한달 치 날짜 만들기 (추후, "출석체크" 캘린더에서 사용할 예정)
@@ -97,7 +97,7 @@ function MyPage() {
   {
     const accessToken = JSON.parse(localStorage.getItem('accessToken') || ''); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
 
-    const url = '/users/profile';
+    const url = '/user/profile';
 
     try {
       const response = await customAxios.get(
