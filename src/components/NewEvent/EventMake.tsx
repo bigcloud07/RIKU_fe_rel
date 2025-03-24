@@ -1,5 +1,4 @@
-// 통합된 NewRegularRunMake.tsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import customAxios from '../../apis/customAxios';
 import { motion } from "framer-motion";
@@ -26,7 +25,7 @@ interface CreatePacerRequest {
   pace: string;
 }
 
-function FlashRunMake() {
+function EventMake() {
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
@@ -150,11 +149,15 @@ function FlashRunMake() {
       const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
   
       const formData = new FormData();
+      const eventType = isCustom ? customInput : selected;
+      formData.append("eventType", eventType);
       formData.append("title", title);
       formData.append("location", location);
       formData.append("date", eventDateTime);
       formData.append("content", content);
       files.forEach(file => formData.append("postImage", file));
+      
+
   
       pacerGroups.forEach((group, index) => {
         formData.append(`pacers[${index}].group`, group.id);
@@ -163,7 +166,7 @@ function FlashRunMake() {
         formData.append(`pacers[${index}].pace`, group.pace);
       });
   
-      const response = await customAxios.post("/run/flash/post", formData, {
+      const response = await customAxios.post("/run/event/post", formData, {
         headers: {
           Authorization: `${token}`,
           "Content-Type": "multipart/form-data",
@@ -171,16 +174,50 @@ function FlashRunMake() {
       });
   
       if (response.data.isSuccess) {
-        alert("번개런이 성공적으로 생성되었습니다!");
+        alert("행사가 성공적으로 생성되었습니다!");
         navigate("/run");
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
       }
     } catch (error) {
-      console.error("번개런 생성 중 오류:", error);
-      alert("번개런 생성 중 문제가 발생했습니다.");
+      console.error("행사 생성 중 오류:", error);
+      alert("행사 생성 중 문제가 발생했습니다.");
     }
   };
+  const eventTypes = ['마라톤', '동아리 행사', '러닝 세션', '기타 (직접입력)'];
+
+  
+  const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState('마라톤');
+  const [customInput, setCustomInput] = useState('');
+  const [isCustom, setIsCustom] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const toggleDropdown = () => setIsOpen((prev) => !prev);
+
+  const handleSelect = (type: string) => {
+    setIsCustom(type === '기타 (직접입력)');
+    setSelected(type);
+    setIsOpen(false);
+    if (type !== '기타 (직접입력)') {
+      setCustomInput('');
+    }
+  };
+
+  const handleCustomInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomInput(e.target.value);
+  };
+
+  // 드롭다운 외부 클릭 시 닫기
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <div className="flex flex-col items-center min-h-screen">
@@ -193,9 +230,89 @@ function FlashRunMake() {
           >
             <img src={BackIcon} alt="뒤로가기" className="w-6 left-3 h-6" />
           </button>
-          <div className="text-2xl font-semibold text-white">번개런 만들기</div>
+          <div className="text-2xl font-semibold text-white">행사 만들기</div>
         </div>
       </div>
+
+      {/* 훈련유형 */}
+      <div className="w-full max-w-md px-4" ref={dropdownRef}>
+  <label className="block text-sm font-medium text-gray-700 mb-1">행사 유형</label>
+  <div className="relative">
+    {!isCustom ? (
+      <>
+        <button
+          type="button"
+          onClick={toggleDropdown}
+          className="w-full bg-white border border-gray-300 rounded-md shadow-sm pl-4 pr-10 py-2 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
+        >
+          {selected}
+          <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <svg
+              className={`w-4 h-4 transform transition-transform duration-200 ${
+                isOpen ? 'rotate-180' : ''
+              }`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
+        </button>
+
+        {isOpen && (
+          <ul className="absolute z-10 mt-1 w-full bg-white shadow-lg border border-gray-200 rounded-md max-h-60 overflow-auto">
+            {eventTypes.map((type) => (
+              <li
+                key={type}
+                onClick={() => {
+                  if (type === '기타 (직접입력)') {
+                    setIsCustom(true);
+                    setIsOpen(false);
+                    setSelected('');
+                  } else {
+                    handleSelect(type);
+                  }
+                }}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800"
+              >
+                {type}
+              </li>
+            ))}
+          </ul>
+        )}
+      </>
+    ) : (
+      <div className="relative">
+        <input
+          type="text"
+          value={customInput}
+          onChange={(e) => setCustomInput(e.target.value)}
+          placeholder="행사명을 입력하세요"
+          className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+        />
+        <button
+          type="button"
+          onClick={() => {
+            setIsCustom(false);
+            setCustomInput('');
+            setSelected('마라톤'); // 기본값으로 초기화
+          }}
+          className="absolute inset-y-0 right-0 flex items-center pr-3"
+        >
+          <svg
+            className="w-4 h-4 text-gray-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
+    )}
+  </div>
+</div>
 
       <div className="w-full max-w-md px-4">
         <div className="my-2">제목</div>
@@ -215,6 +332,7 @@ function FlashRunMake() {
           onChange={handleContent}
         ></textarea>
         
+       
 
         <div className="my-4">
           <h2 className="mb-2">게시글 사진</h2>
@@ -238,4 +356,4 @@ function FlashRunMake() {
   );
 }
 
-export default FlashRunMake;
+export default EventMake;

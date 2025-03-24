@@ -30,8 +30,8 @@ const NewMain: React.FC = () => {
   const [maindata, setMaindata] = useState<MainData>({
     regularRun: { location: "없습니다", date: "정규런이" },
     flashRun: { location: "없습니다", date: "번개런이" },
-    training: { location: "없습니다", date: "행사가" },
-    event: { location: "없습니다", date: "훈련이" },
+    training: { location: "없습니다", date: "훈련이" },
+    event: { location: "없습니다", date: "행사가" },
   });
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -75,7 +75,7 @@ const NewMain: React.FC = () => {
           // 상태를 각 ContentList에 맞게 분리하여 저장
           setMaindata({
             regularRun: {
-              location: result[0]?.location || "번개런이 없네요",
+              location: result[0]?.location || "정규런이 없네요",
               date: (() => {
                 const dateObj = new Date(result[0]?.date);
                 const month = dateObj.getMonth() + 1; // 월 (0부터 시작하므로 +1)
@@ -100,7 +100,7 @@ const NewMain: React.FC = () => {
               poststatus:result[1].postStatus,
             },
             training: {
-              location: result[2]?.location || "번개런이 없네요",
+              location: result[2]?.location || "훈련이 없네요",
               date: (() => {
                 const dateObj = new Date(result[0]?.date);
                 const month = dateObj.getMonth() + 1; // 월 (0부터 시작하므로 +1)
@@ -112,7 +112,7 @@ const NewMain: React.FC = () => {
               poststatus:result[2].postStatus,
             },
             event: {
-              location: result[0]?.location || "번개런이 없네요",
+              location: result[0]?.location || "행사가 없네요",
               date: (() => {
                 const dateObj = new Date(result[0]?.date);
                 const month = dateObj.getMonth() + 1; // 월 (0부터 시작하므로 +1)
@@ -180,7 +180,12 @@ const NewMain: React.FC = () => {
   const handleRegularRunMake = () => {
     navigate("/regular/make");
   };
-
+  const handleEventMake = () => {
+    navigate("/event");
+  };
+  const handleTrainingtMake = () => {
+    navigate("/training");
+  };
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -297,6 +302,7 @@ const NewMain: React.FC = () => {
             <button
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${showThirdButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}
+              onClick={handleTrainingtMake}
             >
               훈련 일정 추가하기
             </button>
@@ -305,6 +311,7 @@ const NewMain: React.FC = () => {
             <button
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${showFourthButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}
+              onClick={handleEventMake}
             >
               행사 일정 추가하기
             </button>
