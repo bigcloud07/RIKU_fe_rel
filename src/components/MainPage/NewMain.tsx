@@ -28,10 +28,10 @@ interface MainData {
 
 const NewMain: React.FC = () => {
   const [maindata, setMaindata] = useState<MainData>({
-    regularRun: { location: "Next", date: "Semester" },
+    regularRun: { location: "없습니다", date: "정규런이" },
     flashRun: { location: "없습니다", date: "번개런이" },
-    training: { location: "Next", date: "Semester" },
-    event: { location: "Next", date: "Semester" },
+    training: { location: "없습니다", date: "행사가" },
+    event: { location: "없습니다", date: "훈련이" },
   });
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -58,7 +58,7 @@ const NewMain: React.FC = () => {
     const fetchMain = async () => {
       try {
         const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
-        const response = await customAxios.get(`/home`, {
+        const response = await customAxios.get(`/run`, {
           headers: { Authorization: `${token}` },
         });
 
@@ -75,11 +75,6 @@ const NewMain: React.FC = () => {
           // 상태를 각 ContentList에 맞게 분리하여 저장
           setMaindata({
             regularRun: {
-              location: "Next",
-              date: "Semester",
-              
-            },
-            flashRun: {
               location: result[0]?.location || "번개런이 없네요",
               date: (() => {
                 const dateObj = new Date(result[0]?.date);
@@ -90,14 +85,43 @@ const NewMain: React.FC = () => {
               })() || "...",
               postimgurl:result[0].postImgaeUrl,
               poststatus:result[0].postStatus,
+              
+            },
+            flashRun: {
+              location: result[1]?.location || "번개런이 없네요",
+              date: (() => {
+                const dateObj = new Date(result[0]?.date);
+                const month = dateObj.getMonth() + 1; // 월 (0부터 시작하므로 +1)
+                const day = dateObj.getDate(); // 일
+                const weekday = dateObj.toLocaleDateString("ko-KR", { weekday: "short" }); // 요일
+                return `${month}/${day} ${weekday}`;
+              })() || "...",
+              postimgurl:result[1].postImgaeUrl,
+              poststatus:result[1].postStatus,
             },
             training: {
-              location: "Next",
-              date: "Semester",
+              location: result[2]?.location || "번개런이 없네요",
+              date: (() => {
+                const dateObj = new Date(result[0]?.date);
+                const month = dateObj.getMonth() + 1; // 월 (0부터 시작하므로 +1)
+                const day = dateObj.getDate(); // 일
+                const weekday = dateObj.toLocaleDateString("ko-KR", { weekday: "short" }); // 요일
+                return `${month}/${day} ${weekday}`;
+              })() || "...",
+              postimgurl:result[2].postImgaeUrl,
+              poststatus:result[2].postStatus,
             },
             event: {
-              location: "Next",
-              date: "Semester",
+              location: result[0]?.location || "번개런이 없네요",
+              date: (() => {
+                const dateObj = new Date(result[0]?.date);
+                const month = dateObj.getMonth() + 1; // 월 (0부터 시작하므로 +1)
+                const day = dateObj.getDate(); // 일
+                const weekday = dateObj.toLocaleDateString("ko-KR", { weekday: "short" }); // 요일
+                return `${month}/${day} ${weekday}`;
+              })() || "...",
+              postimgurl:result[3].postImgaeUrl,
+              poststatus:result[3].postStatus,
             },
           }
           
@@ -150,8 +174,11 @@ const NewMain: React.FC = () => {
     navigate('/run');
   };
 
-  const handleRunMake = () => {
+  const handleflashRunMake = () => {
     navigate("/run/make");
+  };
+  const handleRegularRunMake = () => {
+    navigate("/regular/make");
   };
 
 
@@ -186,35 +213,46 @@ const NewMain: React.FC = () => {
 
       {/* NewMainCard 그리드 */}
       <div className="grid grid-cols-2 grid-rows-2 gap-x-3 gap-y-6 mt-7 mb-36">
+        <div className="cursor-pointer">
         <NewMainCard
-          title="반포한강공원"
-          date="12/24 목요일"
-          status="모집중"
-          imageUrl={NewMainImage}
+          title={maindata?.regularRun.location}
+          date={maindata?.regularRun.date}
+          status={maindata.regularRun.poststatus}
+          imageUrl={maindata.regularRun.postimgurl || NewMainImage}
           event_type="정규런"
+          path="/regular"
         />
+        </div>
+        <div className="cursor-pointer">
         <NewMainCard
           title={maindata?.flashRun.location}
           date={maindata?.flashRun.date}
           status={maindata.flashRun.poststatus}
           imageUrl={maindata.flashRun.postimgurl || NewMainImage}
           event_type="번개런"
+          path="/FlashRuntest"
+        />
+        </div>
+        <div className="cursor-pointer">
+        <NewMainCard
+          title={maindata?.training.location}
+          date={maindata?.training.date}
+          status={maindata.training.poststatus}
+          imageUrl={maindata.training.postimgurl || NewMainImage}
+          event_type="훈련"
           path="/run"
         />
+        </div>
+        <div className="cursor-pointer">
         <NewMainCard
-          title="반포한강공원"
-          date="12/24 목요일"
-          status="모집중"
-          imageUrl={NewMainImage}
-          event_type="훈련"
-        />
-        <NewMainCard
-          title="반포한강공원"
-          date="12/24 목요일"
-          status="모집중"
-          imageUrl={NewMainImage}
+          title={maindata?.event.location}
+          date={maindata?.event.date}
+          status={maindata.event.poststatus}
+          imageUrl={maindata.event.postimgurl || NewMainImage}
           event_type="행사"
+          path="/run"
         />
+        </div>
       </div>
 
       {/* 플로팅 버튼 */}
@@ -241,7 +279,7 @@ const NewMain: React.FC = () => {
             <button
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${showFirstButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}
-              onClick={handleRunMake}
+              onClick={handleflashRunMake}
             >
               번개런 일정 추가하기
             </button>
@@ -250,6 +288,7 @@ const NewMain: React.FC = () => {
             <button
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${showSecondButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                 }`}
+              onClick={handleRegularRunMake}
             >
               정규런 일정 추가하기
             </button>
