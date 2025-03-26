@@ -29,6 +29,8 @@ import NewRegularRunList from './components/NewRegularRun/NewRegularRunList';
 import NewRegularRunMake from './components/NewRegularRun/NewRegularRunMake';
 import EventMake from './components/NewEvent/EventMake'
 import TrainingMake from './components/NewTraining/TrainingMake';
+import NewEventCard from './components/NewFlashRun/NewEventCard';
+import NewTrainingList from './components/NewTraining/NewTrainingRunList';
 
 
 function App() {
@@ -50,15 +52,17 @@ function App() {
             <Route path="/run/make" element={<FlashRunMake />} />
             <Route path='/tab/*' element={<TabNavigationUI/>} />
             <Route path='/main' element={<NewMain/>}/>
-            <Route path='/flashRuntest' element={<NewFlashRunList/>} />
+            <Route path='/flashRun' element={<NewFlashRunList/>} />
             <Route path='/flashRunAdmintest' element={<NewFlashRunDetail/>}/>
             <Route path='/pastruns' element={<PastRuns/>} />
             <Route path='/admin' element={<AdminPage/>}/>
             <Route path='/regular' element={<NewRegularRunList/>}/>
+            <Route path='/training' element={<NewTrainingList/>}/>
             <Route path='/regular/make' element={<NewRegularRunMake/>}/>
             <Route path='/event' element={<EventMake/>}/>
-            <Route path='/training' element={<TrainingMake/>}/>
-
+            <Route path='/training/make' element={<TrainingMake/>}/>
+            
+            
           </Routes>
         </div>
       </Router>

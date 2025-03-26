@@ -10,6 +10,10 @@ import img3 from "../../assets/Main-img/main-moving-images/3.png";
 import img4 from "../../assets/Main-img/main-moving-images/4.png";
 import TopBarimg from "../../assets/Top-bar.svg";
 import customAxios from "../../apis/customAxios";
+import NOWimg from "../../assets/Main-img/NewOpenStatus.svg";
+import CLODESDimg from "../../assets/Main-img/NewClosedStatus.svg";
+import CANCELEDimg from "../../assets/Main-img/NewCanceledStatus.svg";
+
 
 interface EventData {
   location?: string; // 이벤트 위치
@@ -27,6 +31,20 @@ interface MainData {
 }
 
 const NewMain: React.FC = () => {
+  const getStatusImg = (status: string | null | undefined) => {
+    switch (status) {
+      case "NOW":
+        return NOWimg;
+      case "CLOSED":
+        return CLODESDimg;
+      case "CANCELED":
+        return CANCELEDimg;
+      default:
+        return undefined;
+    }
+  };
+
+
   const [maindata, setMaindata] = useState<MainData>({
     regularRun: { location: "없습니다", date: "정규런이" },
     flashRun: { location: "없습니다", date: "번개런이" },
@@ -44,6 +62,15 @@ const NewMain: React.FC = () => {
 
   const navigate = useNavigate();
   const images = [img1, img2, img3, img4];
+
+  const formatDate = (isoDateString?: string): string => {
+    if (!isoDateString) return "...";
+    const dateObj = new Date(isoDateString);
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    const weekday = dateObj.toLocaleDateString("ko-KR", { weekday: "short" });
+    return `${month}/${day} ${weekday}`;
+  };
   
   // 슬라이드 변경 로직
   useEffect(() => {
@@ -75,57 +102,30 @@ const NewMain: React.FC = () => {
           // 상태를 각 ContentList에 맞게 분리하여 저장
           setMaindata({
             regularRun: {
-              location: result[0]?.location || "정규런이 없네요",
-              date: (() => {
-                const dateObj = new Date(result[0]?.date);
-                const month = dateObj.getMonth() + 1; // 월 (0부터 시작하므로 +1)
-                const day = dateObj.getDate(); // 일
-                const weekday = dateObj.toLocaleDateString("ko-KR", { weekday: "short" }); // 요일
-                return `${month}/${day} ${weekday}`;
-              })() || "...",
-              postimgurl:result[0].postImgaeUrl,
-              poststatus:result[0].postStatus,
-              
+              location: result.regularRun?.title || "정규런이 없네요",
+              date: formatDate(result.regularRun?.date),
+              postimgurl: result.regularRun?.postImageUrl,
+              poststatus: result.regularRun?.postStatus,
             },
             flashRun: {
-              location: result[1]?.location || "번개런이 없네요",
-              date: (() => {
-                const dateObj = new Date(result[0]?.date);
-                const month = dateObj.getMonth() + 1; // 월 (0부터 시작하므로 +1)
-                const day = dateObj.getDate(); // 일
-                const weekday = dateObj.toLocaleDateString("ko-KR", { weekday: "short" }); // 요일
-                return `${month}/${day} ${weekday}`;
-              })() || "...",
-              postimgurl:result[1].postImgaeUrl,
-              poststatus:result[1].postStatus,
+              location: result.flashRun?.title || "번개런이 없네요",
+              date: formatDate(result.flashRun?.date),
+              postimgurl: result.flashRun?.postImageUrl,
+              poststatus: result.flashRun?.postStatus,
             },
             training: {
-              location: result[2]?.location || "훈련이 없네요",
-              date: (() => {
-                const dateObj = new Date(result[0]?.date);
-                const month = dateObj.getMonth() + 1; // 월 (0부터 시작하므로 +1)
-                const day = dateObj.getDate(); // 일
-                const weekday = dateObj.toLocaleDateString("ko-KR", { weekday: "short" }); // 요일
-                return `${month}/${day} ${weekday}`;
-              })() || "...",
-              postimgurl:result[2].postImgaeUrl,
-              poststatus:result[2].postStatus,
+              location: result.trainingRun?.title || "훈련이 없네요",
+              date: formatDate(result.trainingRun?.date),
+              postimgurl: result.trainingRun?.postImageUrl,
+              poststatus: result.trainingRun?.postStatus,
             },
             event: {
-              location: result[0]?.location || "행사가 없네요",
-              date: (() => {
-                const dateObj = new Date(result[0]?.date);
-                const month = dateObj.getMonth() + 1; // 월 (0부터 시작하므로 +1)
-                const day = dateObj.getDate(); // 일
-                const weekday = dateObj.toLocaleDateString("ko-KR", { weekday: "short" }); // 요일
-                return `${month}/${day} ${weekday}`;
-              })() || "...",
-              postimgurl:result[3].postImgaeUrl,
-              poststatus:result[3].postStatus,
+              location: result.eventRun?.title || "행사가 없습니다",
+              date: formatDate(result.eventRun?.date),
+              postimgurl: result.eventRun?.postImageUrl,
+              poststatus: result.eventRun?.postStatus,
             },
-          }
-          
-        );
+          });
         } else {
           console.error("데이터를 불러오지 못했습니다.", response.data.responseMessage);
         }
@@ -184,15 +184,13 @@ const NewMain: React.FC = () => {
     navigate("/event");
   };
   const handleTrainingtMake = () => {
-    navigate("/training");
+    navigate("/training/make");
   };
 
   return (
     <div className="flex flex-col items-center justify-center">
       {/* 상단바 */}
-      <div>
-        <img src={TopBarimg} alt="상단바" />
-      </div>
+      <div className="h-[56px]"></div>
 
       {/* 슬라이드쇼 */}
       <div className="w-[375px] h- max-w-4xl mx-auto m-0">
@@ -222,7 +220,7 @@ const NewMain: React.FC = () => {
         <NewMainCard
           title={maindata?.regularRun.location}
           date={maindata?.regularRun.date}
-          status={maindata.regularRun.poststatus}
+          statusImg={getStatusImg(maindata.regularRun.poststatus)}
           imageUrl={maindata.regularRun.postimgurl || NewMainImage}
           event_type="정규런"
           path="/regular"
@@ -232,27 +230,27 @@ const NewMain: React.FC = () => {
         <NewMainCard
           title={maindata?.flashRun.location}
           date={maindata?.flashRun.date}
-          status={maindata.flashRun.poststatus}
+          statusImg={getStatusImg(maindata.flashRun.poststatus)}
           imageUrl={maindata.flashRun.postimgurl || NewMainImage}
           event_type="번개런"
-          path="/FlashRuntest"
+          path="/FlashRun"
         />
         </div>
         <div className="cursor-pointer">
         <NewMainCard
           title={maindata?.training.location}
           date={maindata?.training.date}
-          status={maindata.training.poststatus}
+          statusImg={getStatusImg(maindata.training.poststatus)}
           imageUrl={maindata.training.postimgurl || NewMainImage}
           event_type="훈련"
-          path="/run"
+          path="/training"
         />
         </div>
         <div className="cursor-pointer">
         <NewMainCard
           title={maindata?.event.location}
           date={maindata?.event.date}
-          status={maindata.event.poststatus}
+          statusImg={getStatusImg(maindata.event.poststatus)}
           imageUrl={maindata.event.postimgurl || NewMainImage}
           event_type="행사"
           path="/run"

@@ -175,7 +175,7 @@ function TrainingMake() {
   
       if (response.data.isSuccess) {
         alert("훈련이 성공적으로 생성되었습니다!");
-        navigate("/run");
+        navigate("/training");
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
       }

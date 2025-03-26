@@ -133,16 +133,12 @@ function FlashRunMake() {
   };
 
   const handleSubmit = async () => {
-    console.log(pacerGroups)
-    const hasIncompleteGroup = pacerGroups.some(
-      (group) => !group.pacer || !group.distance || !group.pace
-      
-    );
+    
   
-    // if (!title || !location || !content || !dateTime.date || hasIncompleteGroup) {
-    //   alert("모든 정보를 입력해주세요.");
-    //   return;
-    // } -> 계속 오류 떠서 일단 주석처리함
+    if (!title || !location || !content || !dateTime.date) {
+      alert("모든 정보를 입력해주세요.");
+      return;
+    }
   
     try {
       const isoDate = dateTime.date.toISOString().split("T")[0];
@@ -169,10 +165,12 @@ function FlashRunMake() {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      console.log(response.data)
   
       if (response.data.isSuccess) {
         alert("번개런이 성공적으로 생성되었습니다!");
-        navigate("/run");
+        navigate("/flashRun");
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
       }

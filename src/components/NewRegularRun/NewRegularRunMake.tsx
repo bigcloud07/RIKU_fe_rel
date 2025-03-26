@@ -54,6 +54,7 @@ function NewRegularRunMake() {
     const fetchPacers = async () => {
       try {
         const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
+        console.log({ token })
         const response = await customAxios.get("/pacers", {
           headers: { Authorization: `${token}` },
         });
@@ -136,43 +137,43 @@ function NewRegularRunMake() {
     console.log(pacerGroups)
     const hasIncompleteGroup = pacerGroups.some(
       (group) => !group.pacer || !group.distance || !group.pace
-      
+
     );
-  
-    // if (!title || !location || !content || !dateTime.date || hasIncompleteGroup) {
-    //   alert("모든 정보를 입력해주세요.");
-    //   return;
-    // } -> 계속 오류 떠서 일단 주석처리함
-  
+
+    if (!title || !location || !content || !dateTime.date || hasIncompleteGroup) {
+      alert("모든 정보를 입력해주세요.");
+      return;
+    } 
+
     try {
       const isoDate = dateTime.date.toISOString().split("T")[0];
       const eventDateTime = `${isoDate}T${dateTime.time}`;
       const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
-  
+
       const formData = new FormData();
       formData.append("title", title);
       formData.append("location", location);
       formData.append("date", eventDateTime);
       formData.append("content", content);
       files.forEach(file => formData.append("postImage", file));
-  
+
       pacerGroups.forEach((group, index) => {
         formData.append(`pacers[${index}].group`, group.id);
         formData.append(`pacers[${index}].pacerId`, String(group.pacer));
         formData.append(`pacers[${index}].distance`, group.distance);
         formData.append(`pacers[${index}].pace`, group.pace);
       });
-  
+
       const response = await customAxios.post("/run/regular/post", formData, {
         headers: {
           Authorization: `${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
-  
+
       if (response.data.isSuccess) {
         alert("정규런이 성공적으로 생성되었습니다!");
-        navigate("/run");
+        navigate("/regular");
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
       }
