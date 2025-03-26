@@ -41,7 +41,7 @@ const NavBar: React.FC = () => {
   const getTextColor = (tabName: string) =>
     selectedTab === tabName ? "font-bold text-kuDarkGreen" : "text-gray-400";
 
-
+  //모바일은 375px가 우선이지만, 데스크탑 또는 다른 모바일 기기에서의 호환성을 위해 추후 논의 필요할 듯
   return (
     <div className="w-[375px]">
       {/* 네비게이션 바 */}

@@ -19,15 +19,17 @@ import NewMain from './components/MainPage/NewMain'
 import NewFlashRunDetail from './components/NewFlashRun/NewFlashRunDetail'
 import AdminPage from './components/AdminPage/AdminPage';
 
-
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import NewFlashRunList from './components/NewFlashRun/NewFlashRunList';
 import PastRuns from './components/NewFlashRun/PastRuns';
+
+import ProtectedRoute from './components/ProtectedRoute';
 import NewRegularRunList from './components/NewRegularRun/NewRegularRunList';
 import NewRegularRunMake from './components/NewRegularRun/NewRegularRunMake';
 import EventMake from './components/NewEvent/EventMake'
 import TrainingMake from './components/NewTraining/TrainingMake';
+
 
 function App() {
   return (
@@ -56,6 +58,7 @@ function App() {
             <Route path='/regular/make' element={<NewRegularRunMake/>}/>
             <Route path='/event' element={<EventMake/>}/>
             <Route path='/training' element={<TrainingMake/>}/>
+
           </Routes>
         </div>
       </Router>

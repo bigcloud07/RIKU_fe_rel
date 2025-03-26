@@ -13,6 +13,7 @@ import {
   startOfWeek, 
   endOfWeek, 
   addDays,
+  getMonth,
   parseISO,
 } from 'date-fns';
 
@@ -68,13 +69,36 @@ function makeCalendarDays(pointDate: Date) {
   return calendarDays;
 }
 
+//UserInfo의 타입을 명확하게 지정하기 위함
+//--> String, Number와 같이 대문자 타입은 JS의 래퍼 객체 타입, 아래와 같은 상황에선 소문자 써야함!
+interface UserInfo {
+  studentId: string;
+  userName: string;
+  userProfileImgUrl: string | null;
+  userRole: string;
+  points: number;
+  participationCount: number;
+  profileAttendanceDates: string[];
+}
+
 //로그인 페이지
 function MyPage() {
 
   const navigate = useNavigate(); //useNavigate 훅을 사용해 navigate 함수 생성
 
   //마이페이지에 표시할 유저의 정보를 저장하는 state(서버에서 받아와서 해당 정보를 업데이트할 예정)
-  const [userInfo, setUserInfo] = useState({"studentId": "201911291", "userName": "허준호", "userProfileImg": null, "userRole": "살려주세요", "point": 0, "activity": 0});
+  const [userInfo, setUserInfo] = useState<UserInfo>(
+    {
+      "studentId": "", 
+      "userName": "", 
+      "userProfileImgUrl": "", 
+      "userRole": "", 
+      "points": 0, 
+      "participationCount": 0, 
+      "profileAttendanceDates": []
+    }
+  );
+  const [monthlyAttended, setMonthlyAttended] = useState<{date: string; isAttended: boolean}[]>([]);
   const [attendChecked, setAttendChecked] = useState(false);
 
   //오늘 날짜 기준으로 한달 치 날짜 만들기 (추후, "출석체크" 캘린더에서 사용할 예정)
@@ -96,8 +120,8 @@ function MyPage() {
   async function fetchUserInfo()
   {
     const accessToken = JSON.parse(localStorage.getItem('accessToken') || ''); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
-
-    const url = '/user/profile';
+    const todayDate = format(new Date(), 'yyyy-MM-dd');
+    const url = `/user/profile?date=${todayDate}`;
 
     try {
       const response = await customAxios.get(
@@ -116,10 +140,11 @@ function MyPage() {
         let data = {
           "studentId": response.data.result.studentId,
           "userName": response.data.result.userName,
-          "userProfileImg": response.data.result.userProfileImg,
+          "userProfileImgUrl": response.data.result.userProfileImgUrl,
           "userRole": formattedUserRole,
-          "point": 0,
-          "activity": 0
+          "points": response.data.result.points,
+          "participationCount": response.data.result.participationCount, 
+          "profileAttendanceDates": response.data.result.profileAttendanceDates
         }
         setUserInfo(data);
       }
@@ -166,6 +191,18 @@ function MyPage() {
     setAttendChecked(!attendChecked);
   }
 
+  //"로그아웃" 버튼 클릭 시 이벤트 수행
+  function handleLogout() {
+    //1. 토큰 삭제
+    localStorage.removeItem('accessToken');
+
+    //2. alert창 띄우기 (정상적으로 로그아웃 완료)
+    alert("정상적으로 로그아웃 되었습니다.");
+
+    //3. 로그인 페이지로 이동
+    navigate('/');
+  }
+
   //처음 렌더링 될 때만 유저 정보 불러오기
   useEffect(() => {
     fetchUserInfo();
@@ -197,16 +234,16 @@ function MyPage() {
         {/* 포인트와 활동 내역 섹션 */}
         <div className="flex justify-around mt-6 pt-4 border-t-2">
           <div className="text-center">
-            <p className="text-2xl font-bold text-gray-800">{userInfo.point}</p>
+            <p className="text-2xl font-bold text-gray-800">{userInfo.points}</p>
             <p className="text-sm text-gray-500">포인트</p>
           </div>
           <div className="text-center">
             {
               //활동내역 갯수가 0 이하인 경우를 따진다
-              userInfo.activity <= 0 ? (
+              userInfo.participationCount <= 0 ? (
                 <p className="text-2xl font-bold text-gray-800">-</p>
               ) : (
-                <p className="text-2xl font-bold text-gray-800">{userInfo.activity}</p>
+                <p className="text-2xl font-bold text-gray-800">{userInfo.participationCount}</p>
               )
             }
             <p className="text-sm text-gray-500">활동 내역</p>
@@ -221,19 +258,41 @@ function MyPage() {
 
         {/* 중첩 map 함수를 사용해서 출석체크 달력을 출력할 것이다 */}
         {weeks.map((week, index) => (
-          <div key={index} className="grid grid-cols-7 mt-4 mb-4 text-center w-full max-w-sm">
+          <>
+          <div key={index} className="relative grid grid-cols-7 mt-4 mb-4 text-center w-full max-w-sm">
             {week.map((day, subIndex) => {
+              const formattedDate = format(day, 'yyyy-MM-dd');
+              let markerOn = userInfo.profileAttendanceDates.includes(formattedDate);
+              let isToday = format(pointDate, 'yyyy-MM-dd') === formattedDate;
+              let isCurrentMonth = getMonth(pointDate) === getMonth(day);
+              let style = isCurrentMonth ? 'text-black' : 'text-gray-400';
+              
               return (
-                <div key={subIndex} className="flex flex-col items-center">
-                  <span className="text-base font-normal">{day.getDate()}</span>
-                  {/* 마지막 줄이 아닌 경우에만 선을 추가 */}
-                  {index < weeks.length - 1 && (
-                    <div className="w-full h-px bg-gray-200 mt-4" />
+                <div key={subIndex} className="flex flex-col items-center justify-center">
+                  {/* 오늘 날짜에 대한 Marker 표시(출석 안했을 때만 표시) */}
+                  {(!attendChecked && isToday) ? (
+                    <>
+                    <span className="text-base font-normal z-10 text-white">{day.getDate()}</span>
+                    <div className="absolute w-10 h-10 rounded-full bg-kuDarkGreen z-0" />
+                    </>
+                  ) : (
+                    <>
+                    <span className={`text-base font-normal z-10 ${style}`}>{day.getDate()}</span>
+                    {/* 출석한 날짜에 대한 Marker 표시 */}
+                    {markerOn && (
+                      <div className="absolute w-10 h-10 rounded-full bg-kuWarmGray z-0" />
+                    )}
+                    </>
                   )}
-              </div>
+                </div>
               );
             })}
           </div>
+          {/* 마지막 줄이 아닌 경우에만 선을 추가 */}
+          {index < weeks.length - 1 && (
+            <div className="w-full h-px bg-gray-200" />
+          )}
+          </>
         ))}
 
         {/* 로그인 버튼 */}
@@ -267,7 +326,15 @@ function MyPage() {
       <div className="w-full max-w-sm mt-2">
         {renderButton("운영진 페이지", rightArrow_Icon, handleToAdminPageClick)}
       </div>
-
+      
+      <div className="flex w-full max-w-sm mt-8 mb-8 justify-center">
+        <span 
+          className="text-lg font-normal underline underline-offset-2 text-kuDarkGray"
+          onClick={handleLogout}
+        >
+          로그아웃
+        </span>
+      </div>
     </div>
   );
 }

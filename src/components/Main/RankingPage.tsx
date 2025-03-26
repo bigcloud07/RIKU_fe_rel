@@ -65,6 +65,8 @@ function RankingPage() {
         }
       );
 
+      console.log(response);
+
       //공동 순위 처리에 용이하도록 userId는 서버에서 받아온 정보가 아닌 순위대로 ++하는 idx로 선언(추후 공동 순위 처리 로직이 추가로 삽입됨)
       let idx: number = 1;
 
@@ -107,67 +109,75 @@ function RankingPage() {
   //Tailwind를 사용하여 스타일링 진행
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-kuDarkGreen py-20 px-4">
-
       {/* 상단의 Top3 프로필 카드 */}
       <div className="w-full max-w-sm bg-kuDarkGreen rounded-xl flex flex-col justify-center items-center">
         <span className="w-fit text-center font-semibold text-kuDarkGreen bg-white py-1 px-8 rounded-xl">
           Top 3
         </span>
+        {/* Top3 섹션(top10_Info 배열의 길이가 3 미만일 경우, "집계 준비중"이라고 띄울 것임) */}
+        {
+          top10_Info.length > 3 ? (
+            <div className="flex flex-row justify-between items-end my-4 gap-3">
+              {/* 2nd 섹션 */}
+              <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-600 opacity-0">
+                <span className="block text-center text-2xl font-bold mb-1 text-whiteSmoke">2nd</span>
+                {/* 프로필 이미지 */}
+                <div className="bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
+                  <img src={duganadi_Img} alt="1st" className="w-full h-full object-cover" />
+                </div>
 
-        {/* Top3 섹션 */}
-        <div className="flex flex-row justify-between items-end my-4 gap-3">
-          {/* 2nd 섹션 */}
-          <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-600 opacity-0">
-            <span className="block text-center text-2xl font-bold mb-1 text-whiteSmoke">2nd</span>
-            {/* 프로필 이미지 */}
-            <div className="bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
-              <img src={duganadi_Img} alt="1st" className="w-full h-full object-cover" />
-            </div>
-
-            {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
-            <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
-              <span className="block text-center text-lg font-bold text-black">{top10_Info[1].userName}</span>
-              <span className="block text-center text-sm text-kuDarkGreen font-semibold">{top10_Info[1].totalPoints}P</span>
-            </div>
-          </div>
-
-          {/* 1st 섹션 */}
-          <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-1000 opacity-0">
-            {/* 1st 섹션에는 라이쿠 뿔이 양옆으로 들어가야 한다, 따라서 따로 div를 판다 */}
-            <div className="flex flex-row items-end justify-between space-x-1 mb-1">
-              <img src={rikuHorn_left} alt="rikuHornLeft" className="w-full h-full object-cover" />
-              <span className="inline-block text-center text-2xl font-bold text-yellow-200">1st</span>
-              <img src={rikuHorn_right} alt="rikuHornRight" className="w-full h-full object-cover" />
-            </div>
-            <div className="flex flex-col items-center -space-y-4">
-              {/* 프로필 이미지 */}
-              <div className="bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
-                <img src={duganadi_Img} alt="1st" className="w-full h-full object-cover" />
+                {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
+                <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
+                  <span className="block text-center text-lg font-bold text-black">{top10_Info[1].userName}</span>
+                  <span className="block text-center text-sm text-kuDarkGreen font-semibold">{top10_Info[1].totalPoints}P</span>
+                </div>
               </div>
 
-              {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
-              <div className="w-full bg-kuBeige rounded-xl pt-4 pb-14">
-                <span className="block text-center text-lg font-bold text-black">{top10_Info[0].userName}</span>
-                <span className="block text-center text-sm text-kuDarkGreen font-semibold">{top10_Info[0].totalPoints}P</span>
+              {/* 1st 섹션 */}
+              <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-1000 opacity-0">
+                {/* 1st 섹션에는 라이쿠 뿔이 양옆으로 들어가야 한다, 따라서 따로 div를 판다 */}
+                <div className="flex flex-row items-end justify-between space-x-1 mb-1">
+                  <img src={rikuHorn_left} alt="rikuHornLeft" className="w-full h-full object-cover" />
+                  <span className="inline-block text-center text-2xl font-bold text-yellow-200">1st</span>
+                  <img src={rikuHorn_right} alt="rikuHornRight" className="w-full h-full object-cover" />
+                </div>
+                <div className="flex flex-col items-center -space-y-4">
+                  {/* 프로필 이미지 */}
+                  <div className="bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
+                    <img src={duganadi_Img} alt="1st" className="w-full h-full object-cover" />
+                  </div>
+
+                  {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
+                  <div className="w-full bg-kuBeige rounded-xl pt-4 pb-14">
+                    <span className="block text-center text-lg font-bold text-black">{top10_Info[0].userName}</span>
+                    <span className="block text-center text-sm text-kuDarkGreen font-semibold">{top10_Info[0].totalPoints}P</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3rd 섹션 */}
+              <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-300 opacity-0">
+                <span className="block text-center text-2xl font-bold text-whiteSmoke mb-1">3rd</span>
+                {/* 프로필 이미지 */}
+                <div className="bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
+                  <img src={duganadi_Img} alt="1st" className="w-full h-full object-cover" />
+                </div>
+
+                {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
+                <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
+                  <span className="block text-center text-lg font-bold text-black">{top10_Info[2].userName}</span>
+                  <span className="block text-center text-sm text-kuDarkGreen font-semibold">{top10_Info[2].totalPoints}P</span>
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* 3rd 섹션 */}
-          <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-300 opacity-0">
-            <span className="block text-center text-2xl font-bold text-whiteSmoke mb-1">3rd</span>
-            {/* 프로필 이미지 */}
-            <div className="bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
-              <img src={duganadi_Img} alt="1st" className="w-full h-full object-cover" />
-            </div>
-
-            {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
-            <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
-              <span className="block text-center text-lg font-bold text-black">{top10_Info[2].userName}</span>
-              <span className="block text-center text-sm text-kuDarkGreen font-semibold">{top10_Info[2].totalPoints}P</span>
-            </div>
-          </div>
-        </div>
+          ) : (
+            <span 
+              className="text-3xl font-extrabold text-white mt-8 mb-8 animate-fade-up animation-delay-400 opacity-0"
+              >
+                집계 준비중입니다..
+              </span>
+          )
+        }
       </div>
       
       {/* "이번달 내 순위" 내용을 표현하는 부분 */}
