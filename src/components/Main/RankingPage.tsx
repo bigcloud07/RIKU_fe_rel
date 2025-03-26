@@ -171,7 +171,11 @@ function RankingPage() {
               </div>
             </div>
           ) : (
-            <span className='text-3xl font-extrabold text-white mt-8 mb-8'>집계 준비중입니다..</span>
+            <span 
+              className="text-3xl font-extrabold text-white mt-8 mb-8 animate-fade-up animation-delay-400 opacity-0"
+              >
+                집계 준비중입니다..
+              </span>
           )
         }
       </div>
