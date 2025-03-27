@@ -68,7 +68,7 @@ const NewMain: React.FC = () => {
     const dateObj = new Date(isoDateString);
     const month = dateObj.getMonth() + 1;
     const day = dateObj.getDate();
-    const weekday = dateObj.toLocaleDateString("ko-KR", { weekday: "short" });
+    const weekday = dateObj.toLocaleDateString("ko-KR", { weekday: "long" });
     return `${month}/${day} ${weekday}`;
   };
   
