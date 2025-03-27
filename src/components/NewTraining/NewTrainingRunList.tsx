@@ -26,14 +26,15 @@ interface RunData {
     postImageUrl: string;
 }
 
-const NewTrainingList: React.FC = () => {
+const NewFlashRunList: React.FC = () => {
     const [todayRuns, setTodayRuns] = useState<RunData[]>([]);
     const [upcomingRuns, setUpcomingRuns] = useState<RunData[]>([]);
     const [pastRuns, setPastRuns] = useState<RunData[]>([]);
     const navigate = useNavigate();
 
-    const prevRef = useRef<HTMLDivElement | null>(null);
-    const nextRef = useRef<HTMLDivElement | null>(null);
+    // const prevRef = useRef<HTMLDivElement | null>(null);
+    // const nextRef = useRef<HTMLDivElement | null>(null);
+    const paginationRef = useRef<HTMLDivElement | null>(null); // ✅ pagination element ref
 
     const handleBackHome = () => {
         navigate("/tab/main");
@@ -92,58 +93,106 @@ const NewTrainingList: React.FC = () => {
             <div className="relative bg-kuDarkGreen w-[375px] min-h-[268px]">
                 <div className="w-full flex flex-col items-center pt-2">
                     <div className="w-[114px] h-[32px] bg-white text-kuDarkGreen text-[16px] font-bold rounded-xl flex items-center justify-center">
-                        오늘의 러닝
+                        오늘의 훈련
                     </div>
 
-                    <div className="relative w-[335px] mt-3">
-                        {/* 좌우 버튼 */}
-                        <div
-                            ref={prevRef}
-                            className="swiper-button-prev-custom absolute left-[-20px] top-[50%] z-10 cursor-pointer text-white text-2xl font-bold"
-                        >
-                            ←
-                        </div>
-                        <div
-                            ref={nextRef}
-                            className="swiper-button-next-custom absolute right-[-20px] top-[50%] z-10 cursor-pointer text-white text-2xl font-bold"
-                        >
-                            →
-                        </div>
+                    {todayRuns.length > 0 && (
+                        <>
+                            <div className="relative w-[335px] mt-3">
+                                
+                                {/* <div
+                                    ref={prevRef}
+                                    className="swiper-button-prev-custom absolute left-[-20px] top-[50%] z-10 cursor-pointer text-white text-2xl font-bold"
+                                >
+                                    ←
+                                </div>
+                                <div
+                                    ref={nextRef}
+                                    className="swiper-button-next-custom absolute right-[-20px] top-[50%] z-10 cursor-pointer text-white text-2xl font-bold"
+                                >
+                                    →
+                                </div> */}
 
-                        {/* Swiper */}
-                        <Swiper
-                            spaceBetween={10}
-                            slidesPerView={1}
-                            pagination={{ clickable: true }}
-                            navigation={{
-                                prevEl: prevRef.current,
-                                nextEl: nextRef.current,
-                            }}
-                            onBeforeInit={(swiper) => {
-                                // Swiper의 navigation 연결을 확실히 보장
-                                if (typeof swiper.params.navigation !== "boolean") {
-                                    swiper.params.navigation.prevEl = prevRef.current;
-                                    swiper.params.navigation.nextEl = nextRef.current;
-                                }
-                            }}
-                            modules={[Pagination, Navigation]}
-                        >
-                            {todayRuns.map((run) => (
-                                <SwiperSlide key={run.id}>
-                                    <div className="h-[200px]"> {/* ✅ 반드시 높이 지정 */}
-                                        <NewTodayRun
-                                            title={run.title}
-                                            date={format(new Date(run.date), "yyyy.MM.dd")}
-                                            participants={String(run.participants)}
-                                            postImageUrl={run.postImageUrl}
-                                        />
-                                    </div>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    </div>
+                                {/* Swiper */}
+                                <Swiper
+                                    spaceBetween={10}
+                                    slidesPerView={1}
+                                    pagination={{
+                                        clickable: true,
+                                        el: paginationRef.current ?? undefined, // ✅ ref를 el로 사용
+                                    }}
+                                    // navigation={{
+                                    //     prevEl: prevRef.current ?? undefined,
+                                    //     nextEl: nextRef.current ?? undefined,
+                                    // }}
+                                    onBeforeInit={(swiper) => {
+                                        // if (typeof swiper.params.navigation !== "boolean") {
+                                        //     swiper.params.navigation.prevEl = prevRef.current;
+                                        //     swiper.params.navigation.nextEl = nextRef.current;
+                                        // }
+                                        if (typeof swiper.params.pagination !== "boolean") {
+                                            swiper.params.pagination.el = paginationRef.current;
+                                        }
+                                    }}
+                                    modules={[Pagination]}
+                                    
+                                    // 주석 처리 한 부분들은 좌우 관련 버튼 부분임
+                                >
+                                    {todayRuns.map((run) => {
+                                        const dateObj = new Date(run.date);
+                                        const formattedDate = format(dateObj, "MM/dd EEEE", {
+                                            locale: ko,
+                                        });
+                                        const formattedTime = format(dateObj, "HH:mm");
+
+                                        return (
+                                            <SwiperSlide key={run.id}>
+                                                <div className="">
+                                                    <NewTodayRun
+                                                        key={run.id}
+                                                        location={run.title}
+                                                        postimg={run.postImageUrl}
+                                                        runDate={run.date}
+                                                        runState={run.postStatus ?? "NOW"}
+                                                        participants={run.participants}
+                                                        date={formattedDate}
+                                                        time={formattedTime}
+                                                    />
+                                                </div>
+                                            </SwiperSlide>
+                                        );
+                                    })}
+                                </Swiper>
+
+                                {/* ✅ 실제 점(dot) 위치 */}
+                                <div
+                                    ref={paginationRef}
+                                    className="mb-[12px] mt-[12px] flex justify-center"
+                                />
+                            </div>
+
+                            {/* ✅ dot 스타일 */}
+                            <style>
+                                {`
+                .swiper-pagination-bullet {
+                  background-color: rgba(255, 255, 255, 0.4);
+                  width: 8px;
+                  height: 8px;
+                  margin: 0 6px;
+                  border-radius: 9999px;
+                }
+
+                .swiper-pagination-bullet-active {
+                  background-color: white;
+                }
+              `}
+                            </style>
+                        </>
+                    )}
                 </div>
             </div>
+
+
 
             {/* 예정된 러닝 */}
             <div className="w-[375px] mt-4">
@@ -200,4 +249,4 @@ const NewTrainingList: React.FC = () => {
     );
 };
 
-export default NewTrainingList;
+export default NewFlashRunList;
