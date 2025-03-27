@@ -35,11 +35,21 @@ const NewFlashRunList: React.FC = () => {
     // const prevRef = useRef<HTMLDivElement | null>(null);
     // const nextRef = useRef<HTMLDivElement | null>(null);
     const paginationRef = useRef<HTMLDivElement | null>(null); // ✅ pagination element ref
-
+    const swiperInstance = useRef<any>(null);
     const handleBackHome = () => {
         navigate("/tab/main");
     };
 
+    // ✅ Vercel 대응용 useEffect
+    useEffect(() => {
+        if (swiperInstance.current && paginationRef.current) {
+        swiperInstance.current.params.pagination.el = paginationRef.current;
+        swiperInstance.current.pagination.init();
+        swiperInstance.current.pagination.render();
+        swiperInstance.current.pagination.update();
+        }
+    }, []);
+    
 
 
 
