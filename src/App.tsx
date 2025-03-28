@@ -31,6 +31,8 @@ import EventMake from './components/NewEvent/EventMake'
 import TrainingMake from './components/NewTraining/TrainingMake';
 import NewEventCard from './components/NewFlashRun/NewEventCard';
 import NewTrainingList from './components/NewTraining/NewTrainingRunList';
+import NewEventList from './components/NewEvent/NewEventList';
+import Sandbox from './components/Sandbox';
 
 
 function App() {
@@ -59,8 +61,13 @@ function App() {
             <Route path='/regular' element={<NewRegularRunList/>}/>
             <Route path='/training' element={<NewTrainingList/>}/>
             <Route path='/regular/make' element={<NewRegularRunMake/>}/>
-            <Route path='/event' element={<EventMake/>}/>
+            <Route path='/event/make' element={<EventMake/>}/>
             <Route path='/training/make' element={<TrainingMake/>}/>
+            <Route path='/event' element={<NewEventList/>}/>
+
+
+            {/* 컴포넌트 테스트 sandbox */}
+            <Route path='/event' element={<Sandbox/>}/>
             
             
           </Routes>

@@ -43,33 +43,27 @@ const NewEventCard: React.FC<EventCardProps> = ({
 
   return (
     <div
-      className="flex flex-col relative w-[335px] h-[224px] bg-kuLightGray rounded-lg cursor-pointer"
+      className="flex flex-col relative w-[335px] h-[200px] bg-kuLightGray rounded-lg"
       onClick={onClick}
     >
-      {/* 상태 뱃지 */}
-      <img
-        src={getStatusImage()}
-        className="w-[50px] h-[20px] absolute top-[14px] left-[14px]"
-      />
-
       {/* 날짜 및 시간 */}
-      <div className="absolute top-[38px] left-[16px] text-[15px] font-semibold text-black/60">
-        {`${date} | ${time}`}
+      <div className="absolute top-[14px] left-[16px] text-[15px] font-semibold text-black/60">
+        {`${date}`}
       </div>
 
       {/* 참가자 수 */}
-      <div className="absolute top-[20px] left-[280px] flex items-center space-x-1">
+      <div className="absolute top-[16px] left-[280px] flex items-center space-x-1">
         <img src={peopleimg} className="w-[20px] h-[20px]" alt="참가자" />
         <div className="text-[12px] font-bold text-black/60">{participants}</div>
       </div>
 
       {/* 러닝 장소 또는 제목 */}
-      <div className="absolute top-[59px] left-[16px] text-[20px] font-semibold">
+      <div className="absolute top-[35px] left-[16px] text-[20px] font-semibold">
         {location}
       </div>
 
       {/* 러닝 이미지 */}
-      <div className="absolute top-[103px] left-[16px] justify-center">
+      <div className="absolute top-[79px] left-[16px] justify-center">
         <img className="w-[303px] h-[107px] rounded-[8px]"
           src={
             postimg

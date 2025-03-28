@@ -46,7 +46,7 @@ const NewMainCard: React.FC<CardProps> = ({
       </div>
 
       {/* 정보 영역 */}
-      <div className="ml-3 mt-4">
+      <div className="ml-[10px] mr-[10px] mb-[20px] mt-[8px]">
         {statusImg && (
           <img src={statusImg} alt="Status" className="w-[40px] h-[20px]" />
         )}

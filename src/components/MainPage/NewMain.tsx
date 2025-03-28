@@ -181,7 +181,7 @@ const NewMain: React.FC = () => {
     navigate("/regular/make");
   };
   const handleEventMake = () => {
-    navigate("/event");
+    navigate("/event/make");
   };
   const handleTrainingtMake = () => {
     navigate("/training/make");
@@ -253,7 +253,7 @@ const NewMain: React.FC = () => {
           statusImg={getStatusImg(maindata.event.poststatus)}
           imageUrl={maindata.event.postimgurl || NewMainImage}
           event_type="행사"
-          path="/run"
+          path="/event"
         />
         </div>
       </div>
