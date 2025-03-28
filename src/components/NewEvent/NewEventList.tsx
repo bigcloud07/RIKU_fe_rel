@@ -26,7 +26,7 @@ interface RunData {
     postImageUrl: string;
 }
 
-const NewFlashRunList: React.FC = () => {
+const NewEventList: React.FC = () => {
     const [todayRuns, setTodayRuns] = useState<RunData[]>([]);
     const [upcomingRuns, setUpcomingRuns] = useState<RunData[]>([]);
     const [pastRuns, setPastRuns] = useState<RunData[]>([]);
@@ -35,11 +35,21 @@ const NewFlashRunList: React.FC = () => {
     // const prevRef = useRef<HTMLDivElement | null>(null);
     // const nextRef = useRef<HTMLDivElement | null>(null);
     const paginationRef = useRef<HTMLDivElement | null>(null); // ✅ pagination element ref
-
+    const swiperInstance = useRef<any>(null);
     const handleBackHome = () => {
         navigate("/tab/main");
     };
 
+    // ✅ Vercel 대응용 useEffect
+    useEffect(() => {
+        if (swiperInstance.current && paginationRef.current) {
+        swiperInstance.current.params.pagination.el = paginationRef.current;
+        swiperInstance.current.pagination.init();
+        swiperInstance.current.pagination.render();
+        swiperInstance.current.pagination.update();
+        }
+    }, []);
+    
 
 
 
@@ -48,7 +58,7 @@ const NewFlashRunList: React.FC = () => {
 
         const fetchRunData = async () => {
             try {
-                const response = await customAxios.get(`/run/training`, {
+                const response = await customAxios.get(`/run/event`, {
                     headers: { Authorization: `${token}` },
                 });
 
@@ -86,14 +96,14 @@ const NewFlashRunList: React.FC = () => {
                     alt="Back"
                     onClick={handleBackHome}
                 />
-                훈련
+                행사
             </div>
 
             {/* 오늘의 러닝 */}
             <div className="relative bg-kuDarkGreen w-[375px] min-h-[268px]">
                 <div className="w-full flex flex-col items-center pt-2">
                     <div className="w-[114px] h-[32px] bg-white text-kuDarkGreen text-[16px] font-bold rounded-xl flex items-center justify-center">
-                        오늘의 훈련
+                        오늘의 행사
                     </div>
 
                     {todayRuns.length > 0 ? (
@@ -131,7 +141,7 @@ const NewFlashRunList: React.FC = () => {
                     ) : (
                         // ✅ 오늘의 러닝이 없을 경우
                         <div className="flex flex-col items-center justify-center w-[335px] h-[200px] bg-kuLightGray rounded-lg mt-4">
-                            <p className="text-[18px] font-semibold text-black">현재 진행중인 훈련이 없습니다.</p>
+                            <p className="text-[18px] font-semibold text-black">현재 진행중인 행사가 없습니다.</p>
                             
                         </div>
                     )}
@@ -142,7 +152,7 @@ const NewFlashRunList: React.FC = () => {
 
             {/* 예정된 러닝 */}
             <div className="w-[375px] mt-4">
-                <h2 className="text-[20px] font-semibold ml-5 ">예정된 러닝</h2>
+                <h2 className="text-[20px] font-semibold ml-5 ">예정된 행사</h2>
                 <div className="flex flex-col space-y-[12px] mt-[16px] ml-[20px]">
                     {upcomingRuns.map((run) => {
                         const dateObj = new Date(run.date);
@@ -171,7 +181,7 @@ const NewFlashRunList: React.FC = () => {
 
             {/* 지난 러닝 */}
             <div className="w-[375px] mt-4 mb-[100px]">
-                <h2 className="text-[20px] font-semibold ml-5">지난 러닝</h2>
+                <h2 className="text-[20px] font-semibold ml-5">지난 행사</h2>
                 <div className="grid grid-cols-3 grid-rows-2 gap-x-[12px] gap-y-[16px] mt-[20px] px-3">
                     {pastRuns.map((run) => (
 
@@ -195,4 +205,4 @@ const NewFlashRunList: React.FC = () => {
     );
 };
 
-export default NewFlashRunList;
+export default NewEventList;

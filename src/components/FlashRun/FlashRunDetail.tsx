@@ -36,12 +36,13 @@ const FlashRunDetail: React.FC = () => {
     const fetchDetail = async () => {
       try {
         const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
-        const response = await customAxios.get(`/run/post/${postId}`, {
+        const response = await customAxios.get(`/run/flash/post/${postId}`, {
           headers: {
             Authorization: `${token}`,
           },
         });
         console.log(myId)
+        
         if (response.data.isSuccess) {
           const result = response.data.result;
           setDetailData({
