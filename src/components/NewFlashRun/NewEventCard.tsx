@@ -43,7 +43,7 @@ const NewEventCard: React.FC<EventCardProps> = ({
 
   return (
     <div
-      className="flex flex-col relative w-[335px] h-[224px] bg-kuLightGray rounded-lg"
+      className="flex flex-col relative w-[335px] h-[224px] bg-kuLightGray rounded-lg cursor-pointer"
       onClick={onClick}
     >
       {/* 상태 뱃지 */}
