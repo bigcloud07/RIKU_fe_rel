@@ -27,6 +27,12 @@ import PastRuns from './components/NewFlashRun/PastRuns';
 import ProtectedRoute from './components/ProtectedRoute';
 import NewRegularRunList from './components/NewRegularRun/NewRegularRunList';
 import NewRegularRunMake from './components/NewRegularRun/NewRegularRunMake';
+import EventMake from './components/NewEvent/EventMake'
+import TrainingMake from './components/NewTraining/TrainingMake';
+import NewEventCard from './components/NewFlashRun/NewEventCard';
+import NewTrainingList from './components/NewTraining/NewTrainingRunList';
+import NewEventList from './components/NewEvent/NewEventList';
+import Sandbox from './components/Sandbox';
 
 
 function App() {
@@ -41,17 +47,29 @@ function App() {
             <Route path='/name-input' element={<NameInput />} />
             <Route path='/school-info' element={<SchoolInputInfo />} />
             <Route path='/telNum-input' element={<TelNumberInput />} />
-            {/* 로그인 후 사용해야 할 페이지들에 대해서는 로그인 상태여야 접근 가능하도록 ProtectedRoute로 감싸야 한다 */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/run" element={<FlashRunList />} />
-              <Route path="/run/post/:postId" element={<FlashRunDetail />} />
-              <Route path="/run/make" element={<FlashRunMake />} />
-              <Route path='/tab/*' element={<TabNavigationUI/>} />
-              <Route path='/flashRuntest' element={<NewFlashRunList/>} />
-              {/* <Route path='/flashRuncard' element={<NewFlashRunCard/>} /> */}
-              <Route path='/pastruns' element={<PastRuns/>} />
-              <Route path='/admin' element={<AdminPage/>}/>
-            </Route>
+            <Route path='/schedule-page' element={<SchedulePage />} />
+            <Route path='/my-page' element={<MyPage />} />
+            <Route path="/run" element={<FlashRunList />} />
+            <Route path="/run/post/:postId" element={<FlashRunDetail />} />
+            <Route path="/run/make" element={<FlashRunMake />} />
+            <Route path='/tab/*' element={<TabNavigationUI/>} />
+            <Route path='/main' element={<NewMain/>}/>
+            <Route path='/flashRun' element={<NewFlashRunList/>} />
+            <Route path='/flashRunAdmintest' element={<NewFlashRunDetail/>}/>
+            <Route path='/pastruns' element={<PastRuns/>} />
+            <Route path='/admin' element={<AdminPage/>}/>
+            <Route path='/regular' element={<NewRegularRunList/>}/>
+            <Route path='/training' element={<NewTrainingList/>}/>
+            <Route path='/regular/make' element={<NewRegularRunMake/>}/>
+            <Route path='/event/make' element={<EventMake/>}/>
+            <Route path='/training/make' element={<TrainingMake/>}/>
+            <Route path='/event' element={<NewEventList/>}/>
+
+
+            {/* 컴포넌트 테스트 sandbox */}
+            <Route path='/event' element={<Sandbox/>}/>
+            
+            
           </Routes>
         </div>
       </Router>

@@ -1,82 +1,30 @@
-// const handleSubmit = async () => {
-//   if (!title || !location || !content || !dateTime.date) {
-//     alert("모든 정보를 입력해주세요.");
-//     return;
-//   }
-
-//   const options: Intl.DateTimeFormatOptions = {
-//     month: "2-digit",
-//     day: "2-digit",
-//     weekday: "short",
-//   };
-//   const formatter = new Intl.DateTimeFormat("ko-KR", options);
-//   const formattedDateParts = formatter.formatToParts(dateTime.date);
-
-//   const month = formattedDateParts.find((part) => part.type === "month")?.value;
-//   const day = formattedDateParts.find((part) => part.type === "day")?.value;
-//   const weekday = formattedDateParts.find((part) => part.type === "weekday")?.value;
-
-//   if (!month || !day || !weekday) {
-//     alert("날짜 포맷 오류가 발생했습니다.");
-//     console.error("날짜 포맷 오류:", { month, day, weekday });
-//     return;
-//   }
-
-//   const displayDate = `${month}/${day} ${weekday}요일`;
-
-
-//   // 상태 계산
-//   const status = calculateStatus(dateTime.date, dateTime.time);
-
-
-
-//   const eventData = {
-//     id: getNextId(),
-//     title,
-//     location,
-//     date: displayDate, // 사용자에게 표시될 포맷
-//     isoDate: dateTime.date.toISOString().split("T")[0], // ISO 8601 형식 저장
-//     time: dateTime.time,
-//     imageUrl: file ? URL.createObjectURL(file) : flashrunimage,
-//     status,
-//   };
-
-//   const storedEvents = JSON.parse(localStorage.getItem("events") || "[]");
-//   localStorage.setItem("events", JSON.stringify([...storedEvents, eventData]));
-
-//   navigate("/flash-run");
-// };
-// const getNextId = (): number => {
-//   const storedEvents = JSON.parse(localStorage.getItem("events") || "[]");
-//   if (storedEvents.length === 0) {
-//     return 1;
-//   }
-//   const maxId = Math.max(...storedEvents.map((event: { id: number }) => event.id));
-//   return maxId + 1;
-// };
-// const calculateStatus = (eventDate: Date, eventTime: string): string => {
-//   const currentDateTime = new Date(); // 현재 시간
-
-//   const eventDateTime = new Date(`${eventDate.toISOString().split("T")[0]}T${eventTime}`); // 이벤트 날짜 + 시간
-
-//   const timeDiff = (eventDateTime.getTime() - currentDateTime.getTime() + 86400000) / (1000 * 60); // 분 단위 차이 계산, isodate 때문에 하루 시간이 밀려서 보정한 하루 밀리초 86400000
-
-
-//   if (timeDiff >= 60) return "prog"; // 1시간 이상 남음
-//   else if (timeDiff < 60 && timeDiff > 0) return "argent"; // 1시간 이하 남음
-//   else return "closed"; // 시간이 초과됨
-// };
-
-
-import React, { useState } from "react";
-import BackIcon from "../../assets/Main-img/back-icon.svg";
+// 통합된 NewRegularRunMake.tsx
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import PhotoUpload from "./PhotoUpload";
+import customAxios from '../../apis/customAxios';
+import { motion } from "framer-motion";
+import BackIcon from "../../assets/Main-img/back-icon.svg";
+import removeicon from "../../assets/remove-icon.svg";
 import { DateNtime } from "./DateNtime";
-import flashrunimage from '../../assets/Run-img/flashrunimage.jpg';
-import axios from "axios";
-import customAxios from '../../apis/customAxios'; // customAxios 경로에 맞게 변경
 
+interface Pacer {
+  id: number;
+  name: string;
+}
+
+interface PacerGroup {
+  id: string;
+  pacer: string;
+  distance: string;
+  pace: string;
+}
+
+interface CreatePacerRequest {
+  group: string;
+  pacerId: number;
+  distance: string;
+  pace: string;
+}
 
 function FlashRunMake() {
   const navigate = useNavigate();
@@ -88,83 +36,141 @@ function FlashRunMake() {
     date: null,
     time: "00:00",
   });
-  const [file, setFile] = useState<File | null>(null);
+  const [pacerGroups, setPacerGroups] = useState<PacerGroup[]>([
+    { id: "A", pacer: "", distance: "", pace: "" },
+  ]);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [bottomSheetType, setBottomSheetType] = useState<'distance' | 'pace' | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
+  const [selectedDistance, setSelectedDistance] = useState<string>("5");
+  const [selectedMinutes, setSelectedMinutes] = useState<string>("5");
+  const [selectedSeconds, setSelectedSeconds] = useState<string>("30");
+  const [pacers, setPacers] = useState<Pacer[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
+  const handleContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
 
-  const formatDate = (date: Date): string => {
-    const options: Intl.DateTimeFormatOptions = {
-      month: "numeric",
-      day: "numeric",
-      weekday: "long",
+  useEffect(() => {
+    const fetchPacers = async () => {
+      try {
+        const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
+        const response = await customAxios.get("/pacers", {
+          headers: { Authorization: `${token}` },
+        });
+        if (response.data.isSuccess) {
+          setPacers(response.data.result);
+        }
+      } catch (error) {
+        console.error("페이서 목록을 가져오는 중 오류 발생:", error);
+      }
     };
+    fetchPacers();
+  }, []);
 
-    // "12월 13일 수요일" 형식으로 포맷팅
-    const formattedDate = new Intl.DateTimeFormat("ko-KR", options).format(date);
-
-    // "12월 13일 수요일" → ["12월", "13일", "수요일"]
-    const [monthDay, weekday] = formattedDate.split(" ");
-    const month = monthDay?.split("월")[0]?.trim(); // "12월" → "12"
-    const day = monthDay?.split("일")[0]?.split(" ")[1]?.trim(); // "13일" → "13"
-
-    // 데이터가 올바르게 파싱되지 않으면 기본값 반환
-    if (!month || !day || !weekday) {
-      console.error("날짜 포맷 오류:", { month, day, weekday });
-      return "날짜 포맷 오류";
-    }
-
-    return `${month}/${day} ${weekday}`;
+  const addPacerGroup = () => {
+    const nextGroupId = String.fromCharCode(65 + pacerGroups.length);
+    setPacerGroups([...pacerGroups, { id: nextGroupId, pacer: "", distance: "", pace: "" }]);
   };
 
+  const removePacerGroup = (id: string) => {
+    setPacerGroups(pacerGroups.filter(group => group.id !== id));
+  };
+
+  const handleInputChange = (id: string, field: keyof PacerGroup, value: string) => {
+    setPacerGroups(
+      pacerGroups.map(group => group.id === id ? { ...group, [field]: value } : group)
+    );
+  };
+
+  const handlePacerChange = (id: string, value: string) => {
+    setPacerGroups(
+      pacerGroups.map(group => group.id === id ? { ...group, pacer: value } : group)
+    );
+  };
+
+  const openBottomSheet = (id: string, type: 'distance' | 'pace') => {
+    setSelectedGroup(id);
+    setBottomSheetType(type);
+    setIsBottomSheetOpen(true);
+  };
+
+  const applySelection = () => {
+    if (selectedGroup) {
+      if (bottomSheetType === 'distance') {
+        handleInputChange(selectedGroup, "distance", `${selectedDistance} km`);
+      } else if (bottomSheetType === 'pace') {
+        handleInputChange(selectedGroup, "pace", `${selectedMinutes}:${selectedSeconds}`);
+      }
+    }
+    setIsBottomSheetOpen(false);
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = event.target.files;
+    if (!selectedFiles) return;
+    const selectedArray = Array.from(selectedFiles);
+    if (files.length + selectedArray.length > 6) {
+      alert("최대 6장까지만 업로드할 수 있습니다.");
+      return;
+    }
+    selectedArray.forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviews(prev => [...prev, reader.result as string]);
+      };
+      reader.readAsDataURL(file);
+    });
+    setFiles((prev) => [...prev, ...selectedArray]);
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setFiles(prev => prev.filter((_, i) => i !== index));
+    setPreviews(prev => prev.filter((_, i) => i !== index));
+  };
 
   const handleDateTimeChange = (date: Date | null, time: string) => {
     setDateTime({ date, time });
   };
 
-  const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
-  const handleLocation = (e: React.ChangeEvent<HTMLInputElement>) => setLocation(e.target.value);
-  const handleContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
-  const handleFileChange = (selectedFile: File | null) => setFile(selectedFile);
-
-
-
   const handleSubmit = async () => {
+    
+  
     if (!title || !location || !content || !dateTime.date) {
       alert("모든 정보를 입력해주세요.");
       return;
     }
-
+  
     try {
-      // 날짜 및 시간 포맷팅
       const isoDate = dateTime.date.toISOString().split("T")[0];
       const eventDateTime = `${isoDate}T${dateTime.time}`;
       const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
-      // FormData 생성
+  
       const formData = new FormData();
       formData.append("title", title);
       formData.append("location", location);
       formData.append("date", eventDateTime);
       formData.append("content", content);
-      if (file) {
-        formData.append("postImage", file);
-      }
-
-      // API 요청
-      const response = await customAxios.post(
-        "run/flash/post", // 엔드포인트
-        formData,
-        {
-          headers: {
-
-            Authorization: `${token}`, // 적절한 토큰으로 교체
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      files.forEach(file => formData.append("postImage", file));
+  
+      pacerGroups.forEach((group, index) => {
+        formData.append(`pacers[${index}].group`, group.id);
+        formData.append(`pacers[${index}].pacerId`, String(group.pacer));
+        formData.append(`pacers[${index}].distance`, group.distance);
+        formData.append(`pacers[${index}].pace`, group.pace);
+      });
+  
+      const response = await customAxios.post("/run/flash/post", formData, {
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       console.log(response.data)
-      // 성공 처리
+  
       if (response.data.isSuccess) {
         alert("번개런이 성공적으로 생성되었습니다!");
-        navigate("/run");
+        navigate("/flashRun");
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
       }
@@ -173,8 +179,6 @@ function FlashRunMake() {
       alert("번개런 생성 중 문제가 발생했습니다.");
     }
   };
-
-
 
   return (
     <div className="flex flex-col items-center min-h-screen">
@@ -185,28 +189,19 @@ function FlashRunMake() {
             aria-label="뒤로가기"
             className="absolute left-[-95px] bg-none border-none cursor-pointer"
           >
-            <img
-              src={BackIcon}
-              alt="뒤로가기"
-              className="w-6 left-3 h-6"
-            />
+            <img src={BackIcon} alt="뒤로가기" className="w-6 left-3 h-6" />
           </button>
-          <div className="text-2xl font-semibold">번개런</div>
+          <div className="text-2xl font-semibold text-white">번개런 만들기</div>
         </div>
       </div>
-      <div>
+
+      <div className="w-full max-w-md px-4">
         <div className="my-2">제목</div>
-        <input
-          placeholder="제목을 입력하세요"
-          className="my-2 border border-gray-300 rounded-lg px-4 py-2 w-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
-          onChange={handleTitle}
-        />
+        <input className="border rounded-lg w-full p-2" placeholder="제목을 입력하세요" onChange={(e) => setTitle(e.target.value)} />
+
         <div className="my-2">집합 장소</div>
-        <input
-          placeholder="장소명을 입력하세요"
-          className="my-2 border border-gray-300 rounded-lg px-4 py-2 w-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
-          onChange={handleLocation}
-        />
+        <input className="border rounded-lg w-full p-2" placeholder="장소명을 입력하세요" onChange={(e) => setLocation(e.target.value)} />
+
         <div className="my-2">날짜 및 시간</div>
         <DateNtime onDateTimeChange={handleDateTimeChange} />
         <div className="mb-2 mt-4">세부사항</div>
@@ -217,15 +212,25 @@ function FlashRunMake() {
           value={content}
           onChange={handleContent}
         ></textarea>
-        <div className="my-2">게시글 사진</div>
-        <PhotoUpload onFileChange={handleFileChange} />
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className="my-2 w-full py-3 rounded-lg bg-[#366943] text-white text-lg my-4"
-        >
-          만들기
-        </button>
+        
+
+        <div className="my-4">
+          <h2 className="mb-2">게시글 사진</h2>
+          <div className="grid grid-cols-3 gap-2">
+            {previews.map((img, index) => (
+              <div key={index} className="relative w-[104px] h-[104px]">
+                <img src={img} alt={`upload-${index}`} className="w-[104px] h-[104px] object-cover rounded-md" />
+                <button onClick={() => handleRemoveImage(index)} className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✕</button>
+              </div>
+            ))}
+            {previews.length < 6 && (
+              <label htmlFor="fileUpload" className="w-[104px] h-[104px] border border-dashed border-gray-400 flex items-center justify-center text-gray-500 cursor-pointer rounded-md">+</label>
+            )}
+          </div>
+          <input type="file" id="fileUpload" multiple accept="image/*" onChange={handleImageUpload} className="hidden" />
+        </div>
+
+        <button onClick={handleSubmit} className="w-full bg-[#366943] text-white py-3 rounded-lg mt-4">만들기</button>
       </div>
     </div>
   );

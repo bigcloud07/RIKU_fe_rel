@@ -10,6 +10,7 @@ import flashrunimage from "../../assets/Run-img/flashrunimage.jpg"; // 번개런
 import { Link, useNavigate } from "react-router-dom";
 import BackBtnimg from "../../assets/BackBtn.svg"
 import pacermark from "../../assets/pacer-mark.svg"
+import CommentSection from "./CommentSection";
 
 interface Participant {
   id: number;
@@ -80,11 +81,12 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
   const handleStartClick = async () => {
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const response = await customAxios.post(`/run/post/${postId}/join`, {}, {
+      const response = await customAxios.post(`/run/flash/post/${postId}/join`, {}, {
         headers: {
           Authorization: `${token}`, // 적절한 토큰으로 교체
         },
       });
+      console.log(response.data)
 
       if (response.data.isSuccess) {
         setUserStatus(response.data.result.status); // 상태 업데이트
@@ -138,7 +140,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
     if (tab === "명단") {
       try {
         const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-        const response = await customAxios.get(`/run/post/${postId}`, {
+        const response = await customAxios.get(`/run/flash/post/${postId}`, {
           headers: {
             Authorization: `${token}`,
           },
@@ -181,8 +183,8 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
               <span>{date}</span>
             </div>
             <div className="flex items-center my-1.5">
-              <object data={people} className="w-[24px] h-[24px] mr-2" />
-              <span>{participantsNum}명 참여 중</span>
+              <object data={people} className="w-[24px] h-[24px] mr-2 font-bold font-#366943" />
+              <span>{participantsNum}</span>
             </div>
           </div>
         </div>
@@ -211,6 +213,8 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
         </>
       )}
       {activeTab === "명단" && <AttendanceList users={currentParticipants} />}
+      <CommentSection postId={postId!} />
+
       <button
         className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${userStatus === "ATTENDED"
           ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
