@@ -98,7 +98,6 @@ function MyPage() {
       "profileAttendanceDates": []
     }
   );
-  const [monthlyAttended, setMonthlyAttended] = useState<{date: string; isAttended: boolean}[]>([]);
   const [attendChecked, setAttendChecked] = useState(false);
 
   //오늘 날짜 기준으로 한달 치 날짜 만들기 (추후, "출석체크" 캘린더에서 사용할 예정)
@@ -165,6 +164,11 @@ function MyPage() {
     alert("열심히 기능 준비중입니다!");
   };
 
+  //'프로필 수정' 버튼 눌렀을 때 수행할 함수
+  function handleProfileFixBtnClick() {
+    navigate('/profilefix-page')
+  }
+
   //'운영진 페이지' 버튼 클릭시 수행할 함수
   function handleToAdminPageClick()
   {
@@ -186,9 +190,26 @@ function MyPage() {
   }
 
   //"출석하기" 버튼 클릭 시 이벤트 수행
-  function handleAttendCheckBtn() {
-    alert("출석 완료했습니다!");
-    setAttendChecked(!attendChecked);
+  async function handleAttendCheckBtn() {
+    const accessToken = JSON.parse(localStorage.getItem('accessToken') || ''); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
+    const url = `/user/attend`;
+
+    try {
+      const response = await customAxios.post(
+        url, //요청 url
+        {
+          headers: {
+            Authorization: accessToken //accessToken을 헤더로 추가해서 요청 보냄
+          }
+        }
+      );
+      alert(response.data.result.message) //"출석이 완료되었습니다"가 출력될 것
+      console.log('출석 완료, 불러오기 성공: ', response); //test용
+      setAttendChecked(!attendChecked); //'출석됨'으로 표시  
+    } catch (error) {
+      alert('출석 요청 중 오류 발생!');
+      console.error('요청 실패: ', error);
+    }
   }
 
   //"로그아웃" 버튼 클릭 시 이벤트 수행
@@ -206,6 +227,11 @@ function MyPage() {
   //처음 렌더링 될 때만 유저 정보 불러오기
   useEffect(() => {
     fetchUserInfo();
+    const formattedDate = format(new Date(), 'yyyy-MM-dd'); // 오늘 날짜를 formattedDate로 포맷팅
+    let isTodayAttended = userInfo.profileAttendanceDates.includes(formattedDate);
+    if(isTodayAttended) { // 오늘 날짜가 출석되어 있다면
+      setAttendChecked(!attendChecked); // 출석 더 이상 못하게 한다
+    } 
   },[])
 
   
@@ -219,14 +245,14 @@ function MyPage() {
 
         {/*프로필 이미지와 이름 섹션*/}
         <div className="flex items-center mb-4">
-          <img src={profile_Img} alt="Profile" className="w-16 h-16 rounded-full mr-4"/>
+          <img src={userInfo.userProfileImgUrl || profile_Img} alt="Profile" className="w-16 h-16 rounded-full mr-4"/>
           <div className="text-start">
             <p className="text-lg font-semibold text-gray-800">{userInfo.userName}</p>
             <p className="text-sm text-gray-500">{userInfo.userRole}</p>
           </div>
           <button 
             className="ml-auto px-4 py-1 text-sm bg-green-600 text-white rounded-lg hover hover:bg-green-900 transition" 
-            onClick={handleNoticeClick}>
+            onClick={handleProfileFixBtnClick}>
               프로필 수정
           </button>
         </div>
