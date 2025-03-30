@@ -54,7 +54,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
   const fetchComments = async () => {
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const response = await customAxios.get(`/run/flash/post/${postId}`, {
+      const response = await customAxios.get(`/run/training/post/${postId}`, {
         headers: { Authorization: `${token}` },
       });
       if (response.data.isSuccess) {
@@ -70,7 +70,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
-        `/run/flash/post/${postId}/comment`,
+        `/run/training/post/${postId}/comment`,
         { content: newComment, targetId: null },
         { headers: { Authorization: `${token}` } }
       );
@@ -88,7 +88,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
-        `/run/flash/post/${postId}/comment`,
+        `/run/training/post/${postId}/comment`,
         { content: replyContent, targetId: replyTargetId },
         { headers: { Authorization: `${token}` } }
       );
@@ -106,7 +106,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.patch(
-        `/run/flash/post/${postId}/comment/${commentId}`,
+        `/run/training/post/${postId}/comment/${commentId}`,
         {},
         { headers: { Authorization: `${token}` } }
       );
@@ -122,7 +122,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.patch(
-        `/run/flash/post/${postId}/comment/${commentId}`,
+        `/run/training/post/${postId}/comment/${commentId}`,
         {},
         { headers: { Authorization: `${token}` } }
       );

@@ -1,10 +1,9 @@
-// 통합된 NewRegularRunMake.tsx
+// ✅ 통합된 NewRegularRunMake.tsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import customAxios from '../../apis/customAxios';
+import customAxios from "../../apis/customAxios";
 import { motion } from "framer-motion";
-import BackIcon from "../../assets/Main-img/back-icon.svg";
-import removeicon from "../../assets/remove-icon.svg";
+import BackIcon from "../../assets/BackBtn.svg";
 import { DateNtime } from "./DateNtime";
 
 interface Pacer {
@@ -19,42 +18,36 @@ interface PacerGroup {
   pace: string;
 }
 
-interface CreatePacerRequest {
-  group: string;
-  pacerId: number;
-  distance: string;
-  pace: string;
-}
-
 function NewRegularRunMake() {
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [content, setContent] = useState("");
-  const [dateTime, setDateTime] = useState<{ date: Date | null; time: string }>({
-    date: null,
-    time: "00:00",
-  });
+  const [dateTime, setDateTime] = useState<{ date: Date | null; time: string }>({ date: null, time: "00:00" });
+
   const [pacerGroups, setPacerGroups] = useState<PacerGroup[]>([
     { id: "A", pacer: "", distance: "", pace: "" },
   ]);
+
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [bottomSheetType, setBottomSheetType] = useState<'distance' | 'pace' | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
   const [selectedDistance, setSelectedDistance] = useState<string>("5");
   const [selectedMinutes, setSelectedMinutes] = useState<string>("5");
   const [selectedSeconds, setSelectedSeconds] = useState<string>("30");
+
   const [pacers, setPacers] = useState<Pacer[]>([]);
-  const [files, setFiles] = useState<File[]>([]);
-  const [previews, setPreviews] = useState<string[]>([]);
-  const handleContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
+
+  const [mainImage, setMainImage] = useState<File | null>(null);
+  const [mainPreview, setMainPreview] = useState<string | null>(null);
+  const [courseImages, setCourseImages] = useState<File[]>([]);
+  const [coursePreviews, setCoursePreviews] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchPacers = async () => {
       try {
-        const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
-        console.log({ token })
+        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
         const response = await customAxios.get("/pacers", {
           headers: { Authorization: `${token}` },
         });
@@ -62,7 +55,7 @@ function NewRegularRunMake() {
           setPacers(response.data.result);
         }
       } catch (error) {
-        console.error("페이서 목록을 가져오는 중 오류 발생:", error);
+        console.error("페이서 목록 불러오기 실패:", error);
       }
     };
     fetchPacers();
@@ -78,15 +71,11 @@ function NewRegularRunMake() {
   };
 
   const handleInputChange = (id: string, field: keyof PacerGroup, value: string) => {
-    setPacerGroups(
-      pacerGroups.map(group => group.id === id ? { ...group, [field]: value } : group)
-    );
+    setPacerGroups(pacerGroups.map(group => group.id === id ? { ...group, [field]: value } : group));
   };
 
   const handlePacerChange = (id: string, value: string) => {
-    setPacerGroups(
-      pacerGroups.map(group => group.id === id ? { ...group, pacer: value } : group)
-    );
+    handleInputChange(id, "pacer", value);
   };
 
   const openBottomSheet = (id: string, type: 'distance' | 'pace') => {
@@ -106,27 +95,35 @@ function NewRegularRunMake() {
     setIsBottomSheetOpen(false);
   };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = event.target.files;
-    if (!selectedFiles) return;
-    const selectedArray = Array.from(selectedFiles);
-    if (files.length + selectedArray.length > 6) {
-      alert("최대 6장까지만 업로드할 수 있습니다.");
-      return;
-    }
-    selectedArray.forEach((file) => {
+  const handleMainImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviews(prev => [...prev, reader.result as string]);
-      };
+      reader.onloadend = () => setMainPreview(reader.result as string);
       reader.readAsDataURL(file);
-    });
-    setFiles((prev) => [...prev, ...selectedArray]);
+      setMainImage(file);
+    }
   };
 
-  const handleRemoveImage = (index: number) => {
-    setFiles(prev => prev.filter((_, i) => i !== index));
-    setPreviews(prev => prev.filter((_, i) => i !== index));
+  const handleCourseImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = e.target.files;
+    if (!selectedFiles) return;
+    const selectedArray = Array.from(selectedFiles);
+    if (courseImages.length + selectedArray.length > 6) {
+      alert("코스 사진은 최대 6장까지 업로드할 수 있습니다.");
+      return;
+    }
+    selectedArray.forEach(file => {
+      const reader = new FileReader();
+      reader.onloadend = () => setCoursePreviews(prev => [...prev, reader.result as string]);
+      reader.readAsDataURL(file);
+    });
+    setCourseImages(prev => [...prev, ...selectedArray]);
+  };
+
+  const removeCourseImage = (index: number) => {
+    setCourseImages(prev => prev.filter((_, i) => i !== index));
+    setCoursePreviews(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleDateTimeChange = (date: Date | null, time: string) => {
@@ -134,32 +131,25 @@ function NewRegularRunMake() {
   };
 
   const handleSubmit = async () => {
-    console.log(pacerGroups)
-    const hasIncompleteGroup = pacerGroups.some(
-      (group) => !group.pacer || !group.distance || !group.pace
-
-    );
-
-    if (!title || !location || !content || !dateTime.date || hasIncompleteGroup) {
+    if (!title || !location || !content || !dateTime.date || pacerGroups.some(g => !g.pacer || !g.distance || !g.pace)) {
       alert("모든 정보를 입력해주세요.");
       return;
-    } 
-
+    }
     try {
       const isoDate = dateTime.date.toISOString().split("T")[0];
       const eventDateTime = `${isoDate}T${dateTime.time}`;
-      const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
       const formData = new FormData();
       formData.append("title", title);
       formData.append("location", location);
       formData.append("date", eventDateTime);
       formData.append("content", content);
-      files.forEach(file => formData.append("postImage", file));
-
+      if (mainImage) formData.append("postImage", mainImage);
+      courseImages.forEach(file => formData.append("attachments", file));
       pacerGroups.forEach((group, index) => {
         formData.append(`pacers[${index}].group`, group.id);
-        formData.append(`pacers[${index}].pacerId`, String(group.pacer));
+        formData.append(`pacers[${index}].pacerId`, group.pacer);
         formData.append(`pacers[${index}].distance`, group.distance);
         formData.append(`pacers[${index}].pace`, group.pace);
       });
@@ -185,17 +175,11 @@ function NewRegularRunMake() {
 
   return (
     <div className="flex flex-col items-center min-h-screen">
-      <div className="flex items-center justify-center w-full max-w-[600px] px-5 mb-5 relative bg-kuDarkGreen">
-        <div className="relative flex items-center justify-center py-4 mt-4 ">
-          <button
-            onClick={() => navigate(-1)}
-            aria-label="뒤로가기"
-            className="absolute left-[-95px] bg-none border-none cursor-pointer"
-          >
-            <img src={BackIcon} alt="뒤로가기" className="w-6 left-3 h-6" />
-          </button>
-          <div className="text-2xl font-semibold text-white">정규런 만들기</div>
-        </div>
+      <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
+        <div className="text-2xl font-semibold text-white text-center">정규런 만들기</div>
+        <button onClick={() => navigate(-1)} className="absolute left-4">
+          <img src={BackIcon} alt="뒤로가기" className="w-6 h-6" />
+        </button>
       </div>
 
       <div className="w-full max-w-md px-4">
@@ -207,14 +191,17 @@ function NewRegularRunMake() {
 
         <div className="my-2">날짜 및 시간</div>
         <DateNtime onDateTimeChange={handleDateTimeChange} />
+
         <div className="mb-2 mt-4">세부사항</div>
         <textarea
-          className="my-2 w-full p-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="my-2 w-full p-2 border rounded-lg"
           rows={10}
           placeholder="세부사항을 입력하세요"
           value={content}
-          onChange={handleContent}
+          onChange={(e) => setContent(e.target.value)}
         ></textarea>
+
+        {/* 페이서 UI는 기존 그대로 유지 */}
         {/* 페이서 그룹 입력 UI */}
         <div className="flex flex-col items-center w-full max-w-md p-4 bg-white rounded-lg relative">
           {isBottomSheetOpen && (
@@ -314,20 +301,37 @@ function NewRegularRunMake() {
           )}
         </div>
 
+        {/* 대표 이미지 */}
         <div className="my-4">
-          <h2 className="mb-2">게시글 사진</h2>
-          <div className="grid grid-cols-3 gap-2">
-            {previews.map((img, index) => (
-              <div key={index} className="relative w-[104px] h-[104px]">
-                <img src={img} alt={`upload-${index}`} className="w-[104px] h-[104px] object-cover rounded-md" />
-                <button onClick={() => handleRemoveImage(index)} className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✕</button>
-              </div>
-            ))}
-            {previews.length < 6 && (
-              <label htmlFor="fileUpload" className="w-[104px] h-[104px] border border-dashed border-gray-400 flex items-center justify-center text-gray-500 cursor-pointer rounded-md">+</label>
+          <h2 className="mb-2">대표 게시글 사진</h2>
+          <div className="relative w-[104px] h-[104px]">
+            {mainPreview ? (
+              <>
+                <img src={mainPreview} alt="대표 이미지" className="w-full h-full object-cover rounded-md" />
+                <button onClick={() => { setMainImage(null); setMainPreview(null); }} className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✕</button>
+              </>
+            ) : (
+              <label htmlFor="mainImageUpload" className="w-full h-full border border-dashed border-gray-400 flex items-center justify-center text-gray-500 cursor-pointer rounded-md">+</label>
             )}
           </div>
-          <input type="file" id="fileUpload" multiple accept="image/*" onChange={handleImageUpload} className="hidden" />
+          <input type="file" id="mainImageUpload" accept="image/*" onChange={handleMainImageUpload} className="hidden" />
+        </div>
+
+        {/* 코스 사진 */}
+        <div className="my-4">
+          <h2 className="mb-2">코스 사진</h2>
+          <div className="grid grid-cols-3 gap-2">
+            {coursePreviews.map((img, index) => (
+              <div key={index} className="relative w-[104px] h-[104px]">
+                <img src={img} alt={`course-${index}`} className="w-full h-full object-cover rounded-md" />
+                <button onClick={() => removeCourseImage(index)} className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✕</button>
+              </div>
+            ))}
+            {coursePreviews.length < 6 && (
+              <label htmlFor="courseImageUpload" className="w-[104px] h-[104px] border border-dashed border-gray-400 flex items-center justify-center text-gray-500 cursor-pointer rounded-md">+</label>
+            )}
+          </div>
+          <input type="file" id="courseImageUpload" multiple accept="image/*" onChange={handleCourseImageUpload} className="hidden" />
         </div>
 
         <button onClick={handleSubmit} className="w-full bg-[#366943] text-white py-3 rounded-lg mt-4">만들기</button>
