@@ -30,9 +30,11 @@ import NewRegularRunMake from './components/NewRegularRun/NewRegularRunMake';
 import EventMake from './components/NewEvent/EventMake'
 import TrainingMake from './components/NewTraining/TrainingMake';
 import NewEventCard from './components/NewFlashRun/NewEventCard';
-import NewTrainingList from './components/NewTraining/NewTrainingRunList';
+import NewTrainingList from './components/NewTraining/NewTrainingList';
 import NewEventList from './components/NewEvent/NewEventList';
 import Sandbox from './components/Sandbox';
+import NewRegularRunDetail from './components/NewRegularRun/NewRegularRunDetail';
+import NewTrainingDetail from './components/NewTraining/NewTrainingDetail';
 
 
 function App() {
@@ -50,13 +52,15 @@ function App() {
             <Route path='/schedule-page' element={<SchedulePage />} />
             <Route path='/my-page' element={<MyPage />} />
             <Route path="/run" element={<FlashRunList />} />
-            <Route path="/run/post/:postId" element={<FlashRunDetail />} />
+            <Route path="/run/flash/:postId" element={<FlashRunDetail />} />
+            <Route path="/run/regular/:postId" element={<NewRegularRunDetail />} />
+            <Route path="/run/training/:postId" element={<NewTrainingDetail/>} />
             <Route path="/run/make" element={<FlashRunMake />} />
             <Route path='/tab/*' element={<TabNavigationUI/>} />
             <Route path='/main' element={<NewMain/>}/>
             <Route path='/flashRun' element={<NewFlashRunList/>} />
-            <Route path='/flashRunAdmintest' element={<NewFlashRunDetail/>}/>
-            <Route path='/pastruns' element={<PastRuns/>} />
+            
+            
             <Route path='/admin' element={<AdminPage/>}/>
             <Route path='/regular' element={<NewRegularRunList/>}/>
             <Route path='/training' element={<NewTrainingList/>}/>

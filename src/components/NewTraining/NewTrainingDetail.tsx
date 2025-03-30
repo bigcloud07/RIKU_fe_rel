@@ -1,10 +1,9 @@
-//서버통신 페이지
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import customAxios from "../../apis/customAxios";
-import FlashRunAdmin from "./FlashRunAdmin";
-import FlashRunUser from "./FlashRunUser";
+import NewTrainingAdmin from "./NewTrainingAdmin"
+import NewTrainingUser from "./NewTrainingUser"
+
 
 interface Participant {
   id: number;
@@ -25,7 +24,7 @@ interface DetailData {
   postimgurl : string
 }
 
-const FlashRunDetail: React.FC = () => {
+const NewTrainingDetail: React.FC = () => {
   const { postId } = useParams<{ postId: string }>(); // URL의 postId 파라미터 가져오기
   const navigate = useNavigate(); // 페이지 이동 훅
   const [detailData, setDetailData] = useState<DetailData | null>(null);
@@ -36,7 +35,7 @@ const FlashRunDetail: React.FC = () => {
     const fetchDetail = async () => {
       try {
         const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
-        const response = await customAxios.get(`/run/flash/post/${postId}`, {
+        const response = await customAxios.get(`/run/training/post/${postId}`, {
           headers: {
             Authorization: `${token}`,
           },
@@ -85,9 +84,9 @@ const FlashRunDetail: React.FC = () => {
     return <div>데이터가 없습니다.</div>;
   }
   if(detailData.adminId == myId) // 내 userId와 게시글 만든 사람의 Id 비교후 렌더링
-    return <FlashRunAdmin {...detailData} postId={postId}/>;
+    return <NewTrainingAdmin {...detailData} postId={postId}/>;
   else
-    return <FlashRunAdmin {...detailData} postId={postId}/>
+    return <NewTrainingUser {...detailData} postId={postId}/>
 };
 
-export default FlashRunDetail;
+export default NewTrainingDetail;

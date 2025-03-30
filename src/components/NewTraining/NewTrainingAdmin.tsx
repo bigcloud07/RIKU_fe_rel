@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import FlashRunlogo from "../../assets/FlashRunDetail/flashrunlogo.svg";
 import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
@@ -9,13 +9,6 @@ import customAxios from "../../apis/customAxios";
 import flashrunimage from "../../assets/Run-img/flashrunimage.jpg"; // 번개런 기본이미지
 import BackBtnimg from "../../assets/BackBtn.svg"
 import pacermark from "../../assets/pacer-mark.svg"
-import CommentSection from "./CommentSection";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
-import { useNavigate } from "react-router-dom";
 
 interface Participant {
   id: number;
@@ -34,10 +27,10 @@ interface FlashRunAdminData {
   userName: string;
   code?: string;
   postId?: string; // 게시글 ID 추가
-  postimgurl: string
+  postimgurl:string
 }
 
-const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
+const NewTrainingAdmin: React.FC<FlashRunAdminData> = ({
   title,
   location,
   date,
@@ -63,7 +56,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         // 출석 코드 생성 API 호출
         const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
         const response = await customAxios.post(
-          `/run/flash/post/${postId}/code`,
+          `/run/training/post/${postId}/code`,
           {},
           {
             headers: {
@@ -104,7 +97,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     if (tab === "명단") {
       try {
         const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-        const response = await customAxios.get(`/run/flash/post/${postId}`, {
+        const response = await customAxios.get(`/run/training/post/${postId}`, {
           headers: {
             Authorization: `${token}`,
           },
@@ -120,61 +113,26 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
       }
     }
   };
-
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string }>({
-    userId: 0,
-    userName: "",
-  });
-
-  const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
-  const [creatorName, setCreatorName] = useState(""); // 작성자 이름
-
-  useEffect(() => {
-    const fetchPostData = async () => {
-      try {
-        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-        const response = await customAxios.get(`/run/flash/post/${postId}`, {
-          headers: { Authorization: `${token}` },
-        });
-        if (response.data.isSuccess) {
-          const result = response.data.result;
-          setAttachmentUrls(result.attachmentUrls || []);
-          setCreatorName(result.postCreatorInfo?.userName || "");
-
-          setUserInfo({
-            userId: result.userInfo?.userId || 0,
-            userName: result.userInfo?.userName || "",
-          });
-        } else {
-          setError(response.data.responseMessage);
-        }
-      } catch {
-        setError("데이터를 불러오는 데 실패했습니다.");
-      }
-    };
-    fetchPostData();
-  }, [postId]);
-
-
+  
   return (
     <div className="flex flex-col items-center text-center px-5 justify-center">
       {/* 상단바 */}
       <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
-        <img src={BackBtnimg} className="absolute left-[24px]"></img>
-        번개런
-      </div>
+            <img src={BackBtnimg} className="absolute left-[24px]"></img>
+            훈련
+            </div>
       {/* 러닝 포스팅 사진 */}
-      <div className="relative w-[375px] pb-[90px]">
+      <div className="relative w-[375px] pb-[200px]">
         <object data={postimgurl || flashrunimage} className="w-[375px]" />
         {/* 번개런 정보 */}
         <div className="absolute top-[220px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
-            <object data={FlashRunlogo} />
+            <object data={FlashRunlogo}  />
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
           <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
             <div className="flex items-center my-1.5">
-              <object data={place} className="w-[24px] h-[24px] mr-2" />
+              <object data={place}  className="w-[24px] h-[24px] mr-2" />
               <span>{location}</span>
             </div>
             <div className="flex items-center my-1.5">
@@ -182,13 +140,13 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
               <span>{date}</span>
             </div>
             <div className="flex items-center my-1.5">
-              <object data={people} className="font-bold text-kuDarkGreen w-[24px] h-[24px] mr-2" />
-              <span className="font-bold text-kuDarkGreen">{participantsNum}</span>
+              <object data={people} className="w-[24px] h-[24px] mr-2" />
+              <span>{participantsNum}명 참여 중</span>
             </div>
           </div>
         </div>
       </div>
-
+      
       <TabButton
         leftLabel="소개"
         rightLabel="명단"
@@ -198,63 +156,39 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         <>
           <div className="flex justify-center items-center w-[327px] h-14 bg-[#F0F4DD] rounded-lg text-sm font-normal mt-5">
             <div className="flex items-center">
-              <div className="flex justify-center items-center bg-kuBlue w-6 h-6 rounded-full relative mr-2">
-                <span className="text-white text-xs font-bold">
-                  <span className="text-white text-xs font-bold">
-                    {creatorName && creatorName.length > 1 ? creatorName.charAt(0) : creatorName?.charAt(0) || "?"}
-                  </span>
-                  <div className="absolute top-[-15px] left-[-19px] w-[32.78px] h-[32px]"><img src={pacermark} /></div>
+              <div className="flex justify-center items-center bg-kuBlue w-[30px] h-[30px] rounded-full relative mr-2">
+                <span className="text-white text-xs font-bold relative">
+                  {userName.charAt(1)}
+                  <div className="absolute top-[-20px] left-[-25px] w-[32.78px] h-[32px]"><img src={pacermark}/></div>
                 </span>
               </div>
-              {creatorName}
+              {userName}
             </div>
-
           </div>
-          {attachmentUrls.length > 0 && (
-            <div className="mt-5 w-[327px]">
-              <div className="text-left text-[16px] mb-2">코스 사진</div>
-              <div className="relative">
-                <Swiper
-                  pagination={{ clickable: true }}
-                  modules={[Pagination]}
-                  spaceBetween={10}
-                  slidesPerView={1}
-                >
-                  {attachmentUrls.map((url, index) => (
-                    <SwiperSlide key={index}>
-                      <div className="relative">
-                        <img
-                          src={url}
-                          alt={`코스 사진 ${index + 1}`}
-                          className="rounded-lg w-full h-auto"
-                        />
-                        <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
-                          {index + 1}/{attachmentUrls.length}
-                        </div>
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-            </div>
-          )}
-          <div className="flex flex-col items-start text-left w-full max-w-[327px] mt-2">세부 내용</div>
-          <div className="mt-1 w-[327px] border border-[#ECEBE4] rounded-lg">
+          <div className="mt-5 w-[327px] border border-[#ECEBE4] rounded-lg">
             <div className="text-[#686F75] p-5 text-justify">{content}</div>
           </div>
         </>
       )}
       {activeTab === "명단" && <AttendanceList users={currentParticipants} />}
-      <CommentSection postId={postId!} userInfo={userInfo} />
 
+      {/* 구분선 */}
+      <div><hr className="border-t border-kuLightGray mt-[32px] w-[375px]" /></div>
 
-
+      {/* 댓글창 */}
+      <div className="mt-[20px] font-bold">댓글</div>
+      <div className="relative w-[335px] h-[319px] bg-whiteSmoke rounded-[12px] mt-[16px]">
+        <div className="absolute bottom-[16px] left-[56px] w-[263px] h-[32px] rounded-[8px] bg-kuLightGray">
+          <textarea className="w-full h-full items-center" placeholder="댓글 추가..."></textarea>
+        </div>
+      </div>
       {/* 시작하기 버튼 */}
       <button
-        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished
-          ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
-          : "bg-[#366943] text-white"
-          }`}
+        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${
+          isFinished
+            ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
+            : "bg-[#366943] text-white"
+        }`}
         onClick={handleStartClick}
         disabled={isFinished}
       >
@@ -298,4 +232,4 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   );
 };
 
-export default FlashRunAdmin;
+export default NewTrainingAdmin;

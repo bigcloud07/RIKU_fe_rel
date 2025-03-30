@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import customAxios from '../../apis/customAxios';
 import { motion } from "framer-motion";
-import BackIcon from "../../assets/Main-img/back-icon.svg";
+import BackIcon from "../../assets/BackBtn.svg";
 import removeicon from "../../assets/remove-icon.svg";
 import { DateNtime } from "./DateNtime";
 
@@ -48,6 +48,39 @@ function TrainingMake() {
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const handleContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
+
+  // 대표 사진
+  const [mainImage, setMainImage] = useState<File | null>(null);
+  const [mainPreview, setMainPreview] = useState<string | null>(null);
+
+  // 코스 사진
+  const [courseImages, setCourseImages] = useState<File[]>([]);
+  const [coursePreviews, setCoursePreviews] = useState<string[]>([]);
+  const handleMainImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setMainPreview(reader.result as string);
+      reader.readAsDataURL(file);
+      setMainImage(file);
+    }
+  };
+  
+  const handleCourseImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = e.target.files;
+    if (!selectedFiles) return;
+    const selectedArray = Array.from(selectedFiles);
+    if (courseImages.length + selectedArray.length > 6) {
+      alert("코스 사진은 최대 6장까지 업로드할 수 있습니다.");
+      return;
+    }
+    selectedArray.forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => setCoursePreviews((prev) => [...prev, reader.result as string]);
+      reader.readAsDataURL(file);
+    });
+    setCourseImages((prev) => [...prev, ...selectedArray]);
+  };
 
   useEffect(() => {
     const fetchPacers = async () => {
@@ -104,6 +137,11 @@ function TrainingMake() {
     setIsBottomSheetOpen(false);
   };
 
+  const removeCourseImage = (index: number) => {
+    setCourseImages((prev) => prev.filter((_, i) => i !== index));
+    setCoursePreviews((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;
     if (!selectedFiles) return;
@@ -135,19 +173,19 @@ function TrainingMake() {
     console.log(pacerGroups)
     const hasIncompleteGroup = pacerGroups.some(
       (group) => !group.pacer || !group.distance || !group.pace
-      
+
     );
-  
+
     // if (!title || !location || !content || !dateTime.date || hasIncompleteGroup) {
     //   alert("모든 정보를 입력해주세요.");
     //   return;
     // } -> 계속 오류 떠서 일단 주석처리함
-  
+
     try {
       const isoDate = dateTime.date.toISOString().split("T")[0];
       const eventDateTime = `${isoDate}T${dateTime.time}`;
       const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
-  
+
       const formData = new FormData();
       const trainingType = isCustom ? customInput : selected;
       formData.append("trainingType", trainingType);
@@ -156,23 +194,25 @@ function TrainingMake() {
       formData.append("date", eventDateTime);
       formData.append("content", content);
       files.forEach(file => formData.append("postImage", file));
-      
+      if (mainImage) formData.append("postImage", mainImage);
+      courseImages.forEach(file => formData.append("attachments", file));
 
-  
+
+
       pacerGroups.forEach((group, index) => {
         formData.append(`pacers[${index}].group`, group.id);
         formData.append(`pacers[${index}].pacerId`, String(group.pacer));
         formData.append(`pacers[${index}].distance`, group.distance);
         formData.append(`pacers[${index}].pace`, group.pace);
       });
-  
+
       const response = await customAxios.post("/run/training/post", formData, {
         headers: {
           Authorization: `${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
-  
+
       if (response.data.isSuccess) {
         alert("훈련이 성공적으로 생성되었습니다!");
         navigate("/training");
@@ -186,7 +226,7 @@ function TrainingMake() {
   };
   const eventTypes = ['조깅', '인터벌', 'LSD', '기타 (직접입력)'];
 
-  
+
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState('조깅');
   const [customInput, setCustomInput] = useState('');
@@ -221,98 +261,91 @@ function TrainingMake() {
 
   return (
     <div className="flex flex-col items-center min-h-screen">
-      <div className="flex items-center justify-center w-full max-w-[600px] px-5 mb-5 relative bg-kuDarkGreen">
-        <div className="relative flex items-center justify-center py-4 mt-4 ">
-          <button
-            onClick={() => navigate(-1)}
-            aria-label="뒤로가기"
-            className="absolute left-[-95px] bg-none border-none cursor-pointer"
-          >
-            <img src={BackIcon} alt="뒤로가기" className="w-6 left-3 h-6" />
-          </button>
-          <div className="text-2xl font-semibold text-white">훈련 만들기</div>
-        </div>
+      <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
+        <div className="text-2xl font-semibold text-white text-center">훈련 만들기</div>
+        <button onClick={() => navigate(-1)} className="absolute left-4">
+          <img src={BackIcon} alt="뒤로가기" className="w-6 h-6" />
+        </button>
       </div>
 
       {/* 훈련유형 */}
       <div className="w-full max-w-md px-4" ref={dropdownRef}>
-  <label className="block text-sm font-medium text-gray-700 mb-1">행사 유형</label>
-  <div className="relative">
-    {!isCustom ? (
-      <>
-        <button
-          type="button"
-          onClick={toggleDropdown}
-          className="w-full bg-white border border-gray-300 rounded-md shadow-sm pl-4 pr-10 py-2 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
-        >
-          {selected}
-          <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-            <svg
-              className={`w-4 h-4 transform transition-transform duration-200 ${
-                isOpen ? 'rotate-180' : ''
-              }`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </span>
-        </button>
-
-        {isOpen && (
-          <ul className="absolute z-10 mt-1 w-full bg-white shadow-lg border border-gray-200 rounded-md max-h-60 overflow-auto">
-            {eventTypes.map((type) => (
-              <li
-                key={type}
-                onClick={() => {
-                  if (type === '기타 (직접입력)') {
-                    setIsCustom(true);
-                    setIsOpen(false);
-                    setSelected('');
-                  } else {
-                    handleSelect(type);
-                  }
-                }}
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800"
+        <label className="block text-sm font-medium text-gray-700 mb-1">행사 유형</label>
+        <div className="relative">
+          {!isCustom ? (
+            <>
+              <button
+                type="button"
+                onClick={toggleDropdown}
+                className="w-full bg-white border border-gray-300 rounded-md shadow-sm pl-4 pr-10 py-2 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
               >
-                {type}
-              </li>
-            ))}
-          </ul>
-        )}
-      </>
-    ) : (
-      <div className="relative">
-        <input
-          type="text"
-          value={customInput}
-          onChange={(e) => setCustomInput(e.target.value)}
-          placeholder="행사명을 입력하세요"
-          className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-        />
-        <button
-          type="button"
-          onClick={() => {
-            setIsCustom(false);
-            setCustomInput('');
-            setSelected('마라톤'); // 기본값으로 초기화
-          }}
-          className="absolute inset-y-0 right-0 flex items-center pr-3"
-        >
-          <svg
-            className="w-4 h-4 text-gray-500"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
+                {selected}
+                <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg
+                    className={`w-4 h-4 transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''
+                      }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+              </button>
+
+              {isOpen && (
+                <ul className="absolute z-10 mt-1 w-full bg-white shadow-lg border border-gray-200 rounded-md max-h-60 overflow-auto">
+                  {eventTypes.map((type) => (
+                    <li
+                      key={type}
+                      onClick={() => {
+                        if (type === '기타 (직접입력)') {
+                          setIsCustom(true);
+                          setIsOpen(false);
+                          setSelected('');
+                        } else {
+                          handleSelect(type);
+                        }
+                      }}
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800"
+                    >
+                      {type}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          ) : (
+            <div className="relative">
+              <input
+                type="text"
+                value={customInput}
+                onChange={(e) => setCustomInput(e.target.value)}
+                placeholder="행사명을 입력하세요"
+                className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setIsCustom(false);
+                  setCustomInput('');
+                  setSelected('마라톤'); // 기본값으로 초기화
+                }}
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
+              >
+                <svg
+                  className="w-4 h-4 text-gray-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    )}
-  </div>
-</div>
 
       <div className="w-full max-w-md px-4">
         <div className="my-2">제목</div>
@@ -430,25 +463,45 @@ function TrainingMake() {
           )}
         </div>
 
+       {/* 대표 이미지 */}
         <div className="my-4">
-          <h2 className="mb-2">게시글 사진</h2>
-          <div className="grid grid-cols-3 gap-2">
-            {previews.map((img, index) => (
-              <div key={index} className="relative w-[104px] h-[104px]">
-                <img src={img} alt={`upload-${index}`} className="w-[104px] h-[104px] object-cover rounded-md" />
-                <button onClick={() => handleRemoveImage(index)} className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✕</button>
-              </div>
-            ))}
-            {previews.length < 6 && (
-              <label htmlFor="fileUpload" className="w-[104px] h-[104px] border border-dashed border-gray-400 flex items-center justify-center text-gray-500 cursor-pointer rounded-md">+</label>
+          <h2 className="mb-2">대표 게시글 사진</h2>
+          <div className="relative w-[104px] h-[104px]">
+            {mainPreview ? (
+              <>
+                <img src={mainPreview} alt="대표 이미지" className="w-full h-full object-cover rounded-md" />
+                <button onClick={() => { setMainImage(null); setMainPreview(null); }} className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✕</button>
+              </>
+            ) : (
+              <label htmlFor="mainImageUpload" className="w-full h-full border border-dashed border-gray-400 flex items-center justify-center text-gray-500 cursor-pointer rounded-md">+</label>
             )}
           </div>
-          <input type="file" id="fileUpload" multiple accept="image/*" onChange={handleImageUpload} className="hidden" />
+          <input type="file" id="mainImageUpload" accept="image/*" onChange={handleMainImageUpload} className="hidden" />
+        </div>
+
+        {/* 코스 사진 */}
+        <div className="my-4">
+          <h2 className="mb-2">코스 사진</h2>
+          <div className="grid grid-cols-3 gap-2">
+            {coursePreviews.map((img, index) => (
+              <div key={index} className="relative w-[104px] h-[104px]">
+                <img src={img} alt={`course-${index}`} className="w-full h-full object-cover rounded-md" />
+                <button onClick={() => removeCourseImage(index)} className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✕</button>
+              </div>
+            ))}
+            {coursePreviews.length < 6 && (
+              <label htmlFor="courseImageUpload" className="w-[104px] h-[104px] border border-dashed border-gray-400 flex items-center justify-center text-gray-500 cursor-pointer rounded-md">+</label>
+            )}
+          </div>
+          <input type="file" id="courseImageUpload" multiple accept="image/*" onChange={handleCourseImageUpload} className="hidden" />
         </div>
 
         <button onClick={handleSubmit} className="w-full bg-[#366943] text-white py-3 rounded-lg mt-4">만들기</button>
       </div>
+
+      
     </div>
+    
   );
 }
 

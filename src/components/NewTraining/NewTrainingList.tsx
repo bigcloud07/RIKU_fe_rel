@@ -26,7 +26,7 @@ interface RunData {
     postImageUrl: string;
 }
 
-const NewFlashRunList: React.FC = () => {
+const NewTrainingList: React.FC = () => {
     const [todayRuns, setTodayRuns] = useState<RunData[]>([]);
     const [upcomingRuns, setUpcomingRuns] = useState<RunData[]>([]);
     const [pastRuns, setPastRuns] = useState<RunData[]>([]);
@@ -119,6 +119,7 @@ const NewFlashRunList: React.FC = () => {
                                                     participants={run.participants}
                                                     date={formattedDate}
                                                     time={formattedTime}
+                                                    onClick={() => navigate(`/run/training/${run.id}`)}
                                                 />
                                             </SwiperSlide>
                                         );
@@ -160,6 +161,7 @@ const NewFlashRunList: React.FC = () => {
                                 participants={run.participants}
                                 date={formattedDate}
                                 time={formattedTime}
+                                onClick={() => navigate(`/run/training/${run.id}`)}
                             />
                         );
                     })}
@@ -195,4 +197,4 @@ const NewFlashRunList: React.FC = () => {
     );
 };
 
-export default NewFlashRunList;
+export default NewTrainingList;

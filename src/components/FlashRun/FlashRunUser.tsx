@@ -12,6 +12,12 @@ import BackBtnimg from "../../assets/BackBtn.svg"
 import pacermark from "../../assets/pacer-mark.svg"
 import CommentSection from "./CommentSection";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+
+
 interface Participant {
   id: number;
   name: string;
@@ -31,6 +37,7 @@ interface FlashRunUserData {
   postId?: string; // 게시글 ID
   userStatus?: string; // 유저의 현재 상태 (참여, 출석 등)
   postimgurl?: string;
+  attachmentUrls?: string[];
 }
 
 const FlashRunUser: React.FC<FlashRunUserData> = ({
@@ -113,7 +120,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
-        `/run/post/${postId}/attend`,
+        `/run/flash/post/${postId}/attend`,
         { code },
         {
           headers: {
@@ -156,26 +163,67 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       }
     }
   };
+  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string }>({
+    userId: 0,
+    userName: "",
+  });
+
+  const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchPostData = async () => {
+      try {
+        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+        const response = await customAxios.get(`/run/flash/post/${postId}`, {
+          headers: { Authorization: `${token}` },
+        });
+        if (response.data.isSuccess) {
+          const result = response.data.result;
+          console.log(userName)
+          setCreatorName(result.postCreatorInfo?.userName || "");
+
+
+          setAttachmentUrls(result.attachmentUrls || []);
+
+          setUserInfo({
+            userId: result.userInfo?.userId || 0,
+            userName: result.userInfo?.userName || "",
+          });
+        } else {
+          setError(response.data.responseMessage);
+        }
+      } catch {
+        setError("데이터를 불러오는 데 실패했습니다.");
+      }
+    };
+    fetchPostData();
+  }, [postId]);
+
+  const [creatorName, setCreatorName] = useState(""); // 작성자 이름
+
+
+
+
 
   return (
     <div className="flex flex-col items-center text-center px-5 justify-center">
       {/* 상단바 */}
       <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
-            <img src={BackBtnimg} className="absolute left-[24px]"></img>
-            번개런
-            </div>
+        <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate("/FlashRun")}></img>
+        번개런
+      </div>
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-[375px] pb-[90px]">
         <object data={postimgurl || flashrunimage} className="w-[375px]" />
         {/* 번개런 정보 */}
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
-            <object data={FlashRunlogo}  />
+            <object data={FlashRunlogo} />
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
           <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
             <div className="flex items-center my-1.5">
-              <object data={place}  className="w-[24px] h-[24px] mr-2" />
+              <object data={place} className="w-[24px] h-[24px] mr-2" />
               <span>{location}</span>
             </div>
             <div className="flex items-center my-1.5">
@@ -184,7 +232,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
             </div>
             <div className="flex items-center my-1.5">
               <object data={people} className="w-[24px] h-[24px] mr-2 font-bold font-#366943" />
-              <span>{participantsNum}</span>
+              <span className="font-bold text-kuDarkGreen">{participantsNum}</span>
             </div>
           </div>
         </div>
@@ -200,20 +248,51 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
             <div className="flex items-center">
               <div className="flex justify-center items-center bg-kuBlue w-6 h-6 rounded-full relative mr-2">
                 <span className="text-white text-xs font-bold">
-                  {userName.charAt(1)}
-                  <div className="absolute top-[-15px] left-[-19px] w-[32.78px] h-[32px]"><img src={pacermark}/></div>
+                  <span className="text-white text-xs font-bold">
+                    {creatorName && creatorName.length > 1 ? creatorName.charAt(0) : creatorName?.charAt(0) || "?"}
+                  </span>
+                  <div className="absolute top-[-15px] left-[-19px] w-[32.78px] h-[32px]"><img src={pacermark} /></div>
                 </span>
               </div>
-              {userName}
+              {creatorName}
             </div>
           </div>
+          {attachmentUrls.length > 0 && (
+            <div className="mt-5 w-[327px]">
+              <div className="text-left text-[16px] mb-2">코스 사진</div>
+              <div className="relative">
+                <Swiper
+                  pagination={{ clickable: true }}
+                  modules={[Pagination]}
+                  spaceBetween={10}
+                  slidesPerView={1}
+                >
+                  {attachmentUrls.map((url, index) => (
+                    <SwiperSlide key={index}>
+                      <div className="relative">
+                        <img
+                          src={url}
+                          alt={`코스 사진 ${index + 1}`}
+                          className="rounded-lg w-full h-auto"
+                        />
+                        <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
+                          {index + 1}/{attachmentUrls.length}
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            </div>
+          )}
+          <div className="flex flex-col items-start text-left w-full max-w-[327px]">세부 내용</div>
           <div className="mt-5 w-[327px] border border-[#ECEBE4] rounded-lg">
             <div className="text-[#686F75] p-5 text-justify">{content}</div>
           </div>
         </>
       )}
       {activeTab === "명단" && <AttendanceList users={currentParticipants} />}
-      <CommentSection postId={postId!} />
+      <CommentSection postId={postId!} userInfo={userInfo} />
 
       <button
         className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${userStatus === "ATTENDED"
