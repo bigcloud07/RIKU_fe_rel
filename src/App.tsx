@@ -35,6 +35,7 @@ import NewEventList from './components/NewEvent/NewEventList';
 import Sandbox from './components/Sandbox';
 import NewRegularRunDetail from './components/NewRegularRun/NewRegularRunDetail';
 import NewTrainingDetail from './components/NewTraining/NewTrainingDetail';
+import NewEventDetail from './components/NewEvent/NewEventDetail';
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
             <Route path="/run/flash/:postId" element={<FlashRunDetail />} />
             <Route path="/run/regular/:postId" element={<NewRegularRunDetail />} />
             <Route path="/run/training/:postId" element={<NewTrainingDetail/>} />
+            <Route path="/run/event/:postId" element={<NewEventDetail/>} />
             <Route path="/run/make" element={<FlashRunMake />} />
             <Route path='/tab/*' element={<TabNavigationUI/>} />
             <Route path='/main' element={<NewMain/>}/>

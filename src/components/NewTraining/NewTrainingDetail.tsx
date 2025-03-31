@@ -56,7 +56,7 @@ const NewTrainingDetail: React.FC = () => {
             userName: result.userName,
             participantsNum: result.participants.length,
             participants: result.participants,
-            adminId:result.userId,
+            adminId:result.postCreatorInfo.userId,
             postimgurl:result.postImageUrl,
             
           });

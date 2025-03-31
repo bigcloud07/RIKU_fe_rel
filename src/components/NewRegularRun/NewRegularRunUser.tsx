@@ -73,6 +73,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   });
 
   const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
+  const [postCreatorName, setPostCreatorName] = useState("");
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -96,6 +97,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
           });
+          setPostCreatorName(result.postCreatorInfo.userName)
         } else {
           setError(response.data.responseMessage);
         }
@@ -235,8 +237,15 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
               </div>
             </div>
           )}
-          <div className="mt-5 w-[327px] border border-[#ECEBE4] rounded-lg">
-            <div className="text-[#686F75] p-5 text-justify">{content}</div>
+          <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">세부 내용</div>
+          <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
+                {postCreatorName.charAt(0)}
+              </div>
+              <span className="text-sm font-medium text-black">{postCreatorName}</span>
+            </div>
+            <div className="text-[#686F75] p-3 text-sm text-justify whitespace-pre-wrap">{content}</div>
           </div>
         </>
       )}
@@ -246,13 +255,12 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
       <CommentSection postId={postId!} userInfo={userInfo} />
 
       <button
-        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${
-          userStatus === "ATTENDED"
+        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${userStatus === "ATTENDED"
             ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
             : userStatus === "PENDING"
-            ? "bg-kuWarmGray text-white"
-            : "bg-kuDarkGreen text-white"
-        }`}
+              ? "bg-kuWarmGray text-white"
+              : "bg-kuDarkGreen text-white"
+          }`}
         onClick={userStatus !== "PENDING" ? handleStartClick : handleOpenAttendanceModal}
         disabled={userStatus === "ATTENDED"}
       >

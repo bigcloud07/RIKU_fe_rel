@@ -129,6 +129,7 @@ const NewEventList: React.FC = () => {
                                                     participants={run.participants}
                                                     date={formattedDate}
                                                     time={formattedTime}
+                                                    onClick={() => navigate(`/run/event/${run.id}`)}
                                                 />
                                             </SwiperSlide>
                                         );
@@ -170,6 +171,7 @@ const NewEventList: React.FC = () => {
                                 participants={run.participants}
                                 date={formattedDate}
                                 time={formattedTime}
+                                onClick={() => navigate(`/run/event/${run.id}`)}
                             />
                         );
                     })}

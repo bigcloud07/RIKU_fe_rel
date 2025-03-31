@@ -37,7 +37,7 @@ interface FlashRunAdminData {
   postimgurl: string
 }
 
-const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
+const NewEventAdmin: React.FC<FlashRunAdminData> = ({
   title,
   location,
   date,
@@ -57,6 +57,8 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   const [error, setError] = useState<string | null>(null); // 에러 메시지
   const [currentParticipants, setCurrentParticipants] = useState<Participant[]>(participants);
   const navigate = useNavigate()
+  const [eventtype, setEventtype] = useState("");
+
 
 
   const handleStartClick = async () => {
@@ -106,7 +108,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     if (tab === "명단") {
       try {
         const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-        const response = await customAxios.get(`/run/flash/post/${postId}`, {
+        const response = await customAxios.get(`/run/event/post/${postId}`, {
           headers: {
             Authorization: `${token}`,
           },
@@ -135,14 +137,14 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     const fetchPostData = async () => {
       try {
         const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-        const response = await customAxios.get(`/run/flash/post/${postId}`, {
+        const response = await customAxios.get(`/run/event/post/${postId}`, {
           headers: { Authorization: `${token}` },
         });
         if (response.data.isSuccess) {
           const result = response.data.result;
           setAttachmentUrls(result.attachmentUrls || []);
           setCreatorName(result.postCreatorInfo?.userName || "");
-
+          setEventtype(result.eventType);
           setUserInfo({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
@@ -163,7 +165,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
       {/* 상단바 */}
       <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={() => navigate("/FlashRun")} ></img>
-        번개런
+        행사
       </div>
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-[375px] pb-[50px]">
@@ -171,7 +173,11 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         {/* 번개런 정보 */}
         <div className="absolute top-[220px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
-            <object data={FlashRunlogo} />
+            <div className="relative flex items-center bg-[#D96941] p-[10px] text-[14px] w-auto h-[24px] rounded-[8px]">
+            <div className="flex items-center font-bold text-white">
+                <span>{eventtype}</span> 
+              </div>
+            </div>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
           <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
@@ -214,7 +220,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           </div>
           {attachmentUrls.length > 0 && (
             <div className="mt-5 w-[327px]">
-              <div className="text-left text-[16px] mb-2">코스 사진</div>
+              <div className="text-left text-[16px] mb-2">행사 사진</div>
               <div className="relative">
                 <Swiper
                   pagination={{ clickable: true }}
@@ -300,4 +306,4 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   );
 };
 
-export default FlashRunAdmin;
+export default NewEventAdmin;

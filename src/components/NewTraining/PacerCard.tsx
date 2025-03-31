@@ -26,7 +26,7 @@ const PacerCard: React.FC<PacerCardProps> = ({ pacers }) => {
             {pacers.map((pacer, idx) => (
                 <div
                     key={idx}
-                    className={`grid grid-cols-[60px_1.5fr_1fr_1fr] gap-x-2 gap-y-2 text-center items-center text-sm ${idx % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                    className={`grid grid-cols-[60px_1.5fr_1fr_1fr] gap-x-2 gap-y-2 text-center items-center text-sm ${idx % 2 === 0 ? 'bg-white' : 'bg-white'
                         }`}
                 >
                     {/* 그룹 */}
