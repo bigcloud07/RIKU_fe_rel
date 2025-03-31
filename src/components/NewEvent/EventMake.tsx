@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import customAxios from '../../apis/customAxios';
 import { motion } from "framer-motion";
-import BackIcon from "../../assets/Main-img/back-icon.svg";
+import BackIcon from "../../assets/BackBtn.svg";
 import removeicon from "../../assets/remove-icon.svg";
 import { DateNtime } from "./DateNtime";
 
@@ -48,6 +48,10 @@ function EventMake() {
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const handleContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
+  const [postImagePreview, setPostImagePreview] = useState<string | null>(null);
+  const [postImage, setPostImage] = useState<File | null>(null);
+  const [attachmentPreviews, setAttachmentPreviews] = useState<string[]>([]);
+  const [attachments, setAttachments] = useState<File[]>([]);
 
   useEffect(() => {
     const fetchPacers = async () => {
@@ -132,20 +136,21 @@ function EventMake() {
   };
 
   const handleSubmit = async () => {
-    console.log(pacerGroups)
-    const hasIncompleteGroup = pacerGroups.some(
-      (group) => !group.pacer || !group.distance || !group.pace
-      
-    );
-  
-    // if (!title || !location || !content || !dateTime.date || hasIncompleteGroup) {
-    //   alert("모든 정보를 입력해주세요.");
-    //   return;
-    // } -> 계속 오류 떠서 일단 주석처리함
+    if (!title || !location || !content || !dateTime.date || !postImage) {
+      alert("모든 정보를 입력해주세요.");
+      return;
+    }
   
     try {
-      const isoDate = dateTime.date.toISOString().split("T")[0];
-      const eventDateTime = `${isoDate}T${dateTime.time}`;
+      // 날짜와 시간 직접 분리해서 KST 기준 문자열 만들기
+      const date = dateTime.date;
+      const [hours, minutes] = dateTime.time.split(":").map(Number);
+  
+      const pad = (n: number) => n.toString().padStart(2, "0");
+  
+      const eventDateTime = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(hours)}:${pad(minutes)}`;
+      // 결과 예: "2025-03-31T14:00"
+  
       const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
   
       const formData = new FormData();
@@ -153,18 +158,10 @@ function EventMake() {
       formData.append("eventType", eventType);
       formData.append("title", title);
       formData.append("location", location);
-      formData.append("date", eventDateTime);
+      formData.append("date", eventDateTime); // ⬅ 여기!
       formData.append("content", content);
-      files.forEach(file => formData.append("postImage", file));
-      
-
-  
-      pacerGroups.forEach((group, index) => {
-        formData.append(`pacers[${index}].group`, group.id);
-        formData.append(`pacers[${index}].pacerId`, String(group.pacer));
-        formData.append(`pacers[${index}].distance`, group.distance);
-        formData.append(`pacers[${index}].pace`, group.pace);
-      });
+      formData.append("postImage", postImage);
+      attachments.forEach(file => formData.append("attachments", file));
   
       const response = await customAxios.post("/run/event/post", formData, {
         headers: {
@@ -175,7 +172,7 @@ function EventMake() {
   
       if (response.data.isSuccess) {
         alert("행사가 성공적으로 생성되었습니다!");
-        navigate("/run");
+        navigate("/event");
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
       }
@@ -184,6 +181,7 @@ function EventMake() {
       alert("행사 생성 중 문제가 발생했습니다.");
     }
   };
+  
   const eventTypes = ['마라톤', '동아리 행사', '러닝 세션', '기타 (직접입력)'];
 
   
@@ -219,19 +217,45 @@ function EventMake() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handlePostImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setPostImage(file);
+    const reader = new FileReader();
+    reader.onloadend = () => setPostImagePreview(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveAttachment = (index: number) => {
+    setAttachments(prev => prev.filter((_, i) => i !== index));
+    setAttachmentPreviews(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleAttachmentUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = event.target.files;
+    if (!selectedFiles) return;
+    const selectedArray = Array.from(selectedFiles);
+    if (attachments.length + selectedArray.length > 6) {
+      alert("최대 6장까지만 업로드할 수 있습니다.");
+      return;
+    }
+    selectedArray.forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAttachmentPreviews(prev => [...prev, reader.result as string]);
+      };
+      reader.readAsDataURL(file);
+    });
+    setAttachments(prev => [...prev, ...selectedArray]);
+  };
+
   return (
     <div className="flex flex-col items-center min-h-screen">
-      <div className="flex items-center justify-center w-full max-w-[600px] px-5 mb-5 relative bg-kuDarkGreen">
-        <div className="relative flex items-center justify-center py-4 mt-4 ">
-          <button
-            onClick={() => navigate(-1)}
-            aria-label="뒤로가기"
-            className="absolute left-[-95px] bg-none border-none cursor-pointer"
-          >
-            <img src={BackIcon} alt="뒤로가기" className="w-6 left-3 h-6" />
-          </button>
-          <div className="text-2xl font-semibold text-white">행사 만들기</div>
-        </div>
+      <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
+        <div className="text-2xl font-semibold text-white text-center">행사 만들기</div>
+        <button onClick={() => navigate(-1)} className="absolute left-4">
+          <img src={BackIcon} alt="뒤로가기" className="w-6 h-6" />
+        </button>
       </div>
 
       {/* 훈련유형 */}
@@ -334,20 +358,35 @@ function EventMake() {
         
        
 
+        {/* 대표 이미지 업로드 */}
         <div className="my-4">
-          <h2 className="mb-2">게시글 사진</h2>
+          <h2 className="mb-2">대표 이미지</h2>
+          {postImagePreview ? (
+            <div className="relative w-[104px] h-[104px]">
+              <img src={postImagePreview} className="w-full h-full object-cover rounded-md" />
+              <button onClick={() => { setPostImage(null); setPostImagePreview(null); }} className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✕</button>
+            </div>
+          ) : (
+            <label htmlFor="postImageUpload" className="w-[104px] h-[104px] border border-dashed border-gray-400 flex items-center justify-center text-gray-500 cursor-pointer rounded-md">+</label>
+          )}
+          <input type="file" id="postImageUpload" accept="image/*" onChange={handlePostImageUpload} className="hidden" />
+        </div>
+
+        {/* 첨부 이미지 업로드 */}
+        <div className="my-4">
+          <h2 className="mb-2">코스 사진 (최대 6장)</h2>
           <div className="grid grid-cols-3 gap-2">
-            {previews.map((img, index) => (
+            {attachmentPreviews.map((img, index) => (
               <div key={index} className="relative w-[104px] h-[104px]">
-                <img src={img} alt={`upload-${index}`} className="w-[104px] h-[104px] object-cover rounded-md" />
-                <button onClick={() => handleRemoveImage(index)} className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✕</button>
+                <img src={img} className="w-full h-full object-cover rounded-md" />
+                <button onClick={() => handleRemoveAttachment(index)} className="absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">✕</button>
               </div>
             ))}
-            {previews.length < 6 && (
-              <label htmlFor="fileUpload" className="w-[104px] h-[104px] border border-dashed border-gray-400 flex items-center justify-center text-gray-500 cursor-pointer rounded-md">+</label>
+            {attachmentPreviews.length < 6 && (
+              <label htmlFor="attachmentUpload" className="w-[104px] h-[104px] border border-dashed border-gray-400 flex items-center justify-center text-gray-500 cursor-pointer rounded-md">+</label>
             )}
           </div>
-          <input type="file" id="fileUpload" multiple accept="image/*" onChange={handleImageUpload} className="hidden" />
+          <input type="file" id="attachmentUpload" multiple accept="image/*" onChange={handleAttachmentUpload} className="hidden" />
         </div>
 
         <button onClick={handleSubmit} className="w-full bg-[#366943] text-white py-3 rounded-lg mt-4">만들기</button>

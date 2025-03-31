@@ -57,7 +57,7 @@ const FlashRunDetail: React.FC = () => {
             userName: result.userName,
             participantsNum: result.participants.length,
             participants: result.participants,
-            adminId:result.userId,
+            adminId:result.postCreatorInfo.userId,
             postimgurl:result.postImageUrl,
             
           });
@@ -87,7 +87,7 @@ const FlashRunDetail: React.FC = () => {
   if(detailData.adminId == myId) // 내 userId와 게시글 만든 사람의 Id 비교후 렌더링
     return <FlashRunAdmin {...detailData} postId={postId}/>;
   else
-    return <FlashRunAdmin {...detailData} postId={postId}/>
+    return <FlashRunUser {...detailData} postId={postId}/>
 };
 
 export default FlashRunDetail;

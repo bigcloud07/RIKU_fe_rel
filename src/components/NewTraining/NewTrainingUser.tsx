@@ -12,7 +12,8 @@ import BackBtnimg from "../../assets/BackBtn.svg";
 import pacermark from "../../assets/pacer-mark.svg";
 import CommentSection from "./CommentSection";
 import PacerCard from "./PacerCard";
-
+import questionmarkOn from "../../assets/questionmark_on.svg";
+import questionmarkOff from "../../assets/questionmark_off.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
@@ -73,7 +74,36 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   });
 
   const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
-  const [trainingtype, setTrainingtype] = useState("")
+  const [trainingtype, setTrainingtype] = useState("");
+
+  const [isHovered, setIsHovered] = useState(false);
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
+  const getTrainingDescription = (type: string) => {
+    switch (type) {
+      case 'LSD':
+        return (
+          <>
+            <span className="font-bold">LSD</span>란 Long Slow Distance의 약자로, 장거리 달리기 훈련입니다.
+          </>
+        );
+      // 다른 trainingtype에 대한 설명을 추가할 수 있습니다.
+      case '인터벌':
+        return (
+          <>
+            <span className="font-bold">인터벌</span> 훈련 이란 짧은 고강도 러닝과, 휴식 또는 저강도의 회복러닝을 번갈아가며 하는 훈련입니다.
+          </>
+        );
+      case '조깅':
+        return (
+          <>
+            <span className="font-bold">조깅</span>이란 느린 속도로 가볍게 달리는 훈련입니다.
+          </>
+        );
+      default:
+        return '';
+    }
+  };
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -84,7 +114,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         });
         if (response.data.isSuccess) {
           const result = response.data.result;
-          console.log(result)
+          console.log(result);
           setTitle(result.title);
           setLocation(result.location);
           setDate(result.date);
@@ -98,7 +128,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
           });
-          setTrainingtype(result.trainingType)
+          setTrainingtype(result.trainingType);
         } else {
           setError(response.data.responseMessage);
         }
@@ -169,8 +199,15 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
   const handleTabChange = (tab: "소개" | "명단") => setActiveTab(tab);
 
+  // 말풍선 외부를 클릭했을 때 숨기기
+  const handleOutsideClick = (event: React.MouseEvent) => {
+    if (!event.target.closest('.tooltip-container') && isTooltipVisible) {
+      setIsTooltipVisible(false);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center">
+    <div className="flex flex-col items-center text-center px-5 justify-center" onClick={handleOutsideClick}>
       <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
         훈련
@@ -180,7 +217,28 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         <object data={postImageUrl || flashrunimage} className="w-[375px] h-[308px]" />
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
-            <div className="flex items-center bg-[#FFC002] p-[10px] text-[14px] w-auto  h-[24px] rounded-[8px] font-bold ">{trainingtype}</div>
+          <div className="relative flex items-center bg-[#FFC002] p-[10px] text-[14px] w-auto h-[24px] rounded-[8px]">
+              <div className="flex items-center font-bold">
+                <span>{trainingtype}</span> {/* trainingtype 텍스트 */}
+              </div>
+
+              {/* 물음표 아이콘을 고정된 위치에 배치 */}
+              <img
+                src={isHovered ? questionmarkOn : questionmarkOff}
+                alt="question mark"
+                className="ml-2 cursor-pointer absolute top-0 left-[calc(358%+10px)]" // 물음표 아이콘을 오른쪽에 고정
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={() => setIsTooltipVisible(!isTooltipVisible)}
+              />
+
+              {/* 말풍선 위치 고정 */}
+              {isTooltipVisible && (
+                <div className="absolute left-[calc(5%+10px)] top-[calc(-400%)] mt-2 bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm">
+                  <div className="text-[#4F3F3F] text-[12px]">{getTrainingDescription(trainingtype)}</div>
+                </div>
+              )}
+            </div>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
           <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
@@ -238,6 +296,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
               </div>
             </div>
           )}
+          <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">세부 내용</div>
           <div className="mt-5 w-[327px] border border-[#ECEBE4] rounded-lg">
             <div className="text-[#686F75] p-5 text-justify">{content}</div>
           </div>
@@ -249,13 +308,12 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
       <CommentSection postId={postId!} userInfo={userInfo} />
 
       <button
-        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${
-          userStatus === "ATTENDED"
-            ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
-            : userStatus === "PENDING"
+        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${userStatus === "ATTENDED"
+          ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
+          : userStatus === "PENDING"
             ? "bg-kuWarmGray text-white"
             : "bg-kuDarkGreen text-white"
-        }`}
+          }`}
         onClick={userStatus !== "PENDING" ? handleStartClick : handleOpenAttendanceModal}
         disabled={userStatus === "ATTENDED"}
       >
