@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Link 컴포넌트 import
-import profile_Img from '../../assets/default_profile.png'; //이미지 불러오기
-import rightArrow_Icon from '../../assets/right_arrow.svg'; //라이쿠 로고 불러오기
-import customAxios from '../../apis/customAxios';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom"; // Link 컴포넌트 import
+import profile_Img from "../../assets/default_profile.png"; //이미지 불러오기
+import rightArrow_Icon from "../../assets/right_arrow.svg"; //라이쿠 로고 불러오기
+import customAxios from "../../apis/customAxios";
 
-import { 
-  format, 
-  addMonths, 
-  subMonths, 
-  startOfMonth, 
-  endOfMonth, 
-  startOfWeek, 
-  endOfWeek, 
+import {
+  format,
+  addMonths,
+  subMonths,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
   addDays,
   getMonth,
   parseISO,
-} from 'date-fns';
+} from "date-fns";
 
 // 재사용 가능한 버튼 컴포넌트
 function renderButton(text: string, iconSrc: string, onClick: () => void) {
@@ -28,24 +28,15 @@ function renderButton(text: string, iconSrc: string, onClick: () => void) {
 }
 
 function getUserRole(role: string) {
-  if(role === "NEW_MEMBER")
-  {
+  if (role === "NEW_MEMBER") {
     return "신입부원";
-  }
-  else if(role === "MEMBER")
-  {
+  } else if (role === "MEMBER") {
     return "일반부원";
-  }
-  else if(role === "ADMIN")
-  {
+  } else if (role === "ADMIN") {
     return "운영진";
-  }
-  else if(role === "INACTIVE")
-  {
+  } else if (role === "INACTIVE") {
     return "비활성화 사용자";
-  }
-  else
-  {
+  } else {
     return "살려주세요";
   }
 }
@@ -60,10 +51,10 @@ function makeCalendarDays(pointDate: Date) {
   let calendarDays = [];
   let start = startDate;
 
-  while(start <= endDate) //start가 endDate보다 작거나 같은 동안엔 반복문을 지속한다
-  {
-      calendarDays.push(start); //calendarDays 배열의 끝에 start 값 추가
-      start = addDays(start, 1); //날짜를 하루 더해준다(이것을 통해 start를 업데이트 한다)
+  while (start <= endDate) {
+    //start가 endDate보다 작거나 같은 동안엔 반복문을 지속한다
+    calendarDays.push(start); //calendarDays 배열의 끝에 start 값 추가
+    start = addDays(start, 1); //날짜를 하루 더해준다(이것을 통해 start를 업데이트 한다)
   }
 
   return calendarDays;
@@ -83,22 +74,18 @@ interface UserInfo {
 
 //로그인 페이지
 function MyPage() {
-
   const navigate = useNavigate(); //useNavigate 훅을 사용해 navigate 함수 생성
 
   //마이페이지에 표시할 유저의 정보를 저장하는 state(서버에서 받아와서 해당 정보를 업데이트할 예정)
-  const [userInfo, setUserInfo] = useState<UserInfo>(
-    {
-      "studentId": "", 
-      "userName": "", 
-      "userProfileImgUrl": "", 
-      "userRole": "", 
-      "points": 0, 
-      "participationCount": 0, 
-      "profileAttendanceDates": []
-    }
-  );
-  const [monthlyAttended, setMonthlyAttended] = useState<{date: string; isAttended: boolean}[]>([]);
+  const [userInfo, setUserInfo] = useState<UserInfo>({
+    studentId: "",
+    userName: "",
+    userProfileImgUrl: "",
+    userRole: "",
+    points: 0,
+    participationCount: 0,
+    profileAttendanceDates: [],
+  });
   const [attendChecked, setAttendChecked] = useState(false);
 
   //오늘 날짜 기준으로 한달 치 날짜 만들기 (추후, "출석체크" 캘린더에서 사용할 예정)
@@ -106,7 +93,7 @@ function MyPage() {
   const calendarDaysList = makeCalendarDays(pointDate);
   let weeks: Date[][] = [];
   let week: Date[] = [];
-  calendarDaysList.forEach(day => {
+  calendarDaysList.forEach((day) => {
     if (week.length < 7) {
       week.push(day);
     } else {
@@ -117,10 +104,9 @@ function MyPage() {
   if (week.length > 0) weeks.push(week);
 
   //유저 정보를 가져오는 메소드 fetchUserInfo
-  async function fetchUserInfo()
-  {
-    const accessToken = JSON.parse(localStorage.getItem('accessToken') || ''); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
-    const todayDate = format(new Date(), 'yyyy-MM-dd');
+  async function fetchUserInfo() {
+    const accessToken = JSON.parse(localStorage.getItem("accessToken") || ""); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
+    const todayDate = format(new Date(), "yyyy-MM-dd");
     const url = `/user/profile?date=${todayDate}`;
 
     try {
@@ -128,53 +114,51 @@ function MyPage() {
         url, //요청 url
         {
           headers: {
-            Authorization: accessToken //accessToken을 헤더로 추가해서 요청 보냄
-          }
+            Authorization: accessToken, //accessToken을 헤더로 추가해서 요청 보냄
+          },
         }
       );
 
-      console.log('유저 프로필 불러오기 성공: ', response); //test용
-      if(response.data.isSuccess === true)
-      {
+      console.log("유저 프로필 불러오기 성공: ", response); //test용
+      if (response.data.isSuccess === true) {
         let formattedUserRole = getUserRole(response.data.result.userRole);
         let data = {
-          "studentId": response.data.result.studentId,
-          "userName": response.data.result.userName,
-          "userProfileImgUrl": response.data.result.userProfileImgUrl,
-          "userRole": formattedUserRole,
-          "points": response.data.result.points,
-          "participationCount": response.data.result.participationCount, 
-          "profileAttendanceDates": response.data.result.profileAttendanceDates
-        }
+          studentId: response.data.result.studentId,
+          userName: response.data.result.userName,
+          userProfileImgUrl: response.data.result.userProfileImgUrl,
+          userRole: formattedUserRole,
+          points: response.data.result.points,
+          participationCount: response.data.result.participationCount,
+          profileAttendanceDates: response.data.result.profileAttendanceDates,
+        };
         setUserInfo(data);
-      }
-      else if(response.data.isSuccess === false)
-      {
+      } else if (response.data.isSuccess === false) {
         alert(`서버에서 제대로 유저 정보를 불러오지 못했습니다: ${response.data.responseMessage}`);
       }
-      
     } catch (error) {
-      alert('서버 요청 중 오류 발생!');
-      console.error('요청 실패: ', error);
+      alert("서버 요청 중 오류 발생!");
+      console.error("요청 실패: ", error);
     }
   }
 
   // 버튼 클릭 시 수행할 함수
-  function handleNoticeClick()
-  {
+  function handleNoticeClick() {
     alert("열심히 기능 준비중입니다!");
-  };
+  }
+
+  //'프로필 수정' 버튼 눌렀을 때 수행할 함수
+  function handleProfileFixBtnClick() {
+    navigate("/profilefix-page");
+  }
 
   //'운영진 페이지' 버튼 클릭시 수행할 함수
-  function handleToAdminPageClick()
-  {
-    if(userInfo.userRole === "운영진") //회원 정보가 운영진(ADMIN)일 경우
-    {
+  function handleToAdminPageClick() {
+    if (userInfo.userRole === "운영진") {
+      //회원 정보가 운영진(ADMIN)일 경우
       alert("운영진으로 확인되셨습니다. 운영진 페이지로 이동합니다");
-      navigate('/admin')
-    }
-    else //운영진 페이지에 접근 권한이 없는 사람이라면
-    {
+      navigate("/admin");
+    } //운영진 페이지에 접근 권한이 없는 사람이라면
+    else {
       console.log(userInfo.userRole);
       alert("회원님은 운영진이 아니므로 해당 페이지에 접근 권한이 없으십니다!");
     }
@@ -186,29 +170,51 @@ function MyPage() {
   }
 
   //"출석하기" 버튼 클릭 시 이벤트 수행
-  function handleAttendCheckBtn() {
-    alert("출석 완료했습니다!");
-    setAttendChecked(!attendChecked);
+  async function handleAttendCheckBtn() {
+    const accessToken = JSON.parse(localStorage.getItem("accessToken") || ""); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
+    const url = `/user/attend`;
+
+    try {
+      const response = await customAxios.post(
+        url, //요청 url
+        {
+          headers: {
+            Authorization: accessToken, //accessToken을 헤더로 추가해서 요청 보냄
+          },
+        }
+      );
+      alert(response.data.result.message); //"출석이 완료되었습니다"가 출력될 것
+      console.log("출석 완료, 불러오기 성공: ", response); //test용
+      setAttendChecked(!attendChecked); //'출석됨'으로 표시
+    } catch (error) {
+      alert("출석 요청 중 오류 발생!");
+      console.error("요청 실패: ", error);
+    }
   }
 
   //"로그아웃" 버튼 클릭 시 이벤트 수행
   function handleLogout() {
     //1. 토큰 삭제
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem("accessToken");
 
     //2. alert창 띄우기 (정상적으로 로그아웃 완료)
     alert("정상적으로 로그아웃 되었습니다.");
 
     //3. 로그인 페이지로 이동
-    navigate('/');
+    navigate("/");
   }
 
   //처음 렌더링 될 때만 유저 정보 불러오기
   useEffect(() => {
     fetchUserInfo();
-  },[])
+    const formattedDate = format(new Date(), "yyyy-MM-dd"); // 오늘 날짜를 formattedDate로 포맷팅
+    let isTodayAttended = userInfo.profileAttendanceDates.includes(formattedDate);
+    if (isTodayAttended) {
+      // 오늘 날짜가 출석되어 있다면
+      setAttendChecked(!attendChecked); // 출석 더 이상 못하게 한다
+    }
+  }, []);
 
-  
   //Tailwind를 사용하여 스타일링 진행
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-white pt-20 p-4 pb-20">
@@ -216,21 +222,25 @@ function MyPage() {
         <span className="text-2xl font-bold">마이페이지</span>
       </div>
       <div className="bg-whiteSmoke p-6 mb-4 rounded-xl w-full max-w-sm">
-
         {/*프로필 이미지와 이름 섹션*/}
         <div className="flex items-center mb-4">
-          <img src={profile_Img} alt="Profile" className="w-16 h-16 rounded-full mr-4"/>
+          <img
+            src={userInfo.userProfileImgUrl || profile_Img}
+            alt="Profile"
+            className="w-16 h-16 rounded-full mr-4"
+          />
           <div className="text-start">
             <p className="text-lg font-semibold text-gray-800">{userInfo.userName}</p>
             <p className="text-sm text-gray-500">{userInfo.userRole}</p>
           </div>
-          <button 
-            className="ml-auto px-4 py-1 text-sm bg-green-600 text-white rounded-lg hover hover:bg-green-900 transition" 
-            onClick={handleNoticeClick}>
-              프로필 수정
+          <button
+            className="ml-auto px-4 py-1 text-sm bg-green-600 text-white rounded-lg hover hover:bg-green-900 transition"
+            onClick={handleProfileFixBtnClick}
+          >
+            프로필 수정
           </button>
         </div>
-        
+
         {/* 포인트와 활동 내역 섹션 */}
         <div className="flex justify-around mt-6 pt-4 border-t-2">
           <div className="text-center">
@@ -259,51 +269,58 @@ function MyPage() {
         {/* 중첩 map 함수를 사용해서 출석체크 달력을 출력할 것이다 */}
         {weeks.map((week, index) => (
           <>
-          <div key={index} className="relative grid grid-cols-7 mt-4 mb-4 text-center w-full max-w-sm">
-            {week.map((day, subIndex) => {
-              const formattedDate = format(day, 'yyyy-MM-dd');
-              let markerOn = userInfo.profileAttendanceDates.includes(formattedDate);
-              let isToday = format(pointDate, 'yyyy-MM-dd') === formattedDate;
-              let isCurrentMonth = getMonth(pointDate) === getMonth(day);
-              let style = isCurrentMonth ? 'text-black' : 'text-gray-400';
-              
-              return (
-                <div key={subIndex} className="flex flex-col items-center justify-center">
-                  {/* 오늘 날짜에 대한 Marker 표시(출석 안했을 때만 표시) */}
-                  {(!attendChecked && isToday) ? (
-                    <>
-                    <span className="text-base font-normal z-10 text-white">{day.getDate()}</span>
-                    <div className="absolute w-10 h-10 rounded-full bg-kuDarkGreen z-0" />
-                    </>
-                  ) : (
-                    <>
-                    <span className={`text-base font-normal z-10 ${style}`}>{day.getDate()}</span>
-                    {/* 출석한 날짜에 대한 Marker 표시 */}
-                    {markerOn && (
-                      <div className="absolute w-10 h-10 rounded-full bg-kuWarmGray z-0" />
+            <div
+              key={index}
+              className="relative grid grid-cols-7 mt-4 mb-4 text-center w-full max-w-sm"
+            >
+              {week.map((day, subIndex) => {
+                const formattedDate = format(day, "yyyy-MM-dd");
+                let markerOn = userInfo.profileAttendanceDates.includes(formattedDate);
+                let isToday = format(pointDate, "yyyy-MM-dd") === formattedDate;
+                let isCurrentMonth = getMonth(pointDate) === getMonth(day);
+                let style = isCurrentMonth ? "text-black" : "text-gray-400";
+
+                return (
+                  <div key={subIndex} className="flex flex-col items-center justify-center">
+                    {/* 오늘 날짜에 대한 Marker 표시(출석 안했을 때만 표시) */}
+                    {!attendChecked && isToday ? (
+                      <>
+                        <span className="text-base font-normal z-10 text-white">
+                          {day.getDate()}
+                        </span>
+                        <div className="absolute w-10 h-10 rounded-full bg-kuDarkGreen z-0" />
+                      </>
+                    ) : (
+                      <>
+                        <span className={`text-base font-normal z-10 ${style}`}>
+                          {day.getDate()}
+                        </span>
+                        {/* 출석한 날짜에 대한 Marker 표시 */}
+                        {markerOn && (
+                          <div className="absolute w-10 h-10 rounded-full bg-kuWarmGray z-0" />
+                        )}
+                      </>
                     )}
-                    </>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-          {/* 마지막 줄이 아닌 경우에만 선을 추가 */}
-          {index < weeks.length - 1 && (
-            <div className="w-full h-px bg-gray-200" />
-          )}
+                  </div>
+                );
+              })}
+            </div>
+            {/* 마지막 줄이 아닌 경우에만 선을 추가 */}
+            {index < weeks.length - 1 && <div className="w-full h-px bg-gray-200" />}
           </>
         ))}
 
         {/* 로그인 버튼 */}
-        <button 
+        <button
           className={`w-full mt-4 mb-2 py-3 ${
-            !isAttendCheckBtnValid() ? 'bg-kuDarkGreen hover:bg-kuGreen text-white' : 'bg-kuLightGray text-gray-900 cursor-not-allowed'
+            !isAttendCheckBtnValid()
+              ? "bg-kuDarkGreen hover:bg-kuGreen text-white"
+              : "bg-kuLightGray text-gray-900 cursor-not-allowed"
           } font-bold rounded-md transition-colors`}
           onClick={handleAttendCheckBtn}
           disabled={isAttendCheckBtnValid()}
         >
-          { attendChecked ? '출석 완료' : '출석하기' }
+          {attendChecked ? "출석 완료" : "출석하기"}
         </button>
       </div>
 
@@ -326,9 +343,9 @@ function MyPage() {
       <div className="w-full max-w-sm mt-2">
         {renderButton("운영진 페이지", rightArrow_Icon, handleToAdminPageClick)}
       </div>
-      
+
       <div className="flex w-full max-w-sm mt-8 mb-8 justify-center">
-        <span 
+        <span
           className="text-lg font-normal underline underline-offset-2 text-kuDarkGray"
           onClick={handleLogout}
         >

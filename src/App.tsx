@@ -37,6 +37,8 @@ import NewRegularRunDetail from './components/NewRegularRun/NewRegularRunDetail'
 import NewTrainingDetail from './components/NewTraining/NewTrainingDetail';
 import NewEventDetail from './components/NewEvent/NewEventDetail';
 
+import ProfileFixPage from './components/Main/ProfileFixPage';
+
 
 function App() {
   return (
@@ -70,6 +72,8 @@ function App() {
             <Route path='/event/make' element={<EventMake/>}/>
             <Route path='/training/make' element={<TrainingMake/>}/>
             <Route path='/event' element={<NewEventList/>}/>
+
+            <Route path='/profilefix-page' element={<ProfileFixPage/>}/>
 
 
             {/* 컴포넌트 테스트 sandbox */}
