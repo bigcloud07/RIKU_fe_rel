@@ -73,10 +73,20 @@ function SchedulePage() {
     }
   }
 
-  //번개런 만들기 메소드 handleRunMake
-  const handleRunMake = () => {
-    navigate('/run/make')
-  }
+  
+  const handleflashRunMake = () => {
+    navigate("/run/make");
+  };
+  const handleRegularRunMake = () => {
+    navigate("/regular/make");
+  };
+  const handleEventMake = () => {
+    navigate("/event/make");
+  };
+  const handleTrainingtMake = () => {
+    navigate("/training/make");
+  };
+
 
   //캘린더 일별 조회 메소드
   async function fetchSelectedDateEventData() {
@@ -397,7 +407,7 @@ function SchedulePage() {
           <div onClick={(e) => e.stopPropagation()} className="fixed bottom-40 right-10 flex flex-col space-y-4 pointer-events-auto">
             {/* 첫 번째 버튼 */}
             <button
-              onClick={handleRunMake}
+              onClick={handleflashRunMake}
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${
                 showFirstButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}
@@ -410,6 +420,7 @@ function SchedulePage() {
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${
                 showSecondButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}
+              onClick={handleRegularRunMake}
             >
               정규런 일정 추가하기
             </button>
@@ -419,6 +430,7 @@ function SchedulePage() {
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${
                 showThirdButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}
+              onClick={handleTrainingtMake}
             >
               훈련 일정 추가하기
             </button>
@@ -428,6 +440,7 @@ function SchedulePage() {
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${
                 showFourthButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
               }`}
+              onClick={handleEventMake}
             >
               행사 일정 추가하기
             </button>

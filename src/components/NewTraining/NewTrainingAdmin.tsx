@@ -192,25 +192,30 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
         <object data={postImageUrl || flashrunimage} className="w-[375px] h-[308px]" />
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
-            <div className="relative flex items-center bg-[#FFC002] p-[10px] text-[14px] w-auto h-[24px] rounded-[8px]">
-              <div className="flex items-center font-bold">
-                <span>{trainingtype}</span> {/* trainingtype 텍스트 */}
+            {/* 상단 전체를 relative로 감싸기 */}
+            <div className="relative flex flex-col items-center mt-[10px] w-[375px]">
+
+              {/* trainingtype 박스 */}
+              <div className="mx-auto bg-[#FFC002] h-[24px] px-[16px] py-[3.5px] rounded-md text-sm font-bold w-fit">
+                {trainingtype}
               </div>
 
-              {/* 물음표 아이콘을 고정된 위치에 배치 */}
+              {/* 물음표 아이콘: 고정된 우측 위치 */}
               <img
                 src={isHovered ? questionmarkOn : questionmarkOff}
                 alt="question mark"
-                className="ml-2 cursor-pointer absolute top-0 left-[calc(358%+10px)]" // 물음표 아이콘을 오른쪽에 고정
+                className="absolute top-[-5px] right-[18px] w-[24px] h-[24px] cursor-pointer"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={() => setIsTooltipVisible(!isTooltipVisible)}
               />
 
-              {/* 말풍선 위치 고정 */}
+              {/* 툴팁 */}
               {isTooltipVisible && (
-                <div className="absolute left-[calc(5%+10px)] top-[calc(-400%)] mt-2 bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm">
-                  <div className="text-[#4F3F3F] text-[12px]">{getTrainingDescription(trainingtype)}</div>
+                <div className="absolute bottom-[150%] right-[25px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
+                  <div className="text-[#4F3F3F] text-[12px]">
+                    {getTrainingDescription(trainingtype)}
+                  </div>
                 </div>
               )}
             </div>
