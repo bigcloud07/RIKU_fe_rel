@@ -110,7 +110,7 @@ function RankingPage() {
                 <img
                   src={top10_Info[1].userProfileImg ?? defaultProfileImg}
                   alt="1st"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full"
                 />
               </div>
 
@@ -149,7 +149,7 @@ function RankingPage() {
                   <img
                     src={top10_Info[0].userProfileImg ?? defaultProfileImg}
                     alt="1st"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full"
                   />
                 </div>
 
@@ -173,7 +173,7 @@ function RankingPage() {
                 <img
                   src={top10_Info[2].userProfileImg ?? defaultProfileImg}
                   alt="1st"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full"
                 />
               </div>
 

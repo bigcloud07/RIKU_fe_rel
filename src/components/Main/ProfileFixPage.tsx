@@ -9,25 +9,56 @@ import arrowDown_Icon from "../../assets/Main-img/arrow_down.svg"; //아래쪽 �
 import ActionBar from "../../components/ActionBar";
 import defaultProfileImg from "../../assets/default_profile.png";
 
+import EyeIcon from "../../assets/visibility_true.svg";
+import EyeOffIcon from "../../assets/visibility_false.svg";
+
 interface InputFieldProps {
   label: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
+  password?: boolean;
 }
 
 //입력 필드 공통 컴포넌트
-const InputField: React.FC<InputFieldProps> = ({ label, value, onChange, disabled = false }) => (
-  <div className="mb-6">
-    <label className="block mb-2 text-m font-semibold text-gray-700">{label}</label>
-    <input
-      className="w-full border border-kuCoolGray rounded-xl px-3 py-3 focus: outline-kuDarkGreen"
-      value={value}
-      onChange={onChange}
-      disabled={disabled}
-    />
-  </div>
-);
+const InputField: React.FC<InputFieldProps> = ({
+  label,
+  value,
+  onChange,
+  disabled = false,
+  password = false,
+}) => {
+  const [showPassword, setShowPassword] = useState(false); //비밀번호 입력창인 경우 비밀번호를 보여주는 여부
+  const inputType = password ? (showPassword ? "text" : "password") : "text";
+
+  return (
+    <div className="mb-6">
+      <label className="block mb-2 text-m font-semibold text-gray-700">{label}</label>
+      <div className="relative w-full">
+        <input
+          className="w-full border border-kuCoolGray rounded-xl px-3 py-3 focus: outline-kuDarkGreen"
+          value={value}
+          onChange={onChange}
+          disabled={disabled}
+          type={inputType}
+        />
+        {password && (
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500"
+          >
+            {showPassword ? (
+              <img src={EyeIcon} className="w-4 h-4" />
+            ) : (
+              <img src={EyeOffIcon} className="w-4 h-4" />
+            )}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
 
 //"학교 정보" 입력 컴포넌트
 const SchoolInfoInputField: React.FC<{
@@ -130,7 +161,8 @@ function ProfileFixPage() {
   };
 
   //저장하기 전에 필수 form이 다 채워졌나 확인하는 변수 (전화번호를 제외한 모든 form이 채워져 있어야 함)
-  const isFormValid = password.trim() !== "" && selectedImage !== null;
+  const isFormValid =
+    password.trim() !== "" && (selectedImage !== null || userProfileImageUrl !== null);
 
   //유저 세부 정보를 불러오는 fetchUserDetailedProfile()
   async function fetchUserDetailedProfile() {
@@ -225,6 +257,7 @@ function ProfileFixPage() {
               label="비밀번호"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              password={true}
             />
           </div>
 
