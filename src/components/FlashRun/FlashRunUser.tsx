@@ -214,7 +214,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       </div>
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-[375px] pb-[50px]">
-        <object data={postimgurl || flashrunimage} className="w-[375px]" />
+        <object data={postimgurl || flashrunimage} className="w-[375px] h-[250px]" />
         {/* 번개런 정보 */}
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
