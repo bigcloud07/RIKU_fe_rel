@@ -14,6 +14,8 @@ import {
     endOfWeek, 
     addDays,
     parseISO,
+    addYears,
+    subYears,
 } from 'date-fns';
 
 //한 달 달력에 들어갈 내용(날짜(Date))들의 배열을 만든다.
@@ -39,6 +41,8 @@ function makeCalendarDays(pointDate: Date) {
 function SchedulePage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [pointDate, setPointDate] = useState(new Date());
+  const [pointDateInModal, setPointDateInModal] = useState(new Date());
+  const [selectedDateInModal, setSelectedDateInModal] = useState(new Date());
   const [monthlyPlan, setMonthlyPlan] = useState<{date: string; eventCount: number}[]>([]);
   const [selectedDateEvent, setSelectedDateEvent] = useState<{postId: 1, title: string, date: string, location: string}[]>([]);
 
@@ -119,10 +123,8 @@ function SchedulePage() {
     fetchSelectedDateEventData();
   }, [selectedDate]);
   
-
-  //marker 색깔을 state로 관리할 것이다
-  let [markerColor, setMarkerColor] = useState(['bg-blue-500', 'bg-orange-600', 'bg-purple-400', 'bg-green-300', 'bg-gray-400']);
   const [isFloatingButtonOpen, setIsFloatingButtonOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); //날짜 선택하는 모달창 open 여부 관리
 
   //각 버튼의 개별 상태를 관리하여 순차적 pop-up 효과를 구현
   const [showFirstButton, setShowFirstButton] = useState(false);
@@ -153,6 +155,26 @@ function SchedulePage() {
     setPointDate(subMonths(pointDate, 1));
   };
 
+  //모달창에서 연도 더하기
+  const nextYearInModal = () => {
+    setPointDateInModal(addYears(pointDateInModal, 1));
+  }
+
+  //모달창에서 연도 빼기
+  const prevYearInModal = () => {
+    setPointDateInModal(subYears(pointDateInModal, 1));
+  }
+
+  //모달창에서 월을 선택했을 때 동작하는 액션 (아래와 같이 값을 바꾸는 것이 권장됨(-> state는 불변성을 보장해 줘야 하고, 그를 위해 바꾸는 것은 set 함수를 써서 바꾸는 것이 필요...))
+  const selectMonthInModal = (month: number) => {
+    let newDate = new Date(selectedDateInModal); //복사
+    newDate.setMonth(month-1); //0부터 시작하니까 -1
+    if(pointDateInModal.getFullYear() !== selectedDateInModal.getFullYear()) { //모달 내에서 현재 선택된 날짜(selectedDateInModal)가 pointDateInModal과 다른 경우
+      newDate.setFullYear(pointDateInModal.getFullYear()); //newDate의 연도 값도 바꿔줘야 한다
+    }
+    setSelectedDateInModal(newDate); //모달창 내부에서 선택한 날짜에 대한 정보를 바꿔줘야 한다.
+  }
+ 
   const handleDateClick = (date: Date) => {
     if(date.getMonth() !== pointDate.getMonth()){  //이전 혹은 다음 달의 날짜를 선택했을 경우
       setSelectedDate(date);
@@ -171,6 +193,18 @@ function SchedulePage() {
   const toggleFloatingButton = () => {
     setIsFloatingButtonOpen(!isFloatingButtonOpen);
   };
+
+  //상단에 있는 화살표 사이에 있는 월 표시를 눌렀을 때.. 월 선택 모달창을 띄우는 메소드 toggleMonthSelectModal
+  const toggleMonthSelectModal = () => {
+    if(!isModalOpen) { //modal이 닫혀 있던 경우라면
+      setPointDateInModal(pointDate); //이래야 모달창에 진입할 때마다 pointDate 기준으로 탐색 가능
+      setSelectedDateInModal(pointDate); //이래야 모달창에 진입할 때마다 pointDate 기준으로 월이 선택되어 있는 UI 제공 가능
+      setIsModalOpen(!isModalOpen); //모달 열기
+    } else {
+      setPointDate(selectedDateInModal); //안에서 선택한 연/월을 바깥의 pointDate로 설정한다
+      setIsModalOpen(!isModalOpen); //모달 닫기
+    }
+  }
 
   //플로팅 버튼의 상태가 변경될 때 순차적으로 pop-up 시키는 효과 적용
   useEffect(() => {
@@ -200,13 +234,18 @@ function SchedulePage() {
       <div className="flex flex-col items-center justify-center space-y-0 mb-4">
         <span className="text-xs font-light text-black">{pointDate.getFullYear()}</span>
         <div className="flex items-center justify-center space-x-4 mb-4">
-          <button onClick={prevMonth} aria-label="Previous month" className="p-2 rounded-full hover:bg-gray-100">
+          <button onClick={prevMonth} aria-label="Previous month" className="rounded-full hover:bg-gray-100">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <span className="text-2xl font-semibold text-black">{pointDate.getMonth()+1}월</span>
-          <button onClick={nextMonth} aria-label="Next month" className="p-2 rounded-full hover:bg-gray-100">
+          <span 
+            className="text-2xl font-semibold text-black rounded-sm pl-2 pr-2 hover:bg-gray-100 cursor-pointer" 
+            onClick={toggleMonthSelectModal}
+            >
+              {pointDate.getMonth()+1}월
+            </span>
+          <button onClick={nextMonth} aria-label="Next month" className="rounded-full hover:bg-gray-100">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
@@ -248,7 +287,7 @@ function SchedulePage() {
               <div key={subIndex} className="flex flex-col items-center">
                 <button
                   onClick={() => handleDateClick(day)}
-                  className={`p-2 w-10 ${style} rounded-full hover:bg-gray-200 flex flex-col items-center justify-center`}
+                  className={`p-2 w-10 ${style} rounded-2xl hover:bg-gray-200 flex flex-col items-center justify-center`}
                 >
                   <span className="text-base font-normal">{day.getDate()}</span>
                   {/* marker를 날짜 아래에 배치하여 하나의 요소처럼 보이게 함 */}
@@ -256,23 +295,22 @@ function SchedulePage() {
                     <div className={'flex flex-col items-center justify-center'}>
                       {
                         planCounts > 0 ? (
-                          <>
-                          <div className={`w-1.5 h-1.5 mt-2 rounded-full ${isSelected ? 'outline outline-1 outline-white bg-orange-400' : 'bg-orange-400'}`} />
-                          <span className={`font-bold text-xs mt-2 ${isSelected ? 'text-white' : 'text-gray-500'}`}>+{planCounts}</span>
-                          </>
+                          <div className='flex items-center justify-center gap-0.5'>
+                            <div className={`w-1.5 h-1.5 mt-2 rounded-full ${isSelected ? 'bg-kuLightGreen' : 'bg-kuDarkGreen'}`} />
+                            <span className={`font-bold text-xs mt-2 ${isSelected ? 'text-white' : 'text-gray-500'}`}>{planCounts}</span>
+                          </div>
                         ) : (
-                          <>
-                          <div className={`w-1.5 h-1.5 mt-2 rounded-full bg-transparent`} />
-                          <span className={'font-bold text-xs mt-2 text-transparent'}>0</span>
-                          </>
+                          <div className='flex items-center justify-center gap-1'>
+                            <div className={`w-1.5 h-1.5 mt-2 rounded-full bg-transparent`} />
+                            <span className={'font-bold text-xs mt-2 text-transparent'}>0</span>
+                          </div>
                         )
                       }
                     </div>
-                    
                   ) : ( 
-                    <div className={'flex flex-col items-center justify-center'}>
+                    <div className='flex items-center justify-center gap-1'>
                       <div className={`w-1.5 h-1.5 mt-2 rounded-full bg-transparent`} />
-                      <span className={'font-bold text-xs mt-2 text-transparent'}>+2</span>
+                      <span className={'font-bold text-xs mt-2 text-transparent'}>0</span>
                     </div>
                   )}
                 </button>
@@ -294,7 +332,7 @@ function SchedulePage() {
             selectedDateEvent.map((event, index) => (
               //일정을 표현하는 카드 섹션
               <div key={index} onClick={() => handleNavigateToNotice(event.postId)} className="w-full max-w-sm bg-white border border-gray-300 rounded-lg p-2 shadow-sm mb-4 flex flex-row items-center">
-                <div className={`w-2 h-2 ml-2 ${markerColor[index]} rounded-full`}/>
+                <div className={`w-2 h-2 ml-2 bg-kuWarmGray rounded-full`}/>
                 <div className="pl-4 flex flex-col items-start">
                   <p className="text-gray-800 font-medium">{event.title}</p>
                   <p className="text-gray-500 text-sm">{format(parseISO(event.date), 'HH:mm')} {event.location}</p>
@@ -318,9 +356,53 @@ function SchedulePage() {
           className={`w-8 h-8 transition-transform duration-300 ${isFloatingButtonOpen ? 'rotate-20' : 'rotate-0'}`}
         />
       </button>
-      
+
+      {/* 연/월을 선택하는 모달창이 열렸을 때 나타나는 옵션들 */}
+      {isModalOpen && (
+        <div onClick={toggleMonthSelectModal} className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out flex justify-center items-center p-8 z-50">
+          {/* 날짜를 선택하는 모달 본체 */}
+          <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-xl p-8">
+            {/* 연도 선택하는 선택창 */}
+            <div className="flex items-center justify-center space-x-4 mb-8">
+              <button onClick={prevYearInModal} aria-label="Previous month" className="p-2 rounded-full hover:bg-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <span className="text-2xl font-semibold text-black">{pointDateInModal.getFullYear()}</span>
+              <button onClick={nextYearInModal} aria-label="Next month" className="p-2 rounded-full hover:bg-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+            {/* 월 선택 버튼들 나타나는 구역(grid) */}
+            <div className="grid grid-cols-3 gap-2">
+              {Array.from({length: 12}, (_, i) => i+1).map((month) => {
+                //조건부 렌더링을 위한 변수 선언
+                const isSelected = month === selectedDateInModal.getMonth()+1 && pointDateInModal.getFullYear() === selectedDateInModal.getFullYear();
+                return (
+                  <button
+                    key={month}
+                    onClick={()=>selectMonthInModal(month)}
+                    className={`py-2 px-6 rounded-md text-sm font-semibold transition
+                      ${isSelected 
+                      ? 'bg-kuDarkGreen text-white'
+                      : 'bg-whiteSmoke hover:bg-kuDarkGreen hover:text-white text-kuDarkGray'
+                      }
+                    `}
+                  >
+                    {month}월
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 플로팅 버튼이 열렸을 때 나타나는 옵션들 */}
-      {isFloatingButtonOpen && (
+      {isFloatingButtonOpen && !isModalOpen && (
         <div onClick={() => setIsFloatingButtonOpen(false)} className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out flex justify-end items-end p-8 z-40">
           <div onClick={(e) => e.stopPropagation()} className="fixed bottom-40 right-10 flex flex-col space-y-4 pointer-events-auto">
             {/* 첫 번째 버튼 */}
