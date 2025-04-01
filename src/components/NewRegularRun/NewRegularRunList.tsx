@@ -79,7 +79,7 @@ const NewFlashRunList: React.FC = () => {
     return (
         <div className="flex flex-col justify-center items-center">
             {/* 상단바 */}
-            <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
+            <div className="relative flex bg-kuDarkGreen w-[430px] h-[56px] text-white text-xl font-semibold justify-center items-center">
                 <img
                     src={BacbBtnimg}
                     className="absolute left-[24px] cursor-pointer"
@@ -90,7 +90,7 @@ const NewFlashRunList: React.FC = () => {
             </div>
 
             {/* 오늘의 러닝 */}
-            <div className="relative bg-kuDarkGreen w-[375px] min-h-[268px]">
+            <div className="relative bg-kuDarkGreen w-[430px] min-h-[268px]">
                 <div className="w-full flex flex-col items-center pt-2">
                     <div className="w-[114px] h-[32px] bg-white text-kuDarkGreen text-[16px] font-bold rounded-xl flex items-center justify-center">
                         오늘의 정규런
