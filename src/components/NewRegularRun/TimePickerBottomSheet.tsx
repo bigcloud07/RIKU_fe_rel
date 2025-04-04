@@ -13,8 +13,6 @@ export const TimePickerBottomSheet: React.FC<TimePickerBottomSheetProps> = ({
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  // 시간 상태 분리
   const [hour, setHour] = useState(time.split(":")[0] || "18");
   const [minute, setMinute] = useState(time.split(":")[1] || "00");
 
@@ -31,10 +29,10 @@ export const TimePickerBottomSheet: React.FC<TimePickerBottomSheetProps> = ({
     <>
       <div className="my-2">시간</div>
       <div className="flex items-center my-2">
-        <img src={TimeIcon} alt="시간 아이콘" className="ml-[15px] w-5 h-5" />
+        <img src={TimeIcon} alt="시간 아이콘" className="ml-[7.9px] w-[23.64px] h-[24px]" />
         <div
           onClick={() => setIsOpen(true)}
-          className="ml-2 border border-gray-300 rounded px-2 py-1 text-sm w-full text-gray-700 cursor-pointer"
+          className="ml-[24.4px] border-b border-gray-300 rounded px-4 py-1 text-[16px] w-full text-gray-600 cursor-pointer"
         >
           {time || "시간을 선택하세요"}
         </div>

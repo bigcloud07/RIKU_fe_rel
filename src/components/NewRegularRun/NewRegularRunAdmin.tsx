@@ -120,6 +120,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         }
       );
       if (response.data.isSuccess) {
+        
         setCode(response.data.result.code);
         setIsModalOpen(true);
       } else {

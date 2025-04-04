@@ -27,22 +27,22 @@ function FlashRunMake() {
   const [attachments, setAttachments] = useState<File[]>([]);
   const [attachmentPreviews, setAttachmentPreviews] = useState<string[]>([]);
 
-  useEffect(() => {
-    const fetchPacers = async () => {
-      try {
-        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-        const response = await customAxios.get("/pacers", {
-          headers: { Authorization: `${token}` },
-        });
-        if (response.data.isSuccess) {
-          setPacers(response.data.result);
-        }
-      } catch (error) {
-        console.error("페이서 목록을 가져오는 중 오류 발생:", error);
-      }
-    };
-    fetchPacers();
-  }, []);
+  // useEffect(() => {
+  //   const fetchPacers = async () => {
+  //     try {
+  //       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+  //       const response = await customAxios.get("/pacers", {
+  //         headers: { Authorization: `${token}` },
+  //       });
+  //       if (response.data.isSuccess) {
+  //         // setPacers(response.data.result);
+  //       }
+  //     } catch (error) {
+  //       console.error("페이서 목록을 가져오는 중 오류 발생:", error);
+  //     }
+  //   };
+  //   fetchPacers();
+  // }, []);
 
   const handlePostImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -119,7 +119,15 @@ function FlashRunMake() {
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
   };
 
+  
+
+  // 시간 입력 관련 상태 및 핸들러
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
+
+  const handleTimeChange = (time: string) => {
+    setDateTime((prev) => ({ ...prev, time }));
+  };
+
 
 
   return (
@@ -155,7 +163,7 @@ function FlashRunMake() {
           }}
         />
 
-        <div className="my-2">시간</div>
+        {/* <div className="my-2">시간</div>
         <div className="flex items-center my-2">
           <img src={TimeIcon} className="ml-[15px] w-5 h-5" />
           <input
@@ -171,7 +179,8 @@ function FlashRunMake() {
           isOpen={isTimePickerOpen}
           onClose={() => setIsTimePickerOpen(false)}
           onApply={(time) => setDateTime((prev) => ({ ...prev, time }))}
-        />
+        /> */}
+        <TimePickerBottomSheet time={dateTime.time} onChange={handleTimeChange} />
 
 
         <div className="mb-2 mt-4">세부사항</div>
