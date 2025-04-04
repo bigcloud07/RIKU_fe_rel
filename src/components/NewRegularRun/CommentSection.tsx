@@ -4,23 +4,6 @@ import CommentIcon from "../../assets/CommentIcon.svg";
 import CommentInputOn from "../../assets/comment_input_on.svg";
 import CommentInputOff from "../../assets/comment_input_off.svg";
 
-const formatTimeAgo = (rawDate?: string): string => {
-  if (!rawDate) return "";
-  const date = new Date(rawDate);
-  if (isNaN(date.getTime())) return "";
-
-  const now = new Date();
-  const diff = now.getTime() - date.getTime();
-  const minutes = Math.floor(diff / 60000);
-  const hours = Math.floor(diff / 3600000);
-  const days = Math.floor(diff / 86400000);
-
-  if (minutes < 1) return "방금 전";
-  if (minutes < 60) return `${minutes}분 전`;
-  if (hours < 24) return `${hours}시간 전`;
-  return `${days}일 전`;
-};
-
 interface Reply {
   commentId: number;
   userId: number;
@@ -31,7 +14,7 @@ interface Reply {
   createdAt?: string;
 }
 
-interface Comment extends Reply { }
+interface Comment extends Reply {}
 
 interface CommentSectionProps {
   postId: string;
@@ -150,13 +133,15 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
                     <div className="text-sm text-left break-words whitespace-pre-wrap">
                       {comment.content}
                     </div>
-                    <div className="text-xs text-gray-400 mt-1">{formatTimeAgo(comment.createdAt)}</div>
-                    <button
-                      onClick={() => setReplyTargetCommentId(comment.commentId)}
-                      className="flex items-center gap-1 text-xs text-gray-500 hover:text-[#7EC24F] mt-1"
-                    >
-                      <img src={CommentIcon} alt="답글" className="w-4 h-4" />
-                    </button>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-xs text-gray-400">{comment.createdAt}</span>
+                      <button
+                        onClick={() => setReplyTargetCommentId(comment.commentId)}
+                        className="flex items-center gap-1 text-xs text-gray-500 hover:text-[#7EC24F]"
+                      >
+                        <img src={CommentIcon} alt="답글" className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </div>
                 {comment.userId === userInfo.userId && (
@@ -169,7 +154,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
                 )}
               </div>
 
-              {/* 대댓글 리스트 */}
               {activeReplies.map((reply) => (
                 <div
                   key={reply.commentId}
@@ -184,7 +168,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
                       <div className="text-sm text-left break-words whitespace-pre-wrap">
                         {reply.content}
                       </div>
-                      <div className="text-xs text-gray-400 mt-1">{formatTimeAgo(reply.createdAt)}</div>
+                      <div className="text-xs text-gray-400 mt-1 text-left">{reply.createdAt}</div>
                     </div>
                   </div>
                   {reply.userId === userInfo.userId && (
@@ -198,7 +182,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
                 </div>
               ))}
 
-              {/* 대댓글 입력창 */}
               {replyTargetCommentId === comment.commentId && (
                 <div className="flex items-start gap-2 mt-2 pl-8">
                   <div className="w-6 aspect-square bg-[#9DC34A] rounded-full text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 leading-none">
