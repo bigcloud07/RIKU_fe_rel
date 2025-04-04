@@ -55,11 +55,11 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [participantsNum, setParticipantsNum] = useState<number>(0);
   const [pacers, setPacers] = useState<Pacer[]>([]);
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string }>({
+  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
     userName: "",
+    userProfileImg: "",
   });
-
   const [userStatus, setUserStatus] = useState(() => {
     return localStorage.getItem(`userStatus-${postId}`) || "";
   });
@@ -127,6 +127,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           setUserInfo({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
+            userProfileImg: result.userInfo?.userProfileImg || "",
           });
           setTrainingtype(result.trainingType);
         } else {

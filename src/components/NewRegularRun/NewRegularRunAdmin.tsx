@@ -60,9 +60,10 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   const [participantsNum, setParticipantsNum] = useState<number>(0);
   const [pacers, setPacers] = useState<Pacer[]>([]);
   const [postCreatorName, setPostCreatorName] = useState("");
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string }>({
+  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
     userName: "",
+    userProfileImg: "",
   });
   const [buttonText, setButtonText] = useState("시작하기");
   const handleCloseModal = () => setIsModalOpen(false);
@@ -90,7 +91,10 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
           setUserInfo({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
+            userProfileImg: result.userInfo?.userProfileImg || "",
           });
+          setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+
         } else {
           setError(response.data.responseMessage);
         }
@@ -157,6 +161,8 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   const handleTabChange = (tab: "소개" | "명단") => {
     setActiveTab(tab);
   };
+  const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
+
 
   return (
     <div className="flex flex-col items-center text-center px-5 justify-center">
@@ -224,9 +230,17 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
           <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
 
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
-                {postCreatorName.charAt(0)}
-              </div>
+              {postCreatorImg ? (
+                <img
+                  src={postCreatorImg}
+                  alt={`${postCreatorName} 프로필`}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
+                  {postCreatorName.charAt(0)}
+                </div>
+              )}
               <span className="text-sm font-medium text-black">{postCreatorName}</span>
             </div>
             <div className="text-[#686F75] p-3 text-sm text-justify whitespace-pre-wrap">{content}</div>

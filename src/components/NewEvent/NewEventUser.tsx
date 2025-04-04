@@ -43,7 +43,7 @@ interface FlashRunUserData {
 const NewEventUser: React.FC<FlashRunUserData> = ({
   title,
   location,
-  
+
   participants,
   participantsNum,
   content,
@@ -92,18 +92,22 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(`/run/event/post/${postId}/join`, {}, {
         headers: {
-          Authorization: `${token}`, // 적절한 토큰으로 교체
+          Authorization: `${token}`,
         },
       });
-      console.log(response.data)
+
+      console.log(response.data);
 
       if (response.data.isSuccess) {
         setUserStatus(response.data.result.status); // 상태 업데이트
         setButtonText("출석하기");
         setError(null);
-        
       } else {
-        setError(response.data.responseMessage);
+        if (response.data.responseMessage === "이미 참여한 유저입니다.") {
+          alert("이미 참여했습니다.");
+        } else {
+          setError(response.data.responseMessage); // 다른 에러 메시지는 기존 방식으로
+        }
       }
     } catch (error: any) {
       setError("러닝 참여에 실패했습니다.");
@@ -166,9 +170,10 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
       }
     }
   };
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string }>({
+  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
     userName: "",
+    userProfileImg: "",
   });
 
   const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
@@ -191,7 +196,12 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
           setUserInfo({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
+            userProfileImg: result.userInfo?.userProfileImg || "",
           });
+          setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+          setPostCreatorName(result.postCreatorInfo.userName);
+
+
         } else {
           setError(response.data.responseMessage);
         }
@@ -203,6 +213,8 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
   }, [postId]);
 
   const [creatorName, setCreatorName] = useState(""); // 작성자 이름
+  const [postCreatorName, setPostCreatorName] = useState("");
+
 
 
   const formatDateTime = (iso: string) => {
@@ -213,6 +225,9 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
     const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
     return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
+
+  const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
+
 
 
   return (
@@ -228,9 +243,9 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
         {/* 번개런 정보 */}
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
-          <div className="relative flex items-center bg-[#D96941] p-[10px] text-[14px] w-auto h-[24px] rounded-[8px]">
-            <div className="flex items-center font-bold text-white">
-                <span>{eventtype}</span> 
+            <div className="relative flex items-center bg-[#D96941] p-[10px] text-[14px] w-auto h-[24px] rounded-[8px]">
+              <div className="flex items-center font-bold text-white">
+                <span>{eventtype}</span>
               </div>
             </div>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
@@ -260,15 +275,23 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
         <>
           <div className="flex justify-center items-center w-[327px] h-14 bg-[#F0F4DD] rounded-lg text-sm font-normal mt-5">
             <div className="flex items-center">
-              <div className="flex justify-center items-center bg-kuBlue w-6 h-6 rounded-full relative mr-2">
-                <span className="text-white text-xs font-bold">
-                  <span className="text-white text-xs font-bold">
-                    {creatorName && creatorName.length > 1 ? creatorName.charAt(0) : creatorName?.charAt(0) || "?"}
-                  </span>
-                  <div className="absolute top-[-15px] left-[-19px] w-[32.78px] h-[32px]"><img src={pacermark} /></div>
-                </span>
+              <div className="relative w-6 h-6 mr-2">
+                {postCreatorImg && postCreatorImg.trim() !== "" ? (
+                  <img
+                    src={postCreatorImg}
+                    alt={`${creatorName} 프로필`}
+                    className="w-6 h-6 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-6 h-6 rounded-full bg-kuBlue text-white text-xs font-bold flex items-center justify-center">
+                    {creatorName?.charAt(0) || "?"}
+                  </div>
+                )}
+                <div className="absolute top-[-15px] left-[-19px] w-[32.78px] h-[32px]">
+                  <img src={pacermark} alt="pacer mark" />
+                </div>
               </div>
-              {creatorName}
+              <span className="text-black font-semibold">{creatorName}</span>
             </div>
           </div>
           {attachmentUrls.length > 0 && (
@@ -300,8 +323,23 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
             </div>
           )}
           <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">세부 내용</div>
-          <div className="mt-5 w-[327px] border border-[#ECEBE4] rounded-lg">
-            <div className="text-[#686F75] p-5 text-justify">{content}</div>
+          <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
+
+            <div className="flex items-center gap-2 mb-2">
+              {postCreatorImg ? (
+                <img
+                  src={postCreatorImg}
+                  alt={`${postCreatorName} 프로필`}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
+                  {postCreatorName.charAt(0)}
+                </div>
+              )}
+              <span className="text-sm font-medium text-black">{postCreatorName}</span>
+            </div>
+            <div className="text-[#686F75] p-3 text-sm text-justify whitespace-pre-wrap">{content}</div>
           </div>
         </>
       )}
