@@ -334,6 +334,13 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
       >
         {buttonText}
       </button>
+      {/* 수정하기 버튼 */}
+      <button
+        className="flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mb-4 bg-[#4D4D4D] text-white"
+        onClick={() => navigate(`/training/edit/${postId}`)}
+      >
+        수정하기
+      </button>
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
           <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
