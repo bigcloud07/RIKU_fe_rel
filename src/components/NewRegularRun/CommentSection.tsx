@@ -1,3 +1,4 @@
+// ✅ 최종 통합 CommentSection.tsx (userProfileImg 대응)
 import React, { useEffect, useState } from "react";
 import customAxios from "../../apis/customAxios";
 import CommentIcon from "../../assets/CommentIcon.svg";
@@ -8,6 +9,7 @@ interface Reply {
   commentId: number;
   userId: number;
   userName: string;
+  userProfileImg?: string | null;
   content: string;
   commentStatus: string;
   replies: Reply[];
@@ -21,6 +23,7 @@ interface CommentSectionProps {
   userInfo: {
     userId: number;
     userName: string;
+    userProfileImg?: string | null;
   };
 }
 
@@ -123,16 +126,19 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
           const activeReplies = comment.replies.filter((r) => r.commentStatus === "ACTIVE");
           return (
             <div key={comment.commentId} className="border-b border-[#E0E0E0] pb-3 space-y-2">
+              {/* 원댓글 */}
               <div className="flex justify-between items-start w-full">
                 <div className="flex items-start gap-2 flex-1">
-                  <div className="w-6 aspect-square bg-[#9DC34A] rounded-full text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 leading-none">
-                    {comment.userName.charAt(0)}
+                  <div className="w-6 aspect-square rounded-full flex items-center justify-center overflow-hidden bg-[#9DC34A] text-white text-[10px] font-bold">
+                    {comment.userProfileImg && comment.userProfileImg.trim() !== "" ? (
+                      <img src={comment.userProfileImg} alt="작성자" className="w-full h-full object-cover" />
+                    ) : (
+                      comment.userName.charAt(0)
+                    )}
                   </div>
                   <div className="flex flex-col w-full">
                     <div className="font-semibold text-left">{comment.userName}</div>
-                    <div className="text-sm text-left break-words whitespace-pre-wrap">
-                      {comment.content}
-                    </div>
+                    <div className="text-sm text-left break-words whitespace-pre-wrap">{comment.content}</div>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-xs text-gray-400">{comment.createdAt}</span>
                       <button
@@ -154,20 +160,20 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
                 )}
               </div>
 
+              {/* 대댓글 */}
               {activeReplies.map((reply) => (
-                <div
-                  key={reply.commentId}
-                  className="w-full mt-2 pl-8 flex justify-between items-start"
-                >
+                <div key={reply.commentId} className="w-full mt-2 pl-8 flex justify-between items-start">
                   <div className="flex items-start gap-2 flex-1">
-                    <div className="w-6 aspect-square bg-[#9DC34A] rounded-full text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 leading-none">
-                      {reply.userName.charAt(0)}
+                    <div className="w-6 aspect-square rounded-full flex items-center justify-center overflow-hidden bg-[#9DC34A] text-white text-[10px] font-bold">
+                      {reply.userProfileImg && reply.userProfileImg.trim() !== "" ? (
+                        <img src={reply.userProfileImg} alt="작성자" className="w-full h-full object-cover" />
+                      ) : (
+                        reply.userName.charAt(0)
+                      )}
                     </div>
                     <div className="flex flex-col w-full">
                       <div className="font-semibold text-sm text-left">{reply.userName}</div>
-                      <div className="text-sm text-left break-words whitespace-pre-wrap">
-                        {reply.content}
-                      </div>
+                      <div className="text-sm text-left break-words whitespace-pre-wrap">{reply.content}</div>
                       <div className="text-xs text-gray-400 mt-1 text-left">{reply.createdAt}</div>
                     </div>
                   </div>
@@ -182,10 +188,15 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
                 </div>
               ))}
 
+              {/* 대댓글 입력창 */}
               {replyTargetCommentId === comment.commentId && (
                 <div className="flex items-start gap-2 mt-2 pl-8">
-                  <div className="w-6 aspect-square bg-[#9DC34A] rounded-full text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 leading-none">
-                    {userInfo.userName.charAt(0)}
+                  <div className="w-6 aspect-square rounded-full flex items-center justify-center overflow-hidden bg-[#9DC34A] text-white text-[10px] font-bold">
+                    {userInfo.userProfileImg && userInfo.userProfileImg.trim() !== "" ? (
+                      <img src={userInfo.userProfileImg} alt="내 프로필" className="w-full h-full object-cover" />
+                    ) : (
+                      userInfo.userName.charAt(0)
+                    )}
                   </div>
                   <div className="flex-1 relative">
                     <input
@@ -215,8 +226,12 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
 
         {/* 원댓글 입력창 */}
         <div className="flex items-center mt-3 bg-[#F5F5F5] rounded-xl px-3 py-2">
-          <div className="w-6 aspect-square bg-[#9DC34A] rounded-full text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 leading-none">
-            {userInfo.userName.charAt(0)}
+          <div className="w-6 aspect-square rounded-full flex items-center justify-center overflow-hidden bg-[#9DC34A] text-white text-[10px] font-bold">
+            {userInfo.userProfileImg && userInfo.userProfileImg.trim() !== "" ? (
+              <img src={userInfo.userProfileImg} alt="내 프로필" className="w-full h-full object-cover" />
+            ) : (
+              userInfo.userName.charAt(0)
+            )}
           </div>
           <div className="relative flex-1">
             <input

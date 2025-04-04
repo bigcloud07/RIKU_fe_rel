@@ -138,9 +138,10 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     }
   };
 
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string }>({
+  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
     userName: "",
+    userProfileImg: "",
   });
 
   const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
@@ -161,6 +162,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           setUserInfo({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
+            userProfileImg: result.userInfo?.userProfileImg || "",
           });
           setDate(result.date);
         } else {

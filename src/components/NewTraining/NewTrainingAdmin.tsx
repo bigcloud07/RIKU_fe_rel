@@ -67,9 +67,10 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const [trainingtype, setTrainingtype] = useState("");
 
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string }>({
+  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
     userName: "",
+    userProfileImg: "",
   });
   const [trainingType, setTrainingType] = useState("");
 
@@ -94,10 +95,12 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           setUserInfo({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
+            userProfileImg: result.userInfo?.userProfileImg || "",
           });
           setPostCreatorName(result.postCreatorInfo?.userName || "");
           setTrainingtype(result.trainingType);
           setPostStatus(result.postStatus); // CLOSED, NOW 등
+          setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
         } else {
           setError(response.data.responseMessage);
         }
@@ -197,6 +200,8 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   };
 
   const [postStatus, setPostStatus] = useState<string>("");
+  const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
+
 
 
 
@@ -294,10 +299,18 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           )}
           <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">세부 내용</div>
           <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
-                {postCreatorName.charAt(0)}
-              </div>
+          <div className="flex items-center gap-2 mb-2">
+              {postCreatorImg ? (
+                <img
+                  src={postCreatorImg}
+                  alt={`${postCreatorName} 프로필`}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
+                  {postCreatorName.charAt(0)}
+                </div>
+              )}
               <span className="text-sm font-medium text-black">{postCreatorName}</span>
             </div>
 

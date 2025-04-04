@@ -4,7 +4,7 @@ interface AttendanceListProps {
   users: {
     userId: number;
     userName: string | undefined; // name이 undefined일 수 있으므로 타입 정의
-    profileImage?: string | null;
+    userProfileImg?: string | null;
     status: string;
   }[];
 }
@@ -30,16 +30,14 @@ const AttendanceList: React.FC<AttendanceListProps> = ({ users }) => {
             </div>
             {/* 프로필 이미지 또는 대체 아이콘 */}
             <div className="w-10 h-10 rounded-full overflow-hidden flex justify-center items-center bg-gray-400 text-white text-lg font-bold">
-              {user.profileImage ? (
+              {user.userProfileImg ? (
                 <img
-                  src={user.profileImage}
+                  src={user.userProfileImg}
                   alt={`${user.userName || "Unknown"} profile`}
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="bg-gray-600 w-full h-full flex justify-center items-center rounded-full">
-                  {user.userName?.charAt(0) || "?"}
-                </div>
+                <span>{user.userName?.charAt(0) || "?"}</span>
               )}
             </div>
             {/* 이름 */}
