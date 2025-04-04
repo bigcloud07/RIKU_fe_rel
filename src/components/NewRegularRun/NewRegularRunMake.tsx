@@ -5,6 +5,9 @@ import customAxios from "../../apis/customAxios";
 import { motion } from "framer-motion";
 import BackIcon from "../../assets/BackBtn.svg";
 import { DateNtime } from "./DateNtime";
+import { DateInput } from "./DateInput";
+import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
+import TimeIcon from '../../assets/time_icon.svg'
 
 interface Pacer {
   id: number;
@@ -173,6 +176,19 @@ function NewRegularRunMake() {
     }
   };
 
+  const handleDateChange = (date: Date | null) => {
+    setDateTime((prev) => ({ ...prev, date }));
+  };
+
+  // 시간 입력 관련 상태 및 핸들러
+  const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
+
+  const handleTimeChange = (time: string) => {
+    setDateTime((prev) => ({ ...prev, time }));
+  };
+
+
+
   return (
     <div className="flex flex-col items-center min-h-screen">
       <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
@@ -189,8 +205,13 @@ function NewRegularRunMake() {
         <div className="my-2">집합 장소</div>
         <input className="border rounded-lg w-full p-2" placeholder="장소명을 입력하세요" onChange={(e) => setLocation(e.target.value)} />
 
-        <div className="my-2">날짜 및 시간</div>
-        <DateNtime onDateTimeChange={handleDateTimeChange} />
+        {/* <div className="my-2">날짜 및 시간</div> */}
+        {/* <DateNtime onDateTimeChange={handleDateTimeChange} /> */}
+
+        <DateInput selectedDate={dateTime.date} onChange={handleDateChange} />
+
+        <TimePickerBottomSheet time={dateTime.time} onChange={handleTimeChange} />
+
 
         <div className="mb-2 mt-4">세부사항</div>
         <textarea
@@ -315,7 +336,7 @@ function NewRegularRunMake() {
             )}
           </div>
           <input type="file" id="mainImageUpload" accept="image/*" onChange={handleMainImageUpload} className="hidden" />
-        </div>
+        </div>ㄴ
 
         {/* 코스 사진 */}
         <div className="my-4">

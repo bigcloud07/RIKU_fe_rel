@@ -86,6 +86,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
           setPacers(result.pacers || []);
           setAttachmentUrls(result.attachmentUrls || []);
           setPostCreatorName(result.postCreatorInfo.userName);
+          setPostStatus(result.postStatus); // CLOSED, NOW 등
           setUserInfo({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
@@ -129,10 +130,26 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
     }
   };
 
-  const handleModalStartClick = () => {
+  const [postStatus, setPostStatus] = useState<string>("");
+
+  const handleModalStartClick = async () => {
     if (!code) return;
-    setIsFinished(true);
-    setIsModalOpen(false);
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const response = await customAxios.patch(`/run/training/post/${postId}/close`, {}, {
+        headers: { Authorization: `${token}` },
+      });
+
+      if (response.data.isSuccess) {
+        setIsFinished(true); // 버튼 비활성화 처리
+        setIsModalOpen(false);
+        alert("출석이 종료되었습니다.");
+      } else {
+        setError(response.data.responseMessage);
+      }
+    } catch (error) {
+      setError("출석 종료 처리에 실패했습니다.");
+    }
   };
 
   const handleTabChange = (tab: "소개" | "명단") => {
@@ -203,7 +220,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
           )}
           <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">세부 내용</div>
           <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
-            
+
             <div className="flex items-center gap-2 mb-2">
               <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
                 {postCreatorName.charAt(0)}
@@ -221,15 +238,16 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
 
       {/* 시작하기 버튼 */}
       <button
-        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished
+        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished || postStatus === "CLOSED"
           ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
           : "bg-[#366943] text-white"
           }`}
         onClick={handleStartClick}
-        disabled={isFinished}
+        disabled={isFinished || postStatus === "CLOSED"}
       >
         {buttonText}
       </button>
+
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
           <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">

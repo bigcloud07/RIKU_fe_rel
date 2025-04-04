@@ -218,10 +218,10 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
             {/* 상단 전체를 relative로 감싸기 */}
-            <div className="relative flex flex-col items-center mt-[10px] w-[375px]">
+            <div className="relative flex flex-col items-center mt-[7px] w-[375px]">
 
               {/* trainingtype 박스 */}
-              <div className="mx-auto bg-[#FFC002] h-[24px] px-[16px] py-[3.5px] rounded-md text-sm font-bold w-fit">
+              <div className="flex bg-[#FFC002] h-[24px] p-[10px] text-[14px] rounded-[8px] font-bold w-fit items-center">
                 {trainingtype}
               </div>
 
@@ -229,7 +229,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
               <img
                 src={isHovered ? questionmarkOn : questionmarkOff}
                 alt="question mark"
-                className="absolute top-[-5px] right-[18px] w-[24px] h-[24px] cursor-pointer"
+                className="absolute top-[-1px] right-[18px] w-[24px] h-[24px] cursor-pointer"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={() => setIsTooltipVisible(!isTooltipVisible)}
@@ -316,8 +316,8 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${userStatus === "ATTENDED"
           ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
           : userStatus === "PENDING"
-            ? "bg-kuWarmGray text-white"
-            : "bg-kuDarkGreen text-white"
+            ? "bg-kuDarkGreen text-white"
+            : "bg-kuGreen text-white"
           }`}
         onClick={userStatus !== "PENDING" ? handleStartClick : handleOpenAttendanceModal}
         disabled={userStatus === "ATTENDED"}
