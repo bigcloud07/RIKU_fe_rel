@@ -184,8 +184,13 @@ function TrainingMake() {
     // } -> 계속 오류 떠서 일단 주석처리함
 
     try {
-      const isoDate = dateTime.date.toISOString().split("T")[0];
-      const eventDateTime = `${isoDate}T${dateTime.time}`;
+      const pad = (n: number) => n.toString().padStart(2, "0");
+      const year = dateTime.date!.getFullYear();
+      const month = pad(dateTime.date!.getMonth() + 1);
+      const day = pad(dateTime.date!.getDate());
+      const time = dateTime.time;
+      const eventDateTime = `${year}-${month}-${day}T${time}:00`; // ✅ 로컬 기준
+
       const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
 
       const formData = new FormData();

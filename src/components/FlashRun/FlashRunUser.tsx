@@ -43,7 +43,7 @@ interface FlashRunUserData {
 const FlashRunUser: React.FC<FlashRunUserData> = ({
   title,
   location,
-  date,
+  
   participants,
   participantsNum,
   content,
@@ -70,6 +70,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
     // 로컬 스토리지에서 userStatus 초기값 가져옴
     return localStorage.getItem(`userStatus-${postId}`) || "";
   });
+  const [date, setDate] = useState("")
 
   // buttonText 변경 시 로컬 스토리지에 저장
   useEffect(() => {
@@ -189,6 +190,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
           });
+          setDate(result.date)
         } else {
           setError(response.data.responseMessage);
         }
@@ -202,7 +204,14 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
   const [creatorName, setCreatorName] = useState(""); // 작성자 이름
 
 
-
+  const formatDateTime = (iso: string) => {
+    const dateObj = new Date(iso);
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    const hours = dateObj.getHours().toString().padStart(2, "0");
+    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
+    return `${month}월 ${day}일 ${hours}:${minutes}`;
+  };
 
 
   return (
@@ -228,7 +237,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
             </div>
             <div className="flex items-center my-1.5">
               <object data={time} className="w-[24px] h-[24px] mr-2" />
-              <span>{date}</span>
+              <span>{formatDateTime(date)}</span>
             </div>
             <div className="flex items-center my-1.5">
               <object data={people} className="w-[24px] h-[24px] mr-2 font-bold font-#366943" />

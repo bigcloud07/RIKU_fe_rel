@@ -40,7 +40,7 @@ interface FlashRunAdminData {
 const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   title,
   location,
-  date,
+  
   participants,
   participantsNum,
   content,
@@ -56,8 +56,10 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   const [isFinished, setIsFinished] = useState(false);
   const [error, setError] = useState<string | null>(null); // 에러 메시지
   const [currentParticipants, setCurrentParticipants] = useState<Participant[]>(participants);
+  const [date, setDate] = useState("");
   const navigate = useNavigate()
 
+  
 
   const handleStartClick = async () => {
     if (!code) {
@@ -160,6 +162,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
           });
+          setDate(result.date);
         } else {
           setError(response.data.responseMessage);
         }
@@ -169,6 +172,16 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     };
     fetchPostData();
   }, [postId]);
+
+  const formatDateTime = (iso: string) => {
+    const dateObj = new Date(iso);
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    const hours = dateObj.getHours().toString().padStart(2, "0");
+    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
+    return `${month}월 ${day}일 ${hours}:${minutes}`;
+  };
+  
 
 
   return (
@@ -194,7 +207,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
             </div>
             <div className="flex items-center my-1.5">
               <object data={time} className="w-[24px] h-[24px] mr-2" />
-              <span>{date}</span>
+              <span>{formatDateTime(date)}</span>
             </div>
             <div className="flex items-center my-1.5">
               <object data={people} className="font-bold text-kuDarkGreen w-[24px] h-[24px] mr-2" />

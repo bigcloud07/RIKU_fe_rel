@@ -113,7 +113,8 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
     const month = dateObj.getMonth() + 1;
     const day = dateObj.getDate();
     const hours = dateObj.getHours().toString().padStart(2, "0");
-    return `${month}월 ${day}일 ${hours}시`;
+    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
+    return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
 
   const handleTabChange = (tab: "소개" | "명단") => setActiveTab(tab);
