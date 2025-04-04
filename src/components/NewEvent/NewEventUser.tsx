@@ -304,8 +304,8 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
         className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${userStatus === "ATTENDED"
           ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
           : userStatus === "PENDING"
-            ? "bg-kuWarmGray text-white" // PENDING 상태일 때
-            : "bg-kuDarkGreen text-white" // 기본 상태 (참여하기)
+            ? "bg-kuDarkGreen text-white"
+            : "bg-kuGreen text-white"
           }`}
         onClick={
           userStatus !== "PENDING"

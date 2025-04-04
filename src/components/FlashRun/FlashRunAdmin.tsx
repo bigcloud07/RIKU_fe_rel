@@ -90,13 +90,26 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     setIsModalOpen(true);
   };
 
-  const handleModalStartClick = () => {
-    if (isFinished) return;
+  const [postStatus, setPostStatus] = useState<string>("");
+  const handleModalStartClick = async () => {
     if (!code) return;
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const response = await customAxios.patch(`/run/flash/post/${postId}/close`, {}, {
+        headers: { Authorization: `${token}` },
+      });
 
-    setButtonText("마감됨");
-    setIsFinished(true);
-    setIsModalOpen(false);
+      if (response.data.isSuccess) {
+        setIsFinished(true); // 버튼 비활성화 처리
+        setPostStatus("CLOSED");
+        setIsModalOpen(false);
+        alert("출석이 종료되었습니다.");
+      } else {
+        setError(response.data.responseMessage);
+      }
+    } catch (error) {
+      setError("출석 종료 처리에 실패했습니다.");
+    }
   };
 
   const handleCloseModal = () => setIsModalOpen(false);
@@ -142,7 +155,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           const result = response.data.result;
           setAttachmentUrls(result.attachmentUrls || []);
           setCreatorName(result.postCreatorInfo?.userName || "");
-
+          setPostStatus(result.postStatus);
           setUserInfo({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
@@ -253,12 +266,12 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
       {/* 시작하기 버튼 */}
       <button
-        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished
+        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished || postStatus === "CLOSED"
           ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
           : "bg-[#366943] text-white"
           }`}
         onClick={handleStartClick}
-        disabled={isFinished}
+        disabled={isFinished || postStatus === "CLOSED"}
       >
         {buttonText}
       </button>
