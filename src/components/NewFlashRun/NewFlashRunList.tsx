@@ -110,22 +110,14 @@ const NewFlashRunList: React.FC = () => {
                         <>
                             {/* ✅ Swiper 컴포넌트 (기존 코드 그대로 유지) */}
                             <div className="relative w-[335px] mt-3">
-                            <Swiper
-                                    modules={[Pagination, Navigation]} // ✅ Swiper 모듈 활성화
+                                <Swiper
+                                    modules={[Pagination, Navigation]} // Swiper 모듈 활성화
                                     pagination={{
-                                        el: paginationRef.current,
+                                        el: ".custom-pagination", // ✅ 클래스 기반으로 지정
                                         clickable: true,
                                     }}
-                                    onBeforeInit={(swiper) => {
-                                        if (
-                                            swiper.params.pagination &&
-                                            typeof swiper.params.pagination !== "boolean"
-                                        ) {
-                                            swiper.params.pagination.el = paginationRef.current;
-                                        }
-                                    }}
-                                    spaceBetween={16} // 슬라이드 간 간격 (원하는 값으로 조절 가능)
-                                    slidesPerView={1} // 한 번에 하나의 카드만 보여줌
+                                    spaceBetween={16}
+                                    slidesPerView={1}
                                 >
                                     {todayRuns.map((run) => {
                                         const dateObj = new Date(run.date);
@@ -143,20 +135,20 @@ const NewFlashRunList: React.FC = () => {
                                                     participants={run.participants}
                                                     date={formattedDate}
                                                     time={formattedTime}
-                                                    onClick={() => navigate(`/run/flash/${run.id}`)}
+                                                    onClick={() => navigate(`/run/regular/${run.id}`)}
                                                 />
                                             </SwiperSlide>
                                         );
                                     })}
                                 </Swiper>
 
+                                {/* ✅ Swiper pagination dot 표시 영역 */}
                                 <div
-                                    ref={paginationRef}
-                                    className="mb-[12px] mt-[12px] flex justify-center
-             [&>.swiper-pagination-bullet]:bg-white
-             [&>.swiper-pagination-bullet-active]:bg-white
-             [&>.swiper-pagination-bullet]:mx-[4px]"
-                                />
+                                    className="custom-pagination mb-[12px] mt-[12px] flex justify-center
+    [&>.swiper-pagination-bullet]:bg-white
+    [&>.swiper-pagination-bullet-active]:bg-white
+    [&>.swiper-pagination-bullet]:mx-[4px]"
+                                ></div>
                             </div>
                         </>
                     ) : (
