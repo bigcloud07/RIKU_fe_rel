@@ -106,7 +106,8 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
     const month = dateObj.getMonth() + 1;
     const day = dateObj.getDate();
     const hours = dateObj.getHours().toString().padStart(2, "0");
-    return `${month}월 ${day}일 ${hours}시`;
+    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
+    return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
 
   const handleStartClick = async () => {
@@ -120,7 +121,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         }
       );
       if (response.data.isSuccess) {
-        
+
         setCode(response.data.result.code);
         setIsModalOpen(true);
       } else {

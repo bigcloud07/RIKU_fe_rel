@@ -139,8 +139,13 @@ function NewRegularRunMake() {
       return;
     }
     try {
-      const isoDate = dateTime.date.toISOString().split("T")[0];
-      const eventDateTime = `${isoDate}T${dateTime.time}`;
+      const pad = (n: number) => n.toString().padStart(2, "0");
+      const year = dateTime.date!.getFullYear();
+      const month = pad(dateTime.date!.getMonth() + 1);
+      const day = pad(dateTime.date!.getDate());
+      const time = dateTime.time;
+      const eventDateTime = `${year}-${month}-${day}T${time}:00`; // ✅ 로컬 기준
+
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
       const formData = new FormData();
@@ -336,7 +341,7 @@ function NewRegularRunMake() {
             )}
           </div>
           <input type="file" id="mainImageUpload" accept="image/*" onChange={handleMainImageUpload} className="hidden" />
-        </div>ㄴ
+        </div>
 
         {/* 코스 사진 */}
         <div className="my-4">

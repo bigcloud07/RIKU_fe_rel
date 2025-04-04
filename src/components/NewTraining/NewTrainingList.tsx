@@ -100,8 +100,22 @@ const NewTrainingList: React.FC = () => {
                         <>
                             {/* ✅ Swiper 컴포넌트 (기존 코드 그대로 유지) */}
                             <div className="relative w-[335px] mt-3">
-                                <Swiper
-                                // ... 기존 Swiper 설정
+                            <Swiper
+                                    modules={[Pagination, Navigation]} // ✅ Swiper 모듈 활성화
+                                    pagination={{
+                                        el: paginationRef.current,
+                                        clickable: true,
+                                    }}
+                                    onBeforeInit={(swiper) => {
+                                        if (
+                                            swiper.params.pagination &&
+                                            typeof swiper.params.pagination !== "boolean"
+                                        ) {
+                                            swiper.params.pagination.el = paginationRef.current;
+                                        }
+                                    }}
+                                    spaceBetween={16} // 슬라이드 간 간격 (원하는 값으로 조절 가능)
+                                    slidesPerView={1} // 한 번에 하나의 카드만 보여줌
                                 >
                                     {todayRuns.map((run) => {
                                         const dateObj = new Date(run.date);
@@ -126,7 +140,13 @@ const NewTrainingList: React.FC = () => {
                                     })}
                                 </Swiper>
 
-                                <div ref={paginationRef} className="mb-[12px] mt-[12px] flex justify-center" />
+                                <div
+                                    ref={paginationRef}
+                                    className="mb-[12px] mt-[12px] flex justify-center
+             [&>.swiper-pagination-bullet]:bg-white
+             [&>.swiper-pagination-bullet-active]:bg-white
+             [&>.swiper-pagination-bullet]:mx-[4px]"
+                                />
                             </div>
                         </>
                     ) : (

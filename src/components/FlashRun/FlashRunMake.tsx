@@ -83,8 +83,13 @@ function FlashRunMake() {
     }
 
     try {
-      const isoDate = dateTime.date.toISOString().split("T")[0];
-      const eventDateTime = `${isoDate}T${dateTime.time}`;
+      const pad = (n: number) => n.toString().padStart(2, "0");
+      const year = dateTime.date!.getFullYear();
+      const month = pad(dateTime.date!.getMonth() + 1);
+      const day = pad(dateTime.date!.getDate());
+      const time = dateTime.time;
+      const eventDateTime = `${year}-${month}-${day}T${time}:00`; // ✅ 로컬 기준
+
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
       const formData = new FormData();
@@ -119,7 +124,7 @@ function FlashRunMake() {
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
   };
 
-  
+
 
   // 시간 입력 관련 상태 및 핸들러
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);

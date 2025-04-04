@@ -101,7 +101,21 @@ const NewFlashRunList: React.FC = () => {
                             {/* ✅ Swiper 컴포넌트 (기존 코드 그대로 유지) */}
                             <div className="relative w-[335px] mt-3">
                                 <Swiper
-                                // ... 기존 Swiper 설정
+                                    modules={[Pagination, Navigation]} // ✅ Swiper 모듈 활성화
+                                    pagination={{
+                                        el: paginationRef.current,
+                                        clickable: true,
+                                    }}
+                                    onBeforeInit={(swiper) => {
+                                        if (
+                                            swiper.params.pagination &&
+                                            typeof swiper.params.pagination !== "boolean"
+                                        ) {
+                                            swiper.params.pagination.el = paginationRef.current;
+                                        }
+                                    }}
+                                    spaceBetween={16} // 슬라이드 간 간격 (원하는 값으로 조절 가능)
+                                    slidesPerView={1} // 한 번에 하나의 카드만 보여줌
                                 >
                                     {todayRuns.map((run) => {
                                         const dateObj = new Date(run.date);
@@ -126,14 +140,20 @@ const NewFlashRunList: React.FC = () => {
                                     })}
                                 </Swiper>
 
-                                <div ref={paginationRef} className="mb-[12px] mt-[12px] flex justify-center" />
+                                <div
+                                    ref={paginationRef}
+                                    className="mb-[12px] mt-[12px] flex justify-center
+             [&>.swiper-pagination-bullet]:bg-white
+             [&>.swiper-pagination-bullet-active]:bg-white
+             [&>.swiper-pagination-bullet]:mx-[4px]"
+                                />
                             </div>
                         </>
                     ) : (
                         // ✅ 오늘의 러닝이 없을 경우
                         <div className="flex flex-col items-center justify-center w-[335px] h-[200px] bg-kuLightGray rounded-lg mt-4">
                             <p className="text-[18px] font-semibold text-black">현재 진행중인 정규런이 없습니다.</p>
-                        
+
                         </div>
                     )}
                 </div>
