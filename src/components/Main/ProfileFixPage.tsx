@@ -15,9 +15,11 @@ import EyeOffIcon from "../../assets/visibility_false.svg";
 interface InputFieldProps {
   label: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: string, isValid?: boolean) => void;
   disabled?: boolean;
   password?: boolean;
+  errorMessage?: string;
+  hasError?: boolean;
 }
 
 //입력 필드 공통 컴포넌트
@@ -27,6 +29,8 @@ const InputField: React.FC<InputFieldProps> = ({
   onChange,
   disabled = false,
   password = false,
+  errorMessage = "",
+  hasError = false,
 }) => {
   const [showPassword, setShowPassword] = useState(false); //비밀번호 입력창인 경우 비밀번호를 보여주는 여부
   const inputType = password ? (showPassword ? "text" : "password") : "text";
@@ -36,9 +40,21 @@ const InputField: React.FC<InputFieldProps> = ({
       <label className="block mb-2 text-m font-semibold text-gray-700">{label}</label>
       <div className="relative w-full">
         <input
-          className="w-full border border-kuCoolGray rounded-xl px-3 py-3 focus: outline-kuDarkGreen"
+          className={`w-full border rounded-xl px-3 py-3 ${
+            hasError
+              ? "border-red-500 focus:outline-red-600"
+              : "border-kuCoolGray focus:outline-kuDarkGreen"
+          }`}
           value={value}
-          onChange={onChange}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            if (password) {
+              const { valid } = validatePassword(newValue);
+              onChange(newValue, valid);
+            } else {
+              onChange(newValue);
+            }
+          }}
           disabled={disabled}
           type={inputType}
         />
@@ -56,6 +72,8 @@ const InputField: React.FC<InputFieldProps> = ({
           </button>
         )}
       </div>
+      {/*에러 메시지 렌더링 추가*/}
+      {hasError && errorMessage && <p className="mt-2 text-sm text-red-500">{errorMessage}</p>}
     </div>
   );
 };
@@ -85,6 +103,18 @@ const SchoolInfoInputField: React.FC<{
   </div>
 );
 
+//비밀번호가 유효한지 확인하는 메소드 validatePassword
+function validatePassword(password: string) {
+  // 영문, 숫자, 특수문자 조합 8~20자리까지 가능
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
+
+  if (!passwordRegex.test(password)) {
+    return { valid: false, message: "영문, 숫자, 특수문자 조합 8~20자리까지 가능합니다." };
+  } else {
+    return { valid: true, message: "유효한 비밀번호 형식입니다" };
+  }
+}
+
 //한 달 달력에 들어갈 내용(날짜(Date))들의 배열을 만든다.
 function ProfileFixPage() {
   const navigate = useNavigate(); //useNavigate 훅을 사용해 navigate 함수 생성
@@ -94,8 +124,12 @@ function ProfileFixPage() {
   const [departmentName, setDepartmentName] = useState("힙합공학부"); //학교 정보-학과명
   const [telNum, setTelNum] = useState(""); //전화번호
   const [studentID, setStudentID] = useState("201911291"); //학번(ID)
-  const [password, setPassword] = useState(""); //비밀번호
   const [userProfileImageUrl, setUserProfileImageUrl] = useState(""); //유저 프로필 이미지 url
+
+  //비밀번호 유효성 검사 관련
+  const [password, setPassword] = useState(""); //비밀번호
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
 
   //프로필 이미지 관련
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -114,7 +148,7 @@ function ProfileFixPage() {
 
     if (telNum) formData.append("phone", telNum);
     if (selectedImage) formData.append("userProfileImg", selectedImage);
-    formData.append("password", password);
+    if (password !== "") formData.append("password", password); //비밀번호가 공백이라면, 빈 채로 보내줘야 함
 
     console.log("FormData 내용:", Array.from(formData.entries()));
 
@@ -160,9 +194,21 @@ function ProfileFixPage() {
     }
   };
 
-  //저장하기 전에 필수 form이 다 채워졌나 확인하는 변수 (전화번호를 제외한 모든 form이 채워져 있어야 함)
-  const isFormValid =
-    password.trim() !== "" && (selectedImage !== null || userProfileImageUrl !== null);
+  //저장하기 전에 필수 form이 다 채워졌나 확인하는 변수들 (전화번호를 제외한 모든 form이 채워져 있어야 함), 그리고 이를 검증하는 isFormsValid() 함수
+  const isPasswordFormValid = password.trim() === "" || isPasswordValid;
+
+  function isFormsValid() {
+    //비번도 비어있는 상태이고, 프사 선택도 안했다면, 가차없이 false 반환
+    if (password.trim() === "" && selectedImage === null) return false;
+
+    if (isPasswordFormValid) {
+      //비밀번호가 유효한 경우
+      return true;
+    } else {
+      //비밀번호가 유효하지 않은 경우
+      return false;
+    }
+  }
 
   //유저 세부 정보를 불러오는 fetchUserDetailedProfile()
   async function fetchUserDetailedProfile() {
@@ -189,6 +235,15 @@ function ProfileFixPage() {
     }
   }
 
+  //password를 바꿨을 때를 컨트롤 하는 handlePasswordChange
+  const handlePasswordChange = (value: string, isValid?: boolean) => {
+    setPassword(value);
+    if (typeof isValid === "boolean") {
+      setIsPasswordValid(isValid);
+      setPasswordError(isValid ? "" : "영문, 숫자, 특수문자 조합 8~20자리까지 가능합니다.");
+    }
+  };
+
   //페이지 최초 로딩 1회 시에 유저 정보를 불러와야 함
   useEffect(() => {
     fetchUserDetailedProfile();
@@ -197,11 +252,11 @@ function ProfileFixPage() {
   return (
     <>
       <ActionBar />
-      <div className="min-h-screen flex flex-col items-center justify-start bg-white pt-12 pb-20">
-        <div className="w-full max-w-sm text-left mt-2 mb-16 p-4">
+      <div className="min-h-screen w-full flex flex-col items-center justify-start bg-white pt-[56px] pb-20">
+        <div className="w-full text-left mt-2 mb-16 p-4 pl-8">
           <span className="text-2xl font-bold">프로필 수정</span>
         </div>
-        <div className="relative w-full max-w-sm">
+        <div className="relative w-full">
           {/* 프로필 사진 */}
           <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
             <div className="w-28 h-28 rounded-full bg-gray-300 border-[4px] border-kuDarkGreen overflow-hidden">
@@ -229,46 +284,34 @@ function ProfileFixPage() {
           </div>
 
           {/* 기준이 되는 하단 박스 */}
-          <div className="bg-whiteSmoke w-full pt-16 pb-4 pl-4 pr-4">
-            <InputField
-              label="이름"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              disabled
-            />
+          <div className="bg-whiteSmoke w-full pt-16 pb-4 pl-8 pr-8">
+            <InputField label="이름" value={name} onChange={setName} disabled />
             <SchoolInfoInputField
               label="학교 정보"
               value={[collegeName, departmentName]}
               onChange_1={(e) => setCollegeName(e.target.value)}
               onChange_2={(e) => setDepartmentName(e.target.value)}
             />
-            <InputField
-              label="전화번호"
-              value={telNum}
-              onChange={(e) => setTelNum(e.target.value)}
-            />
-            <InputField
-              label="학번(ID)"
-              value={studentID}
-              onChange={(e) => setStudentID(e.target.value)}
-              disabled
-            />
+            <InputField label="전화번호" value={telNum} onChange={setTelNum} />
+            <InputField label="학번(ID)" value={studentID} onChange={setStudentID} disabled />
             <InputField
               label="비밀번호"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
               password={true}
+              hasError={!isPasswordValid && password.length > 0}
+              errorMessage={passwordError}
             />
           </div>
 
           {/* 저장 버튼 */}
-          <div className="w-full max-w-sm text-left p-4">
+          <div className="w-full text-left p-4 pr-8 pl-8">
             <button
-              disabled={!isFormValid}
+              disabled={!isFormsValid()}
               onClick={handleSubmitBtnClick}
-              className={`w-full font-bold text-xl py-3 rounded-lg mt-6 
+              className={`w-full font-bold text-xl py-3 rounded-lg mt-6
             ${
-              isFormValid
+              isFormsValid()
                 ? "bg-kuDarkGreen text-white hover:bg-kuGreen"
                 : "bg-kuLightGray text-white"
             }`}
