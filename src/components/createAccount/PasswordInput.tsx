@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; //react-router-dom 라이브러리를 사용 (useNavigation 사용할 예정)
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; //react-router-dom 라이브러리를 사용 (useNavigation 사용할 예정)
 
 //redux를 사용하기 위한 구문
-import { useDispatch } from 'react-redux'; 
-import { setPassword } from '../../redux/slices/signupSlice' //Action Creator를 import 해온다!
+import { useDispatch } from "react-redux";
+import { setPassword } from "../../redux/slices/signupSlice"; //Action Creator를 import 해온다!
 
 //비밀번호가 유효한지 확인하는 메소드 validatePassword
 function validatePassword(password: string) {
@@ -38,14 +38,14 @@ function PasswordInput() {
     setIsValidPW(result.valid); //유효한 비밀번호인지를 확인하여 그것으로 set한다(true/false)
   };
 
-  //'비밀번호' 입력 란의 입력 값이 바뀔 때마다 취하는 액션을 정의한 handleChangeInPassword 메소드
+  //'비밀번호' 입력 란의 입력 값이 바뀔 때마다 취하는 액션을 정의한 handleChangeInPasswordConfirm 메소드
   const handleChangeInPasswordConfirm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordConfirm(e.target.value);
   };
 
   //useEffect로 passwordConfirm 값과 password 상태가 변경될 때마다 확인 (상태 변경은 React에서 비동기적으로 처리될 수 있기 때문)
   useEffect(() => {
-    if(passwordConfirm === password) {
+    if (passwordConfirm === password) {
       setValidationMessageInConfirm("비밀번호가 일치합니다");
       setIsValidPWConfirm(true);
     } else {
@@ -64,7 +64,7 @@ function PasswordInput() {
       //redux 저장소에 password 정보 저장
       dispatch(setPassword(password));
 
-      navigate('/name-input'); //'/next-step'라는 값을 가진 컴포넌트로 이동한다 (navigating)
+      navigate("/name-input"); //'/next-step'라는 값을 가진 컴포넌트로 이동한다 (navigating)
     } else {
       alert("비밀번호 설정을 다시 확인해주세요.");
     }
@@ -80,15 +80,15 @@ function PasswordInput() {
         <span className="text-gray-400 text-sm">2/5</span>
       </div>
 
-      
-  
       {/* Main Form */}
       <form onSubmit={handleSubmit} className="w-full max-w-sm mt-16">
         {/* '아이디를 입력해 주세요' 텍스트 */}
         <div className="w-full max-w-sm">
-          <h1 className="text-left font-bold text-2xl text-black mb-12">비밀번호를 설정해 주세요.</h1>
+          <h1 className="text-left font-bold text-2xl text-black mb-12">
+            비밀번호를 설정해 주세요.
+          </h1>
         </div>
-  
+
         {/* 비밀번호 입력 필드 */}
         <div className="mb-6">
           <input
@@ -96,10 +96,14 @@ function PasswordInput() {
             value={password}
             onChange={handleChangeInPassword}
             placeholder="비밀번호"
-            className={`w-full px-4 py-2 border ${password === '' ? 'border-gray-300' : isValidPW ? 'border-gray-300' : 'border-red-500'} rounded-md focus:outline-none`}
+            className={`w-full px-4 py-2 border ${
+              password === "" ? "border-gray-300" : isValidPW ? "border-gray-300" : "border-red-500"
+            } rounded-md focus:outline-none`}
           />
           <div className="w-full max-w-sm">
-            {!(isValidPW || password === '') && <p className="text-red-500 text-sm text-left mt-2">{validationMessage}</p>}
+            {!(isValidPW || password === "") && (
+              <p className="text-red-500 text-sm text-left mt-2">{validationMessage}</p>
+            )}
           </div>
         </div>
 
@@ -110,18 +114,35 @@ function PasswordInput() {
             value={passwordConfirm}
             onChange={handleChangeInPasswordConfirm}
             placeholder="비밀번호 확인"
-            className={`w-full px-4 py-2 border ${passwordConfirm === '' ? 'border-gray-300' : isValidPWConfirm ? 'border-kuDarkGreen' : 'border-red-500'} rounded-md focus:outline-none`}
+            className={`w-full px-4 py-2 border ${
+              passwordConfirm === ""
+                ? "border-gray-300"
+                : isValidPWConfirm
+                ? "border-kuDarkGreen"
+                : "border-red-500"
+            } rounded-md focus:outline-none`}
           />
           <div className="w-full max-w-sm">
-            {!(passwordConfirm === '') ? 
-              (isValidPWConfirm ? <p className="text-kuDarkGreen text-sm mt-2 text-left">{validationMessageInConfirm}</p> : <p className="text-red-500 text-sm mt-2 text-left">{validationMessageInConfirm}</p>) : null}
+            {!(passwordConfirm === "") ? (
+              isValidPWConfirm ? (
+                <p className="text-kuDarkGreen text-sm mt-2 text-left">
+                  {validationMessageInConfirm}
+                </p>
+              ) : (
+                <p className="text-red-500 text-sm mt-2 text-left">{validationMessageInConfirm}</p>
+              )
+            ) : null}
           </div>
         </div>
 
         {/* 다음 버튼 */}
         <button
           type="submit"
-          className={`w-full py-3 mt-72 rounded-md ${(isValidPW && isValidPWConfirm) ? 'bg-kuDarkGreen text-kuWhite hover: hover:bg-kuGreen' : ' text-gray-500 bg-gray-100'} transition-colors`}
+          className={`w-full py-3 mt-72 rounded-md ${
+            isValidPW && isValidPWConfirm
+              ? "bg-kuDarkGreen text-kuWhite hover: hover:bg-kuGreen"
+              : " text-gray-500 bg-gray-100"
+          } transition-colors`}
           disabled={!(isValidPW && isValidPWConfirm)}
         >
           다음
@@ -132,7 +153,6 @@ function PasswordInput() {
       <div className="mb-4"></div>
     </div>
   );
-  
 }
 
 export default PasswordInput;
