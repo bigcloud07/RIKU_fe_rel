@@ -101,7 +101,13 @@ const NewTrainingList: React.FC = () => {
                             {/* ✅ Swiper 컴포넌트 (기존 코드 그대로 유지) */}
                             <div className="relative w-[335px] mt-3">
                                 <Swiper
-                                // ... 기존 Swiper 설정
+                                    modules={[Pagination, Navigation]} // Swiper 모듈 활성화
+                                    pagination={{
+                                        el: ".custom-pagination", // ✅ 클래스 기반으로 지정
+                                        clickable: true,
+                                    }}
+                                    spaceBetween={16}
+                                    slidesPerView={1}
                                 >
                                     {todayRuns.map((run) => {
                                         const dateObj = new Date(run.date);
@@ -119,21 +125,27 @@ const NewTrainingList: React.FC = () => {
                                                     participants={run.participants}
                                                     date={formattedDate}
                                                     time={formattedTime}
-                                                    onClick={() => navigate(`/run/training/${run.id}`)}
+                                                    onClick={() => navigate(`/run/regular/${run.id}`)}
                                                 />
                                             </SwiperSlide>
                                         );
                                     })}
                                 </Swiper>
 
-                                <div ref={paginationRef} className="mb-[12px] mt-[12px] flex justify-center" />
+                                {/* ✅ Swiper pagination dot 표시 영역 */}
+                                <div
+                                    className="custom-pagination mb-[12px] mt-[12px] flex justify-center
+    [&>.swiper-pagination-bullet]:bg-white
+    [&>.swiper-pagination-bullet-active]:bg-white
+    [&>.swiper-pagination-bullet]:mx-[4px]"
+                                ></div>
                             </div>
                         </>
                     ) : (
                         // ✅ 오늘의 러닝이 없을 경우
                         <div className="flex flex-col items-center justify-center w-[335px] h-[200px] bg-kuLightGray rounded-lg mt-4">
                             <p className="text-[18px] font-semibold text-black">현재 진행중인 훈련이 없습니다.</p>
-                            
+
                         </div>
                     )}
                 </div>

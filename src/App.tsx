@@ -15,6 +15,7 @@ import TelNumberInput from "./components/createAccount/TelNumberInput";
 import FlashRunList from "./components/FlashRun/FlashRunList";
 import TabNavigationUI from "./components/TabNavigationUI";
 
+
 import NewMain from "./components/MainPage/NewMain";
 import AdminPage from "./components/AdminPage/AdminPage";
 
@@ -23,20 +24,27 @@ import { store } from "./redux/store";
 import NewFlashRunList from "./components/NewFlashRun/NewFlashRunList";
 import PastRuns from "./components/NewFlashRun/PastRuns";
 
-import ProtectedRoute from "./components/ProtectedRoute";
-import NewRegularRunList from "./components/NewRegularRun/NewRegularRunList";
-import NewRegularRunMake from "./components/NewRegularRun/NewRegularRunMake";
-import EventMake from "./components/NewEvent/EventMake";
-import TrainingMake from "./components/NewTraining/TrainingMake";
-import NewEventCard from "./components/NewFlashRun/NewEventCard";
-import NewTrainingList from "./components/NewTraining/NewTrainingList";
-import NewEventList from "./components/NewEvent/NewEventList";
-import Sandbox from "./components/Sandbox";
-import NewRegularRunDetail from "./components/NewRegularRun/NewRegularRunDetail";
-import NewTrainingDetail from "./components/NewTraining/NewTrainingDetail";
-import NewEventDetail from "./components/NewEvent/NewEventDetail";
+
+import ProtectedRoute from './components/ProtectedRoute';
+import NewRegularRunList from './components/NewRegularRun/NewRegularRunList';
+import NewRegularRunMake from './components/NewRegularRun/NewRegularRunMake';
+import EventMake from './components/NewEvent/EventMake'
+import TrainingMake from './components/NewTraining/TrainingMake';
+import NewEventCard from './components/NewFlashRun/NewEventCard';
+import NewTrainingList from './components/NewTraining/NewTrainingList';
+import NewEventList from './components/NewEvent/NewEventList';
+import Sandbox from './components/Sandbox';
+import NewRegularRunDetail from './components/NewRegularRun/NewRegularRunDetail';
+import NewTrainingDetail from './components/NewTraining/NewTrainingDetail';
+import NewEventDetail from './components/NewEvent/NewEventDetail';
+
+import NewRegularRunEdit from './components/NewRegularRun/NewRegularRunEdit';
+import NewTrainingEdit from './components/NewTraining/NewTrainingEdit';
+import NewFlashRunEdit from './components/FlashRun/NewFlashRunEdit';
+import EventEdit from './components/NewEvent/EventEdit';
 
 import ProfileFixPage from "./components/Main/ProfileFixPage";
+
 
 function App() {
   return (
@@ -64,7 +72,6 @@ function App() {
               <Route path="/tab/*" element={<TabNavigationUI />} />
               <Route path="/main" element={<NewMain />} />
               <Route path="/flashRun" element={<NewFlashRunList />} />
-
               <Route path="/admin" element={<AdminPage />} />
               <Route path="/regular" element={<NewRegularRunList />} />
               <Route path="/training" element={<NewTrainingList />} />
@@ -72,7 +79,11 @@ function App() {
               <Route path="/event/make" element={<EventMake />} />
               <Route path="/training/make" element={<TrainingMake />} />
               <Route path="/event" element={<NewEventList />} />
-
+              
+              <Route path="/regular/edit/:postId" element={<NewRegularRunEdit/>} />
+              <Route path="/training/edit/:postId" element={<NewTrainingEdit/>} />
+              <Route path="/flash/edit/:postId" element={<NewFlashRunEdit/>} />
+              <Route path="/event/edit/:postId" element={<EventEdit/>} />
               <Route path="/profilefix-page" element={<ProfileFixPage />} />
 
               {/* 컴포넌트 테스트 sandbox */}

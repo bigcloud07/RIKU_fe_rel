@@ -43,7 +43,7 @@ interface FlashRunUserData {
 const FlashRunUser: React.FC<FlashRunUserData> = ({
   title,
   location,
-  date,
+  
   participants,
   participantsNum,
   content,
@@ -70,6 +70,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
     // 로컬 스토리지에서 userStatus 초기값 가져옴
     return localStorage.getItem(`userStatus-${postId}`) || "";
   });
+  const [date, setDate] = useState("")
 
   // buttonText 변경 시 로컬 스토리지에 저장
   useEffect(() => {
@@ -163,9 +164,10 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       }
     }
   };
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string }>({
+  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
     userName: "",
+    userProfileImg: "",
   });
 
   const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
@@ -188,7 +190,11 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           setUserInfo({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
+            userProfileImg: result.userInfo?.userProfileImg || "",
           });
+          setDate(result.date)
+          setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+          setPostCreatorName(result.postCreatorInfo.userName);
         } else {
           setError(response.data.responseMessage);
         }
@@ -200,8 +206,20 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
   }, [postId]);
 
   const [creatorName, setCreatorName] = useState(""); // 작성자 이름
+  const [postCreatorName, setPostCreatorName] = useState("");
 
 
+
+  const formatDateTime = (iso: string) => {
+    const dateObj = new Date(iso);
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    const hours = dateObj.getHours().toString().padStart(2, "0");
+    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
+    return `${month}월 ${day}일 ${hours}:${minutes}`;
+  };
+
+  const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
 
 
 
@@ -228,7 +246,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
             </div>
             <div className="flex items-center my-1.5">
               <object data={time} className="w-[24px] h-[24px] mr-2" />
-              <span>{date}</span>
+              <span>{formatDateTime(date)}</span>
             </div>
             <div className="flex items-center my-1.5">
               <object data={people} className="w-[24px] h-[24px] mr-2 font-bold font-#366943" />
@@ -245,16 +263,24 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       {activeTab === "소개" && (
         <>
           <div className="flex justify-center items-center w-[327px] h-14 bg-[#F0F4DD] rounded-lg text-sm font-normal mt-5">
-            <div className="flex items-center">
-              <div className="flex justify-center items-center bg-kuBlue w-6 h-6 rounded-full relative mr-2">
-                <span className="text-white text-xs font-bold">
-                  <span className="text-white text-xs font-bold">
-                    {creatorName && creatorName.length > 1 ? creatorName.charAt(0) : creatorName?.charAt(0) || "?"}
-                  </span>
-                  <div className="absolute top-[-15px] left-[-19px] w-[32.78px] h-[32px]"><img src={pacermark} /></div>
-                </span>
+          <div className="flex items-center">
+              <div className="relative w-6 h-6 mr-2">
+                {postCreatorImg && postCreatorImg.trim() !== "" ? (
+                  <img
+                    src={postCreatorImg}
+                    alt={`${creatorName} 프로필`}
+                    className="w-6 h-6 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-6 h-6 rounded-full bg-kuBlue text-white text-xs font-bold flex items-center justify-center">
+                    {creatorName?.charAt(0) || "?"}
+                  </div>
+                )}
+                <div className="absolute top-[-15px] left-[-19px] w-[32.78px] h-[32px]">
+                  <img src={pacermark} alt="pacer mark" />
+                </div>
               </div>
-              {creatorName}
+              <span className="text-black font-semibold">{creatorName}</span>
             </div>
           </div>
           {attachmentUrls.length > 0 && (
@@ -286,8 +312,23 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
             </div>
           )}
           <div className="flex flex-col items-start text-left w-full max-w-[327px]">세부 내용</div>
-          <div className="mt-5 w-[327px] border border-[#ECEBE4] rounded-lg">
-            <div className="text-[#686F75] p-5 text-justify">{content}</div>
+          <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
+
+            <div className="flex items-center gap-2 mb-2">
+              {postCreatorImg ? (
+                <img
+                  src={postCreatorImg}
+                  alt={`${postCreatorName} 프로필`}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
+                  {postCreatorName.charAt(0)}
+                </div>
+              )}
+              <span className="text-sm font-medium text-black">{postCreatorName}</span>
+            </div>
+            <div className="mt-2 text-[#686F75] p-3 text-sm text-justify whitespace-pre-wrap">{content}</div>
           </div>
         </>
       )}
@@ -298,8 +339,8 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
         className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${userStatus === "ATTENDED"
           ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
           : userStatus === "PENDING"
-            ? "bg-kuWarmGray text-white" // PENDING 상태일 때
-            : "bg-kuDarkGreen text-white" // 기본 상태 (참여하기)
+            ? "bg-kuDarkGreen text-white"
+            : "bg-kuGreen text-white"
           }`}
         onClick={
           userStatus !== "PENDING"

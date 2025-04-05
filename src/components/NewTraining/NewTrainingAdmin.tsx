@@ -67,9 +67,10 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const [trainingtype, setTrainingtype] = useState("");
 
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string }>({
+  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
     userName: "",
+    userProfileImg: "",
   });
   const [trainingType, setTrainingType] = useState("");
 
@@ -94,9 +95,12 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           setUserInfo({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
+            userProfileImg: result.userInfo?.userProfileImg || "",
           });
           setPostCreatorName(result.postCreatorInfo?.userName || "");
           setTrainingtype(result.trainingType);
+          setPostStatus(result.postStatus); // CLOSED, NOW 등
+          setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
         } else {
           setError(response.data.responseMessage);
         }
@@ -112,7 +116,8 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
     const month = dateObj.getMonth() + 1;
     const day = dateObj.getDate();
     const hours = dateObj.getHours().toString().padStart(2, "0");
-    return `${month}월 ${day}일 ${hours}시`;
+    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
+    return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
 
   const handleTabChange = (tab: "소개" | "명단") => setActiveTab(tab);
@@ -137,12 +142,25 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   const handleCloseModal = () => setIsModalOpen(false);
   const [isFinished, setIsFinished] = useState(false);
 
-  const handleModalStartClick = () => {
+  const handleModalStartClick = async () => {
     if (!code) return;
-    setIsFinished(true);
-    setIsModalOpen(false);
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const response = await customAxios.patch(`/run/training/post/${postId}/close`, {}, {
+        headers: { Authorization: `${token}` },
+      });
 
-
+      if (response.data.isSuccess) {
+        setIsFinished(true); // 버튼 비활성화 처리
+        
+        setIsModalOpen(false);
+        alert("출석이 종료되었습니다.");
+      } else {
+        setError(response.data.responseMessage);
+      }
+    } catch (error) {
+      setError("출석 종료 처리에 실패했습니다.");
+    }
   };
 
 
@@ -181,6 +199,12 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
     }
   };
 
+  const [postStatus, setPostStatus] = useState<string>("");
+  const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
+
+
+
+
   return (
     <div className="flex flex-col items-center text-center px-5 justify-center">
       <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
@@ -193,10 +217,10 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
             {/* 상단 전체를 relative로 감싸기 */}
-            <div className="relative flex flex-col items-center mt-[10px] w-[375px]">
+            <div className="relative flex flex-col items-center mt-[7px] w-[375px]">
 
               {/* trainingtype 박스 */}
-              <div className="mx-auto bg-[#FFC002] h-[24px] px-[16px] py-[3.5px] rounded-md text-sm font-bold w-fit">
+              <div className="flex bg-[#FFC002] h-[24px] p-[10px] text-[14px] rounded-[8px] font-bold w-fit items-center">
                 {trainingtype}
               </div>
 
@@ -204,7 +228,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
               <img
                 src={isHovered ? questionmarkOn : questionmarkOff}
                 alt="question mark"
-                className="absolute top-[-5px] right-[18px] w-[24px] h-[24px] cursor-pointer"
+                className="absolute top-[-1px] right-[18px] w-[24px] h-[24px] cursor-pointer"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={() => setIsTooltipVisible(!isTooltipVisible)}
@@ -275,10 +299,18 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           )}
           <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">세부 내용</div>
           <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
-                {postCreatorName.charAt(0)}
-              </div>
+          <div className="flex items-center gap-2 mb-2">
+              {postCreatorImg ? (
+                <img
+                  src={postCreatorImg}
+                  alt={`${postCreatorName} 프로필`}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
+                  {postCreatorName.charAt(0)}
+                </div>
+              )}
               <span className="text-sm font-medium text-black">{postCreatorName}</span>
             </div>
 
@@ -293,14 +325,21 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
 
       {/* 시작하기 버튼 */}
       <button
-        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished
+        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished || postStatus === "CLOSED"
           ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
           : "bg-[#366943] text-white"
           }`}
         onClick={handleStartClick}
-        disabled={isFinished}
+        disabled={isFinished || postStatus === "CLOSED"}
       >
         {buttonText}
+      </button>
+      {/* 수정하기 버튼 */}
+      <button
+        className="flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mb-4 bg-[#4D4D4D] text-white"
+        onClick={() => navigate(`/training/edit/${postId}`)}
+      >
+        수정하기
       </button>
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">

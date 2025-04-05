@@ -5,6 +5,7 @@ interface Pacer {
     pacerName: string;
     distance: string;
     pace: string;
+    profileImg?: string | null;
 }
 
 interface PacerCardProps {
@@ -32,16 +33,16 @@ const PacerCard: React.FC<PacerCardProps> = ({ pacers }) => {
                     {/* 그룹 */}
                     <div
                         className={`p-3 font-semibold rounded-[10px] text-white mt-1 ${idx === 0
-                                ? 'bg-kuDarkGreen bg-opacity-100'
-                                : idx === 1
-                                    ? 'bg-kuDarkGreen bg-opacity-75'
-                                    : idx === 2
-                                        ? 'bg-kuDarkGreen bg-opacity-50'
-                                        : idx === 3
-                                            ? 'bg-kuDarkGreen bg-opacity-30'
-                                            : idx === 4
-                                                ? 'bg-kuDarkGreen bg-opacity-10'
-                                                : 'bg-kuDarkGreen bg-opacity-5' // 기본값
+                            ? 'bg-kuDarkGreen bg-opacity-100'
+                            : idx === 1
+                                ? 'bg-kuDarkGreen bg-opacity-75'
+                                : idx === 2
+                                    ? 'bg-kuDarkGreen bg-opacity-50'
+                                    : idx === 3
+                                        ? 'bg-kuDarkGreen bg-opacity-30'
+                                        : idx === 4
+                                            ? 'bg-kuDarkGreen bg-opacity-10'
+                                            : 'bg-kuDarkGreen bg-opacity-5' // 기본값
                             } rounded-l-xl`}
                     >
                         {pacer.group}
@@ -49,9 +50,17 @@ const PacerCard: React.FC<PacerCardProps> = ({ pacers }) => {
 
                     {/* 페이서 이름 */}
                     <div className="p-3 flex items-center justify-center gap-2 rounded-[10px] mt-1">
-                        <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold">
-                            {pacer.pacerName.charAt(0)}
-                        </div>
+                        {pacer.profileImg ? (
+                            <img
+                                src={pacer.profileImg}
+                                alt={`${pacer.pacerName} 프로필`}
+                                className="w-8 h-8 rounded-full object-cover"
+                            />
+                        ) : (
+                            <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold">
+                                {pacer.pacerName.charAt(0)}
+                            </div>
+                        )}
                         <span className="text-gray-800 font-medium">{pacer.pacerName}</span>
                     </div>
 

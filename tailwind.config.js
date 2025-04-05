@@ -3,7 +3,8 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}", // src 폴더 내 모든 JS/TS 파일
-    "./index.html", // Vite의 기본 HTML 파일 포함
+    "./index.html",                // Vite의 기본 HTML 파일 포함
+    "./node_modules/swiper/**/*.{js,ts,jsx,tsx}", // ✅ Swiper 모듈 포함
   ],
   theme: {
     extend: {

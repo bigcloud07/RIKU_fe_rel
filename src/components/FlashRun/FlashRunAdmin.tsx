@@ -40,7 +40,7 @@ interface FlashRunAdminData {
 const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   title,
   location,
-  date,
+  
   participants,
   participantsNum,
   content,
@@ -56,8 +56,10 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   const [isFinished, setIsFinished] = useState(false);
   const [error, setError] = useState<string | null>(null); // 에러 메시지
   const [currentParticipants, setCurrentParticipants] = useState<Participant[]>(participants);
+  const [date, setDate] = useState("");
   const navigate = useNavigate()
 
+  
 
   const handleStartClick = async () => {
     if (!code) {
@@ -90,13 +92,26 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     setIsModalOpen(true);
   };
 
-  const handleModalStartClick = () => {
-    if (isFinished) return;
+  const [postStatus, setPostStatus] = useState<string>("");
+  const handleModalStartClick = async () => {
     if (!code) return;
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const response = await customAxios.patch(`/run/flash/post/${postId}/close`, {}, {
+        headers: { Authorization: `${token}` },
+      });
 
-    setButtonText("마감됨");
-    setIsFinished(true);
-    setIsModalOpen(false);
+      if (response.data.isSuccess) {
+        setIsFinished(true); // 버튼 비활성화 처리
+        setPostStatus("CLOSED");
+        setIsModalOpen(false);
+        alert("출석이 종료되었습니다.");
+      } else {
+        setError(response.data.responseMessage);
+      }
+    } catch (error) {
+      setError("출석 종료 처리에 실패했습니다.");
+    }
   };
 
   const handleCloseModal = () => setIsModalOpen(false);
@@ -123,9 +138,10 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     }
   };
 
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string }>({
+  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
     userName: "",
+    userProfileImg: "",
   });
 
   const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
@@ -142,11 +158,13 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           const result = response.data.result;
           setAttachmentUrls(result.attachmentUrls || []);
           setCreatorName(result.postCreatorInfo?.userName || "");
-
+          setPostStatus(result.postStatus);
           setUserInfo({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
+            userProfileImg: result.userInfo?.userProfileImg || "",
           });
+          setDate(result.date);
         } else {
           setError(response.data.responseMessage);
         }
@@ -156,6 +174,16 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     };
     fetchPostData();
   }, [postId]);
+
+  const formatDateTime = (iso: string) => {
+    const dateObj = new Date(iso);
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    const hours = dateObj.getHours().toString().padStart(2, "0");
+    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
+    return `${month}월 ${day}일 ${hours}:${minutes}`;
+  };
+  
 
 
   return (
@@ -181,7 +209,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
             </div>
             <div className="flex items-center my-1.5">
               <object data={time} className="w-[24px] h-[24px] mr-2" />
-              <span>{date}</span>
+              <span>{formatDateTime(date)}</span>
             </div>
             <div className="flex items-center my-1.5">
               <object data={people} className="font-bold text-kuDarkGreen w-[24px] h-[24px] mr-2" />
@@ -253,14 +281,21 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
       {/* 시작하기 버튼 */}
       <button
-        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished
+        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished || postStatus === "CLOSED"
           ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
           : "bg-[#366943] text-white"
           }`}
         onClick={handleStartClick}
-        disabled={isFinished}
+        disabled={isFinished || postStatus === "CLOSED"}
       >
         {buttonText}
+      </button>
+      {/* 수정하기 버튼 */}
+      <button
+        className="flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mb-4 bg-[#4D4D4D] text-white"
+        onClick={() => navigate(`/flash/edit/${postId}`)}
+      >
+        수정하기
       </button>
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">

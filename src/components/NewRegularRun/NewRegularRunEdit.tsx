@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import customAxios from '../../apis/customAxios';
+// ✅ NewRegularRunEdit.tsx 전체 완성 코드 - 생략 없이 붙여넣기만 하면 됨
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import customAxios from "../../apis/customAxios";
 import { motion } from "framer-motion";
 import BackIcon from "../../assets/BackBtn.svg";
-import removeicon from "../../assets/remove-icon.svg";
-import { DateNtime } from "./DateNtime";
 import { DateInput } from "./DateInput";
 import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
 
 interface Pacer {
   id: number;
-  name: string;
+  name?: string;
+  pacerName?: string;
 }
 
 interface PacerGroup {
@@ -20,44 +20,95 @@ interface PacerGroup {
   pace: string;
 }
 
-interface CreatePacerRequest {
-  group: string;
-  pacerId: number;
-  distance: string;
-  pace: string;
-}
-
-function TrainingMake() {
+function NewRegularRunEdit() {
   const navigate = useNavigate();
+  const { postId } = useParams();
 
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [content, setContent] = useState("");
-  const [dateTime, setDateTime] = useState<{ date: Date | null; time: string }>({
-    date: null,
-    time: "00:00",
-  });
-  const [pacerGroups, setPacerGroups] = useState<PacerGroup[]>([
-    { id: "A", pacer: "", distance: "", pace: "" },
-  ]);
+  const [dateTime, setDateTime] = useState<{ date: Date | null; time: string }>({ date: null, time: "00:00" });
+  const [pacerGroups, setPacerGroups] = useState<PacerGroup[]>([]);
+  const [pacers, setPacers] = useState<Pacer[]>([]);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [bottomSheetType, setBottomSheetType] = useState<'distance' | 'pace' | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
   const [selectedDistance, setSelectedDistance] = useState<string>("5");
   const [selectedMinutes, setSelectedMinutes] = useState<string>("5");
   const [selectedSeconds, setSelectedSeconds] = useState<string>("30");
-  const [pacers, setPacers] = useState<Pacer[]>([]);
-  const [files, setFiles] = useState<File[]>([]);
-  const [previews, setPreviews] = useState<string[]>([]);
-  const handleContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
-
-  // 대표 사진
   const [mainImage, setMainImage] = useState<File | null>(null);
   const [mainPreview, setMainPreview] = useState<string | null>(null);
-
-  // 코스 사진
   const [courseImages, setCourseImages] = useState<File[]>([]);
   const [coursePreviews, setCoursePreviews] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchPacers = async () => {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const response = await customAxios.get("/pacers", {
+        headers: { Authorization: `${token}` },
+      });
+      if (response.data.isSuccess) setPacers(response.data.result);
+    };
+    const fetchPostData = async () => {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const res = await customAxios.get(`/run/regular/post/${postId}`, {
+        headers: { Authorization: `${token}` },
+      });
+      if (res.data.isSuccess) {
+        const result = res.data.result;
+        setTitle(result.title);
+        setLocation(result.location);
+        setContent(result.content);
+        setMainPreview(result.postImageUrl);
+        setCoursePreviews(result.attachmentUrls || []);
+        setDateTime({
+          date: new Date(result.date),
+          time: new Date(result.date).toTimeString().slice(0, 5),
+        });
+        setPacerGroups(result.pacers.map((p: any) => ({
+          id: p.group,
+          pacer: String(p.pacerId),
+          distance: p.distance,
+          pace: p.pace,
+        })));
+        console.log(result)
+      }
+    };
+    fetchPacers();
+    fetchPostData();
+  }, [postId]);
+
+  const addPacerGroup = () => {
+    const nextGroupId = String.fromCharCode(65 + pacerGroups.length);
+    setPacerGroups([...pacerGroups, { id: nextGroupId, pacer: "", distance: "", pace: "" }]);
+  };
+
+  const removePacerGroup = (id: string) => {
+    setPacerGroups(pacerGroups.filter(group => group.id !== id));
+  };
+
+  const handleInputChange = (id: string, field: keyof PacerGroup, value: string) => {
+    setPacerGroups(pacerGroups.map(group => group.id === id ? { ...group, [field]: value } : group));
+  };
+
+  const handleDateChange = (date: Date | null) => setDateTime(prev => ({ ...prev, date }));
+  const handleTimeChange = (time: string) => setDateTime(prev => ({ ...prev, time }));
+  const openBottomSheet = (id: string, type: 'distance' | 'pace') => {
+    setSelectedGroup(id);
+    setBottomSheetType(type);
+    setIsBottomSheetOpen(true);
+  };
+  const applySelection = () => {
+    if (selectedGroup) {
+      if (bottomSheetType === 'distance') {
+        handleInputChange(selectedGroup, "distance", `${selectedDistance} km`);
+      } else if (bottomSheetType === 'pace') {
+        handleInputChange(selectedGroup, "pace", `${selectedMinutes}:${selectedSeconds}`);
+      }
+    }
+    setIsBottomSheetOpen(false);
+  };
+
   const handleMainImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -76,315 +127,103 @@ function TrainingMake() {
       alert("코스 사진은 최대 6장까지 업로드할 수 있습니다.");
       return;
     }
-    selectedArray.forEach((file) => {
+    selectedArray.forEach(file => {
       const reader = new FileReader();
-      reader.onloadend = () => setCoursePreviews((prev) => [...prev, reader.result as string]);
+      reader.onloadend = () => setCoursePreviews(prev => [...prev, reader.result as string]);
       reader.readAsDataURL(file);
     });
-    setCourseImages((prev) => [...prev, ...selectedArray]);
-  };
-
-  useEffect(() => {
-    const fetchPacers = async () => {
-      try {
-        const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
-        const response = await customAxios.get("/pacers", {
-          headers: { Authorization: `${token}` },
-        });
-        if (response.data.isSuccess) {
-          setPacers(response.data.result);
-        }
-      } catch (error) {
-        console.error("페이서 목록을 가져오는 중 오류 발생:", error);
-      }
-    };
-    fetchPacers();
-  }, []);
-
-  const addPacerGroup = () => {
-    const nextGroupId = String.fromCharCode(65 + pacerGroups.length);
-    setPacerGroups([...pacerGroups, { id: nextGroupId, pacer: "", distance: "", pace: "" }]);
-  };
-
-  const removePacerGroup = (id: string) => {
-    setPacerGroups(pacerGroups.filter(group => group.id !== id));
-  };
-
-  const handleInputChange = (id: string, field: keyof PacerGroup, value: string) => {
-    setPacerGroups(
-      pacerGroups.map(group => group.id === id ? { ...group, [field]: value } : group)
-    );
-  };
-
-  const handlePacerChange = (id: string, value: string) => {
-    setPacerGroups(
-      pacerGroups.map(group => group.id === id ? { ...group, pacer: value } : group)
-    );
-  };
-
-  const openBottomSheet = (id: string, type: 'distance' | 'pace') => {
-    setSelectedGroup(id);
-    setBottomSheetType(type);
-    setIsBottomSheetOpen(true);
-  };
-
-  const applySelection = () => {
-    if (selectedGroup) {
-      if (bottomSheetType === 'distance') {
-        handleInputChange(selectedGroup, "distance", `${selectedDistance} km`);
-      } else if (bottomSheetType === 'pace') {
-        handleInputChange(selectedGroup, "pace", `${selectedMinutes}:${selectedSeconds}`);
-      }
-    }
-    setIsBottomSheetOpen(false);
+    setCourseImages(prev => [...prev, ...selectedArray]);
   };
 
   const removeCourseImage = (index: number) => {
-    setCourseImages((prev) => prev.filter((_, i) => i !== index));
-    setCoursePreviews((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = event.target.files;
-    if (!selectedFiles) return;
-    const selectedArray = Array.from(selectedFiles);
-    if (files.length + selectedArray.length > 6) {
-      alert("최대 6장까지만 업로드할 수 있습니다.");
-      return;
-    }
-    selectedArray.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviews(prev => [...prev, reader.result as string]);
-      };
-      reader.readAsDataURL(file);
-    });
-    setFiles((prev) => [...prev, ...selectedArray]);
-  };
-
-  const handleRemoveImage = (index: number) => {
-    setFiles(prev => prev.filter((_, i) => i !== index));
-    setPreviews(prev => prev.filter((_, i) => i !== index));
-  };
-
-  const handleDateTimeChange = (date: Date | null, time: string) => {
-    setDateTime({ date, time });
+    setCourseImages(prev => prev.filter((_, i) => i !== index));
+    setCoursePreviews(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async () => {
-    console.log(pacerGroups)
-    const hasIncompleteGroup = pacerGroups.some(
-      (group) => !group.pacer || !group.distance || !group.pace
-
-    );
-
-    // if (!title || !location || !content || !dateTime.date || hasIncompleteGroup) {
-    //   alert("모든 정보를 입력해주세요.");
-    //   return;
-    // } -> 계속 오류 떠서 일단 주석처리함
-
+    if (!title || !location || !content || !dateTime.date || pacerGroups.some(g => !g.pacer || !g.distance || !g.pace)) {
+      alert("모든 정보를 입력해주세요.");
+      return;
+    }
     try {
       const pad = (n: number) => n.toString().padStart(2, "0");
       const year = dateTime.date!.getFullYear();
       const month = pad(dateTime.date!.getMonth() + 1);
       const day = pad(dateTime.date!.getDate());
       const time = dateTime.time;
-      const eventDateTime = `${year}-${month}-${day}T${time}:00`; // ✅ 로컬 기준
-
-      const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
-
+      const eventDateTime = `${year}-${month}-${day}T${time}:00`;
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const formData = new FormData();
-      const trainingType = isCustom ? customInput : selected;
-      formData.append("trainingType", trainingType);
       formData.append("title", title);
       formData.append("location", location);
       formData.append("date", eventDateTime);
       formData.append("content", content);
-      files.forEach(file => formData.append("postImage", file));
       if (mainImage) formData.append("postImage", mainImage);
       courseImages.forEach(file => formData.append("attachments", file));
-
-
-
       pacerGroups.forEach((group, index) => {
         formData.append(`pacers[${index}].group`, group.id);
-        formData.append(`pacers[${index}].pacerId`, String(group.pacer));
+        formData.append(`pacers[${index}].pacerId`, group.pacer);
         formData.append(`pacers[${index}].distance`, group.distance);
         formData.append(`pacers[${index}].pace`, group.pace);
       });
-
-      const response = await customAxios.post("/run/training/post", formData, {
+      const response = await customAxios.patch(`/run/regular/post/${postId}`, formData, {
         headers: {
           Authorization: `${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
-
       if (response.data.isSuccess) {
-        alert("훈련이 성공적으로 생성되었습니다!");
-        navigate("/training");
+        alert("정규런이 성공적으로 수정되었습니다!");
+        navigate(`/run/regular/${postId}`);
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
       }
     } catch (error) {
-      console.error("훈련 생성 중 오류:", error);
-      alert("훈련 생성 중 문제가 발생했습니다.");
-    }
-  };
-  const eventTypes = ['조깅', '인터벌', 'LSD', '기타 (직접입력)'];
-
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState('조깅');
-  const [customInput, setCustomInput] = useState('');
-  const [isCustom, setIsCustom] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const toggleDropdown = () => setIsOpen((prev) => !prev);
-
-  const handleSelect = (type: string) => {
-    setIsCustom(type === '기타 (직접입력)');
-    setSelected(type);
-    setIsOpen(false);
-    if (type !== '기타 (직접입력)') {
-      setCustomInput('');
+      console.error("정규런 수정 중 오류:", error);
+      alert("정규런 수정 중 문제가 발생했습니다.");
     }
   };
 
-  const handleCustomInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCustomInput(e.target.value);
+  const handlePacerChange = (id: string, pacerId: string) => {
+    setPacerGroups((prev) =>
+      prev.map((group) => (group.id === id ? { ...group, pacer: pacerId } : group))
+    );
   };
 
-  // 드롭다운 외부 클릭 시 닫기
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  // DateInput관련 핸들러
-  const handleDateChange = (date: Date | null) => {
-    setDateTime((prev) => ({ ...prev, date }));
-  };
-
-  // 시간 입력 관련 상태 및 핸들러
-  const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
-
-  const handleTimeChange = (time: string) => {
-    setDateTime((prev) => ({ ...prev, time }));
-  };
 
   return (
     <div className="flex flex-col items-center min-h-screen">
       <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
-        <div className="text-2xl font-semibold text-white text-center">훈련 만들기</div>
+        <div className="text-2xl font-semibold text-white text-center">정규런 수정</div>
         <button onClick={() => navigate(-1)} className="absolute left-4">
           <img src={BackIcon} alt="뒤로가기" className="w-6 h-6" />
         </button>
       </div>
-
-      {/* 훈련유형 */}
-      <div className="w-full max-w-md px-4" ref={dropdownRef}>
-        <label className="block text-sm font-medium text-gray-700 mb-1">행사 유형</label>
-        <div className="relative">
-          {!isCustom ? (
-            <>
-              <button
-                type="button"
-                onClick={toggleDropdown}
-                className="w-full bg-white border border-gray-300 rounded-md shadow-sm pl-4 pr-10 py-2 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
-              >
-                {selected}
-                <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg
-                    className={`w-4 h-4 transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''
-                      }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </span>
-              </button>
-
-              {isOpen && (
-                <ul className="absolute z-10 mt-1 w-full bg-white shadow-lg border border-gray-200 rounded-md max-h-60 overflow-auto">
-                  {eventTypes.map((type) => (
-                    <li
-                      key={type}
-                      onClick={() => {
-                        if (type === '기타 (직접입력)') {
-                          setIsCustom(true);
-                          setIsOpen(false);
-                          setSelected('');
-                        } else {
-                          handleSelect(type);
-                        }
-                      }}
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800"
-                    >
-                      {type}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </>
-          ) : (
-            <div className="relative">
-              <input
-                type="text"
-                value={customInput}
-                onChange={(e) => setCustomInput(e.target.value)}
-                placeholder="행사명을 입력하세요"
-                className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-              />
-              <button
-                type="button"
-                onClick={() => {
-                  setIsCustom(false);
-                  setCustomInput('');
-                  setSelected('마라톤'); // 기본값으로 초기화
-                }}
-                className="absolute inset-y-0 right-0 flex items-center pr-3"
-              >
-                <svg
-                  className="w-4 h-4 text-gray-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
       <div className="w-full max-w-md px-4">
         <div className="my-2">제목</div>
-        <input className="border rounded-lg w-full p-2" placeholder="제목을 입력하세요" onChange={(e) => setTitle(e.target.value)} />
+        <input className="border rounded-lg w-full p-2" placeholder="제목을 입력하세요" value={title} onChange={(e) => setTitle(e.target.value)} />
 
         <div className="my-2">집합 장소</div>
-        <input className="border rounded-lg w-full p-2" placeholder="장소명을 입력하세요" onChange={(e) => setLocation(e.target.value)} />
+        <input className="border rounded-lg w-full p-2" placeholder="장소명을 입력하세요" value={location} onChange={(e) => setLocation(e.target.value)} />
 
-        {/* <div className="my-2">날짜 및 시간</div>
-        <DateNtime onDateTimeChange={handleDateTimeChange} /> */}
+        {/* <div className="my-2">날짜 및 시간</div> */}
+        {/* <DateNtime onDateTimeChange={handleDateTimeChange} /> */}
+
         <DateInput selectedDate={dateTime.date} onChange={handleDateChange} />
+
         <TimePickerBottomSheet time={dateTime.time} onChange={handleTimeChange} />
+
+
         <div className="mb-2 mt-4">세부사항</div>
         <textarea
-          className="my-2 w-full p-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="my-2 w-full p-2 border rounded-lg"
           rows={10}
           placeholder="세부사항을 입력하세요"
           value={content}
-          onChange={handleContent}
+          onChange={(e) => setContent(e.target.value)}
         ></textarea>
+
+        {/* 페이서 UI는 기존 그대로 유지 */}
         {/* 페이서 그룹 입력 UI */}
         <div className="flex flex-col items-center w-full max-w-md p-4 bg-white rounded-lg relative">
           {isBottomSheetOpen && (
@@ -414,7 +253,9 @@ function TrainingMake() {
                       >
                         <option value="">-</option>
                         {pacers.map((pacer) => (
-                          <option key={pacer.id} value={pacer.id}>{pacer.name}</option>
+                          <option key={pacer.id} value={pacer.id}>
+                            {pacer.name || pacer.pacerName} {/* ✅ 둘 중 있는 값 사용 */}
+                          </option>
                         ))}
                       </select>
                     </td>
@@ -517,13 +358,10 @@ function TrainingMake() {
           <input type="file" id="courseImageUpload" multiple accept="image/*" onChange={handleCourseImageUpload} className="hidden" />
         </div>
 
-        <button onClick={handleSubmit} className="w-full bg-[#366943] text-white py-3 rounded-lg mt-4">만들기</button>
+        <button onClick={handleSubmit} className="w-full bg-[#366943] text-white py-3 rounded-lg mt-4">수정하기</button>
       </div>
-
-
     </div>
-
   );
 }
 
-export default TrainingMake;
+export default NewRegularRunEdit;
