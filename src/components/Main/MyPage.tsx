@@ -86,6 +86,7 @@ function MyPage() {
     participationCount: 0,
     profileAttendanceDates: [],
   });
+  const [isUserInfoLoaded, setIsUserInfoLoaded] = useState(false); //유저 정보 로딩 여부
   const [attendChecked, setAttendChecked] = useState(false);
 
   //오늘 날짜 기준으로 한달 치 날짜 만들기 (추후, "출석체크" 캘린더에서 사용할 예정)
@@ -132,6 +133,7 @@ function MyPage() {
           profileAttendanceDates: response.data.result.profileAttendanceDates,
         };
         setUserInfo(data);
+        setIsUserInfoLoaded(true); //데이터 로딩 완료 되었다는 표시
       } else if (response.data.isSuccess === false) {
         alert(`서버에서 제대로 유저 정보를 불러오지 못했습니다: ${response.data.responseMessage}`);
       }
@@ -173,10 +175,12 @@ function MyPage() {
   async function handleAttendCheckBtn() {
     const accessToken = JSON.parse(localStorage.getItem("accessToken") || ""); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
     const url = `/user/attend`;
+    console.log(accessToken); //테스팅용
 
     try {
       const response = await customAxios.post(
         url, //요청 url
+        {},
         {
           headers: {
             Authorization: accessToken, //accessToken을 헤더로 추가해서 요청 보냄
@@ -204,20 +208,40 @@ function MyPage() {
     navigate("/");
   }
 
-  //처음 렌더링 될 때만 유저 정보 불러오기
+  //첫 렌더링 시에만 유저 정보 불러오기
   useEffect(() => {
     fetchUserInfo();
-    const formattedDate = format(new Date(), "yyyy-MM-dd"); // 오늘 날짜를 formattedDate로 포맷팅
-    let isTodayAttended = userInfo.profileAttendanceDates.includes(formattedDate);
-    if (isTodayAttended) {
-      // 오늘 날짜가 출석되어 있다면
-      setAttendChecked(!attendChecked); // 출석 더 이상 못하게 한다
-    }
   }, []);
 
-  //Tailwind를 사용하여 스타일링 진행
+  //userInfo가 정상적으로 업데이트 되었을 시에만 출석 검사 수행
+  useEffect(() => {
+    if (userInfo.profileAttendanceDates.length > 0) {
+      //profileAttendanceDates가 비어있지 않은 경우에만 수행
+      const formattedDate = format(new Date(), "yyyy-MM-dd"); // 오늘 날짜를 formattedDate로 포맷팅
+      let isTodayAttended = userInfo.profileAttendanceDates.includes(formattedDate);
+      console.log(
+        "userInfo 업데이트 되고, profile 이거 배열 0보다 큼, isTodayAttended: ",
+        isTodayAttended
+      );
+      if (isTodayAttended) {
+        // 오늘 날짜가 출석되어 있다면
+        setAttendChecked(true); // 출석 더 이상 못하게 한다
+      }
+    }
+  }, [userInfo]);
+
+  // isUserInfoLoaded가 false일 때는, "로딩 중.." 렌더링
+  if (!isUserInfoLoaded) {
+    return (
+      <div className="min-h-screen flex justify-center items-center bg-white">
+        <span className="text-gray-400 text-sm animate-pulse">로딩 중입니다...</span>
+      </div>
+    );
+  }
+
+  // isUserInfoLoaded가 true일 때만 해당 컴포넌트가 출력될 것임 (최초 로딩 시에 fade-in 애니메이션 적용됨)
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-white pt-20 p-4 pb-20">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-white pt-20 p-4 pb-20 animate-fade-in">
       <div className="w-full max-w-sm text-left mt-2 mb-6">
         <span className="text-2xl font-bold">마이페이지</span>
       </div>
@@ -266,7 +290,7 @@ function MyPage() {
         <p className="text-lg font-extrabold text-gray-800">오늘의 출석</p>
         <p className="text-sm text-gray-500">출석하면 +5P!</p>
 
-        {/* 중첩 map 함수를 사용해서 출석체크 달력을 출력할 것이다 */}
+        {/* 중첩 map 함수를 사용해서 출석체크 달력을 출력할 것이다(캘린더 렌더링) */}
         {weeks.map((week, index) => (
           <>
             <div
@@ -276,7 +300,7 @@ function MyPage() {
               {week.map((day, subIndex) => {
                 const formattedDate = format(day, "yyyy-MM-dd");
                 let markerOn = userInfo.profileAttendanceDates.includes(formattedDate);
-                let isToday = format(pointDate, "yyyy-MM-dd") === formattedDate;
+                let isToday = format(pointDate, "yyyy-MM-dd") === formattedDate; //오늘 날짜인지 아닌지 체크
                 let isCurrentMonth = getMonth(pointDate) === getMonth(day);
                 let style = isCurrentMonth ? "text-black" : "text-gray-400";
 
@@ -310,7 +334,7 @@ function MyPage() {
           </>
         ))}
 
-        {/* 로그인 버튼 */}
+        {/* 출석하기 버튼 */}
         <button
           className={`w-full mt-4 mb-2 py-3 ${
             !isAttendCheckBtnValid()
