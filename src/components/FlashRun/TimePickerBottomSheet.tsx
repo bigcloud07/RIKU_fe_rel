@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { TimeWheelPicker } from "./TimeWheelPicker";
+import TimeWheelPicker from "./TimeWheelPicker";
 import TimeIcon from "../../assets/time_icon.svg";
 
 interface TimePickerBottomSheetProps {
@@ -12,12 +12,21 @@ export const TimePickerBottomSheet: React.FC<TimePickerBottomSheetProps> = ({
   time,
   onChange,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [hour, setHour] = useState(time.split(":")[0] || "18");
-  const [minute, setMinute] = useState(time.split(":")[1] || "00");
-
   const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
   const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, "0"));
+
+  const [hour, setHour] = useState("00");
+  const [minute, setMinute] = useState("00");
+  const [isOpen, setIsOpen] = useState(false);
+
+  // 🧠 바텀시트 열릴 때마다 time 값을 기준으로 상태 세팅
+  useEffect(() => {
+    if (isOpen && time) {
+      const [h, m] = time.split(":");
+      setHour(h.padStart(2, "0"));
+      setMinute(m.padStart(2, "0"));
+    }
+  }, [isOpen, time]);
 
   const handleApply = () => {
     const selectedTime = `${hour}:${minute}`;
@@ -56,9 +65,17 @@ export const TimePickerBottomSheet: React.FC<TimePickerBottomSheetProps> = ({
               <div className="text-lg font-semibold text-center mb-4">시간 선택</div>
 
               <div className="flex justify-center gap-4">
-                <TimeWheelPicker items={hours} selected={hour} onSelect={setHour} />
+                <TimeWheelPicker
+                  items={hours}
+                  selected={hours.indexOf(hour)}
+                  onSelect={(index) => setHour(hours[index])}
+                />
                 <div className="text-3xl font-bold flex items-center">:</div>
-                <TimeWheelPicker items={minutes} selected={minute} onSelect={setMinute} />
+                <TimeWheelPicker
+                  items={minutes}
+                  selected={minutes.indexOf(minute)}
+                  onSelect={(index) => setMinute(minutes[index])}
+                />
               </div>
 
               <div className="mt-6 flex flex-col gap-2">

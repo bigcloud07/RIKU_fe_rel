@@ -193,12 +193,12 @@ const NewMain: React.FC = () => {
       <div className="h-[56px]"></div>
 
       {/* 슬라이드쇼 */}
-      <div className="w-[430px] h- max-w-4xl mx-auto m-0">
-        <div className="flex justify-center">
+      <div className="w-[430px] h-[300px] max-w-4xl mx-auto m-0">
+        <div className="flex justify-center items-center h-full">
           <img
             src={images[currentIndex]}
             alt={`Slide ${currentIndex + 1}`}
-            className="w-full"
+            className="w-full h-full object-cover transition-opacity duration-500"
           />
         </div>
         <div className="flex w-[430px] h-[40px] justify-center items-center space-x-2 bg-kuDarkGreen">
@@ -215,7 +215,7 @@ const NewMain: React.FC = () => {
       </div>
 
       {/* NewMainCard 그리드 */}
-      <div className="grid grid-cols-2 grid-rows-2 gap-x-3 gap-y-6 mt-7 mb-36">
+      <div className="grid grid-cols-2 grid-rows-2 gap-x-3 gap-y-6 mt-20 mb-36">
         <div className="cursor-pointer">
         <NewMainCard
           title={maindata?.regularRun.location}
