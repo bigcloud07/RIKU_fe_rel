@@ -47,7 +47,7 @@ const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ items, selected, onSe
     <div
       ref={containerRef}
       onScroll={handleScroll}
-      className="h-[120px] overflow-y-scroll no-scrollbar snap-y snap-mandatory relative"
+      className="h-[120px] overflow-y-scroll w-auto no-scrollbar snap-y snap-mandatory relative"
     >
       {/* 구분선 */}
       <div className="absolute top-[40px] left-0 w-full z-10" />
@@ -58,7 +58,7 @@ const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ items, selected, onSe
           <div
             key={index}
             onClick={() => onSelect(index)}
-            className={`h-[40px] flex items-center justify-center snap-center cursor-pointer
+            className={`h-[40px] flex items-center justify-center snap-center cursor-pointer w-auto
               ${index === selected ? 'text-black font-bold text-[30px] border-b border-t' : 'text-gray-400 text-[30px]'}
             `}
           >

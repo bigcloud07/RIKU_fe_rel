@@ -4,12 +4,12 @@ import { DayPicker } from "react-day-picker";
 import { AnimatePresence, motion } from "framer-motion";
 import { ko } from "date-fns/locale";
 
-// ko 로케일을 확장해서 주 시작 요일을 일요일(0)로 설정
+// ko 로케일 확장 - 주 시작 요일을 일요일(0)로 설정
 const customKo = {
   ...ko,
   options: {
     ...ko.options,
-    weekStartsOn: 0, // 0: 일요일, 1: 월요일
+    weekStartsOn: 0,
   },
 };
 
@@ -70,40 +70,27 @@ export const DateInput: React.FC<DateInputProps> = ({ selectedDate, onChange }) 
                     selected={selectedDate || undefined}
                     onSelect={(date) => onChange(date ?? null)}
                     showOutsideDays
-                    // 테이블 레이아웃 유지를 위해 table-* 클래스를 사용합니다.
                     classNames={{
                       months: "flex flex-col",
                       month: "p-3",
-                      // 네비게이션 영역: 이전 버튼, 캡션, 다음 버튼이 한 줄에 배치됨
                       nav: "flex items-center justify-between mb-4",
                       nav_button_previous: "w-8 h-8 flex items-center justify-center",
                       nav_button_next: "w-8 h-8 flex items-center justify-center",
-                      // 캡션 영역 (년월 표시)
                       caption: "inline-flex items-center",
                       caption_label: "text-xl font-bold",
-                      // 테이블 구조
                       table: "table w-full border-collapse",
                       head_row: "table-row",
                       head_cell: "table-cell text-center p-2 font-semibold text-gray-600",
                       row: "table-row",
                       cell: "table-cell text-center p-2",
-                      // 날짜 한 칸 내부
                       day: "inline-flex items-center justify-center w-10 h-10 rounded-full",
-                      // 날짜 상태
                       day_selected: "bg-kuDarkGreen text-white",
                       day_today: "text-kuDarkGreen font-extrabold",
                       day_outside: "text-gray-300",
                     }}
                     formatters={{
-                      // 상단 캡션(년월) 포맷
                       formatCaption: (date) =>
                         `${date.getFullYear()}년 ${date.getMonth() + 1}월`,
-                      // 요일 이름 포맷: date.getDay()를 이용해 인덱스로 변환
-                      formatWeekdayName: (date: Date) => {
-                        const dayIndex = date.getDay();
-                        const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
-                        return weekdays[dayIndex];
-                      },
                     }}
                   />
                 </div>

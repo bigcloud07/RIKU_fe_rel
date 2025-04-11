@@ -106,6 +106,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         setPostStatus("CLOSED");
         setIsModalOpen(false);
         alert("출석이 종료되었습니다.");
+        
       } else {
         setError(response.data.responseMessage);
       }
@@ -166,6 +167,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           });
           setDate(result.date);
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+          console.log(token)
 
         } else {
           setError(response.data.responseMessage);

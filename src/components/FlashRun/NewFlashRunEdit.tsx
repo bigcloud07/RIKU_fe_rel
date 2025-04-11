@@ -37,6 +37,7 @@ function NewFlashRunEdit() {
           time: new Date(result.date).toTimeString().slice(0, 5),
         });
         console.log(result)
+        console.log(token)
       }
     };
     fetchPost();
@@ -87,7 +88,7 @@ function NewFlashRunEdit() {
       const year = dateTime.date!.getFullYear();
       const month = pad(dateTime.date!.getMonth() + 1);
       const day = pad(dateTime.date!.getDate());
-      const eventDateTime = `${year}-${month}-${day}T${dateTime.time}:00`;
+      const date = `${year}-${month}-${day}T${dateTime.time}`;
   
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const formData = new FormData();
@@ -95,19 +96,26 @@ function NewFlashRunEdit() {
       if (title) formData.append("title", title);
       if (location) formData.append("location", location);
       if (content) formData.append("content", content);
-      if (dateTime.date) formData.append("date", eventDateTime);
+      if (dateTime.date) formData.append("date", date);
       if (postImage) formData.append("postImage", postImage);
-      if (attachments?.length > 0) {
-        attachments.forEach((file) => formData.append("attachments", file));
-      }
-  
-      const res = await customAxios.patch(`/run/flash/post/${postId}`, formData, {
+      attachments?.forEach(file => formData.append("attachments", file));
+      
+      const endpoint = `/run/flash/post/${postId}`;
+      
+
+      console.log(formData)
+      console.log(postId)
+      const res = await customAxios.patch(endpoint, formData, {
         headers: {
           Authorization: `${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
-  
+      console.log("요청된 최종 엔드포인트:", res.config.url); // ✅ 실제 요청된 URL
+      console.log("요청된 URL:", `"${res.config.url}"`);
+
+
+      console.log("요청 보낼 엔드포인트:",endpoint); // ✅ 여기서 확인 가능
       if (res.data.isSuccess) {
         alert("번개런이 성공적으로 수정되었습니다!");
         navigate("/FlashRun");
