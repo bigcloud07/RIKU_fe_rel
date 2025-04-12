@@ -106,6 +106,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         setPostStatus("CLOSED");
         setIsModalOpen(false);
         alert("출석이 종료되었습니다.");
+        
       } else {
         setError(response.data.responseMessage);
       }
@@ -165,6 +166,9 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
             userProfileImg: result.userInfo?.userProfileImg || "",
           });
           setDate(result.date);
+          setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+          console.log(token)
+
         } else {
           setError(response.data.responseMessage);
         }
@@ -183,6 +187,9 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
     return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
+
+  const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
+
   
 
 
@@ -228,15 +235,23 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         <>
           <div className="flex justify-center items-center w-[327px] h-14 bg-[#F0F4DD] rounded-lg text-sm font-normal mt-5">
             <div className="flex items-center">
-              <div className="flex justify-center items-center bg-kuBlue w-6 h-6 rounded-full relative mr-2">
-                <span className="text-white text-xs font-bold">
-                  <span className="text-white text-xs font-bold">
-                    {creatorName && creatorName.length > 1 ? creatorName.charAt(0) : creatorName?.charAt(0) || "?"}
-                  </span>
-                  <div className="absolute top-[-15px] left-[-19px] w-[32.78px] h-[32px]"><img src={pacermark} /></div>
-                </span>
+            <div className="relative w-6 h-6 mr-2">
+                {postCreatorImg && postCreatorImg.trim() !== "" ? (
+                  <img
+                    src={postCreatorImg}
+                    alt={`${creatorName} 프로필`}
+                    className="w-6 h-6 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-6 h-6 rounded-full bg-kuBlue text-white text-xs font-bold flex items-center justify-center">
+                    {creatorName?.charAt(0) || "?"}
+                  </div>
+                )}
+                <div className="absolute top-[-15px] left-[-19px] w-[32.78px] h-[32px]">
+                  <img src={pacermark} alt="pacer mark" />
+                </div>
               </div>
-              {creatorName}
+              <span className="text-black font-semibold">{creatorName}</span>
             </div>
 
           </div>

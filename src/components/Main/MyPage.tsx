@@ -288,7 +288,7 @@ function MyPage() {
       {/* 오늘의 출석 세션 */}
       <div className="bg-whiteSmoke p-4 rounded-xl w-full max-w-sm text-center items-center">
         <p className="text-lg font-extrabold text-gray-800">오늘의 출석</p>
-        <p className="text-sm text-gray-500">출석하면 +5P!</p>
+        <p className="text-sm text-gray-500">출석하면 +1P!</p>
 
         {/* 중첩 map 함수를 사용해서 출석체크 달력을 출력할 것이다(캘린더 렌더링) */}
         {weeks.map((week, index) => (

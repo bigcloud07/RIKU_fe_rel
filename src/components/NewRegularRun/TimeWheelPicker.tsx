@@ -1,83 +1,73 @@
-// TimeWheelPicker.tsx
-import React, { useRef, useEffect, useState } from "react";
+import React, { useLayoutEffect, useRef } from 'react';
 
 interface TimeWheelPickerProps {
   items: string[];
-  selected: string;
-  onSelect: (value: string) => void;
+  selected: number;
+  onSelect: (index: number) => void;
 }
 
-const ITEM_HEIGHT = 48; // px
-const SNAP_TIMEOUT = 150; // ms
-
-export const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ items, selected, onSelect }) => {
+const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ items, selected, onSelect }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const itemHeight = 40;
+  const isAutoScrolling = useRef(false);
 
-  // 초기 렌더 시 scroll 위치 설정
-  useEffect(() => {
-    const index = items.indexOf(selected);
-    if (index !== -1 && containerRef.current) {
-      containerRef.current.scrollTop = index * ITEM_HEIGHT;
-    }
-  }, [selected, items]);
-
-  // 스크롤 감지 및 debounce 처리
   const handleScroll = () => {
-    if (scrollTimeoutRef.current) {
-      clearTimeout(scrollTimeoutRef.current);
+    if (isAutoScrolling.current) return;
+
+    const container = containerRef.current;
+    if (!container) return;
+
+    const index = Math.round(container.scrollTop / itemHeight);
+    if (index !== selected) {
+      onSelect(index);
     }
-
-    scrollTimeoutRef.current = setTimeout(() => {
-      if (!containerRef.current) return;
-
-      const scrollTop = containerRef.current.scrollTop;
-      const index = Math.round(scrollTop / ITEM_HEIGHT);
-      const clampedIndex = Math.max(0, Math.min(items.length - 1, index));
-      const newValue = items[clampedIndex];
-
-      containerRef.current.scrollTo({
-        top: clampedIndex * ITEM_HEIGHT,
-        behavior: "smooth",
-      });
-
-      onSelect(newValue);
-    }, SNAP_TIMEOUT);
   };
 
-  return (
-    <div className="relative h-[144px] overflow-hidden w-[80px]">
-      <div
-        ref={containerRef}
-        onScroll={handleScroll}
-        className="h-full overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
-      >
-        <div className="py-[48px]">
-          {items.map((item) => (
-            <div
-              key={item}
-              onClick={() => {
-                const index = items.indexOf(item);
-                if (containerRef.current) {
-                  containerRef.current.scrollTo({
-                    top: index * ITEM_HEIGHT,
-                    behavior: "smooth",
-                  });
-                }
-                onSelect(item);
-              }}
-              className={`h-[48px] text-[30px] flex items-center justify-center text-2xl snap-start cursor-pointer transition-colors duration-200 ${
-                item === selected ? "text-black font-bold" : "text-kuCoolGray"
-              }`}
-            >
-              {item}
-            </div>
-          ))}
-        </div>
-      </div>
+  // ✅ selected 바뀔 때 정확한 포커싱 보장 (DOM 렌더 직후)
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
 
+    const expectedTop = selected * itemHeight;
+
+    isAutoScrolling.current = true;
+    requestAnimationFrame(() => {
+      container.scrollTo({
+        top: expectedTop,
+        behavior: 'auto', // 최초 로딩 시엔 instant
+      });
+
+      setTimeout(() => {
+        isAutoScrolling.current = false;
+      }, 200);
+    });
+  }, [selected]);
+
+  return (
+    <div
+      ref={containerRef}
+      onScroll={handleScroll}
+      className="h-[120px] overflow-y-scroll w-auto no-scrollbar snap-y snap-mandatory relative"
+    >
       {/* 구분선 */}
-      <div className="pointer-events-none absolute top-1/2 left-0 w-full h-[48px] border-t border-b border-gray-300 -translate-y-1/2" />
+      <div className="absolute top-[40px] left-0 w-full z-10" />
+      <div className="absolute top-[80px] left-0 w-full z-10" />
+
+      <div className="flex flex-col items-center py-[40px] relative z-0">
+        {items.map((item, index) => (
+          <div
+            key={index}
+            onClick={() => onSelect(index)}
+            className={`h-[40px] flex items-center justify-center snap-center cursor-pointer w-auto
+              ${index === selected ? 'text-black font-bold text-[30px] border-b border-t' : 'text-gray-400 text-[30px]'}
+            `}
+          >
+            {item.padStart(2, '0')}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
+
+export default TimeWheelPicker;

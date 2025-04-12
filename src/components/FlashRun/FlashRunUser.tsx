@@ -100,6 +100,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
         setUserStatus(response.data.result.status); // 상태 업데이트
         setButtonText("출석하기");
         setError(null);
+        console.log(token)
       } else {
         setError(response.data.responseMessage);
       }
