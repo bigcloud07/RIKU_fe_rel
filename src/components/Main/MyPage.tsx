@@ -189,7 +189,8 @@ function MyPage() {
       );
       alert(response.data.result.message); //"출석이 완료되었습니다"가 출력될 것
       console.log("출석 완료, 불러오기 성공: ", response); //test용
-      setAttendChecked(!attendChecked); //'출석됨'으로 표시
+      setAttendChecked(true); //'출석됨'으로 표시
+      await fetchUserInfo(); //여기에서 유저 정보를 갱신하는 함수(fetchUserInfo)를 call해야 캘린더에 반영된다
     } catch (error) {
       alert("출석 요청 중 오류 발생!");
       console.error("요청 실패: ", error);
@@ -213,7 +214,7 @@ function MyPage() {
     fetchUserInfo();
   }, []);
 
-  //userInfo가 정상적으로 업데이트 되었을 시에만 출석 검사 수행
+  //userInfo가 정상적으로 업데이트 되었을 시에만 출석 검사 수행 ('출석하기' 버튼 클릭 후, attendChecked가 변했을 때에도 다시 수행해야 함)
   useEffect(() => {
     if (userInfo.profileAttendanceDates.length > 0) {
       //profileAttendanceDates가 비어있지 않은 경우에만 수행
@@ -288,7 +289,7 @@ function MyPage() {
       {/* 오늘의 출석 세션 */}
       <div className="bg-whiteSmoke p-4 rounded-xl w-full max-w-sm text-center items-center">
         <p className="text-lg font-extrabold text-gray-800">오늘의 출석</p>
-        <p className="text-sm text-gray-500">출석하면 +5P!</p>
+        <p className="text-sm text-gray-500">출석하면 +1P!</p>
 
         {/* 중첩 map 함수를 사용해서 출석체크 달력을 출력할 것이다(캘린더 렌더링) */}
         {weeks.map((week, index) => (

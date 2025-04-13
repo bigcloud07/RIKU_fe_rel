@@ -203,8 +203,9 @@ function RankingPage() {
               </div>
             </div>
           ) : (
-            <span className="text-3xl font-extrabold text-white mt-8 mb-8 animate-fade-up animation-delay-400 opacity-0">
+            <span className="w-[375px] mx-auto text-center text-3xl font-extrabold text-white mt-8 mb-8 animate-fade-up animation-delay-400 opacity-0">
               집계 준비중입니다..
+              {/* 현재는 우선 375px 크기로 너비를 고정해 놓은 상태, 추후 반응형 설계를 위해 수정해야 할 듯 */}
             </span>
           )}
         </div>
