@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import CalIcon from "../../assets/cal_icon.svg";
-import { DayPicker, getDefaultClassNames } from "react-day-picker";
-import { AnimatePresence, motion } from "framer-motion";
+import { DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
-
+import { AnimatePresence, motion } from "framer-motion";
+import "react-day-picker/dist/style.css";
 
 interface DateInputProps {
   selectedDate: Date | null;
@@ -12,12 +12,13 @@ interface DateInputProps {
 
 export const DateInput: React.FC<DateInputProps> = ({ selectedDate, onChange }) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const defaultClassNames = getDefaultClassNames();
 
   const formatDate = (date: Date | null) => {
     if (!date) return "";
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
   };
+
+  const today = new Date();
 
   return (
     <>
@@ -49,31 +50,26 @@ export const DateInput: React.FC<DateInputProps> = ({ selectedDate, onChange }) 
               transition={{ type: "tween", duration: 0.3 }}
               className="w-full max-w-md bg-white rounded-t-2xl px-4 pt-6 pb-8"
             >
-              {/* ✅ 달력 가운데 정렬 */}
               <div className="w-full flex justify-center">
-                <div className="w-[360px]"> {/* 혹은 w-[400px] 등 적절히 조정 가능 */}
+                <div className="">
                   <DayPicker
                     mode="single"
                     selected={selectedDate || undefined}
                     onSelect={(date) => onChange(date ?? null)}
                     locale={ko}
-                    className="mx-auto w-full text-center"
+                    disabled={{ before: today }} // 오늘만 선택 가능
                     classNames={{
-                      caption: "flex items-center justify-center gap-4 mb-6 text-xl font-bold text-black",
-                      nav: "flex items-center gap-6 justify-center",
-                      chevron: "flex",
+                      caption: "mb-4 text-black",
                       table: "w-full border-collapse",
-                      head_row: "grid grid-cols-7",
-                      head_cell: "text-base font-semibold text-gray-600 text-center",
+                      head_row: "grid grid-cols-7 text-center text-gray-500 text-sm",
+                      head_cell: "py-2",
                       row: "grid grid-cols-7",
                       cell: "w-[40px] h-[40px] text-base text-center text-gray-800 hover:bg-gray-100 rounded-full flex items-center justify-center cursor-pointer",
-                      selected: "bg-kuDarkGreen text-white rounded-full w-[40px] h-[40px] flex items-center justify-center",
-                      today: "text-kuDarkGreen font-extrabold",
+                      selected: "bg-kuDarkGreen text-white font-semibold rounded-full",
+                      today: "text-kuDarkGreen font-bold",
                       outside: "text-gray-300",
-                    }}
-                    formatters={{
-                      formatCaption: (date) =>
-                        `${date.getFullYear()}년 ${date.getMonth() + 1}월`,
+                      chevron: "fill-black",
+                      disabled: "text-gray-300 cursor-not-allowed", // 비활성화된 날짜 스타일
                     }}
                   />
                 </div>
@@ -81,7 +77,7 @@ export const DateInput: React.FC<DateInputProps> = ({ selectedDate, onChange }) 
 
               <button
                 onClick={() => setIsCalendarOpen(false)}
-                className="mt-8 w-full bg-kuDarkGreen text-white text-lg font-semibold py-3 rounded-lg"
+                className="mt-6 w-full bg-kuDarkGreen text-white text-[17px] font-semibold py-3 rounded-lg"
                 disabled={!selectedDate}
               >
                 적용하기
