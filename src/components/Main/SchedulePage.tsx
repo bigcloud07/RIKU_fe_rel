@@ -44,7 +44,7 @@ function SchedulePage() {
   const [pointDateInModal, setPointDateInModal] = useState(new Date());
   const [selectedDateInModal, setSelectedDateInModal] = useState(new Date());
   const [monthlyPlan, setMonthlyPlan] = useState<{date: string; eventCount: number}[]>([]);
-  const [selectedDateEvent, setSelectedDateEvent] = useState<{postId: 1, title: string, date: string, location: string}[]>([]);
+  const [selectedDateEvent, setSelectedDateEvent] = useState<{postId: 1, title: string, date: string, location: string, postType: string}[]>([]);
 
   const navigate = useNavigate();
 
@@ -185,8 +185,8 @@ function SchedulePage() {
   };
 
   //게시글 이동
-  const handleNavigateToNotice = (postId: number) => {
-    navigate(`/run/post/${postId}`);
+  const handleNavigateToNotice = (postId: number, postType: string) => {
+    navigate(`/run/${postType}/${postId}`);
   }
 
   //플로팅 버튼을 눌렀을 때.. 동작하는 floatingButton
@@ -331,7 +331,7 @@ function SchedulePage() {
           selectedDateEvent && selectedDateEvent.length !== 0 ? (
             selectedDateEvent.map((event, index) => (
               //일정을 표현하는 카드 섹션
-              <div key={index} onClick={() => handleNavigateToNotice(event.postId)} className="w-full max-w-sm bg-white border border-gray-300 rounded-lg p-2 shadow-sm mb-4 flex flex-row items-center">
+              <div key={index} onClick={() => handleNavigateToNotice(event.postId, event.postType)} className="w-full max-w-sm bg-white border border-gray-300 rounded-lg p-2 shadow-sm mb-4 flex flex-row items-center">
                 <div className={`w-2 h-2 ml-2 bg-kuWarmGray rounded-full`}/>
                 <div className="pl-4 flex flex-col items-start">
                   <p className="text-gray-800 font-medium">{event.title}</p>

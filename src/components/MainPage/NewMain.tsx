@@ -102,19 +102,19 @@ const NewMain: React.FC = () => {
           // 상태를 각 ContentList에 맞게 분리하여 저장
           setMaindata({
             regularRun: {
-              location: result.regularRun?.title || "정규런이 없네요",
+              location: result.regularRun?.title || "정규런이 없습니다",
               date: formatDate(result.regularRun?.date),
               postimgurl: result.regularRun?.postImageUrl,
               poststatus: result.regularRun?.postStatus,
             },
             flashRun: {
-              location: result.flashRun?.title || "번개런이 없네요",
+              location: result.flashRun?.title || "번개런이 없습니다",
               date: formatDate(result.flashRun?.date),
               postimgurl: result.flashRun?.postImageUrl,
               poststatus: result.flashRun?.postStatus,
             },
             training: {
-              location: result.trainingRun?.title || "훈련이 없네요",
+              location: result.trainingRun?.title || "훈련이 없습니다",
               date: formatDate(result.trainingRun?.date),
               postimgurl: result.trainingRun?.postImageUrl,
               poststatus: result.trainingRun?.postStatus,
@@ -215,7 +215,7 @@ const NewMain: React.FC = () => {
       </div>
 
       {/* NewMainCard 그리드 */}
-      <div className="grid grid-cols-2 grid-rows-2 gap-x-3 gap-y-6 mt-20 mb-36">
+      <div className="grid grid-cols-2 grid-rows-2 gap-x-3 gap-y-6 mt-[70px] mb-36">
         <div className="cursor-pointer">
         <NewMainCard
           title={maindata?.regularRun.location}
