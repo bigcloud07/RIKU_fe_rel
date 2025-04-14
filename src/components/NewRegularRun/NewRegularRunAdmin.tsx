@@ -115,25 +115,30 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   };
 
   const handleStartClick = async () => {
-    try {
-      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const response = await customAxios.post(
-        `/run/regular/post/${postId}/code`,
-        {},
-        {
-          headers: { Authorization: `${token}` },
+    if (!code) {
+      try {
+        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+        const response = await customAxios.post(
+          `/run/regular/post/${postId}/code`,
+          {},
+          {
+            headers: { Authorization: `${token}` },
+          }
+        );
+        console.log("응답", response.data)
+        if (response.data.isSuccess) {
+  
+          setCode(response.data.result.code);
+          
+        } else {
+          setError(response.data.responseMessage);
         }
-      );
-      if (response.data.isSuccess) {
-
-        setCode(response.data.result.code);
-        setIsModalOpen(true);
-      } else {
-        setError(response.data.responseMessage);
+      } catch {
+        setError("출석 코드 생성에 실패했습니다.");
       }
-    } catch {
-      setError("출석 코드 생성에 실패했습니다.");
     }
+
+    setIsModalOpen(true)
   };
 
   const [postStatus, setPostStatus] = useState<string>("");

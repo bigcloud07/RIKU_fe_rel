@@ -123,20 +123,23 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   const handleTabChange = (tab: "소개" | "명단") => setActiveTab(tab);
 
   const handleStartClick = async () => {
-    try {
-      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const response = await customAxios.post(`/run/training/post/${postId}/code`, {}, {
-        headers: { Authorization: `${token}` },
-      });
-      if (response.data.isSuccess) {
-        setCode(response.data.result.code);
-        setIsModalOpen(true);
-      } else {
-        setError(response.data.responseMessage);
+    if (!code) {
+      try {
+        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+        const response = await customAxios.post(`/run/training/post/${postId}/code`, {}, {
+          headers: { Authorization: `${token}` },
+        });
+        if (response.data.isSuccess) {
+          setCode(response.data.result.code);
+          setIsModalOpen(true);
+        } else {
+          setError(response.data.responseMessage);
+        }
+      } catch {
+        setError("출석 코드 생성에 실패했습니다.");
       }
-    } catch {
-      setError("출석 코드 생성에 실패했습니다.");
     }
+    setIsModalOpen(true)
   };
 
   const handleCloseModal = () => setIsModalOpen(false);
