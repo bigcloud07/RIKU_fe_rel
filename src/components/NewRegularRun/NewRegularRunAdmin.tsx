@@ -180,7 +180,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         <object data={postImageUrl || flashrunimage} className="w-[375px] h-[308px]" />
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
-            <object data={RegularRunlogo} />
+            <object data={RegularRunlogo} className="w-[60px] h-[24px]"/>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
           <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
