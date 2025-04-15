@@ -237,7 +237,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
         {/* 번개런 정보 */}
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
-            <object data={FlashRunlogo} />
+            <object data={FlashRunlogo} className="w-[60px] h-[24px]"/>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
           <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
@@ -312,7 +312,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
               </div>
             </div>
           )}
-          <div className="flex flex-col items-start text-left w-full max-w-[327px]">세부 내용</div>
+          <div className="flex flex-col items-start text-left w-full max-w-[327px] mt-2">세부 내용</div>
           <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
 
             <div className="flex items-center gap-2 mb-2">
