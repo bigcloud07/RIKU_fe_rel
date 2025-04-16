@@ -60,6 +60,8 @@ const NewMain: React.FC = () => {
   const [showThirdButton, setShowThirdButton] = useState(false);
   const [showFourthButton, setShowFourthButton] = useState(false);
 
+  const [userRole, setUserRole] = useState<string | null>(null);
+
   const navigate = useNavigate();
   const images = [img1, img2, img3, img4];
 
@@ -99,6 +101,9 @@ const NewMain: React.FC = () => {
           const result = response.data.result;
           console.log(response.data)
           console.log(response.data.result.location)
+          //userRole저장
+          setUserRole(result.userRole || null);
+
           // 상태를 각 ContentList에 맞게 분리하여 저장
           setMaindata({
             regularRun: {
