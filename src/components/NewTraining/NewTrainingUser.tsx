@@ -218,9 +218,9 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
       <div className="relative w-[375px] pb-[90px]">
         <object data={postImageUrl || flashrunimage} className="w-[375px] h-[308px]" />
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
-          <div className="flex flex-col items-center mt-[14px]">
+          <div className="flex flex-col items-center mt-[8px]">
             {/* 상단 전체를 relative로 감싸기 */}
-            <div className="relative flex flex-col items-center mt-[7px] w-[375px]">
+            <div className="relative flex flex-col items-center mt-[4px] w-[375px]">
 
               {/* trainingtype 박스 */}
               <div className="flex bg-[#FFC002] h-[24px] p-[10px] text-[14px] rounded-[8px] font-bold w-fit items-center">
@@ -229,17 +229,15 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
               {/* 물음표 아이콘: 고정된 우측 위치 */}
               <img
-                src={isHovered ? questionmarkOn : questionmarkOff}
+                src={isTooltipVisible ? questionmarkOn : questionmarkOff}
                 alt="question mark"
                 className="absolute top-[-1px] right-[18px] w-[24px] h-[24px] cursor-pointer"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
                 onClick={() => setIsTooltipVisible(!isTooltipVisible)}
               />
 
               {/* 툴팁 */}
               {isTooltipVisible && (
-                <div className="absolute bottom-[150%] right-[25px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
+                <div className="absolute bottom-[140%] right-[25px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
                   <div className="text-[#4F3F3F] text-[12px]">
                     {getTrainingDescription(trainingtype)}
                   </div>

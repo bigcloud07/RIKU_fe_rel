@@ -3,7 +3,7 @@ import testimg from "./assets/RecordPage/test_img.jpeg"
 import RIKUwhite from "./assets/RecordPage/riku_text_white.svg"
 import RIKUcowWhite from "./assets/RecordPage/riku_cow_white.svg"
 
-const RecordOutPage: React.FC = () => {
+const RecordOutPage2: React.FC = () => {
     return (
         <div>
             <div className="relative w-[300px] h-[300px]">
@@ -12,10 +12,10 @@ const RecordOutPage: React.FC = () => {
 
                 {/* 상단 중앙 정렬된 이미지들 */}
                 <div className="absolute top-[7px] left-1/2 transform -translate-x-1/2 flex">
-                    <img src={RIKUwhite} className="h-[12px]" />
-                    <img src={RIKUcowWhite} className="h-[12px]" />
+                    <img src={RIKUcowWhite} className="h-[20px]" />
                 </div>
-
+                <div className="abosolute top-[7px]">2025.04.15</div>
+                <div className="abosolute top-[7px]">반포한강런</div>
                 {/* 하단 왼쪽 정보 텍스트 */}
                 <div className="absolute bottom-[15px] left-[10px]">
                     <div className="flex flex-col text-white text-xs leading-none">
@@ -46,4 +46,4 @@ const RecordOutPage: React.FC = () => {
     )
 }
 
-export default RecordOutPage
+export default RecordOutPage2

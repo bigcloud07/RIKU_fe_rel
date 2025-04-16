@@ -62,7 +62,7 @@ function LoginPage() {
         
         localStorage.setItem('accessToken', JSON.stringify(response.data.result.jwtInfo.accessToken));
         localStorage.setItem('MyId', JSON.stringify(response.data.result.userId));
-        
+        console.log(response.data)
         navigate('/tab/main'); // 로그인 성공 시 메인 페이지로 이동
       } else {
         // 요청 실패 처리
