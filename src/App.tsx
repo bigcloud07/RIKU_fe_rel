@@ -46,6 +46,7 @@ import EventEdit from './components/NewEvent/EventEdit';
 import ProfileFixPage from "./components/Main/ProfileFixPage";
 import RecordOutPage from "./RecordOutPage";
 import RecordOutPage2 from "./RecordOutPage2";
+import OnbordingPage from "./OnBoradingPage";
 
 
 function App() {
@@ -54,7 +55,8 @@ function App() {
       <Router>
         <div className="min-w-{375px} max-w-full">
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/" element={<OnbordingPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/student-id" element={<StudentidInput />} />
             <Route path="/password-input" element={<PasswordInput />} />
             <Route path="/name-input" element={<NameInput />} />
@@ -87,10 +89,12 @@ function App() {
               <Route path="/flash/edit/:postId" element={<NewFlashRunEdit/>} />
               <Route path="/event/edit/:postId" element={<EventEdit/>} />
               <Route path="/profilefix-page" element={<ProfileFixPage />} />
+              <Route path="/start" element={<OnbordingPage />} />
 
               {/* 컴포넌트 테스트 sandbox */}
               <Route path="/sandbox" element={<RecordOutPage />} />
               <Route path="/sandbox2" element={<RecordOutPage2 />} />
+              
             </Route>
           </Routes>
         </div>

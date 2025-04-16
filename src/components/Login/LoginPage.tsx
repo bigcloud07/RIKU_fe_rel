@@ -23,6 +23,7 @@ function LoginPage() {
       // 이미 로그인 되어 있는 경우
       navigate('/tab/main');
     }
+  
   }, []);
 
   const navigate = useNavigate(); //useNavigate 훅을 사용해 navigate 함수 생성
