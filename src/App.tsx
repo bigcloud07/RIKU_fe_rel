@@ -45,6 +45,7 @@ import EventEdit from './components/NewEvent/EventEdit';
 
 import ProfileFixPage from "./components/Main/ProfileFixPage";
 import RecordOutPage from "./RecordOutPage";
+import RecordOutPage2 from "./RecordOutPage2";
 
 
 function App() {
@@ -88,7 +89,8 @@ function App() {
               <Route path="/profilefix-page" element={<ProfileFixPage />} />
 
               {/* 컴포넌트 테스트 sandbox */}
-              <Route path="/TestPgae" element={<RecordOutPage />} />
+              <Route path="/sandbox" element={<RecordOutPage />} />
+              <Route path="/sandbox2" element={<RecordOutPage2 />} />
             </Route>
           </Routes>
         </div>

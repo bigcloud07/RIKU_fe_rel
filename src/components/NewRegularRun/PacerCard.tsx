@@ -24,11 +24,11 @@ const PacerCard: React.FC<PacerCardProps> = ({ pacers }) => {
         <div className="flex flex-1 text-white text-sm font-semibold text-center ml-[4px]">
           <div className="relative w-[123px]  bg-kuDarkGreen font-bold h-[52px] text-[16px] flex items-center justify-center rounded-tl-[10px] rounded-bl-[10px]">
             페이서
-            <div className="absolute top-[20%] right-0 w-[1px] h-[60%] text-[16px] bg-white opacity-60 translate-x-1/2" />
+            <div className="absolute top-[20%] right-0 w-[1px] h-[60%] bg-white opacity-60 font-bold" />
           </div>
           <div className="relative w-[79px] bg-kuDarkGreen h-[52px] flex text-[16px] items-center justify-center font-bold">
             거리
-            <div className="absolute top-[20%] right-0 w-[1px] h-[60%] bg-white opacity-60 translate-x-1/2 font-bold" />
+            <div className="absolute top-[20%] right-0 w-[1px] h-[60%] bg-white opacity-60  font-bold" />
           </div>
           <div className="w-[77px] bg-kuDarkGreen h-[52px] flex items-center text-[16px] justify-center rounded-tr-[10px] rounded-br-[10px] font-bold">
             페이스
