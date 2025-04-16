@@ -32,18 +32,18 @@ function OnbordingPage() {
                 muted
                 loop
                 playsInline
-                className="absolute top-1/2 left-1/2 w-auto h-[900px] transform -translate-x-1/2 -translate-y-1/2 z-0 object-cover"
+                className="absolute top-1/2 left-1/2 w-auto h-screen max-h-[1000px] transform -translate-x-1/2 -translate-y-1/2 z-0 object-cover"
             />
 
             {/* 내용 및 버튼 */}
             <div className="z-10 flex flex-col items-center justify-center">
-                <div className="mt-[160px]">
+                <div className="mt-[130px]">
                     <img src={rikulogo} alt="로고" />
                 </div>
                 <div className="flex flex-col">
                     <button
                         onClick={handleLoginClick}
-                        className="w-[327px] h-[52px] rounded-[10px] bg-kuWarmGray text-black font-bold mt-[130px] 
+                        className="w-[327px] h-[52px] rounded-[10px] bg-kuWarmGray text-black font-bold mt-[90px] 
              hover:bg-kuDarkBeige hover:text-white transition-colors duration-300"
                     >
                         시작하기
