@@ -371,7 +371,7 @@ function SchedulePage() {
             //일정을 표현하는 카드 섹션
             <div
               key={index}
-              onClick={() => handleNavigateToNotice(event.postType, event.postId)}
+              onClick={() => handleNavigateToNotice(event.postId)}
               className="w-full max-w-sm bg-white border border-gray-300 rounded-lg p-2 shadow-sm mb-4 flex flex-row items-center"
             >
               <div className={`w-2 h-2 ml-2 bg-kuWarmGray rounded-full`} />
