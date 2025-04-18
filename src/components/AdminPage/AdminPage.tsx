@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Link 컴포넌트 import
-import axios from "axios";
 import customAxios from "../../apis/customAxios";
 import riku_logo from "../../assets/riku_logo_loginPage.svg"; //라이쿠 로고 불러오기
 
@@ -46,7 +45,7 @@ function AdminPage() {
         }
       );
 
-      console.log(response);
+      console.log("요청 성공", response.data);
 
       let fetchedMembers = response.data.result.map((user: Member) => ({
         studentId: user.studentId,
@@ -57,7 +56,7 @@ function AdminPage() {
         points: user.points,
         participationCount: user.participationCount,
         userRole: user.userRole,
-        isPacer: false, //이 친구가 페이서인지 아닌지 판명
+        isPacer: user.isPacer, //이 친구가 페이서인지 아닌지 판명
       }));
 
       setMembers(fetchedMembers);
