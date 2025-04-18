@@ -71,6 +71,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
     return localStorage.getItem(`userStatus-${postId}`) || "";
   });
   const [date, setDate] = useState("")
+  // const [participantsNum, setParticipantsNum] = useState()
 
   // buttonText 변경 시 로컬 스토리지에 저장
   useEffect(() => {
@@ -212,11 +213,14 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
 
 
   const formatDateTime = (iso: string) => {
-    const dateObj = new Date(iso);
-    const month = dateObj.getMonth() + 1;
-    const day = dateObj.getDate();
-    const hours = dateObj.getHours().toString().padStart(2, "0");
-    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
+    const utcDate = new Date(iso);
+    const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+  
+    const month = kstDate.getMonth() + 1;
+    const day = kstDate.getDate();
+    const hours = kstDate.getHours().toString().padStart(2, "0");
+    const minutes = kstDate.getMinutes().toString().padStart(2, "0");
+  
     return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
 

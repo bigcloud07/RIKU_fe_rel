@@ -43,7 +43,7 @@ const NewEventCard: React.FC<EventCardProps> = ({
 
   return (
     <div
-      className="flex flex-col relative w-[335px] h-[200px] bg-kuLightGray rounded-lg"
+      className="flex flex-col relative w-[335px] h-[293px] bg-kuLightGray rounded-lg"
       onClick={onClick}
     >
       {/* 날짜 및 시간 */}
@@ -58,13 +58,13 @@ const NewEventCard: React.FC<EventCardProps> = ({
       </div>
 
       {/* 러닝 장소 또는 제목 */}
-      <div className="absolute top-[35px] left-[16px] text-[20px] font-semibold">
+      <div className="absolute top-[38px] left-[16px] text-[20px] font-semibold">
         {location}
       </div>
 
       {/* 러닝 이미지 */}
-      <div className="absolute top-[79px] left-[16px] justify-center">
-        <img className="w-[303px] h-[107px] rounded-[8px]"
+      <div className="absolute top-[78px] left-[16px] overflow-hidden w-[303px] h-[200px] justify-center">
+        <img className="w-full h-full rounded-[8px] object-cover"
           src={
             postimg
               ? postimg

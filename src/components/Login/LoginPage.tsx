@@ -15,16 +15,16 @@ function handleFindIDPW() {
 //로그인 페이지 
 function LoginPage() { 
   
-  //로그인 세션이 있으면 메인페이지로 연결
-  useEffect(() => {
-    const token = localStorage.getItem('accessToken');
+  // //로그인 세션이 있으면 메인페이지로 연결
+  // useEffect(() => {
+  //   const token = localStorage.getItem('accessToken');
   
-    if (token) {
-      // 이미 로그인 되어 있는 경우
-      navigate('/tab/main');
-    }
+  //   if (token) {
+  //     // 이미 로그인 되어 있는 경우
+  //     navigate('/tab/main');
+  //   }
   
-  }, []);
+  // }, []);
 
   const navigate = useNavigate(); //useNavigate 훅을 사용해 navigate 함수 생성
 

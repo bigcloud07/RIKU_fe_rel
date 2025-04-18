@@ -144,14 +144,25 @@ function EventMake() {
     }
 
     try {
-      // 날짜와 시간 직접 분리해서 KST 기준 문자열 만들기
-      const date = dateTime.date;
       const [hours, minutes] = dateTime.time.split(":").map(Number);
+      const selectedDate = dateTime.date!;
 
+      // ✅ 1. KST 기준으로 조립
+      const kstDate = new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        selectedDate.getDate(),
+        hours,
+        minutes,
+        0
+      );
+
+      // ✅ 2. UTC 기준으로 변환
+      const utcDate = new Date(kstDate.getTime() - 9 * 60 * 60 * 1000);
+
+      // ✅ 3. 문자열 직접 생성 (🔥 중요: toISOString() 사용하지 말 것!)
       const pad = (n: number) => n.toString().padStart(2, "0");
-
-      const eventDateTime = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(hours)}:${pad(minutes)}`;
-      // 결과 예: "2025-03-31T14:00"
+      const eventDateTime = `${utcDate.getFullYear()}-${pad(utcDate.getMonth() + 1)}-${pad(utcDate.getDate())}T${pad(utcDate.getHours())}:${pad(utcDate.getMinutes())}:${pad(utcDate.getSeconds())}`;
 
       const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
 

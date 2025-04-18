@@ -97,7 +97,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           setAttachmentUrls(result.attachmentUrls || []);
           setUserInfo({
             userId: result.userInfo?.userId || 0,
-            userName: result.userInfo?.userName || "",
+            userName: ㅇㅁㅅresult.userInfo?.userName || "",
             userProfileImg: result.userInfo?.userProfileImg || "",
           });
           setPostCreatorName(result.postCreatorInfo.userName)
@@ -146,11 +146,13 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
-        `/run/regular/post/${postId}/attend`,
+        `/run/regular/post/${postId}/group`,
         { code },
         { headers: { Authorization: `${token}` } }
       );
+      
       if (response.data.isSuccess) {
+        
         setUserStatus(response.data.result.status);
         setButtonText("출석완료");
         setError(null);
@@ -164,11 +166,14 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   };
 
   const formatDateTime = (iso: string) => {
-    const dateObj = new Date(iso);
-    const month = dateObj.getMonth() + 1;
-    const day = dateObj.getDate();
-    const hours = dateObj.getHours().toString().padStart(2, "0");
-    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
+    const utcDate = new Date(iso);
+    const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+  
+    const month = kstDate.getMonth() + 1;
+    const day = kstDate.getDate();
+    const hours = kstDate.getHours().toString().padStart(2, "0");
+    const minutes = kstDate.getMinutes().toString().padStart(2, "0");
+  
     return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
 

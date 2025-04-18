@@ -83,12 +83,29 @@ function FlashRunMake() {
     }
 
     try {
+      const [hours, minutes] = dateTime.time.split(":").map(Number);
+      const selected = dateTime.date!;
+
+      // ✅ 1. KST 기준으로 조립
+      const kstDate = new Date(
+        selected.getFullYear(),
+        selected.getMonth(),
+        selected.getDate(),
+        hours,
+        minutes,
+        0
+      );
+
+      // ✅ 2. UTC 기준으로 변환
+      const utcDate = new Date(kstDate.getTime() - 9 * 60 * 60 * 1000);
+
+      // ✅ 3. 문자열 직접 생성 (🔥 중요: toISOString() 사용하지 말 것!)
       const pad = (n: number) => n.toString().padStart(2, "0");
-      const year = dateTime.date!.getFullYear();
-      const month = pad(dateTime.date!.getMonth() + 1);
-      const day = pad(dateTime.date!.getDate());
-      const time = dateTime.time;
-      const eventDateTime = `${year}-${month}-${day}T${time}:00`; // ✅ 로컬 기준
+      const eventDateTime = `${utcDate.getFullYear()}-${pad(utcDate.getMonth() + 1)}-${pad(utcDate.getDate())}T${pad(utcDate.getHours())}:${pad(utcDate.getMinutes())}:${pad(utcDate.getSeconds())}`;
+
+      console.log("선택한 시간:", dateTime.date, dateTime.time);
+      console.log("KST 조립된 시간:", kstDate.toString());
+      console.log("변환된 UTC:", eventDateTime);
 
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 

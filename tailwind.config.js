@@ -52,6 +52,9 @@ module.exports = {
       clipPath: {
         triangle: "polygon(50% 0%, 0% 100%, 100% 100%)",
       },
+      fontFamily: {
+        sans: ['"Apple SD Gothic Neo"', 'sans-serif'],
+      },
     },
   },
   plugins: [
