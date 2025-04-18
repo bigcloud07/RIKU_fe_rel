@@ -70,13 +70,15 @@ const NewEventCard: React.FC<EventCardProps> = ({
 
       {/* 러닝 이미지 */}
       <div className="absolute top-[103px] left-[16px] justify-center">
-        <img className="w-[303px] h-[107px] rounded-[8px]"
-          src={
-            postimg
-              ? postimg
-              : defaultimg
-          }
-        />
+        <div className="w-[303px] h-[107px] overflow-hidden">
+          <img className="w-full h-full object-cover rounded-[8px]"
+            src={
+              postimg
+                ? postimg
+                : defaultimg
+            }
+          />
+        </div>
       </div>
     </div>
   );

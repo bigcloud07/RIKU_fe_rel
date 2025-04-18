@@ -115,25 +115,30 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   };
 
   const handleStartClick = async () => {
-    try {
-      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const response = await customAxios.post(
-        `/run/regular/post/${postId}/code`,
-        {},
-        {
-          headers: { Authorization: `${token}` },
+    if (!code) {
+      try {
+        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+        const response = await customAxios.post(
+          `/run/regular/post/${postId}/code`,
+          {},
+          {
+            headers: { Authorization: `${token}` },
+          }
+        );
+        console.log("응답", response.data)
+        if (response.data.isSuccess) {
+  
+          setCode(response.data.result.code);
+          
+        } else {
+          setError(response.data.responseMessage);
         }
-      );
-      if (response.data.isSuccess) {
-
-        setCode(response.data.result.code);
-        setIsModalOpen(true);
-      } else {
-        setError(response.data.responseMessage);
+      } catch {
+        setError("출석 코드 생성에 실패했습니다.");
       }
-    } catch {
-      setError("출석 코드 생성에 실패했습니다.");
     }
+
+    setIsModalOpen(true)
   };
 
   const [postStatus, setPostStatus] = useState<string>("");
@@ -175,7 +180,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         <object data={postImageUrl || flashrunimage} className="w-[375px] h-[308px]" />
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
-            <object data={RegularRunlogo} />
+            <object data={RegularRunlogo} className="w-[60px] h-[24px]"/>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
           <div className="flex flex-col items-start w-full max-w-[360px] mt-5">

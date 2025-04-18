@@ -206,7 +206,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         {/* 번개런 정보 */}
         <div className="absolute top-[220px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
-            <object data={FlashRunlogo} />
+            <object data={FlashRunlogo} className="w-[60px] h-[24px]"/>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
           <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
@@ -283,7 +283,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
               </div>
             </div>
           )}
-          <div className="flex flex-col items-start text-left w-full max-w-[327px] mt-3">세부 내용</div>
+          <div className="flex flex-col items-start text-left w-full max-w-[327px] mt-2">세부 내용</div>
           <div className="mt-1 w-[327px] border border-[#ECEBE4] rounded-lg">
             <div className="text-[#686F75] p-5 text-justify">{content}</div>
           </div>

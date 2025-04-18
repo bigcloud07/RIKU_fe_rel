@@ -1,26 +1,29 @@
 declare module '*.png' {
-    const pngUrl: string;
-    export default pngUrl;
-  }
-  
-  declare module '*.jpg' {
-    const jpgUrl: string;
-    export default jpgUrl;
-  }
-  
-  declare module '*.jpeg' {
-    const jpegUrl: string;
-    export default jpegUrl;
-  }
-  
-  declare module '*.svg' {
-    const value: string;
-    export default value;
-  }
-  
-  declare module "*.svg" {
-    const value: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
-    export default value;
+  const pngUrl: string;
+  export default pngUrl;
 }
-  
-  
+
+declare module '*.jpg' {
+  const jpgUrl: string;
+  export default jpgUrl;
+}
+
+declare module '*.jpeg' {
+  const jpegUrl: string;
+  export default jpegUrl;
+}
+
+declare module '*.svg' {
+  const value: string;
+  export default value;
+}
+
+declare module "*.svg" {
+  const value: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
+  export default value;
+}
+
+declare module '*.mp4' {
+  const src: string;
+  export default src;
+}

@@ -186,10 +186,10 @@ function SchedulePage() {
     }
   };
 
-  //게시글 이동
-  const handleNavigateToNotice = (postId: number) => {
-    navigate(`/run/post/${postId}`);
-  };
+  const handleNavigateToNotice = (postId: number, postType: string) => {
+    navigate(`/run/${postType}/${postId}`);
+  }
+
 
   //플로팅 버튼을 눌렀을 때.. 동작하는 floatingButton
   const toggleFloatingButton = () => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import riku_logo from '../../assets/riku_logo_loginPage.svg'; //라이쿠 로고 불러오기
 import { Link, useNavigate } from 'react-router-dom'; // Link 컴포넌트 import
 import customAxios from '../../apis/customAxios'; //커스텀 axios 호출
@@ -10,8 +10,21 @@ function handleFindIDPW() {
 }
 
 
+
+
 //로그인 페이지 
 function LoginPage() { 
+  
+  //로그인 세션이 있으면 메인페이지로 연결
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+  
+    if (token) {
+      // 이미 로그인 되어 있는 경우
+      navigate('/tab/main');
+    }
+  
+  }, []);
 
   const navigate = useNavigate(); //useNavigate 훅을 사용해 navigate 함수 생성
 
@@ -50,7 +63,7 @@ function LoginPage() {
         
         localStorage.setItem('accessToken', JSON.stringify(response.data.result.jwtInfo.accessToken));
         localStorage.setItem('MyId', JSON.stringify(response.data.result.userId));
-        
+        console.log(response.data)
         navigate('/tab/main'); // 로그인 성공 시 메인 페이지로 이동
       } else {
         // 요청 실패 처리
@@ -95,6 +108,13 @@ function LoginPage() {
       }
     }
   }
+
+  //엔터키로 로그인 버튼 작동하게 하는 함수
+const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  if (e.key === 'Enter') {
+    handleLoginClick();
+  }
+}
   
   //Tailwind를 사용하여 스타일링 진행
   return (
@@ -111,6 +131,7 @@ function LoginPage() {
             onChange={(e) => setID(e.target.value)}
             placeholder="학번(ID)"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onKeyDown={handleKeyDown}
           />
         </div>
 
@@ -123,6 +144,7 @@ function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="비밀번호"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onKeyDown={handleKeyDown}
           />
         </div>
 
@@ -133,6 +155,7 @@ function LoginPage() {
           } font-bold rounded-md transition-colors`}
           onClick={handleLoginClick}
           disabled={!isLoginBtnValid()}
+          
         >
           로그인
         </button>

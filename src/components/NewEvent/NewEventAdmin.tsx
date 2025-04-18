@@ -105,6 +105,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
 
       } else {
         setError(response.data.responseMessage);
+        alert(response.data.responseMessage);
       }
     } catch (error: any) {
       setError("러닝 참여에 실패했습니다.");
