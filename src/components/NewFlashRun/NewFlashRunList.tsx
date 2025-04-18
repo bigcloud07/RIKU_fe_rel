@@ -120,10 +120,10 @@ const NewFlashRunList: React.FC = () => {
                                     slidesPerView={1}
                                 >
                                     {todayRuns.map((run) => {
-                                        const dateObj = new Date(run.date);
-                                        const formattedDate = format(dateObj, "MM/dd EEEE", { locale: ko });
-                                        const formattedTime = format(dateObj, "HH:mm");
-
+                                        const utcDate = new Date(run.date);
+                                        const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+                                        const formattedDate = format(kstDate, "MM/dd EEEE", { locale: ko });
+                                        const formattedTime = format(kstDate, "HH:mm");
                                         return (
                                             <SwiperSlide key={run.id}>
                                                 <NewTodayRun
@@ -143,12 +143,13 @@ const NewFlashRunList: React.FC = () => {
                                 </Swiper>
 
                                 {/* ✅ Swiper pagination dot 표시 영역 */}
-                                <div
-                                    className="custom-pagination mb-[12px] mt-[12px] flex justify-center
+<div
+  ref={paginationRef}
+  className="custom-pagination h-[20px] mb-[12px] mt-[12px] flex justify-center items-center
     [&>.swiper-pagination-bullet]:bg-white
     [&>.swiper-pagination-bullet-active]:bg-white
     [&>.swiper-pagination-bullet]:mx-[4px]"
-                                ></div>
+></div>
                             </div>
                         </>
                     ) : (
@@ -169,11 +170,10 @@ const NewFlashRunList: React.FC = () => {
                 <h2 className="text-[20px] font-semibold ml-5 ">예정된 러닝</h2>
                 <div className="flex flex-col space-y-[12px] mt-[16px] ml-[20px]">
                     {upcomingRuns.map((run) => {
-                        const dateObj = new Date(run.date);
-
-                        const formattedDate = format(dateObj, "MM/dd EEEE", { locale: ko }); // → 12/24 목요일
-                        const formattedTime = format(dateObj, "HH:mm"); // → 18:00
-
+                        const utcDate = new Date(run.date);
+                        const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+                        const formattedDate = format(kstDate, "MM/dd EEEE", { locale: ko });
+                        const formattedTime = format(kstDate, "HH:mm");
                         return (
                             <NewEventCard
                                 key={run.id}

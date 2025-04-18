@@ -209,7 +209,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
 
 
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center" onClick={handleOutsideClick}>
+    <div className="flex flex-col items-center text-center px-5 justify-center" >
       <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
         훈련

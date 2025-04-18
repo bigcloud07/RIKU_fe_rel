@@ -56,6 +56,7 @@ function NewRegularRunMake() {
         });
         if (response.data.isSuccess) {
           setPacers(response.data.result);
+          console.log(response.data)
         }
       } catch (error) {
         console.error("페이서 목록 불러오기 실패:", error);
@@ -139,12 +140,25 @@ function NewRegularRunMake() {
       return;
     }
     try {
+      const [hours, minutes] = dateTime.time.split(":").map(Number);
+      const selected = dateTime.date!;
+
+      // ✅ 1. KST 기준으로 조립
+      const kstDate = new Date(
+        selected.getFullYear(),
+        selected.getMonth(),
+        selected.getDate(),
+        hours,
+        minutes,
+        0
+      );
+
+      // ✅ 2. UTC 기준으로 변환
+      const utcDate = new Date(kstDate.getTime() - 9 * 60 * 60 * 1000);
+
+      // ✅ 3. 문자열 직접 생성 (🔥 중요: toISOString() 사용하지 말 것!)
       const pad = (n: number) => n.toString().padStart(2, "0");
-      const year = dateTime.date!.getFullYear();
-      const month = pad(dateTime.date!.getMonth() + 1);
-      const day = pad(dateTime.date!.getDate());
-      const time = dateTime.time;
-      const eventDateTime = `${year}-${month}-${day}T${time}:00`; // ✅ 로컬 기준
+      const eventDateTime = `${utcDate.getFullYear()}-${pad(utcDate.getMonth() + 1)}-${pad(utcDate.getDate())}T${pad(utcDate.getHours())}:${pad(utcDate.getMinutes())}:${pad(utcDate.getSeconds())}`;
 
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
@@ -227,7 +241,6 @@ function NewRegularRunMake() {
           onChange={(e) => setContent(e.target.value)}
         ></textarea>
 
-        {/* 페이서 UI는 기존 그대로 유지 */}
         {/* 페이서 그룹 입력 UI */}
         <div className="flex flex-col items-center w-full max-w-md p-4 bg-white rounded-lg relative">
           {isBottomSheetOpen && (

@@ -215,11 +215,14 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
 
 
   const formatDateTime = (iso: string) => {
-    const dateObj = new Date(iso);
-    const month = dateObj.getMonth() + 1;
-    const day = dateObj.getDate();
-    const hours = dateObj.getHours().toString().padStart(2, "0");
-    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
+    const utcDate = new Date(iso);
+    const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+  
+    const month = kstDate.getMonth() + 1;
+    const day = kstDate.getDate();
+    const hours = kstDate.getHours().toString().padStart(2, "0");
+    const minutes = kstDate.getMinutes().toString().padStart(2, "0");
+  
     return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
 

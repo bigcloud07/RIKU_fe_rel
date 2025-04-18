@@ -49,7 +49,7 @@ function SchedulePage() {
   >([]);
 
   const navigate = useNavigate();
-
+  
   //캘린더 월별 조회 메소드
   async function fetchMonthlyData() {
     const formattedPointDate = format(pointDate, "yyyy-MM-dd"); //pointDate(기준이 되는 날짜) 포맷팅
