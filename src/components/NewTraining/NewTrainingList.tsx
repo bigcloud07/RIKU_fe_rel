@@ -126,7 +126,7 @@ const NewTrainingList: React.FC = () => {
                                                     participants={run.participants}
                                                     date={formattedDate}
                                                     time={formattedTime}
-                                                    onClick={() => navigate(`/run/regular/${run.id}`)}
+                                                    onClick={() => navigate(`/run/training/${run.id}`)}
                                                 />
                                             </SwiperSlide>
                                         );

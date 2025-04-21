@@ -67,6 +67,10 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   });
   const [buttonText, setButtonText] = useState("시작하기");
   const handleCloseModal = () => setIsModalOpen(false);
+  const [refreshComments, setRefreshComments] = useState(false);
+  const [groupedParticipants, setGroupedParticipants] = useState<any[]>([]);
+
+
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -94,6 +98,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
             userProfileImg: result.userInfo?.userProfileImg || "",
           });
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+          setGroupedParticipants(result.groupedParticipants || []);
 
         } else {
           setError(response.data.responseMessage);
@@ -108,12 +113,12 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   const formatDateTime = (iso: string) => {
     const utcDate = new Date(iso);
     const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
-  
+
     const month = kstDate.getMonth() + 1;
     const day = kstDate.getDate();
     const hours = kstDate.getHours().toString().padStart(2, "0");
     const minutes = kstDate.getMinutes().toString().padStart(2, "0");
-  
+
     return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
 
@@ -130,9 +135,9 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         );
         console.log("응답", response.data)
         if (response.data.isSuccess) {
-  
+
           setCode(response.data.result.code);
-          
+
         } else {
           setError(response.data.responseMessage);
         }
@@ -150,7 +155,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
     if (!code) return;
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const response = await customAxios.patch(`/run/training/post/${postId}/close`, {}, {
+      const response = await customAxios.patch(`/run/regular/post/${postId}/close`, {}, {
         headers: { Authorization: `${token}` },
       });
 
@@ -166,9 +171,43 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
     }
   };
 
-  const handleTabChange = (tab: "소개" | "명단") => {
+  const handleTabChange = async (tab: "소개" | "명단") => {
     setActiveTab(tab);
+    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+
+    try {
+      const response = await customAxios.get(`/run/regular/post/${postId}`, {
+        headers: { Authorization: `${token}` },
+      });
+
+      if (response.data.isSuccess) {
+        const result = response.data.result;
+
+        setParticipants(result.participants || []);
+        setParticipantsNum(result.participantsNum);
+        setPostStatus(result.postStatus);
+        setDate(result.date);
+        setAttachmentUrls(result.attachmentUrls || []);
+        setPacers(result.pacers || []);
+        setPostCreatorName(result.postCreatorInfo.userName);
+        setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+        setUserInfo({
+          userId: result.userInfo?.userId || 0,
+          userName: result.userInfo?.userName || "",
+          userProfileImg: result.userInfo?.userProfileImg || "",
+        });
+
+
+        // 댓글도 항상 최신화
+        setRefreshComments((prev) => !prev);
+      } else {
+        setError(response.data.responseMessage);
+      }
+    } catch {
+      setError("데이터를 불러오는 데 실패했습니다.");
+    }
   };
+
   const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
 
 
@@ -183,7 +222,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         <object data={postImageUrl || flashrunimage} className="w-[375px] h-[308px]" />
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
-            <object data={RegularRunlogo} className="w-[60px] h-[24px]"/>
+            <object data={RegularRunlogo} className="w-[60px] h-[24px]" />
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
           <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
@@ -256,9 +295,9 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         </>
       )}
 
-      {activeTab === "명단" && <AttendanceList users={participants} />}
+      {activeTab === "명단" && <AttendanceList groupedParticipants={groupedParticipants} />}
 
-      <CommentSection postId={postId!} userInfo={userInfo} />
+      <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
       {/* 시작하기 버튼 */}
       <button

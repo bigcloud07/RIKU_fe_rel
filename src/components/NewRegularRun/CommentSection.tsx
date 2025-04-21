@@ -25,9 +25,10 @@ interface CommentSectionProps {
     userName: string;
     userProfileImg?: string | null;
   };
+  refreshTrigger?: boolean; // 추가
 }
 
-const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => {
+const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refreshTrigger }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>("");
   const [replyInputs, setReplyInputs] = useState<Record<number, string>>({});
@@ -35,7 +36,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
 
   useEffect(() => {
     fetchComments();
-  }, []);
+  }, [refreshTrigger]);
 
   const fetchComments = async () => {
     try {
@@ -56,7 +57,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
-        `/run/regular/post/${postId}/comment`,
+        `/run/flash/post/${postId}/comment`,
         { content: newComment, targetId: null },
         { headers: { Authorization: `${token}` } }
       );
@@ -76,7 +77,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
-        `/run/regular/post/${postId}/comment`,
+        `/run/flash/post/${postId}/comment`,
         { content, targetId },
         { headers: { Authorization: `${token}` } }
       );
@@ -98,7 +99,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.patch(
-        `/run/regular/post/${postId}/comment/${commentId}`,
+        `/run/flash/post/${postId}/comment/${commentId}`,
         {},
         { headers: { Authorization: `${token}` } }
       );

@@ -25,9 +25,10 @@ interface CommentSectionProps {
     userName: string;
     userProfileImg?: string | null;
   };
+  refreshTrigger?: boolean; // 추가
 }
 
-const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => {
+const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refreshTrigger }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>("");
   const [replyInputs, setReplyInputs] = useState<Record<number, string>>({});
@@ -35,7 +36,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo }) => 
 
   useEffect(() => {
     fetchComments();
-  }, []);
+  }, [refreshTrigger]);
 
   const fetchComments = async () => {
     try {
