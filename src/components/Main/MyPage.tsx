@@ -153,6 +153,11 @@ function MyPage() {
     navigate("/profilefix-page");
   }
 
+  //'활동 내역' 영역 눌렀을 시, '활동 상세 내역' 페이지로 가게 만드는 함수
+  function handleParticipationCountClick() {
+    navigate("/activity-detail");
+  }
+
   //'운영진 페이지' 버튼 클릭시 수행할 함수
   function handleToAdminPageClick() {
     if (userInfo.userRole === "운영진") {
@@ -187,7 +192,8 @@ function MyPage() {
           },
         }
       );
-      alert(response.data.result.message); //"출석이 완료되었습니다"가 출력될 것
+      console.log(response.data);
+      alert("출석이 완료됨!"); //"출석이 완료되었습니다"가 출력될 것
       console.log("출석 완료, 불러오기 성공: ", response); //test용
       setAttendChecked(true); //'출석됨'으로 표시
       await fetchUserInfo(); //여기에서 유저 정보를 갱신하는 함수(fetchUserInfo)를 call해야 캘린더에 반영된다
@@ -272,7 +278,7 @@ function MyPage() {
             <p className="text-2xl font-bold text-gray-800">{userInfo.points}</p>
             <p className="text-sm text-gray-500">포인트</p>
           </div>
-          <div className="text-center">
+          <div className="text-center" onClick={handleParticipationCountClick}>
             {
               //활동내역 갯수가 0 이하인 경우를 따진다
               userInfo.participationCount <= 0 ? (

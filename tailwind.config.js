@@ -3,7 +3,7 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}", // src 폴더 내 모든 JS/TS 파일
-    "./index.html",                // Vite의 기본 HTML 파일 포함
+    "./index.html", // Vite의 기본 HTML 파일 포함
     "./node_modules/swiper/**/*.{js,ts,jsx,tsx}", // ✅ Swiper 모듈 포함
   ],
   theme: {
@@ -48,6 +48,8 @@ module.exports = {
         kuWhite: "#FFFFFF",
         kuOrange: "#DEA93D",
         whiteSmoke: "#F5F5F5",
+        kuBrown: "#D96941",
+        kuYellow: "#FFC000",
       },
       clipPath: {
         triangle: "polygon(50% 0%, 0% 100%, 100% 100%)",
