@@ -79,6 +79,9 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
+  const [refreshComments, setRefreshComments] = useState(false);
+
+
   const getTrainingDescription = (type: string) => {
     switch (type) {
       case 'LSD':
@@ -199,8 +202,41 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
 
-  const handleTabChange = (tab: "소개" | "명단") => setActiveTab(tab);
-
+  const handleTabChange = async (tab: "소개" | "명단") => {
+    setActiveTab(tab);
+    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+  
+    try {
+      const response = await customAxios.get(`/run/regular/post/${postId}`, {
+        headers: { Authorization: `${token}` },
+      });
+  
+      if (response.data.isSuccess) {
+        const result = response.data.result;
+  
+        setParticipants(result.participants || []);
+        setParticipantsNum(result.participantsNum);
+        setPostStatus(result.postStatus);
+        setDate(result.date);
+        setAttachmentUrls(result.attachmentUrls || []);
+        setPacers(result.pacers || []);
+        setPostCreatorName(result.postCreatorInfo.userName);
+        setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+        setUserInfo({
+          userId: result.userInfo?.userId || 0,
+          userName: result.userInfo?.userName || "",
+          userProfileImg: result.userInfo?.userProfileImg || "",
+        });
+  
+        // 댓글도 항상 최신화
+        setRefreshComments((prev) => !prev);
+      } else {
+        setError(response.data.responseMessage);
+      }
+    } catch {
+      setError("데이터를 불러오는 데 실패했습니다.");
+    }
+  };
   // 말풍선 외부를 클릭했을 때 숨기기
   const handleOutsideClick = (event: React.MouseEvent) => {
     if (!event.target.closest('.tooltip-container') && isTooltipVisible) {
@@ -310,7 +346,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
       {activeTab === "명단" && <AttendanceList users={participants} />}
 
-      <CommentSection postId={postId!} userInfo={userInfo} />
+      <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
       <button
         className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${userStatus === "ATTENDED"

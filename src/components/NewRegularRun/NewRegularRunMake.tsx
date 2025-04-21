@@ -71,9 +71,13 @@ function NewRegularRunMake() {
   };
 
   const removePacerGroup = (id: string) => {
-    setPacerGroups(pacerGroups.filter(group => group.id !== id));
+    const filtered = pacerGroups.filter(group => group.id !== id);
+    const reordered = filtered.map((group, index) => ({
+      ...group,
+      id: String.fromCharCode(65 + index), // A부터 다시 재지정
+    }));
+    setPacerGroups(reordered);
   };
-
   const handleInputChange = (id: string, field: keyof PacerGroup, value: string) => {
     setPacerGroups(pacerGroups.map(group => group.id === id ? { ...group, [field]: value } : group));
   };
@@ -102,6 +106,10 @@ function NewRegularRunMake() {
   const handleMainImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      if (file.size > 4 * 1024 * 1024) {
+        alert("사진 용량이 너무 큽니다. (최대 4MB)");
+        return;
+      }
       const reader = new FileReader();
       reader.onloadend = () => setMainPreview(reader.result as string);
       reader.readAsDataURL(file);
@@ -112,18 +120,31 @@ function NewRegularRunMake() {
   const handleCourseImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (!selectedFiles) return;
+  
     const selectedArray = Array.from(selectedFiles);
+  
+    // 용량 초과 검사
+    for (const file of selectedArray) {
+      if (file.size > 4 * 1024 * 1024) {
+        alert("사진 용량이 너무 큽니다. (최대 4MB)");
+        return;
+      }
+    }
+  
     if (courseImages.length + selectedArray.length > 6) {
       alert("코스 사진은 최대 6장까지 업로드할 수 있습니다.");
       return;
     }
+  
     selectedArray.forEach(file => {
       const reader = new FileReader();
       reader.onloadend = () => setCoursePreviews(prev => [...prev, reader.result as string]);
       reader.readAsDataURL(file);
     });
+  
     setCourseImages(prev => [...prev, ...selectedArray]);
   };
+  
 
   const removeCourseImage = (index: number) => {
     setCourseImages(prev => prev.filter((_, i) => i !== index));

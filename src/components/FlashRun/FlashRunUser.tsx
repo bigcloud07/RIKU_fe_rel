@@ -71,7 +71,8 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
     return localStorage.getItem(`userStatus-${postId}`) || "";
   });
   const [date, setDate] = useState("")
-  // const [participantsNum, setParticipantsNum] = useState()
+  const [currentParticipantsNum, setCurrentParticipantsNum] = useState<number>(participantsNum); // 현재 불러오는 값
+
 
   // buttonText 변경 시 로컬 스토리지에 저장
   useEffect(() => {
@@ -145,27 +146,52 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
     }
   };
 
-  const handleTabChange = async (tab: "소개" | "명단") => { //명단 탭누를때 마다 명단 사람들의 상태 최신화
+  const [refreshComments, setRefreshComments] = useState(false);
+
+  const handleTabChange = async (tab: "소개" | "명단") => {
     setActiveTab(tab);
-    if (tab === "명단") {
-      try {
-        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-        const response = await customAxios.get(`/run/flash/post/${postId}`, {
-          headers: {
-            Authorization: `${token}`,
-          },
+    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+
+    try {
+      const response = await customAxios.get(`/run/flash/post/${postId}`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+
+      if (response.data.isSuccess) {
+        const result = response.data.result;
+
+        // 공통 업데이트 (댓글 관련 정보 등)
+        setUserInfo({
+          userId: result.userInfo?.userId || 0,
+          userName: result.userInfo?.userName || "",
+          userProfileImg: result.userInfo?.userProfileImg || "",
         });
-        if (response.data.isSuccess) {
-          console.log(response.data)
-          setCurrentParticipants(response.data.result.participants); // 최신 참가자 목록 설정
-        } else {
-          setError(response.data.responseMessage);
+        setPostCreatorImg(result.postCreatorInfo?.userProfileImg || null);
+        setCurrentParticipantsNum(result.participantsNum); // 참가자 수 갱신
+        setDate(result.date); // 날짜도 혹시 변경되었을 수 있음
+
+        // 탭 별 업데이트
+        if (tab === "명단") {
+          setCurrentParticipants(result.participants);
         }
-      } catch (error: any) {
-        setError("참가자 목록을 가져오는 데 실패했습니다.");
+
+        if (tab === "소개") {
+          setAttachmentUrls(result.attachmentUrls || []);
+          setCreatorName(result.postCreatorInfo?.userName || "");
+        }
+
+        // ✅ 댓글 최신화 트리거
+        setRefreshComments((prev) => !prev);
+      } else {
+        setError(response.data.responseMessage);
       }
+    } catch (error) {
+      setError("데이터를 불러오는 데 실패했습니다.");
     }
   };
+
   const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
     userName: "",
@@ -338,7 +364,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
         </>
       )}
       {activeTab === "명단" && <AttendanceList users={currentParticipants} />}
-      <CommentSection postId={postId!} userInfo={userInfo} />
+      <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
       <button
         className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${userStatus === "ATTENDED"

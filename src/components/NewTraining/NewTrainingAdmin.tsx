@@ -44,7 +44,7 @@ interface Props {
 
 const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   const navigate = useNavigate();
-  const handleBack = () => navigate("/regular");
+  const handleBack = () => navigate("/training");
 
   const [activeTab, setActiveTab] = useState<"소개" | "명단">("소개");
   const [error, setError] = useState<string | null>(null);
@@ -66,6 +66,8 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const [trainingtype, setTrainingtype] = useState("");
+  const [refreshComments, setRefreshComments] = useState(false);
+
 
   const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
@@ -120,7 +122,43 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
     return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
 
-  const handleTabChange = (tab: "소개" | "명단") => setActiveTab(tab);
+  
+  const handleTabChange = async (tab: "소개" | "명단") => {
+    setActiveTab(tab);
+    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+  
+    try {
+      const response = await customAxios.get(`/run/training/post/${postId}`, {
+        headers: { Authorization: `${token}` },
+      });
+  
+      if (response.data.isSuccess) {
+        const result = response.data.result;
+  
+        setParticipants(result.participants || []);
+        setParticipantsNum(result.participantsNum);
+        setPostStatus(result.postStatus);
+        setDate(result.date);
+        setAttachmentUrls(result.attachmentUrls || []);
+        setPacers(result.pacers || []);
+        setPostCreatorName(result.postCreatorInfo.userName);
+        setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+        setUserInfo({
+          userId: result.userInfo?.userId || 0,
+          userName: result.userInfo?.userName || "",
+          userProfileImg: result.userInfo?.userProfileImg || "",
+        });
+  
+        // ✅ 댓글 최신화
+        setRefreshComments((prev) => !prev);
+      } else {
+        setError(response.data.responseMessage);
+      }
+    } catch {
+      setError("데이터를 불러오는 데 실패했습니다.");
+    }
+  };
+  
 
   const handleStartClick = async () => {
     if (!code) {
@@ -322,7 +360,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
 
       {activeTab === "명단" && <AttendanceList users={participants} />}
 
-      <CommentSection postId={postId!} userInfo={userInfo} />
+      <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
       {/* 시작하기 버튼 */}
       <button
