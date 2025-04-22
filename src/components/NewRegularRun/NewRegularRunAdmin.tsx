@@ -72,43 +72,47 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
 
 
 
-  useEffect(() => {
-    const fetchPostData = async () => {
-      try {
-        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-        const response = await customAxios.get(`/run/regular/post/${postId}`, {
-          headers: { Authorization: `${token}` },
+  const fetchPostData = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const response = await customAxios.get(`/run/regular/post/${postId}`, {
+        headers: { Authorization: `${token}` },
+      });
+      if (response.data.isSuccess) {
+        const result = response.data.result;
+        setTitle(result.title);
+        setLocation(result.location);
+        setDate(result.date);
+        setContent(result.content);
+        setPostImageUrl(result.postImageUrl);
+        setParticipants(result.participants || []);
+        setParticipantsNum(result.participantsNum || 0);
+        setPacers(result.pacers || []);
+        setAttachmentUrls(result.attachmentUrls || []);
+        setPostCreatorName(result.postCreatorInfo.userName);
+        setPostStatus(result.postStatus); // CLOSED, NOW 등
+        setUserInfo({
+          userId: result.userInfo?.userId || 0,
+          userName: result.userInfo?.userName || "",
+          userProfileImg: result.userInfo?.userProfileImg || "",
         });
-        if (response.data.isSuccess) {
-          const result = response.data.result;
-          setTitle(result.title);
-          setLocation(result.location);
-          setDate(result.date);
-          setContent(result.content);
-          setPostImageUrl(result.postImageUrl);
-          setParticipants(result.participants || []);
-          setParticipantsNum(result.participantsNum || 0);
-          setPacers(result.pacers || []);
-          setAttachmentUrls(result.attachmentUrls || []);
-          setPostCreatorName(result.postCreatorInfo.userName);
-          setPostStatus(result.postStatus); // CLOSED, NOW 등
-          setUserInfo({
-            userId: result.userInfo?.userId || 0,
-            userName: result.userInfo?.userName || "",
-            userProfileImg: result.userInfo?.userProfileImg || "",
-          });
-          setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
-          setGroupedParticipants(result.groupedParticipants || []);
+        setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+        setGroupedParticipants(result.groupedParticipants || []);
 
-        } else {
-          setError(response.data.responseMessage);
-        }
-      } catch {
-        setError("데이터를 불러오는 데 실패했습니다.");
+      } else {
+        setError(response.data.responseMessage);
       }
-    };
+    } catch {
+      setError("데이터를 불러오는 데 실패했습니다.");
+    }
+  };
+
+  useEffect(() => {
+
     fetchPostData();
   }, [postId]);
+
+  
 
   const formatDateTime = (iso: string) => {
     const utcDate = new Date(iso);
@@ -208,7 +212,77 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
     }
   };
 
+  const fetchParticipantsInfo = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const response = await customAxios.get(`/run/regular/post/${postId}`, {
+        headers: { Authorization: `${token}` },
+      });
+  
+      if (response.data.isSuccess) {
+        const result = response.data.result;
+        setParticipants(result.participants || []);
+        setParticipantsNum(result.participantsNum || 0);
+        setGroupedParticipants(result.groupedParticipants || []);
+      }
+    } catch {
+      setError("명단 정보 불러오기 실패");
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === "명단") {
+      fetchParticipantsInfo();
+    }
+  }, [activeTab]);
+
   const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
+
+  // 명단 수정 관련 로직
+
+  // ✅ NewRegularRunAdmin.tsx 중 명단 관련 핵심 부분만 발췌
+
+  // 출석 상태 상태
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editedAttendance, setEditedAttendance] = useState<{ [userId: number]: boolean }>({});
+
+  const toggleAttendance = (userId: number, originalStatus: string) => {
+    setEditedAttendance((prev) => {
+      const current = userId in prev ? prev[userId] : originalStatus === "ATTENDED";
+      return {
+        ...prev,
+        [userId]: !current,
+      };
+    });
+  };
+
+  const saveAttendanceChanges = async () => {
+    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+    const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
+      userId: Number(userId),
+      isAttend,
+    }));
+
+    try {
+      await customAxios.patch(`/run/regular/post/${postId}/manual-attend`, payload, {
+        headers: { Authorization: `${token}` },
+      });
+      alert("출석 정보가 저장되었습니다.");
+      setIsEditMode(false);
+      setEditedAttendance({});
+      await fetchPostData();
+    } catch {
+      alert("저장에 실패했습니다.");
+    }
+  };
+
+  const editedCheckedCount = participants.filter((p) => {
+    if (p.userId in editedAttendance) return editedAttendance[p.userId];
+    return p.status === "ATTENDED";
+  }).length;
+
+  const attendedCount = participants.filter((p) => p.status === "ATTENDED").length;
+  const pendingCount = participants.length - attendedCount;
 
 
   return (
@@ -219,7 +293,9 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
       </div>
 
       <div className="relative w-[375px] pb-[90px]">
-        <object data={postImageUrl || flashrunimage} className="w-[375px] h-[308px]" />
+        <div className="w-[375px] h-[308px] overflow-hidden">
+          <object data={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
+        </div>
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
             <object data={RegularRunlogo} className="w-[60px] h-[24px]" />
@@ -295,13 +371,29 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         </>
       )}
 
-      {activeTab === "명단" && <AttendanceList groupedParticipants={groupedParticipants} />}
+      {activeTab === "명단" && (
+        <>
+
+
+          <AttendanceList
+            groupedParticipants={groupedParticipants}
+            isEditMode={isEditMode}
+            editedAttendance={editedAttendance}
+            toggleAttendance={toggleAttendance}
+            onSaveAttendance={saveAttendanceChanges}
+            onToggleEditMode={() => setIsEditMode(true)}
+            userInfoName={userInfo.userName}
+            postCreatorName={postCreatorName}
+          />
+        </>
+      )}
+
 
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
       {/* 시작하기 버튼 */}
       <button
-        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished || postStatus === "CLOSED"
+        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-[32px] mb-2 ${isFinished || postStatus === "CLOSED"
           ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
           : "bg-[#366943] text-white"
           }`}

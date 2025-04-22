@@ -19,6 +19,8 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
+import checkedicon from "../../assets/checkedicon.svg"
+
 interface FlashRunUserData {
   postId?: string;
 }
@@ -112,15 +114,27 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
       const response = await customAxios.get(`/run/regular/post/${postId}`, {
         headers: { Authorization: `${token}` },
       });
-  
+
       if (response.data.isSuccess) {
         const result = response.data.result;
         setParticipants(result.participants || []);
         setParticipantsNum(result.participantsNum || 0);
         setGroupedParticipants(result.groupedParticipants || []);
+
+        console.log("📦 Fetched participants:", result.participants);
+        console.log("👥 Fetched grouped participants:", result.groupedParticipants);
       }
-    } catch {
-      setError("명단 정보 불러오기 실패");
+    } catch (error: any) {
+      console.error("❌ 참여/취소 요청 실패:", error);
+    
+      if (error?.response?.data) {
+        const serverError = error.response.data;
+        console.error("📦 서버 응답 내용:", serverError);
+    
+        setError(serverError.responseMessage || "참여 요청 실패");
+      } else {
+        setError("참여 요청 실패");
+      }
     }
   };
 
@@ -149,30 +163,71 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   };
 
   const handleJoinConfirm = async () => {
-    if (!selectedGroup) return setError("그룹을 선택해주세요.");
-
-    // 🔒 이미 참여한 경우 다시 요청 막기
-    if (userStatus === "PENDING" || userStatus === "ATTENDED") {
-      setIsGroupModalOpen(false); // 그냥 닫기만
-      return;
-    }
+    const isCancel = selectedGroup === "";
 
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const res = await customAxios.post(`/run/regular/post/${postId}/join?group=${selectedGroup}`, {}, {
-        headers: { Authorization: `${token}` },
-      });
+      const res = await customAxios.patch(
+        `/run/regular/post/${postId}/join${!isCancel ? `?group=${selectedGroup}` : ""}`,
+        {},
+        { headers: { Authorization: `${token}` } }
+      );
+
       if (res.data.isSuccess) {
-        setUserStatus("PENDING");
-        setButtonText("출석하기");
+        if (isCancel) {
+          // ✅ 참여 취소 처리
+          setUserStatus("");
+          setButtonText("참여하기");
+          setSelectedGroup("");
+          setIsGroupModalOpen(false);
+
+          await fetchParticipantsInfo();
+          return;
+        }
+
+        // ✅ 그룹 참여 or 수정 처리
+        const updatedGroup = res.data.result.groupedParticipants;
+        
+
+        if (!updatedGroup) {
+          // 혹시라도 없는 경우 대비해서 다시 전체 fetch
+          await fetchParticipantsInfo();
+          setIsGroupModalOpen(false);
+          return;
+        }
+
+        setGroupedParticipants(updatedGroup);
+
+        const foundGroup = updatedGroup?.find(group =>
+          group.participants?.find((p: any) => p.userId === userInfo.userId)
+        );
+        if (foundGroup) {
+          const matchedUser = foundGroup.participants.find((p: any) => p.userId === userInfo.userId);
+          setUserStatus(matchedUser?.status || "");
+          setButtonText(
+            matchedUser?.status === "ATTENDED"
+              ? "출석완료"
+              : matchedUser?.status === "PENDING"
+                ? "출석하기"
+                : "참여하기"
+          );
+        }
+
         setIsGroupModalOpen(false);
       } else {
         setError(res.data.responseMessage);
       }
-    } catch {
-      setError("참여 요청 실패");
+    } catch (error: any) {
+      console.error("❌ 참여/취소 요청 실패:", error);
+      if (error?.response?.data) {
+        console.error("📦 서버 응답 내용:", error.response.data);
+        setError(error.response.data.responseMessage || "참여 요청 실패");
+      } else {
+        setError("참여 요청 실패");
+      }
     }
   };
+
 
 
 
@@ -207,13 +262,16 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
   return (
     <div className="flex flex-col items-center text-center px-5 justify-center">
-      <div className="relative flex bg-kuDarkGreen w-[430px] h-[56px] text-white text-xl font-semibold justify-center items-center">
+      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
         정규런
       </div>
 
       <div className="relative w-[375px] pb-[90px]">
-        <object data={postImageUrl || flashrunimage} className="w-[375px] h-[308px]" />
+
+        <div className="w-[375px] h-[308px] overflow-hidden">
+          <object data={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
+        </div>
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
             <object data={RegularRunlogo} className="w-[60px] h-[24px]" />
@@ -239,14 +297,14 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
       <TabButton leftLabel="소개" rightLabel="명단" onTabChange={setActiveTab} />
       {activeTab === "소개" && <>
-        <div className="flex items-start text-left w-full mt-3 my-2 max-w-[349px]">
+        <div className="flex items-start text-left w-full mt-[24px] my-2 max-w-[349px]">
           <img src={pacermark} />
           <div className="m-1">PACER</div>
         </div>
         <PacerCard pacers={pacers} />
         {attachmentUrls.length > 0 && (
           <div className="mt-5 w-[327px]">
-            <div className="text-left text-[16px] mb-2">코스 사진</div>
+            <div className="text-left text-[16px] mb-[16px]">코스 사진</div>
             <Swiper pagination={{ clickable: true }} modules={[Pagination]} spaceBetween={10} slidesPerView={1}>
               {attachmentUrls.map((url, index) => (
                 <SwiperSlide key={index}>
@@ -261,8 +319,8 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
             </Swiper>
           </div>
         )}
-        <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">세부 내용</div>
-        <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
+        <div className="flex flex-col mt-[24px] items-start text-left w-full max-w-[327px]">세부 내용</div>
+        <div className="mt-[12px] w-[327px] border border-[#ECEBE4] rounded-lg p-4">
           <div className="flex items-center gap-2 mb-2">
             {postCreatorImg ? (
               <img src={postCreatorImg} alt="프로필" className="w-8 h-8 rounded-full object-cover" />
@@ -277,7 +335,14 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
         </div>
       </>}
 
-      {activeTab === "명단" && <AttendanceList groupedParticipants={groupedParticipants} />}
+      {activeTab === "명단" &&
+        <AttendanceList
+          key={JSON.stringify(groupedParticipants)} // ⬅️ 이거 추가!
+          groupedParticipants={groupedParticipants}
+          userInfoName={userInfo.userName}
+          postCreatorName={postCreatorName}
+        />
+      }
 
 
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
@@ -290,19 +355,19 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
       ) : userStatus === "PENDING" ? (
         <>
           {selectedGroup && (
-            <div className="text-sm text-left text-black w-full max-w-[327px] mt-4 pl-6">
+            <div className="text-sm text-left text-kuDarkGray w-full max-w-[327px] mt-4 pl-6">
               내가 선택한 그룹 : <span className="font-semibold">{selectedGroup}</span>
             </div>
           )}
-          <div className="flex gap-2 mt-1 mb-6">
+          <div className="flex gap-2 mt-[8px] mb-6">
             <button
-              className="w-[160px] h-14 rounded-lg text-white bg-[#ECEBE4] text-[#333]"
+              className="w-[164px] h-[52px] font-bold rounded-lg text-white bg-kuGreen"
               onClick={handleOpenGroupModal}
             >
               그룹 수정
             </button>
             <button
-              className="w-[160px] h-14 rounded-lg bg-kuDarkGreen text-white"
+              className="w-[164px] h-[52px] rounded-lg font-bold bg-kuDarkGreen text-white"
               onClick={() => setIsModalOpen(true)}
             >
               출석하기
@@ -318,31 +383,71 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
         </button>
       )}
 
-      
+
 
       {isGroupModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
-          <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
-            <button className="absolute top-2.5 right-2.5 text-2xl cursor-pointer" onClick={() => setIsGroupModalOpen(false)}>×</button>
-            <h2 className="text-lg font-semibold mb-4">그룹을 선택해주세요</h2>
-            <div className="flex flex-col gap-2 max-h-[200px] overflow-y-auto">
-              {groupList.map((group, index) => (
-                <button
-                  key={index}
-                  className={`p-2 rounded-lg border ${selectedGroup === group.group ? "bg-kuGreen text-white" : "bg-gray-100"}`}
-                  onClick={() => setSelectedGroup(group.group)}
-                >
-                  {group.group} - {group.pace}
-                </button>
-              ))}
-            </div>
+          <div className="bg-white p-6 rounded-lg w-[300px] max-w-[90%] text-center relative shadow-lg">
             <button
-              className="mt-4 w-full py-2 bg-kuDarkGreen text-white rounded-lg"
+              className="absolute top-[2px] right-2.5 text-2xl cursor-pointer w-[16px] h-[16px]"
+              onClick={() => setIsGroupModalOpen(false)}
+            >
+              ×
+            </button>
+            <h2 className="text-[16px] mb-4">정규런 그룹을 선택해주세요.</h2>
+
+            {/* 그룹 선택 옵션 */}
+            <div className="flex justify-center">
+              <div className="flex flex-col gap-3 max-h-[500px] overflow-y-auto w-full"
+                style={{ paddingRight: "8px", marginRight: "-8px" }}>
+                {groupList.map((group, index) => {
+                  const isSelected = selectedGroup === group.group;
+
+                  const handleSelect = () => {
+                    if (isSelected) {
+                      setSelectedGroup(""); // 다시 누르면 해제
+                    } else {
+                      setSelectedGroup(group.group); // 선택
+                    }
+                  };
+
+                  return (
+                    <button
+                      key={index}
+                      className={`rounded-lg border flex items-center justify-between w-[230px] h-[48px] ${isSelected ? "bg-[#F3F8E8]" : "bg-gray-100 hover:bg-gray-200"
+                        }`}
+                      onClick={handleSelect}
+                    >
+                      {/* 왼쪽: 그룹명 | 페이스 */}
+                      <div className="flex items-center text-left">
+                        <span className={`my-[16px] ml-[16px] font-bold text-base ${isSelected ? "text-black" : "text-gray-400"}`}>
+                          {group.group}
+                        </span>
+                        <div className="w-px h-[42px] ml-[16px] bg-gray-400" />
+                        <span className={`text-[16px] font-semibold ml-[10px] ${isSelected ? "text-kuDarkGreen" : "text-gray-400"}`}>
+                          {group.pace}
+                        </span>
+                      </div>
+
+                      {/* 오른쪽 체크 아이콘 */}
+                      {isSelected && (
+                        <img src={checkedicon} alt="checked" className="w-[24px] h-[24px] mr-[16px]" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            {/* 확인 버튼 */}
+            <button
+              className="mt-5 w-full py-3 bg-kuDarkGreen text-white rounded-lg"
               onClick={handleJoinConfirm}
             >
               확인
             </button>
-            {error && <div className="text-red-500 mt-2">{error}</div>}
+
+            {/* 에러 메시지 */}
+            {error && <div className="text-red-500 mt-2 text-sm">{error}</div>}
           </div>
         </div>
       )}

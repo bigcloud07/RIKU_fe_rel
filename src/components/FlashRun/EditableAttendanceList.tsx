@@ -42,6 +42,7 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
   const handleSave = async () => {
     const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
+    // status를 확실하게 명시해줘야 타입 에러 방지됨
     const payload = users.map((user) => ({
       userId: user.userId,
       isAttend: user.status === "ATTENDED",
@@ -61,7 +62,7 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
       if (response.data.isSuccess) {
         alert("명단이 저장되었습니다.");
         setEditMode(false);
-        onSaveComplete?.();
+        if (onSaveComplete) onSaveComplete();
       } else {
         alert(response.data.responseMessage);
       }
@@ -72,7 +73,7 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
 
   return (
     <div className="flex flex-col p-5 gap-3">
-      {/* 상단 요약 + 버튼 */}
+      {/* 상단 통계 & 버튼 */}
       <div className="flex justify-between items-center">
         <span className="text-[16px] text-kuDarkGreen font-semibold">
           {users.filter((u) => u.status === "ATTENDED").length} / {users.length}
@@ -93,18 +94,22 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
         </button>
       </div>
 
-      {/* 명단 목록 */}
+      {/* 유저 목록 */}
       {users.map((user, index) => {
         const isAttended = user.status === "ATTENDED";
         const background = isAttended ? "bg-[#F0F4DD]" : "bg-[#ECEBE4]";
+
         return (
           <div
             key={user.userId}
             className={`flex items-center gap-3 w-[335px] h-[56px] px-4 py-2.5 rounded-lg ${background}`}
           >
+            {/* 순서 */}
             <div className="w-5 text-center text-gray-500 font-semibold">
               {index + 1}
             </div>
+
+            {/* 프로필 */}
             <div className="w-10 h-10 rounded-full bg-gray-400 text-white font-bold flex items-center justify-center overflow-hidden">
               {user.userProfileImg ? (
                 <img
@@ -116,7 +121,11 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
                 user.userName.charAt(0)
               )}
             </div>
+
+            {/* 이름 */}
             <div className="flex-1 text-left">{user.userName}</div>
+
+            {/* 상태 표시 or 토글 */}
             {editMode ? (
               <div
                 className="cursor-pointer"
