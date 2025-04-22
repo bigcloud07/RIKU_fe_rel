@@ -38,6 +38,13 @@ interface FlashRunAdminData {
   postimgurl: string
 }
 
+interface EditableUser {
+  userId: number;
+  userName: string;
+  userProfileImg?: string | null;
+  status: "ATTENDED" | "PENDING";
+}
+
 const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   title,
   location,
@@ -60,14 +67,17 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   const [date, setDate] = useState("");
   const [currentParticipantsNum, setCurrentParticipantsNum] = useState<number>(participantsNum); // 현재 불러오는 값
   const [postCreatorName, setPostCreatorName] = useState("");
-  const [editableParticipants, setEditableParticipants] = useState<Participant[]>(participants);
 
-  useEffect(() => {
-    setEditableParticipants(participants); // postId 변경 시만 초기화
-  }, [postId, participants]);
+
+
+  const [editableParticipants, setEditableParticipants] = useState<EditableUser[]>([]);
+
+  
 
 
   const navigate = useNavigate()
+
+  
 
 
 
@@ -156,10 +166,13 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
         // 탭 별 업데이트
         if (tab === "명단") {
-          // ❗ editableParticipants가 이미 있으면 유지하고, 없을 경우에만 갱신
-          if (editableParticipants.length === 0) {
-            setEditableParticipants(result.participants);
-          }
+          const converted = result.participants.map((p: any) => ({
+            userId: p.userId,
+            userName: p.userName,
+            userProfileImg: p.userProfileImg || null,
+            status: p.status === "ATTENDED" ? "ATTENDED" : "PENDING",
+          }));
+          setEditableParticipants(converted);
         }
 
 
@@ -177,6 +190,20 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
       setError("데이터를 불러오는 데 실패했습니다.");
     }
   };
+
+  useEffect(() => {
+    if (participants.length > 0) {
+      const converted = participants.map((p) => ({
+        userId: p.id,
+        userName: p.name,
+        userProfileImg: p.profileImage || null,
+        status: p.isPresent ? "ATTENDED" : "PENDING",
+      }));
+      setEditableParticipants(converted);
+    }
+  }, [postId, participants]);
+
+  
 
   const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
@@ -220,6 +247,8 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     fetchPostData();
   }, [postId]);
 
+  
+
   const formatDateTime = (iso: string) => {
     const utcDate = new Date(iso);
     const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
@@ -246,7 +275,9 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
       </div>
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-[375px] pb-[50px]">
-        <object data={postimgurl || flashrunimage} className="w-[375px] h-[250px]" />
+        <div className="w-[375px] h-[250px] overflow-hidden">
+          <object data={postimgurl || flashrunimage} className="w-full h-full object-cover" />
+        </div>
         {/* 번개런 정보 */}
         <div className="absolute top-[220px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
@@ -351,7 +382,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         postId={postId}
         runType="flash"
         users={editableParticipants}
-        onUserChange={setEditableParticipants}
+        onUsersChange={setEditableParticipants} // ✅ 올바른 이름
       />
       }
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />

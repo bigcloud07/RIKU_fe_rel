@@ -66,9 +66,12 @@ function EventEdit() {
           setTitle(eventData.title);
           setLocation(eventData.location);
           setContent(eventData.content);
+          const utcDate = new Date(eventData.date); // 서버에서 받은 UTC 날짜
+          const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000); // 9시간 더해 KST로 변환
+
           setDateTime({
-            date: new Date(eventData.date),
-            time: eventData.time ?? "00:00",
+            date: kstDate,
+            time: kstDate.toTimeString().slice(0, 5), // KST 기준 시간 추출
           });
           setPostImagePreview(eventData.postImageUrl);
           setAttachments(eventData.attachments);
@@ -88,20 +91,31 @@ function EventEdit() {
       alert("수정할 내용을 하나 이상 입력해주세요.");
       return;
     }
-  
+
     try {
-      const date = dateTime.date;
-      let eventDateTime = "";
-  
-      if (date && dateTime.time) {
-        const [hours, minutes] = dateTime.time.split(":").map(Number);
-        const pad = (n: number) => n.toString().padStart(2, "0");
-        eventDateTime = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(hours)}:${pad(minutes)}`;
-      }
-  
+      const [hours, minutes] = dateTime.time.split(":").map(Number);
+      const selected = dateTime.date!;
+
+      // ✅ 1. KST 기준으로 조립
+      const kstDate = new Date(
+        selected.getFullYear(),
+        selected.getMonth(),
+        selected.getDate(),
+        hours,
+        minutes,
+        0
+      );
+
+      // ✅ 2. UTC 기준으로 변환
+      const utcDate = new Date(kstDate.getTime() - 9 * 60 * 60 * 1000);
+
+      // ✅ 3. 문자열 직접 생성 (🔥 중요: toISOString() 사용하지 말 것!)
+      const pad = (n: number) => n.toString().padStart(2, "0");
+      const eventDateTime = `${utcDate.getFullYear()}-${pad(utcDate.getMonth() + 1)}-${pad(utcDate.getDate())}T${pad(utcDate.getHours())}:${pad(utcDate.getMinutes())}:${pad(utcDate.getSeconds())}`;
+
       const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
       const formData = new FormData();
-  
+
       // 변경된 필드만 추가
       if (title) formData.append("title", title);
       if (location) formData.append("location", location);
@@ -109,14 +123,14 @@ function EventEdit() {
       if (eventDateTime) formData.append("date", eventDateTime);
       if (postImage) formData.append("postImage", postImage);
       attachments?.forEach(file => formData.append("attachments", file));
-  
+
       const response = await customAxios.patch(`/run/event/post/${postId}`, formData, {
         headers: {
           Authorization: `${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
-  
+
       if (response.data.isSuccess) {
         alert("행사가 성공적으로 수정되었습니다!");
         navigate(`/run/event/${postId}`);
@@ -128,7 +142,7 @@ function EventEdit() {
       alert("행사 수정 중 문제가 발생했습니다.");
     }
   };
-  
+
 
   const handleRemoveAttachment = (index: number) => {
     setAttachments(prev => prev.filter((_, i) => i !== index));
@@ -138,15 +152,15 @@ function EventEdit() {
   const handleAttachmentUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;
     if (!selectedFiles) return;
-  
+
     const selectedArray = Array.from(selectedFiles);
     const currentAttachments = attachments ?? [];
-  
+
     if (currentAttachments.length + selectedArray.length > 6) {
       alert("최대 6장까지만 업로드할 수 있습니다.");
       return;
     }
-  
+
     selectedArray.forEach((file) => {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -154,10 +168,10 @@ function EventEdit() {
       };
       reader.readAsDataURL(file);
     });
-  
+
     setAttachments(prev => [...(prev ?? []), ...selectedArray]);
   };
-  
+
 
   const handlePostImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

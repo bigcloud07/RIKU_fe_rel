@@ -185,23 +185,7 @@ function FlashRunMake() {
           }}
         />
 
-        {/* <div className="my-2">시간</div>
-        <div className="flex items-center my-2">
-          <img src={TimeIcon} className="ml-[15px] w-5 h-5" />
-          <input
-            type="text"
-            readOnly
-            placeholder="시간을 선택하세요"
-            value={dateTime.time}
-            onClick={() => setIsTimePickerOpen(true)}
-            className="ml-2 border border-gray-300 rounded px-2 py-1 text-sm w-full cursor-pointer"
-          />
-        </div>
-        <TimePickerBottomSheet
-          isOpen={isTimePickerOpen}
-          onClose={() => setIsTimePickerOpen(false)}
-          onApply={(time) => setDateTime((prev) => ({ ...prev, time }))}
-        /> */}
+        
         <TimePickerBottomSheet time={dateTime.time} onChange={handleTimeChange} />
 
 

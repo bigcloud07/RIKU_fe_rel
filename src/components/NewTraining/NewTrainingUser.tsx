@@ -16,6 +16,7 @@ import questionmarkOn from "../../assets/questionmark_on.svg";
 import questionmarkOff from "../../assets/questionmark_off.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+import checkedicon from "../../assets/checkedicon.svg"
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -39,7 +40,7 @@ interface FlashRunUserData {
 
 const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const navigate = useNavigate();
-  const handleBack = () => navigate("/regular");
+  const handleBack = () => navigate("/training");
 
   const [activeTab, setActiveTab] = useState<"소개" | "명단">("소개");
   const [code, setCode] = useState("");
@@ -60,18 +61,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     userName: "",
     userProfileImg: "",
   });
-  const [userStatus, setUserStatus] = useState(() => {
-    return localStorage.getItem(`userStatus-${postId}`) || "";
-  });
 
-  const [buttonText, setButtonText] = useState(() => {
-    return (
-      localStorage.getItem(`buttonText-${postId}`) ||
-      (localStorage.getItem(`userStatus-${postId}`) === "ATTENDED"
-        ? "출석완료"
-        : "참여하기")
-    );
-  });
 
   const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
   const [trainingtype, setTrainingtype] = useState("");
@@ -80,6 +70,64 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
 
   const [refreshComments, setRefreshComments] = useState(false);
+
+  const [groupList, setGroupList] = useState<{ group: string; pace: string }[]>([]);
+  const [selectedGroup, setSelectedGroup] = useState<string>("");
+  const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
+
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editedAttendance, setEditedAttendance] = useState<{ [userId: number]: boolean }>({});
+  const [groupedParticipants, setGroupedParticipants] = useState<any[]>([]);
+  const [postCreatorName, setPostCreatorName] = useState("");
+
+  const [userStatus, setUserStatus] = useState("");
+  const [buttonText, setButtonText] = useState("참여하기");
+
+
+
+  const toggleAttendance = (userId: number, originalStatus: string) => {
+    setEditedAttendance((prev) => {
+      const current = userId in prev ? prev[userId] : originalStatus === "ATTENDED";
+      return {
+        ...prev,
+        [userId]: !current,
+      };
+    });
+  };
+
+  const saveAttendanceChanges = async () => {
+    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+    const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
+      userId: Number(userId),
+      isAttend,
+    }));
+
+    try {
+      await customAxios.patch(`/run/training/post/${postId}/manual-attend`, payload, {
+        headers: { Authorization: `${token}` },
+      });
+      alert("출석 정보가 저장되었습니다.");
+      setIsEditMode(false);
+      setEditedAttendance({});
+      await fetchParticipantsInfo(); // 최신 데이터 반영
+    } catch {
+      alert("저장에 실패했습니다.");
+    }
+  };
+
+
+
+  useEffect(() => {
+    if (activeTab === "명단") {
+      fetchParticipantsInfo();
+    }
+  }, [activeTab]);
+
+
+
+
+
+
 
 
   const getTrainingDescription = (type: string) => {
@@ -108,6 +156,9 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     }
   };
 
+  const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
+
+
   useEffect(() => {
     const fetchPostData = async () => {
       try {
@@ -115,9 +166,11 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         const response = await customAxios.get(`/run/training/post/${postId}`, {
           headers: { Authorization: `${token}` },
         });
+
         if (response.data.isSuccess) {
           const result = response.data.result;
-          console.log(result);
+
+          // 기존 상태 세팅
           setTitle(result.title);
           setLocation(result.location);
           setDate(result.date);
@@ -127,29 +180,163 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           setParticipantsNum(result.participantsNum || 0);
           setPacers(result.pacers || []);
           setAttachmentUrls(result.attachmentUrls || []);
-          setUserInfo({
-            userId: result.userInfo?.userId || 0,
-            userName: result.userInfo?.userName || "",
-            userProfileImg: result.userInfo?.userProfileImg || "",
-          });
+          setUserInfo(result.userInfo || {});
+          setPostCreatorName(result.postCreatorInfo.userName);
+          setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+          setGroupedParticipants(result.groupedParticipants || []);
           setTrainingtype(result.trainingType);
-        } else {
-          setError(response.data.responseMessage);
+
+
+          const myInfo = result.userInfo;
+          const foundGroup = result.groupedParticipants?.find(group =>
+            group.participants?.some((p: any) => p.userId === myInfo.userId)
+          );
+          if (foundGroup) {
+            setSelectedGroup(foundGroup.group);
+            const matchedUser = foundGroup.participants.find((p: any) => p.userId === myInfo.userId);
+            setUserStatus(matchedUser?.status || "");
+            setButtonText(
+              matchedUser?.status === "ATTENDED"
+                ? "출석완료"
+                : matchedUser?.status === "PENDING"
+                  ? "출석하기"
+                  : "참여하기"
+            );
+          }
         }
       } catch {
-        setError("데이터를 불러오는 데 실패했습니다.");
+        setError("데이터 로딩 실패");
       }
     };
+
     fetchPostData();
   }, [postId]);
 
-  useEffect(() => {
-    if (buttonText) localStorage.setItem(`buttonText-${postId}`, buttonText);
-  }, [buttonText, postId]);
+  const fetchParticipantsInfo = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const response = await customAxios.get(`/run/training/post/${postId}`, {
+        headers: { Authorization: `${token}` },
+      });
+
+      if (response.data.isSuccess) {
+        const result = response.data.result;
+        setParticipants(result.participants || []);
+        setParticipantsNum(result.participantsNum || 0);
+        setGroupedParticipants(result.groupedParticipants || []);
+
+        console.log("📦 Fetched participants:", result.participants);
+        console.log("👥 Fetched grouped participants:", result.groupedParticipants);
+      }
+    } catch (error: any) {
+      console.error("❌ 참여/취소 요청 실패:", error);
+
+      if (error?.response?.data) {
+        const serverError = error.response.data;
+        console.error("📦 서버 응답 내용:", serverError);
+
+        setError(serverError.responseMessage || "참여 요청 실패");
+      } else {
+        setError("참여 요청 실패");
+      }
+    }
+  };
 
   useEffect(() => {
-    if (userStatus) localStorage.setItem(`userStatus-${postId}`, userStatus);
-  }, [userStatus, postId]);
+    fetchParticipantsInfo();
+  }, [postId]);
+
+  useEffect(() => {
+    if (activeTab === "명단") {
+      fetchParticipantsInfo();
+    }
+  }, [activeTab]);
+
+  const handleOpenGroupModal = async () => {
+    setIsGroupModalOpen(true);
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const res = await customAxios.get(`/run/training/post/${postId}/group`, {
+        headers: { Authorization: `${token}` },
+      });
+      if (res.data.isSuccess) setGroupList(res.data.result);
+    } catch {
+      setError("그룹 조회 실패");
+    }
+  };
+
+  const handleJoinConfirm = async () => {
+    const isCancel = selectedGroup === "";
+  
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const res = await customAxios.patch(
+        `/run/training/post/${postId}/join${!isCancel ? `?group=${selectedGroup}` : ""}`,
+        {},
+        { headers: { Authorization: `${token}` } }
+      );
+  
+      if (res.data.isSuccess) {
+        const result = res.data.result;
+  
+        // ✅ 유저 ID 직접 추출
+        const userIdFromServer = result.userInfo?.userId;
+  
+        // ✅ 참여 취소 시 초기화
+        if (isCancel) {
+          setUserStatus("");
+          setButtonText("참여하기");
+          setSelectedGroup("");
+          setIsGroupModalOpen(false);
+          await fetchParticipantsInfo();
+          return;
+        }
+  
+        // ✅ 참여 또는 그룹 수정 성공
+        const updatedGroup = result.groupedParticipants;
+        setGroupedParticipants(updatedGroup);
+        if (result.userInfo && result.userInfo.userId) {
+          setUserInfo(result.userInfo);
+        } else {
+          console.warn("⚠️ 유효하지 않은 userInfo:", result.userInfo);
+          setUserInfo({ userId: 0, userName: "", userProfileImg: "" }); // fallback
+        }
+  
+        // ✅ 바로 내가 속한 그룹과 상태 찾아서 반영
+        const foundGroup = updatedGroup?.find(group =>
+          group.participants?.some((p: any) => p.userId === userIdFromServer)
+        );
+        if (foundGroup) {
+          setSelectedGroup(foundGroup.group);
+          const matchedUser = foundGroup.participants.find((p: any) => p.userId === userIdFromServer);
+          const status = matchedUser?.status || "";
+          setUserStatus(status);
+          setButtonText(
+            status === "ATTENDED"
+              ? "출석완료"
+              : status === "PENDING"
+                ? "출석하기"
+                : "참여하기"
+          );
+        }
+  
+        setIsGroupModalOpen(false);
+        await fetchParticipantsInfo();
+      } else {
+        setError(res.data.responseMessage);
+      }
+    } catch (error: any) {
+      console.error("❌ 참여/취소 요청 실패:", error);
+      if (error?.response?.data) {
+        setError(error.response.data.responseMessage || "참여 요청 실패");
+      } else {
+        setError("참여 요청 실패");
+      }
+    }
+  };
+  
+
+
 
   const handleStartClick = async () => {
     try {
@@ -181,15 +368,15 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         { headers: { Authorization: `${token}` } }
       );
       if (response.data.isSuccess) {
-        setUserStatus(response.data.result.status);
+        setUserStatus("ATTENDED");
         setButtonText("출석완료");
-        setError(null);
         setIsModalOpen(false);
+        setError(null);
       } else {
         setError(response.data.responseMessage);
       }
     } catch {
-      setError("출석 코드를 다시 확인해주세요.");
+      setError("출석 요청에 실패했습니다.");
     }
   };
 
@@ -205,18 +392,18 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const handleTabChange = async (tab: "소개" | "명단") => {
     setActiveTab(tab);
     const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-  
+
     try {
-      const response = await customAxios.get(`/run/regular/post/${postId}`, {
+      const response = await customAxios.get(`/run/training/post/${postId}`, {
         headers: { Authorization: `${token}` },
       });
-  
+
       if (response.data.isSuccess) {
         const result = response.data.result;
-  
+
         setParticipants(result.participants || []);
         setParticipantsNum(result.participantsNum);
-        setPostStatus(result.postStatus);
+
         setDate(result.date);
         setAttachmentUrls(result.attachmentUrls || []);
         setPacers(result.pacers || []);
@@ -227,7 +414,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           userName: result.userInfo?.userName || "",
           userProfileImg: result.userInfo?.userProfileImg || "",
         });
-  
+
         // 댓글도 항상 최신화
         setRefreshComments((prev) => !prev);
       } else {
@@ -344,30 +531,131 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         </>
       )}
 
-      {activeTab === "명단" && <AttendanceList users={participants} />}
+      {activeTab === "명단" &&
+        <AttendanceList
+          key={JSON.stringify(groupedParticipants)} // ⬅️ 이거 추가!
+          groupedParticipants={groupedParticipants}
+          userInfoName={userInfo.userName}
+          postCreatorName={postCreatorName}
+        />
+      }
 
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
-      <button
-        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${userStatus === "ATTENDED"
-          ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
-          : userStatus === "PENDING"
-            ? "bg-kuDarkGreen text-white"
-            : "bg-kuGreen text-white"
-          }`}
-        onClick={userStatus !== "PENDING" ? handleStartClick : handleOpenAttendanceModal}
-        disabled={userStatus === "ATTENDED"}
-      >
-        {buttonText}
-      </button>
+      {userStatus === "ATTENDED" && (
+        <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
+          출석완료
+        </div>
+      )}
 
+      {userStatus === "PENDING" && (
+        <>
+          {selectedGroup && (
+            <div className="text-sm text-left text-kuDarkGray w-full max-w-[327px] mt-4 pl-6">
+              내가 선택한 그룹 : <span className="font-semibold">{selectedGroup}</span>
+            </div>
+          )}
+          <div className="flex gap-2 mt-[8px] mb-6">
+            <button
+              className="w-[164px] h-[52px] font-bold rounded-lg text-white bg-kuGreen"
+              onClick={handleOpenGroupModal}
+            >
+              그룹 수정
+            </button>
+            <button
+              className="w-[164px] h-[52px] rounded-lg font-bold bg-kuDarkGreen text-white"
+              onClick={() => setIsModalOpen(true)}
+            >
+              출석하기
+            </button>
+          </div>
+        </>
+      )}
+
+      {userStatus !== "ATTENDED" && userStatus !== "PENDING" && (
+        <button
+          className="w-[327px] h-14 rounded-lg bg-kuGreen text-white font-bold mt-6 mb-6"
+          onClick={handleOpenGroupModal}
+        >
+          참여하기
+        </button>
+      )}
+
+
+
+      {isGroupModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
+          <div className="bg-white p-6 rounded-lg w-[300px] max-w-[90%] text-center relative shadow-lg">
+            <button
+              className="absolute top-[2px] right-2.5 text-2xl cursor-pointer w-[16px] h-[16px]"
+              onClick={() => setIsGroupModalOpen(false)}
+            >
+              ×
+            </button>
+            <h2 className="text-[16px] mb-4">훈련 그룹을 선택해주세요.</h2>
+
+            {/* 그룹 선택 옵션 */}
+            <div className="flex justify-center">
+              <div className="flex flex-col gap-3 max-h-[500px] overflow-y-auto w-full"
+                style={{ paddingRight: "8px", marginRight: "-8px" }}>
+                {groupList.map((group, index) => {
+                  const isSelected = selectedGroup === group.group;
+
+                  const handleSelect = () => {
+                    if (isSelected) {
+                      setSelectedGroup(""); // 다시 누르면 해제
+                    } else {
+                      setSelectedGroup(group.group); // 선택
+                    }
+                  };
+
+                  return (
+                    <button
+                      key={index}
+                      className={`rounded-lg border flex items-center justify-between w-[230px] h-[48px] ${isSelected ? "bg-[#F3F8E8]" : "bg-gray-100 hover:bg-gray-200"
+                        }`}
+                      onClick={handleSelect}
+                    >
+                      {/* 왼쪽: 그룹명 | 페이스 */}
+                      <div className="flex items-center text-left">
+                        <span className={`my-[16px] ml-[16px] font-bold text-base ${isSelected ? "text-black" : "text-gray-400"}`}>
+                          {group.group}
+                        </span>
+                        <div className="w-px h-[42px] ml-[16px] bg-gray-400" />
+                        <span className={`text-[16px] font-semibold ml-[10px] ${isSelected ? "text-kuDarkGreen" : "text-gray-400"}`}>
+                          {group.pace}
+                        </span>
+                      </div>
+
+                      {/* 오른쪽 체크 아이콘 */}
+                      {isSelected && (
+                        <img src={checkedicon} alt="checked" className="w-[24px] h-[24px] mr-[16px]" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            {/* 확인 버튼 */}
+            <button
+              className="mt-5 w-full py-3 bg-kuDarkGreen text-white rounded-lg"
+              onClick={handleJoinConfirm}
+            >
+              확인
+            </button>
+
+            {/* 에러 메시지 */}
+            {error && <div className="text-red-500 mt-2 text-sm">{error}</div>}
+          </div>
+        </div>
+      )}
+
+      {/* // 출석 모달 구조 */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
           <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
-            <button className="absolute top-2.5 right-2.5 text-2xl cursor-pointer" onClick={() => setIsModalOpen(false)}>
-              ×
-            </button>
-            <h2>출석 코드를 입력해주세요.</h2>
+            <button className="absolute top-2.5 right-2.5 text-2xl cursor-pointer" onClick={() => setIsModalOpen(false)}>×</button>
+            <h2 className="text-lg font-semibold">참여 코드를 입력해주세요.</h2>
             <input
               type="text"
               className="w-full p-2 border-b border-gray-300 text-center text-lg mt-5"

@@ -198,7 +198,7 @@ const NewMain: React.FC = () => {
       <div className="h-[56px]"></div>
 
       {/* 슬라이드쇼 */}
-      <div className="w-[430px] h-[300px] max-w-4xl mx-auto m-0">
+      <div className="w-[375px] h-[300px] max-w-4xl mx-auto m-0">
         <div className="flex justify-center items-center h-full">
           <img
             src={images[currentIndex]}
@@ -206,7 +206,7 @@ const NewMain: React.FC = () => {
             className="w-full h-full object-cover transition-opacity duration-500"
           />
         </div>
-        <div className="flex w-[430px] h-[40px] justify-center items-center space-x-2 bg-kuDarkGreen">
+        <div className="flex w-[375px] h-[40px] justify-center items-center space-x-2 bg-kuDarkGreen">
           {images.map((_, index) => (
             <span
               key={index}
