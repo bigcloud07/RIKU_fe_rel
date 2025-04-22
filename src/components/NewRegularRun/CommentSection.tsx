@@ -1,4 +1,3 @@
-// ✅ 최종 통합 CommentSection.tsx (userProfileImg 대응)
 import React, { useEffect, useState } from "react";
 import customAxios from "../../apis/customAxios";
 import CommentIcon from "../../assets/CommentIcon.svg";
@@ -33,6 +32,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
   const [newComment, setNewComment] = useState<string>("");
   const [replyInputs, setReplyInputs] = useState<Record<number, string>>({});
   const [replyTargetCommentId, setReplyTargetCommentId] = useState<number | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // 추가: 중복 제출 방지
 
   useEffect(() => {
     fetchComments();
@@ -53,11 +53,12 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
   };
 
   const handleSubmitComment = async () => {
-    if (!newComment.trim()) return;
+    if (!newComment.trim() || isSubmitting) return; // 제출 중이면 return
+    setIsSubmitting(true); // 제출 시작
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
-        `/run/flash/post/${postId}/comment`,
+        `/run/regular/post/${postId}/comment`,
         { content: newComment, targetId: null },
         { headers: { Authorization: `${token}` } }
       );
@@ -67,17 +68,20 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
       }
     } catch {
       alert("댓글 등록 오류");
+    } finally {
+      setIsSubmitting(false); // 제출 완료
     }
   };
 
   const handleSubmitReply = async (targetId: number) => {
     const content = replyInputs[targetId];
-    if (!content?.trim()) return;
+    if (!content?.trim() || isSubmitting) return; // 제출 중이면 return
+    setIsSubmitting(true); // 제출 시작
 
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
-        `/run/flash/post/${postId}/comment`,
+        `/run/regular/post/${postId}/comment`,
         { content, targetId },
         { headers: { Authorization: `${token}` } }
       );
@@ -88,6 +92,8 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
       }
     } catch {
       alert("대댓글 등록 오류");
+    } finally {
+      setIsSubmitting(false); // 제출 완료
     }
   };
 
@@ -99,7 +105,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.patch(
-        `/run/flash/post/${postId}/comment/${commentId}`,
+        `/run/regular/post/${postId}/comment/${commentId}`,
         {},
         { headers: { Authorization: `${token}` } }
       );
@@ -121,7 +127,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
 
   return (
     <div className="w-[327px]">
-      <div className="mt-2 mb-2 text-[16px] text-left">댓글 {totalActiveCount}</div>
+      <div className="mt-[52px] mb-2 text-[16px] text-left">댓글 {totalActiveCount}</div>
       <div className="bg-[#F5F5F5] rounded-xl p-4 space-y-4">
         {activeComments.map((comment) => {
           const activeReplies = comment.replies.filter((r) => r.commentStatus === "ACTIVE");
@@ -191,7 +197,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
 
               {/* 대댓글 입력창 */}
               {replyTargetCommentId === comment.commentId && (
-                <div className="flex items-start gap-2 mt-2 pl-8">
+                <div className="flex items-center gap-[8px] mt-2 pl-8">
                   <div className="w-6 aspect-square rounded-full flex items-center justify-center overflow-hidden bg-[#9DC34A] text-white text-[10px] font-bold">
                     {userInfo.userProfileImg && userInfo.userProfileImg.trim() !== "" ? (
                       <img src={userInfo.userProfileImg} alt="내 프로필" className="w-full h-full object-cover" />
@@ -203,9 +209,15 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
                     <input
                       type="text"
                       placeholder="대댓글 작성..."
-                      className="w-full bg-kuLightGray text-sm p-1 rounded-[8px] h-[32px] pr-8"
+                      className="w-full bg-kuLightGray text-sm py-[9px] pr-[12px] pl-[8px] rounded-[8px] h-[32px]"
                       value={replyInputs[comment.commentId] || ""}
                       onChange={(e) => handleReplyChange(comment.commentId, e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && replyInputs[comment.commentId]?.trim()) {
+                          e.preventDefault(); // 기본 동작 방지
+                          handleSubmitReply(comment.commentId); // 대댓글 등록
+                        }
+                      }}
                     />
                     <button
                       onClick={() => handleSubmitReply(comment.commentId)}
@@ -226,7 +238,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
         })}
 
         {/* 원댓글 입력창 */}
-        <div className="flex items-center mt-3 bg-[#F5F5F5] rounded-xl px-3 py-2">
+        <div className="flex items-center mt-3 bg-[#F5F5F5] rounded-xl px-3 py-2 gap-[8px]">
           <div className="w-6 aspect-square rounded-full flex items-center justify-center overflow-hidden bg-[#9DC34A] text-white text-[10px] font-bold">
             {userInfo.userProfileImg && userInfo.userProfileImg.trim() !== "" ? (
               <img src={userInfo.userProfileImg} alt="내 프로필" className="w-full h-full object-cover" />
@@ -238,14 +250,20 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
             <input
               type="text"
               placeholder="댓글 추가..."
-              className="w-full bg-kuLightGray text-sm rounded-[8px] ml-2 p-1 h-[32px] focus:outline-none pr-8"
+              className="w-full bg-kuLightGray text-sm rounded-[8px] py-[9px] pr-[12px] pl-[8px] h-[32px] focus:outline-none"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && newComment.trim()) {
+                  e.preventDefault(); // 기본 동작 방지
+                  handleSubmitComment(); // 댓글 등록
+                }
+              }}
             />
             <button
               onClick={handleSubmitComment}
-              disabled={!newComment.trim()}
-              className="absolute right-2 top-1/2 -translate-y-1/2"
+              disabled={!newComment.trim()} // 댓글이 비어있으면 버튼 비활성화
+              className="absolute right-[8px] top-1/2 -translate-y-1/2 w-[18px] h-[18px]"
             >
               <img
                 src={newComment.trim() ? CommentInputOn : CommentInputOff}

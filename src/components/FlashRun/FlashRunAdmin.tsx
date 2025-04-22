@@ -161,7 +161,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
             setEditableParticipants(result.participants);
           }
         }
-        
+
 
         if (tab === "소개") {
           setAttachmentUrls(result.attachmentUrls || []);
@@ -351,7 +351,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         postId={postId}
         runType="flash"
         users={editableParticipants}
-        onChange={setEditableParticipants}
+        onUserChange={setEditableParticipants}
       />
       }
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />

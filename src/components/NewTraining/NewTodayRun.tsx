@@ -43,27 +43,33 @@ const NewEventCard: React.FC<EventCardProps> = ({
 
   return (
     <div
-      className="flex flex-col relative w-[335px] h-[293px] bg-kuLightGray rounded-lg"
+      className="flex flex-col relative w-[335px] h-[322px] bg-kuLightGray rounded-lg"
       onClick={onClick}
     >
+      {/* 상태 뱃지 */}
+      <img
+        src={getStatusImage()}
+        className="w-[50px] h-[20px] absolute top-[16px] left-[14px]"
+      />
       {/* 날짜 및 시간 */}
-      <div className="absolute top-[14px] left-[16px] text-[15px] font-semibold text-black/60">
-        {`${date}`}
+      <div className="absolute top-[44px] left-[16px] text-[14px] text-black/60">
+        {`${date} | ${time}`}
       </div>
+      
 
       {/* 참가자 수 */}
       <div className="absolute top-[16px] left-[280px] flex items-center space-x-1">
         <img src={peopleimg} className="w-[20px] h-[20px]" alt="참가자" />
-        <div className="text-[12px] font-bold text-black/60">{participants}</div>
+        <div className="text-[12px] font-bold text-black/60">{participants}</div> 
       </div>
 
       {/* 러닝 장소 또는 제목 */}
-      <div className="absolute top-[38px] left-[16px] text-[20px] font-semibold">
+      <div className="absolute top-[64px] left-[16px] text-[20px] font-semibold">
         {location}
       </div>
 
       {/* 러닝 이미지 */}
-      <div className="absolute top-[78px] left-[16px] overflow-hidden w-[303px] h-[200px] justify-center">
+      <div className="absolute top-[106px] left-[16px] overflow-hidden w-[303px] h-[200px] justify-center">
         <img className="w-full h-full rounded-[8px] object-cover"
           src={
             postimg
