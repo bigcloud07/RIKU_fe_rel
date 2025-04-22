@@ -67,7 +67,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/schedule-page" element={<SchedulePage />} />
               <Route path="/my-page" element={<MyPage />} />
-              <Route path="/run" element={<FlashRunList />} />
+              
               <Route path="/run/flash/:postId" element={<FlashRunDetail />} />
               <Route path="/run/regular/:postId" element={<NewRegularRunDetail />} />
               <Route path="/run/training/:postId" element={<NewTrainingDetail />} />

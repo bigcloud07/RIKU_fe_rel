@@ -68,13 +68,74 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   const [trainingtype, setTrainingtype] = useState("");
   const [refreshComments, setRefreshComments] = useState(false);
 
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editedAttendance, setEditedAttendance] = useState<{ [userId: number]: boolean }>({});
+
+
 
   const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
     userName: "",
     userProfileImg: "",
   });
+
+  const toggleAttendance = (userId: number, originalStatus: string) => {
+    setEditedAttendance((prev) => {
+      const current = userId in prev ? prev[userId] : originalStatus === "ATTENDED";
+      return {
+        ...prev,
+        [userId]: !current,
+      };
+    });
+  };
+
+  const saveAttendanceChanges = async () => {
+    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+    const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
+      userId: Number(userId),
+      isAttend,
+    }));
+
+    try {
+      await customAxios.patch(`/run/training/post/${postId}/manual-attend`, payload, {
+        headers: { Authorization: `${token}` },
+      });
+      alert("출석 정보가 저장되었습니다.");
+      setIsEditMode(false);
+      setEditedAttendance({});
+      await fetchParticipantsInfo(); // 최신 데이터 반영
+    } catch {
+      alert("저장에 실패했습니다.");
+    }
+  };
+
+  const fetchParticipantsInfo = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const response = await customAxios.get(`/run/training/post/${postId}`, {
+        headers: { Authorization: `${token}` },
+      });
+
+      if (response.data.isSuccess) {
+        const result = response.data.result;
+        setParticipants(result.participants || []);
+        setParticipantsNum(result.participantsNum || 0);
+        setGroupedParticipants(result.groupedParticipants || []);
+      }
+    } catch {
+      setError("명단 정보 불러오기 실패");
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === "명단") {
+      fetchParticipantsInfo();
+    }
+  }, [activeTab]);
   const [trainingType, setTrainingType] = useState("");
+
+
+  const [groupedParticipants, setGroupedParticipants] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -122,19 +183,19 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
     return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
 
-  
+
   const handleTabChange = async (tab: "소개" | "명단") => {
     setActiveTab(tab);
     const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-  
+
     try {
       const response = await customAxios.get(`/run/training/post/${postId}`, {
         headers: { Authorization: `${token}` },
       });
-  
+
       if (response.data.isSuccess) {
         const result = response.data.result;
-  
+
         setParticipants(result.participants || []);
         setParticipantsNum(result.participantsNum);
         setPostStatus(result.postStatus);
@@ -148,8 +209,9 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           userName: result.userInfo?.userName || "",
           userProfileImg: result.userInfo?.userProfileImg || "",
         });
-  
-        // ✅ 댓글 최신화
+
+
+        // 댓글도 항상 최신화
         setRefreshComments((prev) => !prev);
       } else {
         setError(response.data.responseMessage);
@@ -158,7 +220,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
       setError("데이터를 불러오는 데 실패했습니다.");
     }
   };
-  
+
 
   const handleStartClick = async () => {
     if (!code) {
@@ -358,7 +420,18 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
         </>
       )}
 
-      {activeTab === "명단" && <AttendanceList users={participants} />}
+      {activeTab === "명단" && (
+        <AttendanceList
+          groupedParticipants={groupedParticipants}
+          isEditMode={isEditMode}
+          editedAttendance={editedAttendance}
+          toggleAttendance={toggleAttendance}
+          onSaveAttendance={saveAttendanceChanges}
+          onToggleEditMode={() => setIsEditMode(true)}
+          userInfoName={userInfo.userName}
+          postCreatorName={postCreatorName}
+        />
+      )}
 
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 

@@ -89,7 +89,7 @@ const NewEventList: React.FC = () => {
     return (
         <div className="flex flex-col justify-center items-center">
             {/* 상단바 */}
-            <div className="relative flex bg-kuDarkGreen w-[430px] h-[56px] text-white text-xl font-semibold justify-center items-center">
+            <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
                 <img
                     src={BacbBtnimg}
                     className="absolute left-[24px] cursor-pointer"
@@ -100,7 +100,7 @@ const NewEventList: React.FC = () => {
             </div>
 
             {/* 오늘의 러닝 */}
-            <div className="relative bg-kuDarkGreen w-[430px] min-h-[268px]">
+            <div className="relative bg-kuDarkGreen w-[375px] min-h-[268px]">
                 <div className="w-full flex flex-col items-center pt-2">
                     <div className="w-[114px] h-[32px] bg-white text-kuDarkGreen text-[16px] font-bold rounded-xl flex items-center justify-center">
                         오늘의 행사
@@ -199,20 +199,25 @@ const NewEventList: React.FC = () => {
             <div className="w-[375px] mt-4 mb-[100px]">
                 <h2 className="text-[20px] font-semibold ml-5">지난 행사</h2>
                 <div className="grid grid-cols-3 grid-rows-2 gap-x-[12px] gap-y-[16px] mt-[20px] px-3">
-                    {pastRuns.map((run) => (
-
-
-                        <PastRuns
-                            key={run.id}
-                            title={run.title}
-                            date={format(new Date(run.date), "yyyy.MM.dd")}
-                            peoplecount={String(run.participants)}
-                            postimg={run.postImageUrl}
-                            location=""
-                            runDate=""
-                            runState=""
-                        />
-                    ))}
+                {pastRuns.map((run) => {
+                        const utcDate = new Date(run.date);
+                        const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+                        const formattedDate = format(kstDate, "MM/dd EEEE", { locale: ko });
+                        
+                        return (
+                            <PastRuns
+                                key={run.id}
+                                title={run.title}
+                                date={formattedDate}
+                                peoplecount={String(run.participants)}
+                                postimg={run.postImageUrl}
+                                location=""
+                                runDate=""
+                                runState=""
+                                onClick={() => navigate(`/run/event/${run.id}`)}
+                            />
+                        );
+                    })}
                 </div>
             </div>
 

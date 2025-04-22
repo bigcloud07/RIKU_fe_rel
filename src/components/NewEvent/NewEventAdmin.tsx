@@ -11,6 +11,8 @@ import { Link, useNavigate } from "react-router-dom";
 import BackBtnimg from "../../assets/BackBtn.svg"
 import pacermark from "../../assets/pacer-mark.svg"
 import CommentSection from "./CommentSection";
+import EditableAttendanceList from "./EditableAttendanceList";
+
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -90,26 +92,28 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
     }
   }, [userStatus, postId]);
 
+  // 참여하기 버튼 클릭 시
   const handleStartClick = async () => {
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const response = await customAxios.post(`/run/event/post/${postId}/join`, {}, {
+      const response = await customAxios.patch(`/run/event/post/${postId}/join`, {}, {
         headers: {
-          Authorization: `${token}`, // 적절한 토큰으로 교체
+          Authorization: `${token}`,
         },
       });
-      console.log(response.data)
 
       if (response.data.isSuccess) {
-        setUserStatus(response.data.result.status); // 상태 업데이트
+        const newStatus = response.data.result.status;
+        setUserStatus(newStatus);
         setButtonText("출석하기");
         setError(null);
 
+        await fetchParticipants(); // 🔥 명단 갱신 추가
       } else {
         setError(response.data.responseMessage);
         alert(response.data.responseMessage);
       }
-    } catch (error: any) {
+    } catch (error) {
       setError("러닝 참여에 실패했습니다.");
     }
   };
@@ -212,10 +216,9 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
         });
         if (response.data.isSuccess) {
           const result = response.data.result;
-          console.log(userName)
-          setCreatorName(result.postCreatorInfo?.userName || "");
 
-          setDate(result.date)
+          setCreatorName(result.postCreatorInfo?.userName || "");
+          setDate(result.date);
           setAttachmentUrls(result.attachmentUrls || []);
           setEventtype(result.eventType);
           setUserInfo({
@@ -225,6 +228,25 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
           });
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setPostCreatorName(result.postCreatorInfo.userName);
+
+          // ✅ 현재 사용자 상태 정확히 받아오기
+          const currentUser = result.participants.find(
+            (participant: any) => participant.userId === result.userInfo.userId
+          );
+
+          if (currentUser) {
+            setUserStatus(currentUser.status);
+            setButtonText(
+              currentUser.status === "ATTENDED"
+                ? "출석완료"
+                : currentUser.status === "PENDING"
+                  ? "출석하기"
+                  : "참여하기"
+            );
+          } else {
+            setUserStatus("");
+            setButtonText("참여하기");
+          }
 
         } else {
           setError(response.data.responseMessage);
@@ -236,6 +258,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
     fetchPostData();
   }, [postId]);
 
+
   const [creatorName, setCreatorName] = useState(""); // 작성자 이름
   const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
 
@@ -244,14 +267,84 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
   const formatDateTime = (iso: string) => {
     const utcDate = new Date(iso);
     const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
-  
+
     const month = kstDate.getMonth() + 1;
     const day = kstDate.getDate();
     const hours = kstDate.getHours().toString().padStart(2, "0");
     const minutes = kstDate.getMinutes().toString().padStart(2, "0");
-  
+
     return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
+
+  // 참여 취소 버튼 클릭 시
+  const handleCancelParticipation = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const response = await customAxios.patch(
+        `/run/event/post/${postId}/join`,
+        {},
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+
+      if (response.data.isSuccess) {
+        const newStatus = response.data.result.status || "";
+        setUserStatus(newStatus);
+        setButtonText("참여하기");
+        setError(null);
+
+        await fetchParticipants(); // 🔥 명단 갱신 추가
+      } else {
+        setError(response.data.responseMessage);
+        alert(response.data.responseMessage);
+      }
+    } catch (error) {
+      setError("참여 취소 요청에 실패했습니다.");
+    }
+  };
+
+  const fetchParticipants = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const response = await customAxios.get(`/run/event/post/${postId}`, {
+        headers: { Authorization: `${token}` },
+      });
+
+      if (response.data.isSuccess) {
+        const result = response.data.result;
+        setCurrentParticipants(result.participants);
+        setCurrentParticipantsNum(result.participantsNum);
+
+        // 현재 사용자 상태 최신화
+        const currentUser = result.participants.find(
+          (participant: any) => participant.userId === result.userInfo.userId
+        );
+
+        if (currentUser) {
+          setUserStatus(currentUser.status);
+          setButtonText(
+            currentUser.status === "ATTENDED"
+              ? "출석완료"
+              : currentUser.status === "PENDING"
+                ? "출석하기"
+                : "참여하기"
+          );
+        } else {
+          setUserStatus("");
+          setButtonText("참여하기");
+        }
+      } else {
+        setError(response.data.responseMessage);
+      }
+    } catch {
+      setError("명단 데이터를 불러오는 데 실패했습니다.");
+    }
+  };
+
+
 
 
   return (
@@ -263,7 +356,9 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
       </div>
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-[375px] pb-[50px]">
-        <object data={postimgurl || flashrunimage} className="w-[375px] h-[250px]" />
+        <div className="w-[375px] h-[250px] overflow-hidden">
+          <object data={postimgurl || flashrunimage} className="w-full h-full object-cover" />
+        </div>
         {/* 번개런 정보 */}
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
@@ -367,25 +462,48 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
           </div>
         </>
       )}
-      {activeTab === "명단" && <AttendanceList users={currentParticipants} />}
+      {activeTab === "명단" && (
+        <EditableAttendanceList
+          postId={postId!}
+          runType="event"
+          users={currentParticipants}
+          onUsersChange={(updatedUsers) => setCurrentParticipants(updatedUsers)}
+          onSaveComplete={fetchParticipants}
+        />
+      )}
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
-      <button
-        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${userStatus === "ATTENDED"
-          ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
-          : userStatus === "PENDING"
-            ? "bg-kuWarmGray text-white" // PENDING 상태일 때
-            : "bg-kuDarkGreen text-white" // 기본 상태 (참여하기)
-          }`}
-        onClick={
-          userStatus !== "PENDING"
-            ? handleStartClick
-            : handleOpenAttendanceModal
-        }
-        disabled={userStatus === "ATTENDED"}
-      >
-        {buttonText}
-      </button>
+      {userStatus === "PENDING" && (
+        <div className="flex justify-center mt-20 mb-2">
+          <div className="w-[327px] flex gap-2">
+            <button
+              className="w-full h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold"
+              onClick={handleCancelParticipation}
+            >
+              참여 취소
+            </button>
+
+          </div>
+        </div>
+      )}
+
+      {userStatus === "" && (
+        <button
+          className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-kuDarkGreen text-white text-lg font-bold mt-20 mb-2"
+          onClick={handleStartClick}
+        >
+          참여하기
+        </button>
+      )}
+
+      {userStatus === "ATTENDED" && (
+        <button
+          className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] text-lg font-bold mt-20 mb-2 cursor-not-allowed"
+          disabled
+        >
+          출석완료
+        </button>
+      )}
       {/* 수정하기 버튼 */}
       <button
         className="flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mb-4 bg-[#4D4D4D] text-white"
