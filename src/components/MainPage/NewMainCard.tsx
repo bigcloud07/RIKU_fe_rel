@@ -1,10 +1,6 @@
 import React from "react";
-import NewOpenStatus from "../../assets/Main-img/NewOpenStatus.svg";
 import { useNavigate } from "react-router-dom";
-import NewMainImage from "../../assets/CardDefaultImg.svg"
-import NOWimg from "../../assets/Main-img/NewOpenStatus.svg";
-import CLODESDimg from "../../assets/Main-img/NewClosedStatus.svg";
-import CANCELEDimg from "../../assets/Main-img/NewCanceledStatus.svg";
+import ARGENTimg from "../../assets/Main-img/NewUrgentStatus.svg";
 
 interface CardProps {
   title: string;
@@ -28,7 +24,7 @@ const NewMainCard: React.FC<CardProps> = ({
 
   return (
     <div
-      className="w-[160px] h-[236px] bg-kuLightGray rounded-lg overflow-hidden relative"
+      className="w-[160px] h-[250px] bg-kuLightGray rounded-lg overflow-hidden relative"
       onClick={handleClick}
     >
       {/* 이미지 영역 */}
@@ -46,14 +42,24 @@ const NewMainCard: React.FC<CardProps> = ({
       </div>
 
       {/* 정보 영역 */}
-      <div className="ml-[16px] mr-[10px] mb-[20px] mt-[16px]">
+      <div className="ml-[16px] mr-[16px] mb-[20px] mt-[16px]">
+        
+
         {statusImg && (
-          <img src={statusImg} alt="Status" className="w-[40px] h-[20px]" />
+          <img
+            src={statusImg}
+            alt="Status"
+            className={`${statusImg === ARGENTimg ? "w-[46px] h-[20px]" : "w-[40px] h-[20px]"
+              }`}
+          />
         )}
-        <div className="text-gray-500 text-[12px] mt-1">{date}</div>
-        <div className="font-bold text-[20px]">{title}</div>
+
+
+        < div className="text-gray-500 text-[12px] mt-1">{date}</div>
+        <div className="font-bold text-[20px] w-[130px] h-[64px] overflow-hidden text-ellipsis break-words line-clamp-2">
+          {title}</div>
       </div>
-    </div>
+    </div >
   );
 };
 

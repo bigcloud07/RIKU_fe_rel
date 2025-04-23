@@ -120,7 +120,7 @@ const NewFlashRunList: React.FC = () => {
                                                     key={run.id}
                                                     location={run.title}
                                                     postimg={run.postImageUrl}
-                                                    runDate={run.date}
+                                                    runDate={kstDate}
                                                     runState={run.postStatus ?? "NOW"}
                                                     participants={run.participants}
                                                     date={formattedDate}

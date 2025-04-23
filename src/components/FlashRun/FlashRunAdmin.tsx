@@ -343,11 +343,13 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                   {attachmentUrls.map((url, index) => (
                     <SwiperSlide key={index}>
                       <div className="relative">
-                        <img
-                          src={url}
-                          alt={`코스 사진 ${index + 1}`}
-                          className="rounded-lg w-full h-auto"
-                        />
+                      <div className="w-[400px] h-[300px] overflow-hidden">
+                          <img
+                            src={url}
+                            alt={`코스 사진 ${index + 1}`}
+                            className="rounded-lg w-full h-full object-cover"
+                          />
+                        </div>
                         <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
                           {index + 1}/{attachmentUrls.length}
                         </div>

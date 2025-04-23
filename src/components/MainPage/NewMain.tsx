@@ -13,6 +13,7 @@ import customAxios from "../../apis/customAxios";
 import NOWimg from "../../assets/Main-img/NewOpenStatus.svg";
 import CLODESDimg from "../../assets/Main-img/NewClosedStatus.svg";
 import CANCELEDimg from "../../assets/Main-img/NewCanceledStatus.svg";
+import ARGENTimg from "../../assets/Main-img/NewUrgentStatus.svg"
 
 
 interface EventData {
@@ -39,9 +40,24 @@ const NewMain: React.FC = () => {
         return CLODESDimg;
       case "CANCELED":
         return CANCELEDimg;
+      case "URGENT":
+        return ARGENTimg;
       default:
         return undefined;
     }
+  };
+
+  const isWithinOneHour = (isoDateString?: string) => {
+    if (!isoDateString) return false;
+  
+    // 1. UTC → KST로 변환
+    const utcDate = new Date(isoDateString);
+    const kstOffset = 9 * 60 * 60 * 1000;
+    const kstDate = new Date(utcDate.getTime() + kstOffset);
+  
+    const now = new Date();
+  
+    return (kstDate.getTime() - now.getTime()) <= 60 * 60 * 1000 && kstDate > now;
   };
 
 
@@ -67,21 +83,38 @@ const NewMain: React.FC = () => {
 
   const formatDate = (isoDateString?: string): string => {
     if (!isoDateString) return "...";
-    const dateObj = new Date(isoDateString);
-    const month = dateObj.getMonth() + 1;
-    const day = dateObj.getDate();
-    const weekday = dateObj.toLocaleDateString("ko-KR", { weekday: "long" });
+    
+    const utcDate = new Date(isoDateString);
+    const kstOffset = 9 * 60 * 60 * 1000; // 9시간을 밀리초로 변환
+    const kstDate = new Date(utcDate.getTime() + kstOffset);
+  
+    const month = kstDate.getMonth() + 1;
+    const day = kstDate.getDate();
+    const weekday = kstDate.toLocaleDateString("ko-KR", { weekday: "long" });
+  
     return `${month}/${day} ${weekday}`;
   };
   
   // 슬라이드 변경 로직
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000);
-
-    return () => clearInterval(timer);
+    let frameId: number;
+    let timeoutId: NodeJS.Timeout;
+  
+    const advanceSlide = () => {
+      frameId = requestAnimationFrame(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+        timeoutId = setTimeout(advanceSlide, 3000); // 다음 슬라이드까지 대기
+      });
+    };
+  
+    timeoutId = setTimeout(advanceSlide, 3000);
+  
+    return () => {
+      clearTimeout(timeoutId);
+      cancelAnimationFrame(frameId);
+    };
   }, [images.length]);
+  
 
   useEffect(() => {
     const fetchMain = async () => {
@@ -110,25 +143,34 @@ const NewMain: React.FC = () => {
               location: result.regularRun?.title || "정규런이 없습니다",
               date: formatDate(result.regularRun?.date),
               postimgurl: result.regularRun?.postImageUrl,
-              poststatus: result.regularRun?.postStatus,
+              poststatus: isWithinOneHour(result.regularRun?.date)
+                ? "URGENT"
+                : result.regularRun?.postStatus,
             },
             flashRun: {
               location: result.flashRun?.title || "번개런이 없습니다",
               date: formatDate(result.flashRun?.date),
               postimgurl: result.flashRun?.postImageUrl,
-              poststatus: result.flashRun?.postStatus,
+              poststatus: isWithinOneHour(result.flashRun?.date)
+                ? "URGENT"
+                : result.flashRun?.postStatus,
             },
+            
             training: {
               location: result.trainingRun?.title || "훈련이 없습니다",
               date: formatDate(result.trainingRun?.date),
               postimgurl: result.trainingRun?.postImageUrl,
-              poststatus: result.trainingRun?.postStatus,
+              poststatus: isWithinOneHour(result.trainingRun?.date)
+                ? "URGENT"
+                : result.trainingRun?.postStatus,
             },
             event: {
               location: result.eventRun?.title || "행사가 없습니다",
               date: formatDate(result.eventRun?.date),
               postimgurl: result.eventRun?.postImageUrl,
-              poststatus: result.eventRun?.postStatus,
+              poststatus: isWithinOneHour(result.eventRun?.date)
+                ? "URGENT"
+                : result.eventRun?.postStatus,
             },
           });
         } else {
@@ -209,12 +251,12 @@ const NewMain: React.FC = () => {
         <div className="flex w-[375px] h-[40px] justify-center items-center space-x-2 bg-kuDarkGreen">
           {images.map((_, index) => (
             <span
-              key={index}
-              onClick={() => handleDotClick(index)}
-              className={`h-2 w-2 rounded-full cursor-pointer transition-colors ${
-                currentIndex === index ? "bg-white/80" : "bg-white/40"
-              }`}
-            ></span>
+            key={index}
+            className={`h-2 w-2 rounded-full transition-[opacity,transform] duration-300 ease-in-out ${
+              currentIndex === index ? "bg-white/80 scale-125" : "bg-white/40 scale-100"
+            }`}
+            style={{ willChange: "transform, opacity" }}
+          />
           ))}
         </div>
       </div>
