@@ -37,6 +37,23 @@ function makeCalendarDays(pointDate: Date) {
   return calendarDays;
 }
 
+//"일별 캘린더 조회"시에 이벤트의 마커 컬러를 return하는 메소드
+function setMarkerColor(postType: string) {
+  if (postType === "REGULAR") {
+    //정규런이면..
+    return "bg-kuDarkGreen";
+  } else if (postType === "TRAINING") {
+    //훈련이면..
+    return "bg-kuYellow";
+  } else if (postType === "EVENT") {
+    //행사이면..
+    return "bg-kuBrown";
+  } else if (postType === "FLASH") {
+    //번개런이면..
+    return "bg-kuGreen";
+  }
+}
+
 //일정과 캘린더를 확인할 수 있는 SchedulePage
 function SchedulePage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -45,7 +62,9 @@ function SchedulePage() {
   const [selectedDateInModal, setSelectedDateInModal] = useState(new Date());
   const [monthlyPlan, setMonthlyPlan] = useState<{ date: string; eventCount: number }[]>([]);
   const [selectedDateEvent, setSelectedDateEvent] = useState<
-    { postId: 1; title: string; date: string; location: string; postType: string }[]
+
+    { postId: number; postType: string; title: string; date: string; location: string }[]
+
   >([]);
   const [userRole, setUserRole] = useState("");
 
@@ -68,6 +87,7 @@ function SchedulePage() {
           },
         }
       );
+      console.log(response.data);
       setMonthlyPlan(response.data.result.schedules); //불러온 data의 result 값으로 monthlyPlan 값 저장
       setUserRole(response.data.userRole)
     } catch (error) {
@@ -374,7 +394,7 @@ function SchedulePage() {
               onClick={() => handleNavigateToNotice(event.postId, event.postType)}
               className="w-full max-w-sm bg-white border border-gray-300 rounded-lg p-2 shadow-sm mb-4 flex flex-row items-center"
             >
-              <div className={`w-2 h-2 ml-2 bg-kuWarmGray rounded-full`} />
+              <div className={`w-2 h-2 ml-2 ${setMarkerColor(event.postType)} rounded-full`} />
               <div className="pl-4 flex flex-col items-start">
                 <p className="text-gray-800 font-medium">{event.title}</p>
                 <p className="text-gray-500 text-sm">

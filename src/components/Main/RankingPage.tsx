@@ -17,8 +17,8 @@ interface SimpleUserInfo {
 
 //랭킹 페이지
 function RankingPage() {
-  //상위 10명 정보를 저장한 top10_Info (서버에서 받아온 정보로 업데이트할 것임)
-  const [top10_Info, setTop10_Info] = useState<SimpleUserInfo[]>([]);
+  //상위 10명 정보를 저장한 top20_Info (서버에서 받아온 정보로 업데이트할 것임)
+  const [top20_Info, setTop20_Info] = useState<SimpleUserInfo[]>([]);
   const [isRankingInfoLoaded, setRankingInfoLoaded] = useState(false); //랭킹 정보가 모두 불러와 졌는지 체크
 
   //자신의 정보 myInfo (안 불러져왔을 경우 표시할 placeholder 격의 데이터 하나 넣어놓을 것임)
@@ -32,10 +32,13 @@ function RankingPage() {
   //자신의 랭킹 정보 myRankingInfo
   const [myRankingInfo, setMyRankingInfo] = useState<number>(12);
 
-  //"전체 보기" 클릭 시 수행할 함수
-  function handleSeeAllBtnClick() {
-    alert("열심히 기능 준비중입니다!");
-  }
+  //현재 하단 순위표에 보여줄 인원수(top10 혹은 top20), 이걸로 렌더링할 갯수 조절할 것임
+  const [viewCount, setViewCount] = useState(10);
+
+  //하단 순위표를 toggle할 메소드 toggleViewCount ('전체보기' 혹은 '간략히 보기' 버튼에 장착할 메소드)
+  const toggleViewCount = () => {
+    setViewCount(viewCount === 10 ? top20_Info.length : 10);
+  };
 
   //초기에 랭킹 정보를 가져와야 한다. 해당 기능을 수행하는 메소드 fetchRankingInfo()
   async function fetchRankingInfo() {
@@ -58,8 +61,8 @@ function RankingPage() {
       //공동 순위 처리에 용이하도록 userId는 서버에서 받아온 정보가 아닌 순위대로 ++하는 idx로 선언(추후 공동 순위 처리 로직이 추가로 삽입됨)
       let idx: number = 1;
 
-      //상위 10명의 정보를 넣어둘 배열 top10 (response.data.result의 "top10"에서 정보를 가져온다)
-      let top10: SimpleUserInfo[] = response.data.result.top10?.map((user: SimpleUserInfo) => ({
+      //상위 10명의 정보를 넣어둘 배열 top20 (response.data.result의 "top20"에서 정보를 가져온다)
+      let top20: SimpleUserInfo[] = response.data.result.top20?.map((user: SimpleUserInfo) => ({
         userId: idx++,
         userName: user.userName,
         userProfileImg: user.userProfileImg || null,
@@ -67,10 +70,10 @@ function RankingPage() {
       }));
 
       //공동 순위 처리해야 함
-      for (let i: number = 0; i < top10.length; i++) {
+      for (let i: number = 0; i < top20.length; i++) {
         //이전 totalPoints랑 지금 totalPoints가 같다면
-        if (i > 0 && top10[i - 1].totalPoints === top10[i].totalPoints) {
-          top10[i].userId = top10[i - 1].userId;
+        if (i > 0 && top20[i - 1].totalPoints === top20[i].totalPoints) {
+          top20[i].userId = top20[i - 1].userId;
         }
       }
 
@@ -78,7 +81,7 @@ function RankingPage() {
       let myRank: number = response.data.result.userRanking; //사용자 랭킹 정보를 불러와서 저장
 
       //불러온 정보들 바탕으로 set
-      setTop10_Info(top10);
+      setTop20_Info(top20);
       setMyInfo(my);
       setMyRankingInfo(myRank);
       setRankingInfoLoaded(true);
@@ -109,8 +112,8 @@ function RankingPage() {
           <span className="w-fit text-center font-semibold text-kuDarkGreen bg-white py-1 px-8 rounded-xl">
             Top 3
           </span>
-          {/* Top3 섹션(top10_Info 배열의 길이가 3 미만일 경우, "집계 준비중"이라고 띄울 것임) */}
-          {top10_Info.length > 3 ? (
+          {/* Top3 섹션(top20_Info 배열의 길이가 3 미만일 경우, "집계 준비중"이라고 띄울 것임) */}
+          {top20_Info.length > 3 ? (
             <div className="flex flex-row justify-between items-end my-4 gap-3">
               {/* 2nd 섹션 */}
               <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-600 opacity-0">
@@ -120,7 +123,7 @@ function RankingPage() {
                 {/* 프로필 이미지 (userProfileImg 값이 null일 경우 기본 프사 url을, 아닐 경우 불러온 url을 src로 삼는다) */}
                 <div className="w-full aspect-square bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
                   <img
-                    src={top10_Info[1].userProfileImg ?? defaultProfileImg}
+                    src={top20_Info[1].userProfileImg ?? defaultProfileImg}
                     alt="1st"
                     className="w-full h-full object-cover"
                   />
@@ -129,10 +132,10 @@ function RankingPage() {
                 {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
                 <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
                   <span className="block text-center text-lg font-bold text-black">
-                    {top10_Info[1].userName}
+                    {top20_Info[1].userName}
                   </span>
                   <span className="block text-center text-sm text-kuDarkGreen font-semibold">
-                    {top10_Info[1].totalPoints}P
+                    {top20_Info[1].totalPoints}P
                   </span>
                 </div>
               </div>
@@ -159,7 +162,7 @@ function RankingPage() {
                   {/* 프로필 이미지 */}
                   <div className="w-full aspect-square bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
                     <img
-                      src={top10_Info[0].userProfileImg ?? defaultProfileImg}
+                      src={top20_Info[0].userProfileImg ?? defaultProfileImg}
                       alt="1st"
                       className="w-full h-full object-cover"
                     />
@@ -168,10 +171,10 @@ function RankingPage() {
                   {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
                   <div className="w-full bg-kuBeige rounded-xl pt-4 pb-14">
                     <span className="block text-center text-lg font-bold text-black">
-                      {top10_Info[0].userName}
+                      {top20_Info[0].userName}
                     </span>
                     <span className="block text-center text-sm text-kuDarkGreen font-semibold">
-                      {top10_Info[0].totalPoints}P
+                      {top20_Info[0].totalPoints}P
                     </span>
                   </div>
                 </div>
@@ -185,7 +188,7 @@ function RankingPage() {
                 {/* 프로필 이미지 */}
                 <div className="w-full aspect-square bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
                   <img
-                    src={top10_Info[2].userProfileImg ?? defaultProfileImg}
+                    src={top20_Info[2].userProfileImg ?? defaultProfileImg}
                     alt="1st"
                     className="w-full h-full object-cover"
                   />
@@ -194,10 +197,10 @@ function RankingPage() {
                 {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
                 <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
                   <span className="block text-center text-lg font-bold text-black">
-                    {top10_Info[2].userName}
+                    {top20_Info[2].userName}
                   </span>
                   <span className="block text-center text-sm text-kuDarkGreen font-semibold">
-                    {top10_Info[2].totalPoints}P
+                    {top20_Info[2].totalPoints}P
                   </span>
                 </div>
               </div>
@@ -232,7 +235,7 @@ function RankingPage() {
         </div>
 
         {/* 그 밑의 4위부터 회원들 랭킹 프로필 카드 (받아온 랭킹 정보를 바탕으로 map 함수로 return할 것임) */}
-        {top10_Info.slice(3).map((user, index) => (
+        {top20_Info.slice(3, viewCount).map((user, index) => (
           <div
             key={index}
             className="w-full max-w-sm bg-kuWarmGray rounded-xl flex flex-row justify-between items-center px-3 py-2 mb-2"
@@ -257,9 +260,11 @@ function RankingPage() {
         {/* 하단의 '전체보기' 버튼 */}
         <div
           className="w-full max-w-sm bg-kuBeige rounded-xl text-center py-2 mt-4 mb-12"
-          onClick={handleSeeAllBtnClick}
+          onClick={toggleViewCount}
         >
-          <span className="text-black text-base font-normal">전체보기</span>
+          <span className="text-black text-base font-normal">
+            {viewCount === 10 ? "전체보기" : "간략히 보기"}
+          </span>
         </div>
       </div>
     </div>
