@@ -46,7 +46,7 @@ const NavBar: React.FC = () => {
     <div className="w-full">
       {/* 네비게이션 바 */}
 
-      <nav className="fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-between items-center w-[430px] h-16 border-t-[1.5px] border-gray-300 bg-white z-[1000]">
+      <nav className="fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-between items-center w-[375px] h-16 border-t-[1.5px] border-gray-300 bg-white z-[1000]">
 
         {/* 홈 아이콘 */}
         <div

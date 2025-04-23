@@ -328,21 +328,27 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
               </div>
 
               {/* 물음표 아이콘: 고정된 우측 위치 */}
-              <img
-                src={isTooltipVisible ? questionmarkOn : questionmarkOff}
-                alt="question mark"
-                className="absolute top-[-1px] right-[18px] w-[24px] h-[24px] cursor-pointer"
-                onClick={() => setIsTooltipVisible(!isTooltipVisible)}
-              />
+              {/* 물음표 아이콘: 고정된 우측 위치 */}
+              {getTrainingDescription(trainingtype) && (
+                <>
+                  <img
+                    src={isTooltipVisible ? questionmarkOn : questionmarkOff}
+                    alt="question mark"
+                    className="absolute top-[-1px] right-[18px] w-[24px] h-[24px] cursor-pointer"
+                    onClick={() => setIsTooltipVisible(!isTooltipVisible)}
+                  />
 
-              {/* 툴팁 */}
-              {isTooltipVisible && (
-                <div className="absolute bottom-[140%] right-[25px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
-                  <div className="text-[#4F3F3F] text-[12px]">
-                    {getTrainingDescription(trainingtype)}
-                  </div>
-                </div>
+                  {/* 툴팁 */}
+                  {isTooltipVisible && (
+                    <div className="absolute bottom-[140%] right-[25px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
+                      <div className="text-[#4F3F3F] text-[12px]">
+                        {getTrainingDescription(trainingtype)}
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
+
             </div>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
@@ -384,11 +390,13 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                 {attachmentUrls.map((url, index) => (
                   <SwiperSlide key={index}>
                     <div className="relative">
-                      <img
-                        src={url}
-                        alt={`코스 사진 ${index + 1}`}
-                        className="rounded-lg w-full h-auto"
-                      />
+                    <div className="w-[400px] h-[300px] overflow-hidden">
+                          <img
+                            src={url}
+                            alt={`코스 사진 ${index + 1}`}
+                            className="rounded-lg w-full h-full object-cover"
+                          />
+                        </div>
                       <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
                         {index + 1}/{attachmentUrls.length}
                       </div>

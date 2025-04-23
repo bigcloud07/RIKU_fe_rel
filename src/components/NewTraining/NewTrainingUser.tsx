@@ -267,7 +267,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
   const handleJoinConfirm = async () => {
     const isCancel = selectedGroup === "";
-  
+
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const res = await customAxios.patch(
@@ -275,13 +275,13 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         {},
         { headers: { Authorization: `${token}` } }
       );
-  
+
       if (res.data.isSuccess) {
         const result = res.data.result;
-  
+
         // ✅ 유저 ID 직접 추출
         const userIdFromServer = result.userInfo?.userId;
-  
+
         // ✅ 참여 취소 시 초기화
         if (isCancel) {
           setUserStatus("");
@@ -291,7 +291,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           await fetchParticipantsInfo();
           return;
         }
-  
+
         // ✅ 참여 또는 그룹 수정 성공
         const updatedGroup = result.groupedParticipants;
         setGroupedParticipants(updatedGroup);
@@ -301,7 +301,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           console.warn("⚠️ 유효하지 않은 userInfo:", result.userInfo);
           setUserInfo({ userId: 0, userName: "", userProfileImg: "" }); // fallback
         }
-  
+
         // ✅ 바로 내가 속한 그룹과 상태 찾아서 반영
         const foundGroup = updatedGroup?.find(group =>
           group.participants?.some((p: any) => p.userId === userIdFromServer)
@@ -319,7 +319,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
                 : "참여하기"
           );
         }
-  
+
         setIsGroupModalOpen(false);
         await fetchParticipantsInfo();
       } else {
@@ -334,7 +334,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
       }
     }
   };
-  
+
 
 
 
@@ -451,21 +451,29 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
               </div>
 
               {/* 물음표 아이콘: 고정된 우측 위치 */}
-              <img
-                src={isTooltipVisible ? questionmarkOn : questionmarkOff}
-                alt="question mark"
-                className="absolute top-[-1px] right-[18px] w-[24px] h-[24px] cursor-pointer"
-                onClick={() => setIsTooltipVisible(!isTooltipVisible)}
-              />
+              {/* 물음표 아이콘: 고정된 우측 위치 */}
+              {getTrainingDescription(trainingtype) && (
+                <>
+                  <img
+                    src={isTooltipVisible ? questionmarkOn : questionmarkOff}
+                    alt="question mark"
+                    className="absolute top-[-1px] right-[18px] w-[24px] h-[24px] cursor-pointer"
+                    onClick={() => setIsTooltipVisible(!isTooltipVisible)}
+                  />
 
-              {/* 툴팁 */}
-              {isTooltipVisible && (
-                <div className="absolute bottom-[140%] right-[25px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
-                  <div className="text-[#4F3F3F] text-[12px]">
-                    {getTrainingDescription(trainingtype)}
-                  </div>
-                </div>
+                  {/* 툴팁 */}
+                  {isTooltipVisible && (
+                    <div className="absolute bottom-[140%] right-[25px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
+                      <div className="text-[#4F3F3F] text-[12px]">
+                        {getTrainingDescription(trainingtype)}
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
+
+
+              
             </div>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
@@ -509,11 +517,13 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
                   {attachmentUrls.map((url, index) => (
                     <SwiperSlide key={index}>
                       <div className="relative">
-                        <img
-                          src={url}
-                          alt={`코스 사진 ${index + 1}`}
-                          className="rounded-lg w-full h-auto"
-                        />
+                        <div className="w-[400px] h-[300px] overflow-hidden">
+                          <img
+                            src={url}
+                            alt={`코스 사진 ${index + 1}`}
+                            className="rounded-lg w-full h-full object-cover"
+                          />
+                        </div>
                         <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
                           {index + 1}/{attachmentUrls.length}
                         </div>

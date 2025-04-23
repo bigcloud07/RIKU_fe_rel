@@ -64,7 +64,7 @@ const NewEventCard: React.FC<EventCardProps> = ({
       </div>
 
       {/* 러닝 장소 또는 제목 */}
-      <div className="absolute top-[64px] left-[16px] text-[20px] font-semibold">
+      <div className="absolute top-[64px] left-[16px] text-[20px] font-semibold max-w-[300px] truncate overflow-hidden whitespace-nowrap">
         {location}
       </div>
 
