@@ -1,0 +1,13 @@
+/* scroll bar 숨기기 위해 아래와 같은 스타일을 html, body에 적용 */
+html,
+body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  overflow: auto;
+  overscroll-behavior: none; /* 앱처럼 외부로 넘어가는 경우에 대해 scroll되지 않도록 하는 옵션 */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
