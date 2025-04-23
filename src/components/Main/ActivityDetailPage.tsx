@@ -6,9 +6,8 @@ import defaultProfileImg from "../../assets/default_profile.png";
 
 interface participationDetails {
   date: string;
-  eventType: string;
+  postType: string;
   point: number;
-  badgeColor: string;
   title: string;
 }
 
@@ -20,6 +19,40 @@ interface userData {
   participationCounts: number;
   rank: number;
   participationDetails: participationDetails[];
+}
+
+//활동 내역의 종류에 따라 마커 컬러를 return하는 메소드
+function setMarkerColor(postType: string) {
+  if (postType === "REGULAR") {
+    //정규런이면..
+    return "bg-kuDarkGreen";
+  } else if (postType === "TRAINING") {
+    //훈련이면..
+    return "bg-kuYellow";
+  } else if (postType === "EVENT") {
+    //행사이면..
+    return "bg-kuBrown";
+  } else if (postType === "FLASH") {
+    //번개런이면..
+    return "bg-kuGreen";
+  }
+}
+
+//활동 내역의 종류에 따라 마커의 "활동 종류"를 return하는 메소드
+function setEventTypeString(postType: string) {
+  if (postType === "REGULAR") {
+    //정규런이면..
+    return "정규런";
+  } else if (postType === "TRAINING") {
+    //훈련이면..
+    return "훈련";
+  } else if (postType === "EVENT") {
+    //행사이면..
+    return "행사";
+  } else if (postType === "FLASH") {
+    //번개런이면..
+    return "번개런";
+  }
 }
 
 //user의 활동 내역을 불러오는 화면 ActivityDetailPage()
@@ -37,18 +70,29 @@ function ActivityDetailPage() {
     participationDetails: [
       {
         date: "2025.03.14",
-        eventType: "정규런",
+        postType: "REGULAR",
         point: 40,
-        badgeColor: "kuDarkGreen",
         title: "[참여] 완주를 위한 체력 기르기",
       },
       {
         date: "2024.12.28",
-        eventType: "번개런",
+        postType: "FLASH",
         point: 40,
-        badgeColor: "kuGreen",
         title:
           "[참여] 일찍 일어나 선릉에 가면 기처리가 마중을 나와준다는 이야기가 있다. 나는 이 이야기를 정말 좋아한다",
+      },
+      {
+        date: "2024.12.25",
+        postType: "TRAINING",
+        point: 40,
+        title:
+          "[참여] 아침에 회사에 가서 집에 가고 싶다고 외쳐 보아라. 시끄럽기만 하고 집은 못갈 것이다",
+      },
+      {
+        date: "2024.11.03",
+        postType: "EVENT",
+        point: 40,
+        title: "[참여] 2024 JTBC 서울 마라톤",
       },
     ],
   });
@@ -126,9 +170,11 @@ function ActivityDetailPage() {
                     <div className="flex items-center gap-2 text-xs text-gray-500">
                       <span>{participationDetail.date}</span>
                       <span
-                        className={`bg-${participationDetail.badgeColor} text-white px-2 py-0.5 rounded-lg text-[10px] font-semibold`}
+                        className={`${setMarkerColor(
+                          participationDetail.postType
+                        )} text-white px-2 py-0.5 rounded-lg text-[10px] font-semibold`}
                       >
-                        {participationDetail.eventType}
+                        {setEventTypeString(participationDetail.postType)}
                       </span>
                     </div>
                     <div className="text-m font-medium text-gray-800">
