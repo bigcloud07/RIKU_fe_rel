@@ -49,14 +49,14 @@ const NewMain: React.FC = () => {
 
   const isWithinOneHour = (isoDateString?: string) => {
     if (!isoDateString) return false;
-  
+
     // 1. UTC → KST로 변환
     const utcDate = new Date(isoDateString);
     const kstOffset = 9 * 60 * 60 * 1000;
     const kstDate = new Date(utcDate.getTime() + kstOffset);
-  
+
     const now = new Date();
-  
+
     return (kstDate.getTime() - now.getTime()) <= 60 * 60 * 1000 && kstDate > now;
   };
 
@@ -83,38 +83,38 @@ const NewMain: React.FC = () => {
 
   const formatDate = (isoDateString?: string): string => {
     if (!isoDateString) return "...";
-    
+
     const utcDate = new Date(isoDateString);
     const kstOffset = 9 * 60 * 60 * 1000; // 9시간을 밀리초로 변환
     const kstDate = new Date(utcDate.getTime() + kstOffset);
-  
+
     const month = kstDate.getMonth() + 1;
     const day = kstDate.getDate();
     const weekday = kstDate.toLocaleDateString("ko-KR", { weekday: "long" });
-  
+
     return `${month}/${day} ${weekday}`;
   };
-  
+
   // 슬라이드 변경 로직
   useEffect(() => {
     let frameId: number;
     let timeoutId: NodeJS.Timeout;
-  
+
     const advanceSlide = () => {
       frameId = requestAnimationFrame(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
         timeoutId = setTimeout(advanceSlide, 3000); // 다음 슬라이드까지 대기
       });
     };
-  
+
     timeoutId = setTimeout(advanceSlide, 3000);
-  
+
     return () => {
       clearTimeout(timeoutId);
       cancelAnimationFrame(frameId);
     };
   }, [images.length]);
-  
+
 
   useEffect(() => {
     const fetchMain = async () => {
@@ -155,7 +155,7 @@ const NewMain: React.FC = () => {
                 ? "URGENT"
                 : result.flashRun?.postStatus,
             },
-            
+
             training: {
               location: result.trainingRun?.title || "훈련이 없습니다",
               date: formatDate(result.trainingRun?.date),
@@ -191,8 +191,7 @@ const NewMain: React.FC = () => {
 
   // 플로팅 버튼 애니메이션
   useEffect(() => {
-    if (isFloatingButtonOpen) 
-    {
+    if (isFloatingButtonOpen) {
       setShowFirstButton(false);
       setShowSecondButton(false);
       setShowThirdButton(false);
@@ -202,9 +201,8 @@ const NewMain: React.FC = () => {
       setTimeout(() => setShowThirdButton(true), 200);
       setTimeout(() => setShowSecondButton(true), 300);
       setTimeout(() => setShowFirstButton(true), 400);
-    } 
-    else 
-    {
+    }
+    else {
       setShowFirstButton(false);
       setShowSecondButton(false);
       setShowThirdButton(false);
@@ -251,12 +249,11 @@ const NewMain: React.FC = () => {
         <div className="flex w-[375px] h-[40px] justify-center items-center space-x-2 bg-kuDarkGreen">
           {images.map((_, index) => (
             <span
-            key={index}
-            className={`h-2 w-2 rounded-full transition-[opacity,transform] duration-300 ease-in-out ${
-              currentIndex === index ? "bg-white/80 scale-125" : "bg-white/40 scale-100"
-            }`}
-            style={{ willChange: "transform, opacity" }}
-          />
+              key={index}
+              className={`h-2 w-2 rounded-full transition-[opacity,transform] duration-300 ease-in-out ${currentIndex === index ? "bg-white/80 scale-125" : "bg-white/40 scale-100"
+                }`}
+              style={{ willChange: "transform, opacity" }}
+            />
           ))}
         </div>
       </div>
@@ -264,105 +261,131 @@ const NewMain: React.FC = () => {
       {/* NewMainCard 그리드 */}
       <div className="grid grid-cols-2 grid-rows-2 gap-x-3 gap-y-6 mt-[70px] mb-36">
         <div className="cursor-pointer">
-        <NewMainCard
-          title={maindata?.regularRun.location}
-          date={maindata?.regularRun.date}
-          statusImg={getStatusImg(maindata.regularRun.poststatus)}
-          imageUrl={maindata.regularRun.postimgurl || NewMainImage}
-          event_type="정규런"
-          path="/regular"
-        />
+          <NewMainCard
+            title={maindata?.regularRun.location}
+            date={maindata?.regularRun.date}
+            statusImg={getStatusImg(maindata.regularRun.poststatus)}
+            imageUrl={maindata.regularRun.postimgurl || NewMainImage}
+            event_type="정규런"
+            path="/regular"
+          />
         </div>
         <div className="cursor-pointer">
-        <NewMainCard
-          title={maindata?.flashRun.location}
-          date={maindata?.flashRun.date}
-          statusImg={getStatusImg(maindata.flashRun.poststatus)}
-          imageUrl={maindata.flashRun.postimgurl || NewMainImage}
-          event_type="번개런"
-          path="/FlashRun"
-        />
+          <NewMainCard
+            title={maindata?.flashRun.location}
+            date={maindata?.flashRun.date}
+            statusImg={getStatusImg(maindata.flashRun.poststatus)}
+            imageUrl={maindata.flashRun.postimgurl || NewMainImage}
+            event_type="번개런"
+            path="/FlashRun"
+          />
         </div>
         <div className="cursor-pointer">
-        <NewMainCard
-          title={maindata?.training.location}
-          date={maindata?.training.date}
-          statusImg={getStatusImg(maindata.training.poststatus)}
-          imageUrl={maindata.training.postimgurl || NewMainImage}
-          event_type="훈련"
-          path="/training"
-        />
+          <NewMainCard
+            title={maindata?.training.location}
+            date={maindata?.training.date}
+            statusImg={getStatusImg(maindata.training.poststatus)}
+            imageUrl={maindata.training.postimgurl || NewMainImage}
+            event_type="훈련"
+            path="/training"
+          />
         </div>
         <div className="cursor-pointer">
-        <NewMainCard
-          title={maindata?.event.location}
-          date={maindata?.event.date}
-          statusImg={getStatusImg(maindata.event.poststatus)}
-          imageUrl={maindata.event.postimgurl || NewMainImage}
-          event_type="행사"
-          path="/event"
-        />
+          <NewMainCard
+            title={maindata?.event.location}
+            date={maindata?.event.date}
+            statusImg={getStatusImg(maindata.event.poststatus)}
+            imageUrl={maindata.event.postimgurl || NewMainImage}
+            event_type="행사"
+            path="/event"
+          />
         </div>
       </div>
 
       {/* 플로팅 버튼 */}
       <button
         onClick={toggleFloatingButton}
-        className={`fixed bottom-20 right-4 w-16 h-16 rounded-full bg-kuDarkGreen text-white flex items-center justify-center shadow-lg hover:bg-kuDarkGreen-dark focus:outline-none z-50 transition-transform duration-300 ${
-          isFloatingButtonOpen ? "rotate-45" : "rotate-0"
-        }`}
+        className={`fixed bottom-20 right-4 w-16 h-16 rounded-full bg-kuDarkGreen text-white flex items-center justify-center shadow-lg hover:bg-kuDarkGreen-dark focus:outline-none z-50 transition-transform duration-300 ${isFloatingButtonOpen ? "rotate-45" : "rotate-0"
+          }`}
       >
         <img
           src={plusBtn}
           alt="플로팅 버튼 아이콘"
-          className={`w-8 h-8 transition-transform duration-300 ${
-            isFloatingButtonOpen ? "rotate-20" : "rotate-0"
-          }`}
+          className={`w-8 h-8 transition-transform duration-300 ${isFloatingButtonOpen ? "rotate-20" : "rotate-0"
+            }`}
         />
       </button>
 
       {/* 플로팅 버튼이 열렸을 때 나타나는 옵션들 */}
       {isFloatingButtonOpen && (
-        <div onClick={() => setIsFloatingButtonOpen(false)} className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out flex justify-end items-end p-8 z-40">
-          <div onClick={(e) => e.stopPropagation()} className="fixed bottom-40 right-10 flex flex-col space-y-4 pointer-events-auto">
-            {/* 첫 번째 버튼 */}
+        <div
+          onClick={() => setIsFloatingButtonOpen(false)}
+          className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out flex justify-end items-end p-8 z-40"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="fixed bottom-40 right-10 flex flex-col space-y-4 pointer-events-auto"
+          >
+            {/* 번개런 일정 추가하기 - 모든 사용자 사용 가능 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${showFirstButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                }`}
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showFirstButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                } bg-white text-black hover:bg-gray-100`}
               onClick={handleflashRunMake}
             >
               번개런 일정 추가하기
             </button>
 
-            {/* 두 번째 버튼 */}
+            {/* 정규런 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${showSecondButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showSecondButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                } ${userRole === "ADMIN"
+                  ? "bg-white text-black hover:bg-gray-100"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
-              onClick={handleRegularRunMake}
+              onClick={
+                userRole === "ADMIN"
+                  ? handleRegularRunMake
+                  : () => alert("관리자만 사용할 수 있는 기능입니다.")
+              }
             >
               정규런 일정 추가하기
             </button>
 
-            {/* 세 번째 버튼 */}
+            {/* 훈련 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${showThirdButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showThirdButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                } ${userRole === "ADMIN"
+                  ? "bg-white text-black hover:bg-gray-100"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
-              onClick={handleTrainingtMake}
+              onClick={
+                userRole === "ADMIN"
+                  ? handleTrainingtMake
+                  : () => alert("관리자만 사용할 수 있는 기능입니다.")
+              }
             >
               훈련 일정 추가하기
             </button>
 
-            {/* 세 번째 버튼 */}
+            {/* 행사 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${showFourthButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showFourthButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                } ${userRole === "ADMIN"
+                  ? "bg-white text-black hover:bg-gray-100"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
-              onClick={handleEventMake}
+              onClick={
+                userRole === "ADMIN"
+                  ? handleEventMake
+                  : () => alert("관리자만 사용할 수 있는 기능입니다.")
+              }
             >
               행사 일정 추가하기
             </button>
           </div>
         </div>
       )}
+
 
       {/* TabNavigationUI */}
       <TabNavigationUI />
