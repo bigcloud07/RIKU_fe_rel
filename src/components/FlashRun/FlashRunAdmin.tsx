@@ -10,6 +10,7 @@ import flashrunimage from "../../assets/Run-img/flashrunimage.jpg"; // 번개런
 import BackBtnimg from "../../assets/BackBtn.svg"
 import pacermark from "../../assets/pacer-mark.svg"
 import CommentSection from "./CommentSection";
+import EditableAttendanceList from "./EditableAttendanceList"
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -37,10 +38,17 @@ interface FlashRunAdminData {
   postimgurl: string
 }
 
+interface EditableUser {
+  userId: number;
+  userName: string;
+  userProfileImg?: string | null;
+  status: "ATTENDED" | "PENDING";
+}
+
 const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   title,
   location,
-  
+
   participants,
   participantsNum,
   content,
@@ -57,9 +65,21 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   const [error, setError] = useState<string | null>(null); // 에러 메시지
   const [currentParticipants, setCurrentParticipants] = useState<Participant[]>(participants);
   const [date, setDate] = useState("");
+  const [currentParticipantsNum, setCurrentParticipantsNum] = useState<number>(participantsNum); // 현재 불러오는 값
+  const [postCreatorName, setPostCreatorName] = useState("");
+
+
+
+  const [editableParticipants, setEditableParticipants] = useState<EditableUser[]>([]);
+
+  
+
+
   const navigate = useNavigate()
 
   
+
+
 
   const handleStartClick = async () => {
     if (!code) {
@@ -106,7 +126,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         setPostStatus("CLOSED");
         setIsModalOpen(false);
         alert("출석이 종료되었습니다.");
-        
+
       } else {
         setError(response.data.responseMessage);
       }
@@ -117,27 +137,73 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
   const handleCloseModal = () => setIsModalOpen(false);
 
-  const handleTabChange = async (tab: "소개" | "명단") => { //명단 탭누를때 마다 명단 사람들의 상태 최신화
+  const [refreshComments, setRefreshComments] = useState(false);
+
+  const handleTabChange = async (tab: "소개" | "명단") => {
     setActiveTab(tab);
-    if (tab === "명단") {
-      try {
-        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-        const response = await customAxios.get(`/run/flash/post/${postId}`, {
-          headers: {
-            Authorization: `${token}`,
-          },
+    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+
+    try {
+      const response = await customAxios.get(`/run/flash/post/${postId}`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+
+      if (response.data.isSuccess) {
+        const result = response.data.result;
+
+        // 공통 업데이트 (댓글 관련 정보 등)
+        setPostStatus(result.postStatus);
+        setUserInfo({
+          userId: result.userInfo?.userId || 0,
+          userName: result.userInfo?.userName || "",
+          userProfileImg: result.userInfo?.userProfileImg || "",
         });
-        if (response.data.isSuccess) {
-          console.log(response.data)
-          setCurrentParticipants(response.data.result.participants); // 최신 참가자 목록 설정
-        } else {
-          setError(response.data.responseMessage);
+        setPostCreatorImg(result.postCreatorInfo?.userProfileImg || null);
+        setCurrentParticipantsNum(result.participantsNum); // 참가자 수 갱신
+        setDate(result.date); // 날짜도 혹시 변경되었을 수 있음
+
+        // 탭 별 업데이트
+        if (tab === "명단") {
+          const converted = result.participants.map((p: any) => ({
+            userId: p.userId,
+            userName: p.userName,
+            userProfileImg: p.userProfileImg || null,
+            status: p.status === "ATTENDED" ? "ATTENDED" : "PENDING",
+          }));
+          setEditableParticipants(converted);
         }
-      } catch (error: any) {
-        setError("참가자 목록을 가져오는 데 실패했습니다.");
+
+
+        if (tab === "소개") {
+          setAttachmentUrls(result.attachmentUrls || []);
+          setCreatorName(result.postCreatorInfo?.userName || "");
+        }
+
+        // ✅ 댓글 최신화 트리거
+        setRefreshComments((prev) => !prev);
+      } else {
+        setError(response.data.responseMessage);
       }
+    } catch (error) {
+      setError("데이터를 불러오는 데 실패했습니다.");
     }
   };
+
+  useEffect(() => {
+    if (participants.length > 0) {
+      const converted = participants.map((p) => ({
+        userId: p.id,
+        userName: p.name,
+        userProfileImg: p.profileImage || null,
+        status: p.isPresent ? "ATTENDED" : "PENDING",
+      }));
+      setEditableParticipants(converted);
+    }
+  }, [postId, participants]);
+
+  
 
   const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
@@ -167,6 +233,8 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           });
           setDate(result.date);
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+          setPostCreatorName(result.postCreatorInfo.userName);
+
           console.log(token)
 
         } else {
@@ -179,18 +247,23 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     fetchPostData();
   }, [postId]);
 
+  
+
   const formatDateTime = (iso: string) => {
-    const dateObj = new Date(iso);
-    const month = dateObj.getMonth() + 1;
-    const day = dateObj.getDate();
-    const hours = dateObj.getHours().toString().padStart(2, "0");
-    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
+    const utcDate = new Date(iso);
+    const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+
+    const month = kstDate.getMonth() + 1;
+    const day = kstDate.getDate();
+    const hours = kstDate.getHours().toString().padStart(2, "0");
+    const minutes = kstDate.getMinutes().toString().padStart(2, "0");
+
     return `${month}월 ${day}일 ${hours}:${minutes}`;
   };
 
   const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
 
-  
+
 
 
   return (
@@ -202,11 +275,13 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
       </div>
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-[375px] pb-[50px]">
-        <object data={postimgurl || flashrunimage} className="w-[375px] h-[250px]" />
+        <div className="w-[375px] h-[250px] overflow-hidden">
+          <object data={postimgurl || flashrunimage} className="w-full h-full object-cover" />
+        </div>
         {/* 번개런 정보 */}
         <div className="absolute top-[220px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
-            <object data={FlashRunlogo} className="w-[60px] h-[24px]"/>
+            <object data={FlashRunlogo} className="w-[60px] h-[24px]" />
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
           <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
@@ -220,7 +295,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
             </div>
             <div className="flex items-center my-1.5">
               <object data={people} className="font-bold text-kuDarkGreen w-[24px] h-[24px] mr-2" />
-              <span className="font-bold text-kuDarkGreen">{participantsNum}</span>
+              <span className="font-bold text-kuDarkGreen">{currentParticipantsNum}</span>
             </div>
           </div>
         </div>
@@ -235,7 +310,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         <>
           <div className="flex justify-center items-center w-[327px] h-14 bg-[#F0F4DD] rounded-lg text-sm font-normal mt-5">
             <div className="flex items-center">
-            <div className="relative w-6 h-6 mr-2">
+              <div className="relative w-6 h-6 mr-2">
                 {postCreatorImg && postCreatorImg.trim() !== "" ? (
                   <img
                     src={postCreatorImg}
@@ -284,13 +359,33 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
             </div>
           )}
           <div className="flex flex-col items-start text-left w-full max-w-[327px] mt-2">세부 내용</div>
-          <div className="mt-1 w-[327px] border border-[#ECEBE4] rounded-lg">
-            <div className="text-[#686F75] p-5 text-justify">{content}</div>
+          <div className="mt-1 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              {postCreatorImg ? (
+                <img
+                  src={postCreatorImg}
+                  alt={`${postCreatorName} 프로필`}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
+                  {postCreatorName.charAt(0)}
+                </div>
+              )}
+              <span className="text-sm font-medium text-black">{postCreatorName}</span>
+            </div>
+            <div className="text-[#686F75] p-3 text-justify">{content}</div>
           </div>
         </>
       )}
-      {activeTab === "명단" && <AttendanceList users={currentParticipants} />}
-      <CommentSection postId={postId!} userInfo={userInfo} />
+      {activeTab === "명단" && <EditableAttendanceList
+        postId={postId}
+        runType="flash"
+        users={editableParticipants}
+        onUsersChange={setEditableParticipants} // ✅ 올바른 이름
+      />
+      }
+      <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
 
 

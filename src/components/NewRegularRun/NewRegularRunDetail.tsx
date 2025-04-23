@@ -54,7 +54,7 @@ const NewRegularRunDetail: React.FC = () => {
             }),
             content: result.content,
             userName: result.userName,
-            participantsNum: result.participants.length,
+            participantsNum: result.participantsNum,
             participants: result.participants,
             adminId:result.postCreatorInfo.userId,
             postimgurl:result.postImageUrl,

@@ -32,9 +32,12 @@ function NewFlashRunEdit() {
         setContent(result.content);
         setPostImagePreview(result.postImageUrl);
         setAttachmentPreviews(result.attachmentUrls || []);
+        const utcDate = new Date(result.date); // 서버에서 받은 UTC 날짜
+        const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000); // 9시간 더해 KST로 변환
+
         setDateTime({
-          date: new Date(result.date),
-          time: new Date(result.date).toTimeString().slice(0, 5),
+          date: kstDate,
+          time: kstDate.toTimeString().slice(0, 5), // KST 기준 시간 추출
         });
         console.log(result)
         console.log(token)
@@ -84,11 +87,25 @@ function NewFlashRunEdit() {
     }
   
     try {
+      const [hours, minutes] = dateTime.time.split(":").map(Number);
+      const selected = dateTime.date!;
+
+      // ✅ 1. KST 기준으로 조립
+      const kstDate = new Date(
+        selected.getFullYear(),
+        selected.getMonth(),
+        selected.getDate(),
+        hours,
+        minutes,
+        0
+      );
+
+      // ✅ 2. UTC 기준으로 변환
+      const utcDate = new Date(kstDate.getTime() - 9 * 60 * 60 * 1000);
+
+      // ✅ 3. 문자열 직접 생성 (🔥 중요: toISOString() 사용하지 말 것!)
       const pad = (n: number) => n.toString().padStart(2, "0");
-      const year = dateTime.date!.getFullYear();
-      const month = pad(dateTime.date!.getMonth() + 1);
-      const day = pad(dateTime.date!.getDate());
-      const date = `${year}-${month}-${day}T${dateTime.time}`;
+      const eventDateTime = `${utcDate.getFullYear()}-${pad(utcDate.getMonth() + 1)}-${pad(utcDate.getDate())}T${pad(utcDate.getHours())}:${pad(utcDate.getMinutes())}:${pad(utcDate.getSeconds())}`;
   
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const formData = new FormData();
@@ -96,7 +113,7 @@ function NewFlashRunEdit() {
       if (title) formData.append("title", title);
       if (location) formData.append("location", location);
       if (content) formData.append("content", content);
-      if (dateTime.date) formData.append("date", date);
+      if (dateTime.date) formData.append("date", eventDateTime);
       if (postImage) formData.append("postImage", postImage);
       attachments?.forEach(file => formData.append("attachments", file));
       
@@ -191,7 +208,7 @@ function NewFlashRunEdit() {
           </div>
         </div>
 
-        <button onClick={handleSubmit} className="w-full bg-[#366943] text-white py-3 rounded-lg mt-4">수정하기</button>
+        <button onClick={handleSubmit} className="w-full bg-[#366943] text-white py-3 font-bold rounded-lg mt-4 mb-4">수정하기</button>
       </div>
     </div>
   );

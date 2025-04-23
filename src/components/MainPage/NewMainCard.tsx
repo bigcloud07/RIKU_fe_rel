@@ -41,16 +41,16 @@ const NewMainCard: React.FC<CardProps> = ({
       </div>
 
       {/* 콘텐츠 유형 배지 */}
-      <div className="absolute top-[100px] bg-kuLightGray text-[12px] font-semibold rounded-lg px-4 py-1">
+      <div className="absolute top-[100px] bg-kuLightGray text-[12px] rounded-lg px-4 py-1">
         {event_type}
       </div>
 
       {/* 정보 영역 */}
-      <div className="ml-[10px] mr-[10px] mb-[20px] mt-[8px]">
+      <div className="ml-[16px] mr-[10px] mb-[20px] mt-[16px]">
         {statusImg && (
           <img src={statusImg} alt="Status" className="w-[40px] h-[20px]" />
         )}
-        <div className="text-gray-500 text-[12px] font-bold mt-1">{date}</div>
+        <div className="text-gray-500 text-[12px] mt-1">{date}</div>
         <div className="font-bold text-[20px]">{title}</div>
       </div>
     </div>

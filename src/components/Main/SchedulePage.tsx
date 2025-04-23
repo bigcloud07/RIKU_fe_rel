@@ -45,11 +45,11 @@ function SchedulePage() {
   const [selectedDateInModal, setSelectedDateInModal] = useState(new Date());
   const [monthlyPlan, setMonthlyPlan] = useState<{ date: string; eventCount: number }[]>([]);
   const [selectedDateEvent, setSelectedDateEvent] = useState<
-    { postId: 1; title: string; date: string; location: string }[]
+    { postId: 1; title: string; date: string; location: string; postType: string}[]
   >([]);
 
   const navigate = useNavigate();
-
+  
   //캘린더 월별 조회 메소드
   async function fetchMonthlyData() {
     const formattedPointDate = format(pointDate, "yyyy-MM-dd"); //pointDate(기준이 되는 날짜) 포맷팅
@@ -371,7 +371,7 @@ function SchedulePage() {
             //일정을 표현하는 카드 섹션
             <div
               key={index}
-              onClick={() => handleNavigateToNotice(event.postId)}
+              onClick={() => handleNavigateToNotice(event.postId, event.postType)}
               className="w-full max-w-sm bg-white border border-gray-300 rounded-lg p-2 shadow-sm mb-4 flex flex-row items-center"
             >
               <div className={`w-2 h-2 ml-2 bg-kuWarmGray rounded-full`} />

@@ -89,7 +89,7 @@ const NewFlashRunList: React.FC = () => {
     return (
         <div className="flex flex-col justify-center items-center">
             {/* 상단바 */}
-            <div className="relative flex bg-kuDarkGreen w-[430px] h-[56px] text-white text-xl font-semibold justify-center items-center">
+            <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
                 <img
                     src={BacbBtnimg}
                     className="absolute left-[24px] cursor-pointer"
@@ -100,7 +100,7 @@ const NewFlashRunList: React.FC = () => {
             </div>
 
             {/* 오늘의 러닝 */}
-            <div className="relative bg-kuDarkGreen w-[430px] min-h-[268px]">
+            <div className="relative bg-kuDarkGreen w-[375px] min-h-[268px]">
                 <div className="w-full flex flex-col items-center pt-2">
                     <div className="w-[114px] h-[32px] bg-white text-kuDarkGreen text-[16px] font-bold rounded-xl flex items-center justify-center">
                         오늘의 러닝
@@ -120,10 +120,10 @@ const NewFlashRunList: React.FC = () => {
                                     slidesPerView={1}
                                 >
                                     {todayRuns.map((run) => {
-                                        const dateObj = new Date(run.date);
-                                        const formattedDate = format(dateObj, "MM/dd EEEE", { locale: ko });
-                                        const formattedTime = format(dateObj, "HH:mm");
-
+                                        const utcDate = new Date(run.date);
+                                        const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+                                        const formattedDate = format(kstDate, "MM/dd EEEE", { locale: ko });
+                                        const formattedTime = format(kstDate, "HH:mm");
                                         return (
                                             <SwiperSlide key={run.id}>
                                                 <NewTodayRun
@@ -144,7 +144,8 @@ const NewFlashRunList: React.FC = () => {
 
                                 {/* ✅ Swiper pagination dot 표시 영역 */}
                                 <div
-                                    className="custom-pagination mb-[12px] mt-[12px] flex justify-center
+                                    ref={paginationRef}
+                                    className="custom-pagination h-[20px] mb-[12px] mt-[12px] flex justify-center items-center
     [&>.swiper-pagination-bullet]:bg-white
     [&>.swiper-pagination-bullet-active]:bg-white
     [&>.swiper-pagination-bullet]:mx-[4px]"
@@ -169,11 +170,10 @@ const NewFlashRunList: React.FC = () => {
                 <h2 className="text-[20px] font-semibold ml-5 ">예정된 러닝</h2>
                 <div className="flex flex-col space-y-[12px] mt-[16px] ml-[20px]">
                     {upcomingRuns.map((run) => {
-                        const dateObj = new Date(run.date);
-
-                        const formattedDate = format(dateObj, "MM/dd EEEE", { locale: ko }); // → 12/24 목요일
-                        const formattedTime = format(dateObj, "HH:mm"); // → 18:00
-
+                        const utcDate = new Date(run.date);
+                        const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+                        const formattedDate = format(kstDate, "MM/dd EEEE", { locale: ko });
+                        const formattedTime = format(kstDate, "HH:mm");
                         return (
                             <NewEventCard
                                 key={run.id}
@@ -198,21 +198,25 @@ const NewFlashRunList: React.FC = () => {
             <div className="w-[375px] mt-4 mb-[100px]">
                 <h2 className="text-[20px] font-semibold ml-5">지난 러닝</h2>
                 <div className="grid grid-cols-3 grid-rows-2 gap-x-[12px] gap-y-[16px] mt-[20px] px-3">
-                    {pastRuns.map((run) => (
-
-
-                        <PastRuns
-                            key={run.id}
-                            title={run.title}
-                            date={format(new Date(run.date), "yyyy.MM.dd")}
-                            peoplecount={String(run.participants)}
-                            postimg={run.postImageUrl}
-                            location=""
-                            runDate=""
-                            runState=""
-                            onClick={() => navigate(`/run/flash/${run.id}`)}
-                        />
-                    ))}
+                    {pastRuns.map((run) => {
+                        const utcDate = new Date(run.date);
+                        const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+                        const formattedDate = format(kstDate, "MM/dd EEEE", { locale: ko });
+                        
+                        return (
+                            <PastRuns
+                                key={run.id}
+                                title={run.title}
+                                date={formattedDate}
+                                peoplecount={String(run.participants)}
+                                postimg={run.postImageUrl}
+                                location=""
+                                runDate=""
+                                runState=""
+                                onClick={() => navigate(`/run/flash/${run.id}`)}
+                            />
+                        );
+                    })}
                 </div>
             </div>
 

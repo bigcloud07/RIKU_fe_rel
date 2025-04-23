@@ -1,64 +1,161 @@
+// ✅ AttendanceList.tsx
 import React from "react";
+import peopleimg from "../../assets/people_darkgreen.svg";
+import checkicon from "../../assets/checkedicon.svg"
 
-interface AttendanceListProps {
-  users: {
-    userId: number;
-    userName: string | undefined; // name이 undefined일 수 있으므로 타입 정의
-    userProfileImg?: string | null;
-    status: string;
-  }[];
+interface Participant {
+  userId: number;
+  userName: string;
+  userProfileImg?: string | null;
+  status: "ATTENDED" | "PENDING" | string;
 }
 
-const AttendanceList: React.FC<AttendanceListProps> = ({ users }) => {
-  return (
-    <div className="flex flex-col gap-2.5 p-5">
-      {users.map((user, index) => {
-        // 상태에 따른 클래스 계산
-        const backgroundColor =
-          user.status === "ATTENDED" || user.status === "PENDING"
-            ? "bg-[#F0F4DD]"
-            : "bg-[#ECEBE4]";
+interface GroupedParticipants {
+  group: string;
+  participants: Participant[];
+}
 
-        return (
-          <div
-            key={user.userId || `user-${index}`} // user.id가 없으면 index를 사용해 고유한 key 생성
-            className={`flex items-center gap-2.5 w-[335px] h-[57px] px-4 py-2.5 rounded-lg text-base font-medium ${backgroundColor}`}
+interface AttendanceListProps {
+  groupedParticipants: GroupedParticipants[];
+  isEditMode?: boolean;
+  editedAttendance?: { [userId: number]: boolean };
+  toggleAttendance?: (userId: number, originalStatus: string) => void;
+  onSaveAttendance?: () => void;
+  onToggleEditMode?: () => void;
+  userInfoName: string;
+  postCreatorName: string;
+}
+
+const AttendanceList: React.FC<AttendanceListProps> = ({
+  userInfoName,
+  postCreatorName,
+  groupedParticipants,
+  isEditMode = false,
+  editedAttendance = {},
+  toggleAttendance = () => { },
+  onSaveAttendance = () => { },
+  onToggleEditMode = () => { },
+}) => {
+  const allParticipants = groupedParticipants.flatMap((group) => group.participants);
+
+  const validParticipants = allParticipants.filter(
+    (user) => user.status === "ATTENDED" || user.status === "PENDING"
+  );
+
+  const realTimeCheckedCount = validParticipants.filter((user) => {
+    if (user.userId in editedAttendance) return editedAttendance[user.userId];
+    return user.status === "ATTENDED";
+  }).length;
+
+  const originalAttendedCount = allParticipants.filter(
+    (user) => user.status === "ATTENDED"
+  ).length;
+  const originalPendingCount = validParticipants.filter((user) => user.status === "PENDING").length;
+  const totalCount = allParticipants.filter(
+    (user) => user.status === "PENDING" || user.status === "ATTENDED"
+  ).length;
+  return (
+    <div className="flex flex-col gap-3 px-5 mt-[22px]">
+      <div className="flex items-center justify-between mb-1">
+        <div className="flex items-center text-sm font-medium text-[#366943] gap-1">
+          <img src={peopleimg} alt="people icon" className="w-[24px] h-[17px]" />
+          {isEditMode ? (
+            <span className="text-[16px]">
+              <span className="text-kuDarkGreen font-bold">{realTimeCheckedCount}</span>
+              <span className="text-black"> / {totalCount}</span>
+            </span>
+          ) : (
+            <span className="text-[16px]">
+              <span className="text-kuDarkGreen font-bold">{originalAttendedCount} </span>
+              <span className="text-black">/ {totalCount}</span>
+            </span>
+          )}
+        </div>
+
+        {/* ✅ 작성자인 경우에만 명단 수정/저장 버튼 노출 */}
+        {userInfoName === postCreatorName && (
+          <button
+            className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${isEditMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"
+              }`}
+            onClick={isEditMode ? onSaveAttendance : onToggleEditMode}
           >
-            {/* 순서 표시 */}
-            <div className="font-bold text-base text-gray-600 mr-2.5 flex justify-center items-center w-5 text-center">
-              {index + 1}
-            </div>
-            {/* 프로필 이미지 또는 대체 아이콘 */}
-            <div className="w-10 h-10 rounded-full overflow-hidden flex justify-center items-center bg-gray-400 text-white text-lg font-bold">
-              {user.userProfileImg ? (
-                <img
-                  src={user.userProfileImg}
-                  alt={`${user.userName || "Unknown"} profile`}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span>{user.userName?.charAt(0) || "?"}</span>
-              )}
-            </div>
-            {/* 이름 */}
-            <div className="flex-1 ml-2 text-left">{user.userName || "이름 없음"}</div>
-            {/* 상태 아이콘 */}
-            {user.status === "ATTENDED" && ( // ATTENDED 상태일 때만 아이콘 표시
-              <div className="flex justify-center items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="#4CAF50"
-                  viewBox="0 0 24 24"
-                  width="24px"
-                  height="24px"
-                >
-                  <path d="M20.29 5.3a1 1 0 0 0-1.41 0l-9.17 9.17-3.17-3.17a1 1 0 1 0-1.41 1.41l4 4a1 1 0 0 0 1.41 0l10-10a1 1 0 0 0 0-1.41z" />
-                </svg>
-              </div>
-            )}
+            {isEditMode ? "명단 저장" : "명단 수정"}
+          </button>
+        )}
+      </div>
+
+      {groupedParticipants.map((group) =>
+        group.participants.length === 0 ? (
+          <div key={group.group} className="flex items-start gap-2.5">
+            <div className="w-[30px] font-bold text-gray-600 pt-2">{group.group}</div>
+            <div className="text-sm text-gray-400">참가자가 없습니다.</div>
           </div>
-        );
-      })}
+        ) : (
+          group.participants.map((user, index) => {
+            const isChecked =
+              user.userId in editedAttendance
+                ? editedAttendance[user.userId]
+                : user.status === "ATTENDED";
+
+            const backgroundColor = isEditMode
+              ? isChecked
+                ? "bg-[#F0F4DD]"
+                : "bg-[#ECEBE4]"
+              : user.status === "ATTENDED" || user.status === "PENDING"
+                ? "bg-[#F0F4DD]"
+                : "bg-[#ECEBE4]";
+
+            return (
+              <div key={user.userId || `user-${index}`} className="flex items-center ml-[4px] justify-center w-full ">
+                {index === 0 ? (
+                  <div className="w-[30px] font-bold text-gray-600 pr-[20.54px]">{group.group}</div>
+                ) : (
+                  <div className="w-[30px]" />
+                )}
+
+
+                <div className={`flex items-center gap-2.5 w-[288px] h-[52px] px-4 py-2.5 rounded-lg text-base font-medium ${backgroundColor}`}>
+
+                  <div className="flex items-center gap-2 ">
+
+                    <div className="w-[36px] h-[36px] text-[14.4px] rounded-full overflow-hidden flex justify-center items-center bg-gray-400 text-white font-bold">
+                      {user.userProfileImg ? (
+                        <img
+                          src={user.userProfileImg}
+                          alt={`${user.userName} profile`}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span>{user.userName?.charAt(0) || "?"}</span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex-1 ml-1 text-left text-[16px]">{user.userName}</div>
+
+                  {isEditMode ? (
+                    <div
+                      onClick={() => toggleAttendance(user.userId, user.status)}
+                      className={`w-6 h-6 rounded-full border-[1px] flex items-center justify-center cursor-pointer transition-all duration-150 ${isChecked ? "border-green-600 bg-green-500" : "border-green-700 bg-transparent"
+                        }`}
+                    >
+                      {isChecked && (
+                        <img src={checkicon}></img>
+                      )}
+                    </div>
+                  ) : (
+                    isChecked && (
+                      <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
+                        <img src={checkicon}></img>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            );
+          })
+        )
+      )}
     </div>
   );
 };
