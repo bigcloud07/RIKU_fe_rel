@@ -356,22 +356,22 @@ function MyPage() {
       </div>
 
       {/* '공지사항' 버튼 */}
-      <div className="w-full max-w-sm mt-4">
+      {/* <div className="w-full max-w-sm mt-4">
         {renderButton("공지사항", rightArrow_Icon, handleNoticeClick)}
-      </div>
+      </div> */}
 
       {/* '문의하기' 버튼 */}
-      <div className="w-full max-w-sm mt-2">
+      {/* <div className="w-full max-w-sm mt-2">
         {renderButton("문의하기", rightArrow_Icon, handleNoticeClick)}
-      </div>
+      </div> */}
 
       {/* 'FAQ' 버튼 */}
-      <div className="w-full max-w-sm mt-2">
+      {/* <div className="w-full max-w-sm mt-2">
         {renderButton("FAQ", rightArrow_Icon, handleNoticeClick)}
-      </div>
+      </div> */}
 
       {/* '운영진 페이지' 버튼 */}
-      <div className="w-full max-w-sm mt-2">
+      <div className="w-full max-w-sm mt-4">
         {renderButton("운영진 페이지", rightArrow_Icon, handleToAdminPageClick)}
       </div>
 

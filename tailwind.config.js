@@ -68,5 +68,6 @@ module.exports = {
 
       addUtilities(utilities, ["responsive", "hover"]);
     },
+    require("tailwind-scrollbar-hide"), //Tailwind CSS에서 제공하는 스크롤바 숨기기 라이브러리
   ],
 };

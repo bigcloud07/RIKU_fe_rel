@@ -20,6 +20,7 @@ interface InputFieldProps {
   password?: boolean;
   errorMessage?: string;
   hasError?: boolean;
+  placeholder?: string;
 }
 
 //입력 필드 공통 컴포넌트
@@ -31,6 +32,7 @@ const InputField: React.FC<InputFieldProps> = ({
   password = false,
   errorMessage = "",
   hasError = false,
+  placeholder = "",
 }) => {
   const [showPassword, setShowPassword] = useState(false); //비밀번호 입력창인 경우 비밀번호를 보여주는 여부
   const inputType = password ? (showPassword ? "text" : "password") : "text";
@@ -57,6 +59,7 @@ const InputField: React.FC<InputFieldProps> = ({
           }}
           disabled={disabled}
           type={inputType}
+          placeholder={placeholder}
         />
         {password && (
           <button
@@ -292,7 +295,12 @@ function ProfileFixPage() {
               onChange_1={(e) => setCollegeName(e.target.value)}
               onChange_2={(e) => setDepartmentName(e.target.value)}
             />
-            <InputField label="전화번호" value={telNum} onChange={setTelNum} />
+            <InputField
+              label="전화번호"
+              value={telNum}
+              onChange={setTelNum}
+              placeholder="ex) 010-1111-2222"
+            />
             <InputField label="학번(ID)" value={studentID} onChange={setStudentID} disabled />
             <InputField
               label="비밀번호"
