@@ -12,7 +12,6 @@ import PasswordInput from "./components/createAccount/PasswordInput";
 import NameInput from "./components/createAccount/NameInput";
 import SchoolInputInfo from "./components/createAccount/SchoolInfoInput";
 import TelNumberInput from "./components/createAccount/TelNumberInput";
-import FlashRunList from "./components/FlashRun/FlashRunList";
 import TabNavigationUI from "./components/TabNavigationUI";
 
 import NewMain from "./components/MainPage/NewMain";
@@ -66,7 +65,6 @@ function App() {
               <Route path="/schedule-page" element={<SchedulePage />} />
               <Route path="/my-page" element={<MyPage />} />
               <Route path="/activity-detail" element={<ActivityDetailPage />} />
-              <Route path="/run" element={<FlashRunList />} />
               <Route path="/run/flash/:postId" element={<FlashRunDetail />} />
               <Route path="/run/regular/:postId" element={<NewRegularRunDetail />} />
               <Route path="/run/training/:postId" element={<NewTrainingDetail />} />
