@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import customAxios from "../../apis/customAxios";
+import { motion } from "framer-motion";
+import { useRef } from "react";
 
 import RegularRunlogo from "../../assets/regularRunMark.svg";
 import people from "../../assets/FlashRunDetail/people.svg";
@@ -41,8 +43,9 @@ interface Props {
 }
 
 const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
+
   const navigate = useNavigate();
-  const handleBack = () => navigate("/regular");
+  const handleBack = () => navigate(-1);
 
   const [activeTab, setActiveTab] = useState<"소개" | "명단">("소개");
   const [code, setCode] = useState("");
@@ -284,18 +287,87 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   const attendedCount = participants.filter((p) => p.status === "ATTENDED").length;
   const pendingCount = participants.length - attendedCount;
 
+  // 상단바 점 버튼 관련 코드
+  const [showMenu, setShowMenu] = useState(false); // 메뉴 열림 상태 추가
+  const menuRef = useRef<HTMLDivElement>(null);
+  const dotButtonRef = useRef<HTMLDivElement>(null);
+
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target as Node) &&
+        dotButtonRef.current &&
+        !dotButtonRef.current.contains(e.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+    };
+
+    if (showMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showMenu]);
+
+
+
+
 
   return (
     <div className="flex flex-col items-center text-center px-5 justify-center">
       <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
         정규런
+        <div
+          ref={dotButtonRef}
+          className="absolute right-[5px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation(); // 이벤트 버블링 방지
+            setShowMenu((prev) => !prev);
+          }}
+        >
+          <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
+            {[...Array(3)].map((_, i) => (
+              <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+            ))}
+          </div>
+        </div>
+
+        {showMenu && (
+          <motion.div
+            ref={menuRef}
+            initial={{ opacity: 0, scale: 0.8, y: -5 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: -5 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-[50px] right-[18px] z-20"
+          >
+            <button
+              className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+              onClick={() => {
+                navigate(`/regular/edit/${postId}`);
+                setShowMenu(false);
+              }}
+            >
+              수정하기
+            </button>
+          </motion.div>
+        )}
       </div>
+
 
       <div className="relative w-[375px] pb-[90px]">
         <div className="w-[375px] h-[308px] overflow-hidden">
-          <object data={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
-        </div>
+          <object
+            data={postImageUrl || flashrunimage}
+            className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
+              }`}
+          />        </div>
         <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
             <object data={RegularRunlogo} className="w-[60px] h-[24px]" />
@@ -408,13 +480,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
       >
         {buttonText}
       </button>
-      {/* 수정하기 버튼 */}
-      <button
-        className="flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mb-4 bg-[#4D4D4D] text-white"
-        onClick={() => navigate(`/regular/edit/${postId}`)}
-      >
-        수정하기
-      </button>
+      
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">

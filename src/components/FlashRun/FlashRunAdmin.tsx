@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import FlashRunlogo from "../../assets/FlashRunDetail/flashrunlogo.svg";
 import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
@@ -11,6 +11,7 @@ import BackBtnimg from "../../assets/BackBtn.svg"
 import pacermark from "../../assets/pacer-mark.svg"
 import CommentSection from "./CommentSection";
 import EditableAttendanceList from "./EditableAttendanceList"
+import { motion } from "framer-motion";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -72,12 +73,13 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
   const [editableParticipants, setEditableParticipants] = useState<EditableUser[]>([]);
 
-  
+
 
 
   const navigate = useNavigate()
+  const handleBack = () => navigate(-1);
 
-  
+
 
 
 
@@ -203,7 +205,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     }
   }, [postId, participants]);
 
-  
+
 
   const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
@@ -247,7 +249,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     fetchPostData();
   }, [postId]);
 
-  
+
 
   const formatDateTime = (iso: string) => {
     const utcDate = new Date(iso);
@@ -263,20 +265,86 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
   const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
 
+  // 상단바 점 버튼 관련 코드
+  const [showMenu, setShowMenu] = useState(false); // 메뉴 열림 상태 추가
+  const menuRef = useRef<HTMLDivElement>(null);
+  const dotButtonRef = useRef<HTMLDivElement>(null);
+
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target as Node) &&
+        dotButtonRef.current &&
+        !dotButtonRef.current.contains(e.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+    };
+
+    if (showMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showMenu]);
+
 
 
 
   return (
     <div className="flex flex-col items-center text-center px-5 justify-center">
       {/* 상단바 */}
-      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
-        <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={() => navigate("/FlashRun")} ></img>
+      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
+        <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
         번개런
+        <div
+          ref={dotButtonRef}
+          className="absolute right-[5px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation(); // 이벤트 버블링 방지
+            setShowMenu((prev) => !prev);
+          }}
+        >
+          <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
+            {[...Array(3)].map((_, i) => (
+              <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+            ))}
+          </div>
+        </div>
+
+        {showMenu && (
+          <motion.div
+            ref={menuRef}
+            initial={{ opacity: 0, scale: 0.8, y: -5 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: -5 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-[50px] right-[18px] z-20"
+          >
+            <button
+              className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+              onClick={() => {
+                navigate(`/flash/edit/${postId}`);
+                setShowMenu(false);
+              }}
+            >
+              수정하기
+            </button>
+          </motion.div>
+        )}
       </div>
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-[375px] pb-[50px]">
         <div className="w-[375px] h-[250px] overflow-hidden">
-          <object data={postimgurl || flashrunimage} className="w-full h-full object-cover" />
+        <object
+            data={postimgurl || flashrunimage}
+            className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
+              }`}
+          /> 
         </div>
         {/* 번개런 정보 */}
         <div className="absolute top-[220px] w-[375px] rounded-t-[20px] bg-white">
@@ -343,7 +411,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                   {attachmentUrls.map((url, index) => (
                     <SwiperSlide key={index}>
                       <div className="relative">
-                      <div className="w-[400px] h-[300px] overflow-hidden">
+                        <div className="w-[400px] h-[300px] overflow-hidden">
                           <img
                             src={url}
                             alt={`코스 사진 ${index + 1}`}
@@ -381,12 +449,12 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         </>
       )}
       {activeTab === "명단" && <EditableAttendanceList
-        postId={postId}
+        postId={postId!}
         runType="flash"
         users={editableParticipants}
-        onUsersChange={setEditableParticipants} // ✅ 올바른 이름
-      />
-      }
+        onUsersChange={setEditableParticipants}
+        canEdit={true} // 🔥 관리자용이므로 무조건 true
+      />}
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
 

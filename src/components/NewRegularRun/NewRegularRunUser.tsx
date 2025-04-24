@@ -27,7 +27,7 @@ interface FlashRunUserData {
 
 const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const navigate = useNavigate();
-  const handleBack = () => navigate("/regular");
+  const handleBack = () => navigate(-1);
 
   const [activeTab, setActiveTab] = useState<"소개" | "명단">("소개");
   const [title, setTitle] = useState("");
@@ -55,6 +55,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [groupedParticipants, setGroupedParticipants] = useState<any[]>([]);
+  const [postStatus, setPostStatus] = useState("")
 
 
   useEffect(() => {
@@ -82,6 +83,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           setPostCreatorName(result.postCreatorInfo.userName);
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setGroupedParticipants(result.groupedParticipants || []);
+          setPostStatus(result.postStatus);
 
           const myInfo = result.userInfo;
           const foundGroup = result.groupedParticipants?.find(group =>
@@ -354,7 +356,11 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
       {/* ✅ 참여 상태에 따른 버튼 렌더링 */}
-      {userStatus === "ATTENDED" ? (
+      {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
+        <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
+          모집 종료
+        </div>
+      ) : userStatus === "ATTENDED" ? (
         <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
           출석완료
         </div>
@@ -388,6 +394,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           참여하기
         </button>
       )}
+
 
 
 

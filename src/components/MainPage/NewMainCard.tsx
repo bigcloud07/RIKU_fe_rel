@@ -24,11 +24,11 @@ const NewMainCard: React.FC<CardProps> = ({
 
   return (
     <div
-      className="w-[160px] h-[250px] bg-kuLightGray rounded-lg overflow-hidden relative"
+      className="w-[160px] h-[250px] bg-kuLightGray rounded-lg relative"
       onClick={handleClick}
     >
       {/* 이미지 영역 */}
-      <div className="w-full h-[120px]">
+      <div className="w-full h-[120px] overflow-hidden">
         <img
           src={imageUrl}
           alt={title}

@@ -83,6 +83,9 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const [userStatus, setUserStatus] = useState("");
   const [buttonText, setButtonText] = useState("참여하기");
 
+  const [postStatus, setPostStatus] = useState("")
+
+
 
 
   const toggleAttendance = (userId: number, originalStatus: string) => {
@@ -185,6 +188,8 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setGroupedParticipants(result.groupedParticipants || []);
           setTrainingtype(result.trainingType);
+          setPostStatus(result.postStatus);
+
 
 
           const myInfo = result.userInfo;
@@ -381,12 +386,9 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   };
 
   const formatDateTime = (iso: string) => {
-    const dateObj = new Date(iso);
-    const month = dateObj.getMonth() + 1;
-    const day = dateObj.getDate();
-    const hours = dateObj.getHours().toString().padStart(2, "0");
-    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
-    return `${month}월 ${day}일 ${hours}:${minutes}`;
+    const utcDate = new Date(iso);
+    const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+    return `${kstDate.getMonth() + 1}월 ${kstDate.getDate()}일 ${kstDate.getHours().toString().padStart(2, "0")}:${kstDate.getMinutes().toString().padStart(2, "0")}`;
   };
 
   const handleTabChange = async (tab: "소개" | "명단") => {
@@ -473,7 +475,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
               )}
 
 
-              
+
             </div>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
@@ -552,13 +554,15 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
-      {userStatus === "ATTENDED" && (
+      {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
+        <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
+          모집 종료
+        </div>
+      ) : userStatus === "ATTENDED" ? (
         <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
           출석완료
         </div>
-      )}
-
-      {userStatus === "PENDING" && (
+      ) : userStatus === "PENDING" ? (
         <>
           {selectedGroup && (
             <div className="text-sm text-left text-kuDarkGray w-full max-w-[327px] mt-4 pl-6">
@@ -580,9 +584,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
             </button>
           </div>
         </>
-      )}
-
-      {userStatus !== "ATTENDED" && userStatus !== "PENDING" && (
+      ) : (
         <button
           className="w-[327px] h-14 rounded-lg bg-kuGreen text-white font-bold mt-6 mb-6"
           onClick={handleOpenGroupModal}
@@ -590,6 +592,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           참여하기
         </button>
       )}
+
 
 
 
