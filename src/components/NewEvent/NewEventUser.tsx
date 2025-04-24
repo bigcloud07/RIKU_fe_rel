@@ -3,7 +3,7 @@ import FlashRunlogo from "../../assets/FlashRunDetail/flashrunlogo.svg";
 import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
 import time from "../../assets/FlashRunDetail/time.svg";
-import TabButton from "./TapButton";
+import TabButtonUser from "./TapButtonUser";
 import AttendanceList from "./AttendanceList";
 import customAxios from "../../apis/customAxios";
 import flashrunimage from "../../assets/Run-img/flashrunimage.jpg"; // 번개런 기본이미지
@@ -364,7 +364,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
           </div>
         </div>
       </div>
-      <TabButton
+      <TabButtonUser
         leftLabel="소개"
         rightLabel="명단"
         onTabChange={handleTabChange}

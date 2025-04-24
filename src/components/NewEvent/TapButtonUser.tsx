@@ -6,7 +6,7 @@ interface TabButtonProps {
     onTabChange: (tab: '소개' | '명단') => void;
 }
 
-const TabButton: React.FC<TabButtonProps> = ({ leftLabel, rightLabel, onTabChange }) => {
+const TabButtonUser: React.FC<TabButtonProps> = ({ leftLabel, rightLabel, onTabChange }) => {
     const [activeTab, setActiveTab] = useState<'소개' | '명단'>('소개');
 
     const handleBarClick = (tab: '소개' | '명단') => {
@@ -15,7 +15,7 @@ const TabButton: React.FC<TabButtonProps> = ({ leftLabel, rightLabel, onTabChang
     };
 
     return (
-        <div className="flex flex-col items-center max-w-[380px] mt-[19px]">
+        <div className="flex flex-col items-center max-w-[380px] mt-[94px]">
             <div className="w-[380px]">
                 {/* 탭 버튼 */}
                 <div className="flex w-full">
@@ -49,4 +49,4 @@ const TabButton: React.FC<TabButtonProps> = ({ leftLabel, rightLabel, onTabChang
     );
 };
 
-export default TabButton;
+export default TabButtonUser;
