@@ -15,7 +15,7 @@ interface Reply {
   createdAt?: string;
 }
 
-interface Comment extends Reply {}
+interface Comment extends Reply { }
 
 interface CommentSectionProps {
   postId: string;
@@ -157,7 +157,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
                     </div>
                   </div>
                 </div>
-                {userInfo?.userId === userInfo.userId && (
+                {userInfo?.userId === comment.userId && (
                   <button
                     onClick={() => handleDeleteComment(comment.commentId)}
                     className="text-xs text-red-500 ml-2 whitespace-nowrap"
@@ -192,6 +192,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
                       삭제
                     </button>
                   )}
+
                 </div>
               ))}
 

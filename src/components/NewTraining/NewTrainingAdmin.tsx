@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import customAxios from "../../apis/customAxios";
 
 import RegularRunlogo from "../../assets/regularRunMark.svg";
@@ -44,7 +45,7 @@ interface Props {
 
 const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   const navigate = useNavigate();
-  const handleBack = () => navigate("/training");
+  const handleBack = () => navigate(-1);
 
   const [activeTab, setActiveTab] = useState<"소개" | "명단">("소개");
   const [error, setError] = useState<string | null>(null);
@@ -175,14 +176,10 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   }, [postId]);
 
   const formatDateTime = (iso: string) => {
-    const dateObj = new Date(iso);
-    const month = dateObj.getMonth() + 1;
-    const day = dateObj.getDate();
-    const hours = dateObj.getHours().toString().padStart(2, "0");
-    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
-    return `${month}월 ${day}일 ${hours}:${minutes}`;
+    const utcDate = new Date(iso);
+    const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+    return `${kstDate.getMonth() + 1}월 ${kstDate.getDate()}일 ${kstDate.getHours().toString().padStart(2, "0")}:${kstDate.getMinutes().toString().padStart(2, "0")}`;
   };
-
 
   const handleTabChange = async (tab: "소개" | "명단") => {
     setActiveTab(tab);
@@ -305,19 +302,124 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   const [postStatus, setPostStatus] = useState<string>("");
   const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
 
+  // 상단바 점 버튼 관련 코드
+  const [showMenu, setShowMenu] = useState(false); // 메뉴 열림 상태 추가
+  const menuRef = useRef<HTMLDivElement>(null);
+  const dotButtonRef = useRef<HTMLDivElement>(null);
+
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target as Node) &&
+        dotButtonRef.current &&
+        !dotButtonRef.current.contains(e.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+    };
+
+    if (showMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showMenu]);
+
 
 
 
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center" >
-      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
+    <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center" >
+      {/* 상단바 */}
+      <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
         훈련
+        <div
+          ref={dotButtonRef}
+          className="absolute right-[5px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation(); // 이벤트 버블링 방지
+            setShowMenu((prev) => !prev);
+          }}
+        >
+          <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
+            {[...Array(3)].map((_, i) => (
+              <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+            ))}
+          </div>
+        </div>
+
+        {showMenu && (
+          <motion.div
+          ref={menuRef}
+          initial={{ opacity: 0, scale: 0.8, y: -5 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8, y: -5 }}
+          transition={{ duration: 0.2 }}
+          className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
+        >
+          <button
+            className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+            onClick={() => {
+              navigate(`/training/edit/${postId}`);
+              setShowMenu(false);
+            }}
+          >
+            수정하기
+          </button>
+          <button
+            className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+            onClick={async () => {
+              try {
+                const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                if (!token) {
+                  alert("로그인이 필요합니다.");
+                  return;
+                }
+            
+                const { data } = await customAxios.patch(
+                  `/run/training/post/${postId}/cancel`,
+                  {},
+                  {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+                
+            
+                if (data.isSuccess) {
+                  alert("게시글이 성공적으로 취소되었습니다.");
+                  setShowMenu(false);
+                  // 페이지 새로고침 또는 상태 업데이트 필요 시 여기에 추가
+                  navigate("/training")
+                } else {
+                  alert(data.responseMessage || "취소에 실패했습니다.");
+                }
+              } catch (error) {
+                console.error(error);
+                alert("요청 중 오류가 발생했습니다.");
+              }
+            }}
+            
+          >
+            취소하기
+          </button>
+        </motion.div>
+        )}
       </div>
 
-      <div className="relative w-[375px] pb-[90px]">
-        <object data={postImageUrl || flashrunimage} className="w-[375px] h-[308px]" />
-        <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
+      <div className="relative w-full">
+      <object
+            data={postImageUrl || flashrunimage}
+            className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
+              }`}
+          /> 
+        <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[8px]">
             {/* 상단 전체를 relative로 감싸기 */}
             <div className="relative flex flex-col items-center mt-[4px] w-[375px]">
@@ -327,7 +429,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                 {trainingtype}
               </div>
 
-              {/* 물음표 아이콘: 고정된 우측 위치 */}
+              
               {/* 물음표 아이콘: 고정된 우측 위치 */}
               {getTrainingDescription(trainingtype) && (
                 <>
@@ -352,7 +454,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
             </div>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
-          <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
+          <div className="flex flex-col items-start w-full max-w-[360px] px-5 mt-5">
             <div className="flex items-center my-1.5">
               <object data={place} className="w-[24px] h-[24px] mr-2" />
               <span>{location}</span>
@@ -369,7 +471,10 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
         </div>
       </div>
 
-      <TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} />
+      <div className="">
+        <TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} />
+      </div>
+     
 
       {activeTab === "소개" && (
         <>
@@ -454,13 +559,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
       >
         {buttonText}
       </button>
-      {/* 수정하기 버튼 */}
-      <button
-        className="flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mb-4 bg-[#4D4D4D] text-white"
-        onClick={() => navigate(`/training/edit/${postId}`)}
-      >
-        수정하기
-      </button>
+      
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
           <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
@@ -482,7 +581,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                 className="w-full py-3 rounded-lg bg-[#366943] text-white text-lg"
                 onClick={handleModalStartClick}
               >
-                종료하기
+                출석종료
               </button>
               <button
                 className="w-full py-3 rounded-lg bg-gray-300 text-gray-700"

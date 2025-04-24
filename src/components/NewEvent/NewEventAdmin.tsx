@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import FlashRunlogo from "../../assets/FlashRunDetail/flashrunlogo.svg";
+import React, { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
 import time from "../../assets/FlashRunDetail/time.svg";
 import TabButton from "./TapButton";
-import AttendanceList from "./AttendanceList";
 import customAxios from "../../apis/customAxios";
 import flashrunimage from "../../assets/Run-img/flashrunimage.jpg"; // 번개런 기본이미지
 import { Link, useNavigate } from "react-router-dom";
@@ -54,6 +53,8 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
   postimgurl,
 }) => {
   const navigate = useNavigate()
+  const handleBack = () => navigate(-1);
+
   const [activeTab, setActiveTab] = useState<"소개" | "명단">("소개");
   const [buttonText, setButtonText] = useState(() => {
     // 로컬 스토리지에서 buttonText 초기값 가져옴
@@ -344,23 +345,127 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
     }
   };
 
+  // 상단바 점 버튼 관련 코드
+  const [showMenu, setShowMenu] = useState(false); // 메뉴 열림 상태 추가
+  const menuRef = useRef<HTMLDivElement>(null);
+  const dotButtonRef = useRef<HTMLDivElement>(null);
+
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target as Node) &&
+        dotButtonRef.current &&
+        !dotButtonRef.current.contains(e.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+    };
+
+    if (showMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showMenu]);
 
 
 
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center">
+    <div className="flex flex-col items-center max-w-[430px] mx-auto text-center justify-center">
+      
       {/* 상단바 */}
-      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
-        <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate("/FlashRun")}></img>
+      <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
+        <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
         행사
+        <div
+          ref={dotButtonRef}
+          className="absolute right-[5px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation(); // 이벤트 버블링 방지
+            setShowMenu((prev) => !prev);
+          }}
+        >
+          <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
+            {[...Array(3)].map((_, i) => (
+              <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+            ))}
+          </div>
+        </div>
+
+        {showMenu && (
+          <motion.div
+          ref={menuRef}
+          initial={{ opacity: 0, scale: 0.8, y: -5 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8, y: -5 }}
+          transition={{ duration: 0.2 }}
+          className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
+        >
+          <button
+            className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+            onClick={() => {
+              navigate(`/event/edit/${postId}`);
+              setShowMenu(false);
+            }}
+          >
+            수정하기
+          </button>
+          <button
+            className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+            onClick={async () => {
+              try {
+                const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                if (!token) {
+                  alert("로그인이 필요합니다.");
+                  return;
+                }
+            
+                const { data } = await customAxios.patch(
+                  `/run/event/post/${postId}/cancel`,
+                  {},
+                  {
+                    headers: {
+                      Authorization: `${token}`,
+                    },
+                  }
+                );
+                
+            
+                if (data.isSuccess) {
+                  alert("게시글이 성공적으로 취소되었습니다.");
+                  setShowMenu(false);
+                  // 페이지 새로고침 또는 상태 업데이트 필요 시 여기에 추가
+                  navigate("/event")
+                } else {
+                  alert(data.responseMessage || "취소에 실패했습니다.");
+                }
+              } catch (error) {
+                console.error(error);
+                alert("요청 중 오류가 발생했습니다.");
+              }
+            }}
+            
+          >
+            취소하기
+          </button>
+        </motion.div>
+        )}
       </div>
       {/* 러닝 포스팅 사진 */}
-      <div className="relative w-[375px] pb-[50px]">
-        <div className="w-[375px] h-[250px] overflow-hidden">
-          <object data={postimgurl || flashrunimage} className="w-full h-full object-cover" />
+      <div className="relative w-full pb-[50px]">
+        <div className="w-full h-[250px] overflow-hidden">
+        <object
+            data={postimgurl || flashrunimage}
+            className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
+              }`}
+          /> 
         </div>
         {/* 번개런 정보 */}
-        <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
+        <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
             <div className="relative flex items-center bg-[#D96941] p-[10px] text-[14px] w-auto h-[24px] rounded-[8px]">
               <div className="flex items-center font-bold text-white">
@@ -369,7 +474,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
             </div>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
-          <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
+          <div className="flex flex-col items-start w-full max-w-[360px] mt-5 px-5">
             <div className="flex items-center my-1.5">
               <object data={place} className="w-[24px] h-[24px] mr-2" />
               <span>{location}</span>
@@ -471,6 +576,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
           users={currentParticipants}
           onUsersChange={(updatedUsers) => setCurrentParticipants(updatedUsers)}
           onSaveComplete={fetchParticipants}
+          canEdit={true}
         />
       )}
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
@@ -506,13 +612,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
           출석완료
         </button>
       )}
-      {/* 수정하기 버튼 */}
-      <button
-        className="flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mb-4 bg-[#4D4D4D] text-white"
-        onClick={() => navigate(`/event/edit/${postId}`)}
-      >
-        수정하기
-      </button>
+      
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
           <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">

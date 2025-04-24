@@ -70,6 +70,32 @@ function SchedulePage() {
 
   const navigate = useNavigate();
 
+  //uesrRole 받아오기
+  useEffect(() => {
+    const fetchMain = async () => {
+      try {
+        const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
+        const response = await customAxios.get(`/run`, {
+          headers: { Authorization: `${token}` },
+        });
+
+        if (response.data.isSuccess) {
+          const result = response.data.result;
+          setUserRole(result.userRole || null);
+          console.log("userRole성공")
+          
+        } else {
+          console.error("데이터를 불러오지 못했습니다.", response.data.responseMessage);
+        }
+      } catch (error) {
+        console.error("API 요청 오류", error);
+      }
+    };
+    fetchMain();
+  },[])
+    
+
+
   //캘린더 월별 조회 메소드
   async function fetchMonthlyData() {
     const formattedPointDate = format(pointDate, "yyyy-MM-dd"); //pointDate(기준이 되는 날짜) 포맷팅
@@ -89,7 +115,7 @@ function SchedulePage() {
       );
       console.log(response.data);
       setMonthlyPlan(response.data.result.schedules); //불러온 data의 result 값으로 monthlyPlan 값 저장
-      setUserRole(response.data.userRole)
+      
     } catch (error) {
       alert("서버 요청 중 오류 발생!");
       console.error("요청 실패: ", error);

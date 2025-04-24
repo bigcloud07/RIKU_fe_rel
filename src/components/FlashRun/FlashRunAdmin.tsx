@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import FlashRunlogo from "../../assets/FlashRunDetail/flashrunlogo.svg";
 import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
@@ -11,6 +11,7 @@ import BackBtnimg from "../../assets/BackBtn.svg"
 import pacermark from "../../assets/pacer-mark.svg"
 import CommentSection from "./CommentSection";
 import EditableAttendanceList from "./EditableAttendanceList"
+import { motion } from "framer-motion";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -72,12 +73,13 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
   const [editableParticipants, setEditableParticipants] = useState<EditableUser[]>([]);
 
-  
+
 
 
   const navigate = useNavigate()
+  const handleBack = () => navigate(-1);
 
-  
+
 
 
 
@@ -203,7 +205,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     }
   }, [postId, participants]);
 
-  
+
 
   const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
     userId: 0,
@@ -247,7 +249,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     fetchPostData();
   }, [postId]);
 
-  
+
 
   const formatDateTime = (iso: string) => {
     const utcDate = new Date(iso);
@@ -263,186 +265,285 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
   const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
 
+  // 상단바 점 버튼 관련 코드
+  const [showMenu, setShowMenu] = useState(false); // 메뉴 열림 상태 추가
+  const menuRef = useRef<HTMLDivElement>(null);
+  const dotButtonRef = useRef<HTMLDivElement>(null);
+
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target as Node) &&
+        dotButtonRef.current &&
+        !dotButtonRef.current.contains(e.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+    };
+
+    if (showMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showMenu]);
+
 
 
 
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center">
-      {/* 상단바 */}
-      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
-        <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={() => navigate("/FlashRun")} ></img>
-        번개런
-      </div>
-      {/* 러닝 포스팅 사진 */}
-      <div className="relative w-[375px] pb-[50px]">
-        <div className="w-[375px] h-[250px] overflow-hidden">
-          <object data={postimgurl || flashrunimage} className="w-full h-full object-cover" />
-        </div>
-        {/* 번개런 정보 */}
-        <div className="absolute top-[220px] w-[375px] rounded-t-[20px] bg-white">
-          <div className="flex flex-col items-center mt-[14px]">
-            <object data={FlashRunlogo} className="w-[60px] h-[24px]" />
-            <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
-          </div>
-          <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
-            <div className="flex items-center my-1.5">
-              <object data={place} className="w-[24px] h-[24px] mr-2" />
-              <span>{location}</span>
-            </div>
-            <div className="flex items-center my-1.5">
-              <object data={time} className="w-[24px] h-[24px] mr-2" />
-              <span>{formatDateTime(date)}</span>
-            </div>
-            <div className="flex items-center my-1.5">
-              <object data={people} className="font-bold text-kuDarkGreen w-[24px] h-[24px] mr-2" />
-              <span className="font-bold text-kuDarkGreen">{currentParticipantsNum}</span>
+    <div className="w-full min-h-screen bg-white">
+      <div className="w-full max-w-[430px] mx-auto flex flex-col items-center text-center justify-center">
+        {/* 상단바 */}
+        <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
+          <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
+          번개런
+          <div
+            ref={dotButtonRef}
+            className="absolute right-[5px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation(); // 이벤트 버블링 방지
+              setShowMenu((prev) => !prev);
+            }}
+          >
+            <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
+              {[...Array(3)].map((_, i) => (
+                <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+              ))}
             </div>
           </div>
+  
+          {showMenu && (
+            <motion.div
+            ref={menuRef}
+            initial={{ opacity: 0, scale: 0.8, y: -5 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: -5 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
+          >
+            <button
+              className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+              onClick={() => {
+                navigate(`/flash/edit/${postId}`);
+                setShowMenu(false);
+              }}
+            >
+              수정하기
+            </button>
+            <button
+              className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+              onClick={async () => {
+                try {
+                  const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                  if (!token) {
+                    alert("로그인이 필요합니다.");
+                    return;
+                  }
+              
+                  const { data } = await customAxios.patch(
+                    `/run/flash/post/${postId}/cancel`,
+                    {},
+                    {
+                      headers: {
+                        Authorization: `${token}`,
+                      },
+                    }
+                  );
+                  
+              
+                  if (data.isSuccess) {
+                    alert("게시글이 성공적으로 취소되었습니다.");
+                    setShowMenu(false);
+                    navigate("/Flash")
+                  } else {
+                    alert(data.responseMessage || "취소에 실패했습니다.");
+                  }
+                } catch (error) {
+                  console.error(error);
+                  alert("요청 중 오류가 발생했습니다.");
+                }
+              }}
+              
+            >
+              취소하기
+            </button>
+          </motion.div>
+          )}
         </div>
-      </div>
-
-      <TabButton
-        leftLabel="소개"
-        rightLabel="명단"
-        onTabChange={handleTabChange}
-      />
-      {activeTab === "소개" && (
-        <>
-          <div className="flex justify-center items-center w-[327px] h-14 bg-[#F0F4DD] rounded-lg text-sm font-normal mt-5">
-            <div className="flex items-center">
-              <div className="relative w-6 h-6 mr-2">
-                {postCreatorImg && postCreatorImg.trim() !== "" ? (
+        {/* 러닝 포스팅 사진 */}
+        <div className="relative w-full max-w-[430px] pb-[50px]">
+          <div className="w-full h-[250px] overflow-hidden">
+          <object
+              data={postimgurl || flashrunimage}
+              className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
+                }`}
+            /> 
+          </div>
+          {/* 번개런 정보 */}
+          <div className="absolute top-[220px] w-full px-5 rounded-t-[20px] bg-white">
+            <div className="flex flex-col items-center mt-[14px]">
+              <object data={FlashRunlogo} className="w-[60px] h-[24px]" />
+              <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
+            </div>
+            <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
+              <div className="flex items-center my-1.5">
+                <object data={place} className="w-[24px] h-[24px] mr-2" />
+                <span>{location}</span>
+              </div>
+              <div className="flex items-center my-1.5">
+                <object data={time} className="w-[24px] h-[24px] mr-2" />
+                <span>{formatDateTime(date)}</span>
+              </div>
+              <div className="flex items-center my-1.5">
+                <object data={people} className="font-bold text-kuDarkGreen w-[24px] h-[24px] mr-2" />
+                <span className="font-bold text-kuDarkGreen">{currentParticipantsNum}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <TabButton
+          leftLabel="소개"
+          rightLabel="명단"
+          onTabChange={handleTabChange}
+        />
+        {activeTab === "소개" && (
+          <>
+            <div className="flex justify-center items-center w-full max-w-[320px] h-14 bg-[#F0F4DD] rounded-lg text-sm font-normal mt-5">
+              <div className="flex items-center">
+                <div className="relative w-6 h-6 mr-2">
+                  {postCreatorImg && postCreatorImg.trim() !== "" ? (
+                    <img
+                      src={postCreatorImg}
+                      alt={`${creatorName} 프로필`}
+                      className="w-6 h-6 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-6 h-6 rounded-full bg-kuBlue text-white text-xs font-bold flex items-center justify-center">
+                      {creatorName?.charAt(0) || "?"}
+                    </div>
+                  )}
+                  <div className="absolute top-[-15px] left-[-19px] w-[32.78px] h-[32px]">
+                    <img src={pacermark} alt="pacer mark" />
+                  </div>
+                </div>
+                <span className="text-black font-semibold">{creatorName}</span>
+              </div>
+  
+            </div>
+            {attachmentUrls.length > 0 && (
+              <div className="mt-5 w-full max-w-[320px]">
+                <div className="text-left text-[16px] mb-2">코스 사진</div>
+                <div className="relative">
+                  <Swiper
+                    pagination={{ clickable: true }}
+                    modules={[Pagination]}
+                    spaceBetween={10}
+                    slidesPerView={1}
+                  >
+                    {attachmentUrls.map((url, index) => (
+                      <SwiperSlide key={index}>
+                        <div className="relative">
+                          <div className="w-[400px] h-[300px] overflow-hidden">
+                            <img
+                              src={url}
+                              alt={`코스 사진 ${index + 1}`}
+                              className="rounded-lg w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
+                            {index + 1}/{attachmentUrls.length}
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+              </div>
+            )}
+            <div className="flex flex-col items-start text-left w-full max-w-[430px] mt-2">세부 내용</div>
+            <div className="mt-1 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                {postCreatorImg ? (
                   <img
                     src={postCreatorImg}
-                    alt={`${creatorName} 프로필`}
-                    className="w-6 h-6 rounded-full object-cover"
+                    alt={`${postCreatorName} 프로필`}
+                    className="w-8 h-8 rounded-full object-cover"
                   />
                 ) : (
-                  <div className="w-6 h-6 rounded-full bg-kuBlue text-white text-xs font-bold flex items-center justify-center">
-                    {creatorName?.charAt(0) || "?"}
+                  <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
+                    {postCreatorName.charAt(0)}
                   </div>
                 )}
-                <div className="absolute top-[-15px] left-[-19px] w-[32.78px] h-[32px]">
-                  <img src={pacermark} alt="pacer mark" />
-                </div>
+                <span className="text-sm font-medium text-black">{postCreatorName}</span>
               </div>
-              <span className="text-black font-semibold">{creatorName}</span>
+              <div className="text-[#686F75] p-3 text-justify">{content}</div>
             </div>
-
-          </div>
-          {attachmentUrls.length > 0 && (
-            <div className="mt-5 w-[327px]">
-              <div className="text-left text-[16px] mb-2">코스 사진</div>
-              <div className="relative">
-                <Swiper
-                  pagination={{ clickable: true }}
-                  modules={[Pagination]}
-                  spaceBetween={10}
-                  slidesPerView={1}
-                >
-                  {attachmentUrls.map((url, index) => (
-                    <SwiperSlide key={index}>
-                      <div className="relative">
-                      <div className="w-[400px] h-[300px] overflow-hidden">
-                          <img
-                            src={url}
-                            alt={`코스 사진 ${index + 1}`}
-                            className="rounded-lg w-full h-full object-cover"
-                          />
-                        </div>
-                        <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
-                          {index + 1}/{attachmentUrls.length}
-                        </div>
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-            </div>
-          )}
-          <div className="flex flex-col items-start text-left w-full max-w-[327px] mt-2">세부 내용</div>
-          <div className="mt-1 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
-            <div className="flex items-center gap-2 mb-2">
-              {postCreatorImg ? (
-                <img
-                  src={postCreatorImg}
-                  alt={`${postCreatorName} 프로필`}
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
-                  {postCreatorName.charAt(0)}
-                </div>
-              )}
-              <span className="text-sm font-medium text-black">{postCreatorName}</span>
-            </div>
-            <div className="text-[#686F75] p-3 text-justify">{content}</div>
-          </div>
-        </>
-      )}
-      {activeTab === "명단" && <EditableAttendanceList
-        postId={postId}
-        runType="flash"
-        users={editableParticipants}
-        onUsersChange={setEditableParticipants} // ✅ 올바른 이름
-      />
-      }
-      <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
-
-
-
-      {/* 시작하기 버튼 */}
-      <button
-        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished || postStatus === "CLOSED"
-          ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
-          : "bg-[#366943] text-white"
-          }`}
-        onClick={handleStartClick}
-        disabled={isFinished || postStatus === "CLOSED"}
-      >
-        {buttonText}
-      </button>
-      {/* 수정하기 버튼 */}
-      <button
-        className="flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mb-4 bg-[#4D4D4D] text-white"
-        onClick={() => navigate(`/flash/edit/${postId}`)}
-      >
-        수정하기
-      </button>
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
-          <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
-            <button
-              className="absolute top-2.5 right-2.5 text-2xl cursor-pointer"
-              onClick={handleCloseModal}
-            >
-              ×
-            </button>
-            <h2>참여 코드가 생성되었습니다.</h2>
-            <input
-              type="text"
-              className="w-full p-2 border-b border-gray-300 text-center text-lg mt-5"
-              value={code}
-              disabled
-            />
-            <div className="flex justify-between mt-5 gap-2">
+          </>
+        )}
+        {activeTab === "명단" && <EditableAttendanceList
+          postId={postId!}
+          runType="flash"
+          users={editableParticipants}
+          onUsersChange={setEditableParticipants}
+          canEdit={true} // 🔥 관리자용이므로 무조건 true
+        />}
+        <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
+  
+  
+  
+        {/* 시작하기 버튼 */}
+        <button
+          className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished || postStatus === "CLOSED"
+            ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
+            : "bg-[#366943] text-white"
+            }`}
+          onClick={handleStartClick}
+          disabled={isFinished || postStatus === "CLOSED"}
+        >
+          {buttonText}
+        </button>
+        
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
+            <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
               <button
-                className="w-full py-3 rounded-lg bg-[#366943] text-white text-lg"
-                onClick={handleModalStartClick}
-              >
-                종료하기
-              </button>
-              <button
-                className="w-full py-3 rounded-lg bg-gray-300 text-gray-700"
+                className="absolute top-2.5 right-2.5 text-2xl cursor-pointer"
                 onClick={handleCloseModal}
               >
-                창닫기
+                ×
               </button>
+              <h2>참여 코드가 생성되었습니다.</h2>
+              <input
+                type="text"
+                className="w-full p-2 border-b border-gray-300 text-center text-lg mt-5"
+                value={code}
+                disabled
+              />
+              <div className="flex justify-between mt-5 gap-2">
+                <button
+                  className="w-full py-3 rounded-lg bg-[#366943] text-white text-lg"
+                  onClick={handleModalStartClick}
+                >
+                  출석종료
+                </button>
+                <button
+                  className="w-full py-3 rounded-lg bg-gray-300 text-gray-700"
+                  onClick={handleCloseModal}
+                >
+                  창닫기
+                </button>
+              </div>
+              {error && <div className="text-red-500 mt-2">{error}</div>}
             </div>
-            {error && <div className="text-red-500 mt-2">{error}</div>}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import BackBtnimg from "../../assets/BackBtn.svg"
 import pacermark from "../../assets/pacer-mark.svg"
 import CommentSection from "./CommentSection";
+import EditableAttendanceList from "./EditableAttendanceList";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -61,6 +62,10 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
   const [userStatus, setUserStatus] = useState("");
   const [date, setDate] = useState("")
   const [currentParticipantsNum, setCurrentParticipantsNum] = useState<number>(participantsNum); // 현재 불러오는 값
+  const [postCreatorId, setPostCreatorId] = useState<number | null>(null);
+  const [postStatus, setPostStatus] = useState("")
+
+
 
 
 
@@ -79,7 +84,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           },
         }
       );
-  
+
       if (response.data.isSuccess) {
         const newStatus = response.data.result.status; // ✅ API에서 받은 상태값 사용
         setUserStatus(newStatus); // 상태 업데이트
@@ -92,7 +97,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       setError("러닝 참여에 실패했습니다.");
     }
   };
-  
+
 
 
   const handleOpenAttendanceModal = () => {
@@ -193,7 +198,8 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
         });
         if (response.data.isSuccess) {
           const result = response.data.result;
-  
+
+
           setCreatorName(result.postCreatorInfo?.userName || "");
           setAttachmentUrls(result.attachmentUrls || []);
           setUserInfo({
@@ -204,12 +210,22 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           setDate(result.date);
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setPostCreatorName(result.postCreatorInfo.userName);
-          
+
           // 🔥 로그인된 사용자의 참가 상태 찾기
           const currentUser = result.participants.find(
             (participant: any) => participant.userId === result.userInfo.userId
           );
-  
+          setPostCreatorId(result.postCreatorInfo.userId);
+          setPostStatus(result.postStatus);
+
+          console.log("작성자 ID:", result.postCreatorInfo.userId);
+          console.log("현재 유저 ID:", result.userInfo.userId);
+
+
+
+
+
+
           if (currentUser) {
             setUserStatus(currentUser.status);
             setButtonText(
@@ -223,7 +239,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
             setUserStatus("");
             setButtonText("참여하기");
           }
-  
+
         } else {
           setError(response.data.responseMessage);
         }
@@ -231,10 +247,10 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
         setError("데이터를 불러오는 데 실패했습니다.");
       }
     };
-  
+
     fetchPostData();
   }, [postId]);
-  
+
 
   const [creatorName, setCreatorName] = useState(""); // 작성자 이름
   const [postCreatorName, setPostCreatorName] = useState("");
@@ -285,19 +301,19 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
 
 
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center">
+    <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center">
       {/* 상단바 */}
-      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
+      <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate("/FlashRun")}></img>
         번개런
       </div>
       {/* 러닝 포스팅 사진 */}
-      <div className="relative w-[375px] pb-[50px]">
-        <div className="w-[375px] h-[250px] overflow-hidden">
+      <div className="relative w-full pb-[50px]">
+        <div className="w-full h-[250px] overflow-hidden">
           <object data={postimgurl || flashrunimage} className="w-full h-full object-cover" />
         </div>
         {/* 번개런 정보 */}
-        <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
+        <div className="absolute top-[230px] w-full px-5 rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
             <object data={FlashRunlogo} className="w-[60px] h-[24px]" />
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
@@ -359,7 +375,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
                   {attachmentUrls.map((url, index) => (
                     <SwiperSlide key={index}>
                       <div className="relative">
-                      <div className="w-[400px] h-[300px] overflow-hidden">
+                        <div className="w-[400px] h-[300px] overflow-hidden">
                           <img
                             src={url}
                             alt={`코스 사진 ${index + 1}`}
@@ -397,10 +413,25 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           </div>
         </>
       )}
-      {activeTab === "명단" && <AttendanceList users={currentParticipants} />}
+      {activeTab === "명단" && userInfo.userId !== 0 && postCreatorId !== null && (
+        <EditableAttendanceList
+          postId={postId!}
+          runType="flash"
+          users={currentParticipants}
+          onUsersChange={(newUsers) => setCurrentParticipants(newUsers)}
+          canEdit={userInfo.userId === postCreatorId}
+        />
+      )}
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
-      {userStatus === "PENDING" && (
+      {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
+        <button
+          className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] text-lg font-bold mt-20 mb-2 cursor-not-allowed"
+          disabled
+        >
+          모집 종료
+        </button>
+      ) : userStatus === "PENDING" ? (
         <div className="flex justify-center mt-20 mb-2">
           <div className="w-[327px] flex gap-2">
             <button
@@ -417,18 +448,14 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
             </button>
           </div>
         </div>
-      )}
-
-      {userStatus === "" && (
+      ) : userStatus === "" ? (
         <button
           className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-kuGreen text-white text-lg font-bold mt-20 mb-2"
           onClick={handleStartClick}
         >
           참여하기
         </button>
-      )}
-
-      {userStatus === "ATTENDED" && (
+      ) : (
         <button
           className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] text-lg font-bold mt-20 mb-2 cursor-not-allowed"
           disabled
@@ -436,6 +463,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           출석완료
         </button>
       )}
+
 
 
       {isModalOpen && (

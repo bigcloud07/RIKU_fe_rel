@@ -57,6 +57,12 @@ module.exports = {
       fontFamily: {
         sans: ['"Apple SD Gothic Neo"', 'sans-serif'],
       },
+      screens: {
+        'iphone': '393px', // iPhone 15 Pro 대응
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+      },
     },
   },
   plugins: [
