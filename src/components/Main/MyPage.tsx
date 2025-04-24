@@ -274,7 +274,7 @@ function MyPage() {
 
         {/* 포인트와 활동 내역 섹션 */}
         <div className="flex justify-around mt-6 pt-4 border-t-2">
-          <div className="text-center">
+          <div className="text-center" onClick={handleParticipationCountClick}>
             <p className="text-2xl font-bold text-gray-800">{userInfo.points}</p>
             <p className="text-sm text-gray-500">포인트</p>
           </div>
