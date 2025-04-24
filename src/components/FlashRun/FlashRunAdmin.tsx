@@ -466,7 +466,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                 </div>
               </div>
             )}
-            <div className="flex flex-col items-start text-left w-full max-w-[430px] mt-2">세부 내용</div>
+            <div className="flex flex-col items-start text-left w-full max-w-[327px] mt-2">세부 내용</div>
             <div className="mt-1 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 {postCreatorImg ? (
