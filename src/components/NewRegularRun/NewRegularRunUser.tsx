@@ -101,6 +101,8 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                   : "참여하기"
             );
           }
+          console.log(result.attachmentUrls); // 1장인지, 여러 장인지
+
         }
       } catch {
         setError("데이터 로딩 실패");
@@ -263,232 +265,234 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   };
 
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center">
-      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
-        <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
-        정규런
-      </div>
-
-      <div className="relative w-[375px] pb-[90px]">
-
-        <div className="w-[375px] h-[308px] overflow-hidden">
-          <object data={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
+    <div className="w-full min-h-screen bg-white">
+      <div className="flex flex-col items-center text-center justify-center w-full max-w-[430px] mx-auto">
+        <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
+          <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
+          정규런
         </div>
-        <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
-          <div className="flex flex-col items-center mt-[14px]">
-            <object data={RegularRunlogo} className="w-[60px] h-[24px]" />
-            <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
+  
+        <div className="relative w-full pb-[90px]">
+  
+          <div className="w-full h-[308px] overflow-hidden">
+            <object data={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
           </div>
-          <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
-            <div className="flex items-center my-1.5">
-              <object data={place} className="w-[24px] h-[24px] mr-2" />
-              <span>{location}</span>
+          <div className="absolute top-[230px] w-full px-5 rounded-t-[20px] bg-white">
+            <div className="flex flex-col items-center mt-[14px]">
+              <object data={RegularRunlogo} className="w-[60px] h-[24px]" />
+              <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
             </div>
-            <div className="flex items-center my-1.5">
-              <object data={time} className="w-[24px] h-[24px] mr-2" />
-              <span>{formatDateTime(date)}</span>
-            </div>
-            <div className="flex items-center my-1.5">
-              <object data={people} className="w-[24px] h-[24px] mr-2" />
-              <span className="font-bold text-kuDarkGreen">{participantsNum}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <TabButton leftLabel="소개" rightLabel="명단" onTabChange={setActiveTab} />
-      {activeTab === "소개" && <>
-        <div className="flex items-start text-left w-full mt-[24px] my-2 max-w-[349px]">
-          <img src={pacermark} />
-          <div className="m-1">PACER</div>
-        </div>
-        <PacerCard pacers={pacers} />
-        {attachmentUrls.length > 0 && (
-          <div className="mt-5 w-[327px]">
-            <div className="text-left text-[16px] mb-[16px]">코스 사진</div>
-            <Swiper pagination={{ clickable: true }} modules={[Pagination]} spaceBetween={10} slidesPerView={1}>
-              {attachmentUrls.map((url, index) => (
-                <SwiperSlide key={index}>
-                  <div className="relative">
-                    <div className="w-[400px] h-[300px] overflow-hidden">
-                      <img
-                        src={url}
-                        alt={`코스 사진 ${index + 1}`}
-                        className="rounded-lg w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
-                      {index + 1}/{attachmentUrls.length}
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        )}
-        <div className="flex flex-col mt-[24px] items-start text-left w-full max-w-[327px]">세부 내용</div>
-        <div className="mt-[12px] w-[327px] border border-[#ECEBE4] rounded-lg p-4">
-          <div className="flex items-center gap-2 mb-2">
-            {postCreatorImg ? (
-              <img src={postCreatorImg} alt="프로필" className="w-8 h-8 rounded-full object-cover" />
-            ) : (
-              <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold">
-                {postCreatorName.charAt(0)}
+            <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
+              <div className="flex items-center my-1.5">
+                <object data={place} className="w-[24px] h-[24px] mr-2" />
+                <span>{location}</span>
               </div>
-            )}
-            <span className="text-sm font-medium text-black">{postCreatorName}</span>
+              <div className="flex items-center my-1.5">
+                <object data={time} className="w-[24px] h-[24px] mr-2" />
+                <span>{formatDateTime(date)}</span>
+              </div>
+              <div className="flex items-center my-1.5">
+                <object data={people} className="w-[24px] h-[24px] mr-2" />
+                <span className="font-bold text-kuDarkGreen">{participantsNum}</span>
+              </div>
+            </div>
           </div>
-          <div className="text-[#686F75] p-3 text-sm text-justify whitespace-pre-wrap">{content}</div>
         </div>
-      </>}
-
-      {activeTab === "명단" &&
-        <AttendanceList
-          key={JSON.stringify(groupedParticipants)} // ⬅️ 이거 추가!
-          groupedParticipants={groupedParticipants}
-          userInfoName={userInfo.userName}
-          postCreatorName={postCreatorName}
-        />
-      }
-
-
-      <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
-
-      {/* ✅ 참여 상태에 따른 버튼 렌더링 */}
-      {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
-        <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
-          모집 종료
-        </div>
-      ) : userStatus === "ATTENDED" ? (
-        <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
-          출석완료
-        </div>
-      ) : userStatus === "PENDING" ? (
-        <>
-          {selectedGroup && (
-            <div className="text-sm text-left text-kuDarkGray w-full max-w-[327px] mt-4 pl-6">
-              내가 선택한 그룹 : <span className="font-semibold">{selectedGroup}</span>
+  
+  
+        <TabButton leftLabel="소개" rightLabel="명단" onTabChange={setActiveTab} />
+        {activeTab === "소개" && <>
+          <div className="flex items-start text-left w-full mt-[24px] my-2 max-w-[349px]">
+            <img src={pacermark} />
+            <div className="m-1">PACER</div>
+          </div>
+          <PacerCard pacers={pacers} />
+          {attachmentUrls.length > 0 && (
+            <div className="mt-5 w-[327px]">
+              <div className="text-left text-[16px] mb-[16px]">코스 사진</div>
+              <Swiper pagination={{ clickable: true }} modules={[Pagination]} spaceBetween={10} slidesPerView={1}>
+                {attachmentUrls.map((url, index) => (
+                  <SwiperSlide key={index}>
+                    <div className="relative">
+                      <div className="w-[400px] h-[300px] overflow-hidden">
+                        <img
+                          src={url}
+                          alt={`코스 사진 ${index + 1}`}
+                          className="rounded-lg w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
+                        {index + 1}/{attachmentUrls.length}
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
           )}
-          <div className="flex gap-2 mt-[8px] mb-6">
-            <button
-              className="w-[164px] h-[52px] font-bold rounded-lg text-white bg-kuGreen"
-              onClick={handleOpenGroupModal}
-            >
-              그룹 수정
-            </button>
-            <button
-              className="w-[164px] h-[52px] rounded-lg font-bold bg-kuDarkGreen text-white"
-              onClick={() => setIsModalOpen(true)}
-            >
-              출석하기
-            </button>
-          </div>
-        </>
-      ) : (
-        <button
-          className="w-[327px] h-14 rounded-lg bg-kuGreen text-white font-bold mt-6 mb-6"
-          onClick={handleOpenGroupModal}
-        >
-          참여하기
-        </button>
-      )}
-
-
-
-
-      {isGroupModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
-          <div className="bg-white p-6 rounded-lg w-[300px] max-w-[90%] text-center relative shadow-lg">
-            <button
-              className="absolute top-[2px] right-2.5 text-2xl cursor-pointer w-[16px] h-[16px]"
-              onClick={() => setIsGroupModalOpen(false)}
-            >
-              ×
-            </button>
-            <h2 className="text-[16px] mb-4">정규런 그룹을 선택해주세요.</h2>
-
-            {/* 그룹 선택 옵션 */}
-            <div className="flex justify-center">
-              <div className="flex flex-col gap-3 max-h-[500px] overflow-y-auto w-full"
-                style={{ paddingRight: "8px", marginRight: "-8px" }}>
-                {groupList.map((group, index) => {
-                  const isSelected = selectedGroup === group.group;
-
-                  const handleSelect = () => {
-                    if (isSelected) {
-                      setSelectedGroup(""); // 다시 누르면 해제
-                    } else {
-                      setSelectedGroup(group.group); // 선택
-                    }
-                  };
-
-                  return (
-                    <button
-                      key={index}
-                      className={`rounded-lg border flex items-center justify-between w-[230px] h-[48px] ${isSelected ? "bg-[#F3F8E8]" : "bg-gray-100 hover:bg-gray-200"
-                        }`}
-                      onClick={handleSelect}
-                    >
-                      {/* 왼쪽: 그룹명 | 페이스 */}
-                      <div className="flex items-center text-left">
-                        <span className={`my-[16px] ml-[16px] font-bold text-base ${isSelected ? "text-black" : "text-gray-400"}`}>
-                          {group.group}
-                        </span>
-                        <div className="w-px h-[42px] ml-[16px] bg-gray-400" />
-                        <span className={`text-[16px] font-semibold ml-[10px] ${isSelected ? "text-kuDarkGreen" : "text-gray-400"}`}>
-                          {group.pace}
-                        </span>
-                      </div>
-
-                      {/* 오른쪽 체크 아이콘 */}
-                      {isSelected && (
-                        <img src={checkedicon} alt="checked" className="w-[24px] h-[24px] mr-[16px]" />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
+          <div className="flex flex-col mt-[24px] items-start text-left w-full max-w-[327px]">세부 내용</div>
+          <div className="mt-[12px] w-[327px] border border-[#ECEBE4] rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              {postCreatorImg ? (
+                <img src={postCreatorImg} alt="프로필" className="w-8 h-8 rounded-full object-cover" />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold">
+                  {postCreatorName.charAt(0)}
+                </div>
+              )}
+              <span className="text-sm font-medium text-black">{postCreatorName}</span>
             </div>
-            {/* 확인 버튼 */}
-            <button
-              className="mt-5 w-full py-3 bg-kuDarkGreen text-white rounded-lg"
-              onClick={handleJoinConfirm}
-            >
-              확인
-            </button>
-
-            {/* 에러 메시지 */}
-            {error && <div className="text-red-500 mt-2 text-sm">{error}</div>}
+            <div className="text-[#686F75] p-3 text-sm text-justify whitespace-pre-wrap">{content}</div>
           </div>
-        </div>
-      )}
-
-      {/* // 출석 모달 구조 */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
-          <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
-            <button className="absolute top-2.5 right-2.5 text-2xl cursor-pointer" onClick={() => setIsModalOpen(false)}>×</button>
-            <h2 className="text-lg font-semibold">참여 코드를 입력해주세요.</h2>
-            <input
-              type="text"
-              className="w-full p-2 border-b border-gray-300 text-center text-lg mt-5"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-            />
-            <button
-              className="w-full py-3 rounded-lg bg-[#366943] text-white text-lg mt-5"
-              onClick={handleAttendanceClick}
-            >
-              확인
-            </button>
-            {error && <div className="text-red-500 mt-2">{error}</div>}
+        </>}
+  
+        {activeTab === "명단" &&
+          <AttendanceList
+            key={JSON.stringify(groupedParticipants)} // ⬅️ 이거 추가!
+            groupedParticipants={groupedParticipants}
+            userInfoName={userInfo.userName}
+            postCreatorName={postCreatorName}
+          />
+        }
+  
+  
+        <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
+  
+        {/* ✅ 참여 상태에 따른 버튼 렌더링 */}
+        {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
+          <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
+            모집 종료
           </div>
-        </div>
-      )}
-
-
+        ) : userStatus === "ATTENDED" ? (
+          <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
+            출석완료
+          </div>
+        ) : userStatus === "PENDING" ? (
+          <>
+            {selectedGroup && (
+              <div className="text-sm text-left text-kuDarkGray w-full max-w-[327px] mt-4 pl-6">
+                내가 선택한 그룹 : <span className="font-semibold">{selectedGroup}</span>
+              </div>
+            )}
+            <div className="flex gap-2 mt-[8px] mb-6">
+              <button
+                className="w-[164px] h-[52px] font-bold rounded-lg text-white bg-kuGreen"
+                onClick={handleOpenGroupModal}
+              >
+                그룹 수정
+              </button>
+              <button
+                className="w-[164px] h-[52px] rounded-lg font-bold bg-kuDarkGreen text-white"
+                onClick={() => setIsModalOpen(true)}
+              >
+                출석하기
+              </button>
+            </div>
+          </>
+        ) : (
+          <button
+            className="w-[327px] h-14 rounded-lg bg-kuGreen text-white font-bold mt-6 mb-6"
+            onClick={handleOpenGroupModal}
+          >
+            참여하기
+          </button>
+        )}
+  
+  
+  
+  
+        {isGroupModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
+            <div className="bg-white p-6 rounded-lg w-[300px] max-w-[90%] text-center relative shadow-lg">
+              <button
+                className="absolute top-[2px] right-2.5 text-2xl cursor-pointer w-[16px] h-[16px]"
+                onClick={() => setIsGroupModalOpen(false)}
+              >
+                ×
+              </button>
+              <h2 className="text-[16px] mb-4">정규런 그룹을 선택해주세요.</h2>
+  
+              {/* 그룹 선택 옵션 */}
+              <div className="flex justify-center">
+                <div className="flex flex-col gap-3 max-h-[500px] overflow-y-auto w-full"
+                  style={{ paddingRight: "8px", marginRight: "-8px" }}>
+                  {groupList.map((group, index) => {
+                    const isSelected = selectedGroup === group.group;
+  
+                    const handleSelect = () => {
+                      if (isSelected) {
+                        setSelectedGroup(""); // 다시 누르면 해제
+                      } else {
+                        setSelectedGroup(group.group); // 선택
+                      }
+                    };
+  
+                    return (
+                      <button
+                        key={index}
+                        className={`rounded-lg border flex items-center justify-between w-[230px] h-[48px] ${isSelected ? "bg-[#F3F8E8]" : "bg-gray-100 hover:bg-gray-200"
+                          }`}
+                        onClick={handleSelect}
+                      >
+                        {/* 왼쪽: 그룹명 | 페이스 */}
+                        <div className="flex items-center text-left">
+                          <span className={`my-[16px] ml-[16px] font-bold text-base ${isSelected ? "text-black" : "text-gray-400"}`}>
+                            {group.group}
+                          </span>
+                          <div className="w-px h-[42px] ml-[16px] bg-gray-400" />
+                          <span className={`text-[16px] font-semibold ml-[10px] ${isSelected ? "text-kuDarkGreen" : "text-gray-400"}`}>
+                            {group.pace}
+                          </span>
+                        </div>
+  
+                        {/* 오른쪽 체크 아이콘 */}
+                        {isSelected && (
+                          <img src={checkedicon} alt="checked" className="w-[24px] h-[24px] mr-[16px]" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* 확인 버튼 */}
+              <button
+                className="mt-5 w-full py-3 bg-kuDarkGreen text-white rounded-lg"
+                onClick={handleJoinConfirm}
+              >
+                확인
+              </button>
+  
+              {/* 에러 메시지 */}
+              {error && <div className="text-red-500 mt-2 text-sm">{error}</div>}
+            </div>
+          </div>
+        )}
+  
+        {/* // 출석 모달 구조 */}
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
+            <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
+              <button className="absolute top-2.5 right-2.5 text-2xl cursor-pointer" onClick={() => setIsModalOpen(false)}>×</button>
+              <h2 className="text-lg font-semibold">참여 코드를 입력해주세요.</h2>
+              <input
+                type="text"
+                className="w-full p-2 border-b border-gray-300 text-center text-lg mt-5"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+              />
+              <button
+                className="w-full py-3 rounded-lg bg-[#366943] text-white text-lg mt-5"
+                onClick={handleAttendanceClick}
+              >
+                확인
+              </button>
+              {error && <div className="text-red-500 mt-2">{error}</div>}
+            </div>
+          </div>
+        )}
+  
+  
+      </div>
     </div>
   );
 };

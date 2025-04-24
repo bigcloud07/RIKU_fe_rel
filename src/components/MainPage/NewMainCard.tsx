@@ -21,6 +21,17 @@ const NewMainCard: React.FC<CardProps> = ({
 }) => {
   const navigate = useNavigate();
   const handleClick = () => navigate(path);
+  //줄바꿈 처리 함수
+  const renderMultilineTitle = (text: string) => {
+    return text.split("\n").map((line, idx) => (
+      <React.Fragment key={idx}>
+        {line}
+        <br />
+      </React.Fragment>
+    ));
+  };
+  //러닝이 없을 때
+  const isEmptyContent = title.includes("없습니다");
 
   return (
     <div
@@ -28,7 +39,7 @@ const NewMainCard: React.FC<CardProps> = ({
       onClick={handleClick}
     >
       {/* 이미지 영역 */}
-      <div className="w-full h-[120px] overflow-hidden">
+      <div className="w-full h-[120px] overflow-hidden rounded-lg">
         <img
           src={imageUrl}
           alt={title}
@@ -37,27 +48,31 @@ const NewMainCard: React.FC<CardProps> = ({
       </div>
 
       {/* 콘텐츠 유형 배지 */}
-      <div className="absolute top-[100px] bg-kuLightGray text-[12px] rounded-lg px-4 py-1">
+      <div
+        className={`absolute top-[100px] text-[12px] rounded-lg px-4 py-1
+    ${isEmptyContent ? "bg-kuLightGray" : "bg-kuLightGray"}`}
+      >
         {event_type}
       </div>
 
       {/* 정보 영역 */}
-      <div className="ml-[16px] mr-[16px] mb-[20px] mt-[16px]">
-        
-
+      <div
+        className={`ml-[16px] mr-[16px] mb-[20px] mt-[16px]
+    ${isEmptyContent ? "text-kuDarkGray" : "text-black"}`}
+      >
         {statusImg && (
           <img
             src={statusImg}
             alt="Status"
-            className={`${statusImg === ARGENTimg ? "w-[46px] h-[20px]" : "w-[40px] h-[20px]"
-              }`}
+            className={`${statusImg === ARGENTimg ? "w-[46px] h-[20px]" : "w-[40px] h-[20px]"}`}
           />
         )}
 
+        <div className="text-[12px] mt-1">{date}</div>
 
-        < div className="text-gray-500 text-[12px] mt-1">{date}</div>
         <div className="font-bold text-[20px] w-[130px] h-[64px] overflow-hidden text-ellipsis break-words line-clamp-2">
-          {title}</div>
+          {renderMultilineTitle(title)}
+        </div>
       </div>
     </div >
   );

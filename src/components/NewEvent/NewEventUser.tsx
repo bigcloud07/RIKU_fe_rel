@@ -327,19 +327,19 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
 
 
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center">
+    <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center">
       {/* 상단바 */}
-      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
+      <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate("/FlashRun")}></img>
         행사
       </div>
       {/* 러닝 포스팅 사진 */}
-      <div className="relative w-[375px] pb-[50px]">
-        <div className="w-[375px] h-[308px] overflow-hidden">
+      <div className="relative w-full pb-[50px]">
+        <div className="w-full h-[308px] overflow-hidden">
           <object data={postimgurl || flashrunimage} className="w-full h-full object-cover" />
         </div>
         {/* 번개런 정보 */}
-        <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
+        <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
             <div className="relative flex items-center bg-[#D96941] p-[10px] text-[14px] w-auto h-[24px] rounded-[8px]">
               <div className="flex items-center font-bold text-white">
@@ -348,7 +348,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
             </div>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
-          <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
+          <div className="flex flex-col items-start w-full max-w-[360px] mt-5 px-5">
             <div className="flex items-center my-1.5">
               <object data={place} className="w-[24px] h-[24px] mr-2" />
               <span>{location}</span>

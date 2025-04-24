@@ -144,6 +144,8 @@ function NewRegularRunEdit() {
     setCoursePreviews(prev => prev.filter((_, i) => i !== index));
   };
 
+  const newImageURLs = courseImages.map((file) => URL.createObjectURL(file));
+
   const handleSubmit = async () => {
     if (!title || !location || !content || !dateTime.date || pacerGroups.some(g => !g.pacer || !g.distance || !g.pace)) {
       alert("모든 정보를 입력해주세요.");
@@ -176,6 +178,7 @@ function NewRegularRunEdit() {
       formData.append("date", eventDateTime);
       formData.append("content", content);
       if (mainImage) formData.append("postImage", mainImage);
+      
       courseImages.forEach(file => formData.append("attachments", file));
       pacerGroups.forEach((group, index) => {
         formData.append(`pacers[${index}].group`, group.id);

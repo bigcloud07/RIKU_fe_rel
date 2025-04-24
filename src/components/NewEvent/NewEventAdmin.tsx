@@ -375,10 +375,10 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
 
 
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center">
+    <div className="flex flex-col items-center max-w-[430px] mx-auto text-center justify-center">
       
       {/* 상단바 */}
-      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
+      <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
         행사
         <div
@@ -398,28 +398,66 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
 
         {showMenu && (
           <motion.div
-            ref={menuRef}
-            initial={{ opacity: 0, scale: 0.8, y: -5 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: -5 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-[50px] right-[18px] z-20"
+          ref={menuRef}
+          initial={{ opacity: 0, scale: 0.8, y: -5 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8, y: -5 }}
+          transition={{ duration: 0.2 }}
+          className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
+        >
+          <button
+            className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+            onClick={() => {
+              navigate(`/event/edit/${postId}`);
+              setShowMenu(false);
+            }}
           >
-            <button
-              className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
-              onClick={() => {
-                navigate(`/training/edit/${postId}`);
-                setShowMenu(false);
-              }}
-            >
-              수정하기
-            </button>
-          </motion.div>
+            수정하기
+          </button>
+          <button
+            className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+            onClick={async () => {
+              try {
+                const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                if (!token) {
+                  alert("로그인이 필요합니다.");
+                  return;
+                }
+            
+                const { data } = await customAxios.patch(
+                  `/run/event/post/${postId}/cancel`,
+                  {},
+                  {
+                    headers: {
+                      Authorization: `${token}`,
+                    },
+                  }
+                );
+                
+            
+                if (data.isSuccess) {
+                  alert("게시글이 성공적으로 취소되었습니다.");
+                  setShowMenu(false);
+                  // 페이지 새로고침 또는 상태 업데이트 필요 시 여기에 추가
+                  navigate("/event")
+                } else {
+                  alert(data.responseMessage || "취소에 실패했습니다.");
+                }
+              } catch (error) {
+                console.error(error);
+                alert("요청 중 오류가 발생했습니다.");
+              }
+            }}
+            
+          >
+            취소하기
+          </button>
+        </motion.div>
         )}
       </div>
       {/* 러닝 포스팅 사진 */}
-      <div className="relative w-[375px] pb-[50px]">
-        <div className="w-[375px] h-[250px] overflow-hidden">
+      <div className="relative w-full pb-[50px]">
+        <div className="w-full h-[250px] overflow-hidden">
         <object
             data={postimgurl || flashrunimage}
             className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
@@ -427,7 +465,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
           /> 
         </div>
         {/* 번개런 정보 */}
-        <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
+        <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
             <div className="relative flex items-center bg-[#D96941] p-[10px] text-[14px] w-auto h-[24px] rounded-[8px]">
               <div className="flex items-center font-bold text-white">
@@ -436,7 +474,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
             </div>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
-          <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
+          <div className="flex flex-col items-start w-full max-w-[360px] mt-5 px-5">
             <div className="flex items-center my-1.5">
               <object data={place} className="w-[24px] h-[24px] mr-2" />
               <span>{location}</span>

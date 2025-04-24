@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NewMainCard from "./NewMainCard";
-import NewMainImage from "../../assets/Main-img/NewMainImage.svg";
+import flashImage from "../../assets/default_flashRun.jpeg";
+import trainImage from "../../assets/defalut_trainingRun.jpeg"
+import regularImg from "../../assets/default_regular.jpeg"
+import eventImg from "../../assets/default_event.jpeg"
 import TabNavigationUI from "../TabNavigationUI";
 import plusBtn from "../../assets/plus_Icon.svg";
 import img1 from "../../assets/Main-img/main-moving-images/1.png";
 import img2 from "../../assets/Main-img/main-moving-images/2.png";
-import img3 from "../../assets/Main-img/main-moving-images/3.png";
+import img3 from "../../assets/Main-img/main-moving-images/3.jpg";
 import img4 from "../../assets/Main-img/main-moving-images/4.png";
 import TopBarimg from "../../assets/Top-bar.svg";
 import customAxios from "../../apis/customAxios";
@@ -82,7 +85,7 @@ const NewMain: React.FC = () => {
   const images = [img1, img2, img3, img4];
 
   const formatDate = (isoDateString?: string): string => {
-    if (!isoDateString) return "...";
+    if (!isoDateString) return "-";
 
     const utcDate = new Date(isoDateString);
     const kstOffset = 9 * 60 * 60 * 1000; // 9시간을 밀리초로 변환
@@ -140,7 +143,7 @@ const NewMain: React.FC = () => {
           // 상태를 각 ContentList에 맞게 분리하여 저장
           setMaindata({
             regularRun: {
-              location: result.regularRun?.title || "정규런이 없습니다",
+              location: result.regularRun?.title || "등록된 정규런이\n없습니다",
               date: formatDate(result.regularRun?.date),
               postimgurl: result.regularRun?.postImageUrl,
               poststatus: isWithinOneHour(result.regularRun?.date)
@@ -148,7 +151,7 @@ const NewMain: React.FC = () => {
                 : result.regularRun?.postStatus,
             },
             flashRun: {
-              location: result.flashRun?.title || "번개런이 없습니다",
+              location: result.flashRun?.title || "등록된 번개런이\n없습니다",
               date: formatDate(result.flashRun?.date),
               postimgurl: result.flashRun?.postImageUrl,
               poststatus: isWithinOneHour(result.flashRun?.date)
@@ -157,7 +160,7 @@ const NewMain: React.FC = () => {
             },
 
             training: {
-              location: result.trainingRun?.title || "훈련이 없습니다",
+              location: result.trainingRun?.title || "등록된 훈련이\n없습니다",
               date: formatDate(result.trainingRun?.date),
               postimgurl: result.trainingRun?.postImageUrl,
               poststatus: isWithinOneHour(result.trainingRun?.date)
@@ -165,7 +168,7 @@ const NewMain: React.FC = () => {
                 : result.trainingRun?.postStatus,
             },
             event: {
-              location: result.eventRun?.title || "행사가 없습니다",
+              location: result.eventRun?.title || "등록된   행사가\n없습니다",
               date: formatDate(result.eventRun?.date),
               postimgurl: result.eventRun?.postImageUrl,
               poststatus: isWithinOneHour(result.eventRun?.date)
@@ -238,7 +241,7 @@ const NewMain: React.FC = () => {
       <div className="h-[56px]"></div>
 
       {/* 슬라이드쇼 */}
-      <div className="w-[375px] h-[300px] max-w-4xl mx-auto m-0">
+      <div className="max-w-[430px] w-full h-[300px]  mx-auto m-0">
         <div className="flex justify-center items-center h-full">
           <img
             src={images[currentIndex]}
@@ -246,7 +249,7 @@ const NewMain: React.FC = () => {
             className="w-full h-full object-cover transition-opacity duration-500"
           />
         </div>
-        <div className="flex w-[375px] h-[40px] justify-center items-center space-x-2 bg-kuDarkGreen">
+        <div className="flex max-w-[430px] w-full h-[40px] justify-center items-center space-x-2 bg-kuDarkGreen">
           {images.map((_, index) => (
             <span
               key={index}
@@ -259,13 +262,13 @@ const NewMain: React.FC = () => {
       </div>
 
       {/* NewMainCard 그리드 */}
-      <div className="grid grid-cols-2 grid-rows-2 gap-x-3 gap-y-6 mt-[70px] mb-36">
+      <div className="grid grid-cols-2 grid-rows-2 gap-x-3 gap-y-[15px] mt-[70px] mb-36">
         <div className="cursor-pointer">
           <NewMainCard
             title={maindata?.regularRun.location}
-            date={maindata?.regularRun.date}
+            date={maindata?.regularRun.date} 
             statusImg={getStatusImg(maindata.regularRun.poststatus)}
-            imageUrl={maindata.regularRun.postimgurl || NewMainImage}
+            imageUrl={maindata.regularRun.postimgurl || regularImg}
             event_type="정규런"
             path="/regular"
           />
@@ -275,7 +278,7 @@ const NewMain: React.FC = () => {
             title={maindata?.flashRun.location}
             date={maindata?.flashRun.date}
             statusImg={getStatusImg(maindata.flashRun.poststatus)}
-            imageUrl={maindata.flashRun.postimgurl || NewMainImage}
+            imageUrl={maindata.flashRun.postimgurl || flashImage}
             event_type="번개런"
             path="/FlashRun"
           />
@@ -285,7 +288,7 @@ const NewMain: React.FC = () => {
             title={maindata?.training.location}
             date={maindata?.training.date}
             statusImg={getStatusImg(maindata.training.poststatus)}
-            imageUrl={maindata.training.postimgurl || NewMainImage}
+            imageUrl={maindata.training.postimgurl || trainImage}
             event_type="훈련"
             path="/training"
           />
@@ -295,7 +298,7 @@ const NewMain: React.FC = () => {
             title={maindata?.event.location}
             date={maindata?.event.date}
             statusImg={getStatusImg(maindata.event.poststatus)}
-            imageUrl={maindata.event.postimgurl || NewMainImage}
+            imageUrl={maindata.event.postimgurl || eventImg}
             event_type="행사"
             path="/event"
           />

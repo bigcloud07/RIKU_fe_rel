@@ -433,16 +433,19 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     }
   };
 
+  
+  
+
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center" onClick={handleOutsideClick}>
-      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
+    <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center" onClick={handleOutsideClick}>
+      <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
         훈련
       </div>
 
-      <div className="relative w-[375px] pb-[90px]">
-        <object data={postImageUrl || flashrunimage} className="w-[375px] h-[308px]" />
-        <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
+      <div className="relative w-full pb-[90px]">
+        <object data={postImageUrl || flashrunimage} className="w-full h-[308px]" />
+        <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[8px]">
             {/* 상단 전체를 relative로 감싸기 */}
             <div className="relative flex flex-col items-center mt-[4px] w-[375px]">
@@ -479,7 +482,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
             </div>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
-          <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
+          <div className="flex flex-col items-start w-full max-w-[360px] mt-5 px-5">
             <div className="flex items-center my-1.5">
               <object data={place} className="w-[24px] h-[24px] mr-2" />
               <span>{location}</span>
@@ -497,7 +500,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         </div>
       </div>
 
-      <TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} />
+      <div className="mt-[25px]"><TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} /></div>
 
       {activeTab === "소개" && (
         <>
@@ -537,8 +540,23 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
             </div>
           )}
           <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">세부 내용</div>
-          <div className="mt-5 w-[327px] border border-[#ECEBE4] rounded-lg">
-            <div className="text-[#686F75] p-5 text-justify">{content}</div>
+          <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              {postCreatorImg ? (
+                <img
+                  src={postCreatorImg}
+                  alt={`${postCreatorName} 프로필`}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
+                  {postCreatorName.charAt(0)}
+                </div>
+              )}
+              <span className="text-sm font-medium text-black">{postCreatorName}</span>
+            </div>
+
+            <div className="text-[#686F75] p-3 text-sm text-justify whitespace-pre-wrap">{content}</div>
           </div>
         </>
       )}

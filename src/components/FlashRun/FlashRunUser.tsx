@@ -301,19 +301,19 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
 
 
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center">
+    <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center">
       {/* 상단바 */}
-      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
+      <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate("/FlashRun")}></img>
         번개런
       </div>
       {/* 러닝 포스팅 사진 */}
-      <div className="relative w-[375px] pb-[50px]">
-        <div className="w-[375px] h-[250px] overflow-hidden">
+      <div className="relative w-full pb-[50px]">
+        <div className="w-full h-[250px] overflow-hidden">
           <object data={postimgurl || flashrunimage} className="w-full h-full object-cover" />
         </div>
         {/* 번개런 정보 */}
-        <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
+        <div className="absolute top-[230px] w-full px-5 rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
             <object data={FlashRunlogo} className="w-[60px] h-[24px]" />
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
@@ -414,14 +414,14 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
         </>
       )}
       {activeTab === "명단" && userInfo.userId !== 0 && postCreatorId !== null && (
-  <EditableAttendanceList
-    postId={postId!}
-    runType="flash"
-    users={currentParticipants}
-    onUsersChange={(newUsers) => setCurrentParticipants(newUsers)}
-    canEdit={userInfo.userId === postCreatorId}
-  />
-)}
+        <EditableAttendanceList
+          postId={postId!}
+          runType="flash"
+          users={currentParticipants}
+          onUsersChange={(newUsers) => setCurrentParticipants(newUsers)}
+          canEdit={userInfo.userId === postCreatorId}
+        />
+      )}
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
       {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (

@@ -333,9 +333,9 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
 
 
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center" >
+    <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center" >
       {/* 상단바 */}
-      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
+      <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
         훈련
         <div
@@ -355,33 +355,71 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
 
         {showMenu && (
           <motion.div
-            ref={menuRef}
-            initial={{ opacity: 0, scale: 0.8, y: -5 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: -5 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-[50px] right-[18px] z-20"
+          ref={menuRef}
+          initial={{ opacity: 0, scale: 0.8, y: -5 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.8, y: -5 }}
+          transition={{ duration: 0.2 }}
+          className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
+        >
+          <button
+            className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+            onClick={() => {
+              navigate(`/training/edit/${postId}`);
+              setShowMenu(false);
+            }}
           >
-            <button
-              className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
-              onClick={() => {
-                navigate(`/training/edit/${postId}`);
-                setShowMenu(false);
-              }}
-            >
-              수정하기
-            </button>
-          </motion.div>
+            수정하기
+          </button>
+          <button
+            className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+            onClick={async () => {
+              try {
+                const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                if (!token) {
+                  alert("로그인이 필요합니다.");
+                  return;
+                }
+            
+                const { data } = await customAxios.patch(
+                  `/run/training/post/${postId}/cancel`,
+                  {},
+                  {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                );
+                
+            
+                if (data.isSuccess) {
+                  alert("게시글이 성공적으로 취소되었습니다.");
+                  setShowMenu(false);
+                  // 페이지 새로고침 또는 상태 업데이트 필요 시 여기에 추가
+                  navigate("/training")
+                } else {
+                  alert(data.responseMessage || "취소에 실패했습니다.");
+                }
+              } catch (error) {
+                console.error(error);
+                alert("요청 중 오류가 발생했습니다.");
+              }
+            }}
+            
+          >
+            취소하기
+          </button>
+        </motion.div>
         )}
       </div>
 
-      <div className="relative w-[375px] pb-[90px]">
+      <div className="relative w-full">
       <object
             data={postImageUrl || flashrunimage}
             className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
               }`}
           /> 
-        <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
+        <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[8px]">
             {/* 상단 전체를 relative로 감싸기 */}
             <div className="relative flex flex-col items-center mt-[4px] w-[375px]">
@@ -416,7 +454,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
             </div>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
-          <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
+          <div className="flex flex-col items-start w-full max-w-[360px] px-5 mt-5">
             <div className="flex items-center my-1.5">
               <object data={place} className="w-[24px] h-[24px] mr-2" />
               <span>{location}</span>
@@ -433,7 +471,10 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
         </div>
       </div>
 
-      <TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} />
+      <div className="">
+        <TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} />
+      </div>
+     
 
       {activeTab === "소개" && (
         <>
@@ -540,7 +581,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                 className="w-full py-3 rounded-lg bg-[#366943] text-white text-lg"
                 onClick={handleModalStartClick}
               >
-                종료하기
+                출석종료
               </button>
               <button
                 className="w-full py-3 rounded-lg bg-gray-300 text-gray-700"
