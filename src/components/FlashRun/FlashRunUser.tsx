@@ -375,7 +375,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
                   {attachmentUrls.map((url, index) => (
                     <SwiperSlide key={index}>
                       <div className="relative">
-                        <div className="w-[400px] h-[300px] overflow-hidden">
+                        <div className="w-full h-[300px] overflow-hidden">
                           <img
                             src={url}
                             alt={`코스 사진 ${index + 1}`}

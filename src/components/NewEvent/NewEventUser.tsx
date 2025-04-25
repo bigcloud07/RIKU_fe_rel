@@ -405,7 +405,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
                   {attachmentUrls.map((url, index) => (
                     <SwiperSlide key={index}>
                       <div className="relative">
-                        <div className="w-[400px] h-[300px] overflow-hidden">
+                        <div className="w-full h-[300px] overflow-hidden">
                           <img
                             src={url}
                             alt={`코스 사진 ${index + 1}`}
@@ -464,17 +464,17 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
         <div className="flex justify-center mt-20 mb-2">
           <div className="w-[327px] flex gap-2">
             <button
-              className="w-1/2 h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold"
+              className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold"
               onClick={handleCancelParticipation}
             >
               참여 취소
             </button>
-            <button
+            {/* <button
               className="w-1/2 h-14 rounded-lg bg-kuDarkGreen text-white font-bold"
               onClick={handleOpenAttendanceModal}
             >
               출석하기
-            </button>
+            </button> */}
           </div>
         </div>
       ) : userStatus === "" ? (

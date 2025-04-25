@@ -220,6 +220,8 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
 
 
   const handleStartClick = async () => {
+
+
     if (!code) {
       try {
         const token = JSON.parse(localStorage.getItem("accessToken") || "null");
@@ -243,6 +245,9 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   const [isFinished, setIsFinished] = useState(false);
 
   const handleModalStartClick = async () => {
+    const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
+    if (!confirmClose) return;
+
     if (!code) return;
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
@@ -329,6 +334,24 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
     };
   }, [showMenu]);
 
+  // 명단 수정 조건 검사 후 진입 함수
+  const handleEditAttempt = () => {
+    const now = new Date(); // 현재 로컬 시간
+    const postDateKST = new Date(new Date(date).getTime() + 9 * 60 * 60 * 1000);
+
+    if (postStatus === "CLOSED" || postStatus === "CANCELED") {
+      alert("출석이 종료되어 명단 수정이 불가능합니다.");
+      return;
+    }
+
+    if (now < postDateKST) {
+      alert("아직 명단 수정을 할 수 없습니다.");
+      return;
+    }
+
+    setIsEditMode(true);
+  };
+
 
 
 
@@ -355,94 +378,101 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
 
         {showMenu && (
           <motion.div
-          ref={menuRef}
-          initial={{ opacity: 0, scale: 0.8, y: -5 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: -5 }}
-          transition={{ duration: 0.2 }}
-          className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
-        >
-          <button
-            className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
-            onClick={() => {
-              navigate(`/training/edit/${postId}`);
-              setShowMenu(false);
+            ref={menuRef}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={{
+              hidden: {},
+              visible: {},
+              exit: {},
             }}
+            className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
           >
-            수정하기
-          </button>
-          <button
-            className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
-            onClick={async () => {
-              try {
-                const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-                if (!token) {
-                  alert("로그인이 필요합니다.");
-                  return;
-                }
-            
-                const { data } = await customAxios.patch(
-                  `/run/training/post/${postId}/cancel`,
-                  {},
-                  {
-                    headers: {
-                      Authorization: `Bearer ${token}`,
-                    },
+            {["수정하기", "취소하기"].map((label, index) => (
+              <motion.button
+                key={label}
+                custom={index}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ delay: 0.1 * index, duration: 0.2 }}
+                className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+                onClick={async () => {
+                  if (label === "수정하기") {
+                    navigate(`/training/edit/${postId}`);
+                    setShowMenu(false);
+                  } else {
+                    const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
+                    if (!confirmCancel) return;
+
+                    try {
+                      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                      if (!token) {
+                        alert("로그인이 필요합니다.");
+                        return;
+                      }
+
+                      const { data } = await customAxios.patch(
+                        `/run/training/post/${postId}/cancel`,
+                        {},
+                        {
+                          headers: {
+                            Authorization: `${token}`,
+                          },
+                        }
+                      );
+
+                      if (data.isSuccess) {
+                        alert("게시글이 성공적으로 취소되었습니다.");
+                        setShowMenu(false);
+                        navigate("/training");
+                      } else {
+                        alert(data.responseMessage || "취소에 실패했습니다.");
+                      }
+                    } catch (error) {
+                      console.error(error);
+                      alert("요청 중 오류가 발생했습니다.");
+                    }
                   }
-                );
-                
-            
-                if (data.isSuccess) {
-                  alert("게시글이 성공적으로 취소되었습니다.");
-                  setShowMenu(false);
-                  // 페이지 새로고침 또는 상태 업데이트 필요 시 여기에 추가
-                  navigate("/training")
-                } else {
-                  alert(data.responseMessage || "취소에 실패했습니다.");
-                }
-              } catch (error) {
-                console.error(error);
-                alert("요청 중 오류가 발생했습니다.");
-              }
-            }}
-            
-          >
-            취소하기
-          </button>
-        </motion.div>
+                }}
+              >
+                {label}
+              </motion.button>
+            ))}
+          </motion.div>
         )}
       </div>
 
-      <div className="relative w-full">
-      <object
-            data={postImageUrl || flashrunimage}
-            className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
-              }`}
-          /> 
-        <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
+      <div className="relative w-full overflow-hidden">
+        <object
+          data={postImageUrl || flashrunimage}
+          className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
+            }`}
+        />
+        <div className="absolute top-[240px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[8px]">
-            {/* 상단 전체를 relative로 감싸기 */}
-            <div className="relative flex flex-col items-center mt-[4px] w-[375px]">
-
-              {/* trainingtype 박스 */}
-              <div className="flex bg-[#FFC002] h-[24px] p-[10px] text-[14px] rounded-[8px] font-bold w-fit items-center">
-                {trainingtype}
+            <div className="relative w-full max-w-[430px] mx-auto">
+              <div className="flex flex-col items-center">
+                {/* 훈련 종류 뱃지 */}
+                <div className="flex bg-[#FFC002] h-[24px] p-[10px] text-[14px] rounded-[8px] font-bold w-fit items-center">
+                  {trainingtype}
+                </div>
               </div>
 
-              
-              {/* 물음표 아이콘: 고정된 우측 위치 */}
+              {/* 물음표 아이콘: 오른쪽 상단에 고정 */}
               {getTrainingDescription(trainingtype) && (
                 <>
                   <img
                     src={isTooltipVisible ? questionmarkOn : questionmarkOff}
                     alt="question mark"
-                    className="absolute top-[-1px] right-[18px] w-[24px] h-[24px] cursor-pointer"
+                    className="absolute top-[6px] right-[15px] w-[24px] h-[24px] cursor-pointer"
                     onClick={() => setIsTooltipVisible(!isTooltipVisible)}
                   />
 
-                  {/* 툴팁 */}
+                  {/* 툴팁도 동일하게 위치 */}
                   {isTooltipVisible && (
-                    <div className="absolute bottom-[140%] right-[25px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
+                    <div className="absolute bottom-[150%] right-[22px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
                       <div className="text-[#4F3F3F] text-[12px]">
                         {getTrainingDescription(trainingtype)}
                       </div>
@@ -450,8 +480,8 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                   )}
                 </>
               )}
-
             </div>
+
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
           <div className="flex flex-col items-start w-full max-w-[360px] px-5 mt-5">
@@ -474,7 +504,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
       <div className="">
         <TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} />
       </div>
-     
+
 
       {activeTab === "소개" && (
         <>
@@ -495,13 +525,13 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                 {attachmentUrls.map((url, index) => (
                   <SwiperSlide key={index}>
                     <div className="relative">
-                    <div className="w-[400px] h-[300px] overflow-hidden">
-                          <img
-                            src={url}
-                            alt={`코스 사진 ${index + 1}`}
-                            className="rounded-lg w-full h-full object-cover"
-                          />
-                        </div>
+                      <div className="w-full h-[300px] overflow-hidden">
+                        <img
+                          src={url}
+                          alt={`코스 사진 ${index + 1}`}
+                          className="rounded-lg w-full h-full object-cover"
+                        />
+                      </div>
                       <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
                         {index + 1}/{attachmentUrls.length}
                       </div>
@@ -540,7 +570,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           editedAttendance={editedAttendance}
           toggleAttendance={toggleAttendance}
           onSaveAttendance={saveAttendanceChanges}
-          onToggleEditMode={() => setIsEditMode(true)}
+          onToggleEditMode={handleEditAttempt} 
           userInfoName={userInfo.userName}
           postCreatorName={postCreatorName}
         />
@@ -559,7 +589,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
       >
         {buttonText}
       </button>
-      
+
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
           <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">

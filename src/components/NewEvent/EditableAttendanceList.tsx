@@ -18,7 +18,8 @@ interface EditableAttendanceListProps {
   users: User[];
   onUsersChange: (newUsers: User[]) => void;
   onSaveComplete?: () => void;
-  canEdit?: boolean; // 🔥 새로 추가
+  canEdit?: boolean;
+  onEditAttempt?: () => void;
 }
 
 
@@ -29,6 +30,7 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
   onUsersChange,
   onSaveComplete,
   canEdit,
+  onEditAttempt,
 }) => {
   const [editMode, setEditMode] = useState(false);
 
@@ -92,7 +94,7 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
               if (editMode) {
                 handleSave();
               } else {
-                setEditMode(true);
+                onEditAttempt ? onEditAttempt() : setEditMode(true); // ✅ 조건 분기
               }
             }}
             className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${editMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"

@@ -116,6 +116,9 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
   const [postStatus, setPostStatus] = useState<string>("");
   const handleModalStartClick = async () => {
+    const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
+    if (!confirmClose) return;
+
     if (!code) return;
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
@@ -316,73 +319,87 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
               ))}
             </div>
           </div>
-  
+
           {showMenu && (
             <motion.div
-            ref={menuRef}
-            initial={{ opacity: 0, scale: 0.8, y: -5 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: -5 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
-          >
-            <button
-              className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
-              onClick={() => {
-                navigate(`/flash/edit/${postId}`);
-                setShowMenu(false);
+              ref={menuRef}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={{
+                hidden: {},
+                visible: {},
+                exit: {},
               }}
+              className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
             >
-              수정하기
-            </button>
-            <button
-              className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
-              onClick={async () => {
-                try {
-                  const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-                  if (!token) {
-                    alert("로그인이 필요합니다.");
-                    return;
-                  }
-              
-                  const { data } = await customAxios.patch(
-                    `/run/flash/post/${postId}/cancel`,
-                    {},
-                    {
-                      headers: {
-                        Authorization: `${token}`,
-                      },
+              {["수정하기", "취소하기"].map((label, index) => (
+                <motion.button
+                  key={label}
+                  custom={index}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: 0.1 * index, duration: 0.2 }}
+                  className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+                  onClick={async () => {
+                    if (label === "수정하기") {
+                      if (postStatus === "CLOSED") {
+                        alert("종료된 러닝은 수정이 불가능합니다.");
+                        return;
+                      }
+                      navigate(`/regular/edit/${postId}`);
+                      setShowMenu(false);
+                    } else {
+                      const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
+                      if (!confirmCancel) return;
+
+                      try {
+                        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                        if (!token) {
+                          alert("로그인이 필요합니다.");
+                          return;
+                        }
+
+                        const { data } = await customAxios.patch(
+                          `/run/flash/post/${postId}/cancel`,
+                          {},
+                          {
+                            headers: {
+                              Authorization: `${token}`,
+                            },
+                          }
+                        );
+
+                        if (data.isSuccess) {
+                          alert("게시글이 성공적으로 취소되었습니다.");
+                          setShowMenu(false);
+                          navigate("/Flash");
+                        } else {
+                          alert(data.responseMessage || "취소에 실패했습니다.");
+                        }
+                      } catch (error) {
+                        console.error(error);
+                        alert("요청 중 오류가 발생했습니다.");
+                      }
                     }
-                  );
-                  
-              
-                  if (data.isSuccess) {
-                    alert("게시글이 성공적으로 취소되었습니다.");
-                    setShowMenu(false);
-                    navigate("/Flash")
-                  } else {
-                    alert(data.responseMessage || "취소에 실패했습니다.");
-                  }
-                } catch (error) {
-                  console.error(error);
-                  alert("요청 중 오류가 발생했습니다.");
-                }
-              }}
-              
-            >
-              취소하기
-            </button>
-          </motion.div>
+                  }}
+                >
+                  {label}
+                </motion.button>
+              ))}
+            </motion.div>
           )}
+
         </div>
         {/* 러닝 포스팅 사진 */}
         <div className="relative w-full max-w-[430px] pb-[50px]">
           <div className="w-full h-[250px] overflow-hidden">
-          <object
+            <object
               data={postimgurl || flashrunimage}
               className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
                 }`}
-            /> 
+            />
           </div>
           {/* 번개런 정보 */}
           <div className="absolute top-[220px] w-full px-5 rounded-t-[20px] bg-white">
@@ -406,7 +423,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
             </div>
           </div>
         </div>
-  
+
         <TabButton
           leftLabel="소개"
           rightLabel="명단"
@@ -434,7 +451,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                 </div>
                 <span className="text-black font-semibold">{creatorName}</span>
               </div>
-  
+
             </div>
             {attachmentUrls.length > 0 && (
               <div className="mt-5 w-full max-w-[320px]">
@@ -492,11 +509,13 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           users={editableParticipants}
           onUsersChange={setEditableParticipants}
           canEdit={true} // 🔥 관리자용이므로 무조건 true
+          postStatus={postStatus}        // 추가
+          postDate={date}
         />}
         <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
-  
-  
-  
+
+
+
         {/* 시작하기 버튼 */}
         <button
           className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished || postStatus === "CLOSED"
@@ -508,7 +527,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         >
           {buttonText}
         </button>
-        
+
         {isModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
             <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
