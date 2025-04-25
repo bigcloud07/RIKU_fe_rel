@@ -4,6 +4,7 @@ import CLODESDimg from "../../assets/Main-img/NewClosedStatus.svg";
 import CANCELEDimg from "../../assets/Main-img/NewCanceledStatus.svg";
 import peopleimg from "../../assets/people_darkgreen.svg";
 import defaultimg from "../../assets/CardDefaultImg.svg";
+import ARGENTimg from "../../assets/Main-img/NewUrgentStatus.svg"
 
 interface EventCardProps {
   location: string;
@@ -64,7 +65,7 @@ const NewEventCard: React.FC<EventCardProps> = ({
       </div>
 
       {/* 러닝 장소 또는 제목 */}
-      <div className="absolute top-[64px] left-[16px] text-[20px] font-semibold">
+      <div className="absolute top-[64px] left-[16px] text-[20px] font-semibold max-w-[300px] truncate overflow-hidden whitespace-nowrap">
         {location}
       </div>
 

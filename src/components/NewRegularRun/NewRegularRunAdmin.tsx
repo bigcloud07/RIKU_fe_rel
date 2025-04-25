@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import customAxios from "../../apis/customAxios";
+import { motion } from "framer-motion";
+import { useRef } from "react";
 
 import RegularRunlogo from "../../assets/regularRunMark.svg";
 import people from "../../assets/FlashRunDetail/people.svg";
@@ -41,8 +43,9 @@ interface Props {
 }
 
 const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
+
   const navigate = useNavigate();
-  const handleBack = () => navigate("/regular");
+  const handleBack = () => navigate(-1);
 
   const [activeTab, setActiveTab] = useState<"소개" | "명단">("소개");
   const [code, setCode] = useState("");
@@ -98,6 +101,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         });
         setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
         setGroupedParticipants(result.groupedParticipants || []);
+        console.log(result.attachmentUrls); // 1장인지, 여러 장인지
 
       } else {
         setError(response.data.responseMessage);
@@ -112,7 +116,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
     fetchPostData();
   }, [postId]);
 
-  
+
 
   const formatDateTime = (iso: string) => {
     const utcDate = new Date(iso);
@@ -156,6 +160,9 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   const [postStatus, setPostStatus] = useState<string>("");
 
   const handleModalStartClick = async () => {
+    const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
+    if (!confirmClose) return;
+
     if (!code) return;
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
@@ -164,7 +171,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
       });
 
       if (response.data.isSuccess) {
-        setIsFinished(true); // 버튼 비활성화 처리
+        setIsFinished(true);
         setIsModalOpen(false);
         alert("출석이 종료되었습니다.");
       } else {
@@ -174,6 +181,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
       setError("출석 종료 처리에 실패했습니다.");
     }
   };
+
 
   const handleTabChange = async (tab: "소개" | "명단") => {
     setActiveTab(tab);
@@ -218,7 +226,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
       const response = await customAxios.get(`/run/regular/post/${postId}`, {
         headers: { Authorization: `${token}` },
       });
-  
+
       if (response.data.isSuccess) {
         const result = response.data.result;
         setParticipants(result.participants || []);
@@ -284,167 +292,308 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   const attendedCount = participants.filter((p) => p.status === "ATTENDED").length;
   const pendingCount = participants.length - attendedCount;
 
+  // 상단바 점 버튼 관련 코드
+  const [showMenu, setShowMenu] = useState(false); // 메뉴 열림 상태 추가
+  const menuRef = useRef<HTMLDivElement>(null);
+  const dotButtonRef = useRef<HTMLDivElement>(null);
+
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target as Node) &&
+        dotButtonRef.current &&
+        !dotButtonRef.current.contains(e.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+    };
+
+    if (showMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showMenu]);
+
+  // 명단 수정 조건 검사 함수
+  const handleEditAttempt = () => {
+    const now = new Date(); // 현재 로컬 시간
+    const postDateKST = new Date(new Date(date).getTime() + 9 * 60 * 60 * 1000);
+
+    if (postStatus === "CLOSED" || postStatus === "CANCELED") {
+      alert("출석이 종료되어 명단 수정이 불가능합니다.");
+      return;
+    }
+
+    if (now < postDateKST) {
+      alert("아직 명단 수정을 할 수 없습니다.");
+      return;
+    }
+
+    setIsEditMode(true);
+  };
+
+
+
+
+
 
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center">
-      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
-        <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
-        정규런
-      </div>
-
-      <div className="relative w-[375px] pb-[90px]">
-        <div className="w-[375px] h-[308px] overflow-hidden">
-          <object data={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
-        </div>
-        <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
-          <div className="flex flex-col items-center mt-[14px]">
-            <object data={RegularRunlogo} className="w-[60px] h-[24px]" />
-            <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
-          </div>
-          <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
-            <div className="flex items-center my-1.5">
-              <object data={place} className="w-[24px] h-[24px] mr-2" />
-              <span>{location}</span>
-            </div>
-            <div className="flex items-center my-1.5">
-              <object data={time} className="w-[24px] h-[24px] mr-2" />
-              <span>{formatDateTime(date)}</span>
-            </div>
-            <div className="flex items-center my-1.5">
-              <object data={people} className="w-[24px] h-[24px] mr-2" />
-              <span className="font-bold text-kuDarkGreen">{participantsNum}</span>
+    <div className="w-full min-h-screen bg-white">
+      <div className="w-full max-w-[430px] mx-auto flex flex-col items-center text-center justify-center">
+        <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
+          <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
+          정규런
+          <div
+            ref={dotButtonRef}
+            className="absolute right-[5px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation(); // 이벤트 버블링 방지
+              setShowMenu((prev) => !prev);
+            }}
+          >
+            <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
+              {[...Array(3)].map((_, i) => (
+                <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+              ))}
             </div>
           </div>
-        </div>
-      </div>
 
-      <TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} />
-
-      {activeTab === "소개" && (
-        <>
-          <div className="flex items-start text-left w-full mt-3 my-2 max-w-[349px]">
-            <img src={pacermark} />
-            <div className="m-1">PACER</div>
-          </div>
-          <PacerCard pacers={pacers} />
-          {attachmentUrls.length > 0 && (
-            <div className="mt-5 w-[327px]">
-              <div className="text-left text-[16px] mb-2">코스 사진</div>
-              <Swiper
-                pagination={{ clickable: true }}
-                modules={[Pagination]}
-                spaceBetween={10}
-                slidesPerView={1}
-              >
-                {attachmentUrls.map((url, index) => (
-                  <SwiperSlide key={index}>
-                    <div className="relative">
-                      <img src={url} alt={`코스 사진 ${index + 1}`} className="rounded-lg w-full h-auto" />
-                      <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
-                        {index + 1}/{attachmentUrls.length}
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-          )}
-          <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">세부 내용</div>
-          <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
-
-            <div className="flex items-center gap-2 mb-2">
-              {postCreatorImg ? (
-                <img
-                  src={postCreatorImg}
-                  alt={`${postCreatorName} 프로필`}
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
-                  {postCreatorName.charAt(0)}
-                </div>
-              )}
-              <span className="text-sm font-medium text-black">{postCreatorName}</span>
-            </div>
-            <div className="text-[#686F75] p-3 text-sm text-justify whitespace-pre-wrap">{content}</div>
-          </div>
-        </>
-      )}
-
-      {activeTab === "명단" && (
-        <>
-
-
-          <AttendanceList
-            groupedParticipants={groupedParticipants}
-            isEditMode={isEditMode}
-            editedAttendance={editedAttendance}
-            toggleAttendance={toggleAttendance}
-            onSaveAttendance={saveAttendanceChanges}
-            onToggleEditMode={() => setIsEditMode(true)}
-            userInfoName={userInfo.userName}
-            postCreatorName={postCreatorName}
-          />
-        </>
-      )}
-
-
-      <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
-
-      {/* 시작하기 버튼 */}
-      <button
-        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-[32px] mb-2 ${isFinished || postStatus === "CLOSED"
-          ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
-          : "bg-[#366943] text-white"
-          }`}
-        onClick={handleStartClick}
-        disabled={isFinished || postStatus === "CLOSED"}
-      >
-        {buttonText}
-      </button>
-      {/* 수정하기 버튼 */}
-      <button
-        className="flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mb-4 bg-[#4D4D4D] text-white"
-        onClick={() => navigate(`/regular/edit/${postId}`)}
-      >
-        수정하기
-      </button>
-
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
-          <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
-            <button
-              className="absolute top-2.5 right-2.5 text-2xl cursor-pointer"
-              onClick={handleCloseModal}
+          {showMenu && (
+            <motion.div
+              ref={menuRef}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={{
+                hidden: {},
+                visible: {},
+                exit: {},
+              }}
+              className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
             >
-              ×
-            </button>
-            <h2>참여 코드가 생성되었습니다.</h2>
-            <input
-              type="text"
-              className="w-full p-2 border-b border-gray-300 text-center text-lg mt-5"
-              value={code}
-              disabled
+              {["수정하기", "취소하기"].map((label, index) => (
+                <motion.button
+                  key={label}
+                  custom={index}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: 0.1 * index, duration: 0.2 }}
+                  className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+                  onClick={async () => {
+                    if (label === "수정하기") {
+                      if (postStatus === "CLOSED") {
+                        alert("종료된 러닝은 수정이 불가능합니다.");
+                        return;
+                      }
+                      navigate(`/regular/edit/${postId}`);
+                      setShowMenu(false);
+                    } else {
+                      const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
+                      if (!confirmCancel) return;
+
+                      try {
+                        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                        if (!token) {
+                          alert("로그인이 필요합니다.");
+                          return;
+                        }
+
+                        const { data } = await customAxios.patch(
+                          `/run/regular/post/${postId}/cancel`,
+                          {},
+                          {
+                            headers: {
+                              Authorization: `${token}`,
+                            },
+                          }
+                        );
+
+                        if (data.isSuccess) {
+                          alert("게시글이 성공적으로 취소되었습니다.");
+                          setShowMenu(false);
+                          navigate("/regular");
+                        } else {
+                          alert(data.responseMessage || "취소에 실패했습니다.");
+                        }
+                      } catch (error) {
+                        console.error(error);
+                        alert("요청 중 오류가 발생했습니다.");
+                      }
+                    }
+                  }}
+                >
+                  {label}
+                </motion.button>
+              ))}
+            </motion.div>
+          )}
+
+        </div>
+
+
+        <div className="relative w-full max-w-[430px] mx-auto pb-[90px]">
+          <div className="w-fulls h-[308px] overflow-hidden">
+            <object
+              data={postImageUrl || flashrunimage}
+              className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
+                }`}
+            />        </div>
+          <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
+            <div className="flex flex-col items-center mt-[14px]">
+              <object data={RegularRunlogo} className="w-[60px] h-[24px]" />
+              <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
+            </div>
+            <div className="flex flex-col items-start w-full px-5 mt-5">
+              <div className="flex items-center my-1.5">
+                <object data={place} className="w-[24px] h-[24px] mr-2" />
+                <span>{location}</span>
+              </div>
+              <div className="flex items-center my-1.5">
+                <object data={time} className="w-[24px] h-[24px] mr-2" />
+                <span>{formatDateTime(date)}</span>
+              </div>
+              <div className="flex items-center my-1.5">
+                <object data={people} className="w-[24px] h-[24px] mr-2" />
+                <span className="font-bold text-kuDarkGreen">{participantsNum}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} />
+
+        {activeTab === "소개" && (
+          <>
+            <div className="flex items-start text-left w-full mt-3 my-2 max-w-[349px]">
+              <img src={pacermark} />
+              <div className="m-1">PACER</div>
+            </div>
+            <PacerCard pacers={pacers} />
+            {attachmentUrls.length > 0 && (
+              <div className="mt-5 w-[327px]">
+                <div className="text-left text-[16px] mb-2">코스 사진</div>
+                <Swiper
+                  pagination={{ clickable: true }}
+                  modules={[Pagination]}
+                  spaceBetween={10}
+                  slidesPerView={1}
+                >
+                  {attachmentUrls.map((url, index) => (
+                    <SwiperSlide key={index}>
+                      <div className="relative">
+                        <div className="w-full h-[300px] overflow-hidden rounded-lg">
+                          <img
+                            src={url}
+                            alt={`코스 사진 ${index + 1}`}
+                            className="rounded-lg w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
+                          {index + 1}/{attachmentUrls.length}
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            )}
+            <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">세부 내용</div>
+            <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
+
+              <div className="flex items-center gap-2 mb-2">
+                {postCreatorImg ? (
+                  <img
+                    src={postCreatorImg}
+                    alt={`${postCreatorName} 프로필`}
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
+                    {postCreatorName.charAt(0)}
+                  </div>
+                )}
+                <span className="text-sm font-medium text-black">{postCreatorName}</span>
+              </div>
+              <div className="text-[#686F75] p-3 text-sm text-justify whitespace-pre-wrap">{content}</div>
+            </div>
+          </>
+        )}
+
+        {activeTab === "명단" && (
+          <>
+
+
+            <AttendanceList
+              groupedParticipants={groupedParticipants}
+              isEditMode={isEditMode}
+              editedAttendance={editedAttendance}
+              toggleAttendance={toggleAttendance}
+              onSaveAttendance={saveAttendanceChanges}
+              onToggleEditMode={handleEditAttempt} // 여기서 조건 검사 포함된 함수 전달
+              userInfoName={userInfo.userName}
+              postCreatorName={postCreatorName}
             />
-            <div className="flex justify-between mt-5 gap-2">
+          </>
+        )}
+
+
+        <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
+
+        {/* 시작하기 버튼 */}
+        <button
+          className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-[32px] mb-2 ${isFinished || postStatus === "CLOSED"
+            ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
+            : "bg-[#366943] text-white"
+            }`}
+          onClick={handleStartClick}
+          disabled={isFinished || postStatus === "CLOSED"}
+        >
+          {buttonText}
+        </button>
+
+
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
+            <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
               <button
-                className="w-full py-3 rounded-lg bg-[#366943] text-white text-lg"
-                onClick={handleModalStartClick}
-              >
-                종료하기
-              </button>
-              <button
-                className="w-full py-3 rounded-lg bg-gray-300 text-gray-700"
+                className="absolute top-2.5 right-2.5 text-2xl cursor-pointer"
                 onClick={handleCloseModal}
               >
-                창닫기
+                ×
               </button>
+              <h2>참여 코드가 생성되었습니다.</h2>
+              <input
+                type="text"
+                className="w-full p-2 border-b border-gray-300 text-center text-lg mt-5"
+                value={code}
+                disabled
+              />
+              <div className="flex justify-between mt-5 gap-2">
+                <button
+                  className="w-full py-3 rounded-lg bg-[#366943] text-white text-lg"
+                  onClick={handleModalStartClick}
+                >
+                  출석종료
+                </button>
+                <button
+                  className="w-full py-3 rounded-lg bg-gray-300 text-gray-700"
+                  onClick={handleCloseModal}
+                >
+                  창닫기
+                </button>
+              </div>
+              {error && <div className="text-red-500 mt-2">{error}</div>}
             </div>
-            {error && <div className="text-red-500 mt-2">{error}</div>}
           </div>
-        </div>
-      )}
+        )}
 
+      </div>
     </div>
   );
 };

@@ -6,9 +6,10 @@ interface TimeWheelPickerProps {
   onSelect: (index: number) => void;
 }
 
+
 const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ items, selected, onSelect }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const itemHeight = 40;
+  const itemHeight = 56;
   const isAutoScrolling = useRef(false);
 
   const handleScroll = () => {
@@ -47,25 +48,26 @@ const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ items, selected, onSe
     <div
       ref={containerRef}
       onScroll={handleScroll}
-      className="h-[120px] overflow-y-scroll w-auto no-scrollbar snap-y snap-mandatory relative"
+      className="h-[180px] overflow-y-scroll no-scrollbar snap-y snap-mandatory relative"
     >
       {/* 구분선 */}
-      <div className="absolute top-[40px] left-0 w-full z-10" />
-      <div className="absolute top-[80px] left-0 w-full z-10" />
+      <div className="absolute top-[56px] left-0 w-full z-10 " />
+      <div className="absolute top-[112px] left-0 w-full z-10" />
 
-      <div className="flex flex-col items-center py-[40px] relative z-0">
+      <div className="flex flex-col items-center py-[56px] relative z-0">
         {items.map((item, index) => (
           <div
             key={index}
             onClick={() => onSelect(index)}
-            className={`h-[40px] flex items-center justify-center snap-center cursor-pointer w-auto
-              ${index === selected ? 'text-black font-bold text-[30px] border-b border-t' : 'text-gray-400 text-[30px]'}
-            `}
+            className={`h-[56px] flex items-center justify-center snap-center cursor-pointer
+        ${index === selected ? 'text-black font-bold text-[50px] border-b border-t' : 'text-gray-400 text-[50px]'}
+      `}
           >
             {item.padStart(2, '0')}
           </div>
         ))}
       </div>
+
     </div>
   );
 };

@@ -4,6 +4,7 @@ import CLODESDimg from "../../assets/Main-img/NewClosedStatus.svg";
 import CANCELEDimg from "../../assets/Main-img/NewCanceledStatus.svg";
 import peopleimg from "../../assets/people_darkgreen.svg";
 import defaultimg from "../../assets/CardDefaultImg.svg";
+import ARGENTimg from "../../assets/Main-img/NewUrgentStatus.svg"
 
 interface EventCardProps {
   location: string;
@@ -26,8 +27,27 @@ const NewEventCard: React.FC<EventCardProps> = ({
   participants,
   onClick,
 }) => {
-  // 상태에 따라 뱃지 이미지 선택
   const getStatusImage = () => {
+    // 현재 시간
+    const now = new Date();
+  
+    // time props를 "HH:mm" → Date 객체로 변환 (오늘 날짜 기준)
+    const [hourStr, minuteStr] = time.split(":");
+    const runTime = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      parseInt(hourStr, 10),
+      parseInt(minuteStr, 10)
+    );
+  
+    const diff = runTime.getTime() - now.getTime();
+    const oneHourInMs = 60 * 60 * 1000;
+  
+    if (runState === "NOW" && diff <= oneHourInMs && diff > 0) {
+      return ARGENTimg;
+    }
+  
     switch (runState) {
       case "NOW":
         return NOWimg;
@@ -39,6 +59,8 @@ const NewEventCard: React.FC<EventCardProps> = ({
         return NOWimg;
     }
   };
+    
+
 
 
   return (
@@ -64,7 +86,7 @@ const NewEventCard: React.FC<EventCardProps> = ({
       </div>
 
       {/* 러닝 장소 또는 제목 */}
-      <div className="absolute top-[64px] left-[16px] text-[20px] font-semibold">
+      <div className="absolute top-[64px] left-[16px] text-[20px] font-semibold max-w-[300px] truncate overflow-hidden whitespace-nowrap">
         {location}
       </div>
 

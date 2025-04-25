@@ -18,7 +18,10 @@ interface EditableAttendanceListProps {
   users: User[];
   onUsersChange: (newUsers: User[]) => void;
   onSaveComplete?: () => void;
+  canEdit?: boolean;
+  onEditAttempt?: () => void;
 }
+
 
 const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
   postId,
@@ -26,6 +29,8 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
   users,
   onUsersChange,
   onSaveComplete,
+  canEdit,
+  onEditAttempt,
 }) => {
   const [editMode, setEditMode] = useState(false);
 
@@ -83,21 +88,21 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
             <span className="text-kuDarkGreen">{users.filter((u) => u.status === "ATTENDED").length}</span> / {users.length}
           </span>
         </div>
-        <button
-          onClick={() => {
-            if (editMode) {
-              handleSave();
-            } else {
-              setEditMode(true);
-            }
-          }}
-          className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${
-            editMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"
-          }`}
-          
-        >
-          {editMode ? "명단 저장" : "명단 수정"}
-        </button>
+        {canEdit && (
+          <button
+            onClick={() => {
+              if (editMode) {
+                handleSave();
+              } else {
+                onEditAttempt ? onEditAttempt() : setEditMode(true); // ✅ 조건 분기
+              }
+            }}
+            className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${editMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"
+              }`}
+          >
+            {editMode ? "명단 저장" : "명단 수정"}
+          </button>
+        )}
       </div>
 
       {/* 유저 목록 */}

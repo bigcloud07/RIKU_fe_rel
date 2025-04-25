@@ -70,7 +70,10 @@ export const DateInput: React.FC<DateInputProps> = ({ selectedDate, onChange }) 
                       outside: "text-gray-300",
                       chevron: "fill-black",
                       disabled: "text-gray-300 cursor-not-allowed", // 비활성화된 날짜 스타일
+                      
+
                     }}
+
                   />
                 </div>
               </div>

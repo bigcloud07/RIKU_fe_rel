@@ -18,7 +18,12 @@ interface EditableAttendanceListProps {
   users: User[];
   onUsersChange: (newUsers: User[]) => void;
   onSaveComplete?: () => void;
+  canEdit?: boolean;
+  postStatus?: string; // 🔥 추가
+  postDate?: string;   // 🔥 추가
 }
+
+
 
 const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
   postId,
@@ -26,6 +31,9 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
   users,
   onUsersChange,
   onSaveComplete,
+  canEdit,
+  postDate,
+  postStatus
 }) => {
   const [editMode, setEditMode] = useState(false);
 
@@ -83,21 +91,41 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
             <span className="text-kuDarkGreen">{users.filter((u) => u.status === "ATTENDED").length}</span> / {users.length}
           </span>
         </div>
-        <button
+        {canEdit && (
+          <button
           onClick={() => {
+            if (!editMode) {
+              // 🔍 상태 조건 먼저 확인
+              if (postStatus === "CLOSED" || postStatus === "CANCELED") {
+                alert("출석이 종료되어 명단 수정이 불가능합니다.");
+                return;
+              }
+        
+              // 🔍 시간 조건 확인
+              if (postDate) {
+                const localNow = new Date(); // 현재 로컬 시간
+                const postDateKST = new Date(new Date(postDate).getTime() + 9 * 60 * 60 * 1000);
+        
+                if (localNow < postDateKST) {
+                  alert("아직 명단 수정을 할 수 없습니다.");
+                  return;
+                }
+              }
+            }
+        
+            // 조건 모두 통과 → 수정모드 활성화 또는 저장
             if (editMode) {
               handleSave();
             } else {
               setEditMode(true);
             }
           }}
-          className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${
-            editMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"
-          }`}
-          
+          className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${editMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"}`}
         >
           {editMode ? "명단 저장" : "명단 수정"}
         </button>
+        
+        )}
       </div>
 
       {/* 유저 목록 */}

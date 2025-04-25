@@ -77,9 +77,9 @@ const NewTrainingList: React.FC = () => {
 
 
     return (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center mx-auto max-w-[430px]">
             {/* 상단바 */}
-            <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-xl font-semibold justify-center items-center">
+            <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
                 <img
                     src={BacbBtnimg}
                     className="absolute left-[24px] cursor-pointer"
@@ -90,7 +90,7 @@ const NewTrainingList: React.FC = () => {
             </div>
 
             {/* 오늘의 러닝 */}
-            <div className="relative bg-kuDarkGreen w-[375px] min-h-[268px]">
+            <div className="relative bg-kuDarkGreen w-full min-h-[268px]">
                 <div className="w-full flex flex-col items-center pt-2">
                     <div className="w-[114px] h-[32px] bg-white text-kuDarkGreen text-[16px] font-bold rounded-xl flex items-center justify-center">
                         오늘의 훈련
@@ -121,7 +121,7 @@ const NewTrainingList: React.FC = () => {
                                                     key={run.id}
                                                     location={run.title}
                                                     postimg={run.postImageUrl}
-                                                    runDate={run.date}
+                                                    runDate={kstDate}
                                                     runState={run.postStatus ?? "NOW"}
                                                     participants={run.participants}
                                                     date={formattedDate}
@@ -157,7 +157,7 @@ const NewTrainingList: React.FC = () => {
 
             {/* 예정된 러닝 */}
             <div className="w-[375px] mt-4">
-                <h2 className="text-[20px] font-semibold ml-5 ">예정된 러닝</h2>
+                <h2 className="text-[20px] font-semibold ml-5 ">예정된 훈련</h2>
                 <div className="flex flex-col space-y-[12px] mt-[16px] ml-[20px]">
                     {upcomingRuns.map((run) => {
                         const utcDate = new Date(run.date);
@@ -183,11 +183,11 @@ const NewTrainingList: React.FC = () => {
             </div>
 
             {/* 구분선 */}
-            <div className="w-[375px] h-[8px] bg-kuLightGray mt-[32px]"></div>
+            <div className="w-full h-[8px] bg-kuLightGray mt-[32px]"></div>
 
             {/* 지난 러닝 */}
             <div className="w-[375px] mt-4 mb-[100px]">
-                <h2 className="text-[20px] font-semibold ml-5">지난 러닝</h2>
+                <h2 className="text-[20px] font-semibold ml-5">지난 훈련</h2>
                 <div className="grid grid-cols-3 grid-rows-2 gap-x-[12px] gap-y-[16px] mt-[20px] px-3">
                 {pastRuns.map((run) => {
                         const utcDate = new Date(run.date);

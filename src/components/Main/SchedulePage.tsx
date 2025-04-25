@@ -16,6 +16,7 @@ import {
   parseISO,
   addYears,
   subYears,
+  addHours,
 } from "date-fns";
 
 //한 달 달력에 들어갈 내용(날짜(Date))들의 배열을 만든다.
@@ -62,10 +63,39 @@ function SchedulePage() {
   const [selectedDateInModal, setSelectedDateInModal] = useState(new Date());
   const [monthlyPlan, setMonthlyPlan] = useState<{ date: string; eventCount: number }[]>([]);
   const [selectedDateEvent, setSelectedDateEvent] = useState<
+
     { postId: number; postType: string; title: string; date: string; location: string }[]
+
   >([]);
+  const [userRole, setUserRole] = useState("");
 
   const navigate = useNavigate();
+
+  //uesrRole 받아오기
+  useEffect(() => {
+    const fetchMain = async () => {
+      try {
+        const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
+        const response = await customAxios.get(`/run`, {
+          headers: { Authorization: `${token}` },
+        });
+
+        if (response.data.isSuccess) {
+          const result = response.data.result;
+          setUserRole(result.userRole || null);
+          console.log("userRole성공")
+
+        } else {
+          console.error("데이터를 불러오지 못했습니다.", response.data.responseMessage);
+        }
+      } catch (error) {
+        console.error("API 요청 오류", error);
+      }
+    };
+    fetchMain();
+  }, [])
+
+
 
   //캘린더 월별 조회 메소드
   async function fetchMonthlyData() {
@@ -86,6 +116,7 @@ function SchedulePage() {
       );
       console.log(response.data);
       setMonthlyPlan(response.data.result.schedules); //불러온 data의 result 값으로 monthlyPlan 값 저장
+
     } catch (error) {
       alert("서버 요청 중 오류 발생!");
       console.error("요청 실패: ", error);
@@ -329,8 +360,8 @@ function SchedulePage() {
             let style = isSelected
               ? "bg-kuDarkGreen text-white"
               : isCurrentMonth
-              ? "text-black"
-              : "text-gray-400";
+                ? "text-black"
+                : "text-gray-400";
 
             return (
               <div key={subIndex} className="flex flex-col items-center">
@@ -344,10 +375,12 @@ function SchedulePage() {
                     <div className={"flex flex-col items-center justify-center"}>
                       {planCounts > 0 ? (
                         <div className="flex items-center justify-center gap-0.5">
+
                           <span
                             className={`font-bold text-xs mt-2 ${
                               isSelected ? "text-kuWhite" : "text-kuDarkGray"
                             }`}
+
                           >
                             +{planCounts}
                           </span>
@@ -391,7 +424,7 @@ function SchedulePage() {
               <div className="pl-4 flex flex-col items-start">
                 <p className="text-gray-800 font-medium">{event.title}</p>
                 <p className="text-gray-500 text-sm">
-                  {format(parseISO(event.date), "HH:mm")} {event.location}
+                  {format(addHours(parseISO(event.date), 9), "HH:mm")} {event.location}
                 </p>
               </div>
             </div>
@@ -404,16 +437,14 @@ function SchedulePage() {
       {/* 플로팅 버튼 */}
       <button
         onClick={toggleFloatingButton}
-        className={`fixed bottom-20 right-4 w-16 h-16 rounded-full bg-kuDarkGreen text-white flex items-center justify-center shadow-lg hover:bg-kuDarkGreen-dark focus:outline-none z-50 transition-transform duration-300 ${
-          isFloatingButtonOpen ? "rotate-45" : "rotate-0"
-        }`}
+        className={`fixed bottom-20 right-4 w-16 h-16 rounded-full bg-kuDarkGreen text-white flex items-center justify-center shadow-lg hover:bg-kuDarkGreen-dark focus:outline-none z-50 transition-transform duration-300 ${isFloatingButtonOpen ? "rotate-45" : "rotate-0"
+          }`}
       >
         <img
           src={plusBtn}
           alt="플로팅 버튼 아이콘"
-          className={`w-8 h-8 transition-transform duration-300 ${
-            isFloatingButtonOpen ? "rotate-20" : "rotate-0"
-          }`}
+          className={`w-8 h-8 transition-transform duration-300 ${isFloatingButtonOpen ? "rotate-20" : "rotate-0"
+            }`}
         />
       </button>
 
@@ -483,10 +514,9 @@ function SchedulePage() {
                     key={month}
                     onClick={() => selectMonthInModal(month)}
                     className={`py-2 px-6 rounded-md text-sm font-semibold transition
-                      ${
-                        isSelected
-                          ? "bg-kuDarkGreen text-white"
-                          : "bg-whiteSmoke hover:bg-kuDarkGreen hover:text-white text-kuDarkGray"
+                      ${isSelected
+                        ? "bg-kuDarkGreen text-white"
+                        : "bg-whiteSmoke hover:bg-kuDarkGreen hover:text-white text-kuDarkGray"
                       }
                     `}
                   >
@@ -499,8 +529,7 @@ function SchedulePage() {
         </div>
       )}
 
-      {/* 플로팅 버튼이 열렸을 때 나타나는 옵션들 */}
-      {isFloatingButtonOpen && !isModalOpen && (
+      {isFloatingButtonOpen && (
         <div
           onClick={() => setIsFloatingButtonOpen(false)}
           className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out flex justify-end items-end p-8 z-40"
@@ -509,48 +538,66 @@ function SchedulePage() {
             onClick={(e) => e.stopPropagation()}
             className="fixed bottom-40 right-10 flex flex-col space-y-4 pointer-events-auto"
           >
-            {/* 첫 번째 버튼 */}
+            {/* 번개런 일정 추가하기 - 모든 사용자 사용 가능 */}
             <button
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showFirstButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                } bg-white text-black hover:bg-gray-100`}
               onClick={handleflashRunMake}
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${
-                showFirstButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-              }`}
             >
               번개런 일정 추가하기
             </button>
 
-            {/* 두 번째 버튼 */}
+            {/* 정규런 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${
-                showSecondButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-              }`}
-              onClick={handleRegularRunMake}
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showSecondButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                } ${userRole === "ADMIN"
+                  ? "bg-white text-black hover:bg-gray-100"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                }`}
+              onClick={
+                userRole === "ADMIN"
+                  ? handleRegularRunMake
+                  : () => alert("관리자만 사용할 수 있는 기능입니다.")
+              }
             >
               정규런 일정 추가하기
             </button>
 
-            {/* 세 번째 버튼 */}
+            {/* 훈련 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${
-                showThirdButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-              }`}
-              onClick={handleTrainingtMake}
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showThirdButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                } ${userRole === "ADMIN"
+                  ? "bg-white text-black hover:bg-gray-100"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                }`}
+              onClick={
+                userRole === "ADMIN"
+                  ? handleTrainingtMake
+                  : () => alert("관리자만 사용할 수 있는 기능입니다.")
+              }
             >
               훈련 일정 추가하기
             </button>
 
-            {/* 세 번째 버튼 */}
+            {/* 행사 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl bg-white text-black font-semibold shadow-lg py-2 px-4 hover:bg-gray-100 transition-all duration-300 ease-out transform ${
-                showFourthButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-              }`}
-              onClick={handleEventMake}
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showFourthButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                } ${userRole === "ADMIN"
+                  ? "bg-white text-black hover:bg-gray-100"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                }`}
+              onClick={
+                userRole === "ADMIN"
+                  ? handleEventMake
+                  : () => alert("관리자만 사용할 수 있는 기능입니다.")
+              }
             >
               행사 일정 추가하기
             </button>
           </div>
         </div>
       )}
+
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import riku_logo from "../../assets/riku_logo_loginPage.svg"; //라이쿠 로고 불러오기
+import riku_logo from "../../assets/riku_logo_loginPage.png"; //라이쿠 로고 불러오기
 import { Link, useNavigate } from "react-router-dom"; // Link 컴포넌트 import
 import customAxios from "../../apis/customAxios"; //커스텀 axios 호출
 import axios from "axios";

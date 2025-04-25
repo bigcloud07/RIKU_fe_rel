@@ -83,6 +83,9 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const [userStatus, setUserStatus] = useState("");
   const [buttonText, setButtonText] = useState("참여하기");
 
+  const [postStatus, setPostStatus] = useState("")
+
+
 
 
   const toggleAttendance = (userId: number, originalStatus: string) => {
@@ -185,6 +188,8 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setGroupedParticipants(result.groupedParticipants || []);
           setTrainingtype(result.trainingType);
+          setPostStatus(result.postStatus);
+
 
 
           const myInfo = result.userInfo;
@@ -267,7 +272,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
   const handleJoinConfirm = async () => {
     const isCancel = selectedGroup === "";
-  
+
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const res = await customAxios.patch(
@@ -275,13 +280,13 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         {},
         { headers: { Authorization: `${token}` } }
       );
-  
+
       if (res.data.isSuccess) {
         const result = res.data.result;
-  
+
         // ✅ 유저 ID 직접 추출
         const userIdFromServer = result.userInfo?.userId;
-  
+
         // ✅ 참여 취소 시 초기화
         if (isCancel) {
           setUserStatus("");
@@ -291,7 +296,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           await fetchParticipantsInfo();
           return;
         }
-  
+
         // ✅ 참여 또는 그룹 수정 성공
         const updatedGroup = result.groupedParticipants;
         setGroupedParticipants(updatedGroup);
@@ -301,7 +306,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           console.warn("⚠️ 유효하지 않은 userInfo:", result.userInfo);
           setUserInfo({ userId: 0, userName: "", userProfileImg: "" }); // fallback
         }
-  
+
         // ✅ 바로 내가 속한 그룹과 상태 찾아서 반영
         const foundGroup = updatedGroup?.find(group =>
           group.participants?.some((p: any) => p.userId === userIdFromServer)
@@ -319,7 +324,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
                 : "참여하기"
           );
         }
-  
+
         setIsGroupModalOpen(false);
         await fetchParticipantsInfo();
       } else {
@@ -334,7 +339,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
       }
     }
   };
-  
+
 
 
 
@@ -381,12 +386,9 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   };
 
   const formatDateTime = (iso: string) => {
-    const dateObj = new Date(iso);
-    const month = dateObj.getMonth() + 1;
-    const day = dateObj.getDate();
-    const hours = dateObj.getHours().toString().padStart(2, "0");
-    const minutes = dateObj.getMinutes().toString().padStart(2, "0"); // 분 추가
-    return `${month}월 ${day}일 ${hours}:${minutes}`;
+    const utcDate = new Date(iso);
+    const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+    return `${kstDate.getMonth() + 1}월 ${kstDate.getDate()}일 ${kstDate.getHours().toString().padStart(2, "0")}:${kstDate.getMinutes().toString().padStart(2, "0")}`;
   };
 
   const handleTabChange = async (tab: "소개" | "명단") => {
@@ -431,16 +433,21 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     }
   };
 
+
+
+
   return (
-    <div className="flex flex-col items-center text-center px-5 justify-center" onClick={handleOutsideClick}>
-      <div className="relative flex bg-kuDarkGreen w-[375px] h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
+    <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center" onClick={handleOutsideClick}>
+      <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
         훈련
       </div>
 
-      <div className="relative w-[375px] pb-[90px]">
-        <object data={postImageUrl || flashrunimage} className="w-[375px] h-[308px]" />
-        <div className="absolute top-[230px] w-[375px] rounded-t-[20px] bg-white">
+      <div className="relative w-full pb-[180px]">
+        <div className="w-full h-[250px] overflow-hidden">
+          <object data={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
+        </div>
+        <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[8px]">
             {/* 상단 전체를 relative로 감싸기 */}
             <div className="relative flex flex-col items-center mt-[4px] w-[375px]">
@@ -450,26 +457,34 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
                 {trainingtype}
               </div>
 
-              {/* 물음표 아이콘: 고정된 우측 위치 */}
-              <img
-                src={isTooltipVisible ? questionmarkOn : questionmarkOff}
-                alt="question mark"
-                className="absolute top-[-1px] right-[18px] w-[24px] h-[24px] cursor-pointer"
-                onClick={() => setIsTooltipVisible(!isTooltipVisible)}
-              />
 
-              {/* 툴팁 */}
-              {isTooltipVisible && (
-                <div className="absolute bottom-[140%] right-[25px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
-                  <div className="text-[#4F3F3F] text-[12px]">
-                    {getTrainingDescription(trainingtype)}
-                  </div>
+              {/* 물음표 아이콘: 고정된 우측 위치 */}
+              {getTrainingDescription(trainingtype) && (
+                <div className="relative w-full flex justify-end pr-[18px] tooltip-container">
+                  <img
+                    src={isTooltipVisible ? questionmarkOn : questionmarkOff}
+                    alt="question mark"
+                    className="absolute top-[-1px] right-[18px] w-[24px] h-[24px] cursor-pointer"
+                    onClick={() => setIsTooltipVisible(!isTooltipVisible)}
+                  />
+
+                  {/* 툴팁 */}
+                  {isTooltipVisible && (
+                    <div className="absolute bottom-[140%] right-[25px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
+                      <div className="text-[#4F3F3F] text-[12px]">
+                        {getTrainingDescription(trainingtype)}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
+
+
+
             </div>
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
-          <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
+          <div className="flex flex-col items-start w-full max-w-[360px] mt-5 px-5">
             <div className="flex items-center my-1.5">
               <object data={place} className="w-[24px] h-[24px] mr-2" />
               <span>{location}</span>
@@ -487,7 +502,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         </div>
       </div>
 
-      <TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} />
+      <div className="mt-[34px]"><TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} /></div>
 
       {activeTab === "소개" && (
         <>
@@ -509,11 +524,13 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
                   {attachmentUrls.map((url, index) => (
                     <SwiperSlide key={index}>
                       <div className="relative">
-                        <img
-                          src={url}
-                          alt={`코스 사진 ${index + 1}`}
-                          className="rounded-lg w-full h-auto"
-                        />
+                        <div className="w-full h-[300px] overflow-hidden">
+                          <img
+                            src={url}
+                            alt={`코스 사진 ${index + 1}`}
+                            className="rounded-lg w-full h-full object-cover"
+                          />
+                        </div>
                         <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
                           {index + 1}/{attachmentUrls.length}
                         </div>
@@ -525,8 +542,23 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
             </div>
           )}
           <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">세부 내용</div>
-          <div className="mt-5 w-[327px] border border-[#ECEBE4] rounded-lg">
-            <div className="text-[#686F75] p-5 text-justify">{content}</div>
+          <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              {postCreatorImg ? (
+                <img
+                  src={postCreatorImg}
+                  alt={`${postCreatorName} 프로필`}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-[#844E4E] text-white text-xs flex items-center justify-center font-bold leading-none">
+                  {postCreatorName.charAt(0)}
+                </div>
+              )}
+              <span className="text-sm font-medium text-black">{postCreatorName}</span>
+            </div>
+
+            <div className="text-[#686F75] p-3 text-sm text-justify whitespace-pre-wrap">{content}</div>
           </div>
         </>
       )}
@@ -542,13 +574,15 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
-      {userStatus === "ATTENDED" && (
+      {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
+        <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
+          모집 종료
+        </div>
+      ) : userStatus === "ATTENDED" ? (
         <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
           출석완료
         </div>
-      )}
-
-      {userStatus === "PENDING" && (
+      ) : userStatus === "PENDING" ? (
         <>
           {selectedGroup && (
             <div className="text-sm text-left text-kuDarkGray w-full max-w-[327px] mt-4 pl-6">
@@ -570,9 +604,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
             </button>
           </div>
         </>
-      )}
-
-      {userStatus !== "ATTENDED" && userStatus !== "PENDING" && (
+      ) : (
         <button
           className="w-[327px] h-14 rounded-lg bg-kuGreen text-white font-bold mt-6 mb-6"
           onClick={handleOpenGroupModal}
@@ -580,6 +612,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           참여하기
         </button>
       )}
+
 
 
 

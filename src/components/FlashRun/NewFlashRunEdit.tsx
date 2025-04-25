@@ -171,7 +171,7 @@ function NewFlashRunEdit() {
 
         {/* 대표 이미지 */}
         <div className="my-4">
-          <h2 className="mb-2">대표 이미지</h2>
+          <h2 className="mb-2">대표 이미지 (필수)</h2>
           <div className="relative w-[104px] h-[104px]">
             {postImagePreview ? (
               <>

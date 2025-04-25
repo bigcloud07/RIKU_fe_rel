@@ -15,33 +15,35 @@ const TabButton: React.FC<TabButtonProps> = ({ leftLabel, rightLabel, onTabChang
     };
 
     return (
-        <div className="flex flex-col items-center w-[370px] mt-[135px]">
-            {/* 탭 버튼 */}
-            <div className="flex w-full">
-                <button
-                    className={`flex-1 text-center py-2 cursor-pointer ${
-                        activeTab === '소개' ? 'text-[#355c48] font-semibold' : 'text-gray-400'
-                    }`}
-                    onClick={() => handleBarClick('소개')}
-                >
-                    {leftLabel}
-                </button>
-                <button
-                    className={`flex-1 text-center py-2 cursor-pointer ${
-                        activeTab === '명단' ? 'text-[#355c48] font-semibold' : 'text-gray-400'
-                    }`}
-                    onClick={() => handleBarClick('명단')}
-                >
-                    {rightLabel}
-                </button>
-            </div>
-            {/* 하단 바 */}
-            <div className="relative w-full h-1 bg-gray-300 rounded mt-1">
-                <div
-                    className={`absolute w-1/2 h-full bg-[#355c48] rounded transition-all duration-300 ${
-                        activeTab === '소개' ? 'left-0' : 'left-1/2'
-                    }`}
-                ></div>
+        <div className="flex flex-col items-center max-w-[430px] mt-[150px]">
+            <div className="w-[370px] max-w-full px-4">
+                {/* 탭 버튼 */}
+                <div className="flex w-full">
+                    <button
+                        className={`flex-1 text-center py-2 cursor-pointer ${
+                            activeTab === '소개' ? 'text-[#355c48] font-semibold' : 'text-gray-400'
+                        }`}
+                        onClick={() => handleBarClick('소개')}
+                    >
+                        {leftLabel}
+                    </button>
+                    <button
+                        className={`flex-1 text-center py-2 cursor-pointer ${
+                            activeTab === '명단' ? 'text-[#355c48] font-semibold' : 'text-gray-400'
+                        }`}
+                        onClick={() => handleBarClick('명단')}
+                    >
+                        {rightLabel}
+                    </button>
+                </div>
+                {/* 하단 바 */}
+                <div className="relative w-full h-1 bg-gray-300 rounded mt-1">
+                    <div
+                        className={`absolute w-1/2 h-full bg-[#355c48] rounded transition-all duration-300 ${
+                            activeTab === '소개' ? 'left-0' : 'left-1/2'
+                        }`}
+                    ></div>
+                </div>
             </div>
         </div>
     );
