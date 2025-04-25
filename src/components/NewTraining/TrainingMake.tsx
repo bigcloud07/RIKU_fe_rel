@@ -172,16 +172,17 @@ function TrainingMake() {
   };
 
   const handleSubmit = async () => {
+    if (!title || !mainImage || !location || !content || !dateTime.date || pacerGroups.some(g => !g.pacer || !g.distance || !g.pace)) {
+      alert("모든 정보를 입력해주세요.");
+      return;
+    }
     console.log(pacerGroups)
     const hasIncompleteGroup = pacerGroups.some(
       (group) => !group.pacer || !group.distance || !group.pace
 
     );
 
-    // if (!title || !location || !content || !dateTime.date || hasIncompleteGroup) {
-    //   alert("모든 정보를 입력해주세요.");
-    //   return;
-    // } -> 계속 오류 떠서 일단 주석처리함
+    
 
     try {
       const [hours, minutes] = dateTime.time.split(":").map(Number);
@@ -477,16 +478,32 @@ function TrainingMake() {
                   </select>
                 ) : (
                   <div className="flex space-x-2 mt-4">
-                    <select className="p-2 border border-gray-300 rounded-lg w-16 text-center" value={selectedMinutes} onChange={(e) => setSelectedMinutes(e.target.value)}>
-                      {Array.from({ length: 60 }, (_, i) => `${i}`).map((min) => (
-                        <option key={min} value={min}>{min}</option>
+                    <select
+                      className="p-2 border border-gray-300 rounded-lg w-16 text-center"
+                      value={selectedMinutes}
+                      onChange={(e) => setSelectedMinutes(e.target.value)}
+                    >
+                      {Array.from({ length: 11 }, (_, i) => (
+                        <option key={i} value={String(i)}>
+                          {i}
+                        </option>
                       ))}
                     </select>
                     <span className="text-lg font-bold">:</span>
-                    <select className="p-2 border border-gray-300 rounded-lg w-16 text-center" value={selectedSeconds} onChange={(e) => setSelectedSeconds(e.target.value)}>
-                      {Array.from({ length: 60 }, (_, i) => `${i}`).map((sec) => (
-                        <option key={sec} value={sec}>{sec}</option>
-                      ))}
+                    <select
+                      className="p-2 border border-gray-300 rounded-lg w-16 text-center"
+                      value={selectedSeconds}
+                      onChange={(e) => setSelectedSeconds(e.target.value)}
+                    >
+                      {Array.from({ length: 6 }, (_, i) => {
+                        const sec = i * 10;
+                        const padded = String(sec).padStart(2, "0");
+                        return (
+                          <option key={padded} value={padded}>
+                            {padded}
+                          </option>
+                        );
+                      })}
                     </select>
                   </div>
                 )}

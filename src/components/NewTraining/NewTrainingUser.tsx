@@ -433,8 +433,8 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     }
   };
 
-  
-  
+
+
 
   return (
     <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center" onClick={handleOutsideClick}>
@@ -443,8 +443,10 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         훈련
       </div>
 
-      <div className="relative w-full pb-[90px]">
-        <object data={postImageUrl || flashrunimage} className="w-full h-[308px]" />
+      <div className="relative w-full pb-[180px]">
+        <div className="w-full h-[250px] overflow-hidden">
+          <object data={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
+        </div>
         <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[8px]">
             {/* 상단 전체를 relative로 감싸기 */}
@@ -455,10 +457,10 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
                 {trainingtype}
               </div>
 
-              {/* 물음표 아이콘: 고정된 우측 위치 */}
+
               {/* 물음표 아이콘: 고정된 우측 위치 */}
               {getTrainingDescription(trainingtype) && (
-                <>
+                <div className="relative w-full flex justify-end pr-[18px] tooltip-container">
                   <img
                     src={isTooltipVisible ? questionmarkOn : questionmarkOff}
                     alt="question mark"
@@ -474,7 +476,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
                       </div>
                     </div>
                   )}
-                </>
+                </div>
               )}
 
 
@@ -522,7 +524,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
                   {attachmentUrls.map((url, index) => (
                     <SwiperSlide key={index}>
                       <div className="relative">
-                        <div className="w-[400px] h-[300px] overflow-hidden">
+                        <div className="w-full h-[300px] overflow-hidden">
                           <img
                             src={url}
                             alt={`코스 사진 ${index + 1}`}

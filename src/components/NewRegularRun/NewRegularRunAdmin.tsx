@@ -160,6 +160,9 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   const [postStatus, setPostStatus] = useState<string>("");
 
   const handleModalStartClick = async () => {
+    const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
+    if (!confirmClose) return;
+
     if (!code) return;
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
@@ -168,7 +171,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
       });
 
       if (response.data.isSuccess) {
-        setIsFinished(true); // 버튼 비활성화 처리
+        setIsFinished(true);
         setIsModalOpen(false);
         alert("출석이 종료되었습니다.");
       } else {
@@ -178,6 +181,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
       setError("출석 종료 처리에 실패했습니다.");
     }
   };
+
 
   const handleTabChange = async (tab: "소개" | "명단") => {
     setActiveTab(tab);
@@ -315,6 +319,25 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
     };
   }, [showMenu]);
 
+  // 명단 수정 조건 검사 함수
+  const handleEditAttempt = () => {
+    const now = new Date(); // 현재 로컬 시간
+    const postDateKST = new Date(new Date(date).getTime() + 9 * 60 * 60 * 1000);
+
+    if (postStatus === "CLOSED" || postStatus === "CANCELED") {
+      alert("출석이 종료되어 명단 수정이 불가능합니다.");
+      return;
+    }
+
+    if (now < postDateKST) {
+      alert("아직 명단 수정을 할 수 없습니다.");
+      return;
+    }
+
+    setIsEditMode(true);
+  };
+
+
 
 
 
@@ -322,7 +345,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   return (
     <div className="w-full min-h-screen bg-white">
       <div className="w-full max-w-[430px] mx-auto flex flex-col items-center text-center justify-center">
-      <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
+        <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
           <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
           정규런
           <div
@@ -339,68 +362,81 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
               ))}
             </div>
           </div>
-  
+
           {showMenu && (
             <motion.div
               ref={menuRef}
-              initial={{ opacity: 0, scale: 0.8, y: -5 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: -5 }}
-              transition={{ duration: 0.2 }}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={{
+                hidden: {},
+                visible: {},
+                exit: {},
+              }}
               className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
             >
-              <button
-                className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
-                onClick={() => {
-                  navigate(`/regular/edit/${postId}`);
-                  setShowMenu(false);
-                }}
-              >
-                수정하기
-              </button>
-              <button
-                className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
-                onClick={async () => {
-                  try {
-                    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-                    if (!token) {
-                      alert("로그인이 필요합니다.");
-                      return;
-                    }
-                
-                    const { data } = await customAxios.patch(
-                      `/run/regular/post/${postId}/cancel`,
-                      {},
-                      {
-                        headers: {
-                          Authorization: `${token}`,
-                        },
+              {["수정하기", "취소하기"].map((label, index) => (
+                <motion.button
+                  key={label}
+                  custom={index}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: 0.1 * index, duration: 0.2 }}
+                  className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+                  onClick={async () => {
+                    if (label === "수정하기") {
+                      if (postStatus === "CLOSED") {
+                        alert("종료된 러닝은 수정이 불가능합니다.");
+                        return;
                       }
-                    );
-                    
-                
-                    if (data.isSuccess) {
-                      alert("게시글이 성공적으로 취소되었습니다.");
+                      navigate(`/regular/edit/${postId}`);
                       setShowMenu(false);
-                      // 페이지 새로고침 또는 상태 업데이트 필요 시 여기에 추가
-                      navigate("/regular")
                     } else {
-                      alert(data.responseMessage || "취소에 실패했습니다.");
+                      const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
+                      if (!confirmCancel) return;
+
+                      try {
+                        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                        if (!token) {
+                          alert("로그인이 필요합니다.");
+                          return;
+                        }
+
+                        const { data } = await customAxios.patch(
+                          `/run/regular/post/${postId}/cancel`,
+                          {},
+                          {
+                            headers: {
+                              Authorization: `${token}`,
+                            },
+                          }
+                        );
+
+                        if (data.isSuccess) {
+                          alert("게시글이 성공적으로 취소되었습니다.");
+                          setShowMenu(false);
+                          navigate("/regular");
+                        } else {
+                          alert(data.responseMessage || "취소에 실패했습니다.");
+                        }
+                      } catch (error) {
+                        console.error(error);
+                        alert("요청 중 오류가 발생했습니다.");
+                      }
                     }
-                  } catch (error) {
-                    console.error(error);
-                    alert("요청 중 오류가 발생했습니다.");
-                  }
-                }}
-                
-              >
-                취소하기
-              </button>
+                  }}
+                >
+                  {label}
+                </motion.button>
+              ))}
             </motion.div>
           )}
+
         </div>
-  
-  
+
+
         <div className="relative w-full max-w-[430px] mx-auto pb-[90px]">
           <div className="w-fulls h-[308px] overflow-hidden">
             <object
@@ -429,9 +465,9 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
             </div>
           </div>
         </div>
-  
+
         <TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} />
-  
+
         {activeTab === "소개" && (
           <>
             <div className="flex items-start text-left w-full mt-3 my-2 max-w-[349px]">
@@ -451,7 +487,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
                   {attachmentUrls.map((url, index) => (
                     <SwiperSlide key={index}>
                       <div className="relative">
-                        <div className="w-[400px] h-[300px] overflow-hidden">
+                        <div className="w-full h-[300px] overflow-hidden rounded-lg">
                           <img
                             src={url}
                             alt={`코스 사진 ${index + 1}`}
@@ -469,7 +505,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
             )}
             <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">세부 내용</div>
             <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
-  
+
               <div className="flex items-center gap-2 mb-2">
                 {postCreatorImg ? (
                   <img
@@ -488,27 +524,27 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
             </div>
           </>
         )}
-  
+
         {activeTab === "명단" && (
           <>
-  
-  
+
+
             <AttendanceList
               groupedParticipants={groupedParticipants}
               isEditMode={isEditMode}
               editedAttendance={editedAttendance}
               toggleAttendance={toggleAttendance}
               onSaveAttendance={saveAttendanceChanges}
-              onToggleEditMode={() => setIsEditMode(true)}
+              onToggleEditMode={handleEditAttempt} // 여기서 조건 검사 포함된 함수 전달
               userInfoName={userInfo.userName}
               postCreatorName={postCreatorName}
             />
           </>
         )}
-  
-  
+
+
         <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
-  
+
         {/* 시작하기 버튼 */}
         <button
           className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-[32px] mb-2 ${isFinished || postStatus === "CLOSED"
@@ -520,8 +556,8 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         >
           {buttonText}
         </button>
-        
-  
+
+
         {isModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
             <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
@@ -556,7 +592,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
             </div>
           </div>
         )}
-  
+
       </div>
     </div>
   );

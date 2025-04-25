@@ -27,12 +27,20 @@ interface CommentSectionProps {
   refreshTrigger?: boolean; // 추가
 }
 
+
 const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refreshTrigger }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>("");
   const [replyInputs, setReplyInputs] = useState<Record<number, string>>({});
   const [replyTargetCommentId, setReplyTargetCommentId] = useState<number | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // 추가: 중복 제출 방지
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  // 자동 포커싱 방지용 상태
+  const [inputReady, setInputReady] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setInputReady(true), 500); // 0.5초 후 입력 허용
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     fetchComments();
@@ -53,8 +61,8 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
   };
 
   const handleSubmitComment = async () => {
-    if (!newComment.trim() || isSubmitting) return; // 제출 중이면 return
-    setIsSubmitting(true); // 제출 시작
+    if (!newComment.trim() || isSubmitting) return;
+    setIsSubmitting(true);
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
@@ -69,14 +77,14 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
     } catch {
       alert("댓글 등록 오류");
     } finally {
-      setIsSubmitting(false); // 제출 완료
+      setIsSubmitting(false);
     }
   };
 
   const handleSubmitReply = async (targetId: number) => {
     const content = replyInputs[targetId];
-    if (!content?.trim() || isSubmitting) return; // 제출 중이면 return
-    setIsSubmitting(true); // 제출 시작
+    if (!content?.trim() || isSubmitting) return;
+    setIsSubmitting(true);
 
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
@@ -93,7 +101,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
     } catch {
       alert("대댓글 등록 오류");
     } finally {
-      setIsSubmitting(false); // 제출 완료
+      setIsSubmitting(false);
     }
   };
 
@@ -133,11 +141,10 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
           const activeReplies = comment.replies.filter((r) => r.commentStatus === "ACTIVE");
           return (
             <div key={comment.commentId} className="border-b border-[#E0E0E0] pb-3 space-y-2">
-              {/* 원댓글 */}
               <div className="flex justify-between items-start w-full">
                 <div className="flex items-start gap-2 flex-1">
                   <div className="w-6 aspect-square rounded-full flex items-center justify-center overflow-hidden bg-[#9DC34A] text-white text-[10px] font-bold">
-                    {comment.userProfileImg && comment.userProfileImg.trim() !== "" ? (
+                    {comment.userProfileImg ? (
                       <img src={comment.userProfileImg} alt="작성자" className="w-full h-full object-cover" />
                     ) : (
                       comment.userName.charAt(0)
@@ -167,12 +174,11 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
                 )}
               </div>
 
-              {/* 대댓글 */}
               {activeReplies.map((reply) => (
                 <div key={reply.commentId} className="w-full mt-2 pl-8 flex justify-between items-start">
                   <div className="flex items-start gap-2 flex-1">
                     <div className="w-6 aspect-square rounded-full flex items-center justify-center overflow-hidden bg-[#9DC34A] text-white text-[10px] font-bold">
-                      {reply.userProfileImg && reply.userProfileImg.trim() !== "" ? (
+                      {reply.userProfileImg ? (
                         <img src={reply.userProfileImg} alt="작성자" className="w-full h-full object-cover" />
                       ) : (
                         reply.userName.charAt(0)
@@ -195,11 +201,11 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
                 </div>
               ))}
 
-              {/* 대댓글 입력창 */}
+              {/*  대댓글 입력창에도 자동 포커싱 방지 적용 */}
               {replyTargetCommentId === comment.commentId && (
                 <div className="flex items-center gap-[8px] mt-2 pl-8">
                   <div className="w-6 aspect-square rounded-full flex items-center justify-center overflow-hidden bg-[#9DC34A] text-white text-[10px] font-bold">
-                    {userInfo.userProfileImg && userInfo.userProfileImg.trim() !== "" ? (
+                    {userInfo.userProfileImg ? (
                       <img src={userInfo.userProfileImg} alt="내 프로필" className="w-full h-full object-cover" />
                     ) : (
                       userInfo.userName.charAt(0)
@@ -209,13 +215,19 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
                     <input
                       type="text"
                       placeholder="대댓글 작성..."
+                      readOnly={!inputReady}
+                      onFocus={() => {
+                        if (!inputReady) {
+                          (document.activeElement as HTMLElement)?.blur();
+                        }
+                      }}
                       className="w-full bg-kuLightGray text-sm py-[9px] pr-[12px] pl-[8px] rounded-[8px] h-[32px]"
                       value={replyInputs[comment.commentId] || ""}
                       onChange={(e) => handleReplyChange(comment.commentId, e.target.value)}
                       onKeyDown={(e) => {
                         if (e.key === "Enter" && replyInputs[comment.commentId]?.trim()) {
-                          e.preventDefault(); // 기본 동작 방지
-                          handleSubmitReply(comment.commentId); // 대댓글 등록
+                          e.preventDefault();
+                          handleSubmitReply(comment.commentId);
                         }
                       }}
                     />
@@ -237,10 +249,10 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
           );
         })}
 
-        {/* 원댓글 입력창 */}
+        {/*  원댓글 입력창에도 자동 포커싱 방지 적용 */}
         <div className="flex items-center mt-3 bg-[#F5F5F5] rounded-xl px-3 py-2 gap-[8px]">
           <div className="w-6 aspect-square rounded-full flex items-center justify-center overflow-hidden bg-[#9DC34A] text-white text-[10px] font-bold">
-            {userInfo.userProfileImg && userInfo.userProfileImg.trim() !== "" ? (
+            {userInfo.userProfileImg ? (
               <img src={userInfo.userProfileImg} alt="내 프로필" className="w-full h-full object-cover" />
             ) : (
               userInfo.userName.charAt(0)
@@ -250,19 +262,25 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
             <input
               type="text"
               placeholder="댓글 추가..."
+              readOnly={!inputReady}
+              onFocus={() => {
+                if (!inputReady) {
+                  (document.activeElement as HTMLElement)?.blur();
+                }
+              }}
               className="w-full bg-kuLightGray text-sm rounded-[8px] py-[9px] pr-[12px] pl-[8px] h-[32px] focus:outline-none"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && newComment.trim()) {
-                  e.preventDefault(); // 기본 동작 방지
-                  handleSubmitComment(); // 댓글 등록
+                  e.preventDefault();
+                  handleSubmitComment();
                 }
               }}
             />
             <button
               onClick={handleSubmitComment}
-              disabled={!newComment.trim()} // 댓글이 비어있으면 버튼 비활성화
+              disabled={!newComment.trim()}
               className="absolute right-[8px] top-1/2 -translate-y-1/2 w-[18px] h-[18px]"
             >
               <img
@@ -279,3 +297,5 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
 };
 
 export default CommentSection;
+
+

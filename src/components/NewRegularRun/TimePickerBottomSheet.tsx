@@ -34,6 +34,19 @@ export const TimePickerBottomSheet: React.FC<TimePickerBottomSheetProps> = ({
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+  
+
   return (
     <>
       <div className="my-2">시간</div>
@@ -60,9 +73,9 @@ export const TimePickerBottomSheet: React.FC<TimePickerBottomSheetProps> = ({
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "tween", duration: 0.3 }}
-              className="w-full max-w-sm bg-white rounded-t-2xl px-4 pt-6 pb-4 mx-auto"
+              className="w-full max-w-[430px] bg-white rounded-t-2xl px-4 pt-10 pb-4 mx-auto"
             >
-              <div className="text-lg font-semibold text-center mb-4">시간 선택</div>
+              {/* <div className="text-lg font-semibold text-center mb-4">시간 선택</div> */}
 
               <div className="flex justify-center gap-4">
                 <TimeWheelPicker
@@ -78,7 +91,7 @@ export const TimePickerBottomSheet: React.FC<TimePickerBottomSheetProps> = ({
                 />
               </div>
 
-              <div className="mt-6 flex flex-col gap-2">
+              <div className="mt-9 flex flex-col gap-2">
                 <button
                   onClick={handleApply}
                   className="w-full bg-kuDarkGreen text-white py-3 rounded-lg text-lg"

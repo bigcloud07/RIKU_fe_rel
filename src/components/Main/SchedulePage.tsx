@@ -16,6 +16,7 @@ import {
   parseISO,
   addYears,
   subYears,
+  addHours,
 } from "date-fns";
 
 //한 달 달력에 들어갈 내용(날짜(Date))들의 배열을 만든다.
@@ -83,7 +84,7 @@ function SchedulePage() {
           const result = response.data.result;
           setUserRole(result.userRole || null);
           console.log("userRole성공")
-          
+
         } else {
           console.error("데이터를 불러오지 못했습니다.", response.data.responseMessage);
         }
@@ -92,8 +93,8 @@ function SchedulePage() {
       }
     };
     fetchMain();
-  },[])
-    
+  }, [])
+
 
 
   //캘린더 월별 조회 메소드
@@ -115,7 +116,7 @@ function SchedulePage() {
       );
       console.log(response.data);
       setMonthlyPlan(response.data.result.schedules); //불러온 data의 result 값으로 monthlyPlan 값 저장
-      
+
     } catch (error) {
       alert("서버 요청 중 오류 발생!");
       console.error("요청 실패: ", error);
@@ -424,7 +425,7 @@ function SchedulePage() {
               <div className="pl-4 flex flex-col items-start">
                 <p className="text-gray-800 font-medium">{event.title}</p>
                 <p className="text-gray-500 text-sm">
-                  {format(parseISO(event.date), "HH:mm")} {event.location}
+                  {format(addHours(parseISO(event.date), 9), "HH:mm")} {event.location}
                 </p>
               </div>
             </div>

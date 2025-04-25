@@ -8,6 +8,8 @@ import { DateNtime } from "./DateNtime";
 import { DateInput } from "./DateInput";
 import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
 import TimeIcon from '../../assets/time_icon.svg'
+import imageCompression from 'browser-image-compression';
+
 
 interface Pacer {
   id: number;
@@ -46,6 +48,21 @@ function NewRegularRunMake() {
   const [mainPreview, setMainPreview] = useState<string | null>(null);
   const [courseImages, setCourseImages] = useState<File[]>([]);
   const [coursePreviews, setCoursePreviews] = useState<string[]>([]);
+
+  const compressImage = async (file: File): Promise<File> => {
+    const options = {
+      maxSizeMB: 4,
+      maxWidthOrHeight: 1920, // 너무 큰 이미지는 리사이즈
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(file, options);
+      return compressedFile;
+    } catch (error) {
+      console.error("이미지 압축 실패", error);
+      return file; // 실패하면 원본 사용
+    }
+  };
 
   useEffect(() => {
     const fetchPacers = async () => {
@@ -103,48 +120,58 @@ function NewRegularRunMake() {
     setIsBottomSheetOpen(false);
   };
 
-  const handleMainImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMainImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 4 * 1024 * 1024) {
-        alert("사진 용량이 너무 큽니다. (최대 4MB)");
+      const compressed = await compressImage(file);
+      if (compressed.size > 4 * 1024 * 1024) {
+        alert("압축 후에도 용량이 4MB를 초과합니다.");
         return;
       }
       const reader = new FileReader();
       reader.onloadend = () => setMainPreview(reader.result as string);
-      reader.readAsDataURL(file);
-      setMainImage(file);
+      reader.readAsDataURL(compressed);
+      setMainImage(compressed);
     }
   };
 
-  const handleCourseImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleCourseImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (!selectedFiles) return;
-  
+
     const selectedArray = Array.from(selectedFiles);
-  
-    // 용량 초과 검사
-    for (const file of selectedArray) {
-      if (file.size > 4 * 1024 * 1024) {
-        alert("사진 용량이 너무 큽니다. (최대 4MB)");
-        return;
+    const compressedFiles: File[] = [];
+    const previews: string[] = [];
+
+    for (let i = 0; i < selectedArray.length; i++) {
+      const file = selectedArray[i];
+
+      const compressed = await compressImage(file);
+      if (compressed.size > 4 * 1024 * 1024) {
+        alert(`${i + 1}번째 코스 사진이 압축 후에도 4MB를 초과합니다.`);
+        continue;
       }
+
+      const previewReader = new FileReader();
+      previewReader.onloadend = () => {
+        previews.push(previewReader.result as string);
+        setCoursePreviews(prev => [...prev, previewReader.result as string]);
+      };
+      previewReader.readAsDataURL(compressed);
+
+      compressedFiles.push(compressed);
     }
-  
-    if (courseImages.length + selectedArray.length > 6) {
+
+    if (courseImages.length + compressedFiles.length > 6) {
       alert("코스 사진은 최대 6장까지 업로드할 수 있습니다.");
       return;
     }
-  
-    selectedArray.forEach(file => {
-      const reader = new FileReader();
-      reader.onloadend = () => setCoursePreviews(prev => [...prev, reader.result as string]);
-      reader.readAsDataURL(file);
-    });
-  
-    setCourseImages(prev => [...prev, ...selectedArray]);
+
+    setCourseImages(prev => [...prev, ...compressedFiles]);
   };
-  
+
+
 
   const removeCourseImage = (index: number) => {
     setCourseImages(prev => prev.filter((_, i) => i !== index));
@@ -156,11 +183,38 @@ function NewRegularRunMake() {
   };
 
   const handleSubmit = async () => {
-    if (!title || !location || !content || !dateTime.date || pacerGroups.some(g => !g.pacer || !g.distance || !g.pace)) {
+    if (!title || !mainImage || !location || !content || !dateTime.date || pacerGroups.some(g => !g.pacer || !g.distance || !g.pace)) {
       alert("모든 정보를 입력해주세요.");
       return;
     }
     try {
+
+      const errors: string[] = [];
+
+      // 대표 이미지 용량 확인
+      if (mainImage && mainImage.size > 4 * 1024 * 1024) {
+        errors.push("대표 이미지의 크기가 4MB를 초과했습니다.");
+      }
+
+      // 코스 이미지 용량 확인
+      const oversizedCourseImages: number[] = [];
+      courseImages.forEach((file, idx) => {
+        if (file.size > 4 * 1024 * 1024) {
+          oversizedCourseImages.push(idx + 1); // 1부터 시작하는 번호로 표시
+        }
+      });
+
+      if (oversizedCourseImages.length > 0) {
+        errors.push(`코스 사진 ${oversizedCourseImages.join(", ")}번의 크기가 4MB를 초과했습니다.`);
+      }
+
+      // 에러가 있으면 중단
+      if (errors.length > 0) {
+        alert(errors.join("\n"));
+        return;
+      }
+
+
       const [hours, minutes] = dateTime.time.split(":").map(Number);
       const selected = dateTime.date!;
 
@@ -245,8 +299,7 @@ function NewRegularRunMake() {
         <div className="my-2">집합 장소</div>
         <input className="border rounded-lg w-full p-2" placeholder="장소명을 입력하세요" onChange={(e) => setLocation(e.target.value)} />
 
-        {/* <div className="my-2">날짜 및 시간</div> */}
-        {/* <DateNtime onDateTimeChange={handleDateTimeChange} /> */}
+
 
         <DateInput selectedDate={dateTime.date} onChange={handleDateChange} />
 
@@ -342,17 +395,35 @@ function NewRegularRunMake() {
                   </select>
                 ) : (
                   <div className="flex space-x-2 mt-4">
-                    <select className="p-2 border border-gray-300 rounded-lg w-16 text-center" value={selectedMinutes} onChange={(e) => setSelectedMinutes(e.target.value)}>
-                      {Array.from({ length: 60 }, (_, i) => `${i}`).map((min) => (
-                        <option key={min} value={min}>{min}</option>
+                    <select
+                      className="p-2 border border-gray-300 rounded-lg w-16 text-center"
+                      value={selectedMinutes}
+                      onChange={(e) => setSelectedMinutes(e.target.value)}
+                    >
+                      {Array.from({ length: 11 }, (_, i) => (
+                        <option key={i} value={String(i)}>
+                          {i}
+                        </option>
                       ))}
                     </select>
                     <span className="text-lg font-bold">:</span>
-                    <select className="p-2 border border-gray-300 rounded-lg w-16 text-center" value={selectedSeconds} onChange={(e) => setSelectedSeconds(e.target.value)}>
-                      {Array.from({ length: 60 }, (_, i) => `${i}`).map((sec) => (
-                        <option key={sec} value={sec}>{sec}</option>
-                      ))}
+                    <select
+                      className="p-2 border border-gray-300 rounded-lg w-16 text-center"
+                      value={selectedSeconds}
+                      onChange={(e) => setSelectedSeconds(e.target.value)}
+                    >
+                      {Array.from({ length: 6 }, (_, i) => {
+                        const sec = i * 10;
+                        const padded = String(sec).padStart(2, "0");
+                        return (
+                          <option key={padded} value={padded}>
+                            {padded}
+                          </option>
+                        );
+                      })}
                     </select>
+
+
                   </div>
                 )}
                 <button onClick={applySelection} className="mt-4 bg-kuDarkGreen text-white px-6 py-2 rounded-lg hover:bg-green-700">적용하기</button>

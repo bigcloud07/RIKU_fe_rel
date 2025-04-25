@@ -157,7 +157,7 @@ const NewTrainingList: React.FC = () => {
 
             {/* 예정된 러닝 */}
             <div className="w-[375px] mt-4">
-                <h2 className="text-[20px] font-semibold ml-5 ">예정된 러닝</h2>
+                <h2 className="text-[20px] font-semibold ml-5 ">예정된 훈련</h2>
                 <div className="flex flex-col space-y-[12px] mt-[16px] ml-[20px]">
                     {upcomingRuns.map((run) => {
                         const utcDate = new Date(run.date);
@@ -187,7 +187,7 @@ const NewTrainingList: React.FC = () => {
 
             {/* 지난 러닝 */}
             <div className="w-[375px] mt-4 mb-[100px]">
-                <h2 className="text-[20px] font-semibold ml-5">지난 러닝</h2>
+                <h2 className="text-[20px] font-semibold ml-5">지난 훈련</h2>
                 <div className="grid grid-cols-3 grid-rows-2 gap-x-[12px] gap-y-[16px] mt-[20px] px-3">
                 {pastRuns.map((run) => {
                         const utcDate = new Date(run.date);

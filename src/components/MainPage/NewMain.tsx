@@ -10,7 +10,7 @@ import plusBtn from "../../assets/plus_Icon.svg";
 import img1 from "../../assets/Main-img/main-moving-images/1.png";
 import img2 from "../../assets/Main-img/main-moving-images/2.png";
 import img3 from "../../assets/Main-img/main-moving-images/3.jpg";
-import img4 from "../../assets/Main-img/main-moving-images/4.png";
+import img4 from "../../assets/Main-img/main-moving-images/4.jpg";
 import TopBarimg from "../../assets/Top-bar.svg";
 import customAxios from "../../apis/customAxios";
 import NOWimg from "../../assets/Main-img/NewOpenStatus.svg";
@@ -142,40 +142,48 @@ const NewMain: React.FC = () => {
 
           // 상태를 각 ContentList에 맞게 분리하여 저장
           setMaindata({
-            regularRun: {
-              location: result.regularRun?.title || "등록된 정규런이\n없습니다",
-              date: formatDate(result.regularRun?.date),
-              postimgurl: result.regularRun?.postImageUrl,
-              poststatus: isWithinOneHour(result.regularRun?.date)
-                ? "URGENT"
-                : result.regularRun?.postStatus,
-            },
-            flashRun: {
-              location: result.flashRun?.title || "등록된 번개런이\n없습니다",
-              date: formatDate(result.flashRun?.date),
-              postimgurl: result.flashRun?.postImageUrl,
-              poststatus: isWithinOneHour(result.flashRun?.date)
-                ? "URGENT"
-                : result.flashRun?.postStatus,
-            },
-
-            training: {
-              location: result.trainingRun?.title || "등록된 훈련이\n없습니다",
-              date: formatDate(result.trainingRun?.date),
-              postimgurl: result.trainingRun?.postImageUrl,
-              poststatus: isWithinOneHour(result.trainingRun?.date)
-                ? "URGENT"
-                : result.trainingRun?.postStatus,
-            },
-            event: {
-              location: result.eventRun?.title || "등록된   행사가\n없습니다",
-              date: formatDate(result.eventRun?.date),
-              postimgurl: result.eventRun?.postImageUrl,
-              poststatus: isWithinOneHour(result.eventRun?.date)
-                ? "URGENT"
-                : result.eventRun?.postStatus,
-            },
+            regularRun: result.regularRun?.postStatus === "CANCELED"
+              ? { location: "등록된 정규런이\n없습니다"}
+              : {
+                  location: result.regularRun?.title || "등록된 정규런이\n없습니다",
+                  date: formatDate(result.regularRun?.date),
+                  postimgurl: result.regularRun?.postImageUrl,
+                  poststatus: isWithinOneHour(result.regularRun?.date)
+                    ? "URGENT"
+                    : result.regularRun?.postStatus,
+                },
+            flashRun: result.flashRun?.postStatus === "CANCELED"
+              ? { location: "등록된 번개런이\n없습니다" }
+              : {
+                  location: result.flashRun?.title || "등록된 번개런이\n없습니다",
+                  date: formatDate(result.flashRun?.date),
+                  postimgurl: result.flashRun?.postImageUrl,
+                  poststatus: isWithinOneHour(result.flashRun?.date)
+                    ? "URGENT"
+                    : result.flashRun?.postStatus,
+                },
+            training: result.trainingRun?.postStatus === "CANCELED"
+              ? { location: "등록된 훈련이\n없습니다" }
+              : {
+                  location: result.trainingRun?.title || "등록된 훈련이\n없습니다",
+                  date: formatDate(result.trainingRun?.date),
+                  postimgurl: result.trainingRun?.postImageUrl,
+                  poststatus: isWithinOneHour(result.trainingRun?.date)
+                    ? "URGENT"
+                    : result.trainingRun?.postStatus,
+                },
+            event: result.eventRun?.postStatus === "CANCELED"
+              ? { location: "등록된 행사가\n없습니다" }
+              : {
+                  location: result.eventRun?.title || "등록된 행사가\n없습니다",
+                  date: formatDate(result.eventRun?.date),
+                  postimgurl: result.eventRun?.postImageUrl,
+                  poststatus: isWithinOneHour(result.eventRun?.date)
+                    ? "URGENT"
+                    : result.eventRun?.postStatus,
+                },
           });
+          
         } else {
           console.error("데이터를 불러오지 못했습니다.", response.data.responseMessage);
         }

@@ -47,7 +47,11 @@ function NewRegularRunEdit() {
       const response = await customAxios.get("/pacers", {
         headers: { Authorization: `${token}` },
       });
-      if (response.data.isSuccess) setPacers(response.data.result);
+      if (response.data.isSuccess) {
+        console.log("페이서 데이터:", response.data.result); // 🔍 확인!
+        setPacers(response.data.result);
+
+      }
     };
     const fetchPostData = async () => {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
@@ -61,7 +65,7 @@ function NewRegularRunEdit() {
         setContent(result.content);
         setMainPreview(result.postImageUrl);
         setCoursePreviews(result.attachmentUrls || []);
-        
+
         const utcDate = new Date(result.date); // 서버에서 받은 UTC 날짜
         const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000); // 9시간 더해 KST로 변환
 
@@ -178,7 +182,7 @@ function NewRegularRunEdit() {
       formData.append("date", eventDateTime);
       formData.append("content", content);
       if (mainImage) formData.append("postImage", mainImage);
-      
+
       courseImages.forEach(file => formData.append("attachments", file));
       pacerGroups.forEach((group, index) => {
         formData.append(`pacers[${index}].group`, group.id);
@@ -208,6 +212,11 @@ function NewRegularRunEdit() {
     setPacerGroups((prev) =>
       prev.map((group) => (group.id === id ? { ...group, pacer: pacerId } : group))
     );
+  };
+
+  const getPacerNameById = (id: string) => {
+    const pacer = pacers.find((p) => p.id.toString() === id);
+    return pacer?.name || pacer?.pacerName || "-";
   };
 
 
@@ -271,13 +280,20 @@ function NewRegularRunEdit() {
                         onChange={(e) => handlePacerChange(group.id, e.target.value)}
                         className="w-full text-center border-gray-400 focus:outline-none"
                       >
-                        <option value="">-</option>
+                        {/* 기본 선택값 → 현재 선택된 pacerId에 해당하는 이름 */}
+                        <option value={group.pacer} disabled hidden>
+                          {getPacerNameById(group.pacer)}
+                        </option>
+
+                        {/* 전체 /pacers 목록 드롭다운에 표시 */}
                         {pacers.map((pacer) => (
-                          <option key={pacer.id} value={pacer.id}>
-                            {pacer.name || pacer.pacerName} {/* ✅ 둘 중 있는 값 사용 */}
+                          <option key={pacer.id} value={pacer.id.toString()}>
+                            {pacer.name || pacer.pacerName}
                           </option>
                         ))}
                       </select>
+
+
                     </td>
                     <td className="p-2">
                       <button
