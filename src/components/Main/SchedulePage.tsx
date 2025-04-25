@@ -375,15 +375,14 @@ function SchedulePage() {
                     <div className={"flex flex-col items-center justify-center"}>
                       {planCounts > 0 ? (
                         <div className="flex items-center justify-center gap-0.5">
-                          <div
-                            className={`w-1.5 h-1.5 mt-2 rounded-full ${isSelected ? "bg-kuLightGreen" : "bg-kuDarkGreen"
-                              }`}
-                          />
+
                           <span
-                            className={`font-bold text-xs mt-2 ${isSelected ? "text-white" : "text-gray-500"
-                              }`}
+                            className={`font-bold text-xs mt-2 ${
+                              isSelected ? "text-kuWhite" : "text-kuDarkGray"
+                            }`}
+
                           >
-                            {planCounts}
+                            +{planCounts}
                           </span>
                         </div>
                       ) : (
