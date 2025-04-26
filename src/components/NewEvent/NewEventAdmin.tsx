@@ -448,7 +448,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
                       alert("종료된 행사는 수정이 불가능합니다.");
                       return;
                     }
-                    navigate(`/regular/edit/${postId}`);
+                    navigate(`/event/edit/${postId}`);
                     setShowMenu(false);
                   } else {
                     const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
@@ -494,8 +494,8 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-full pb-[50px]">
         <div className="w-full h-[250px] overflow-hidden">
-          <object
-            data={postimgurl || flashrunimage}
+          <img
+            src={postimgurl || flashrunimage}
             className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
               }`}
           />

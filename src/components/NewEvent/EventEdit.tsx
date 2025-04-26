@@ -52,6 +52,16 @@ function EventEdit() {
   const [postImage, setPostImage] = useState<File | null>(null);
   const [attachmentPreviews, setAttachmentPreviews] = useState<string[]>([]);
   const [attachments, setAttachments] = useState<File[]>([]);
+  const [originalUrls, setOriginalUrls] = useState<string[]>([]); // 기존 이미지 URL
+
+  const fetchImageAsFile = async (url: string, index: number): Promise<File> => {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const ext = url.split('.').pop()?.split('?')[0] || 'jpg';
+    return new File([blob], `existing_${index}.${ext}`, { type: blob.type });
+  };
+
+
 
   // 행사 데이터를 수정 시 로딩
   useEffect(() => {
@@ -74,7 +84,10 @@ function EventEdit() {
             time: kstDate.toTimeString().slice(0, 5), // KST 기준 시간 추출
           });
           setPostImagePreview(eventData.postImageUrl);
-          setAttachments(eventData.attachments);
+          setAttachmentPreviews(eventData.attachmentUrls || []);
+          setAttachments([]); // File은 새로 업로드할 때만 추가
+
+
           console.log(eventData)
         }
       } catch (error) {
@@ -122,7 +135,27 @@ function EventEdit() {
       if (content) formData.append("content", content);
       if (eventDateTime) formData.append("date", eventDateTime);
       if (postImage) formData.append("postImage", postImage);
-      attachments?.forEach(file => formData.append("attachments", file));
+      // ✅ attachmentPreviews 기준으로 파일 변환
+      const fetchAndConvertToFile = async (url: string, filename: string): Promise<File> => {
+        const res = await fetch(url);
+        const blob = await res.blob();
+        return new File([blob], filename, { type: blob.type });
+      };
+
+      if (attachmentPreviews.length > 0) {
+        const courseImageFiles = await Promise.all(
+          attachmentPreviews.map((url, idx) =>
+            fetchAndConvertToFile(url, `course_image_${idx}.jpg`)
+          )
+        );
+        courseImageFiles.forEach(file => {
+          formData.append("attachments", file);
+        });
+      } else {
+        // 첨부 사진 없을 때 빈 attachments 추가
+        formData.append("attachments", new Blob([], { type: "application/octet-stream" }));
+      }
+
 
       const response = await customAxios.patch(`/run/event/post/${postId}`, formData, {
         headers: {
@@ -147,6 +180,7 @@ function EventEdit() {
   const handleRemoveAttachment = (index: number) => {
     setAttachments(prev => prev.filter((_, i) => i !== index));
     setAttachmentPreviews(prev => prev.filter((_, i) => i !== index));
+    setOriginalUrls(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleAttachmentUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -185,11 +219,13 @@ function EventEdit() {
 
   return (
     <div className="flex flex-col items-center min-h-screen">
-      <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
-        <div className="text-2xl font-semibold text-white text-center">행사 수정</div>
-        <button onClick={() => navigate(-1)} className="absolute left-4">
-          <img src={BackIcon} alt="뒤로가기" className="w-6 h-6" />
-        </button>
+      <div className="max-w-[430px] w-full">
+        <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
+          <div className="text-2xl font-semibold text-white text-center">행사 수정</div>
+          <button onClick={() => navigate(-1)} className="absolute left-4">
+            <img src={BackIcon} alt="뒤로가기" className="w-6 h-6" />
+          </button>
+        </div>
       </div>
 
       {/* 행사 제목, 장소, 내용, 날짜 및 시간 */}

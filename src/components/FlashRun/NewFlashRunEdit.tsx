@@ -16,7 +16,7 @@ function NewFlashRunEdit() {
   const [dateTime, setDateTime] = useState<{ date: Date | null; time: string }>({ date: null, time: "00:00" });
   const [postImage, setPostImage] = useState<File | null>(null);
   const [postImagePreview, setPostImagePreview] = useState<string | null>(null);
-  const [attachments, setAttachments] = useState<File[]>([]);
+  // const [attachments, setAttachments] = useState<File[]>([]);
   const [attachmentPreviews, setAttachmentPreviews] = useState<string[]>([]);
 
   useEffect(() => {
@@ -59,20 +59,20 @@ function NewFlashRunEdit() {
     const selectedFiles = e.target.files;
     if (!selectedFiles) return;
     const selectedArray = Array.from(selectedFiles);
-    if (attachments.length + selectedArray.length > 6) {
+    if (attachmentPreviews.length + selectedArray.length > 6) {
       alert("최대 6장까지만 업로드할 수 있습니다.");
       return;
     }
+
     selectedArray.forEach((file) => {
       const reader = new FileReader();
       reader.onloadend = () => setAttachmentPreviews((prev) => [...prev, reader.result as string]);
       reader.readAsDataURL(file);
     });
-    setAttachments((prev) => [...prev, ...selectedArray]);
+    ;
   };
 
   const handleRemoveAttachment = (index: number) => {
-    setAttachments((prev) => prev.filter((_, i) => i !== index));
     setAttachmentPreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
@@ -81,11 +81,11 @@ function NewFlashRunEdit() {
   };
 
   const handleSubmit = async () => {
-    if (!title && !location && !content && !dateTime.date && !postImage && attachments.length === 0) {
+    if (!title && !location && !content && !dateTime.date && !postImage && attachmentPreviews.length === 0) {
       alert("수정할 내용을 하나 이상 입력해주세요.");
       return;
     }
-  
+
     try {
       const [hours, minutes] = dateTime.time.split(":").map(Number);
       const selected = dateTime.date!;
@@ -106,33 +106,50 @@ function NewFlashRunEdit() {
       // ✅ 3. 문자열 직접 생성 (🔥 중요: toISOString() 사용하지 말 것!)
       const pad = (n: number) => n.toString().padStart(2, "0");
       const eventDateTime = `${utcDate.getFullYear()}-${pad(utcDate.getMonth() + 1)}-${pad(utcDate.getDate())}T${pad(utcDate.getHours())}:${pad(utcDate.getMinutes())}:${pad(utcDate.getSeconds())}`;
-  
+
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const formData = new FormData();
-  
+
       if (title) formData.append("title", title);
       if (location) formData.append("location", location);
       if (content) formData.append("content", content);
       if (dateTime.date) formData.append("date", eventDateTime);
       if (postImage) formData.append("postImage", postImage);
-      attachments?.forEach(file => formData.append("attachments", file));
-      
-      const endpoint = `/run/flash/post/${postId}`;
+
+      // ✅ 코스 이미지 preview → File 변환 후 전송
+      const fetchAndConvertToFile = async (url: string, filename: string): Promise<File> => {
+        const res = await fetch(url);
+        const blob = await res.blob();
+        return new File([blob], filename, { type: blob.type });
+      };
+
+      // 🔥 수정된 첨부파일 처리 로직
+      if (attachmentPreviews.length > 0) {
+        for (const img of attachmentPreviews) {
+          if (img.startsWith("data:")) {
+            // 새로 추가된 로컬 파일 (base64 데이터)만 처리
+            const res = await fetch(img);
+            const blob = await res.blob();
+            const file = new File([blob], `course_image_${Date.now()}.jpg`, { type: blob.type });
+            formData.append("attachments", file);
+          }
+          // 서버에서 가져온 S3 URL들은 무시 (fetch하지 않음)
+        }
+      } else {
+        formData.append("attachments", new Blob([], { type: "application/octet-stream" }));
+      }
       
 
-      console.log(formData)
-      console.log(postId)
+      const endpoint = `/run/flash/post/${postId}`;
+
       const res = await customAxios.patch(endpoint, formData, {
         headers: {
           Authorization: `${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
+
       console.log("요청된 최종 엔드포인트:", res.config.url); // ✅ 실제 요청된 URL
-      console.log("요청된 URL:", `"${res.config.url}"`);
-
-
-      console.log("요청 보낼 엔드포인트:",endpoint); // ✅ 여기서 확인 가능
       if (res.data.isSuccess) {
         alert("번개런이 성공적으로 수정되었습니다!");
         navigate("/FlashRun");
@@ -144,15 +161,18 @@ function NewFlashRunEdit() {
       alert("번개런 수정 중 문제가 발생했습니다.");
     }
   };
-  
+
+
 
   return (
     <div className="flex flex-col items-center min-h-screen">
-      <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
-        <div className="text-2xl font-semibold text-white text-center">번개런 수정</div>
-        <button onClick={() => navigate(-1)} className="absolute left-4">
-          <img src={BackIcon} alt="뒤로가기" className="w-6 h-6" />
-        </button>
+      <div className="max-w-[430px] w-full">
+        <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
+          <div className="text-2xl font-semibold text-white text-center">번개런 수정</div>
+          <button onClick={() => navigate(-1)} className="absolute left-4">
+            <img src={BackIcon} alt="뒤로가기" className="w-6 h-6" />
+          </button>
+        </div>
       </div>
 
       <div className="w-full max-w-md px-4">

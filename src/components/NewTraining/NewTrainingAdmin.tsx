@@ -444,13 +444,14 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
         )}
       </div>
 
-      <div className="relative w-full overflow-hidden">
-        <object
-          data={postImageUrl || flashrunimage}
-          className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
+      <div className="relative w-full overflow-visible">
+        {/* 게시글 사진 */}
+        <img
+          src={postImageUrl || flashrunimage}
+          className={`z-0 w-full h-[308px] object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
             }`}
         />
-        <div className="absolute top-[240px] w-full rounded-t-[20px] bg-white">
+        <div className="absolute top-[240px] w-full rounded-t-[20px] bg-white z-10">
           <div className="flex flex-col items-center mt-[8px]">
             <div className="relative w-full max-w-[430px] mx-auto">
               <div className="flex flex-col items-center">
@@ -484,6 +485,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
 
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
+          {/* 게시글 정보 */}
           <div className="flex flex-col items-start w-full max-w-[360px] px-5 mt-5">
             <div className="flex items-center my-1.5">
               <object data={place} className="w-[24px] h-[24px] mr-2" />
@@ -501,7 +503,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
         </div>
       </div>
 
-      <div className="">
+      <div className="mt-[135px]">
         <TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} />
       </div>
 

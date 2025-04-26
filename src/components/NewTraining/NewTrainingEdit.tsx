@@ -159,13 +159,32 @@ function NewTrainingEdit() {
       formData.append("date", eventDateTime);
       formData.append("content", content);
       if (mainImage) formData.append("postImage", mainImage);
-      courseImages.forEach(file => formData.append("attachments", file));
+      // 🔥 코스 이미지 처리 수정 (coursePreviews 기준 fetch)
+      const fetchAndConvertToFile = async (url: string, filename: string): Promise<File> => {
+        const res = await fetch(url);
+        const blob = await res.blob();
+        return new File([blob], filename, { type: blob.type });
+      };
+
+      if (coursePreviews.length > 0) {
+        const courseImageFiles = await Promise.all(
+          coursePreviews.map((url, idx) =>
+            fetchAndConvertToFile(url, `course_image_${idx}.jpg`)
+          )
+        );
+        courseImageFiles.forEach(file => {
+          formData.append("attachments", file);
+        });
+      } else {
+        // 코스 사진이 아무것도 없으면 빈 attachments 필드
+        formData.append("attachments", new Blob([], { type: "application/octet-stream" }));
+      }
       pacerGroups.forEach((group, index) => {
         if (!group.pacer || group.pacer === "undefined") {
           console.warn(`❗ pacerId 누락됨 - group ${group.id}:`, group);
           return;
         }
-      
+
         formData.append(`pacers[${index}].group`, group.id);
         formData.append(`pacers[${index}].pacerId`, group.pacer);
         formData.append(`pacers[${index}].distance`, group.distance);
@@ -200,11 +219,13 @@ function NewTrainingEdit() {
 
   return (
     <div className="flex flex-col items-center min-h-screen">
-      <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
-        <div className="text-2xl font-semibold text-white text-center">훈련 수정</div>
-        <button onClick={() => navigate(-1)} className="absolute left-4">
-          <img src={BackIcon} alt="뒤로가기" className="w-6 h-6" />
-        </button>
+      <div className="max-w-[430px] w-full">
+        <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
+          <div className="text-2xl font-semibold text-white text-center">훈련 수정</div>
+          <button onClick={() => navigate(-1)} className="absolute left-4">
+            <img src={BackIcon} alt="뒤로가기" className="w-6 h-6" />
+          </button>
+        </div>
       </div>
       <div className="w-full max-w-md px-4">
         <div className="my-2">제목</div>

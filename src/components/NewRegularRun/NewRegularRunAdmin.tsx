@@ -439,11 +439,12 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
 
         <div className="relative w-full max-w-[430px] mx-auto pb-[90px]">
           <div className="w-fulls h-[308px] overflow-hidden">
-            <object
-              data={postImageUrl || flashrunimage}
+            <img
+              src={postImageUrl || flashrunimage}
               className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
                 }`}
-            />        </div>
+            />
+          </div>
           <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
             <div className="flex flex-col items-center mt-[14px]">
               <object data={RegularRunlogo} className="w-[60px] h-[24px]" />

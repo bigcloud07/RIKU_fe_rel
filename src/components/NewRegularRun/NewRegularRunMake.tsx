@@ -51,18 +51,27 @@ function NewRegularRunMake() {
 
   const compressImage = async (file: File): Promise<File> => {
     const options = {
-      maxSizeMB: 4,
-      maxWidthOrHeight: 1920, // 너무 큰 이미지는 리사이즈
+      maxSizeMB: 4, // 안전하게 낮춤
+      maxWidthOrHeight: 1920,
       useWebWorker: true,
     };
     try {
-      const compressedFile = await imageCompression(file, options);
-      return compressedFile;
+      const compressedBlob = await imageCompression(file, options);
+      
+      // ✅ 파일 이름과 타입 유지하며 File 객체로 감싸기
+      const renamedFile = new File(
+        [compressedBlob],
+        file.name, // 원래 이름 유지
+        { type: file.type }
+      );
+  
+      return renamedFile;
     } catch (error) {
       console.error("이미지 압축 실패", error);
-      return file; // 실패하면 원본 사용
+      return file;
     }
   };
+  
 
   useEffect(() => {
     const fetchPacers = async () => {
@@ -132,6 +141,8 @@ function NewRegularRunMake() {
       reader.onloadend = () => setMainPreview(reader.result as string);
       reader.readAsDataURL(compressed);
       setMainImage(compressed);
+      console.log("압축된 대표 이미지 용량 (MB):", (compressed.size / (1024 * 1024)).toFixed(2));
+
     }
   };
 
@@ -251,6 +262,11 @@ function NewRegularRunMake() {
         formData.append(`pacers[${index}].pace`, group.pace);
       });
 
+      // ✅ 여기!!! formData 잘 들어갔는지 확인용 콘솔
+      for (const pair of formData.entries()) {
+        console.log(`${pair[0]}:`, pair[1]);
+      }
+
       const response = await customAxios.post("/run/regular/post", formData, {
         headers: {
           Authorization: `${token}`,
@@ -284,7 +300,7 @@ function NewRegularRunMake() {
 
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center min-h-screen w-full max-w-[430px] mx-auto">
       <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
         <div className="text-2xl font-semibold text-white text-center">정규런 만들기</div>
         <button onClick={() => navigate(-1)} className="absolute left-4">

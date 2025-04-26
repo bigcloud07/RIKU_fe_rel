@@ -348,7 +348,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                         alert("종료된 러닝은 수정이 불가능합니다.");
                         return;
                       }
-                      navigate(`/regular/edit/${postId}`);
+                      navigate(`/flash/edit/${postId}`);
                       setShowMenu(false);
                     } else {
                       const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
@@ -393,21 +393,21 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
         </div>
         {/* 러닝 포스팅 사진 */}
-        <div className="relative w-full max-w-[430px] pb-[50px]">
-          <div className="w-full h-[250px] overflow-hidden">
-            <object
-              data={postimgurl || flashrunimage}
-              className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
+        <div className="relative w-full max-w-[430px] pb-[10px]">
+          <div className="w-full overflow-hidden">
+            <img
+              src={postimgurl || flashrunimage}
+              className={`w-full h-[308px] object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
                 }`}
             />
           </div>
           {/* 번개런 정보 */}
-          <div className="absolute top-[220px] w-full px-5 rounded-t-[20px] bg-white">
+          <div className="absolute top-[234px] w-full px-5 rounded-t-[20px] bg-white">
             <div className="flex flex-col items-center mt-[14px]">
               <object data={FlashRunlogo} className="w-[60px] h-[24px]" />
               <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
             </div>
-            <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
+            <div className="flex flex-col items-start w-full max-w-[360px] mt-[15px] ">
               <div className="flex items-center my-1.5">
                 <object data={place} className="w-[24px] h-[24px] mr-2" />
                 <span>{location}</span>
@@ -466,7 +466,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                     {attachmentUrls.map((url, index) => (
                       <SwiperSlide key={index}>
                         <div className="relative">
-                          <div className="w-[400px] h-[300px] overflow-hidden">
+                          <div className="w-full h-[300px] overflow-hidden">
                             <img
                               src={url}
                               alt={`코스 사진 ${index + 1}`}
