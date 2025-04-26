@@ -112,7 +112,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
 
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const response = await customAxios.patch(
+      const response = await customAxios.post(
         `/run/flash/post/${postId}/attend`, // ✅ attend 엔드포인트로 변경
         { code },
         {
@@ -310,7 +310,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-full pb-[50px]">
         <div className="w-full h-[250px] overflow-hidden">
-          <object data={postimgurl || flashrunimage} className="w-full h-full object-cover" />
+          <img src={postimgurl || flashrunimage} className="w-full h-full object-cover" />
         </div>
         {/* 번개런 정보 */}
         <div className="absolute top-[230px] w-full px-5 rounded-t-[20px] bg-white">
@@ -334,11 +334,13 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           </div>
         </div>
       </div>
-      <TabButton
-        leftLabel="소개"
-        rightLabel="명단"
-        onTabChange={handleTabChange}
-      />
+      <div className="mt-[15px]">
+        <TabButton
+          leftLabel="소개"
+          rightLabel="명단"
+          onTabChange={handleTabChange}
+        />
+      </div>
       {activeTab === "소개" && (
         <>
           <div className="flex justify-center items-center w-[327px] h-14 bg-[#F0F4DD] rounded-lg text-sm font-normal mt-[20px]">

@@ -40,6 +40,8 @@ function NewRegularRunEdit() {
   const [mainPreview, setMainPreview] = useState<string | null>(null);
   const [courseImages, setCourseImages] = useState<File[]>([]);
   const [coursePreviews, setCoursePreviews] = useState<string[]>([]);
+  const [attachmentPreviews, setAttachmentPreviews] = useState<string[]>([]);
+
 
   useEffect(() => {
     const fetchPacers = async () => {
@@ -64,8 +66,7 @@ function NewRegularRunEdit() {
         setLocation(result.location);
         setContent(result.content);
         setMainPreview(result.postImageUrl);
-        setCoursePreviews(result.attachmentUrls || []);
-
+        setAttachmentPreviews(result.attachmentUrls || []);
         const utcDate = new Date(result.date); // 서버에서 받은 UTC 날짜
         const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000); // 9시간 더해 KST로 변환
 
@@ -183,7 +184,40 @@ function NewRegularRunEdit() {
       formData.append("content", content);
       if (mainImage) formData.append("postImage", mainImage);
 
-      courseImages.forEach(file => formData.append("attachments", file));
+      // ✅ 코스 이미지 preview → File 변환 후 전송
+      const fetchAndConvertToFile = async (url: string, filename: string): Promise<File> => {
+        const res = await fetch(url);
+        const blob = await res.blob();
+        return new File([blob], filename, { type: blob.type });
+      };
+
+      const validPreviews = attachmentPreviews.filter((url) => url.startsWith('data:'));
+
+      const courseImageFiles = validPreviews.map((preview, idx) =>
+        dataUrlToFile(preview, `course_image_${idx}.jpg`)
+      );
+
+      courseImageFiles.forEach((file) => {
+        formData.append("attachments", file);
+      });
+
+
+      // 🔥 수정된 첨부파일 처리 로직
+      if (attachmentPreviews.length > 0) {
+        for (const img of attachmentPreviews) {
+          if (img.startsWith("data:")) {
+            // 새로 추가된 로컬 파일 (base64 데이터)만 처리
+            const res = await fetch(img);
+            const blob = await res.blob();
+            const file = new File([blob], `course_image_${Date.now()}.jpg`, { type: blob.type });
+            formData.append("attachments", file);
+          }
+          // 서버에서 가져온 S3 URL들은 무시 (fetch하지 않음)
+        }
+      } else {
+        formData.append("attachments", new Blob([], { type: "application/octet-stream" }));
+      }
+
       pacerGroups.forEach((group, index) => {
         formData.append(`pacers[${index}].group`, group.id);
         formData.append(`pacers[${index}].pacerId`, group.pacer);
@@ -198,7 +232,8 @@ function NewRegularRunEdit() {
       });
       if (response.data.isSuccess) {
         alert("정규런이 성공적으로 수정되었습니다!");
-        navigate(`/run/regular/${postId}`);
+        navigate(`/run/regular/${postId}`, { replace: true });
+
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
       }
@@ -219,14 +254,36 @@ function NewRegularRunEdit() {
     return pacer?.name || pacer?.pacerName || "-";
   };
 
+  const dataUrlToFile = (dataUrl: string, filename: string): File => {
+    if (!dataUrl.startsWith('data:')) {
+      throw new Error('Not a base64 Data URL');
+    }
+
+    const arr = dataUrl.split(',');
+    const mime = arr[0].match(/:(.*?);/)?.[1] || '';
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
+  };
+
+
+
 
   return (
     <div className="flex flex-col items-center min-h-screen">
-      <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
-        <div className="text-2xl font-semibold text-white text-center">정규런 수정</div>
-        <button onClick={() => navigate(-1)} className="absolute left-4">
-          <img src={BackIcon} alt="뒤로가기" className="w-6 h-6" />
-        </button>
+      <div className="max-w-[430px] w-full">
+        <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
+          <div className="text-2xl font-semibold text-white text-center">정규런 수정</div>
+          <button onClick={() => navigate(-1)} className="absolute left-4">
+            <img src={BackIcon} alt="뒤로가기" className="w-6 h-6" />
+          </button>
+        </div>
       </div>
       <div className="w-full max-w-md px-4">
         <div className="my-2">제목</div>
@@ -252,7 +309,6 @@ function NewRegularRunEdit() {
           onChange={(e) => setContent(e.target.value)}
         ></textarea>
 
-        {/* 페이서 UI는 기존 그대로 유지 */}
         {/* 페이서 그룹 입력 UI */}
         <div className="flex flex-col items-center w-full max-w-md p-4 bg-white rounded-lg relative">
           {isBottomSheetOpen && (

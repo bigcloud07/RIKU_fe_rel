@@ -502,7 +502,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         </div>
       </div>
 
-      <div className="mt-[34px]"><TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} /></div>
+      <div className="mt-[12px]"><TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} /></div>
 
       {activeTab === "소개" && (
         <>

@@ -275,7 +275,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
         <div className="relative w-full pb-[90px]">
   
           <div className="w-full h-[308px] overflow-hidden">
-            <object data={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
+            <img src={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
           </div>
           <div className="absolute top-[230px] w-full px-5 rounded-t-[20px] bg-white">
             <div className="flex flex-col items-center mt-[14px]">
