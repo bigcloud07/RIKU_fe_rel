@@ -400,6 +400,22 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                 className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
                 onClick={async () => {
                   if (label === "수정하기") {
+                    if (postStatus === "CLOSED") {
+                      alert("종료된 러닝은 수정이 불가능합니다.");
+                      return;
+                    }
+                  
+                    // 🔥 정확한 비교 로직
+                    const now = new Date();
+                  
+                    const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
+                    const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
+                  
+                    if (now > runKstDate) {
+                      alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
+                      return;
+                    }
+                  
                     navigate(`/training/edit/${postId}`, { replace: true });
                     setShowMenu(false);
                   } else {

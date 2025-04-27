@@ -179,8 +179,10 @@ function NewRegularRunEdit() {
       if (mainImage) formData.append("postImage", mainImage);
       courseImages.forEach(file => formData.append("attachments", file));
       pacerGroups.forEach((group, index) => {
+        const matchedPacer = pacers.find((p) => p.name === group.pacer || p.pacerName === group.pacer);
+        const pacerId = matchedPacer ? matchedPacer.id : "";
         formData.append(`pacers[${index}].group`, group.id);
-        formData.append(`pacers[${index}].pacerId`, group.pacer);
+        formData.append(`pacers[${index}].pacerId`, String(pacerId));
         formData.append(`pacers[${index}].distance`, group.distance);
         formData.append(`pacers[${index}].pace`, group.pace);
       });

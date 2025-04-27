@@ -56,6 +56,9 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const [error, setError] = useState<string | null>(null);
   const [groupedParticipants, setGroupedParticipants] = useState<any[]>([]);
   const [postStatus, setPostStatus] = useState("")
+  const [buttonRefreshKey, setButtonRefreshKey] = useState(0);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
 
 
   useEffect(() => {
@@ -100,6 +103,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                   ? "출석하기"
                   : "참여하기"
             );
+            setIsGroupModalOpen(false);
           }
           console.log(result.attachmentUrls); // 1장인지, 여러 장인지
 
@@ -110,7 +114,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
     };
 
     fetchPostData();
-  }, [postId]);
+  }, [refreshTrigger]);
 
   const fetchParticipantsInfo = async () => {
     try {
@@ -168,7 +172,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
   const handleJoinConfirm = async () => {
     const isCancel = selectedGroup === "";
-
+  
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const res = await customAxios.patch(
@@ -176,7 +180,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
         {},
         { headers: { Authorization: `${token}` } }
       );
-
+  
       if (res.data.isSuccess) {
         if (isCancel) {
           // ✅ 참여 취소 처리
@@ -184,53 +188,29 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           setButtonText("참여하기");
           setSelectedGroup("");
           setIsGroupModalOpen(false);
-
-          await fetchParticipantsInfo();
           return;
         }
-
-        // ✅ 그룹 참여 or 수정 처리
-        const updatedGroup = res.data.result.groupedParticipants;
-
-
-        if (!updatedGroup) {
-          // 혹시라도 없는 경우 대비해서 다시 전체 fetch
-          await fetchParticipantsInfo();
-          setIsGroupModalOpen(false);
-          return;
-        }
-
-        setGroupedParticipants(updatedGroup);
-
-        const foundGroup = updatedGroup?.find(group =>
-          group.participants?.find((p: any) => p.userId === userInfo.userId)
-        );
-        if (foundGroup) {
-          const matchedUser = foundGroup.participants.find((p: any) => p.userId === userInfo.userId);
-          setUserStatus(matchedUser?.status || "");
-          setButtonText(
-            matchedUser?.status === "ATTENDED"
-              ? "출석완료"
-              : matchedUser?.status === "PENDING"
-                ? "출석하기"
-                : "참여하기"
-          );
-        }
-
+  
+        // ✅ 그룹 참여 성공
+        setUserStatus("PENDING");    // 무조건 직접 세팅
+        setButtonText("출석하기");
+        setSelectedGroup(selectedGroup); // 선택했던 그룹
         setIsGroupModalOpen(false);
+  
+        // 🔥 추가로 participantsNum도 1 증가시켜서 바로 반영하고 싶으면 여기서 직접 setParticipantsNum(prev => prev + 1) 해도 돼
       } else {
         setError(res.data.responseMessage);
       }
     } catch (error: any) {
       console.error("❌ 참여/취소 요청 실패:", error);
       if (error?.response?.data) {
-        console.error("📦 서버 응답 내용:", error.response.data);
         setError(error.response.data.responseMessage || "참여 요청 실패");
       } else {
         setError("참여 요청 실패");
       }
     }
   };
+  
 
 
 
@@ -271,9 +251,9 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
           정규런
         </div>
-  
+
         <div className="relative w-full pb-[90px]">
-  
+
           <div className="w-full h-[308px] overflow-hidden">
             <img src={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
           </div>
@@ -298,8 +278,8 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
             </div>
           </div>
         </div>
-  
-  
+
+
         <TabButton leftLabel="소개" rightLabel="명단" onTabChange={setActiveTab} />
         {activeTab === "소개" && <>
           <div className="flex items-start text-left w-full mt-[24px] my-2 max-w-[349px]">
@@ -345,7 +325,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
             <div className="text-[#686F75] p-3 text-sm text-justify whitespace-pre-wrap">{content}</div>
           </div>
         </>}
-  
+
         {activeTab === "명단" &&
           <AttendanceList
             key={JSON.stringify(groupedParticipants)} // ⬅️ 이거 추가!
@@ -354,53 +334,56 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
             postCreatorName={postCreatorName}
           />
         }
-  
-  
+
+
         <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
-  
+
         {/* ✅ 참여 상태에 따른 버튼 렌더링 */}
-        {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
-          <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
-            모집 종료
-          </div>
-        ) : userStatus === "ATTENDED" ? (
-          <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
-            출석완료
-          </div>
-        ) : userStatus === "PENDING" ? (
-          <>
-            {selectedGroup && (
-              <div className="text-sm text-left text-kuDarkGray w-full max-w-[327px] mt-4 pl-6">
-                내가 선택한 그룹 : <span className="font-semibold">{selectedGroup}</span>
-              </div>
-            )}
-            <div className="flex gap-2 mt-[8px] mb-6">
-              <button
-                className="w-[164px] h-[52px] font-bold rounded-lg text-white bg-kuGreen"
-                onClick={handleOpenGroupModal}
-              >
-                그룹 수정
-              </button>
-              <button
-                className="w-[164px] h-[52px] rounded-lg font-bold bg-kuDarkGreen text-white"
-                onClick={() => setIsModalOpen(true)}
-              >
-                출석하기
-              </button>
+        <div key={buttonRefreshKey}>
+          {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
+            <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
+              모집 종료
             </div>
-          </>
-        ) : (
-          <button
-            className="w-[327px] h-14 rounded-lg bg-kuGreen text-white font-bold mt-6 mb-6"
-            onClick={handleOpenGroupModal}
-          >
-            참여하기
-          </button>
-        )}
-  
-  
-  
-  
+          ) : userStatus === "ATTENDED" ? (
+            <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
+              출석완료
+            </div>
+          ) : userStatus === "PENDING" ? (
+            <>
+              {selectedGroup && (
+                <div className="text-sm text-left text-kuDarkGray w-full max-w-[327px] mt-4 pl-6">
+                  내가 선택한 그룹 : <span className="font-semibold">{selectedGroup}</span>
+                </div>
+              )}
+              <div className="flex gap-2 mt-[8px] mb-6">
+                <button
+                  className="w-[164px] h-[52px] font-bold rounded-lg text-white bg-kuGreen"
+                  onClick={handleOpenGroupModal}
+                >
+                  그룹 수정
+                </button>
+                <button
+                  className="w-[164px] h-[52px] rounded-lg font-bold bg-kuDarkGreen text-white"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  출석하기
+                </button>
+              </div>
+            </>
+          ) : (
+            <button
+              className="w-[327px] h-14 rounded-lg bg-kuGreen text-white font-bold mt-6 mb-6"
+              onClick={handleOpenGroupModal}
+            >
+              참여하기
+            </button>
+          )}
+        </div>
+
+
+
+
+
         {isGroupModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
             <div className="bg-white p-6 rounded-lg w-[300px] max-w-[90%] text-center relative shadow-lg">
@@ -411,14 +394,14 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                 ×
               </button>
               <h2 className="text-[16px] mb-4">정규런 그룹을 선택해주세요.</h2>
-  
+
               {/* 그룹 선택 옵션 */}
               <div className="flex justify-center">
                 <div className="flex flex-col gap-3 max-h-[500px] overflow-y-auto w-full"
                   style={{ paddingRight: "8px", marginRight: "-8px" }}>
                   {groupList.map((group, index) => {
                     const isSelected = selectedGroup === group.group;
-  
+
                     const handleSelect = () => {
                       if (isSelected) {
                         setSelectedGroup(""); // 다시 누르면 해제
@@ -426,7 +409,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                         setSelectedGroup(group.group); // 선택
                       }
                     };
-  
+
                     return (
                       <button
                         key={index}
@@ -444,7 +427,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                             {group.pace}
                           </span>
                         </div>
-  
+
                         {/* 오른쪽 체크 아이콘 */}
                         {isSelected && (
                           <img src={checkedicon} alt="checked" className="w-[24px] h-[24px] mr-[16px]" />
@@ -461,13 +444,13 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
               >
                 확인
               </button>
-  
+
               {/* 에러 메시지 */}
               {error && <div className="text-red-500 mt-2 text-sm">{error}</div>}
             </div>
           </div>
         )}
-  
+
         {/* // 출석 모달 구조 */}
         {isModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
@@ -490,8 +473,8 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
             </div>
           </div>
         )}
-  
-  
+
+
       </div>
     </div>
   );
