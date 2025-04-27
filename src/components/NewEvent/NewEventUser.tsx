@@ -347,7 +347,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-full pb-[50px]">
         <div className="w-full h-[308px] overflow-hidden">
-          <object data={postimgurl || flashrunimage} className="w-full h-full object-cover" />
+          <img src={postimgurl || flashrunimage} className="w-full h-full object-cover" />
         </div>
         {/* 번개런 정보 */}
         <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">

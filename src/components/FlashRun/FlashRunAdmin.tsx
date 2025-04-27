@@ -97,7 +97,6 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
             },
           }
         );
-        console.log(response.data)
         if (response.data.isSuccess) {
           const generatedCode = response.data.result.code;
           setCode(generatedCode);
@@ -240,7 +239,6 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setPostCreatorName(result.postCreatorInfo.userName);
 
-          console.log(token)
 
         } else {
           setError(response.data.responseMessage);
