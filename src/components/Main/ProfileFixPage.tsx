@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Link 컴포넌트 import
 import customAxios from "../../apis/customAxios";
 import pencil_Icon from "../../assets/Main-img/pencil.svg"; //연필 로고 불러오기
@@ -123,6 +123,7 @@ function ProfileFixPage() {
   const [collegeName, setCollegeName] = useState("공과대학"); //학교 정보-단과대명
   const [departmentName, setDepartmentName] = useState("힙합공학부"); //학교 정보-학과명
   const [telNum, setTelNum] = useState(""); //전화번호
+  const [telNumChanged, setTelNumChanged] = useState(false); //전화번호가 바뀌었는지 확인하는 state
   const [studentID, setStudentID] = useState("201911291"); //학번(ID)
   const [userProfileImageUrl, setUserProfileImageUrl] = useState(""); //유저 프로필 이미지 url
 
@@ -203,12 +204,20 @@ function ProfileFixPage() {
     }
   };
 
+  //핸드폰 번호의 정보가 바뀌었을 때 바뀌었다는 것을 표시하기 위한 handleTelNumChanged
+  const handleTelNumChanged = useCallback((value: string) => {
+    if (!telNumChanged) {
+      setTelNumChanged(true); //전화번호가 바뀌었다고 표시한다
+    }
+    setTelNum(value);
+  }, []);
+
   //저장하기 전에 필수 form이 다 채워졌나 확인하는 변수들 (전화번호를 제외한 모든 form이 채워져 있어야 함), 그리고 이를 검증하는 isFormsValid() 함수
   const isPasswordFormValid = password.trim() === "" || isPasswordValid;
 
   function isFormsValid() {
     //비번도 비어있는 상태이고, 프사 선택도 안했다면, 가차없이 false 반환
-    if (password.trim() === "" && selectedImage === null) return false;
+    if (password.trim() === "" && selectedImage === null && telNumChanged === false) return false;
 
     if (isPasswordFormValid) {
       //비밀번호가 유효한 경우
@@ -303,7 +312,7 @@ function ProfileFixPage() {
             <InputField
               label="전화번호"
               value={telNum}
-              onChange={setTelNum}
+              onChange={handleTelNumChanged}
               placeholder="ex) 010-1111-2222"
             />
             <InputField label="학번(ID)" value={studentID} onChange={setStudentID} disabled />
