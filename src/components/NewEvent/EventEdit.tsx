@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { replace, useNavigate, useParams } from "react-router-dom";
 import customAxios from '../../apis/customAxios';
 import { motion } from "framer-motion";
 import BackIcon from "../../assets/BackBtn.svg";
@@ -166,7 +166,7 @@ function EventEdit() {
 
       if (response.data.isSuccess) {
         alert("행사가 성공적으로 수정되었습니다!");
-        navigate(`/run/event/${postId}`);
+        navigate(`/run/event/${postId}`, { replace: true });
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
       }
@@ -204,6 +204,8 @@ function EventEdit() {
     });
 
     setAttachments(prev => [...(prev ?? []), ...selectedArray]);
+
+    event.target.value = ""; // ✅ input 초기화 추가
   };
 
 
@@ -214,6 +216,8 @@ function EventEdit() {
     const reader = new FileReader();
     reader.onloadend = () => setPostImagePreview(reader.result as string);
     reader.readAsDataURL(file);
+
+    event.target.value = ""; // ✅ input 초기화 추가
   };
 
 

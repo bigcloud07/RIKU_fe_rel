@@ -391,7 +391,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
                         alert("종료된 러닝은 수정이 불가능합니다.");
                         return;
                       }
-                      navigate(`/regular/edit/${postId}`);
+                      navigate(`/regular/edit/${postId}`, { replace: true });
                       setShowMenu(false);
                     } else {
                       const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");

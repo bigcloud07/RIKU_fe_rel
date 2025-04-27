@@ -33,21 +33,23 @@ function OnbordingPage() {
       />
 
       {/* 내용 및 버튼 */}
-      <div className="z-10 flex flex-col items-center justify-center">
-        <div className="mt-[130px]">
-          <img src={rikulogo} alt="로고" />
+      <div className="z-10 flex flex-col items-center justify-center min-h-screen">
+        <div className="mt-[130px] opacity-90">
+          <object data={rikulogo} />
         </div>
         <div className="flex flex-col">
           <button
             onClick={handleLoginClick}
-            className="w-[327px] h-[52px] rounded-[10px] bg-kuWarmGray text-black font-bold mt-[90px] 
-             hover:bg-kuDarkBeige hover:text-white transition-colors duration-300"
+            className="w-[327px] h-[52px] rounded-[10px] bg-black/20 text-white font-bold mt-[20px] 
+  hover:bg-kuWarmGray hover:bg-opacity-100 hover:text-white transition-colors duration-300"
           >
             시작하기
           </button>
-        </div>
+
+          
       </div>
     </div>
+    </div >
   );
 }
 

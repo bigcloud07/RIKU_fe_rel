@@ -53,6 +53,9 @@ function NewFlashRunEdit() {
     const reader = new FileReader();
     reader.onloadend = () => setPostImagePreview(reader.result as string);
     reader.readAsDataURL(file);
+
+    e.target.value = ""; // ✅ input 초기화 추가
+
   };
 
   const handleAttachmentUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +72,9 @@ function NewFlashRunEdit() {
       reader.onloadend = () => setAttachmentPreviews((prev) => [...prev, reader.result as string]);
       reader.readAsDataURL(file);
     });
-    ;
+    
+    e.target.value = ""; // ✅ input 초기화 추가
+
   };
 
   const handleRemoveAttachment = (index: number) => {
@@ -152,7 +157,7 @@ function NewFlashRunEdit() {
       console.log("요청된 최종 엔드포인트:", res.config.url); // ✅ 실제 요청된 URL
       if (res.data.isSuccess) {
         alert("번개런이 성공적으로 수정되었습니다!");
-        navigate("/FlashRun");
+        navigate(`/run/flash/${postId}`, { replace: true });
       } else {
         alert(`요청 실패: ${res.data.responseMessage}`);
       }
