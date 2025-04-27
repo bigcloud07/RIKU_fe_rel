@@ -52,7 +52,7 @@
     "vite": "^5.4.8"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "start": "vite preview",
     "dev:webpack": "react-scripts start",

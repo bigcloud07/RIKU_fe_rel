@@ -49,28 +49,29 @@ function NewRegularRunMake() {
   const [courseImages, setCourseImages] = useState<File[]>([]);
   const [coursePreviews, setCoursePreviews] = useState<string[]>([]);
 
-  const compressImage = async (file: File): Promise<File> => {
-    const options = {
-      maxSizeMB: 4, // 안전하게 낮춤
-      maxWidthOrHeight: 1920,
-      useWebWorker: true,
-    };
-    try {
-      const compressedBlob = await imageCompression(file, options);
+  // 압축 로직 삭제
+  // const compressImage = async (file: File): Promise<File> => {
+  //   const options = {
+  //     maxSizeMB: 1, // 안전하게 낮춤
+  //     maxWidthOrHeight: 1920,
+  //     useWebWorker: true,
+  //   };
+  //   try {
+  //     const compressedBlob = await imageCompression(file, options);
       
-      // ✅ 파일 이름과 타입 유지하며 File 객체로 감싸기
-      const renamedFile = new File(
-        [compressedBlob],
-        file.name, // 원래 이름 유지
-        { type: file.type }
-      );
+  //     // ✅ 파일 이름과 타입 유지하며 File 객체로 감싸기
+  //     const renamedFile = new File(
+  //       [compressedBlob],
+  //       file.name, // 원래 이름 유지
+  //       { type: file.type }
+  //     );
   
-      return renamedFile;
-    } catch (error) {
-      console.error("이미지 압축 실패", error);
-      return file;
-    }
-  };
+  //     return renamedFile;
+  //   } catch (error) {
+  //     console.error("이미지 압축 실패", error);
+  //     return file;
+  //   }
+  // };
   
 
   useEffect(() => {
@@ -131,56 +132,69 @@ function NewRegularRunMake() {
 
   const handleMainImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const compressed = await compressImage(file);
-      if (compressed.size > 4 * 1024 * 1024) {
-        alert("압축 후에도 용량이 4MB를 초과합니다.");
-        return;
-      }
-      const reader = new FileReader();
-      reader.onloadend = () => setMainPreview(reader.result as string);
-      reader.readAsDataURL(compressed);
-      setMainImage(compressed);
-      console.log("압축된 대표 이미지 용량 (MB):", (compressed.size / (1024 * 1024)).toFixed(2));
-
+    if (!file) return;
+  
+    // 4MB 초과 검사
+    if (file.size > 4 * 1024 * 1024) {
+      alert("대표 이미지가 4MB를 초과합니다.");
+      e.target.value = ""; // input 초기화
+      return;
     }
+  
+    const reader = new FileReader();
+    reader.onloadend = () => setMainPreview(reader.result as string);
+    reader.readAsDataURL(file);
+    setMainImage(file);
+  
+    e.target.value = ""; // ✅ input 초기화
   };
+  
 
 
   const handleCourseImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (!selectedFiles) return;
-
+  
     const selectedArray = Array.from(selectedFiles);
-    const compressedFiles: File[] = [];
-    const previews: string[] = [];
-
-    for (let i = 0; i < selectedArray.length; i++) {
-      const file = selectedArray[i];
-
-      const compressed = await compressImage(file);
-      if (compressed.size > 4 * 1024 * 1024) {
-        alert(`${i + 1}번째 코스 사진이 압축 후에도 4MB를 초과합니다.`);
-        continue;
-      }
-
-      const previewReader = new FileReader();
-      previewReader.onloadend = () => {
-        previews.push(previewReader.result as string);
-        setCoursePreviews(prev => [...prev, previewReader.result as string]);
-      };
-      previewReader.readAsDataURL(compressed);
-
-      compressedFiles.push(compressed);
-    }
-
-    if (courseImages.length + compressedFiles.length > 6) {
+  
+    // 총 개수 초과 방지
+    if (courseImages.length + selectedArray.length > 6) {
       alert("코스 사진은 최대 6장까지 업로드할 수 있습니다.");
+      e.target.value = ""; // input 초기화
       return;
     }
-
-    setCourseImages(prev => [...prev, ...compressedFiles]);
+  
+    const validFiles: File[] = [];
+    const errorFiles: number[] = [];
+  
+    for (let i = 0; i < selectedArray.length; i++) {
+      const file = selectedArray[i];
+  
+      if (file.size > 4 * 1024 * 1024) {
+        errorFiles.push(i + 1); // 몇 번째 사진인지 기록 (1부터 시작)
+        continue;
+      }
+  
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setCoursePreviews(prev => [...prev, reader.result as string]);
+      };
+      reader.readAsDataURL(file);
+  
+      validFiles.push(file);
+    }
+  
+    // 4MB 초과한 파일들 있으면 알림
+    if (errorFiles.length > 0) {
+      alert(`첨부하려는 ${errorFiles.join(", ")}번째 사진이 4MB를 초과합니다.`);
+    }
+  
+    setCourseImages(prev => [...prev, ...validFiles]);
+  
+    e.target.value = ""; // ✅ input 초기화
   };
+  
+  
 
 
 

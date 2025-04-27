@@ -66,10 +66,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
   const [currentParticipants, setCurrentParticipants] = useState<Participant[]>(participants);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState<string | null>(null); // 에러 메시지
-  const [userStatus, setUserStatus] = useState(() => {
-    // 로컬 스토리지에서 userStatus 초기값 가져옴
-    return localStorage.getItem(`userStatus-${postId}`) || "";
-  });
+  const [userStatus, setUserStatus] = useState("")
   const [eventtype, setEventtype] = useState("");
   const [date, setDate] = useState("");
   const [currentParticipantsNum, setCurrentParticipantsNum] = useState<number>(participantsNum); // 현재 불러오는 값
@@ -232,6 +229,20 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setPostCreatorName(result.postCreatorInfo.userName);
           setPostStatus(result.postStatus);
+
+          const currentUser = result.participants.find(
+            (p: any) => p.userId === result.userInfo.userId
+          );
+          if (currentUser) {
+            setUserStatus(currentUser.status); // 서버로부터 받아온 내 상태로 갱신
+            setButtonText(
+              currentUser.status === "ATTENDED"
+                ? "출석완료"
+                : currentUser.status === "PENDING"
+                ? "출석하기"
+                : "참여하기"
+            );
+          }
 
 
 

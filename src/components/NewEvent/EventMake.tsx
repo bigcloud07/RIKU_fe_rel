@@ -233,11 +233,21 @@ function EventMake() {
   const handlePostImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
+  
+    if (file.size > 4 * 1024 * 1024) {
+      alert("대표 이미지는 4MB 이하만 업로드할 수 있습니다.");
+      event.target.value = ""; // 초기화
+      return;
+    }
+  
     setPostImage(file);
     const reader = new FileReader();
     reader.onloadend = () => setPostImagePreview(reader.result as string);
     reader.readAsDataURL(file);
+  
+    event.target.value = "";
   };
+  
 
   const handleRemoveAttachment = (index: number) => {
     setAttachments(prev => prev.filter((_, i) => i !== index));
@@ -248,10 +258,27 @@ function EventMake() {
     const selectedFiles = event.target.files;
     if (!selectedFiles) return;
     const selectedArray = Array.from(selectedFiles);
+  
     if (attachments.length + selectedArray.length > 6) {
       alert("최대 6장까지만 업로드할 수 있습니다.");
+      event.target.value = "";
       return;
     }
+  
+    let oversizedIndexes: number[] = [];
+  
+    selectedArray.forEach((file, idx) => {
+      if (file.size > 4 * 1024 * 1024) {
+        oversizedIndexes.push(idx + 1); // 1번부터
+      }
+    });
+  
+    if (oversizedIndexes.length > 0) {
+      alert(`다음 코스 사진이 4MB를 초과했습니다: ${oversizedIndexes.join(", ")}번째`);
+      event.target.value = "";
+      return;
+    }
+  
     selectedArray.forEach((file) => {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -259,8 +286,12 @@ function EventMake() {
       };
       reader.readAsDataURL(file);
     });
+  
     setAttachments(prev => [...prev, ...selectedArray]);
+  
+    event.target.value = "";
   };
+  
 
   const handleDateChange = (date: Date | null) => {
     setDateTime((prev) => ({ ...prev, date }));

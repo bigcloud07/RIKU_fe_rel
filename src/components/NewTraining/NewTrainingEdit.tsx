@@ -67,10 +67,11 @@ function NewTrainingEdit() {
         });
         setPacerGroups(result.pacers.map((p: any) => ({
           id: p.group,
-          pacer: String(p.pacerId || ""),
+          pacer: p.pacerName || "",  // ✅ pacerName으로 저장
           distance: p.distance,
           pace: p.pace,
         })));
+
         console.log(result)
       }
     };
@@ -117,6 +118,9 @@ function NewTrainingEdit() {
       reader.readAsDataURL(file);
       setMainImage(file);
     }
+
+    e.target.value = ""; // ✅ input 초기화 추가
+
   };
 
   const handleCourseImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,6 +137,9 @@ function NewTrainingEdit() {
       reader.readAsDataURL(file);
     });
     setCourseImages(prev => [...prev, ...selectedArray]);
+
+    e.target.value = ""; // ✅ input 초기화 추가
+
   };
 
   const removeCourseImage = (index: number) => {
@@ -198,7 +205,7 @@ function NewTrainingEdit() {
       });
       if (response.data.isSuccess) {
         alert("훈련이 성공적으로 수정되었습니다!");
-        navigate(`/run/training/${postId}`);
+        navigate(`/run/training/${postId}`, { replace: true });
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
         console.log(response.data)
@@ -209,12 +216,12 @@ function NewTrainingEdit() {
     }
   };
 
-  const handlePacerChange = (id: string, pacerId: string) => {
-    console.log(`[선택된 페이서 ID]:`, pacerId); // 확인용
+  const handlePacerChange = (id: string, pacerName: string) => {
     setPacerGroups((prev) =>
-      prev.map((group) => (group.id === id ? { ...group, pacer: pacerId } : group))
+      prev.map((group) => (group.id === id ? { ...group, pacer: pacerName } : group))
     );
   };
+
 
 
   return (
@@ -281,11 +288,12 @@ function NewTrainingEdit() {
                       >
                         <option value="">-</option>
                         {pacers.map((pacer) => (
-                          <option key={pacer.id} value={pacer.id}>
-                            {pacer.name || pacer.pacerName} {/* ✅ 둘 중 있는 값 사용 */}
+                          <option key={pacer.name || pacer.pacerName} value={pacer.name || pacer.pacerName}>
+                            {pacer.name || pacer.pacerName}
                           </option>
                         ))}
                       </select>
+
                     </td>
                     <td className="p-2">
                       <button

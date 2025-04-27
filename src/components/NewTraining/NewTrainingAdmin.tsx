@@ -400,7 +400,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                 className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
                 onClick={async () => {
                   if (label === "수정하기") {
-                    navigate(`/training/edit/${postId}`);
+                    navigate(`/training/edit/${postId}`, { replace: true });
                     setShowMenu(false);
                   } else {
                     const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");

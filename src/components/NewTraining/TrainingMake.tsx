@@ -58,31 +58,62 @@ function TrainingMake() {
   // 코스 사진
   const [courseImages, setCourseImages] = useState<File[]>([]);
   const [coursePreviews, setCoursePreviews] = useState<string[]>([]);
-  const handleMainImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setMainPreview(reader.result as string);
-      reader.readAsDataURL(file);
-      setMainImage(file);
-    }
-  };
 
-  const handleCourseImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = e.target.files;
-    if (!selectedFiles) return;
-    const selectedArray = Array.from(selectedFiles);
-    if (courseImages.length + selectedArray.length > 6) {
-      alert("코스 사진은 최대 6장까지 업로드할 수 있습니다.");
-      return;
+  const handleMainImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  if (file.size > 4 * 1024 * 1024) { // 4MB 초과
+    alert("대표 이미지는 4MB 이하만 업로드할 수 있습니다.");
+    e.target.value = ""; // input 초기화
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onloadend = () => setMainPreview(reader.result as string);
+  reader.readAsDataURL(file);
+  setMainImage(file);
+
+  e.target.value = "";
+};
+
+
+const handleCourseImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const selectedFiles = e.target.files;
+  if (!selectedFiles) return;
+
+  const selectedArray = Array.from(selectedFiles);
+
+  if (courseImages.length + selectedArray.length > 6) {
+    alert("코스 사진은 최대 6장까지 업로드할 수 있습니다.");
+    e.target.value = "";
+    return;
+  }
+
+  let oversizedIndexes: number[] = [];
+
+  selectedArray.forEach((file, idx) => {
+    if (file.size > 4 * 1024 * 1024) {
+      oversizedIndexes.push(idx + 1); // 1번부터
     }
-    selectedArray.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => setCoursePreviews((prev) => [...prev, reader.result as string]);
-      reader.readAsDataURL(file);
-    });
-    setCourseImages((prev) => [...prev, ...selectedArray]);
-  };
+  });
+
+  if (oversizedIndexes.length > 0) {
+    alert(`다음 코스 사진이 4MB를 초과했습니다: ${oversizedIndexes.join(", ")}번째`);
+    e.target.value = "";
+    return;
+  }
+
+  selectedArray.forEach((file) => {
+    const reader = new FileReader();
+    reader.onloadend = () => setCoursePreviews((prev) => [...prev, reader.result as string]);
+    reader.readAsDataURL(file);
+  });
+  setCourseImages((prev) => [...prev, ...selectedArray]);
+
+  e.target.value = "";
+};
+
 
   useEffect(() => {
     const fetchPacers = async () => {
