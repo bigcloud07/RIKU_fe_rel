@@ -41,7 +41,6 @@ const NewEventDetail: React.FC = () => {
             Authorization: `${token}`,
           },
         });
-        console.log(myId)
         
         if (response.data.isSuccess) {
           const result = response.data.result;
@@ -61,7 +60,6 @@ const NewEventDetail: React.FC = () => {
             postimgurl:result.postImageUrl,
             
           });
-          console.log(response.data)
         } else {
           console.error("데이터를 불러오지 못했습니다:", response.data.responseMessage);
           navigate("/");

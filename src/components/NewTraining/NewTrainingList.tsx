@@ -54,14 +54,12 @@ const NewTrainingList: React.FC = () => {
 
                 const result = response.data.result;
 
-                console.log("✅ 서버 응답:", result);
 
 
 
                 setTodayRuns(result.todayRuns ?? []);
                 setUpcomingRuns(result.upcomingRuns ?? []);
                 setPastRuns(result.pastRuns ?? []);
-                console.log("📦 upcomingRuns 배열", result.upcomingRuns);
             } catch (error) {
                 console.error("Error fetching run data:", error);
             }

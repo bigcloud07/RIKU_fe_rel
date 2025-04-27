@@ -306,8 +306,7 @@ const handleJoinConfirm = async () => {
 
       setIsGroupModalOpen(false);
 
-      // ❌ 여기 이거 지운다
-      // await fetchParticipantsInfo();
+      
 
     } else {
       setError(res.data.responseMessage);
