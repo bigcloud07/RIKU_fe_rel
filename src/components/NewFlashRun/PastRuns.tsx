@@ -15,7 +15,7 @@ interface PastRunsProps {
 
 const PastRuns: React.FC<PastRunsProps> = ({ date, peoplecount, title, postimg, onClick }) => {
     return (
-        <div className="relative w-[103.05px] h-[152px] bg-kuLightGray rounded-xl" onClick={onClick}>
+        <div className="relative w-[103.05px] h-[154px] bg-kuLightGray rounded-xl" onClick={onClick}>
             <div className="absolute top-0 w-[103.05px] h-[75px] overflow-hidden rounded-xl">
                 <img
                     className="w-full h-full object-cover rounded-t-[6.44px]"

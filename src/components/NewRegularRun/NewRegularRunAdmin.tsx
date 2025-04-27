@@ -343,8 +343,8 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
 
 
   return (
-    <div className="w-full min-h-screen bg-white">
-      <div className="w-full max-w-[430px] mx-auto flex flex-col items-center text-center justify-center">
+    <div className="w-full bg-white max-w-[430px] mx-auto">
+      <div className="w-full flex flex-col items-center text-center justify-center">
         <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
           <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
           정규런
@@ -391,6 +391,18 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
                         alert("종료된 러닝은 수정이 불가능합니다.");
                         return;
                       }
+                    
+                      // 🔥 정확한 비교 로직
+                      const now = new Date();
+                    
+                      const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
+                      const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
+                    
+                      if (now > runKstDate) {
+                        alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
+                        return;
+                      }
+                    
                       navigate(`/regular/edit/${postId}`, { replace: true });
                       setShowMenu(false);
                     } else {
@@ -437,8 +449,8 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         </div>
 
 
-        <div className="relative w-full max-w-[430px] mx-auto pb-[90px]">
-          <div className="w-fulls h-[308px] overflow-hidden">
+        <div className="relative w-full pb-[90px]">
+          <div className="w-full h-[308px] overflow-hidden">
             <img
               src={postImageUrl || flashrunimage}
               className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
@@ -493,6 +505,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
                             src={url}
                             alt={`코스 사진 ${index + 1}`}
                             className="rounded-lg w-full h-full object-cover"
+                            style={{ maxWidth: "100%", height: "300px" }}
                           />
                         </div>
                         <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">

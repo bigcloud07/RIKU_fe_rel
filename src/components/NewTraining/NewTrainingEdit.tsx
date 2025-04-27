@@ -137,14 +137,14 @@ function NewTrainingEdit() {
       reader.readAsDataURL(file);
     });
     setCourseImages(prev => [...prev, ...selectedArray]);
-
-    e.target.value = ""; // ✅ input 초기화 추가
-
   };
 
   const removeCourseImage = (index: number) => {
     setCourseImages(prev => prev.filter((_, i) => i !== index));
     setCoursePreviews(prev => prev.filter((_, i) => i !== index));
+
+    e.target.value = ""; // ✅ input 초기화 추가
+
   };
 
   const handleSubmit = async () => {
@@ -166,37 +166,23 @@ function NewTrainingEdit() {
       formData.append("date", eventDateTime);
       formData.append("content", content);
       if (mainImage) formData.append("postImage", mainImage);
-      // 🔥 코스 이미지 처리 수정 (coursePreviews 기준 fetch)
-      const fetchAndConvertToFile = async (url: string, filename: string): Promise<File> => {
-        const res = await fetch(url);
-        const blob = await res.blob();
-        return new File([blob], filename, { type: blob.type });
-      };
+      courseImages.forEach(file => formData.append("attachments", file));
 
-      if (coursePreviews.length > 0) {
-        const courseImageFiles = await Promise.all(
-          coursePreviews.map((url, idx) =>
-            fetchAndConvertToFile(url, `course_image_${idx}.jpg`)
-          )
-        );
-        courseImageFiles.forEach(file => {
-          formData.append("attachments", file);
-        });
-      } else {
-        // 코스 사진이 아무것도 없으면 빈 attachments 필드
-        formData.append("attachments", new Blob([], { type: "application/octet-stream" }));
-      }
       pacerGroups.forEach((group, index) => {
-        if (!group.pacer || group.pacer === "undefined") {
-          console.warn(`❗ pacerId 누락됨 - group ${group.id}:`, group);
-          return;
+        const matchedPacer = pacers.find((p) => p.name === group.pacer || p.pacerName === group.pacer);
+      
+        if (!matchedPacer) {
+          console.warn(`❗ pacerId 매칭 실패 - group ${group.id}:`, group);
+          throw new Error(`pacer 매칭 실패 - 그룹 ${group.id}`); // 🚨 여기서 에러를 던지자
         }
-
+      
         formData.append(`pacers[${index}].group`, group.id);
-        formData.append(`pacers[${index}].pacerId`, group.pacer);
+        formData.append(`pacers[${index}].pacerId`, String(matchedPacer.id));
         formData.append(`pacers[${index}].distance`, group.distance);
         formData.append(`pacers[${index}].pace`, group.pace);
       });
+      
+
       const response = await customAxios.patch(`/run/training/post/${postId}`, formData, {
         headers: {
           Authorization: `${token}`,

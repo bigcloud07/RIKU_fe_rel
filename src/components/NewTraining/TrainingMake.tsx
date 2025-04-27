@@ -99,7 +99,7 @@ const handleCourseImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
   });
 
   if (oversizedIndexes.length > 0) {
-    alert(`다음 코스 사진이 4MB를 초과했습니다: ${oversizedIndexes.join(", ")}번째`);
+    alert(`다음 첨부 사진이 4MB를 초과했습니다: ${oversizedIndexes.join(", ")}번째`);
     e.target.value = "";
     return;
   }
