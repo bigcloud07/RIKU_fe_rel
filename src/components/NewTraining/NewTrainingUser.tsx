@@ -274,52 +274,52 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   };
 
   // ✅ 수정된 handleJoinConfirm
-const handleJoinConfirm = async () => {
-  const isCancel = selectedGroup === "";
+  const handleJoinConfirm = async () => {
+    const isCancel = selectedGroup === "";
 
-  try {
-    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-    const res = await customAxios.patch(
-      `/run/training/post/${postId}/join${!isCancel ? `?group=${selectedGroup}` : ""}`,
-      {},
-      { headers: { Authorization: `${token}` } }
-    );
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const res = await customAxios.patch(
+        `/run/training/post/${postId}/join${!isCancel ? `?group=${selectedGroup}` : ""}`,
+        {},
+        { headers: { Authorization: `${token}` } }
+      );
 
-    if (res.data.isSuccess) {
-      const result = res.data.result;
+      if (res.data.isSuccess) {
+        const result = res.data.result;
 
-      const myInfo = result.userInfo;
-      const updatedGroup = result.groupedParticipants;
+        const myInfo = result.userInfo;
+        const updatedGroup = result.groupedParticipants;
 
-      setGroupedParticipants(updatedGroup);
+        setGroupedParticipants(updatedGroup);
 
-      if (isCancel) {
-        setUserStatus(""); 
-        setButtonText("참여하기");
-        setSelectedGroup("");
-      } else {
-        setUserStatus("PENDING"); // ✅ 직접 "PENDING"으로 세팅해버려
-        setButtonText("출석하기"); // ✅ 바로 "출석하기"로 버튼 텍스트 변경
+        if (isCancel) {
+          setUserStatus("");
+          setButtonText("참여하기");
+          setSelectedGroup("");
+        } else {
+          setUserStatus("PENDING"); // ✅ 직접 "PENDING"으로 세팅해버려
+          setButtonText("출석하기"); // ✅ 바로 "출석하기"로 버튼 텍스트 변경
+          setIsGroupModalOpen(false);
+        }
+
+
         setIsGroupModalOpen(false);
+
+
+
+      } else {
+        setError(res.data.responseMessage);
       }
-      
-
-      setIsGroupModalOpen(false);
-
-      
-
-    } else {
-      setError(res.data.responseMessage);
+    } catch (error: any) {
+      console.error("❌ 참여/취소 요청 실패:", error);
+      if (error?.response?.data) {
+        setError(error.response.data.responseMessage || "참여 요청 실패");
+      } else {
+        setError("참여 요청 실패");
+      }
     }
-  } catch (error: any) {
-    console.error("❌ 참여/취소 요청 실패:", error);
-    if (error?.response?.data) {
-      setError(error.response.data.responseMessage || "참여 요청 실패");
-    } else {
-      setError("참여 요청 실패");
-    }
-  }
-};
+  };
 
 
 
@@ -425,45 +425,41 @@ const handleJoinConfirm = async () => {
         훈련
       </div>
 
-      <div className="relative w-full pb-[180px]">
-        <div className="w-full h-[250px] overflow-hidden">
+      <div className="relative w-full pb-[125px]">
+        <div className="w-full h-[308px] overflow-hidden">
           <object data={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
         </div>
-        <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
+        <div className="absolute top-[243px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[8px]">
             {/* 상단 전체를 relative로 감싸기 */}
-            <div className="relative flex flex-col items-center mt-[4px] w-[375px]">
-
-              {/* trainingtype 박스 */}
-              <div className="flex bg-[#FFC002] h-[24px] p-[10px] text-[14px] rounded-[8px] font-bold w-fit items-center">
+            <div className="relative w-full max-w-[430px]  flex flex-col items-center mt-[4px]">
+              {/* 훈련 타입 박스 */}
+              <div className="flex bg-[#FFC002] h-[24px] px-[10px] mt-[4px] text-[14px] rounded-[8px] font-bold w-fit items-center">
                 {trainingtype}
               </div>
 
-
-              {/* 물음표 아이콘: 고정된 우측 위치 */}
+              {/* 물음표 아이콘 */}
               {getTrainingDescription(trainingtype) && (
-                <div className="relative w-full flex justify-end pr-[18px] tooltip-container">
+                <>
                   <img
                     src={isTooltipVisible ? questionmarkOn : questionmarkOff}
                     alt="question mark"
-                    className="absolute top-[-1px] right-[18px] w-[24px] h-[24px] cursor-pointer"
+                    className="absolute top-[6px] right-[15px] w-[24px] h-[24px] cursor-pointer"
                     onClick={() => setIsTooltipVisible(!isTooltipVisible)}
                   />
 
-                  {/* 툴팁 */}
                   {isTooltipVisible && (
-                    <div className="absolute bottom-[140%] right-[25px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
+                    <div className="absolute bottom-[120%] right-[23px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
                       <div className="text-[#4F3F3F] text-[12px]">
                         {getTrainingDescription(trainingtype)}
                       </div>
                     </div>
                   )}
-                </div>
+                </>
               )}
-
-
-
             </div>
+
+
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
           <div className="flex flex-col items-start w-full max-w-[360px] mt-5 px-5">
