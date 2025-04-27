@@ -72,7 +72,6 @@ function ActivityDetailPage() {
           Authorization: accessToken,
         },
       });
-      console.log(response.data.result);
       setUserData(response.data.result); //불러온 값(response.data.result)으로 userData를 세팅!
     } catch (error) {
       console.error("프로필 불러오기 실패:", error);

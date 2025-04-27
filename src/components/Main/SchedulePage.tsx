@@ -114,7 +114,6 @@ function SchedulePage() {
           },
         }
       );
-      console.log(response.data);
       setMonthlyPlan(response.data.result.schedules); //불러온 data의 result 값으로 monthlyPlan 값 저장
 
     } catch (error) {
@@ -154,7 +153,6 @@ function SchedulePage() {
         }
       );
       setSelectedDateEvent(response.data.result); //불러온 data의 result 값으로 selectedDateEvent 값 저장
-      console.log("일별 데이터 응답 성공: ", response.data);
     } catch (error) {
       alert("서버 요청 중 오류 발생!");
       console.error("요청 실패: ", error);
@@ -221,7 +219,9 @@ function SchedulePage() {
       //모달 내에서 현재 선택된 날짜(selectedDateInModal)가 pointDateInModal과 다른 경우
       newDate.setFullYear(pointDateInModal.getFullYear()); //newDate의 연도 값도 바꿔줘야 한다
     }
-    setSelectedDateInModal(newDate); //모달창 내부에서 선택한 날짜에 대한 정보를 바꿔줘야 한다.
+    setPointDate(newDate); //안에서 선택한 연/월을 바깥의 pointDate로 설정한다
+    setIsModalOpen(false); //누르자마자 모달창 닫도록 설정
+    // setSelectedDateInModal(newDate); //모달창 내부에서 선택한 날짜에 대한 정보를 바꿔줘야 한다.
   };
 
   const handleDateClick = (date: Date) => {

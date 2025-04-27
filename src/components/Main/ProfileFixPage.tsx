@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Link 컴포넌트 import
-import profile_Img from "../../assets/default_profile.png"; //이미지 불러오기
-import rightArrow_Icon from "../../assets/right_arrow.svg"; //라이쿠 로고 불러오기
 import customAxios from "../../apis/customAxios";
-import duganadi_Img from "../../assets/RankingPage/dueganadi.png"; //이미지 불러오기
 import pencil_Icon from "../../assets/Main-img/pencil.svg"; //연필 로고 불러오기
-import arrowDown_Icon from "../../assets/Main-img/arrow_down.svg"; //아래쪽 화살표 로고 불러오기
 import ActionBar from "../../components/ActionBar";
 import defaultProfileImg from "../../assets/default_profile.png";
+import imageCompression from "browser-image-compression"; //이미지 압축을 위한 라이브러리 추가
 
 import EyeIcon from "../../assets/visibility_true.svg";
 import EyeOffIcon from "../../assets/visibility_false.svg";
@@ -153,8 +150,6 @@ function ProfileFixPage() {
     if (selectedImage) formData.append("userProfileImg", selectedImage);
     if (password !== "") formData.append("password", password); //비밀번호가 공백이라면, 빈 채로 보내줘야 함
 
-    console.log("FormData 내용:", Array.from(formData.entries()));
-
     try {
       const accessToken = JSON.parse(localStorage.getItem("accessToken") || ""); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
       const url = `/user/profile`;
@@ -167,11 +162,9 @@ function ProfileFixPage() {
 
       //성공했다면
       if (response.data.isSuccess) {
-        console.log("프로필 수정 성공: ", response.data);
         alert("프로필 수정에 성공했습니다.");
         navigate("/tab/my-page");
       } else {
-        console.log("요청 값이 잘못됨");
         alert(response.data.errors.message);
       }
     } catch (error) {
@@ -183,17 +176,30 @@ function ProfileFixPage() {
   const MAX_FILE_SIZE = 3 * 1024 * 1024; // 업로드 최대 가능 용량: 3MB로 우선 하드코딩
 
   //파일 선택 시 -> file 객체 상태에 저장 + 미리보기 URL 생성하는 메소드 handleFileChange
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      //최대 용량을 넘어갈 경우
-      if (file.size > MAX_FILE_SIZE) {
-        alert("업로드 가능한 사진 크기는 최대 3MB입니다.");
+    if (!file) return; //file이 null일 경우, return
+
+    try {
+      const options = {
+        maxSizeMB: 1, //최대 1MB 목표 (가볍게 하려면 추후 0.5로도 가능할 듯)
+        maxWidthOrHeight: 512, //가로/세로 길이 제한
+        useWebWorker: true,
+        fileType: "image/webp", //변환 포맴ㅅ 지정 (브라우저 지원 범위 고려해서..)
+      };
+
+      const compressedFile = await imageCompression(file, options); //압축할 것임
+
+      // 압축 후에도 3MB를 초과한다면 업로드 금지
+      if (compressedFile.size > MAX_FILE_SIZE) {
+        alert("압축 후에도 파일이 너무 큽니다. 다른 파일을 선택해 주세요.");
         return;
       }
-
-      setSelectedImage(file);
-      setPreviewUrl(URL.createObjectURL(file)); // 미리보기용 URL 생성
+      setSelectedImage(compressedFile);
+      setPreviewUrl(URL.createObjectURL(compressedFile)); // 미리보기용 URL 생성
+    } catch (error) {
+      console.error("이미지 압축 실패: ", error);
+      alert("이미지 압축하는 도중에 오류가 발생함!");
     }
   };
 
@@ -223,7 +229,6 @@ function ProfileFixPage() {
           Authorization: accessToken,
         },
       });
-      console.log(response.data.result);
 
       //400, 405, 500 오류일 경우, catch가 잡아줄 것이므로 따로 예외처리할 필요 없을 듯
       setName(response.data.result.name);

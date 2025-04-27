@@ -45,8 +45,6 @@ function AdminPage() {
         }
       );
 
-      console.log("요청 성공", response.data);
-
       let fetchedMembers = response.data.result.map((user: Member) => ({
         studentId: user.studentId,
         userName: user.userName,
@@ -70,7 +68,6 @@ function AdminPage() {
   useEffect(() => {
     // setMembers(dummyData);
     // setEditedMembers(dummyData);
-    console.log("바뀐 놈: ", editedMembers);
     fetchMembers();
   }, []);
 
@@ -169,7 +166,6 @@ function AdminPage() {
         userRole,
         isPacer,
       }));
-      console.log("바뀐 회원 정보: ", payload);
       //바뀐 친구가 없다면(roleChangedMembers에 들어간 놈이 아무것도 없다면..)
       if (payload.length === 0) {
         alert("현재 바뀐 정보가 없습니다.");
