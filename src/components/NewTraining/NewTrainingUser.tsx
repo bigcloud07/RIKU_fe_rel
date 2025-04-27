@@ -85,6 +85,9 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
   const [postStatus, setPostStatus] = useState("")
 
+  const [refreshKey, setRefreshKey] = useState(0);
+
+
 
 
 
@@ -270,75 +273,55 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     }
   };
 
-  const handleJoinConfirm = async () => {
-    const isCancel = selectedGroup === "";
+  // ✅ 수정된 handleJoinConfirm
+const handleJoinConfirm = async () => {
+  const isCancel = selectedGroup === "";
 
-    try {
-      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const res = await customAxios.patch(
-        `/run/training/post/${postId}/join${!isCancel ? `?group=${selectedGroup}` : ""}`,
-        {},
-        { headers: { Authorization: `${token}` } }
-      );
+  try {
+    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+    const res = await customAxios.patch(
+      `/run/training/post/${postId}/join${!isCancel ? `?group=${selectedGroup}` : ""}`,
+      {},
+      { headers: { Authorization: `${token}` } }
+    );
 
-      if (res.data.isSuccess) {
-        const result = res.data.result;
+    if (res.data.isSuccess) {
+      const result = res.data.result;
 
-        // ✅ 유저 ID 직접 추출
-        const userIdFromServer = result.userInfo?.userId;
+      const myInfo = result.userInfo;
+      const updatedGroup = result.groupedParticipants;
 
-        // ✅ 참여 취소 시 초기화
-        if (isCancel) {
-          setUserStatus("");
-          setButtonText("참여하기");
-          setSelectedGroup("");
-          setIsGroupModalOpen(false);
-          await fetchParticipantsInfo();
-          return;
-        }
+      setGroupedParticipants(updatedGroup);
 
-        // ✅ 참여 또는 그룹 수정 성공
-        const updatedGroup = result.groupedParticipants;
-        setGroupedParticipants(updatedGroup);
-        if (result.userInfo && result.userInfo.userId) {
-          setUserInfo(result.userInfo);
-        } else {
-          console.warn("⚠️ 유효하지 않은 userInfo:", result.userInfo);
-          setUserInfo({ userId: 0, userName: "", userProfileImg: "" }); // fallback
-        }
-
-        // ✅ 바로 내가 속한 그룹과 상태 찾아서 반영
-        const foundGroup = updatedGroup?.find(group =>
-          group.participants?.some((p: any) => p.userId === userIdFromServer)
-        );
-        if (foundGroup) {
-          setSelectedGroup(foundGroup.group);
-          const matchedUser = foundGroup.participants.find((p: any) => p.userId === userIdFromServer);
-          const status = matchedUser?.status || "";
-          setUserStatus(status);
-          setButtonText(
-            status === "ATTENDED"
-              ? "출석완료"
-              : status === "PENDING"
-                ? "출석하기"
-                : "참여하기"
-          );
-        }
-
+      if (isCancel) {
+        setUserStatus(""); 
+        setButtonText("참여하기");
+        setSelectedGroup("");
+      } else {
+        setUserStatus("PENDING"); // ✅ 직접 "PENDING"으로 세팅해버려
+        setButtonText("출석하기"); // ✅ 바로 "출석하기"로 버튼 텍스트 변경
         setIsGroupModalOpen(false);
-        await fetchParticipantsInfo();
-      } else {
-        setError(res.data.responseMessage);
       }
-    } catch (error: any) {
-      console.error("❌ 참여/취소 요청 실패:", error);
-      if (error?.response?.data) {
-        setError(error.response.data.responseMessage || "참여 요청 실패");
-      } else {
-        setError("참여 요청 실패");
-      }
+      
+
+      setIsGroupModalOpen(false);
+
+      // ❌ 여기 이거 지운다
+      // await fetchParticipantsInfo();
+
+    } else {
+      setError(res.data.responseMessage);
     }
-  };
+  } catch (error: any) {
+    console.error("❌ 참여/취소 요청 실패:", error);
+    if (error?.response?.data) {
+      setError(error.response.data.responseMessage || "참여 요청 실패");
+    } else {
+      setError("참여 요청 실패");
+    }
+  }
+};
+
 
 
 
