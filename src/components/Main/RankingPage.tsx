@@ -56,8 +56,6 @@ function RankingPage() {
         }
       );
 
-      console.log(response);
-
       //공동 순위 처리에 용이하도록 userId는 서버에서 받아온 정보가 아닌 순위대로 ++하는 idx로 선언(추후 공동 순위 처리 로직이 추가로 삽입됨)
       let idx: number = 1;
 

@@ -52,7 +52,6 @@ function LoginPage() {
       const response = await customAxios.post(url, data);
       // 성공적인 응답 처리
       if (response.data.isSuccess) {
-        console.log(response.data.result.jwtInfo.accessToken);
         alert(`로그인에 성공했습니다! 회원의 학번: ${response.data.result.studentId}`);
 
         localStorage.setItem(
@@ -60,7 +59,6 @@ function LoginPage() {
           JSON.stringify(response.data.result.jwtInfo.accessToken)
         );
         localStorage.setItem("MyId", JSON.stringify(response.data.result.userId));
-        console.log(response.data);
         navigate("/tab/main"); // 로그인 성공 시 메인 페이지로 이동
       } else {
         // 요청 실패 처리

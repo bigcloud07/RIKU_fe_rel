@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; //react-router-dom 라이브러리를 사용 (useNavigation 사용할 예정)
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; //react-router-dom 라이브러리를 사용 (useNavigation 사용할 예정)
 
-import { useDispatch } from 'react-redux'; 
-import { setStudentID } from '../../redux/slices/signupSlice' //Action Creator를 import 해온다!
+import { useDispatch } from "react-redux";
+import { setStudentID } from "../../redux/slices/signupSlice"; //Action Creator를 import 해온다!
 
-import axios from 'axios'; //axios(서버와의 통신을 위한 라이브러리) import!
-import customAxios from '../../apis/customAxios';
+import axios from "axios"; //axios(서버와의 통신을 위한 라이브러리) import!
+import customAxios from "../../apis/customAxios";
 
 //학번의 유효성을 검사하는 메소드 validateStudentID
 function validateStudentID(id: string) {
@@ -50,23 +50,25 @@ function StudentidInput() {
       //학번 중복 확인을 서버 요청을 통해 먼저 진행해야 한다 (try-catch 구문 활용)
       try {
         const response = await customAxios.get(`/user/check-id?studentId=${studentID}`);
-        console.log("결과: ", response);
         //중복 확인 검사 성공했을 경우에만 (result 값이 false여야 함)
-        if(response.data.result === false) {
+        if (response.data.result === false) {
           alert("학번이 유효합니다! 다음 단계로 넘어갑니다.");
           //redux 저장소에 studentID 저장
           dispatch(setStudentID(studentID));
-          navigate('/password-input'); //'/next-step'라는 값을 가진 컴포넌트로 이동한다 (navigating)
+          navigate("/password-input"); //'/next-step'라는 값을 가진 컴포넌트로 이동한다 (navigating)
         } else {
           //중복 검사 실패 (겹치는 놈 있음)
-          alert('이미 가입된 학번입니다. 다른 학번으로 가입을 다시 시도해 주세요.');
+          alert("이미 가입된 학번입니다. 다른 학번으로 가입을 다시 시도해 주세요.");
         }
-      } catch(error) {
+      } catch (error) {
         // 오류가 발생한 경우 처리
         if (axios.isAxiosError(error)) {
-          alert('An error occurred while validating the Login ID: ' + (error.response?.data?.message || error.message));
+          alert(
+            "An error occurred while validating the Login ID: " +
+              (error.response?.data?.message || error.message)
+          );
         } else {
-          alert('An unexpected error occurred');
+          alert("An unexpected error occurred");
         }
       }
     } else {
@@ -83,14 +85,14 @@ function StudentidInput() {
         </button>
         <span className="text-gray-400 text-sm">1/5</span>
       </div>
-  
+
       {/* Main Form */}
       <form onSubmit={handleSubmit} className="w-full max-w-sm mt-16">
         {/* '아이디를 입력해 주세요' 텍스트 */}
         <div className="w-full max-w-sm">
           <h1 className="text-left font-bold text-2xl text-black mb-12">학번을 입력해 주세요.</h1>
         </div>
-  
+
         {/* 학번 입력 필드 */}
         <div className="mb-6">
           <input
@@ -98,17 +100,29 @@ function StudentidInput() {
             value={studentID}
             onChange={handleChange}
             placeholder="학번(StudentID)"
-            className={`w-full px-4 py-2 border ${studentID === '' ? 'border-gray-300' : isValidID ? 'border-gray-300' : 'border-red-500'} rounded-md focus:outline-none`}
+            className={`w-full px-4 py-2 border ${
+              studentID === ""
+                ? "border-gray-300"
+                : isValidID
+                ? "border-gray-300"
+                : "border-red-500"
+            } rounded-md focus:outline-none`}
           />
           <div className="w-full max-w-sm">
-            {!(isValidID || studentID === '') && <p className="text-red-500 text-sm mt-2 text-left">{validationMessage}</p>}
+            {!(isValidID || studentID === "") && (
+              <p className="text-red-500 text-sm mt-2 text-left">{validationMessage}</p>
+            )}
           </div>
         </div>
 
         {/* 다음 버튼 */}
         <button
           type="submit"
-          className={`w-full py-3 mt-72 rounded-md ${isValidID ? 'bg-kuDarkGreen text-kuWhite hover: hover:bg-kuGreen' : ' text-gray-500 bg-gray-100'} transition-colors`}
+          className={`w-full py-3 mt-72 rounded-md ${
+            isValidID
+              ? "bg-kuDarkGreen text-kuWhite hover: hover:bg-kuGreen"
+              : " text-gray-500 bg-gray-100"
+          } transition-colors`}
           disabled={!isValidID}
         >
           다음
@@ -119,7 +133,6 @@ function StudentidInput() {
       <div className="mb-4"></div>
     </div>
   );
-  
 }
 
 export default StudentidInput;
