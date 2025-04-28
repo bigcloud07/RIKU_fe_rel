@@ -245,7 +245,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-white">
+    <div className="w-full min-h-screen bg-white overflow-y-auto">
       <div className="flex flex-col items-center text-center justify-center w-full max-w-[430px] mx-auto">
         <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
           <img
