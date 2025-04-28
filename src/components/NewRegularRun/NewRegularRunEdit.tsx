@@ -89,7 +89,15 @@ function NewRegularRunEdit() {
   };
 
   const removePacerGroup = (id: string) => {
-    setPacerGroups(pacerGroups.filter(group => group.id !== id));
+    setPacerGroups(prev => {
+      // 1) 삭제
+      const filtered = prev.filter(group => group.id !== id);
+      // 2) A, B, C… 순서대로 다시 매기기
+      return filtered.map((group, idx) => ({
+        ...group,
+        id: String.fromCharCode(65 + idx), // 65 = 'A'
+      }));
+    });
   };
 
   const handleInputChange = (id: string, field: keyof PacerGroup, value: string) => {

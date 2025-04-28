@@ -23,6 +23,8 @@ import "swiper/css/pagination";
 
 import questionmarkOn from "../../assets/questionmark_on.svg";
 import questionmarkOff from "../../assets/questionmark_off.svg";
+import TabNavigationUI from "../TabNavigationUI";
+import TabNavigationUI_detail from "../TabNavigationUI_detail";
 
 interface Participant {
   userId: number;
@@ -598,7 +600,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
 
       {/* 시작하기 버튼 */}
       <button
-        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished || postStatus === "CLOSED"
+        className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-[100px] ${isFinished || postStatus === "CLOSED"
           ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
           : "bg-[#366943] text-white"
           }`}
@@ -642,6 +644,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           </div>
         </div>
       )}
+      <TabNavigationUI_detail/>
     </div>
   );
 };

@@ -17,6 +17,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import TabNavigationUI from "../TabNavigationUI";
+import TabNavigationUI_detail from "../TabNavigationUI_detail";
 
 
 interface Participant {
@@ -303,7 +305,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
     <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center">
       {/* 상단바 */}
       <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
-        <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate("/FlashRun")}></img>
+        <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate(-1)}></img>
         번개런
       </div>
       {/* 러닝 포스팅 사진 */}
@@ -425,45 +427,47 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       )}
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
-      {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
-        <button
-          className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] text-lg font-bold mt-20 mb-2 cursor-not-allowed"
-          disabled
-        >
-          모집 종료
-        </button>
-      ) : userStatus === "PENDING" ? (
-        <div className="flex justify-center mt-20 mb-2">
-          <div className="w-[327px] flex gap-2">
-            <button
-              className="w-1/2 h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold"
-              onClick={handleCancelParticipation}
-            >
-              참여 취소
-            </button>
-            <button
-              className="w-1/2 h-14 rounded-lg bg-kuDarkGreen text-white font-bold"
-              onClick={handleOpenAttendanceModal}
-            >
-              출석하기
-            </button>
+      <div className="mb-[100px]">
+        {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
+          <button
+            className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] text-lg font-bold mt-20 mb-2 cursor-not-allowed"
+            disabled
+          >
+            모집 종료
+          </button>
+        ) : userStatus === "PENDING" ? (
+          <div className="flex justify-center mt-20 mb-2">
+            <div className="w-[327px] flex gap-2">
+              <button
+                className="w-1/2 h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold"
+                onClick={handleCancelParticipation}
+              >
+                참여 취소
+              </button>
+              <button
+                className="w-1/2 h-14 rounded-lg bg-kuDarkGreen text-white font-bold"
+                onClick={handleOpenAttendanceModal}
+              >
+                출석하기
+              </button>
+            </div>
           </div>
-        </div>
-      ) : userStatus === "" ? (
-        <button
-          className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-kuGreen text-white text-lg font-bold mt-20 mb-2"
-          onClick={handleStartClick}
-        >
-          참여하기
-        </button>
-      ) : (
-        <button
-          className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] text-lg font-bold mt-20 mb-2 cursor-not-allowed"
-          disabled
-        >
-          출석완료
-        </button>
-      )}
+        ) : userStatus === "" ? (
+          <button
+            className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-kuGreen text-white text-lg font-bold mt-20 mb-2"
+            onClick={handleStartClick}
+          >
+            참여하기
+          </button>
+        ) : (
+          <button
+            className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] text-lg font-bold mt-20 mb-2 cursor-not-allowed"
+            disabled
+          >
+            출석완료
+          </button>
+        )}
+      </div>
 
 
 
@@ -493,6 +497,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           </div>
         </div>
       )}
+      <TabNavigationUI_detail/>
     </div>
   );
 };

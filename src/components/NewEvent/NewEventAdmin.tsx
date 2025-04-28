@@ -16,6 +16,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import TabNavigationUI from "../TabNavigationUI";
+import TabNavigationUI_detail from "../TabNavigationUI_detail";
 
 
 interface Participant {
@@ -341,7 +343,7 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
     <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center">
       {/* 상단바 */}
       <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
-        <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate("/FlashRun")}></img>
+        <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate(-1)}></img>
         행사
       </div>
       {/* 러닝 포스팅 사진 */}
@@ -534,6 +536,7 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
           </div>
         </div>
       )}
+      <TabNavigationUI_detail/>
     </div>
   );
 };

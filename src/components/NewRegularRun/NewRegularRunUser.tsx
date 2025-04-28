@@ -19,7 +19,11 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import checkedicon from "../../assets/checkedicon.svg";
+
+import checkedicon from "../../assets/checkedicon.svg"
+import TabNavigationUI from "../TabNavigationUI";
+import TabNavigationUI_detail from "../TabNavigationUI_detail";
+
 
 interface FlashRunUserData {
   postId?: string;
@@ -351,8 +355,11 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
         <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
         {/* ✅ 참여 상태에 따른 버튼 렌더링 */}
-        <div key={buttonRefreshKey}>
-          {postStatus === "CANCELED" || postStatus === "CLOSED" ? (
+
+        <div key={buttonRefreshKey} className="mb-[100px]">
+          {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
+
+        
             <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
               모집 종료
             </div>
@@ -502,6 +509,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           </div>
         )}
       </div>
+      <TabNavigationUI_detail/>
     </div>
   );
 };
