@@ -54,8 +54,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [groupedParticipants, setGroupedParticipants] = useState<any[]>([]);
-
-  const [postStatus, setPostStatus] = useState("")
+  const [postStatus, setPostStatus] = useState("");
   const [buttonRefreshKey, setButtonRefreshKey] = useState(0);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
@@ -170,7 +169,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
   const handleJoinConfirm = async () => {
     const isCancel = selectedGroup === "";
-  
+
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const res = await customAxios.patch(
@@ -178,7 +177,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
         {},
         { headers: { Authorization: `${token}` } }
       );
-  
+
       if (res.data.isSuccess) {
         if (isCancel) {
           // ✅ 참여 취소 처리
@@ -188,12 +187,13 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           setIsGroupModalOpen(false);
           return;
         }
+
         // ✅ 그룹 참여 성공
-        setUserStatus("PENDING");    // 무조건 직접 세팅
+        setUserStatus("PENDING"); // 무조건 직접 세팅
         setButtonText("출석하기");
         setSelectedGroup(selectedGroup); // 선택했던 그룹
         setIsGroupModalOpen(false);
-  
+
         // 🔥 추가로 participantsNum도 1 증가시켜서 바로 반영하고 싶으면 여기서 직접 setParticipantsNum(prev => prev + 1) 해도 돼
       } else {
         setError(res.data.responseMessage);
@@ -207,7 +207,6 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
       }
     }
   };
-  
 
   // 변경된 handleAttendanceClick 함수:
   const handleAttendanceClick = async () => {
@@ -278,7 +277,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
             </div>
           </div>
         </div>
-          
+
         <TabButton leftLabel="소개" rightLabel="명단" onTabChange={setActiveTab} />
         {activeTab === "소개" && (
           <>
@@ -337,23 +336,23 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                 {content}
               </div>
             </div>
-            <div className="text-[#686F75] p-3 text-sm text-justify whitespace-pre-wrap">{content}</div>
-          </div>
-        </>}
-        {activeTab === "명단" &&
+          </>
+        )}
+
+        {activeTab === "명단" && (
           <AttendanceList
             key={JSON.stringify(groupedParticipants)} // ⬅️ 이거 추가!
             groupedParticipants={groupedParticipants}
             userInfoName={userInfo.userName}
             postCreatorName={postCreatorName}
           />
-        }
+        )}
 
         <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
         {/* ✅ 참여 상태에 따른 버튼 렌더링 */}
         <div key={buttonRefreshKey}>
-          {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
+          {postStatus === "CANCELED" || postStatus === "CLOSED" ? (
             <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
               모집 종료
             </div>
