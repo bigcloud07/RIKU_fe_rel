@@ -337,15 +337,28 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
     setIsEditMode(true);
   };
 
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isModalOpen]);
+  
+
 
 
 
 
 
   return (
-    <div className="w-full min-h-screen bg-white">
+    <div className="w-full max-w-[430px] mx-auto min-h-screen bg-white overflow-x-hidden">
+
       <div className="w-full max-w-[430px] mx-auto flex flex-col items-center text-center justify-center">
-        <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
+        <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center overflow-x-hidden">
           <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
           정규런
           <div
@@ -391,6 +404,18 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
                         alert("종료된 러닝은 수정이 불가능합니다.");
                         return;
                       }
+                    
+                      // 🔥 정확한 비교 로직
+                      const now = new Date();
+                    
+                      const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
+                      const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
+                    
+                      if (now > runKstDate) {
+                        alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
+                        return;
+                      }
+                    
                       navigate(`/regular/edit/${postId}`, { replace: true });
                       setShowMenu(false);
                     } else {
@@ -437,20 +462,20 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         </div>
 
 
-        <div className="relative w-full max-w-[430px] mx-auto pb-[90px]">
-          <div className="w-fulls h-[308px] overflow-hidden">
+        <div className="relative w-full max-w-[430px] pb-[90px]">
+          <div className="w-full max-w-[430px] h-[308px] overflow-hidden">
             <img
               src={postImageUrl || flashrunimage}
-              className={`w-full h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
+              className={`w-full max-w-[430px] h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
                 }`}
             />
           </div>
-          <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
+          <div className="absolute top-[230px] w-full max-w-[430px] rounded-t-[20px] bg-white">
             <div className="flex flex-col items-center mt-[14px]">
               <object data={RegularRunlogo} className="w-[60px] h-[24px]" />
               <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
             </div>
-            <div className="flex flex-col items-start w-full px-5 mt-5">
+            <div className="flex flex-col items-start w-full max-w-[430px] px-5 mt-5">
               <div className="flex items-center my-1.5">
                 <object data={place} className="w-[24px] h-[24px] mr-2" />
                 <span>{location}</span>
@@ -471,7 +496,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
 
         {activeTab === "소개" && (
           <>
-            <div className="flex items-start text-left w-full mt-3 my-2 max-w-[349px]">
+            <div className="flex items-start text-left w-full  mt-3 my-2 max-w-[349px]">
               <img src={pacermark} />
               <div className="m-1">PACER</div>
             </div>
@@ -488,11 +513,12 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
                   {attachmentUrls.map((url, index) => (
                     <SwiperSlide key={index}>
                       <div className="relative">
-                        <div className="w-full h-[300px] overflow-hidden rounded-lg">
+                        <div className="w-full max-w-[430px] h-[300px] overflow-hidden rounded-lg">
                           <img
                             src={url}
                             alt={`코스 사진 ${index + 1}`}
-                            className="rounded-lg w-full h-full object-cover"
+                            className="rounded-lg w-full max-w-[430px] h-full object-cover"
+                            style={{ maxWidth: "100%", height: "300px" }}
                           />
                         </div>
                         <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
@@ -548,7 +574,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
 
         {/* 시작하기 버튼 */}
         <button
-          className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-[32px] mb-2 ${isFinished || postStatus === "CLOSED"
+          className={`flex justify-center items-center w-full max-w-[327px] h-14 rounded-lg text-lg font-bold mt-[32px] mb-2 ${isFinished || postStatus === "CLOSED"
             ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
             : "bg-[#366943] text-white"
             }`}
@@ -571,19 +597,19 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
               <h2>참여 코드가 생성되었습니다.</h2>
               <input
                 type="text"
-                className="w-full p-2 border-b border-gray-300 text-center text-lg mt-5"
+                className="w-full max-w-[430px] p-2 border-b border-gray-300 text-center text-lg mt-5"
                 value={code}
                 disabled
               />
               <div className="flex justify-between mt-5 gap-2">
                 <button
-                  className="w-full py-3 rounded-lg bg-[#366943] text-white text-lg"
+                  className="w-full max-w-[430px] py-3 rounded-lg bg-[#366943] text-white text-lg"
                   onClick={handleModalStartClick}
                 >
                   출석종료
                 </button>
                 <button
-                  className="w-full py-3 rounded-lg bg-gray-300 text-gray-700"
+                  className="w-full max-w-[430px] py-3 rounded-lg bg-gray-300 text-gray-700"
                   onClick={handleCloseModal}
                 >
                   창닫기

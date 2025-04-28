@@ -400,6 +400,22 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                 className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
                 onClick={async () => {
                   if (label === "수정하기") {
+                    if (postStatus === "CLOSED") {
+                      alert("종료된 러닝은 수정이 불가능합니다.");
+                      return;
+                    }
+                  
+                    // 🔥 정확한 비교 로직
+                    const now = new Date();
+                  
+                    const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
+                    const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
+                  
+                    if (now > runKstDate) {
+                      alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
+                      return;
+                    }
+                  
                     navigate(`/training/edit/${postId}`, { replace: true });
                     setShowMenu(false);
                   } else {
@@ -452,7 +468,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
             }`}
         />
         <div className="absolute top-[240px] w-full rounded-t-[20px] bg-white z-10">
-          <div className="flex flex-col items-center mt-[8px]">
+          <div className="flex flex-col items-center mt-[18px]">
             <div className="relative w-full max-w-[430px] mx-auto">
               <div className="flex flex-col items-center">
                 {/* 훈련 종류 뱃지 */}
@@ -467,13 +483,13 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                   <img
                     src={isTooltipVisible ? questionmarkOn : questionmarkOff}
                     alt="question mark"
-                    className="absolute top-[6px] right-[15px] w-[24px] h-[24px] cursor-pointer"
+                    className="absolute top-[0px] right-[15px] w-[24px] h-[24px] cursor-pointer"
                     onClick={() => setIsTooltipVisible(!isTooltipVisible)}
                   />
 
                   {/* 툴팁도 동일하게 위치 */}
                   {isTooltipVisible && (
-                    <div className="absolute bottom-[150%] right-[22px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
+                    <div className="absolute bottom-[150%] right-[25px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
                       <div className="text-[#4F3F3F] text-[12px]">
                         {getTrainingDescription(trainingtype)}
                       </div>

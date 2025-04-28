@@ -10,6 +10,7 @@ interface User {
   userName: string;
   userProfileImg?: string | null;
   status: "ATTENDED" | "PENDING";
+  canEdit: string;
 }
 
 interface EditableAttendanceListProps {
@@ -18,10 +19,7 @@ interface EditableAttendanceListProps {
   users: User[];
   onUsersChange: (newUsers: User[]) => void;
   onSaveComplete?: () => void;
-  canEdit?: boolean;
-  onEditAttempt?: () => void;
 }
-
 
 const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
   postId,
@@ -30,7 +28,6 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
   onUsersChange,
   onSaveComplete,
   canEdit,
-  onEditAttempt,
 }) => {
   const [editMode, setEditMode] = useState(false);
 
@@ -94,7 +91,7 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
               if (editMode) {
                 handleSave();
               } else {
-                onEditAttempt ? onEditAttempt() : setEditMode(true); // ✅ 조건 분기
+                setEditMode(true);
               }
             }}
             className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${editMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"
@@ -103,6 +100,7 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
             {editMode ? "명단 저장" : "명단 수정"}
           </button>
         )}
+
       </div>
 
       {/* 유저 목록 */}

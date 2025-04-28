@@ -218,8 +218,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           setPostCreatorId(result.postCreatorInfo.userId);
           setPostStatus(result.postStatus);
 
-          console.log("작성자 ID:", result.postCreatorInfo.userId);
-          console.log("현재 유저 ID:", result.userInfo.userId);
+          
 
 
 

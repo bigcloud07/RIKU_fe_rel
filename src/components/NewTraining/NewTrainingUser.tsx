@@ -85,6 +85,9 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
   const [postStatus, setPostStatus] = useState("")
 
+  const [refreshKey, setRefreshKey] = useState(0);
+
+
 
 
 
@@ -270,6 +273,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     }
   };
 
+  // ✅ 수정된 handleJoinConfirm
   const handleJoinConfirm = async () => {
     const isCancel = selectedGroup === "";
 
@@ -284,49 +288,26 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
       if (res.data.isSuccess) {
         const result = res.data.result;
 
-        // ✅ 유저 ID 직접 추출
-        const userIdFromServer = result.userInfo?.userId;
+        const myInfo = result.userInfo;
+        const updatedGroup = result.groupedParticipants;
 
-        // ✅ 참여 취소 시 초기화
+        setGroupedParticipants(updatedGroup);
+
         if (isCancel) {
           setUserStatus("");
           setButtonText("참여하기");
           setSelectedGroup("");
-          setIsGroupModalOpen(false);
-          await fetchParticipantsInfo();
-          return;
-        }
-
-        // ✅ 참여 또는 그룹 수정 성공
-        const updatedGroup = result.groupedParticipants;
-        setGroupedParticipants(updatedGroup);
-        if (result.userInfo && result.userInfo.userId) {
-          setUserInfo(result.userInfo);
         } else {
-          console.warn("⚠️ 유효하지 않은 userInfo:", result.userInfo);
-          setUserInfo({ userId: 0, userName: "", userProfileImg: "" }); // fallback
+          setUserStatus("PENDING"); // ✅ 직접 "PENDING"으로 세팅해버려
+          setButtonText("출석하기"); // ✅ 바로 "출석하기"로 버튼 텍스트 변경
+          setIsGroupModalOpen(false);
         }
 
-        // ✅ 바로 내가 속한 그룹과 상태 찾아서 반영
-        const foundGroup = updatedGroup?.find(group =>
-          group.participants?.some((p: any) => p.userId === userIdFromServer)
-        );
-        if (foundGroup) {
-          setSelectedGroup(foundGroup.group);
-          const matchedUser = foundGroup.participants.find((p: any) => p.userId === userIdFromServer);
-          const status = matchedUser?.status || "";
-          setUserStatus(status);
-          setButtonText(
-            status === "ATTENDED"
-              ? "출석완료"
-              : status === "PENDING"
-                ? "출석하기"
-                : "참여하기"
-          );
-        }
 
         setIsGroupModalOpen(false);
-        await fetchParticipantsInfo();
+
+
+
       } else {
         setError(res.data.responseMessage);
       }
@@ -339,6 +320,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
       }
     }
   };
+
 
 
 
@@ -443,45 +425,41 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         훈련
       </div>
 
-      <div className="relative w-full pb-[180px]">
-        <div className="w-full h-[250px] overflow-hidden">
+      <div className="relative w-full pb-[125px]">
+        <div className="w-full h-[308px] overflow-hidden">
           <object data={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
         </div>
-        <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
+        <div className="absolute top-[243px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[8px]">
             {/* 상단 전체를 relative로 감싸기 */}
-            <div className="relative flex flex-col items-center mt-[4px] w-[375px]">
-
-              {/* trainingtype 박스 */}
-              <div className="flex bg-[#FFC002] h-[24px] p-[10px] text-[14px] rounded-[8px] font-bold w-fit items-center">
+            <div className="relative w-full max-w-[430px]  flex flex-col items-center mt-[4px]">
+              {/* 훈련 타입 박스 */}
+              <div className="flex bg-[#FFC002] h-[24px] px-[10px] mt-[4px] text-[14px] rounded-[8px] font-bold w-fit items-center">
                 {trainingtype}
               </div>
 
-
-              {/* 물음표 아이콘: 고정된 우측 위치 */}
+              {/* 물음표 아이콘 */}
               {getTrainingDescription(trainingtype) && (
-                <div className="relative w-full flex justify-end pr-[18px] tooltip-container">
+                <>
                   <img
                     src={isTooltipVisible ? questionmarkOn : questionmarkOff}
                     alt="question mark"
-                    className="absolute top-[-1px] right-[18px] w-[24px] h-[24px] cursor-pointer"
+                    className="absolute top-[6px] right-[15px] w-[24px] h-[24px] cursor-pointer"
                     onClick={() => setIsTooltipVisible(!isTooltipVisible)}
                   />
 
-                  {/* 툴팁 */}
                   {isTooltipVisible && (
-                    <div className="absolute bottom-[140%] right-[25px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
+                    <div className="absolute bottom-[120%] right-[23px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
                       <div className="text-[#4F3F3F] text-[12px]">
                         {getTrainingDescription(trainingtype)}
                       </div>
                     </div>
                   )}
-                </div>
+                </>
               )}
-
-
-
             </div>
+
+
             <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
           </div>
           <div className="flex flex-col items-start w-full max-w-[360px] mt-5 px-5">

@@ -7,6 +7,8 @@ import removeicon from "../../assets/remove-icon.svg";
 import { DateNtime } from "./DateNtime";
 import { DateInput } from "./DateInput";
 import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
+import imageCompression from 'browser-image-compression';
+
 
 interface Pacer {
   id: number;
@@ -230,23 +232,34 @@ function EventMake() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handlePostImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePostImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
   
-    if (file.size > 4 * 1024 * 1024) {
-      alert("대표 이미지는 4MB 이하만 업로드할 수 있습니다.");
-      event.target.value = ""; // 초기화
-      return;
+    
+  
+    let finalFile = file;
+    if (file.size > 1 * 1024 * 1024) { // 1MB 초과면 압축
+      try {
+        finalFile = await imageCompression(file, {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+        });
+      } catch (error) {
+        console.error("대표 이미지 압축 실패:", error);
+        alert("이미지 압축에 실패했습니다. 원본 파일을 업로드합니다.");
+      }
     }
   
-    setPostImage(file);
+    setPostImage(finalFile);
     const reader = new FileReader();
     reader.onloadend = () => setPostImagePreview(reader.result as string);
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(finalFile);
   
     event.target.value = "";
   };
+  
   
 
   const handleRemoveAttachment = (index: number) => {
@@ -254,7 +267,7 @@ function EventMake() {
     setAttachmentPreviews(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleAttachmentUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAttachmentUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;
     if (!selectedFiles) return;
     const selectedArray = Array.from(selectedFiles);
@@ -265,32 +278,40 @@ function EventMake() {
       return;
     }
   
-    let oversizedIndexes: number[] = [];
+    let compressedFiles: File[] = [];
   
-    selectedArray.forEach((file, idx) => {
-      if (file.size > 4 * 1024 * 1024) {
-        oversizedIndexes.push(idx + 1); // 1번부터
+    for (let i = 0; i < selectedArray.length; i++) {
+      let file = selectedArray[i];
+  
+      console.log(`✅ 원본 ${i + 1}번 파일 크기: ${(file.size / 1024 / 1024).toFixed(2)}MB`);
+  
+      try {
+        // 항상 압축 (용량 + 해상도 둘 다 조절)
+        const compressed = await imageCompression(file, {
+          maxSizeMB: 1, // 1MB 이하
+          maxWidthOrHeight: 800, // 가로 세로 최대 1200px
+          useWebWorker: true,
+        });
+        console.log(`🔻 압축 후 ${i + 1}번 파일 크기: ${(compressed.size / 1024 / 1024).toFixed(2)}MB`);
+        compressedFiles.push(compressed);
+  
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setAttachmentPreviews(prev => [...prev, reader.result as string]);
+        };
+        reader.readAsDataURL(compressed);
+      } catch (error) {
+        console.error(`코스 이미지 ${i + 1} 압축 실패:`, error);
+        alert(`코스 이미지 ${i + 1}번 파일 압축에 실패했습니다.`);
       }
-    });
-  
-    if (oversizedIndexes.length > 0) {
-      alert(`다음 코스 사진이 4MB를 초과했습니다: ${oversizedIndexes.join(", ")}번째`);
-      event.target.value = "";
-      return;
     }
   
-    selectedArray.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAttachmentPreviews(prev => [...prev, reader.result as string]);
-      };
-      reader.readAsDataURL(file);
-    });
-  
-    setAttachments(prev => [...prev, ...selectedArray]);
-  
+    setAttachments(prev => [...prev, ...compressedFiles]);
     event.target.value = "";
   };
+  
+  
+  
   
 
   const handleDateChange = (date: Date | null) => {

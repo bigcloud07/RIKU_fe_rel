@@ -97,7 +97,6 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
             },
           }
         );
-        console.log(response.data)
         if (response.data.isSuccess) {
           const generatedCode = response.data.result.code;
           setCode(generatedCode);
@@ -240,7 +239,6 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setPostCreatorName(result.postCreatorInfo.userName);
 
-          console.log(token)
 
         } else {
           setError(response.data.responseMessage);
@@ -348,9 +346,21 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                         alert("종료된 러닝은 수정이 불가능합니다.");
                         return;
                       }
+                    
+                      // 🔥 정확한 비교 로직
+                      const now = new Date();
+                    
+                      const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
+                      const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
+                    
+                      if (now > runKstDate) {
+                        alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
+                        return;
+                      }
+                    
                       navigate(`/flash/edit/${postId}`, { replace: true });
                       setShowMenu(false);
-                    } else {
+                    }else {
                       const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
                       if (!confirmCancel) return;
 
