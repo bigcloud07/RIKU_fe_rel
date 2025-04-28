@@ -120,7 +120,6 @@ function MyPage() {
         }
       );
 
-      console.log("유저 프로필 불러오기 성공: ", response); //test용
       if (response.data.isSuccess === true) {
         let formattedUserRole = getUserRole(response.data.result.userRole);
         let data = {
@@ -166,7 +165,6 @@ function MyPage() {
       navigate("/admin");
     } //운영진 페이지에 접근 권한이 없는 사람이라면
     else {
-      console.log(userInfo.userRole);
       alert("회원님은 운영진이 아니므로 해당 페이지에 접근 권한이 없으십니다!");
     }
   }
@@ -180,7 +178,6 @@ function MyPage() {
   async function handleAttendCheckBtn() {
     const accessToken = JSON.parse(localStorage.getItem("accessToken") || ""); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
     const url = `/user/attend`;
-    console.log(accessToken); //테스팅용
 
     try {
       const response = await customAxios.post(
@@ -192,9 +189,7 @@ function MyPage() {
           },
         }
       );
-      console.log(response.data);
       alert("출석이 완료됨!"); //"출석이 완료되었습니다"가 출력될 것
-      console.log("출석 완료, 불러오기 성공: ", response); //test용
       setAttendChecked(true); //'출석됨'으로 표시
       await fetchUserInfo(); //여기에서 유저 정보를 갱신하는 함수(fetchUserInfo)를 call해야 캘린더에 반영된다
     } catch (error) {
@@ -226,10 +221,6 @@ function MyPage() {
       //profileAttendanceDates가 비어있지 않은 경우에만 수행
       const formattedDate = format(new Date(), "yyyy-MM-dd"); // 오늘 날짜를 formattedDate로 포맷팅
       let isTodayAttended = userInfo.profileAttendanceDates.includes(formattedDate);
-      console.log(
-        "userInfo 업데이트 되고, profile 이거 배열 0보다 큼, isTodayAttended: ",
-        isTodayAttended
-      );
       if (isTodayAttended) {
         // 오늘 날짜가 출석되어 있다면
         setAttendChecked(true); // 출석 더 이상 못하게 한다
@@ -274,7 +265,7 @@ function MyPage() {
 
         {/* 포인트와 활동 내역 섹션 */}
         <div className="flex justify-around mt-6 pt-4 border-t-2">
-          <div className="text-center">
+          <div className="text-center" onClick={handleParticipationCountClick}>
             <p className="text-2xl font-bold text-gray-800">{userInfo.points}</p>
             <p className="text-sm text-gray-500">포인트</p>
           </div>
