@@ -134,12 +134,12 @@ function NewRegularRunMake() {
     const file = e.target.files?.[0];
     if (!file) return;
   
-    // 4MB 초과 검사
-    if (file.size > 4 * 1024 * 1024) {
-      alert("대표 이미지가 4MB를 초과합니다.");
-      e.target.value = ""; // input 초기화
-      return;
-    }
+    // // 4MB 초과 검사
+    // if (file.size > 4 * 1024 * 1024) {
+    //   alert("대표 이미지가 4MB를 초과합니다.");
+    //   e.target.value = ""; // input 초기화
+    //   return;
+    // }
   
     const reader = new FileReader();
     reader.onloadend = () => setMainPreview(reader.result as string);
@@ -165,34 +165,20 @@ function NewRegularRunMake() {
     }
   
     const validFiles: File[] = [];
-    const errorFiles: number[] = [];
-  
     for (let i = 0; i < selectedArray.length; i++) {
       const file = selectedArray[i];
-  
-      if (file.size > 4 * 1024 * 1024) {
-        errorFiles.push(i + 1); // 몇 번째 사진인지 기록 (1부터 시작)
-        continue;
-      }
-  
       const reader = new FileReader();
       reader.onloadend = () => {
         setCoursePreviews(prev => [...prev, reader.result as string]);
       };
       reader.readAsDataURL(file);
-  
       validFiles.push(file);
     }
   
-    // 4MB 초과한 파일들 있으면 알림
-    if (errorFiles.length > 0) {
-      alert(`첨부하려는 ${errorFiles.join(", ")}번째 사진이 4MB를 초과합니다.`);
-    }
-  
     setCourseImages(prev => [...prev, ...validFiles]);
-  
     e.target.value = ""; // ✅ input 초기화
   };
+  
   
   
 
@@ -216,28 +202,28 @@ function NewRegularRunMake() {
 
       const errors: string[] = [];
 
-      // 대표 이미지 용량 확인
-      if (mainImage && mainImage.size > 4 * 1024 * 1024) {
-        errors.push("대표 이미지의 크기가 4MB를 초과했습니다.");
-      }
+      // // 대표 이미지 용량 확인
+      // if (mainImage && mainImage.size > 4 * 1024 * 1024) {
+      //   errors.push("대표 이미지의 크기가 4MB를 초과했습니다.");
+      // }
 
-      // 코스 이미지 용량 확인
-      const oversizedCourseImages: number[] = [];
-      courseImages.forEach((file, idx) => {
-        if (file.size > 4 * 1024 * 1024) {
-          oversizedCourseImages.push(idx + 1); // 1부터 시작하는 번호로 표시
-        }
-      });
+      // // 코스 이미지 용량 확인
+      // const oversizedCourseImages: number[] = [];
+      // courseImages.forEach((file, idx) => {
+      //   if (file.size > 4 * 1024 * 1024) {
+      //     oversizedCourseImages.push(idx + 1); // 1부터 시작하는 번호로 표시
+      //   }
+      // });
 
-      if (oversizedCourseImages.length > 0) {
-        errors.push(`코스 사진 ${oversizedCourseImages.join(", ")}번의 크기가 4MB를 초과했습니다.`);
-      }
+      // if (oversizedCourseImages.length > 0) {
+      //   errors.push(`코스 사진 ${oversizedCourseImages.join(", ")}번의 크기가 4MB를 초과했습니다.`);
+      // }
 
-      // 에러가 있으면 중단
-      if (errors.length > 0) {
-        alert(errors.join("\n"));
-        return;
-      }
+      // // 에러가 있으면 중단
+      // if (errors.length > 0) {
+      //   alert(errors.join("\n"));
+      //   return;
+      // }
 
 
       const [hours, minutes] = dateTime.time.split(":").map(Number);

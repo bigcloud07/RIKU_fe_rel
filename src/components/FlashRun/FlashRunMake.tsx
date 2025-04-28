@@ -27,17 +27,15 @@ function FlashRunMake() {
   const [attachments, setAttachments] = useState<File[]>([]);
   const [attachmentPreviews, setAttachmentPreviews] = useState<string[]>([]);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
 
 
   const handlePostImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
   
-    if (file.size > 4 * 1024 * 1024) { // 4MB 초과
-      alert("대표 이미지는 4MB 이하만 업로드할 수 있습니다.");
-      event.target.value = ""; // 초기화
-      return;
-    }
+    
   
     setPostImage(file);
     const reader = new FileReader();
@@ -62,20 +60,6 @@ function FlashRunMake() {
       return;
     }
   
-    let oversizedIndexes: number[] = [];
-  
-    selectedArray.forEach((file, idx) => {
-      if (file.size > 4 * 1024 * 1024) {
-        oversizedIndexes.push(idx + 1); // 1번부터 시작
-      }
-    });
-  
-    if (oversizedIndexes.length > 0) {
-      alert(`첨부한 사진이 4MB를 초과했습니다: ${oversizedIndexes.join(", ")}번째`);
-      event.target.value = "";
-      return;
-    }
-  
     selectedArray.forEach((file) => {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -90,6 +74,7 @@ function FlashRunMake() {
   };
   
   
+  
 
   const handleRemoveAttachment = (index: number) => {
     setAttachments((prev) => prev.filter((_, i) => i !== index));
@@ -97,6 +82,8 @@ function FlashRunMake() {
   };
 
   const handleSubmit = async () => {
+    if (isSubmitting) return; 
+
     if (!title || !location || !content || !dateTime.date || !postImage) {
       alert("모든 정보를 입력해주세요.");
       return;

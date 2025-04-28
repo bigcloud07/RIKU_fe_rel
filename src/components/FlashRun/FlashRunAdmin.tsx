@@ -18,6 +18,8 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { useNavigate } from "react-router-dom";
+import TabNavigationUI from "../TabNavigationUI";
+import TabNavigationUI_detail from "../TabNavigationUI_detail";
 
 interface Participant {
   id: number;
@@ -384,7 +386,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                         if (data.isSuccess) {
                           alert("게시글이 성공적으로 취소되었습니다.");
                           setShowMenu(false);
-                          navigate("/Flash");
+                          navigate("/FlashRun");
                         } else {
                           alert(data.responseMessage || "취소에 실패했습니다.");
                         }
@@ -528,7 +530,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
         {/* 시작하기 버튼 */}
         <button
-          className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-2 ${isFinished || postStatus === "CLOSED"
+          className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-[100px] ${isFinished || postStatus === "CLOSED"
             ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
             : "bg-[#366943] text-white"
             }`}
@@ -573,6 +575,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           </div>
         )}
       </div>
+      <TabNavigationUI_detail/>
     </div>
   );
 };

@@ -19,6 +19,8 @@ import { Pagination } from "swiper/modules";
 import checkedicon from "../../assets/checkedicon.svg"
 import "swiper/css";
 import "swiper/css/pagination";
+import TabNavigationUI from "../TabNavigationUI";
+import TabNavigationUI_detail from "../TabNavigationUI_detail";
 
 interface Participant {
   id: number;
@@ -40,7 +42,7 @@ interface FlashRunUserData {
 
 const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const navigate = useNavigate();
-  const handleBack = () => navigate("/training");
+  const handleBack = () => navigate(-1);
 
   const [activeTab, setActiveTab] = useState<"소개" | "명단">("소개");
   const [code, setCode] = useState("");
@@ -552,44 +554,46 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
       <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
 
-      {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
-        <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
-          모집 종료
-        </div>
-      ) : userStatus === "ATTENDED" ? (
-        <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
-          출석완료
-        </div>
-      ) : userStatus === "PENDING" ? (
-        <>
-          {selectedGroup && (
-            <div className="text-sm text-left text-kuDarkGray w-full max-w-[327px] mt-4 pl-6">
-              내가 선택한 그룹 : <span className="font-semibold">{selectedGroup}</span>
-            </div>
-          )}
-          <div className="flex gap-2 mt-[8px] mb-6">
-            <button
-              className="w-[164px] h-[52px] font-bold rounded-lg text-white bg-kuGreen"
-              onClick={handleOpenGroupModal}
-            >
-              그룹 수정
-            </button>
-            <button
-              className="w-[164px] h-[52px] rounded-lg font-bold bg-kuDarkGreen text-white"
-              onClick={() => setIsModalOpen(true)}
-            >
-              출석하기
-            </button>
+      <div className="mb-[100px]">
+        {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
+          <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
+            모집 종료
           </div>
-        </>
-      ) : (
-        <button
-          className="w-[327px] h-14 rounded-lg bg-kuGreen text-white font-bold mt-6 mb-6"
-          onClick={handleOpenGroupModal}
-        >
-          참여하기
-        </button>
-      )}
+        ) : userStatus === "ATTENDED" ? (
+          <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
+            출석완료
+          </div>
+        ) : userStatus === "PENDING" ? (
+          <>
+            {selectedGroup && (
+              <div className="text-sm text-left text-kuDarkGray w-full max-w-[327px] mt-4 pl-6">
+                내가 선택한 그룹 : <span className="font-semibold">{selectedGroup}</span>
+              </div>
+            )}
+            <div className="flex gap-2 mt-[8px] mb-6">
+              <button
+                className="w-[164px] h-[52px] font-bold rounded-lg text-white bg-kuGreen"
+                onClick={handleOpenGroupModal}
+              >
+                그룹 수정
+              </button>
+              <button
+                className="w-[164px] h-[52px] rounded-lg font-bold bg-kuDarkGreen text-white"
+                onClick={() => setIsModalOpen(true)}
+              >
+                출석하기
+              </button>
+            </div>
+          </>
+        ) : (
+          <button
+            className="w-[327px] h-14 rounded-lg bg-kuGreen text-white font-bold mt-6 mb-6"
+            onClick={handleOpenGroupModal}
+          >
+            참여하기
+          </button>
+        )}
+      </div>
 
 
 
@@ -683,6 +687,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           </div>
         </div>
       )}
+      <TabNavigationUI_detail/>
     </div>
   );
 };
