@@ -8,27 +8,27 @@ import axios from "axios"; //axios(서버와의 통신을 위한 라이브러리
 import customAxios from "../../apis/customAxios";
 
 //학번의 유효성을 검사하는 메소드 validateStudentID
-function validateStudentID(id: string) {
-  const currentYear = new Date().getFullYear();
-  const idRegex = /^\d{9}$/;
+// function validateStudentID(id: string) {
+//   const currentYear = new Date().getFullYear();
+//   const idRegex = /^\d{9}$/;
 
-  if (!idRegex.test(id)) {
-    return { valid: false, message: "학번은 9자리 숫자여야 합니다." };
-  }
+//   if (!idRegex.test(id)) {
+//     return { valid: false, message: "학번은 9자리 숫자여야 합니다." };
+//   }
 
-  const year = parseInt(id.slice(0, 4), 10);
-  if (year > currentYear) {
-    return { valid: false, message: "유효한 형식의 학번이 아닙니다" };
-  }
+//   const year = parseInt(id.slice(0, 4), 10);
+//   if (year > currentYear) {
+//     return { valid: false, message: "유효한 형식의 학번이 아닙니다" };
+//   }
 
-  return { valid: true, message: "유효한 학번입니다." };
-}
+//   return { valid: true, message: "유효한 학번입니다." };
+// }
 
 //학생의 학번을 입력하는 화면인 studentIDInput (추후 중복 검사 후 다음 화면으로 넘어가게 설계해야 함)
 function StudentidInput() {
   const [studentID, setStudentIDInput] = useState<string>("");
-  const [validationMessage, setValidationMessage] = useState<string>("");
-  const [isValidID, setIsValidID] = useState<boolean>(false);
+  // const [validationMessage, setValidationMessage] = useState<string>("");
+  // const [isValidID, setIsValidID] = useState<boolean>(false);
   const navigate = useNavigate(); //제출 후에 다음 화면으로 넘어가기 위해 useNavigate() hook 활용!
   const dispatch = useDispatch(); //redux 사용을 위해 useDispatch 훅 활용
 
@@ -37,42 +37,36 @@ function StudentidInput() {
     const input = e.target.value;
     setStudentIDInput(input);
 
-    const result = validateStudentID(input);
-    setValidationMessage(result.message);
-    setIsValidID(result.valid);
+    // const result = validateStudentID(input);
+    // setValidationMessage(result.message);
+    // setIsValidID(result.valid);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    //학번이 유효한 형태인 경우
-    if (isValidID) {
-      //학번 중복 확인을 서버 요청을 통해 먼저 진행해야 한다 (try-catch 구문 활용)
-      try {
-        const response = await customAxios.get(`/user/check-id?studentId=${studentID}`);
-        //중복 확인 검사 성공했을 경우에만 (result 값이 false여야 함)
-        if (response.data.result === false) {
-          alert("학번이 유효합니다! 다음 단계로 넘어갑니다.");
-          //redux 저장소에 studentID 저장
-          dispatch(setStudentID(studentID));
-          navigate("/password-input"); //'/next-step'라는 값을 가진 컴포넌트로 이동한다 (navigating)
-        } else {
-          //중복 검사 실패 (겹치는 놈 있음)
-          alert("이미 가입된 학번입니다. 다른 학번으로 가입을 다시 시도해 주세요.");
-        }
-      } catch (error) {
-        // 오류가 발생한 경우 처리
-        if (axios.isAxiosError(error)) {
-          alert(
-            "An error occurred while validating the Login ID: " +
-              (error.response?.data?.message || error.message)
-          );
-        } else {
-          alert("An unexpected error occurred");
-        }
+    try {
+      const response = await customAxios.get(`/user/check-id?studentId=${studentID}`);
+      //중복 확인 검사 성공했을 경우에만 (result 값이 false여야 함)
+      if (response.data.result === false) {
+        alert("학번이 유효합니다! 다음 단계로 넘어갑니다.");
+        //redux 저장소에 studentID 저장
+        dispatch(setStudentID(studentID));
+        navigate("/password-input"); //'/next-step'라는 값을 가진 컴포넌트로 이동한다 (navigating)
+      } else {
+        //중복 검사 실패 (겹치는 놈 있음)
+        alert("이미 가입된 학번입니다. 다른 학번으로 가입을 다시 시도해 주세요.");
       }
-    } else {
-      alert("학번을 다시 확인해주세요.");
+    } catch (error) {
+      // 오류가 발생한 경우 처리
+      if (axios.isAxiosError(error)) {
+        alert(
+          "An error occurred while validating the Login ID: " +
+            (error.response?.data?.message || error.message)
+        );
+      } else {
+        alert("An unexpected error occurred");
+      }
     }
   };
 
@@ -100,30 +94,19 @@ function StudentidInput() {
             value={studentID}
             onChange={handleChange}
             placeholder="학번(StudentID)"
-            className={`w-full px-4 py-2 border ${
-              studentID === ""
-                ? "border-gray-300"
-                : isValidID
-                ? "border-gray-300"
-                : "border-red-500"
-            } rounded-md focus:outline-none`}
+            className={`w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none`}
           />
-          <div className="w-full max-w-sm">
-            {!(isValidID || studentID === "") && (
-              <p className="text-red-500 text-sm mt-2 text-left">{validationMessage}</p>
-            )}
-          </div>
         </div>
 
         {/* 다음 버튼 */}
         <button
           type="submit"
           className={`w-full py-3 mt-72 rounded-md ${
-            isValidID
+            studentID !== ""
               ? "bg-kuDarkGreen text-kuWhite hover: hover:bg-kuGreen"
               : " text-gray-500 bg-gray-100"
           } transition-colors`}
-          disabled={!isValidID}
+          disabled={studentID === ""}
         >
           다음
         </button>
