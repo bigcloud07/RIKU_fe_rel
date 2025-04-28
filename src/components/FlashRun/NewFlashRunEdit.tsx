@@ -5,6 +5,8 @@ import customAxios from "../../apis/customAxios";
 import BackIcon from "../../assets/BackBtn.svg";
 import { DateInput } from "./DateInput";
 import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
+import imageCompression from "browser-image-compression";
+
 
 function NewFlashRunEdit() {
   const navigate = useNavigate();
@@ -46,36 +48,65 @@ function NewFlashRunEdit() {
     fetchPost();
   }, [postId]);
 
-  const handlePostImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePostImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setPostImage(file);
-    const reader = new FileReader();
-    reader.onloadend = () => setPostImagePreview(reader.result as string);
-    reader.readAsDataURL(file);
-
-    e.target.value = ""; // ✅ input 초기화 추가
-
+  
+    try {
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 5,             // 1MB 이하로 압축
+        maxWidthOrHeight: 1000,   // (선택) 해상도 제한
+        useWebWorker: true,       // 웹워커로 비동기 압축
+      });
+  
+      setPostImage(compressedFile);
+  
+      const reader = new FileReader();
+      reader.onloadend = () => setPostImagePreview(reader.result as string);
+      reader.readAsDataURL(compressedFile);
+    } catch (error) {
+      console.error("대표 이미지 압축 실패:", error);
+      alert("대표 이미지 압축 중 오류가 발생했습니다.");
+    }
+  
+    e.target.value = ""; // ✅ input 초기화
   };
+  
 
-  const handleAttachmentUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAttachmentUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (!selectedFiles) return;
+  
     const selectedArray = Array.from(selectedFiles);
+  
     if (attachmentPreviews.length + selectedArray.length > 6) {
       alert("최대 6장까지만 업로드할 수 있습니다.");
+      e.target.value = ""; // input 초기화
       return;
     }
-
-    selectedArray.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => setAttachmentPreviews((prev) => [...prev, reader.result as string]);
-      reader.readAsDataURL(file);
-    });
-    
-    e.target.value = ""; // ✅ input 초기화 추가
-
+  
+    try {
+      for (const file of selectedArray) {
+        const compressedFile = await imageCompression(file, {
+          maxSizeMB: 5,
+          maxWidthOrHeight: 1000,
+          useWebWorker: true,
+        });
+  
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setAttachmentPreviews((prev) => [...prev, reader.result as string]);
+        };
+        reader.readAsDataURL(compressedFile);
+      }
+    } catch (error) {
+      console.error("코스 사진 압축 실패:", error);
+      alert("코스 사진 압축 중 오류가 발생했습니다.");
+    }
+  
+    e.target.value = ""; // ✅ input 초기화
   };
+  
 
   const handleRemoveAttachment = (index: number) => {
     setAttachmentPreviews((prev) => prev.filter((_, i) => i !== index));

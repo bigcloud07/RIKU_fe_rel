@@ -236,29 +236,26 @@ function EventMake() {
     const file = event.target.files?.[0];
     if (!file) return;
   
-    
+    try {
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 5,
+        maxWidthOrHeight: 1000,
+        useWebWorker: true,
+      });
   
-    let finalFile = file;
-    if (file.size > 1 * 1024 * 1024) { // 1MB 초과면 압축
-      try {
-        finalFile = await imageCompression(file, {
-          maxSizeMB: 1,
-          maxWidthOrHeight: 1920,
-          useWebWorker: true,
-        });
-      } catch (error) {
-        console.error("대표 이미지 압축 실패:", error);
-        alert("이미지 압축에 실패했습니다. 원본 파일을 업로드합니다.");
-      }
+      setPostImage(compressedFile);
+  
+      const reader = new FileReader();
+      reader.onloadend = () => setPostImagePreview(reader.result as string);
+      reader.readAsDataURL(compressedFile);
+    } catch (error) {
+      console.error("대표 이미지 압축 실패:", error);
+      alert("대표 이미지 압축 중 문제가 발생했습니다.");
     }
-  
-    setPostImage(finalFile);
-    const reader = new FileReader();
-    reader.onloadend = () => setPostImagePreview(reader.result as string);
-    reader.readAsDataURL(finalFile);
   
     event.target.value = "";
   };
+  
   
   
 
@@ -270,6 +267,7 @@ function EventMake() {
   const handleAttachmentUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;
     if (!selectedFiles) return;
+  
     const selectedArray = Array.from(selectedFiles);
   
     if (attachments.length + selectedArray.length > 6) {
@@ -278,37 +276,34 @@ function EventMake() {
       return;
     }
   
-    let compressedFiles: File[] = [];
+    try {
+      const compressedFiles: File[] = [];
   
-    for (let i = 0; i < selectedArray.length; i++) {
-      let file = selectedArray[i];
-  
-      console.log(`✅ 원본 ${i + 1}번 파일 크기: ${(file.size / 1024 / 1024).toFixed(2)}MB`);
-  
-      try {
-        // 항상 압축 (용량 + 해상도 둘 다 조절)
-        const compressed = await imageCompression(file, {
-          maxSizeMB: 1, // 1MB 이하
-          maxWidthOrHeight: 800, // 가로 세로 최대 1200px
+      for (const file of selectedArray) {
+        const compressedFile = await imageCompression(file, {
+          maxSizeMB: 5,
+          maxWidthOrHeight: 1000,  // 첨부파일은 해상도 살짝 더 줄여도 좋음
           useWebWorker: true,
         });
-        console.log(`🔻 압축 후 ${i + 1}번 파일 크기: ${(compressed.size / 1024 / 1024).toFixed(2)}MB`);
-        compressedFiles.push(compressed);
+  
+        compressedFiles.push(compressedFile);
   
         const reader = new FileReader();
         reader.onloadend = () => {
           setAttachmentPreviews(prev => [...prev, reader.result as string]);
         };
-        reader.readAsDataURL(compressed);
-      } catch (error) {
-        console.error(`코스 이미지 ${i + 1} 압축 실패:`, error);
-        alert(`코스 이미지 ${i + 1}번 파일 압축에 실패했습니다.`);
+        reader.readAsDataURL(compressedFile);
       }
+  
+      setAttachments(prev => [...prev, ...compressedFiles]);
+    } catch (error) {
+      console.error("첨부 이미지 압축 실패:", error);
+      alert("첨부 이미지 압축 중 문제가 발생했습니다.");
     }
   
-    setAttachments(prev => [...prev, ...compressedFiles]);
     event.target.value = "";
   };
+  
   
   
   

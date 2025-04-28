@@ -5,6 +5,8 @@ import BackIcon from "../../assets/BackBtn.svg";
 import { DateInput } from "./DateInput";
 import TimeIcon from "../../assets/time_icon.svg"
 import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
+import imageCompression from "browser-image-compression";
+
 
 
 interface Pacer {
@@ -31,24 +33,35 @@ function FlashRunMake() {
 
 
 
-  const handlePostImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePostImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
   
-    
+    try {
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 5,        // 1MB 이하로
+        maxWidthOrHeight: 1000, // (선택) 너무 큰 해상도도 제한
+        useWebWorker: true,
+      });
   
-    setPostImage(file);
-    const reader = new FileReader();
-    reader.onloadend = () => setPostImagePreview(reader.result as string);
-    reader.readAsDataURL(file);
+      setPostImage(compressedFile);
   
-    event.target.value = "";
+      const reader = new FileReader();
+      reader.onloadend = () => setPostImagePreview(reader.result as string);
+      reader.readAsDataURL(compressedFile);
+  
+    } catch (error) {
+      console.error("이미지 압축 실패:", error);
+      alert("이미지 압축 중 오류가 발생했습니다.");
+    }
+  
+    event.target.value = ""; // input 초기화
   };
   
   
   
 
-  const handleAttachmentUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAttachmentUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;
     if (!selectedFiles) return;
   
@@ -60,18 +73,30 @@ function FlashRunMake() {
       return;
     }
   
-    selectedArray.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAttachmentPreviews((prev) => [...prev, reader.result as string]);
-      };
-      reader.readAsDataURL(file);
-    });
+    try {
+      for (const file of selectedArray) {
+        const compressedFile = await imageCompression(file, {
+          maxSizeMB: 5,
+          maxWidthOrHeight: 1000,
+          useWebWorker: true,
+        });
   
-    setAttachments((prev) => [...prev, ...selectedArray]);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setAttachmentPreviews((prev) => [...prev, reader.result as string]);
+        };
+        reader.readAsDataURL(compressedFile);
+  
+        setAttachments((prev) => [...prev, compressedFile]);
+      }
+    } catch (error) {
+      console.error("첨부 이미지 압축 실패:", error);
+      alert("첨부 이미지 압축 중 오류가 발생했습니다.");
+    }
   
     event.target.value = "";
   };
+  
   
   
   

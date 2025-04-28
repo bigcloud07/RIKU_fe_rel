@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import BackIcon from "../../assets/BackBtn.svg";
 import { DateInput } from "./DateInput";
 import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
-
+import imageCompression from "browser-image-compression";
 interface Pacer {
   id: number;
   name?: string;
@@ -110,42 +110,81 @@ function NewTrainingEdit() {
     setIsBottomSheetOpen(false);
   };
 
-  const handleMainImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMainImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
+    if (!file) return;
+  
+    try {
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 5,
+        maxWidthOrHeight: 1000,
+        useWebWorker: true,
+      });
+  
+      setMainImage(compressedFile);
+  
       const reader = new FileReader();
       reader.onloadend = () => setMainPreview(reader.result as string);
-      reader.readAsDataURL(file);
-      setMainImage(file);
+      reader.readAsDataURL(compressedFile);
+  
+    } catch (error) {
+      console.error("대표 이미지 압축 실패:", error);
+      alert("대표 이미지 압축 중 오류가 발생했습니다.");
     }
-
-    e.target.value = ""; // ✅ input 초기화 추가
-
+  
+    e.target.value = ""; // input 초기화
   };
+  
 
-  const handleCourseImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCourseImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (!selectedFiles) return;
+  
     const selectedArray = Array.from(selectedFiles);
-    if (courseImages.length + selectedArray.length > 6) {
-      alert("코스 사진은 최대 6장까지 업로드할 수 있습니다.");
+  
+    if (courseImages.length >= 6) {
+      alert("코스 사진은 최대 6장까지만 업로드할 수 있습니다.");
+      e.target.value = "";
       return;
     }
-    selectedArray.forEach(file => {
-      const reader = new FileReader();
-      reader.onloadend = () => setCoursePreviews(prev => [...prev, reader.result as string]);
-      reader.readAsDataURL(file);
-    });
-    setCourseImages(prev => [...prev, ...selectedArray]);
+  
+    try {
+      const compressedFiles: File[] = [];
+      const newPreviews: string[] = [];
+  
+      for (const file of selectedArray) {
+        const compressedFile = await imageCompression(file, {
+          maxSizeMB: 5,
+          maxWidthOrHeight: 1000,
+          useWebWorker: true,
+        });
+  
+        compressedFiles.push(compressedFile);
+  
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          newPreviews.push(reader.result as string);
+  
+          // 모든 압축/로드가 끝난 뒤 추가
+          if (newPreviews.length === compressedFiles.length) {
+            const totalPreviews = [...coursePreviews, ...newPreviews].slice(0, 6);
+            const totalFiles = [...courseImages, ...compressedFiles].slice(0, 6);
+  
+            setCoursePreviews(totalPreviews);
+            setCourseImages(totalFiles);
+          }
+        };
+        reader.readAsDataURL(compressedFile);
+      }
+    } catch (error) {
+      console.error("코스 사진 압축 실패:", error);
+      alert("코스 사진 압축 중 오류가 발생했습니다.");
+    }
+  
+    e.target.value = ""; // input 초기화
   };
-
-  const removeCourseImage = (index: number) => {
-    setCourseImages(prev => prev.filter((_, i) => i !== index));
-    setCoursePreviews(prev => prev.filter((_, i) => i !== index));
-
-    e.target.value = ""; // ✅ input 초기화 추가
-
-  };
+  
+  
 
   const handleSubmit = async () => {
     if (!title || !location || !content || !dateTime.date || pacerGroups.some(g => !g.pacer || !g.distance || !g.pace)) {
@@ -207,6 +246,13 @@ function NewTrainingEdit() {
       prev.map((group) => (group.id === id ? { ...group, pacer: pacerName } : group))
     );
   };
+
+  const removeCourseImage = (index: number) => {
+    setCourseImages(prev => prev.filter((_, i) => i !== index));
+    setCoursePreviews(prev => prev.filter((_, i) => i !== index));
+    
+  };
+  
 
 
 

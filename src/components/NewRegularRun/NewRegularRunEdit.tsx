@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import BackIcon from "../../assets/BackBtn.svg";
 import { DateInput } from "./DateInput";
 import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
+import imageCompression from "browser-image-compression";
+
 
 interface Pacer {
   id: number;
@@ -122,31 +124,62 @@ function NewRegularRunEdit() {
     setIsBottomSheetOpen(false);
   };
 
-  const handleMainImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMainImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setMainPreview(reader.result as string);
-      reader.readAsDataURL(file);
-      setMainImage(file);
+      try {
+        const compressedFile = await imageCompression(file, {
+          maxSizeMB: 5,
+          maxWidthOrHeight: 1000,
+          useWebWorker: true,
+        });
+  
+        const reader = new FileReader();
+        reader.onloadend = () => setMainPreview(reader.result as string);
+        reader.readAsDataURL(compressedFile);
+  
+        setMainImage(compressedFile);
+      } catch (error) {
+        console.error("대표 이미지 압축 실패:", error);
+        alert("대표 이미지 압축 중 문제가 발생했습니다.");
+      }
     }
   };
+  
 
-  const handleCourseImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCourseImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (!selectedFiles) return;
+  
     const selectedArray = Array.from(selectedFiles);
+  
     if (courseImages.length + selectedArray.length > 6) {
       alert("코스 사진은 최대 6장까지 업로드할 수 있습니다.");
       return;
     }
-    selectedArray.forEach(file => {
-      const reader = new FileReader();
-      reader.onloadend = () => setCoursePreviews(prev => [...prev, reader.result as string]);
-      reader.readAsDataURL(file);
-    });
-    setCourseImages(prev => [...prev, ...selectedArray]);
+  
+    try {
+      for (const file of selectedArray) {
+        const compressedFile = await imageCompression(file, {
+          maxSizeMB: 5,
+          maxWidthOrHeight: 1000,
+          useWebWorker: true,
+        });
+  
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setCoursePreviews((prev) => [...prev, reader.result as string]);
+        };
+        reader.readAsDataURL(compressedFile);
+  
+        setCourseImages((prev) => [...prev, compressedFile]);
+      }
+    } catch (error) {
+      console.error("코스 이미지 압축 실패:", error);
+      alert("코스 이미지 압축 중 문제가 발생했습니다.");
+    }
   };
+  
 
   const removeCourseImage = (index: number) => {
     setCourseImages(prev => prev.filter((_, i) => i !== index));

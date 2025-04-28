@@ -7,6 +7,7 @@ import removeicon from "../../assets/remove-icon.svg";
 import { DateNtime } from "./DateNtime";
 import { DateInput } from "./DateInput";
 import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
+import imageCompression from "browser-image-compression";
 
 interface Pacer {
   id: number;
@@ -59,60 +60,73 @@ function TrainingMake() {
   const [courseImages, setCourseImages] = useState<File[]>([]);
   const [coursePreviews, setCoursePreviews] = useState<string[]>([]);
 
-  const handleMainImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
-
-  if (file.size > 4 * 1024 * 1024) { // 4MB 초과
-    alert("대표 이미지는 4MB 이하만 업로드할 수 있습니다.");
-    e.target.value = ""; // input 초기화
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onloadend = () => setMainPreview(reader.result as string);
-  reader.readAsDataURL(file);
-  setMainImage(file);
-
-  e.target.value = "";
-};
-
-
-const handleCourseImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const selectedFiles = e.target.files;
-  if (!selectedFiles) return;
-
-  const selectedArray = Array.from(selectedFiles);
-
-  if (courseImages.length + selectedArray.length > 6) {
-    alert("코스 사진은 최대 6장까지 업로드할 수 있습니다.");
-    e.target.value = "";
-    return;
-  }
-
-  let oversizedIndexes: number[] = [];
-
-  selectedArray.forEach((file, idx) => {
-    if (file.size > 4 * 1024 * 1024) {
-      oversizedIndexes.push(idx + 1); // 1번부터
+  const handleMainImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+  
+    try {
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 5, // 1MB 이하
+        maxWidthOrHeight: 1000, // 해상도 제한
+        useWebWorker: true,
+      });
+  
+      setMainImage(compressedFile);
+  
+      const reader = new FileReader();
+      reader.onloadend = () => setMainPreview(reader.result as string);
+      reader.readAsDataURL(compressedFile);
+  
+    } catch (error) {
+      console.error("대표 이미지 압축 실패:", error);
+      alert("대표 이미지 압축 중 오류가 발생했습니다.");
     }
-  });
+  
+    e.target.value = ""; // input 초기화
+  };
+  
 
-  if (oversizedIndexes.length > 0) {
-    alert(`다음 첨부 사진이 4MB를 초과했습니다: ${oversizedIndexes.join(", ")}번째`);
+
+  const handleCourseImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = e.target.files;
+    if (!selectedFiles) return;
+  
+    const selectedArray = Array.from(selectedFiles);
+  
+    if (courseImages.length + selectedArray.length > 6) {
+      alert("코스 사진은 최대 6장까지만 업로드할 수 있습니다.");
+      e.target.value = "";
+      return;
+    }
+  
+    try {
+      const compressedFiles: File[] = [];
+  
+      for (const file of selectedArray) {
+        const compressedFile = await imageCompression(file, {
+          maxSizeMB: 5, // 1MB 이하
+          maxWidthOrHeight: 1000, // 해상도 1200 제한
+          useWebWorker: true,
+        });
+  
+        compressedFiles.push(compressedFile);
+  
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setCoursePreviews(prev => [...prev, reader.result as string]);
+        };
+        reader.readAsDataURL(compressedFile);
+      }
+  
+      setCourseImages(prev => [...prev, ...compressedFiles]);
+    } catch (error) {
+      console.error("코스 이미지 압축 실패:", error);
+      alert("코스 이미지 압축 중 오류가 발생했습니다.");
+    }
+  
     e.target.value = "";
-    return;
-  }
-
-  selectedArray.forEach((file) => {
-    const reader = new FileReader();
-    reader.onloadend = () => setCoursePreviews((prev) => [...prev, reader.result as string]);
-    reader.readAsDataURL(file);
-  });
-  setCourseImages((prev) => [...prev, ...selectedArray]);
-
-  e.target.value = "";
-};
+  };
+  
 
 
   useEffect(() => {

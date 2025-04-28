@@ -463,7 +463,7 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
         onUsersChange={(newUsers) => setCurrentParticipants(newUsers)}
         canEdit={true} // 🔥 이 부분!
       />}
-      <div className="mb-5">
+      <div className="mb-[100px]">
         <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
       </div>
      
