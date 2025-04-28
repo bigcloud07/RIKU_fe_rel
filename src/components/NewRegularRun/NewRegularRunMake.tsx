@@ -134,20 +134,26 @@ function NewRegularRunMake() {
     const file = e.target.files?.[0];
     if (!file) return;
   
-    // // 4MB 초과 검사
-    // if (file.size > 4 * 1024 * 1024) {
-    //   alert("대표 이미지가 4MB를 초과합니다.");
-    //   e.target.value = ""; // input 초기화
-    //   return;
-    // }
+    try {
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 5,
+        maxWidthOrHeight: 1000,
+        useWebWorker: true,
+      });
   
-    const reader = new FileReader();
-    reader.onloadend = () => setMainPreview(reader.result as string);
-    reader.readAsDataURL(file);
-    setMainImage(file);
+      setMainImage(compressedFile);
   
-    e.target.value = ""; // ✅ input 초기화
+      const reader = new FileReader();
+      reader.onloadend = () => setMainPreview(reader.result as string);
+      reader.readAsDataURL(compressedFile);
+    } catch (error) {
+      console.error("대표 이미지 압축 실패:", error);
+      alert("대표 이미지 압축 중 오류가 발생했습니다.");
+    }
+  
+    e.target.value = ""; // input 초기화
   };
+  
   
 
 
@@ -157,27 +163,36 @@ function NewRegularRunMake() {
   
     const selectedArray = Array.from(selectedFiles);
   
-    // 총 개수 초과 방지
     if (courseImages.length + selectedArray.length > 6) {
       alert("코스 사진은 최대 6장까지 업로드할 수 있습니다.");
       e.target.value = ""; // input 초기화
       return;
     }
   
-    const validFiles: File[] = [];
-    for (let i = 0; i < selectedArray.length; i++) {
-      const file = selectedArray[i];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setCoursePreviews(prev => [...prev, reader.result as string]);
-      };
-      reader.readAsDataURL(file);
-      validFiles.push(file);
+    try {
+      for (const file of selectedArray) {
+        const compressedFile = await imageCompression(file, {
+          maxSizeMB: 5,
+          maxWidthOrHeight: 1000,
+          useWebWorker: true,
+        });
+  
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setCoursePreviews((prev) => [...prev, reader.result as string]);
+        };
+        reader.readAsDataURL(compressedFile);
+  
+        setCourseImages((prev) => [...prev, compressedFile]);
+      }
+    } catch (error) {
+      console.error("코스 이미지 압축 실패:", error);
+      alert("코스 이미지 압축 중 오류가 발생했습니다.");
     }
   
-    setCourseImages(prev => [...prev, ...validFiles]);
-    e.target.value = ""; // ✅ input 초기화
+    e.target.value = ""; // input 초기화
   };
+  
   
   
   

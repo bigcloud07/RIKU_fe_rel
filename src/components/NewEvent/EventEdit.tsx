@@ -7,6 +7,8 @@ import removeicon from "../../assets/remove-icon.svg";
 import { DateNtime } from "./DateNtime";
 import { DateInput } from "./DateInput";
 import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
+import imageCompression from "browser-image-compression";
+
 
 interface Pacer {
   id: number;
@@ -183,42 +185,83 @@ function EventEdit() {
     setOriginalUrls(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleAttachmentUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAttachmentUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files;
     if (!selectedFiles) return;
-
+  
     const selectedArray = Array.from(selectedFiles);
     const currentAttachments = attachments ?? [];
-
+  
     if (currentAttachments.length + selectedArray.length > 6) {
       alert("최대 6장까지만 업로드할 수 있습니다.");
+      event.target.value = "";
       return;
     }
-
-    selectedArray.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAttachmentPreviews(prev => [...prev, reader.result as string]);
-      };
-      reader.readAsDataURL(file);
-    });
-
-    setAttachments(prev => [...(prev ?? []), ...selectedArray]);
-
-    event.target.value = ""; // ✅ input 초기화 추가
+  
+    try {
+      const compressedFiles: File[] = [];
+      const newPreviews: string[] = []; // 새로 추가될 미리보기 모음
+  
+      for (const file of selectedArray) {
+        const compressedFile = await imageCompression(file, {
+          maxSizeMB: 5,
+          maxWidthOrHeight: 1000,  // 첨부 파일은 1200px까지 제한
+          useWebWorker: true,
+        });
+  
+        compressedFiles.push(compressedFile);
+  
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          newPreviews.push(reader.result as string);
+  
+          // ✅ reader가 끝났을 때만 프리뷰 세팅!
+          if (newPreviews.length === compressedFiles.length) {
+            // 기존 previews + 새 previews 합친 결과가 6장 넘으면 자른다
+            const mergedPreviews = [...attachmentPreviews, ...newPreviews].slice(0, 6);
+            setAttachmentPreviews(mergedPreviews);
+  
+            const mergedAttachments = [...attachments, ...compressedFiles].slice(0, 6);
+            setAttachments(mergedAttachments);
+          }
+        };
+        reader.readAsDataURL(compressedFile);
+      }
+    } catch (error) {
+      console.error("첨부 이미지 압축 실패:", error);
+      alert("첨부 이미지 압축 중 오류가 발생했습니다.");
+    }
+  
+    event.target.value = ""; // input 초기화
   };
+  
+  
 
 
-  const handlePostImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePostImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-    setPostImage(file);
-    const reader = new FileReader();
-    reader.onloadend = () => setPostImagePreview(reader.result as string);
-    reader.readAsDataURL(file);
-
-    event.target.value = ""; // ✅ input 초기화 추가
+  
+    try {
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: 5,
+        maxWidthOrHeight: 1000,
+        useWebWorker: true,
+      });
+  
+      setPostImage(compressedFile);
+  
+      const reader = new FileReader();
+      reader.onloadend = () => setPostImagePreview(reader.result as string);
+      reader.readAsDataURL(compressedFile);
+    } catch (error) {
+      console.error("대표 이미지 압축 실패:", error);
+      alert("대표 이미지 압축 중 오류가 발생했습니다.");
+    }
+  
+    event.target.value = ""; // input 초기화
   };
+  
 
 
   return (
