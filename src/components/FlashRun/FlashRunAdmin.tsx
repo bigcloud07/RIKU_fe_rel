@@ -299,7 +299,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
 
   return (
-    <div className="w-full min-h-screen bg-white">
+    <div className="w-full min-h-screen overflow-y-auto bg-white">
       <div className="w-full max-w-[430px] mx-auto flex flex-col items-center text-center justify-center">
         {/* 상단바 */}
         <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
