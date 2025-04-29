@@ -87,7 +87,7 @@ function ActivityDetailPage() {
   return (
     <>
       <ActionBar />
-      <div className="min-h-screen w-full flex flex-col items-center justify-start bg-white pt-[56px] pb-20">
+      <div className="min-h-screen w-full max-w-[430px] mx-auto flex flex-col items-center justify-start bg-white pt-[56px] pb-20">
         <div className="w-full text-left mt-2 mb-16 p-4 pl-8">
           <span className="text-2xl font-bold">포인트 / 활동 상세 내역</span>
         </div>

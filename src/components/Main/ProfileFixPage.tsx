@@ -35,7 +35,7 @@ const InputField: React.FC<InputFieldProps> = ({
   const inputType = password ? (showPassword ? "text" : "password") : "text";
 
   return (
-    <div className="mb-6">
+    <div className="mb-6 max-w-[430px] w-full mx-auto">
       <label className="block mb-2 text-m font-semibold text-gray-700">{label}</label>
       <div className="relative w-full">
         <input
@@ -85,7 +85,7 @@ const SchoolInfoInputField: React.FC<{
   onChange_1: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChange_2: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }> = ({ label, value, onChange_1, onChange_2 }) => (
-  <div className="mb-6">
+  <div className="mb-6 max-w-[430px] w-full mx-auto">
     <label className="block mb-2 text-m font-semibold text-gray-700">{label}</label>
     <input
       className="w-full border border-kuCoolGray rounded-xl px-3 py-3 mb-4 focus: outline-kuDarkGreen"
@@ -269,7 +269,7 @@ function ProfileFixPage() {
   return (
     <>
       <ActionBar />
-      <div className="min-h-screen w-full flex flex-col items-center justify-start bg-white pt-[56px] pb-20">
+      <div className="min-h-screen max-w-[430px] w-full mx-auto flex flex-col items-center justify-start bg-white pt-[56px] pb-20">
         <div className="w-full text-left mt-2 mb-16 p-4 pl-8">
           <span className="text-2xl font-bold">프로필 수정</span>
         </div>
