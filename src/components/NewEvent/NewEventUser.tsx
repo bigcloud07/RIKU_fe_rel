@@ -452,7 +452,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
               )}
               <span className="text-sm font-medium text-black">{postCreatorName}</span>
             </div>
-            <div className="text-[#686F75] p-3 text-sm text-justify whitespace-pre-wrap">{content}</div>
+            <div className="text-black p-3 text-sm text-left whitespace-pre-wrap">{content}</div>
           </div>
         </>
       )}

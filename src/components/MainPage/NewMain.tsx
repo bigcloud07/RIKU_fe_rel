@@ -17,6 +17,7 @@ import NOWimg from "../../assets/Main-img/NewOpenStatus.svg";
 import CLODESDimg from "../../assets/Main-img/NewClosedStatus.svg";
 import CANCELEDimg from "../../assets/Main-img/NewCanceledStatus.svg";
 import ARGENTimg from "../../assets/Main-img/NewUrgentStatus.svg"
+import imageCompression from "browser-image-compression";
 
 
 interface EventData {
@@ -143,47 +144,47 @@ const NewMain: React.FC = () => {
           // 상태를 각 ContentList에 맞게 분리하여 저장
           setMaindata({
             regularRun: result.regularRun?.postStatus === "CANCELED"
-              ? { location: "등록된 정규런이\n없습니다"}
+              ? { location: "등록된 정규런이\n없습니다" }
               : {
-                  location: result.regularRun?.title || "등록된 정규런이\n없습니다",
-                  date: formatDate(result.regularRun?.date),
-                  postimgurl: result.regularRun?.postImageUrl,
-                  poststatus: isWithinOneHour(result.regularRun?.date)
-                    ? "URGENT"
-                    : result.regularRun?.postStatus,
-                },
+                location: result.regularRun?.title || "등록된 정규런이\n없습니다",
+                date: formatDate(result.regularRun?.date),
+                postimgurl: result.regularRun?.postImageUrl,
+                poststatus: isWithinOneHour(result.regularRun?.date)
+                  ? "URGENT"
+                  : result.regularRun?.postStatus,
+              },
             flashRun: result.flashRun?.postStatus === "CANCELED"
               ? { location: "등록된 번개런이\n없습니다" }
               : {
-                  location: result.flashRun?.title || "등록된 번개런이\n없습니다",
-                  date: formatDate(result.flashRun?.date),
-                  postimgurl: result.flashRun?.postImageUrl,
-                  poststatus: isWithinOneHour(result.flashRun?.date)
-                    ? "URGENT"
-                    : result.flashRun?.postStatus,
-                },
+                location: result.flashRun?.title || "등록된 번개런이\n없습니다",
+                date: formatDate(result.flashRun?.date),
+                postimgurl: result.flashRun?.postImageUrl,
+                poststatus: isWithinOneHour(result.flashRun?.date)
+                  ? "URGENT"
+                  : result.flashRun?.postStatus,
+              },
             training: result.trainingRun?.postStatus === "CANCELED"
               ? { location: "등록된 훈련이\n없습니다" }
               : {
-                  location: result.trainingRun?.title || "등록된 훈련이\n없습니다",
-                  date: formatDate(result.trainingRun?.date),
-                  postimgurl: result.trainingRun?.postImageUrl,
-                  poststatus: isWithinOneHour(result.trainingRun?.date)
-                    ? "URGENT"
-                    : result.trainingRun?.postStatus,
-                },
+                location: result.trainingRun?.title || "등록된 훈련이\n없습니다",
+                date: formatDate(result.trainingRun?.date),
+                postimgurl: result.trainingRun?.postImageUrl,
+                poststatus: isWithinOneHour(result.trainingRun?.date)
+                  ? "URGENT"
+                  : result.trainingRun?.postStatus,
+              },
             event: result.eventRun?.postStatus === "CANCELED"
               ? { location: "등록된 행사가\n없습니다" }
               : {
-                  location: result.eventRun?.title || "등록된 행사가\n없습니다",
-                  date: formatDate(result.eventRun?.date),
-                  postimgurl: result.eventRun?.postImageUrl,
-                  poststatus: isWithinOneHour(result.eventRun?.date)
-                    ? "URGENT"
-                    : result.eventRun?.postStatus,
-                },
+                location: result.eventRun?.title || "등록된 행사가\n없습니다",
+                date: formatDate(result.eventRun?.date),
+                postimgurl: result.eventRun?.postImageUrl,
+                poststatus: isWithinOneHour(result.eventRun?.date)
+                  ? "URGENT"
+                  : result.eventRun?.postStatus,
+              },
           });
-          
+
         } else {
           console.error("데이터를 불러오지 못했습니다.", response.data.responseMessage);
         }
@@ -274,7 +275,7 @@ const NewMain: React.FC = () => {
         <div className="cursor-pointer">
           <NewMainCard
             title={maindata?.regularRun.location}
-            date={maindata?.regularRun.date} 
+            date={maindata?.regularRun.date}
             statusImg={getStatusImg(maindata.regularRun.poststatus)}
             imageUrl={maindata.regularRun.postimgurl || regularImg}
             event_type="정규런"
@@ -316,7 +317,7 @@ const NewMain: React.FC = () => {
       {/* 플로팅 버튼 */}
       <button
         onClick={toggleFloatingButton}
-        className={`fixed bottom-20 right-4 w-16 h-16 rounded-full bg-kuDarkGreen text-white flex items-center justify-center shadow-lg hover:bg-kuDarkGreen-dark focus:outline-none z-50 transition-transform duration-300 ${isFloatingButtonOpen ? "rotate-45" : "rotate-0"
+        className={`fixed bottom-20 right-10 w-16 h-16 rounded-full bg-kuDarkGreen text-white flex items-center justify-center shadow-lg hover:bg-kuDarkGreen-dark focus:outline-none z-50 transition-transform duration-300 ${isFloatingButtonOpen ? "rotate-45" : "rotate-0"
           }`}
       >
         <img
@@ -354,7 +355,7 @@ const NewMain: React.FC = () => {
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
               onClick={
-                userRole === "ADMIN"
+                userRole === "ADMIN" || userRole === "PACER"
                   ? handleRegularRunMake
                   : () => alert("관리자만 사용할 수 있는 기능입니다.")
               }
@@ -370,7 +371,7 @@ const NewMain: React.FC = () => {
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
               onClick={
-                userRole === "ADMIN"
+                userRole === "ADMIN" || userRole === "PACER"
                   ? handleTrainingtMake
                   : () => alert("관리자만 사용할 수 있는 기능입니다.")
               }
@@ -399,7 +400,12 @@ const NewMain: React.FC = () => {
 
 
       {/* TabNavigationUI */}
-      <TabNavigationUI />
+      <TabNavigationUI/>
+        
+
+      
+
+
     </div>
   );
 };

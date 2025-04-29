@@ -34,8 +34,8 @@ function getUserRole(role: string) {
     return "일반부원";
   } else if (role === "ADMIN") {
     return "운영진";
-  } else if (role === "INACTIVE") {
-    return "비활성화 사용자";
+  } else if (role === "PACER") {
+    return "페이서";
   } else {
     return "살려주세요";
   }
@@ -133,6 +133,7 @@ function MyPage() {
         };
         setUserInfo(data);
         setIsUserInfoLoaded(true); //데이터 로딩 완료 되었다는 표시
+        console.log(response.data)
       } else if (response.data.isSuccess === false) {
         alert(`서버에서 제대로 유저 정보를 불러오지 못했습니다: ${response.data.responseMessage}`);
       }
@@ -334,11 +335,10 @@ function MyPage() {
 
         {/* 출석하기 버튼 */}
         <button
-          className={`w-full mt-4 mb-2 py-3 ${
-            !isAttendCheckBtnValid()
+          className={`w-full mt-4 mb-2 py-3 ${!isAttendCheckBtnValid()
               ? "bg-kuDarkGreen hover:bg-kuGreen text-white"
               : "bg-kuLightGray text-gray-900 cursor-not-allowed"
-          } font-bold rounded-md transition-colors`}
+            } font-bold rounded-md transition-colors`}
           onClick={handleAttendCheckBtn}
           disabled={isAttendCheckBtnValid()}
         >
