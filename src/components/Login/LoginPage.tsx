@@ -52,7 +52,7 @@ function LoginPage() {
       const response = await customAxios.post(url, data);
       // 성공적인 응답 처리
       if (response.data.isSuccess) {
-        alert(`로그인에 성공했습니다! 회원의 학번: ${response.data.result.studentId}`);
+        // alert(`로그인에 성공했습니다! 회원의 학번: ${response.data.result.studentId}`);
 
         localStorage.setItem(
           "accessToken",

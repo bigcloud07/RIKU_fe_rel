@@ -377,9 +377,8 @@ function SchedulePage() {
                         <div className="flex items-center justify-center gap-0.5">
 
                           <span
-                            className={`font-bold text-xs mt-2 ${
-                              isSelected ? "text-kuWhite" : "text-kuDarkGray"
-                            }`}
+                            className={`font-bold text-xs mt-2 ${isSelected ? "text-kuWhite" : "text-kuDarkGray"
+                              }`}
 
                           >
                             +{planCounts}
@@ -437,7 +436,9 @@ function SchedulePage() {
       {/* 플로팅 버튼 */}
       <button
         onClick={toggleFloatingButton}
-        className={`fixed bottom-20 right-4 w-16 h-16 rounded-full bg-kuDarkGreen text-white flex items-center justify-center shadow-lg hover:bg-kuDarkGreen-dark focus:outline-none z-50 transition-transform duration-300 ${isFloatingButtonOpen ? "rotate-45" : "rotate-0"
+        className={`fixed bottom-20 w-16 h-16 rounded-full bg-kuDarkGreen text-white flex items-center justify-center shadow-lg hover:bg-kuDarkGreen-dark focus:outline-none z-50 transition-transform duration-300 
+          right-4
+          ${isFloatingButtonOpen ? "rotate-45" : "rotate-0"
           }`}
       >
         <img
