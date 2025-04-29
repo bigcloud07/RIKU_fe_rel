@@ -413,8 +413,8 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
                   className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
                   onClick={async () => {
                     if (label === "수정하기") {
-                      if (postStatus === "CLOSED") {
-                        alert("종료된 러닝은 수정이 불가능합니다.");
+                      if (postStatus === "CLOSED" || postStatus === "CANCELED") {
+                        alert("종료된 러닝이나 취소된 러닝은 수정이 불가능합니다.");
                         return;
                       }
                     
@@ -432,6 +432,11 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
                       navigate(`/event/edit/${postId}`, { replace: true });
                       setShowMenu(false);
                     }else {
+                      if (postStatus === "CLOSED" || postStatus === "CANCELED") {
+                        alert("이미 종료되었거나 취소된 게시글은 취소할 수 없습니다.");
+                        return;
+                      }
+                      
                       const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
                       if (!confirmCancel) return;
 
