@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import FlashRunlogo from "../../assets/FlashRunDetail/flashrunlogo.svg";
 import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
@@ -18,6 +18,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import TabNavigationUI from "../TabNavigationUI";
 import TabNavigationUI_detail from "../TabNavigationUI_detail";
+import { motion } from "framer-motion";
+
 
 
 interface Participant {
@@ -74,6 +76,33 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
   const [currentParticipantsNum, setCurrentParticipantsNum] = useState<number>(participantsNum); // 현재 불러오는 값
   const [postCreatorId, setPostCreatorId] = useState<number | null>(null);
   const [postStatus, setPostStatus] = useState("")
+
+  // 상단바 점 버튼 관련 코드
+  const [showMenu, setShowMenu] = useState(false); // 메뉴 열림 상태 추가
+  const menuRef = useRef<HTMLDivElement>(null);
+  const dotButtonRef = useRef<HTMLDivElement>(null);
+
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target as Node) &&
+        dotButtonRef.current &&
+        !dotButtonRef.current.contains(e.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+    };
+
+    if (showMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showMenu]);
 
 
 
@@ -345,6 +374,104 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
       <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate(-1)}></img>
         행사
+        <div
+            ref={dotButtonRef}
+            className="absolute right-[5px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation(); // 이벤트 버블링 방지
+              setShowMenu((prev) => !prev);
+            }}
+          >
+            <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
+              {[...Array(3)].map((_, i) => (
+                <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+              ))}
+            </div>
+          </div>
+
+          {showMenu && (
+            <motion.div
+              ref={menuRef}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={{
+                hidden: {},
+                visible: {},
+                exit: {},
+              }}
+              className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
+            >
+              {["수정하기", "취소하기"].map((label, index) => (
+                <motion.button
+                  key={label}
+                  custom={index}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: 0.1 * index, duration: 0.2 }}
+                  className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+                  onClick={async () => {
+                    if (label === "수정하기") {
+                      if (postStatus === "CLOSED") {
+                        alert("종료된 러닝은 수정이 불가능합니다.");
+                        return;
+                      }
+                    
+                      // 🔥 정확한 비교 로직
+                      const now = new Date();
+                    
+                      const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
+                      const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
+                    
+                      if (now > runKstDate) {
+                        alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
+                        return;
+                      }
+                    
+                      navigate(`/event/edit/${postId}`, { replace: true });
+                      setShowMenu(false);
+                    }else {
+                      const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
+                      if (!confirmCancel) return;
+
+                      try {
+                        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                        if (!token) {
+                          alert("로그인이 필요합니다.");
+                          return;
+                        }
+
+                        const { data } = await customAxios.patch(
+                          `/run/event/post/${postId}/cancel`,
+                          {},
+                          {
+                            headers: {
+                              Authorization: `${token}`,
+                            },
+                          }
+                        );
+
+                        if (data.isSuccess) {
+                          alert("게시글이 성공적으로 취소되었습니다.");
+                          setShowMenu(false);
+                          navigate("/event");
+                        } else {
+                          alert(data.responseMessage || "취소에 실패했습니다.");
+                        }
+                      } catch (error) {
+                        console.error(error);
+                        alert("요청 중 오류가 발생했습니다.");
+                      }
+                    }
+                  }}
+                >
+                  {label}
+                </motion.button>
+              ))}
+            </motion.div>
+          )}
+        
       </div>
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-full pb-[50px]">
