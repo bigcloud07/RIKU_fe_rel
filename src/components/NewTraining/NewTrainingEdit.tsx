@@ -204,21 +204,28 @@ function NewTrainingEdit() {
       formData.append("date", eventDateTime);
       formData.append("content", content);
       if (mainImage) formData.append("postImage", mainImage);
-      //  기존 이미지 fetch → File로 변환
-      for (let i = 0; i < originalUrls.length; i++) {
-        const url = originalUrls[i];
-        const res = await fetch(url);
-        const blob = await res.blob();
-        const file = new File([blob], `original_course_${i}.jpg`, { type: blob.type });
-        formData.append("attachments", file);
+      let fileIndex = 0;
+      for (const preview of coursePreviews) {
+        if (preview.startsWith("http")) {
+          const res = await fetch(preview);
+          const blob = await res.blob();
+          const file = new File([blob], `original_${Date.now()}.jpg`, { type: blob.type });
+          formData.append("attachments", file);
+        } else if (preview.startsWith("data:")) {
+          const file = courseImages[fileIndex];
+          if (file) {
+            formData.append("attachments", file);
+            fileIndex++;
+          }
+        }
       }
 
-      //  새로 추가한 파일 추가
-      for (const file of courseImages) {
-        formData.append("attachments", file);
-      }
+      // attachments가 없으면 아무것도 append 안 함 
 
-      
+
+
+
+
 
       pacerGroups.forEach((group, index) => {
         const matchedPacer = pacers.find((p) => p.name === group.pacer || p.pacerName === group.pacer);
@@ -234,6 +241,15 @@ function NewTrainingEdit() {
         formData.append(`pacers[${index}].pace`, group.pace);
       });
 
+      // ✅ ⬇️ 여기서 콘솔 확인 (요청 직전!)
+      for (const [key, value] of formData.entries()) {
+        if (value instanceof File) {
+          console.log(`${key}: [File] name=${value.name}, size=${value.size}`);
+        } else {
+          console.log(`${key}: ${value}`);
+        }
+      }
+
 
       const response = await customAxios.patch(`/run/training/post/${postId}`, formData, {
         headers: {
@@ -243,6 +259,7 @@ function NewTrainingEdit() {
       });
       if (response.data.isSuccess) {
         alert("훈련이 성공적으로 수정되었습니다!");
+
         console.log(formData)
         navigate(`/run/training/${postId}`, { replace: true });
       } else {

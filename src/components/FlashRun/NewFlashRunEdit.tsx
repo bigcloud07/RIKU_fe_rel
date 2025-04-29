@@ -191,7 +191,14 @@ function NewFlashRunEdit() {
         formData.append("attachments", file);
       }
 
-
+      // ✅ ⬇️ 여기서 콘솔 확인 (요청 직전!)
+      for (const [key, value] of formData.entries()) {
+        if (value instanceof File) {
+          console.log(`${key}: [File] name=${value.name}, size=${value.size}`);
+        } else {
+          console.log(`${key}: ${value}`);
+        }
+      }
 
       const endpoint = `/run/flash/post/${postId}`;
 
