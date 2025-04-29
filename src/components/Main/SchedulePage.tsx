@@ -555,7 +555,7 @@ function SchedulePage() {
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
               onClick={
-                userRole === "ADMIN"
+                userRole === "ADMIN" || userRole === "PACER"
                   ? handleRegularRunMake
                   : () => alert("관리자만 사용할 수 있는 기능입니다.")
               }
@@ -571,7 +571,7 @@ function SchedulePage() {
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
               onClick={
-                userRole === "ADMIN"
+                userRole === "ADMIN" || userRole === "PACER"
                   ? handleTrainingtMake
                   : () => alert("관리자만 사용할 수 있는 기능입니다.")
               }

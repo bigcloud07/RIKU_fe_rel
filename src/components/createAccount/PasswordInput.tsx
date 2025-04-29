@@ -59,7 +59,7 @@ function PasswordInput() {
 
     //비밀번호가 유효한 경우
     if (isValidPW) {
-      alert("비밀번호가 유효합니다");
+      // alert("비밀번호가 유효합니다");
 
       //redux 저장소에 password 정보 저장
       dispatch(setPassword(password));

@@ -49,7 +49,7 @@ function StudentidInput() {
       const response = await customAxios.get(`/user/check-id?studentId=${studentID}`);
       //중복 확인 검사 성공했을 경우에만 (result 값이 false여야 함)
       if (response.data.result === false) {
-        alert("학번이 유효합니다! 다음 단계로 넘어갑니다.");
+        // alert("학번이 유효합니다! 다음 단계로 넘어갑니다.");
         //redux 저장소에 studentID 저장
         dispatch(setStudentID(studentID));
         navigate("/password-input"); //'/next-step'라는 값을 가진 컴포넌트로 이동한다 (navigating)

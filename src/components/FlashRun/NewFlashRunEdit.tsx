@@ -201,7 +201,7 @@ function NewFlashRunEdit() {
 
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center min-h-screen overflow-y-auto">
       <div className="max-w-[430px] w-full">
         <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
           <div className="text-2xl font-semibold text-white text-center">번개런 수정</div>

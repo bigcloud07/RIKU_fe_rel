@@ -250,7 +250,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
                           (document.activeElement as HTMLElement)?.blur();
                         }
                       }}
-                      className="w-full bg-kuLightGray text-[16px] py-[9px] pr-[12px] pl-[8px] rounded-[8px] h-[32px]"
+                      className="w-full bg-kuLightGray text-[16px] py-[9px] pr-[35px] pl-[8px] rounded-[8px] h-[32px]"
                       value={replyInputs[comment.commentId] || ""}
                       onChange={(e) => handleReplyChange(comment.commentId, e.target.value)}
                       onKeyDown={(e) => {
@@ -299,7 +299,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
                   (document.activeElement as HTMLElement)?.blur();
                 }
               }}
-              className="w-full bg-kuLightGray text-[16px] rounded-[8px] py-[9px] pr-[12px] pl-[8px] h-[32px] focus:outline-none"
+              className="w-full bg-kuLightGray text-[16px] rounded-[8px] py-[9px] pr-[35px] pl-[8px] h-[32px] focus:outline-none"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               onKeyDown={(e) => {

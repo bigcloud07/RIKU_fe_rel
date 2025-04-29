@@ -22,7 +22,7 @@ function NameInput() {
     e.preventDefault();
 
     //이름에는 유효한 입력 상태가 딱히 존재하지 않으므로, 바로 다음 버튼을 누를 경우, alert()를 띄우며 navigate를 통해 다음으로 넘어가도록 한다
-    alert("이름 입력을 완료했습니다");
+    // alert("이름 입력을 완료했습니다");
 
     // Dispatch the action to update the Redux state
     dispatch(setName(name)); 
