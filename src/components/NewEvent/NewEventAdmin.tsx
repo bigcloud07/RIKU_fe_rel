@@ -369,7 +369,7 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
 
 
   return (
-    <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center">
+    <div className="flex flex-col items-center text-center max-w-[430px] mx-auto overflow-y-auto justify-center">
       {/* 상단바 */}
       <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate(-1)}></img>

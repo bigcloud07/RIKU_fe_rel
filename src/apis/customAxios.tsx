@@ -24,6 +24,13 @@ customAxios.interceptors.response.use(
       return Promise.reject(error); // 네트워크 오류인 경우 요청을 중단
     }
 
+    // 토큰 만료 라우팅 처리
+    if (error.response.status === 401) {
+      console.warn('토큰 만료 감지. 메인페이지로 이동합니다.');
+      window.location.href = '/'; // 👉 window.location 사용해야 함 (useNavigate는 사용불가)
+      return;
+    }
+
     // 그 외의 서버 응답 에러
     console.error('서버 응답 에러:', error.response?.data);
     return Promise.reject(error);
