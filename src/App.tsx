@@ -50,7 +50,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <div className="min-w-{375px} max-w-full font-['Apple SD Gothic Neo']">
+        <div className="min-w-{375px} max-w-full font-['Apple SD Gothic Neo'] overflow-y-auto">
           <Routes>
             <Route path="/" element={<OnbordingPage />} />
             <Route path="/login" element={<LoginPage />} />

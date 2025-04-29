@@ -85,7 +85,7 @@ const NewEventList: React.FC = () => {
 
 
     return (
-        <div className="flex flex-col justify-center mx-auto max-w-[430px] items-center">
+        <div className="flex flex-col justify-center mx-auto max-w-[430px] overflow-y-auto items-center">
             {/* 상단바 */}
             <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
                 <img
