@@ -18,8 +18,13 @@ function NewFlashRunEdit() {
   const [dateTime, setDateTime] = useState<{ date: Date | null; time: string }>({ date: null, time: "00:00" });
   const [postImage, setPostImage] = useState<File | null>(null);
   const [postImagePreview, setPostImagePreview] = useState<string | null>(null);
-  // const [attachments, setAttachments] = useState<File[]>([]);
+
+
+
   const [attachmentPreviews, setAttachmentPreviews] = useState<string[]>([]);
+  const [newAttachmentFiles, setNewAttachmentFiles] = useState<File[]>([]);
+  const [originalAttachmentUrls, setOriginalAttachmentUrls] = useState<string[]>([]);
+
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -36,6 +41,9 @@ function NewFlashRunEdit() {
         setAttachmentPreviews(result.attachmentUrls || []);
         const utcDate = new Date(result.date); // 서버에서 받은 UTC 날짜
         const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000); // 9시간 더해 KST로 변환
+        setAttachmentPreviews(result.attachmentUrls || []);
+        setOriginalAttachmentUrls(result.attachmentUrls || []);
+
 
         setDateTime({
           date: kstDate,
@@ -51,16 +59,16 @@ function NewFlashRunEdit() {
   const handlePostImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-  
+
     try {
       const compressedFile = await imageCompression(file, {
         maxSizeMB: 5,             // 1MB 이하로 압축
         maxWidthOrHeight: 1000,   // (선택) 해상도 제한
         useWebWorker: true,       // 웹워커로 비동기 압축
       });
-  
+
       setPostImage(compressedFile);
-  
+
       const reader = new FileReader();
       reader.onloadend = () => setPostImagePreview(reader.result as string);
       reader.readAsDataURL(compressedFile);
@@ -68,23 +76,24 @@ function NewFlashRunEdit() {
       console.error("대표 이미지 압축 실패:", error);
       alert("대표 이미지 압축 중 오류가 발생했습니다.");
     }
-  
+
     e.target.value = ""; // ✅ input 초기화
   };
-  
+
 
   const handleAttachmentUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (!selectedFiles) return;
-  
+
     const selectedArray = Array.from(selectedFiles);
-  
-    if (attachmentPreviews.length + selectedArray.length > 6) {
-      alert("최대 6장까지만 업로드할 수 있습니다.");
-      e.target.value = ""; // input 초기화
+    const currentTotal = attachmentPreviews.length;
+
+    if (currentTotal + selectedArray.length > 6) {
+      alert("최대 6장까지 업로드할 수 있습니다.");
+      e.target.value = "";
       return;
     }
-  
+
     try {
       for (const file of selectedArray) {
         const compressedFile = await imageCompression(file, {
@@ -92,25 +101,41 @@ function NewFlashRunEdit() {
           maxWidthOrHeight: 1000,
           useWebWorker: true,
         });
-  
+
         const reader = new FileReader();
         reader.onloadend = () => {
-          setAttachmentPreviews((prev) => [...prev, reader.result as string]);
+          setAttachmentPreviews(prev => [...prev, reader.result as string]);
         };
         reader.readAsDataURL(compressedFile);
+
+        setNewAttachmentFiles(prev => [...prev, compressedFile]);
       }
     } catch (error) {
       console.error("코스 사진 압축 실패:", error);
       alert("코스 사진 압축 중 오류가 발생했습니다.");
     }
-  
-    e.target.value = ""; // ✅ input 초기화
+
+    e.target.value = "";
   };
-  
+
+
 
   const handleRemoveAttachment = (index: number) => {
-    setAttachmentPreviews((prev) => prev.filter((_, i) => i !== index));
+    const toRemove = attachmentPreviews[index];
+    setAttachmentPreviews(prev => prev.filter((_, i) => i !== index));
+
+    if (toRemove.startsWith("http")) {
+      setOriginalAttachmentUrls(prev => prev.filter(url => url !== toRemove));
+    } else {
+      // base64일 경우 → newAttachmentFiles에서도 제거
+      setNewAttachmentFiles(prev => {
+        const newFiles = [...prev];
+        newFiles.splice(index - originalAttachmentUrls.length, 1);
+        return newFiles;
+      });
+    }
   };
+
 
   const handleTimeChange = (time: string) => {
     setDateTime((prev) => ({ ...prev, time }));
@@ -152,29 +177,21 @@ function NewFlashRunEdit() {
       if (dateTime.date) formData.append("date", eventDateTime);
       if (postImage) formData.append("postImage", postImage);
 
-      // ✅ 코스 이미지 preview → File 변환 후 전송
-      const fetchAndConvertToFile = async (url: string, filename: string): Promise<File> => {
+      // 🔥 기존 S3 이미지들을 File로 변환해서 append
+      for (let i = 0; i < originalAttachmentUrls.length; i++) {
+        const url = originalAttachmentUrls[i];
         const res = await fetch(url);
         const blob = await res.blob();
-        return new File([blob], filename, { type: blob.type });
-      };
-
-      // 🔥 수정된 첨부파일 처리 로직
-      if (attachmentPreviews.length > 0) {
-        for (const img of attachmentPreviews) {
-          if (img.startsWith("data:")) {
-            // 새로 추가된 로컬 파일 (base64 데이터)만 처리
-            const res = await fetch(img);
-            const blob = await res.blob();
-            const file = new File([blob], `course_image_${Date.now()}.jpg`, { type: blob.type });
-            formData.append("attachments", file);
-          }
-          // 서버에서 가져온 S3 URL들은 무시 (fetch하지 않음)
-        }
-      } else {
-        formData.append("attachments", new Blob([], { type: "application/octet-stream" }));
+        const file = new File([blob], `original_attachment_${i}.jpg`, { type: blob.type });
+        formData.append("attachments", file);
       }
-      
+
+      // 🔥 새로 업로드된 이미지들도 append
+      for (const file of newAttachmentFiles) {
+        formData.append("attachments", file);
+      }
+
+
 
       const endpoint = `/run/flash/post/${postId}`;
 

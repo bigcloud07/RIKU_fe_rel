@@ -43,6 +43,8 @@ function NewRegularRunEdit() {
   const [courseImages, setCourseImages] = useState<File[]>([]);
   const [coursePreviews, setCoursePreviews] = useState<string[]>([]);
 
+  const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
+
   useEffect(() => {
     const fetchPacers = async () => {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
@@ -63,6 +65,7 @@ function NewRegularRunEdit() {
         setContent(result.content);
         setMainPreview(result.postImageUrl);
         setCoursePreviews(result.attachmentUrls || []);
+        setAttachmentUrls(result.attachmentUrls || []);
 
         const utcDate = new Date(result.date); // 서버에서 받은 UTC 날짜
         const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000); // 9시간 더해 KST로 변환
@@ -133,11 +136,11 @@ function NewRegularRunEdit() {
           maxWidthOrHeight: 1000,
           useWebWorker: true,
         });
-  
+
         const reader = new FileReader();
         reader.onloadend = () => setMainPreview(reader.result as string);
         reader.readAsDataURL(compressedFile);
-  
+
         setMainImage(compressedFile);
       } catch (error) {
         console.error("대표 이미지 압축 실패:", error);
@@ -145,7 +148,7 @@ function NewRegularRunEdit() {
       }
     }
   };
-  
+
 
   const handleCourseImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
@@ -153,13 +156,20 @@ function NewRegularRunEdit() {
   
     const selectedArray = Array.from(selectedFiles);
   
-    if (courseImages.length + selectedArray.length > 6) {
+    //  현재 총 이미지 수 = 기존 URL 수 + 새로 업로드된 파일 수
+    const currentImageCount = attachmentUrls.length + courseImages.length;
+  
+    if (currentImageCount >= 6) {
       alert("코스 사진은 최대 6장까지 업로드할 수 있습니다.");
       return;
     }
   
+    //  추가할 수 있는 파일 개수 계산
+    const availableSlots = 6 - currentImageCount;
+    const limitedFiles = selectedArray.slice(0, availableSlots); // 남은 칸만큼 자르기
+  
     try {
-      for (const file of selectedArray) {
+      for (const file of limitedFiles) {
         const compressedFile = await imageCompression(file, {
           maxSizeMB: 5,
           maxWidthOrHeight: 1000,
@@ -181,10 +191,22 @@ function NewRegularRunEdit() {
   };
   
 
+
   const removeCourseImage = (index: number) => {
-    setCourseImages(prev => prev.filter((_, i) => i !== index));
+    const toRemove = coursePreviews[index];
+
+    // coursePreviews에서 제거
     setCoursePreviews(prev => prev.filter((_, i) => i !== index));
+
+    // 기존 이미지일 경우: attachmentUrls에서 제거
+    if (toRemove.startsWith("http")) {
+      setAttachmentUrls(prev => prev.filter(url => url !== toRemove));
+    } else {
+      // 새 이미지일 경우: courseImages에서도 제거
+      setCourseImages(prev => prev.filter((_, i) => i !== (index - attachmentUrls.length)));
+    }
   };
+
 
   const handleSubmit = async () => {
     if (!title || !location || !content || !dateTime.date || pacerGroups.some(g => !g.pacer || !g.distance || !g.pace)) {
@@ -218,7 +240,20 @@ function NewRegularRunEdit() {
       formData.append("date", eventDateTime);
       formData.append("content", content);
       if (mainImage) formData.append("postImage", mainImage);
-      courseImages.forEach(file => formData.append("attachments", file));
+      let fileIdx = 0;
+
+      // 기존 이미지 URL → File 변환 후 attachments에 포함
+      for (let i = 0; i < attachmentUrls.length; i++) {
+        const url = attachmentUrls[i];
+        const file = await urlToFile(url, `existing_image_${i}.jpg`);
+        formData.append("attachments", file);
+      }
+
+      // 새로 추가한 이미지도 추가
+      courseImages.forEach((file) => {
+        formData.append("attachments", file);
+      });
+
       pacerGroups.forEach((group, index) => {
         const matchedPacer = pacers.find((p) => p.name === group.pacer || p.pacerName === group.pacer);
         const pacerId = matchedPacer ? matchedPacer.id : "";
@@ -251,6 +286,12 @@ function NewRegularRunEdit() {
     );
   };
 
+  const urlToFile = async (url: string, filename: string): Promise<File> => {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    return new File([blob], filename, { type: blob.type });
+  };
+
 
   return (
     <div className="flex flex-col items-center min-h-screen">
@@ -267,8 +308,7 @@ function NewRegularRunEdit() {
         <div className="my-2">집합 장소</div>
         <input className="border rounded-lg w-full p-2" placeholder="장소명을 입력하세요" value={location} onChange={(e) => setLocation(e.target.value)} />
 
-        {/* <div className="my-2">날짜 및 시간</div> */}
-        {/* <DateNtime onDateTimeChange={handleDateTimeChange} /> */}
+        
 
         <DateInput selectedDate={dateTime.date} onChange={handleDateChange} />
 
@@ -284,7 +324,7 @@ function NewRegularRunEdit() {
           onChange={(e) => setContent(e.target.value)}
         ></textarea>
 
-        {/* 페이서 UI는 기존 그대로 유지 */}
+        
         {/* 페이서 그룹 입력 UI */}
         <div className="flex flex-col items-center w-full max-w-md p-4 bg-white rounded-lg relative">
           {isBottomSheetOpen && (

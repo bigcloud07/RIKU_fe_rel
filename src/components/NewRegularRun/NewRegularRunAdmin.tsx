@@ -360,7 +360,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
     <div className="w-full max-w-[430px] mx-auto min-h-screen bg-white overflow-x-hidden">
 
       <div className="w-full max-w-[430px] mx-auto flex flex-col items-center text-center justify-center">
-        <div className="relative flex bg-kuDarkGreen w-full h-[56px] z-50 text-white text-xl font-semibold justify-center items-center overflow-x-hidden">
+        <div className="relative flex bg-kuDarkGreen w-full h-[56px] z-50 text-white text-xl font-semibold justify-center items-center">
           <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
           정규런
           <div
@@ -389,7 +389,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
                 visible: {},
                 exit: {},
               }}
-              className="absolute top-[50px] right-[18px] z-[999] flex flex-col gap-y-2"
+              className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
             >
               {["수정하기", "취소하기"].map((label, index) => (
                 <motion.button
