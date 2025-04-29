@@ -350,7 +350,7 @@ const NewMain: React.FC = () => {
             {/* 정규런 일정 추가하기 */}
             <button
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showSecondButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                } ${userRole === "ADMIN"
+                } ${userRole === "ADMIN" || userRole === "PACER"
                   ? "bg-white text-black hover:bg-gray-100"
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
@@ -366,7 +366,7 @@ const NewMain: React.FC = () => {
             {/* 훈련 일정 추가하기 */}
             <button
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showThirdButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                } ${userRole === "ADMIN"
+                } ${userRole === "ADMIN" || userRole === "PACER"
                   ? "bg-white text-black hover:bg-gray-100"
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
@@ -382,7 +382,7 @@ const NewMain: React.FC = () => {
             {/* 행사 일정 추가하기 */}
             <button
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showFourthButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                } ${userRole === "ADMIN"
+                } ${userRole === "ADMIN" 
                   ? "bg-white text-black hover:bg-gray-100"
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
