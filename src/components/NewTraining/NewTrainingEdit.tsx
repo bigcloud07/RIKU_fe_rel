@@ -38,8 +38,12 @@ function NewTrainingEdit() {
   const [selectedSeconds, setSelectedSeconds] = useState<string>("30");
   const [mainImage, setMainImage] = useState<File | null>(null);
   const [mainPreview, setMainPreview] = useState<string | null>(null);
-  const [courseImages, setCourseImages] = useState<File[]>([]);
+
+
   const [coursePreviews, setCoursePreviews] = useState<string[]>([]);
+  const [originalUrls, setOriginalUrls] = useState<string[]>([]); // 서버에서 불러온 URL만 저장
+  const [courseImages, setCourseImages] = useState<File[]>([]);    // 새로 업로드한 파일
+
 
   useEffect(() => {
     const fetchPacers = async () => {
@@ -71,6 +75,10 @@ function NewTrainingEdit() {
           distance: p.distance,
           pace: p.pace,
         })));
+
+        setCoursePreviews(result.attachmentUrls || []);
+        setOriginalUrls(result.attachmentUrls || []);
+
 
         console.log(result)
       }
@@ -113,78 +121,69 @@ function NewTrainingEdit() {
   const handleMainImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-  
+
     try {
       const compressedFile = await imageCompression(file, {
         maxSizeMB: 5,
         maxWidthOrHeight: 1000,
         useWebWorker: true,
       });
-  
+
       setMainImage(compressedFile);
-  
+
       const reader = new FileReader();
       reader.onloadend = () => setMainPreview(reader.result as string);
       reader.readAsDataURL(compressedFile);
-  
+
     } catch (error) {
       console.error("대표 이미지 압축 실패:", error);
       alert("대표 이미지 압축 중 오류가 발생했습니다.");
     }
-  
+
     e.target.value = ""; // input 초기화
   };
-  
+
 
   const handleCourseImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (!selectedFiles) return;
-  
+
     const selectedArray = Array.from(selectedFiles);
-  
-    if (courseImages.length >= 6) {
+
+    const currentTotal = originalUrls.length + courseImages.length;
+
+    if (currentTotal + selectedArray.length > 6) {
       alert("코스 사진은 최대 6장까지만 업로드할 수 있습니다.");
       e.target.value = "";
       return;
     }
-  
+
     try {
-      const compressedFiles: File[] = [];
-      const newPreviews: string[] = [];
-  
       for (const file of selectedArray) {
         const compressedFile = await imageCompression(file, {
           maxSizeMB: 5,
           maxWidthOrHeight: 1000,
           useWebWorker: true,
         });
-  
-        compressedFiles.push(compressedFile);
-  
+
         const reader = new FileReader();
         reader.onloadend = () => {
-          newPreviews.push(reader.result as string);
-  
-          // 모든 압축/로드가 끝난 뒤 추가
-          if (newPreviews.length === compressedFiles.length) {
-            const totalPreviews = [...coursePreviews, ...newPreviews].slice(0, 6);
-            const totalFiles = [...courseImages, ...compressedFiles].slice(0, 6);
-  
-            setCoursePreviews(totalPreviews);
-            setCourseImages(totalFiles);
-          }
+          setCoursePreviews(prev => [...prev, reader.result as string]);
         };
         reader.readAsDataURL(compressedFile);
+
+        setCourseImages(prev => [...prev, compressedFile]);
       }
     } catch (error) {
       console.error("코스 사진 압축 실패:", error);
       alert("코스 사진 압축 중 오류가 발생했습니다.");
     }
-  
-    e.target.value = ""; // input 초기화
+
+    e.target.value = "";
   };
-  
-  
+
+
+
 
   const handleSubmit = async () => {
     if (!title || !location || !content || !dateTime.date || pacerGroups.some(g => !g.pacer || !g.distance || !g.pace)) {
@@ -205,22 +204,52 @@ function NewTrainingEdit() {
       formData.append("date", eventDateTime);
       formData.append("content", content);
       if (mainImage) formData.append("postImage", mainImage);
-      courseImages.forEach(file => formData.append("attachments", file));
+      let fileIndex = 0;
+      for (const preview of coursePreviews) {
+        if (preview.startsWith("http")) {
+          const res = await fetch(preview);
+          const blob = await res.blob();
+          const file = new File([blob], `original_${Date.now()}.jpg`, { type: blob.type });
+          formData.append("attachments", file);
+        } else if (preview.startsWith("data:")) {
+          const file = courseImages[fileIndex];
+          if (file) {
+            formData.append("attachments", file);
+            fileIndex++;
+          }
+        }
+      }
+
+      // attachments가 없으면 아무것도 append 안 함 
+
+
+
+
+
 
       pacerGroups.forEach((group, index) => {
         const matchedPacer = pacers.find((p) => p.name === group.pacer || p.pacerName === group.pacer);
-      
+
         if (!matchedPacer) {
           console.warn(`❗ pacerId 매칭 실패 - group ${group.id}:`, group);
           throw new Error(`pacer 매칭 실패 - 그룹 ${group.id}`); // 🚨 여기서 에러를 던지자
         }
-      
+
         formData.append(`pacers[${index}].group`, group.id);
         formData.append(`pacers[${index}].pacerId`, String(matchedPacer.id));
         formData.append(`pacers[${index}].distance`, group.distance);
         formData.append(`pacers[${index}].pace`, group.pace);
       });
-      
+
+      // ✅ ⬇️ 여기서 콘솔 확인 (요청 직전!)
+      for (const [key, value] of formData.entries()) {
+        if (value instanceof File) {
+          console.log(`${key}: [File] name=${value.name}, size=${value.size}`);
+        } else {
+          console.log(`${key}: ${value}`);
+        }
+      }
+
 
       const response = await customAxios.patch(`/run/training/post/${postId}`, formData, {
         headers: {
@@ -230,6 +259,8 @@ function NewTrainingEdit() {
       });
       if (response.data.isSuccess) {
         alert("훈련이 성공적으로 수정되었습니다!");
+
+        console.log(formData)
         navigate(`/run/training/${postId}`, { replace: true });
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
@@ -248,11 +279,20 @@ function NewTrainingEdit() {
   };
 
   const removeCourseImage = (index: number) => {
-    setCourseImages(prev => prev.filter((_, i) => i !== index));
+    const toRemove = coursePreviews[index];
     setCoursePreviews(prev => prev.filter((_, i) => i !== index));
-    
+
+    if (toRemove.startsWith("http")) {
+      setOriginalUrls(prev => prev.filter(url => url !== toRemove));
+    } else {
+      setCourseImages(prev => {
+        const fileIndex = index - originalUrls.length;
+        return prev.filter((_, i) => i !== fileIndex);
+      });
+    }
   };
-  
+
+
 
 
 

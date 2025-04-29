@@ -167,6 +167,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           setTrainingtype(result.trainingType);
           setPostStatus(result.postStatus); // CLOSED, NOW 등
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+          console.log(response.data)
         } else {
           setError(response.data.responseMessage);
         }

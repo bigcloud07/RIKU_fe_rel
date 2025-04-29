@@ -52,9 +52,12 @@ function EventEdit() {
   const [previews, setPreviews] = useState<string[]>([]);
   const [postImagePreview, setPostImagePreview] = useState<string | null>(null);
   const [postImage, setPostImage] = useState<File | null>(null);
+
+
   const [attachmentPreviews, setAttachmentPreviews] = useState<string[]>([]);
-  const [attachments, setAttachments] = useState<File[]>([]);
-  const [originalUrls, setOriginalUrls] = useState<string[]>([]); // 기존 이미지 URL
+  const [originalAttachmentUrls, setOriginalAttachmentUrls] = useState<string[]>([]); // 기존 URL
+  const [newAttachmentFiles, setNewAttachmentFiles] = useState<File[]>([]); // 새로 업로드된 파일
+
 
   const fetchImageAsFile = async (url: string, index: number): Promise<File> => {
     const response = await fetch(url);
@@ -137,25 +140,19 @@ function EventEdit() {
       if (content) formData.append("content", content);
       if (eventDateTime) formData.append("date", eventDateTime);
       if (postImage) formData.append("postImage", postImage);
-      // ✅ attachmentPreviews 기준으로 파일 변환
-      const fetchAndConvertToFile = async (url: string, filename: string): Promise<File> => {
-        const res = await fetch(url);
-        const blob = await res.blob();
-        return new File([blob], filename, { type: blob.type });
-      };
+      
+      //  기존 이미지들을 fetch해서 File로 변환 후 append
+      for (let i = 0; i < originalAttachmentUrls.length; i++) {
+        const url = originalAttachmentUrls[i];
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const file = new File([blob], `original_attachment_${i}.jpg`, { type: blob.type });
+        formData.append("attachments", file);
+      }
 
-      if (attachmentPreviews.length > 0) {
-        const courseImageFiles = await Promise.all(
-          attachmentPreviews.map((url, idx) =>
-            fetchAndConvertToFile(url, `course_image_${idx}.jpg`)
-          )
-        );
-        courseImageFiles.forEach(file => {
-          formData.append("attachments", file);
-        });
-      } else {
-        // 첨부 사진 없을 때 빈 attachments 추가
-        formData.append("attachments", new Blob([], { type: "application/octet-stream" }));
+      //  새로 추가된 파일들도 append
+      for (const file of newAttachmentFiles) {
+        formData.append("attachments", file);
       }
 
 
@@ -180,77 +177,77 @@ function EventEdit() {
 
 
   const handleRemoveAttachment = (index: number) => {
-    setAttachments(prev => prev.filter((_, i) => i !== index));
-    setAttachmentPreviews(prev => prev.filter((_, i) => i !== index));
-    setOriginalUrls(prev => prev.filter((_, i) => i !== index));
+    const toRemove = attachmentPreviews[index];
+    setAttachmentPreviews((prev) => prev.filter((_, i) => i !== index));
+
+    if (toRemove.startsWith("http")) {
+      // 기존 URL 삭제
+      setOriginalAttachmentUrls((prev) => prev.filter((url) => url !== toRemove));
+    } else {
+      // 새로 추가한 파일 삭제
+      setNewAttachmentFiles((prev) => {
+        const fileIndex = index - originalAttachmentUrls.length;
+        return prev.filter((_, i) => i !== fileIndex);
+      });
+    }
   };
 
-  const handleAttachmentUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = event.target.files;
+
+  const handleAttachmentUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = e.target.files;
     if (!selectedFiles) return;
-  
+
     const selectedArray = Array.from(selectedFiles);
-    const currentAttachments = attachments ?? [];
-  
-    if (currentAttachments.length + selectedArray.length > 6) {
+
+    const currentTotal = originalAttachmentUrls.length + newAttachmentFiles.length;
+
+    if (currentTotal + selectedArray.length > 6) {
       alert("최대 6장까지만 업로드할 수 있습니다.");
-      event.target.value = "";
+      e.target.value = "";
       return;
     }
-  
+
     try {
-      const compressedFiles: File[] = [];
-      const newPreviews: string[] = []; // 새로 추가될 미리보기 모음
-  
       for (const file of selectedArray) {
         const compressedFile = await imageCompression(file, {
           maxSizeMB: 5,
-          maxWidthOrHeight: 1000,  // 첨부 파일은 1200px까지 제한
+          maxWidthOrHeight: 1000,
           useWebWorker: true,
         });
-  
-        compressedFiles.push(compressedFile);
-  
+
         const reader = new FileReader();
         reader.onloadend = () => {
-          newPreviews.push(reader.result as string);
-  
-          // ✅ reader가 끝났을 때만 프리뷰 세팅!
-          if (newPreviews.length === compressedFiles.length) {
-            // 기존 previews + 새 previews 합친 결과가 6장 넘으면 자른다
-            const mergedPreviews = [...attachmentPreviews, ...newPreviews].slice(0, 6);
-            setAttachmentPreviews(mergedPreviews);
-  
-            const mergedAttachments = [...attachments, ...compressedFiles].slice(0, 6);
-            setAttachments(mergedAttachments);
-          }
+          setAttachmentPreviews((prev) => [...prev, reader.result as string]);
         };
         reader.readAsDataURL(compressedFile);
+
+        setNewAttachmentFiles((prev) => [...prev, compressedFile]);
       }
     } catch (error) {
       console.error("첨부 이미지 압축 실패:", error);
       alert("첨부 이미지 압축 중 오류가 발생했습니다.");
     }
-  
-    event.target.value = ""; // input 초기화
+
+    e.target.value = "";
   };
-  
-  
+
+
+
 
 
   const handlePostImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-  
+
     try {
       const compressedFile = await imageCompression(file, {
         maxSizeMB: 5,
         maxWidthOrHeight: 1000,
         useWebWorker: true,
       });
-  
+
       setPostImage(compressedFile);
-  
+
       const reader = new FileReader();
       reader.onloadend = () => setPostImagePreview(reader.result as string);
       reader.readAsDataURL(compressedFile);
@@ -258,10 +255,10 @@ function EventEdit() {
       console.error("대표 이미지 압축 실패:", error);
       alert("대표 이미지 압축 중 오류가 발생했습니다.");
     }
-  
+
     event.target.value = ""; // input 초기화
   };
-  
+
 
 
   return (
