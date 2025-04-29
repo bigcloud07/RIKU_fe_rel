@@ -52,7 +52,7 @@ const AttendanceList: React.FC<AttendanceListProps> = ({
   ).length;
   const originalPendingCount = validParticipants.filter((user) => user.status === "PENDING").length;
   const totalCount = allParticipants.filter(
-    (user) => user.status === "PENDING" || user.status === "ATTENDED"
+    (user) => user.status === "PENDING" || user.status === "ATTENDED" || user.status === "ABSENT"
   ).length;
   return (
     <div className="flex flex-col gap-3 px-5 mt-[22px]">
