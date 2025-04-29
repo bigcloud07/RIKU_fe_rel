@@ -93,6 +93,8 @@ function EventEdit() {
           setAttachments([]); // File은 새로 업로드할 때만 추가
 
 
+
+
           console.log(eventData)
         }
       } catch (error) {
@@ -140,20 +142,25 @@ function EventEdit() {
       if (content) formData.append("content", content);
       if (eventDateTime) formData.append("date", eventDateTime);
       if (postImage) formData.append("postImage", postImage);
-      
-      //  기존 이미지들을 fetch해서 File로 변환 후 append
-      for (let i = 0; i < originalAttachmentUrls.length; i++) {
-        const url = originalAttachmentUrls[i];
-        const response = await fetch(url);
-        const blob = await response.blob();
-        const file = new File([blob], `original_attachment_${i}.jpg`, { type: blob.type });
-        formData.append("attachments", file);
+
+      let fileIndex = 0;
+      for (const preview of attachmentPreviews) {
+        if (preview.startsWith("http")) {
+          // 기존 이미지 → fetch해서 file 변환
+          const res = await fetch(preview);
+          const blob = await res.blob();
+          const file = new File([blob], `original_attachment_${Date.now()}.jpg`, { type: blob.type });
+          formData.append("attachments", file);
+        } else if (preview.startsWith("data:")) {
+          // 새로 추가한 이미지 → 파일로 전송
+          const file = newAttachmentFiles[fileIndex];
+          if (file) {
+            formData.append("attachments", file);
+            fileIndex++;
+          }
+        }
       }
 
-      //  새로 추가된 파일들도 append
-      for (const file of newAttachmentFiles) {
-        formData.append("attachments", file);
-      }
 
 
       const response = await customAxios.patch(`/run/event/post/${postId}`, formData, {
@@ -180,6 +187,7 @@ function EventEdit() {
     const toRemove = attachmentPreviews[index];
     setAttachmentPreviews((prev) => prev.filter((_, i) => i !== index));
 
+
     if (toRemove.startsWith("http")) {
       // 기존 URL 삭제
       setOriginalAttachmentUrls((prev) => prev.filter((url) => url !== toRemove));
@@ -189,6 +197,7 @@ function EventEdit() {
         const fileIndex = index - originalAttachmentUrls.length;
         return prev.filter((_, i) => i !== fileIndex);
       });
+
     }
   };
 
