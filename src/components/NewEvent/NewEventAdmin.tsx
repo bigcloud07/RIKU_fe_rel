@@ -162,7 +162,7 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
     const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
     try {
-      const response = await customAxios.get(`/run/flash/post/${postId}`, {
+      const response = await customAxios.get(`/run/event/post/${postId}`, {
         headers: {
           Authorization: `${token}`,
         },
