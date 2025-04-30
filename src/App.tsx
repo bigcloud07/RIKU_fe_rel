@@ -47,6 +47,7 @@ import RecordOutPage2 from "./RecordOutPage2";
 import OnbordingPage from "./OnBoradingPage";
 
 import NoticeMain from "./components/Notice/NoticeMain";
+import MakeNotice from "./components/Notice/MakeNotice";
 
 function App() {
   return (
@@ -91,6 +92,7 @@ function App() {
               <Route path="/start" element={<OnbordingPage />} />
 
               <Route path="/notice" element={<NoticeMain />} />
+              <Route path="/notice/make" element={<MakeNotice />} />
 
               {/* 컴포넌트 테스트 sandbox */}
               <Route path="/sandbox" element={<RecordOutPage />} />
