@@ -45,6 +45,7 @@ module.exports = {
         whiteSmoke: "#F5F5F5",
         kuViolet: "#B686C2",
         kuLightGray: "#ECEBE4",
+        kuGray: "#E5E5E5",
         kuWhite: "#FFFFFF",
         kuOrange: "#DEA93D",
         whiteSmoke: "#F5F5F5",
@@ -55,13 +56,13 @@ module.exports = {
         triangle: "polygon(50% 0%, 0% 100%, 100% 100%)",
       },
       fontFamily: {
-        sans: ['"Apple SD Gothic Neo"', 'sans-serif'],
+        sans: ['"Apple SD Gothic Neo"', "sans-serif"],
       },
       screens: {
-        'iphone': '393px', // iPhone 15 Pro 대응
-        'sm': '640px',
-        'md': '768px',
-        'lg': '1024px',
+        iphone: "393px", // iPhone 15 Pro 대응
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
       },
     },
   },

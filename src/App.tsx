@@ -46,6 +46,8 @@ import RecordOutPage from "./RecordOutPage";
 import RecordOutPage2 from "./RecordOutPage2";
 import OnbordingPage from "./OnBoradingPage";
 
+import NoticeMain from "./components/Notice/NoticeMain";
+
 function App() {
   return (
     <Provider store={store}>
@@ -87,6 +89,8 @@ function App() {
               <Route path="/event/edit/:postId" element={<EventEdit />} />
               <Route path="/profilefix-page" element={<ProfileFixPage />} />
               <Route path="/start" element={<OnbordingPage />} />
+
+              <Route path="/notice" element={<NoticeMain />} />
 
               {/* 컴포넌트 테스트 sandbox */}
               <Route path="/sandbox" element={<RecordOutPage />} />

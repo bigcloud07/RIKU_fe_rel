@@ -14,6 +14,7 @@ interface Member {
   participationCount: number;
   userRole: string;
   isPacer: boolean;
+  number: number; //인덱스 순서 부여를 위함
 }
 
 //운영진 페이지
@@ -29,6 +30,7 @@ function AdminPage() {
     key: keyof Member;
     sortDirection: "asc" | "desc";
   } | null>(null);
+  const [memberCount, setMemberCount] = useState(0); //멤버들의 총 인원 세는 state
 
   //회원 정보 불러올 함수 fetchMembers()
   async function fetchMembers() {
@@ -45,7 +47,7 @@ function AdminPage() {
         }
       );
 
-      let fetchedMembers = response.data.result.map((user: Member) => ({
+      let fetchedMembers = response.data.result.map((user: Member, index: number) => ({
         studentId: user.studentId,
         userName: user.userName,
         college: user.college,
@@ -55,10 +57,12 @@ function AdminPage() {
         participationCount: user.participationCount,
         userRole: user.userRole,
         isPacer: user.isPacer, //이 친구가 페이서인지 아닌지 판명
+        number: index + 1, //처음 순서 기준 번호 부여(1부터 시작)
       }));
 
       setMembers(fetchedMembers);
       setEditedMembers(fetchedMembers);
+      setMemberCount(fetchedMembers.length);
     } catch (error) {
       alert("회원 정보를 가져 오는 데 실패했습니다");
     }
@@ -200,10 +204,11 @@ function AdminPage() {
         <img src={riku_logo} alt="Logo" className="h-10 mr-4" />
         <span className="text-2xl font-bold">회원 정보 관리</span>
       </div>
-      <div className="flex items-center ml-4 mbs-4">
+      <div className="flex items-center flex-col ml-4 mbs-4">
         <span className="text-sm font-bold">
           참고 사항: 표의 제목을 누르실 경우, 각 항목에 대해 정렬하여 조회하실 수 있습니다
         </span>
+        <span className="my-4 text-lg font-bold text-kuDarkGreen">총 회원 수: {memberCount}명</span>
       </div>
       <div className="overflow-x-auto">
         <table className="table-auto w-[1220px] text-left border-collapse">
@@ -211,6 +216,7 @@ function AdminPage() {
           <thead>
             <tr>
               {[
+                "No.",
                 "학번",
                 "이름",
                 "단과대학명",
@@ -227,6 +233,7 @@ function AdminPage() {
                   onClick={() =>
                     handleSort(
                       [
+                        "number",
                         "studentId",
                         "userName",
                         "college",
@@ -247,37 +254,40 @@ function AdminPage() {
           </thead>
           {/*표 하단의 회원 정보 출력하는 부분 렌더링*/}
           <tbody>
-            {editedMembers.map((member, index) => (
-              <tr key={index}>
-                <td className="px-4 py-2 border-b">{member.studentId}</td>
-                <td className="px-4 py-2 border-b">{member.userName}</td>
-                <td className="px-4 py-2 border-b">{member.college}</td>
-                <td className="px-4 py-2 border-b">{member.major}</td>
-                <td className="px-4 py-2 border-b">{member.phone}</td>
-                <td className="px-4 py-2 border-b">{member.points}</td>
-                <td className="px-4 py-2 border-b">{member.participationCount}</td>
-                <td className="px-4 py-2 border-b">
-                  <select
-                    value={member.userRole}
-                    onChange={(e) => handleRoleChange(index, e.target.value)}
-                    className="border rounded p-1"
-                  >
-                    <option value="NEW_MEMBER">신입 부원</option>
-                    <option value="MEMBER">일반 부원</option>
-                    <option value="ADMIN">운영진</option>
-                    <option value="INACTIVE">비활성화 사용자</option>
-                  </select>
-                </td>
-                <td className="px-4 py-2 border-b text-center">
-                  <input
-                    type="checkbox"
-                    checked={member.isPacer}
-                    onChange={() => handlePacerToggle(index)}
-                    className="w-4 h-4 mr-2 accent-kuDarkGreen"
-                  />
-                </td>
-              </tr>
-            ))}
+            {editedMembers.map((member, index) => {
+              return (
+                <tr key={index}>
+                  <td className="px-4 py-2 border-b">{member.number}</td>
+                  <td className="px-4 py-2 border-b">{member.studentId}</td>
+                  <td className="px-4 py-2 border-b">{member.userName}</td>
+                  <td className="px-4 py-2 border-b">{member.college}</td>
+                  <td className="px-4 py-2 border-b">{member.major}</td>
+                  <td className="px-4 py-2 border-b">{member.phone}</td>
+                  <td className="px-4 py-2 border-b">{member.points}</td>
+                  <td className="px-4 py-2 border-b">{member.participationCount}</td>
+                  <td className="px-4 py-2 border-b">
+                    <select
+                      value={member.userRole}
+                      onChange={(e) => handleRoleChange(index, e.target.value)}
+                      className="border rounded p-1"
+                    >
+                      <option value="NEW_MEMBER">신입 부원</option>
+                      <option value="MEMBER">일반 부원</option>
+                      <option value="ADMIN">운영진</option>
+                      <option value="INACTIVE">비활성화 사용자</option>
+                    </select>
+                  </td>
+                  <td className="px-4 py-2 border-b text-center">
+                    <input
+                      type="checkbox"
+                      checked={member.isPacer}
+                      onChange={() => handlePacerToggle(index)}
+                      className="w-4 h-4 mr-2 accent-kuDarkGreen"
+                    />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

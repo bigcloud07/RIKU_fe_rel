@@ -144,7 +144,7 @@ function MyPage() {
 
   // 버튼 클릭 시 수행할 함수
   function handleNoticeClick() {
-    alert("열심히 기능 준비중입니다!");
+    navigate("/notice");
   }
 
   //'프로필 수정' 버튼 눌렀을 때 수행할 함수
@@ -347,9 +347,9 @@ function MyPage() {
       </div>
 
       {/* '공지사항' 버튼 */}
-      {/* <div className="w-full max-w-sm mt-4">
+      <div className="w-full max-w-sm mt-4">
         {renderButton("공지사항", rightArrow_Icon, handleNoticeClick)}
-      </div> */}
+      </div>
 
       {/* '문의하기' 버튼 */}
       {/* <div className="w-full max-w-sm mt-2">
