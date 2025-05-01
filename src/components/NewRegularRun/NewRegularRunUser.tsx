@@ -345,7 +345,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
         {activeTab === "명단" && (
           <AttendanceList
-            key={JSON.stringify(groupedParticipants)} // ⬅️ 이거 추가!
+            key={JSON.stringify(groupedParticipants)} 
             groupedParticipants={groupedParticipants}
             userInfoName={userInfo.userName}
             postCreatorName={postCreatorName}
