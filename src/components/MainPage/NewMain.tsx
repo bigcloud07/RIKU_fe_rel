@@ -7,10 +7,10 @@ import regularImg from "../../assets/default_regular.jpeg"
 import eventImg from "../../assets/default_event.jpeg"
 import TabNavigationUI from "../TabNavigationUI";
 import plusBtn from "../../assets/plus_Icon.svg";
-import img1 from "../../assets/Main-img/main-moving-images/1.png";
-import img2 from "../../assets/Main-img/main-moving-images/2.png";
-import img3 from "../../assets/Main-img/main-moving-images/3.jpg";
-import img4 from "../../assets/Main-img/main-moving-images/4.jpg";
+import img1 from "../../assets/main_new.jpg"
+import img2 from "../../assets/Main-img/main-moving-images/1.png";
+import img3 from "../../assets/Main-img/main-moving-images/2.png";
+import img4 from "../../assets/Main-img/main-moving-images/3.jpg";
 import TopBarimg from "../../assets/Top-bar.svg";
 import customAxios from "../../apis/customAxios";
 import NOWimg from "../../assets/Main-img/NewOpenStatus.svg";
