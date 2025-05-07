@@ -73,6 +73,7 @@ function ActivityDetailPage() {
         },
       });
       setUserData(response.data.result); //불러온 값(response.data.result)으로 userData를 세팅!
+      console.log(response.data.result)
     } catch (error) {
       console.error("프로필 불러오기 실패:", error);
       alert("프로필 불러오기 실패!");
