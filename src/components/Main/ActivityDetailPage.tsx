@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom"; // Link 컴포넌트 impor
 import customAxios from "../../apis/customAxios";
 import ActionBar from "../../components/ActionBar";
 import defaultProfileImg from "../../assets/default_profile.png";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
+
 
 
 interface points {
@@ -86,16 +89,14 @@ function ActivityDetailPage() {
     fetchUserDetailedProfile();
   }, []);
 
-  //kst 변환 코드
-  function formatToKST(dateString: string): string {
-    const utcDate = new Date(dateString);
-    // 9시간을 밀리초 단위로 더해서 새로운 Date 생성
-    const kstTimestamp = utcDate.getTime() + 9 * 60 * 60 * 1000;
-    const kstDate = new Date(kstTimestamp);
-    // YYYY-MM-DD 포맷으로 변환
-    return kstDate.toISOString().slice(0, 10);
+  function toKST_YMD(utcDateString: string): string {
+    const utcDate = new Date(utcDateString);
+    const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000); // KST = UTC + 9시간
+    const year = kstDate.getFullYear();
+    const month = String(kstDate.getMonth() + 1).padStart(2, "0");
+    const day = String(kstDate.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
   }
-  
   
 
   return (
@@ -150,7 +151,7 @@ function ActivityDetailPage() {
                   {/* 좌측 정보 영역 */}
                   <div className="flex flex-col justify-center gap-1 px-4 py-3 bg-white w-4/5">
                     <div className="flex items-center gap-2 text-xs text-gray-500">
-                      <span>{(participationDetail.date)}</span>
+                    <span>{toKST_YMD(participationDetail.date)}</span>
                       <span
                         className={`${setMarkerColor(
                           participationDetail.tag
