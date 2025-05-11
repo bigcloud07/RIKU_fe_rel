@@ -407,18 +407,18 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                       alert("종료된 러닝이나 취소된 러닝은 수정이 불가능합니다.");
                       return;
                     }
-                  
+
                     // 🔥 정확한 비교 로직
                     const now = new Date();
-                  
+
                     const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
                     const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
-                  
+
                     if (now > runKstDate) {
                       alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
                       return;
                     }
-                  
+
                     navigate(`/training/edit/${postId}`, { replace: true });
                     setShowMenu(false);
                   } else {
@@ -426,7 +426,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                       alert("이미 종료되었거나 취소된 게시글은 취소할 수 없습니다.");
                       return;
                     }
-                    
+
                     const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
                     if (!confirmCancel) return;
 
@@ -472,9 +472,18 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
         {/* 게시글 사진 */}
         <img
           src={postImageUrl || flashrunimage}
-          className={`z-0 w-full h-[308px] object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
+          className={`z-0 w-full h-[308px] object-cover transition-all duration-300 ${showMenu || postStatus === "CANCELED" || postStatus === "CLOSED" ? "brightness-75" : ""
             }`}
         />
+
+        {/* 상태 메시지 오버레이 */}
+        {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
+          <div className="absolute top-0 left-0 w-full h-[308px] flex justify-center items-center z-10">
+            <div className="transform -translate-y-[60%] text-white text-lg font-bold bg-opacity-60 px-4 py-2 rounded">
+              {postStatus === "CANCELED" ? "취소된 훈련입니다." : "마감된 훈련입니다."}
+            </div>
+          </div>
+        )}
         <div className="absolute top-[240px] w-full rounded-t-[20px] bg-white z-10">
           <div className="flex flex-col items-center mt-[18px]">
             <div className="relative w-full max-w-[430px] mx-auto">
@@ -596,7 +605,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           editedAttendance={editedAttendance}
           toggleAttendance={toggleAttendance}
           onSaveAttendance={saveAttendanceChanges}
-          onToggleEditMode={handleEditAttempt} 
+          onToggleEditMode={handleEditAttempt}
           userInfoName={userInfo.userName}
           postCreatorName={postCreatorName}
         />
@@ -650,7 +659,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           </div>
         </div>
       )}
-      <TabNavigationUI_detail/>
+      <TabNavigationUI_detail />
     </div>
   );
 };

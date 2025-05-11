@@ -195,24 +195,26 @@ const NewFlashRunList: React.FC = () => {
             {/* 지난 러닝 */}
             <div className="w-[375px] mt-4 mb-[100px]">
                 <h2 className="text-[20px] font-semibold ml-5">지난 러닝</h2>
-                <div className="grid grid-cols-3 grid-rows-2 gap-x-[12px] gap-y-[16px] mt-[20px] px-3">
+                <div className="grid grid-cols-3 grid-rows-2 gap-x-[12px] gap-y-[16px] mt-[20px] px-3 justify-items-start">
                     {pastRuns.map((run) => {
                         const utcDate = new Date(run.date);
                         const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
                         const formattedDate = format(kstDate, "MM/dd EEEE", { locale: ko });
                         
                         return (
-                            <PastRuns
-                                key={run.id}
-                                title={run.title}
-                                date={formattedDate}
-                                peoplecount={String(run.participants)}
-                                postimg={run.postImageUrl}
-                                location=""
-                                runDate=""
-                                runState=""
-                                onClick={() => navigate(`/run/flash/${run.id}`)}
-                            />
+                            <div className="justify-self-center">
+                                <PastRuns
+                                    key={run.id}
+                                    title={run.title}
+                                    date={formattedDate}
+                                    peoplecount={String(run.participants)}
+                                    postimg={run.postImageUrl}
+                                    location=""
+                                    runDate=""
+                                    runState=""
+                                    onClick={() => navigate(`/run/flash/${run.id}`)}
+                                />
+                            </div>
                         );
                     })}
                 </div>

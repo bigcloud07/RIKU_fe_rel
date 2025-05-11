@@ -349,7 +349,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
       document.body.style.overflow = "auto";
     };
   }, [isModalOpen]);
-  
+
 
 
 
@@ -406,18 +406,18 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
                         alert("종료된 러닝이나 취소된 러닝은 수정이 불가능합니다.");
                         return;
                       }
-                    
+
                       // 🔥 정확한 비교 로직
                       const now = new Date();
-                    
+
                       const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
                       const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
-                    
+
                       if (now > runKstDate) {
                         alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
                         return;
                       }
-                    
+
                       navigate(`/regular/edit/${postId}`, { replace: true });
                       setShowMenu(false);
                     } else {
@@ -425,7 +425,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
                         alert("이미 종료되었거나 취소된 게시글은 취소할 수 없습니다.");
                         return;
                       }
-                      
+
                       const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
                       if (!confirmCancel) return;
 
@@ -470,13 +470,21 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
 
 
         <div className="relative w-full max-w-[430px] pb-[90px]">
-          <div className="w-full max-w-[430px] h-[308px] overflow-hidden">
+          <div className="relative w-full overflow-hidden">
             <img
               src={postImageUrl || flashrunimage}
-              className={`w-full max-w-[430px] z-0 h-full object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
+              className={`w-full h-[308px] object-cover transition-all duration-300 ${showMenu || postStatus === "CANCELED" || postStatus === "CLOSED" ? "brightness-75" : ""
                 }`}
             />
+            {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
+              <div className="absolute inset-0 flex justify-center items-center">
+                <div className="text-white text-xl font-bold bg-opacity-60 px-4 py-2 rounded">
+                  {postStatus === "CANCELED" ? "취소된 러닝입니다." : "마감된 러닝입니다."}
+                </div>
+              </div>
+            )}
           </div>
+
           <div className="absolute top-[230px] w-full max-w-[430px] rounded-t-[20px] bg-white">
             <div className="flex flex-col items-center mt-[14px]">
               <object data={RegularRunlogo} className="w-[60px] h-[24px]" />
@@ -626,7 +634,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
             </div>
           </div>
         )}
-      <TabNavigationUI_detail/>
+        <TabNavigationUI_detail />
       </div>
     </div>
   );

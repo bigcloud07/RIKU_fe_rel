@@ -203,17 +203,19 @@ const NewEventList: React.FC = () => {
                         const formattedDate = format(kstDate, "MM/dd EEEE", { locale: ko });
                         
                         return (
-                            <PastRuns
-                                key={run.id}
-                                title={run.title}
-                                date={formattedDate}
-                                peoplecount={String(run.participants)}
-                                postimg={run.postImageUrl}
-                                location=""
-                                runDate=""
-                                runState=""
-                                onClick={() => navigate(`/run/event/${run.id}`)}
-                            />
+                            <div className="justify-self-center">
+                                <PastRuns
+                                    key={run.id}
+                                    title={run.title}
+                                    date={formattedDate}
+                                    peoplecount={String(run.participants)}
+                                    postimg={run.postImageUrl}
+                                    location=""
+                                    runDate=""
+                                    runState=""
+                                    onClick={() => navigate(`/run/event/${run.id}`)}
+                                />
+                            </div>
                         );
                     })}
                 </div>

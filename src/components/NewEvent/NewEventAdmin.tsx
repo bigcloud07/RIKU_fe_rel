@@ -518,9 +518,20 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
       </div>
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-full pb-[50px]">
-        <div className="w-full h-[308px] overflow-hidden">
-          <img src={postimgurl || flashrunimage} className="w-full h-full object-cover" />
+        <div className="relative w-full h-[250px] overflow-hidden">
+          <img
+            src={postimgurl || flashrunimage}
+            className={`w-full h-full object-cover ${postStatus === "CANCELED" || postStatus === "CLOSED" ? "brightness-50" : ""}`}
+          />
+          {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
+            <div className="absolute inset-0 flex justify-center items-center">
+              <div className="text-white text-lg font-bold bg-opacity-60 px-4 py-2 rounded">
+                {postStatus === "CANCELED" ? "취소된 행사입니다." : "마감된 행사입니다."}
+              </div>
+            </div>
+          )}
         </div>
+
         {/* 번개런 정보 */}
         <div className="absolute top-[230px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[14px]">
@@ -631,7 +642,7 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
         runType="event"
         users={currentParticipants}
         onUsersChange={(newUsers) => setCurrentParticipants(newUsers)}
-        canEdit={true} 
+        canEdit={true}
         postStatus={postStatus}
         postDate={date}
       />}

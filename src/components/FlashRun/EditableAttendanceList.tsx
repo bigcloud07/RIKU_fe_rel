@@ -19,8 +19,8 @@ interface EditableAttendanceListProps {
   onUsersChange: (newUsers: User[]) => void;
   onSaveComplete?: () => void;
   canEdit?: boolean;
-  postStatus?: string; // 🔥 추가
-  postDate?: string;   // 🔥 추가
+  postStatus?: string; 
+  postDate?: string;   
 }
 
 

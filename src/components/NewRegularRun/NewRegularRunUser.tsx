@@ -103,8 +103,8 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
               matchedUser?.status === "ATTENDED"
                 ? "출석완료"
                 : matchedUser?.status === "PENDING"
-                ? "출석하기"
-                : "참여하기"
+                  ? "출석하기"
+                  : "참여하기"
             );
             setIsGroupModalOpen(false);
           }
@@ -257,9 +257,20 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
         </div>
 
         <div className="relative w-full pb-[90px]">
-          <div className="w-full h-[308px] overflow-hidden">
-            <img src={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
+          <div className="relative w-full h-[250px] overflow-hidden">
+            <img
+              src={postImageUrl || flashrunimage}
+              className={`w-full h-full object-cover ${postStatus === "CANCELED" || postStatus === "CLOSED" ? "brightness-50" : ""}`}
+            />
+            {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
+              <div className="absolute inset-0 flex justify-center items-center">
+                <div className="text-white text-lg font-bold bg-opacity-60 px-4 py-2 rounded">
+                  {postStatus === "CANCELED" ? "취소된 러닝입니다." : "마감된 러닝입니다."}
+                </div>
+              </div>
+            )}
           </div>
+
           <div className="absolute top-[230px] w-full px-5 rounded-t-[20px] bg-white">
             <div className="flex flex-col items-center mt-[14px]">
               <object data={RegularRunlogo} className="w-[60px] h-[24px]" />
@@ -345,7 +356,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
         {activeTab === "명단" && (
           <AttendanceList
-            key={JSON.stringify(groupedParticipants)} 
+            key={JSON.stringify(groupedParticipants)}
             groupedParticipants={groupedParticipants}
             userInfoName={userInfo.userName}
             postCreatorName={postCreatorName}
@@ -359,7 +370,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
         <div key={buttonRefreshKey} className="mb-[100px]">
           {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
 
-        
+
             <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
               모집 종료
             </div>
@@ -430,25 +441,22 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                     return (
                       <button
                         key={index}
-                        className={`rounded-lg border flex items-center justify-between w-[230px] h-[48px] ${
-                          isSelected ? "bg-[#F3F8E8]" : "bg-gray-100 hover:bg-gray-200"
-                        }`}
+                        className={`rounded-lg border flex items-center justify-between w-[230px] h-[48px] ${isSelected ? "bg-[#F3F8E8]" : "bg-gray-100 hover:bg-gray-200"
+                          }`}
                         onClick={handleSelect}
                       >
                         {/* 왼쪽: 그룹명 | 페이스 */}
                         <div className="flex items-center text-left">
                           <span
-                            className={`my-[16px] ml-[16px] font-bold text-base ${
-                              isSelected ? "text-black" : "text-gray-400"
-                            }`}
+                            className={`my-[16px] ml-[16px] font-bold text-base ${isSelected ? "text-black" : "text-gray-400"
+                              }`}
                           >
                             {group.group}
                           </span>
                           <div className="w-px h-[42px] ml-[16px] bg-gray-400" />
                           <span
-                            className={`text-[16px] font-semibold ml-[10px] ${
-                              isSelected ? "text-kuDarkGreen" : "text-gray-400"
-                            }`}
+                            className={`text-[16px] font-semibold ml-[10px] ${isSelected ? "text-kuDarkGreen" : "text-gray-400"
+                              }`}
                           >
                             {group.pace}
                           </span>
@@ -509,7 +517,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           </div>
         )}
       </div>
-      <TabNavigationUI_detail/>
+      <TabNavigationUI_detail />
     </div>
   );
 };

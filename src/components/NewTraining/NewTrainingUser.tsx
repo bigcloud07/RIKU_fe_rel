@@ -428,8 +428,19 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
       </div>
 
       <div className="relative w-full pb-[125px]">
-        <div className="w-full h-[308px] overflow-hidden">
-          <img src={postImageUrl || flashrunimage} className="w-full h-full object-cover" />
+        <div className="relative w-full h-[308px] overflow-hidden">
+          <img
+            src={postImageUrl || flashrunimage}
+            className={`w-full h-full object-cover transition-all duration-300 ${postStatus === "CANCELED" || postStatus === "CLOSED" ? "brightness-75" : ""
+              }`}
+          />
+          {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
+            <div className="absolute inset-0 flex justify-center items-center z-10">
+              <div className="transform -translate-y-[60%] text-white text-xl font-bold bg-opacity-60 px-4 py-2 rounded">
+                {postStatus === "CANCELED" ? "취소된 훈련입니다." : "마감된 훈련입니다."}
+              </div>
+            </div>
+          )}
         </div>
         <div className="absolute top-[243px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[8px]">
@@ -687,7 +698,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           </div>
         </div>
       )}
-      <TabNavigationUI_detail/>
+      <TabNavigationUI_detail />
     </div>
   );
 };
