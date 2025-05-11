@@ -82,6 +82,42 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
   const menuRef = useRef<HTMLDivElement>(null);
   const dotButtonRef = useRef<HTMLDivElement>(null);
 
+  const [isClosing, setIsClosing] = useState(false); // 출석 종료 중 여부
+
+  const handleCloseAttendance = async () => {
+    const confirmClose = window.confirm("출석을 종료하시겠습니까?");
+    if (!confirmClose) return;
+
+    try {
+      setIsClosing(true);
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+
+      const response = await customAxios.patch(
+        `/run/event/post/${postId}/close`,
+        {},
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+
+      if (response.data.isSuccess) {
+        alert("출석이 성공적으로 종료되었습니다.");
+        setPostStatus("CLOSED"); // 게시글 상태를 갱신
+      } else {
+        alert(response.data.responseMessage || "출석 종료에 실패했습니다.");
+      }
+    } catch (error) {
+      alert("출석 종료 중 오류가 발생했습니다.");
+      console.error(error);
+    } finally {
+      setIsClosing(false);
+    }
+  };
+
+
+
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -261,6 +297,8 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
           setPostCreatorName(result.postCreatorInfo.userName);
           setPostStatus(result.postStatus);
 
+          console.log(response.data.result)
+
           const currentUser = result.participants.find(
             (p: any) => p.userId === result.userInfo.userId
           );
@@ -270,8 +308,8 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
               currentUser.status === "ATTENDED"
                 ? "출석완료"
                 : currentUser.status === "PENDING"
-                ? "출석하기"
-                : "참여하기"
+                  ? "출석하기"
+                  : "참여하기"
             );
           }
 
@@ -375,108 +413,108 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
         <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate(-1)}></img>
         행사
         <div
-            ref={dotButtonRef}
-            className="absolute right-[5px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
-            onClick={(e) => {
-              e.stopPropagation(); // 이벤트 버블링 방지
-              setShowMenu((prev) => !prev);
-            }}
-          >
-            <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
-              {[...Array(3)].map((_, i) => (
-                <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
-              ))}
-            </div>
+          ref={dotButtonRef}
+          className="absolute right-[5px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation(); // 이벤트 버블링 방지
+            setShowMenu((prev) => !prev);
+          }}
+        >
+          <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
+            {[...Array(3)].map((_, i) => (
+              <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+            ))}
           </div>
+        </div>
 
-          {showMenu && (
-            <motion.div
-              ref={menuRef}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={{
-                hidden: {},
-                visible: {},
-                exit: {},
-              }}
-              className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
-            >
-              {["수정하기", "취소하기"].map((label, index) => (
-                <motion.button
-                  key={label}
-                  custom={index}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ delay: 0.1 * index, duration: 0.2 }}
-                  className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
-                  onClick={async () => {
-                    if (label === "수정하기") {
-                      if (postStatus === "CLOSED" || postStatus === "CANCELED") {
-                        alert("종료된 러닝이나 취소된 러닝은 수정이 불가능합니다.");
-                        return;
-                      }
-                    
-                      // 🔥 정확한 비교 로직
-                      const now = new Date();
-                    
-                      const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
-                      const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
-                    
-                      if (now > runKstDate) {
-                        alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
-                        return;
-                      }
-                    
-                      navigate(`/event/edit/${postId}`, { replace: true });
-                      setShowMenu(false);
-                    }else {
-                      if (postStatus === "CLOSED" || postStatus === "CANCELED") {
-                        alert("이미 종료되었거나 취소된 게시글은 취소할 수 없습니다.");
-                        return;
-                      }
-                      
-                      const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
-                      if (!confirmCancel) return;
-
-                      try {
-                        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-                        if (!token) {
-                          alert("로그인이 필요합니다.");
-                          return;
-                        }
-
-                        const { data } = await customAxios.patch(
-                          `/run/event/post/${postId}/cancel`,
-                          {},
-                          {
-                            headers: {
-                              Authorization: `${token}`,
-                            },
-                          }
-                        );
-
-                        if (data.isSuccess) {
-                          alert("게시글이 성공적으로 취소되었습니다.");
-                          setShowMenu(false);
-                          navigate("/event");
-                        } else {
-                          alert(data.responseMessage || "취소에 실패했습니다.");
-                        }
-                      } catch (error) {
-                        console.error(error);
-                        alert("요청 중 오류가 발생했습니다.");
-                      }
+        {showMenu && (
+          <motion.div
+            ref={menuRef}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={{
+              hidden: {},
+              visible: {},
+              exit: {},
+            }}
+            className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
+          >
+            {["수정하기", "취소하기"].map((label, index) => (
+              <motion.button
+                key={label}
+                custom={index}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ delay: 0.1 * index, duration: 0.2 }}
+                className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+                onClick={async () => {
+                  if (label === "수정하기") {
+                    if (postStatus === "CLOSED" || postStatus === "CANCELED") {
+                      alert("종료된 러닝이나 취소된 러닝은 수정이 불가능합니다.");
+                      return;
                     }
-                  }}
-                >
-                  {label}
-                </motion.button>
-              ))}
-            </motion.div>
-          )}
-        
+
+                    // 🔥 정확한 비교 로직
+                    const now = new Date();
+
+                    const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
+                    const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
+
+                    if (now > runKstDate) {
+                      alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
+                      return;
+                    }
+
+                    navigate(`/event/edit/${postId}`, { replace: true });
+                    setShowMenu(false);
+                  } else {
+                    if (postStatus === "CLOSED" || postStatus === "CANCELED") {
+                      alert("이미 종료되었거나 취소된 게시글은 취소할 수 없습니다.");
+                      return;
+                    }
+
+                    const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
+                    if (!confirmCancel) return;
+
+                    try {
+                      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                      if (!token) {
+                        alert("로그인이 필요합니다.");
+                        return;
+                      }
+
+                      const { data } = await customAxios.patch(
+                        `/run/event/post/${postId}/cancel`,
+                        {},
+                        {
+                          headers: {
+                            Authorization: `${token}`,
+                          },
+                        }
+                      );
+
+                      if (data.isSuccess) {
+                        alert("게시글이 성공적으로 취소되었습니다.");
+                        setShowMenu(false);
+                        navigate("/event");
+                      } else {
+                        alert(data.responseMessage || "취소에 실패했습니다.");
+                      }
+                    } catch (error) {
+                      console.error(error);
+                      alert("요청 중 오류가 발생했습니다.");
+                    }
+                  }
+                }}
+              >
+                {label}
+              </motion.button>
+            ))}
+          </motion.div>
+        )}
+
       </div>
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-full pb-[50px]">
@@ -593,53 +631,29 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
         runType="event"
         users={currentParticipants}
         onUsersChange={(newUsers) => setCurrentParticipants(newUsers)}
-        canEdit={true} // 🔥 이 부분!
+        canEdit={true} 
+        postStatus={postStatus}
+        postDate={date}
       />}
-      <div className="mb-[100px]">
+      <div className="">
         <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
       </div>
-     
 
-      {/* 상태별 버튼 렌더링
-      {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
-        <button
-          className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] text-lg font-bold mt-20 mb-2 cursor-not-allowed"
-          disabled
-        >
-          모집 종료
-        </button>
-      ) : userStatus === "PENDING" ? (
-        <div className="flex justify-center mt-20 mb-2">
-          <div className="w-[327px] flex gap-2">
-            <button
-              className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold"
-              onClick={handleCancelParticipation}
-            >
-              참여 취소
-            </button>
-            <button
-              className="w-1/2 h-14 rounded-lg bg-kuDarkGreen text-white font-bold"
-              onClick={handleOpenAttendanceModal}
-            >
-              출석하기
-            </button>
-          </div>
-        </div>
-      ) : userStatus === "" ? (
-        <button
-          className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-kuGreen text-white text-lg font-bold mt-20 mb-2"
-          onClick={handleStartClick}
-        >
-          참여하기
-        </button>
-      ) : (
-        <button
-          className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] text-lg font-bold mt-20 mb-2 cursor-not-allowed"
-          disabled
-        >
-          출석완료
-        </button>
-      )} */}
+      <button
+        onClick={handleCloseAttendance}
+        disabled={postStatus === "CLOSED" || isClosing}
+        className={`w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-[100px] ${postStatus === "CLOSED" ? "bg-kuLightGray text-kuDarkGray" : "bg-kuGreen text-white"
+          }`}
+      >
+        {isClosing
+          ? "종료 중..."
+          : postStatus === "CLOSED"
+            ? "모집 종료"
+            : "출석 종료"}
+      </button>
+
+
+
 
 
       {isModalOpen && (
@@ -668,7 +682,7 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
           </div>
         </div>
       )}
-      <TabNavigationUI_detail/>
+      <TabNavigationUI_detail />
     </div>
   );
 };

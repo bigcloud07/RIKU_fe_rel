@@ -4,6 +4,7 @@ import customAxios from "../../apis/customAxios";
 import ActionBar from "../../components/ActionBar";
 import defaultProfileImg from "../../assets/default_profile.png";
 
+
 interface points {
   date: string;
   tag: string;
@@ -85,6 +86,18 @@ function ActivityDetailPage() {
     fetchUserDetailedProfile();
   }, []);
 
+  //kst 변환 코드
+  function formatToKST(dateString: string): string {
+    const utcDate = new Date(dateString);
+    // 9시간을 밀리초 단위로 더해서 새로운 Date 생성
+    const kstTimestamp = utcDate.getTime() + 9 * 60 * 60 * 1000;
+    const kstDate = new Date(kstTimestamp);
+    // YYYY-MM-DD 포맷으로 변환
+    return kstDate.toISOString().slice(0, 10);
+  }
+  
+  
+
   return (
     <>
       <ActionBar />
@@ -137,7 +150,7 @@ function ActivityDetailPage() {
                   {/* 좌측 정보 영역 */}
                   <div className="flex flex-col justify-center gap-1 px-4 py-3 bg-white w-4/5">
                     <div className="flex items-center gap-2 text-xs text-gray-500">
-                      <span>{participationDetail.date}</span>
+                      <span>{(participationDetail.date)}</span>
                       <span
                         className={`${setMarkerColor(
                           participationDetail.tag

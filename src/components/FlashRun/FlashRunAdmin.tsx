@@ -525,8 +525,8 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           runType="flash"
           users={editableParticipants}
           onUsersChange={setEditableParticipants}
-          canEdit={true} // 🔥 관리자용이므로 무조건 true
-          postStatus={postStatus}        // 추가
+          canEdit={true} // 관리자용이므로 무조건 true
+          postStatus={postStatus}        
           postDate={date}
         />}
         <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
