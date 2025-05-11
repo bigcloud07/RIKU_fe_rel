@@ -558,11 +558,13 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
           </div>
         </div>
       </div>
-      <TabButtonUser
-        leftLabel="소개"
-        rightLabel="명단"
-        onTabChange={handleTabChange}
-      />
+      <div className="mt-[70px]">
+        <TabButtonUser
+          leftLabel="소개"
+          rightLabel="명단"
+          onTabChange={handleTabChange}
+        />
+      </div>
       {activeTab === "소개" && (
         <>
           <div className="flex justify-center items-center w-[327px] h-14 bg-[#F0F4DD] rounded-lg text-sm font-normal mt-5">
