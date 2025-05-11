@@ -293,7 +293,10 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           </div>
         </div>
 
-        <TabButton leftLabel="소개" rightLabel="명단" onTabChange={setActiveTab} />
+        <div className="mt-[70px]">
+          <TabButton leftLabel="소개" rightLabel="명단" onTabChange={setActiveTab} />
+        </div>
+       
         {activeTab === "소개" && (
           <>
             <div className="flex items-start text-left w-full mt-[24px] my-2 max-w-[349px]">
