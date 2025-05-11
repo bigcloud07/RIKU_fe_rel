@@ -348,26 +348,26 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                         alert("종료된 러닝이나 취소된 러닝은 수정이 불가능합니다.");
                         return;
                       }
-                    
+
                       // 🔥 정확한 비교 로직
                       const now = new Date();
-                    
+
                       const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
                       const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
-                    
+
                       if (now > runKstDate) {
                         alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
                         return;
                       }
-                    
+
                       navigate(`/flash/edit/${postId}`, { replace: true });
                       setShowMenu(false);
-                    }else {
+                    } else {
                       if (postStatus === "CLOSED" || postStatus === "CANCELED") {
                         alert("이미 종료되었거나 취소된 게시글은 취소할 수 없습니다.");
                         return;
                       }
-                      
+
                       const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
                       if (!confirmCancel) return;
 
@@ -411,12 +411,19 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         </div>
         {/* 러닝 포스팅 사진 */}
         <div className="relative w-full max-w-[430px] pb-[10px]">
-          <div className="w-full overflow-hidden">
+          <div className="relative w-full overflow-hidden">
             <img
               src={postimgurl || flashrunimage}
-              className={`w-full h-[308px] object-cover transition-all duration-300 ${showMenu ? "brightness-75" : ""
+              className={`w-full h-[308px] object-cover transition-all duration-300 ${showMenu || postStatus === "CANCELED" || postStatus === "CLOSED" ? "brightness-75" : ""
                 }`}
             />
+            {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
+              <div className="absolute inset-0 flex justify-center items-center">
+                <div className="text-white text-xl font-bold bg-black bg-opacity-60 px-4 py-2 rounded">
+                  {postStatus === "CANCELED" ? "취소된 러닝입니다." : "마감된 러닝입니다."}
+                </div>
+              </div>
+            )}
           </div>
           {/* 번개런 정보 */}
           <div className="absolute top-[234px] w-full px-5 rounded-t-[20px] bg-white">
@@ -526,7 +533,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           users={editableParticipants}
           onUsersChange={setEditableParticipants}
           canEdit={true} // 관리자용이므로 무조건 true
-          postStatus={postStatus}        
+          postStatus={postStatus}
           postDate={date}
         />}
         <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
@@ -580,7 +587,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           </div>
         )}
       </div>
-      <TabNavigationUI_detail/>
+      <TabNavigationUI_detail />
     </div>
   );
 };
