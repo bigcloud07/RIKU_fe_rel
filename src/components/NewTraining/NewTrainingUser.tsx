@@ -435,7 +435,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
               }`}
           />
           {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
-            <div className="absolute inset-0 flex justify-center items-center z-10">
+            <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none">
               <div className="transform -translate-y-[60%] text-white text-xl font-bold bg-opacity-60 px-4 py-2 rounded">
                 {postStatus === "CANCELED" ? "취소된 훈련입니다." : "마감된 훈련입니다."}
               </div>
@@ -462,7 +462,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
                   />
 
                   {isTooltipVisible && (
-                    <div className="absolute bottom-[120%] right-[23px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-10">
+                    <div className="absolute bottom-[120%] right-[23px] bg-[#F5F5F5] pt-[13.5px] pl-[16px] pr-[16px] pb-[13.5px] rounded-tl-lg rounded-tr-lg rounded-bl-lg w-[186px] text-left text-sm z-30">
                       <div className="text-[#4F3F3F] text-[12px]">
                         {getTrainingDescription(trainingtype)}
                       </div>
