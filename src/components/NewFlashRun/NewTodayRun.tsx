@@ -1,5 +1,6 @@
 import React from "react";
 import NOWimg from "../../assets/Main-img/NewOpenStatus.svg";
+import PROGRESSimg from "../../assets/progress.png"
 import CLODESDimg from "../../assets/Main-img/NewClosedStatus.svg";
 import CANCELEDimg from "../../assets/Main-img/NewCanceledStatus.svg";
 import peopleimg from "../../assets/people_darkgreen.svg";
@@ -28,7 +29,6 @@ const NewEventCard: React.FC<EventCardProps> = ({
   onClick,
 }) => {
   const getStatusImage = () => {
-    // 현재 시간
     const now = new Date();
   
     // time props를 "HH:mm" → Date 객체로 변환 (오늘 날짜 기준)
@@ -44,6 +44,13 @@ const NewEventCard: React.FC<EventCardProps> = ({
     const diff = runTime.getTime() - now.getTime();
     const oneHourInMs = 60 * 60 * 1000;
   
+    //  현재 시간이 runDate를 넘겼으면 진행중 이미지 반환
+    const runDateTime = new Date(runDate);
+    if (runState === "NOW" && runDateTime <= now) {
+      return PROGRESSimg;
+    }
+  
+    //  1시간 이내면 마감임박
     if (runState === "NOW" && diff <= oneHourInMs && diff > 0) {
       return ARGENTimg;
     }
@@ -59,6 +66,7 @@ const NewEventCard: React.FC<EventCardProps> = ({
         return NOWimg;
     }
   };
+  
     
 
 
