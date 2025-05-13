@@ -26,7 +26,10 @@ const PastRuns: React.FC<PastRunsProps> = ({ date, peoplecount, title, postimg, 
                     <div className="absolute top-[10px] left-[10px] text-[10px] font-semibold text-black/60">{date}</div>
                     <div className="absolute top-[28px] left-[10px] text-[10px] w-[14.12px] h-[10px]"><img src={peopleimg} /></div>
                     <div className="absolute top-[26px] left-[28.59px] text-[10px] font-semibold">{peoplecount}</div>
-                    <div className="absolute top-[42px] left-[10px] text-[12px] font-bold w-[82.44px] h-[34px] text-black/80">{title}</div>
+                    <div className="absolute top-[42px] left-[10px] text-[12px] font-bold w-[82.44px] h-[34px] text-black/80 overflow-hidden text-ellipsis line-clamp-2">
+                        {title}
+                    </div>
+
                 </div>
             </div>
         </div>

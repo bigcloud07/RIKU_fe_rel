@@ -14,6 +14,7 @@ import img4 from "../../assets/Main-img/main-moving-images/3.jpg";
 import TopBarimg from "../../assets/Top-bar.svg";
 import customAxios from "../../apis/customAxios";
 import NOWimg from "../../assets/Main-img/NewOpenStatus.svg";
+import PROGRESSimg from "../../assets/progress.png";
 import CLODESDimg from "../../assets/Main-img/NewClosedStatus.svg";
 import CANCELEDimg from "../../assets/Main-img/NewCanceledStatus.svg";
 import ARGENTimg from "../../assets/Main-img/NewUrgentStatus.svg"
@@ -36,20 +37,31 @@ interface MainData {
 }
 
 const NewMain: React.FC = () => {
-  const getStatusImg = (status: string | null | undefined) => {
+  const getStatusImg = (status: string | null | undefined, date?: string) => {
+    if (!status || !date) return undefined;
+  
+    const utcDate = new Date(date);
+    const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+    const now = new Date();
+  
+    if (kstDate <= now && (status === "NOW" || status === "URGENT")) {
+      return PROGRESSimg; // 현재 시간 지났고 상태가 NOW나 URGENT → 진행중
+    }
+  
     switch (status) {
       case "NOW":
         return NOWimg;
+      case "URGENT":
+        return ARGENTimg;
       case "CLOSED":
         return CLODESDimg;
       case "CANCELED":
         return CANCELEDimg;
-      case "URGENT":
-        return ARGENTimg;
       default:
         return undefined;
     }
   };
+  
 
   const isWithinOneHour = (isoDateString?: string) => {
     if (!isoDateString) return false;
@@ -276,7 +288,7 @@ const NewMain: React.FC = () => {
           <NewMainCard
             title={maindata?.regularRun.location}
             date={maindata?.regularRun.date}
-            statusImg={getStatusImg(maindata.regularRun.poststatus)}
+            statusImg={getStatusImg(maindata.regularRun.poststatus, maindata.regularRun.date)}
             imageUrl={maindata.regularRun.postimgurl || regularImg}
             event_type="정규런"
             path="/regular"
@@ -286,7 +298,7 @@ const NewMain: React.FC = () => {
           <NewMainCard
             title={maindata?.flashRun.location}
             date={maindata?.flashRun.date}
-            statusImg={getStatusImg(maindata.flashRun.poststatus)}
+            statusImg={getStatusImg(maindata.flashRun.poststatus, maindata.flashRun.date)}
             imageUrl={maindata.flashRun.postimgurl || flashImage}
             event_type="번개런"
             path="/FlashRun"
@@ -296,7 +308,7 @@ const NewMain: React.FC = () => {
           <NewMainCard
             title={maindata?.training.location}
             date={maindata?.training.date}
-            statusImg={getStatusImg(maindata.training.poststatus)}
+            statusImg={getStatusImg(maindata.training.poststatus, maindata.training.date)} 
             imageUrl={maindata.training.postimgurl || trainImage}
             event_type="훈련"
             path="/training"
@@ -306,7 +318,7 @@ const NewMain: React.FC = () => {
           <NewMainCard
             title={maindata?.event.location}
             date={maindata?.event.date}
-            statusImg={getStatusImg(maindata.event.poststatus)}
+            statusImg={getStatusImg(maindata.event.poststatus, maindata.event.date)} 
             imageUrl={maindata.event.postimgurl || eventImg}
             event_type="행사"
             path="/event"

@@ -142,13 +142,13 @@ const NewEventList: React.FC = () => {
                                 </Swiper>
 
                                 {/* ✅ Swiper pagination dot 표시 영역 */}
-<div
-  ref={paginationRef}
-  className="custom-pagination h-[20px] mb-[12px] mt-[12px] flex justify-center items-center
+                                <div
+                                    ref={paginationRef}
+                                    className="custom-pagination h-[20px] mb-[12px] mt-[12px] flex justify-center items-center
     [&>.swiper-pagination-bullet]:bg-white
     [&>.swiper-pagination-bullet-active]:bg-white
     [&>.swiper-pagination-bullet]:mx-[4px]"
-></div>
+                                ></div>
                             </div>
                         </>
                     ) : (
@@ -197,27 +197,29 @@ const NewEventList: React.FC = () => {
             <div className="w-[375px] mt-4 mb-[100px]">
                 <h2 className="text-[20px] font-semibold ml-5">지난 행사</h2>
                 <div className="grid grid-cols-3 grid-rows-2 gap-x-[12px] gap-y-[16px] mt-[20px] px-3">
-                {pastRuns.map((run) => {
-                        const utcDate = new Date(run.date);
-                        const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
-                        const formattedDate = format(kstDate, "MM/dd EEEE", { locale: ko });
-                        
-                        return (
-                            <div className="justify-self-center">
-                                <PastRuns
-                                    key={run.id}
-                                    title={run.title}
-                                    date={formattedDate}
-                                    peoplecount={String(run.participants)}
-                                    postimg={run.postImageUrl}
-                                    location=""
-                                    runDate=""
-                                    runState=""
-                                    onClick={() => navigate(`/run/event/${run.id}`)}
-                                />
-                            </div>
-                        );
-                    })}
+                    {[...pastRuns]
+                        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                        .slice(0, 6)
+                        .map((run) => {
+                            const utcDate = new Date(run.date);
+                            const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
+                            const formattedDate = format(kstDate, "MM/dd EEEE", { locale: ko });
+
+                            return (
+                                <div key={run.id} className="justify-self-center">
+                                    <PastRuns
+                                        title={run.title}
+                                        date={formattedDate}
+                                        peoplecount={String(run.participants)}
+                                        postimg={run.postImageUrl}
+                                        location=""
+                                        runDate=""
+                                        runState=""
+                                        onClick={() => navigate(`/run/event/${run.id}`)}
+                                    />
+                                </div>
+                            );
+                        })}
                 </div>
             </div>
 
