@@ -8,6 +8,7 @@ interface CardProps {
   imageUrl: string;
   statusImg?: string; // status -> statusImg로 변경
   event_type: string;
+  
   path: string;
 }
 

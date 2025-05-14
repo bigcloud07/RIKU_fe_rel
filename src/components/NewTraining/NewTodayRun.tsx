@@ -1,6 +1,6 @@
 import React from "react";
 import NOWimg from "../../assets/Main-img/NewOpenStatus.svg";
-import PROGRESSimg from "../../assets/progress.png"
+import PROGRESSimg from "../../assets/progress.svg"
 import CLODESDimg from "../../assets/Main-img/NewClosedStatus.svg";
 import CANCELEDimg from "../../assets/Main-img/NewCanceledStatus.svg";
 import peopleimg from "../../assets/people_darkgreen.svg";

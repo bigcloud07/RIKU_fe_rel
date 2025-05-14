@@ -14,7 +14,7 @@ import img4 from "../../assets/Main-img/main-moving-images/3.jpg";
 import TopBarimg from "../../assets/Top-bar.svg";
 import customAxios from "../../apis/customAxios";
 import NOWimg from "../../assets/Main-img/NewOpenStatus.svg";
-import PROGRESSimg from "../../assets/progress.png";
+import PROGRESSimg from "../../assets/progress.svg";
 import CLODESDimg from "../../assets/Main-img/NewClosedStatus.svg";
 import CANCELEDimg from "../../assets/Main-img/NewCanceledStatus.svg";
 import ARGENTimg from "../../assets/Main-img/NewUrgentStatus.svg"
@@ -26,6 +26,7 @@ interface EventData {
   date?: string; // 표시할 날짜 문자열
   postimgurl?: string; // 포스트 이미지
   poststatus?: string; // 포스트 상태
+  rawDate?: string;
 }
 
 interface MainData {
@@ -38,16 +39,20 @@ interface MainData {
 
 const NewMain: React.FC = () => {
   const getStatusImg = (status: string | null | undefined, date?: string) => {
+    
     if (!status || !date) return undefined;
-  
+
     const utcDate = new Date(date);
     const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
     const now = new Date();
-  
+
+   
+
     if (kstDate <= now && (status === "NOW" || status === "URGENT")) {
-      return PROGRESSimg; // 현재 시간 지났고 상태가 NOW나 URGENT → 진행중
+      
+      return PROGRESSimg;
     }
-  
+
     switch (status) {
       case "NOW":
         return NOWimg;
@@ -61,7 +66,7 @@ const NewMain: React.FC = () => {
         return undefined;
     }
   };
-  
+
 
   const isWithinOneHour = (isoDateString?: string) => {
     if (!isoDateString) return false;
@@ -148,8 +153,7 @@ const NewMain: React.FC = () => {
           };
 
           const result = response.data.result;
-          console.log(response.data)
-          console.log(response.data.result.location)
+          
           //userRole저장
           setUserRole(result.userRole || null);
 
@@ -160,6 +164,7 @@ const NewMain: React.FC = () => {
               : {
                 location: result.regularRun?.title || "등록된 정규런이\n없습니다",
                 date: formatDate(result.regularRun?.date),
+                rawDate: result.regularRun?.date,
                 postimgurl: result.regularRun?.postImageUrl,
                 poststatus: isWithinOneHour(result.regularRun?.date)
                   ? "URGENT"
@@ -169,32 +174,35 @@ const NewMain: React.FC = () => {
               ? { location: "등록된 번개런이\n없습니다" }
               : {
                 location: result.flashRun?.title || "등록된 번개런이\n없습니다",
-                date: formatDate(result.flashRun?.date),
+                date: formatDate(result.flashRun?.date),        // 표시용
+                rawDate: result.flashRun?.date,                 // 원본 ISO string 추가
                 postimgurl: result.flashRun?.postImageUrl,
                 poststatus: isWithinOneHour(result.flashRun?.date)
                   ? "URGENT"
                   : result.flashRun?.postStatus,
               },
-            training: result.trainingRun?.postStatus === "CANCELED"
+              training: result.trainingRun?.postStatus === "CANCELED"
               ? { location: "등록된 훈련이\n없습니다" }
               : {
-                location: result.trainingRun?.title || "등록된 훈련이\n없습니다",
-                date: formatDate(result.trainingRun?.date),
-                postimgurl: result.trainingRun?.postImageUrl,
-                poststatus: isWithinOneHour(result.trainingRun?.date)
-                  ? "URGENT"
-                  : result.trainingRun?.postStatus,
-              },
-            event: result.eventRun?.postStatus === "CANCELED"
-              ? { location: "등록된 행사가\n없습니다" }
-              : {
-                location: result.eventRun?.title || "등록된 행사가\n없습니다",
-                date: formatDate(result.eventRun?.date),
-                postimgurl: result.eventRun?.postImageUrl,
-                poststatus: isWithinOneHour(result.eventRun?.date)
-                  ? "URGENT"
-                  : result.eventRun?.postStatus,
-              },
+                  location: result.trainingRun?.title || "등록된 훈련이\n없습니다",
+                  date: formatDate(result.trainingRun?.date),
+                  rawDate: result.trainingRun?.date,
+                  postimgurl: result.trainingRun?.postImageUrl,
+                  poststatus: isWithinOneHour(result.trainingRun?.date)
+                    ? "URGENT"
+                    : result.trainingRun?.postStatus,
+                },
+                event: result.eventRun?.postStatus === "CANCELED"
+                ? { location: "등록된 행사가\n없습니다" }
+                : {
+                    location: result.eventRun?.title || "등록된 행사가\n없습니다",
+                    date: formatDate(result.eventRun?.date),
+                    rawDate: result.eventRun?.date,
+                    postimgurl: result.eventRun?.postImageUrl,
+                    poststatus: isWithinOneHour(result.eventRun?.date)
+                      ? "URGENT"
+                      : result.eventRun?.postStatus,
+                  },
           });
 
         } else {
@@ -298,7 +306,7 @@ const NewMain: React.FC = () => {
           <NewMainCard
             title={maindata?.flashRun.location}
             date={maindata?.flashRun.date}
-            statusImg={getStatusImg(maindata.flashRun.poststatus, maindata.flashRun.date)}
+            statusImg={getStatusImg(maindata.flashRun.poststatus, maindata.flashRun.rawDate)}
             imageUrl={maindata.flashRun.postimgurl || flashImage}
             event_type="번개런"
             path="/FlashRun"
@@ -308,7 +316,7 @@ const NewMain: React.FC = () => {
           <NewMainCard
             title={maindata?.training.location}
             date={maindata?.training.date}
-            statusImg={getStatusImg(maindata.training.poststatus, maindata.training.date)} 
+            statusImg={getStatusImg(maindata.training.poststatus, maindata.training.date)}
             imageUrl={maindata.training.postimgurl || trainImage}
             event_type="훈련"
             path="/training"
@@ -318,7 +326,7 @@ const NewMain: React.FC = () => {
           <NewMainCard
             title={maindata?.event.location}
             date={maindata?.event.date}
-            statusImg={getStatusImg(maindata.event.poststatus, maindata.event.date)} 
+            statusImg={getStatusImg(maindata.event.poststatus, maindata.event.date)}
             imageUrl={maindata.event.postimgurl || eventImg}
             event_type="행사"
             path="/event"
@@ -330,7 +338,7 @@ const NewMain: React.FC = () => {
       <button
         onClick={toggleFloatingButton}
         className={`fixed bottom-20 w-16 h-16 rounded-full bg-kuDarkGreen text-white flex items-center justify-center shadow-lg hover:bg-kuDarkGreen-dark focus:outline-none z-50 transition-transform duration-300 ${isFloatingButtonOpen ? "rotate-45" : "rotate-0"
-          
+
           }
           right-4
           `}
@@ -397,7 +405,7 @@ const NewMain: React.FC = () => {
             {/* 행사 일정 추가하기 */}
             <button
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showFourthButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                } ${userRole === "ADMIN" 
+                } ${userRole === "ADMIN"
                   ? "bg-white text-black hover:bg-gray-100"
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
@@ -415,10 +423,10 @@ const NewMain: React.FC = () => {
 
 
       {/* TabNavigationUI */}
-      <TabNavigationUI/>
-        
+      <TabNavigationUI />
 
-      
+
+
 
 
     </div>
