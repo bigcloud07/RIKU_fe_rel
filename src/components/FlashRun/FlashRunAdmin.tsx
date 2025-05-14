@@ -419,7 +419,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
             />
             {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
               <div className="absolute inset-0 flex justify-center items-center">
-                <div className="text-white text-xl font-bold bg-black bg-opacity-60 px-4 py-2 rounded">
+                <div className="text-white text-lg font-bold bg-opacity-60 px-4 py-2 mb-10 rounded">
                   {postStatus === "CANCELED" ? "취소된 러닝입니다." : "마감된 러닝입니다."}
                 </div>
               </div>
