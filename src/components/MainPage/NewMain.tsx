@@ -296,7 +296,7 @@ const NewMain: React.FC = () => {
           <NewMainCard
             title={maindata?.regularRun.location}
             date={maindata?.regularRun.date}
-            statusImg={getStatusImg(maindata.regularRun.poststatus, maindata.regularRun.date)}
+            statusImg={getStatusImg(maindata.regularRun.poststatus, maindata.regularRun.rawDate)}
             imageUrl={maindata.regularRun.postimgurl || regularImg}
             event_type="정규런"
             path="/regular"
@@ -316,7 +316,7 @@ const NewMain: React.FC = () => {
           <NewMainCard
             title={maindata?.training.location}
             date={maindata?.training.date}
-            statusImg={getStatusImg(maindata.training.poststatus, maindata.training.date)}
+            statusImg={getStatusImg(maindata.training.poststatus, maindata.training.rawDate)}
             imageUrl={maindata.training.postimgurl || trainImage}
             event_type="훈련"
             path="/training"
@@ -326,7 +326,7 @@ const NewMain: React.FC = () => {
           <NewMainCard
             title={maindata?.event.location}
             date={maindata?.event.date}
-            statusImg={getStatusImg(maindata.event.poststatus, maindata.event.date)}
+            statusImg={getStatusImg(maindata.event.poststatus, maindata.event.rawDate)}
             imageUrl={maindata.event.postimgurl || eventImg}
             event_type="행사"
             path="/event"
