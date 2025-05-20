@@ -507,7 +507,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
           </div>
         </div>
 
-        <div className="mt-[70px]">
+        <div className="mt-[14px]">
           <TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} />
         </div>
 
