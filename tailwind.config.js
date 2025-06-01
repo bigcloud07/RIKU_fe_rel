@@ -47,21 +47,22 @@ module.exports = {
         kuLightGray: "#ECEBE4",
         kuWhite: "#FFFFFF",
         kuOrange: "#DEA93D",
-        whiteSmoke: "#F5F5F5",
         kuBrown: "#D96941",
         kuYellow: "#FFC000",
+        kuLimeGreen: "#F6FDE6",
+        kuLightBlack: "#333333",
       },
       clipPath: {
         triangle: "polygon(50% 0%, 0% 100%, 100% 100%)",
       },
       fontFamily: {
-        sans: ['"Apple SD Gothic Neo"', 'sans-serif'],
+        sans: ['"Apple SD Gothic Neo"', "sans-serif"],
       },
       screens: {
-        'iphone': '393px', // iPhone 15 Pro 대응
-        'sm': '640px',
-        'md': '768px',
-        'lg': '1024px',
+        iphone: "393px", // iPhone 15 Pro 대응
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
       },
     },
   },

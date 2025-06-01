@@ -12,7 +12,7 @@ function TabNavigationUI_detail() {
   return (
     <div>
       {/* 상단 액션 바 */}
-      
+
       <Routes>
         <Route path="/main" element={<NewMain />} />
         <Route path="/schedule-page" element={<SchedulePage />} />
