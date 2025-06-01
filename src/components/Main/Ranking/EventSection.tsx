@@ -247,14 +247,14 @@ export default function EventSection({ onShowDetailModal }: { onShowDetailModal:
       <img
         src={star1}
         alt="Star 1"
-        className="absolute top-[480px] -right-14 w-[178px] h-auto z-10 pointer-events-none opacity-80"
+        className="absolute top-[480px] -right-14 w-[178px] h-auto z-10 pointer-events-none opacity-80 animate-fade-up"
       />
 
       {/* ⭐ 절대 위치 이미지 2 */}
       <img
         src={star2}
         alt="Star 2"
-        className="absolute top-[620px] left-4 w-[78px] h-auto z-10 pointer-events-none opacity-80"
+        className="absolute top-[620px] left-4 w-[78px] h-auto z-10 pointer-events-none opacity-80 animate-fade-up"
       />
     </>
   );
