@@ -42,8 +42,8 @@ export default function EventSection({ onShowDetailModal }: { onShowDetailModal:
       const response = await customAxios.post(
         url, // 요청 url
         {
-          startDate: "2025-05-01",
-          endDate: "2025-05-31",
+          startDate: "2025-06-02",
+          endDate: "2025-06-30",
           pointTypes: ["ADD_FLASH_CREATE", "ADD_FLASH_JOIN"],
         },
         {
@@ -116,10 +116,10 @@ export default function EventSection({ onShowDetailModal }: { onShowDetailModal:
 
               {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
               <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
-                <span className="block text-center text-lg font-bold text-black pt-2">
+                <span className="block text-center text-lg font-bold text-black pt-2 max-w-[100px] truncate m-auto">
                   {eventTop20[1].userName}
                 </span>
-                <span className="block text-center text-sm text-kuDarkGreen font-semibold">
+                <span className="block text-center text-sm text-kuDarkGreen font-semibold max-w-[100px] truncate m-auto">
                   {eventTop20[1].totalPoints}P
                 </span>
               </div>
@@ -147,10 +147,10 @@ export default function EventSection({ onShowDetailModal }: { onShowDetailModal:
 
                 {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
                 <div className="w-full bg-kuBeige rounded-xl pt-4 pb-14">
-                  <span className="block text-center text-lg font-bold text-black pt-2">
+                  <span className="block text-center text-lg font-bold text-black pt-2 max-w-[100px] truncate m-auto">
                     {eventTop20[0].userName}
                   </span>
-                  <span className="block text-center text-sm text-kuDarkGreen font-semibold">
+                  <span className="block text-center text-sm text-kuDarkGreen font-semibold max-w-[100px] truncate m-auto">
                     {eventTop20[0].totalPoints}P
                   </span>
                 </div>
@@ -171,10 +171,10 @@ export default function EventSection({ onShowDetailModal }: { onShowDetailModal:
 
               {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
               <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
-                <span className="block text-center text-lg font-bold text-black pt-2">
+                <span className="block text-center text-lg font-bold text-black pt-2 max-w-[100px] truncate m-auto">
                   {eventTop20[2].userName}
                 </span>
-                <span className="block text-center text-sm text-kuDarkGreen font-semibold">
+                <span className="block text-center text-sm text-kuDarkGreen font-semibold max-w-[100px] truncate m-auto">
                   {eventTop20[2].totalPoints}P
                 </span>
               </div>

@@ -85,10 +85,10 @@ export default function RankingSection() {
 
               {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
               <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
-                <span className="block text-center text-lg font-bold text-black">
+                <span className="block text-center text-lg font-bold text-black max-w-[100px] truncate m-auto">
                   {top20[1].userName}
                 </span>
-                <span className="block text-center text-sm text-kuDarkGreen font-semibold">
+                <span className="block text-center text-sm text-kuDarkGreen font-semibold max-w-[100px] truncate m-auto">
                   {top20[1].totalPoints}P
                 </span>
               </div>
@@ -124,10 +124,10 @@ export default function RankingSection() {
 
                 {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
                 <div className="w-full bg-kuBeige rounded-xl pt-4 pb-14">
-                  <span className="block text-center text-lg font-bold text-black">
+                  <span className="block text-center text-lg font-bold text-black max-w-[100px] truncate m-auto">
                     {top20[0].userName}
                   </span>
-                  <span className="block text-center text-sm text-kuDarkGreen font-semibold">
+                  <span className="block text-center text-sm text-kuDarkGreen font-semibold max-w-[100px] truncate m-auto">
                     {top20[0].totalPoints}P
                   </span>
                 </div>
@@ -148,10 +148,10 @@ export default function RankingSection() {
 
               {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
               <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
-                <span className="block text-center text-lg font-bold text-black">
+                <span className="block text-center text-lg font-bold text-black max-w-[100px] truncate m-auto">
                   {top20[2].userName}
                 </span>
-                <span className="block text-center text-sm text-kuDarkGreen font-semibold">
+                <span className="block text-center text-sm text-kuDarkGreen font-semibold max-w-[100px] truncate m-auto">
                   {top20[2].totalPoints}P
                 </span>
               </div>
