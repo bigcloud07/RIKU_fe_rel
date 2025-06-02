@@ -563,7 +563,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         />
       }
 
-      <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
+      <CommentSection postId={postId!} postType="training" userInfo={userInfo} refreshTrigger={refreshComments} />
 
       <div className="mb-[100px]">
         {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (

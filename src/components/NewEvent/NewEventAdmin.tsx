@@ -649,7 +649,7 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
         postDate={date}
       />}
       <div className="">
-        <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
+        <CommentSection postId={postId!} postType="event" userInfo={userInfo} refreshTrigger={refreshComments} />
       </div>
 
       <button

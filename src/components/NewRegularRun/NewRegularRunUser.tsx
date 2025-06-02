@@ -365,7 +365,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           />
         )}
 
-        <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
+        <CommentSection postId={postId!} postType="regular" userInfo={userInfo} refreshTrigger={refreshComments} />
 
         {/* ✅ 참여 상태에 따른 버튼 렌더링 */}
 
