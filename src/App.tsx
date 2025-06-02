@@ -19,25 +19,22 @@ import AdminPage from "./components/AdminPage/AdminPage";
 
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-import NewFlashRunList from "./components/NewFlashRun/NewFlashRunList";
-import PastRuns from "./components/NewFlashRun/PastRuns";
+
 
 import ProtectedRoute from "./components/ProtectedRoute";
-import NewRegularRunList from "./components/NewRegularRun/NewRegularRunList";
+
 import NewRegularRunMake from "./components/NewRegularRun/NewRegularRunMake";
 import EventMake from "./components/NewEvent/EventMake";
 import TrainingMake from "./components/NewTraining/TrainingMake";
-import NewEventCard from "./components/NewFlashRun/NewEventCard";
-import NewTrainingList from "./components/NewTraining/NewTrainingList";
-import NewEventList from "./components/NewEvent/NewEventList";
-import Sandbox from "./components/Sandbox";
+
+
 import NewRegularRunDetail from "./components/NewRegularRun/NewRegularRunDetail";
 import NewTrainingDetail from "./components/NewTraining/NewTrainingDetail";
 import NewEventDetail from "./components/NewEvent/NewEventDetail";
 
 import NewRegularRunEdit from "./components/NewRegularRun/NewRegularRunEdit";
 import NewTrainingEdit from "./components/NewTraining/NewTrainingEdit";
-import NewFlashRunEdit from "./components/FlashRun/NewFlashRunEdit";
+import FlashRunEdit from "./components/FlashRun/FlashRunEdit";
 import EventEdit from "./components/NewEvent/EventEdit";
 
 import ProfileFixPage from "./components/Main/ProfileFixPage";
@@ -45,6 +42,7 @@ import ActivityDetailPage from "./components/Main/ActivityDetailPage";
 import RecordOutPage from "./RecordOutPage";
 import RecordOutPage2 from "./RecordOutPage2";
 import OnbordingPage from "./OnBoradingPage";
+import RunList from "./components/common/RunList";
 
 function App() {
   return (
@@ -65,25 +63,26 @@ function App() {
               <Route path="/schedule-page" element={<SchedulePage />} />
               <Route path="/my-page" element={<MyPage />} />
               <Route path="/activity-detail" element={<ActivityDetailPage />} />
-              <Route path="/run/flash/:postId" element={<FlashRunDetail />} />
-              <Route path="/run/regular/:postId" element={<NewRegularRunDetail />} />
-              <Route path="/run/training/:postId" element={<NewTrainingDetail />} />
-              <Route path="/run/event/:postId" element={<NewEventDetail />} />
-              <Route path="/run/make" element={<FlashRunMake />} />
+              <Route path="/flash/:postId" element={<FlashRunDetail />} />
+              <Route path="/regular/:postId" element={<NewRegularRunDetail />} />
+              <Route path="/training/:postId" element={<NewTrainingDetail />} />
+              <Route path="/event/:postId" element={<NewEventDetail />} />
+
+              <Route path="/admin" element={<AdminPage />} />
+
+              <Route path="/make/flash" element={<FlashRunMake />} />
+              <Route path="/make/regular" element={<NewRegularRunMake />} />
+              <Route path="/make/event" element={<EventMake />} />
+              <Route path="/make/training" element={<TrainingMake />} />
+
               <Route path="/tab/*" element={<TabNavigationUI />} />
               <Route path="/main" element={<NewMain />} />
-              <Route path="/flashRun" element={<NewFlashRunList />} />
-              <Route path="/admin" element={<AdminPage />} />
-              <Route path="/regular" element={<NewRegularRunList />} />
-              <Route path="/training" element={<NewTrainingList />} />
-              <Route path="/regular/make" element={<NewRegularRunMake />} />
-              <Route path="/event/make" element={<EventMake />} />
-              <Route path="/training/make" element={<TrainingMake />} />
-              <Route path="/event" element={<NewEventList />} />
+              <Route path="/:runType" element={<RunList />} />
+
 
               <Route path="/regular/edit/:postId" element={<NewRegularRunEdit />} />
               <Route path="/training/edit/:postId" element={<NewTrainingEdit />} />
-              <Route path="/flash/edit/:postId" element={<NewFlashRunEdit />} />
+              <Route path="/flash/edit/:postId" element={<FlashRunEdit />} />
               <Route path="/event/edit/:postId" element={<EventEdit />} />
               <Route path="/profilefix-page" element={<ProfileFixPage />} />
               <Route path="/start" element={<OnbordingPage />} />

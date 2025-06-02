@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import customAxios from "../../apis/customAxios";
 import BackIcon from "../../assets/BackBtn.svg";
-import { DateInput } from "./DateInput";
-import TimeIcon from "../../assets/time_icon.svg"
-import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
+import { DateInput } from "../common/DateInput";
+
+import { TimePickerBottomSheet } from "../common/TimePickerBottomSheet";
 import imageCompression from "browser-image-compression";
 
 
@@ -158,7 +158,7 @@ function FlashRunMake() {
 
       if (response.data.isSuccess) {
         alert("번개런이 성공적으로 생성되었습니다!");
-        navigate("/flashRun");
+        navigate("/flash");
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
       }
@@ -185,7 +185,7 @@ function FlashRunMake() {
 
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center min-h-screen w-full max-w-[430px] mx-auto">
       <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
         <div className="text-2xl font-semibold text-white text-center">번개런 만들기</div>
         <button onClick={() => navigate(-1)} className="absolute left-4">

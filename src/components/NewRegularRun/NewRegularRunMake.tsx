@@ -1,13 +1,12 @@
-// ✅ 통합된 NewRegularRunMake.tsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import customAxios from "../../apis/customAxios";
 import { motion } from "framer-motion";
 import BackIcon from "../../assets/BackBtn.svg";
-import { DateNtime } from "./DateNtime";
-import { DateInput } from "./DateInput";
-import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
-import TimeIcon from '../../assets/time_icon.svg'
+
+import { DateInput } from "../common/DateInput";
+import { TimePickerBottomSheet } from "../common/TimePickerBottomSheet";
+
 import imageCompression from 'browser-image-compression';
 
 
@@ -49,29 +48,6 @@ function NewRegularRunMake() {
   const [courseImages, setCourseImages] = useState<File[]>([]);
   const [coursePreviews, setCoursePreviews] = useState<string[]>([]);
 
-  // 압축 로직 삭제
-  // const compressImage = async (file: File): Promise<File> => {
-  //   const options = {
-  //     maxSizeMB: 1, // 안전하게 낮춤
-  //     maxWidthOrHeight: 1920,
-  //     useWebWorker: true,
-  //   };
-  //   try {
-  //     const compressedBlob = await imageCompression(file, options);
-      
-  //     // ✅ 파일 이름과 타입 유지하며 File 객체로 감싸기
-  //     const renamedFile = new File(
-  //       [compressedBlob],
-  //       file.name, // 원래 이름 유지
-  //       { type: file.type }
-  //     );
-  
-  //     return renamedFile;
-  //   } catch (error) {
-  //     console.error("이미지 압축 실패", error);
-  //     return file;
-  //   }
-  // };
   
 
   useEffect(() => {

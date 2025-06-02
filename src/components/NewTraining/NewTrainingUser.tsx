@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import RegularRunlogo from "../../assets/regularRunMark.svg";
+
 import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
 import time from "../../assets/FlashRunDetail/time.svg";
@@ -10,7 +10,7 @@ import flashrunimage from "../../assets/Run-img/flashrunimage.jpg";
 import { useNavigate } from "react-router-dom";
 import BackBtnimg from "../../assets/BackBtn.svg";
 import pacermark from "../../assets/pacer-mark.svg";
-import CommentSection from "./CommentSection";
+import CommentSection from "../common/CommentSection";
 import PacerCard from "./PacerCard";
 import questionmarkOn from "../../assets/questionmark_on.svg";
 import questionmarkOff from "../../assets/questionmark_off.svg";

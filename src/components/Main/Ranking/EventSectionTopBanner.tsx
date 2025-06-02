@@ -15,7 +15,7 @@ const EventSectionTopBanner = ({ onShowDetailModal }: { onShowDetailModal: () =>
 
       {/* 안내문 + 버튼이 들어가는 div */}
       <div className="w-[300px] flex flex-col items-center text-center">
-        <span className="font-['danjoBoldRegular']">6.1-6.22</span>
+        <span className="font-['danjoBoldRegular']">6.2-6.15</span>
         <span className="font-normal pt-[20px]">
           이벤트 기간 중 번개런에 참여하면 <br />
           상품을 드립니다!

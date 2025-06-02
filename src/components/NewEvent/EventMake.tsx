@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import customAxios from '../../apis/customAxios';
-import { motion } from "framer-motion";
 import BackIcon from "../../assets/BackBtn.svg";
-import removeicon from "../../assets/remove-icon.svg";
-import { DateNtime } from "./DateNtime";
-import { DateInput } from "./DateInput";
-import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
+import { DateInput } from "../common/DateInput";
+import { TimePickerBottomSheet } from "../common/TimePickerBottomSheet";
 import imageCompression from 'browser-image-compression';
 
 
@@ -321,7 +318,7 @@ function EventMake() {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center min-h-screen w-full max-w-[430px] mx-auto">
       <div className="flex items-center justify-center w-full h-[56px] px-5 mb-5 relative bg-kuDarkGreen">
         <div className="text-2xl font-semibold text-white text-center">행사 만들기</div>
         <button onClick={() => navigate(-1)} className="absolute left-4">

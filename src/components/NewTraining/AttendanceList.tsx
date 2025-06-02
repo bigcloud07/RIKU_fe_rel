@@ -1,4 +1,3 @@
-// ✅ AttendanceList.tsx
 import React from "react";
 import peopleimg from "../../assets/people_darkgreen.svg";
 import checkicon from "../../assets/checkedicon.svg"

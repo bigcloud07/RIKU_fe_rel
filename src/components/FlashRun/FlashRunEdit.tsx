@@ -1,14 +1,13 @@
-// ✅ FlashRunEdit.tsx - 번개런 수정 페이지
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import customAxios from "../../apis/customAxios";
 import BackIcon from "../../assets/BackBtn.svg";
-import { DateInput } from "./DateInput";
-import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
+import { DateInput } from "../common/DateInput";
+import { TimePickerBottomSheet } from "../common/TimePickerBottomSheet";
 import imageCompression from "browser-image-compression";
 
 
-function NewFlashRunEdit() {
+function FlashRunEdit() {
   const navigate = useNavigate();
   const { postId } = useParams();
 
@@ -212,7 +211,7 @@ function NewFlashRunEdit() {
       console.log("요청된 최종 엔드포인트:", res.config.url); // ✅ 실제 요청된 URL
       if (res.data.isSuccess) {
         alert("번개런이 성공적으로 수정되었습니다!");
-        navigate(`/run/flash/${postId}`, { replace: true });
+        navigate(`/flash/${postId}`, { replace: true });
       } else {
         alert(`요청 실패: ${res.data.responseMessage}`);
       }
@@ -294,4 +293,4 @@ function NewFlashRunEdit() {
   );
 }
 
-export default NewFlashRunEdit;
+export default FlashRunEdit;

@@ -1,11 +1,10 @@
-// ✅ NewRegularRunEdit.tsx 전체 완성 코드 - 생략 없이 붙여넣기만 하면 됨
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import customAxios from "../../apis/customAxios";
 import { motion } from "framer-motion";
 import BackIcon from "../../assets/BackBtn.svg";
-import { DateInput } from "./DateInput";
-import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
+import { DateInput } from "../common/DateInput";
+import { TimePickerBottomSheet } from "../common/TimePickerBottomSheet";
 import imageCompression from "browser-image-compression";
 
 
@@ -270,7 +269,7 @@ function NewRegularRunEdit() {
       });
       if (response.data.isSuccess) {
         alert("정규런이 성공적으로 수정되었습니다!");
-        navigate(`/run/regular/${postId}`, { replace: true });
+        navigate(`/regular/${postId}`, { replace: true });
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
       }

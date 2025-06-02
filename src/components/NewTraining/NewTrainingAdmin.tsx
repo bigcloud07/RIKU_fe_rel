@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import customAxios from "../../apis/customAxios";
 
-import RegularRunlogo from "../../assets/regularRunMark.svg";
+
 import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
 import time from "../../assets/FlashRunDetail/time.svg";
@@ -14,7 +14,7 @@ import flashrunimage from "../../assets/Run-img/flashrunimage.jpg";
 import TabButton from "./TapButton";
 import AttendanceList from "./AttendanceList";
 import PacerCard from "./PacerCard";
-import CommentSection from "./CommentSection";
+import CommentSection from "../common/CommentSection";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -23,7 +23,7 @@ import "swiper/css/pagination";
 
 import questionmarkOn from "../../assets/questionmark_on.svg";
 import questionmarkOff from "../../assets/questionmark_off.svg";
-import TabNavigationUI from "../TabNavigationUI";
+
 import TabNavigationUI_detail from "../TabNavigationUI_detail";
 
 interface Participant {

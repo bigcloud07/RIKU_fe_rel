@@ -1,4 +1,3 @@
-// ✅ 통합된 NewRegularRunUser.tsx (그룹 선택 및 참여 기능 포함)
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import customAxios from "../../apis/customAxios";
@@ -12,7 +11,7 @@ import flashrunimage from "../../assets/Run-img/flashrunimage.jpg";
 
 import TabButton from "./TapButton";
 import AttendanceList from "./AttendanceList";
-import CommentSection from "./CommentSection";
+import CommentSection from "../common/CommentSection";
 import PacerCard from "./PacerCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -21,7 +20,7 @@ import "swiper/css/pagination";
 
 
 import checkedicon from "../../assets/checkedicon.svg"
-import TabNavigationUI from "../TabNavigationUI";
+
 import TabNavigationUI_detail from "../TabNavigationUI_detail";
 
 

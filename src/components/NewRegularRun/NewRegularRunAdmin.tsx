@@ -1,4 +1,3 @@
-// 리팩토링된 NewRegularRunAdmin.tsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import customAxios from "../../apis/customAxios";
@@ -16,13 +15,13 @@ import flashrunimage from "../../assets/Run-img/flashrunimage.jpg";
 import TabButton from "./TapButton";
 import AttendanceList from "./AttendanceList";
 import PacerCard from "./PacerCard";
-import CommentSection from "./CommentSection";
+import CommentSection from "../common/CommentSection";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import TabNavigationUI from "../TabNavigationUI";
+
 import TabNavigationUI_detail from "../TabNavigationUI_detail";
 
 interface Participant {
