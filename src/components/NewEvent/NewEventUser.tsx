@@ -476,7 +476,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
         onUsersChange={(newUsers) => setCurrentParticipants(newUsers)}
         canEdit={userInfo.userId === postCreatorId} // 🔥 이 부분!
       />}
-      <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
+      <CommentSection postId={postId!} postType="event" userInfo={userInfo} refreshTrigger={refreshComments} />
 
       {/* 상태별 버튼 렌더링 */}
       <div className="mb-[100px]">

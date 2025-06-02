@@ -22,6 +22,7 @@ interface Comment extends Reply {}
 // 컴포넌트 Props 타입
 interface CommentSectionProps {
   postId: string;
+  postType: "event" | "regular" | "training" | "flash";
   userInfo: {
     userId: number;
     userName: string;
@@ -31,7 +32,7 @@ interface CommentSectionProps {
 }
 
 // 댓글 섹션 컴포넌트
-const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refreshTrigger }) => {
+const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refreshTrigger, postType }) => {
   // 상태 관리
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState<string>("");
@@ -55,7 +56,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
   const fetchComments = async () => {
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const response = await customAxios.get(`/run/event/post/${postId}`, {
+      const response = await customAxios.get(`/run/${postType}/post/${postId}`, {
         headers: { Authorization: `${token}` },
       });
       if (response.data.isSuccess) {
@@ -73,7 +74,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
-        `/run/event/post/${postId}/comment`,
+        `/run/${postType}/post/${postId}/comment`,
         { content: newComment, targetId: null },
         { headers: { Authorization: `${token}` } }
       );
@@ -96,7 +97,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
-        `/run/event/post/${postId}/comment`,
+        `/run/${postType}/post/${postId}/comment`,
         { content, targetId },
         { headers: { Authorization: `${token}` } }
       );
@@ -122,7 +123,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId, userInfo, refre
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.patch(
-        `/run/event/post/${postId}/comment/${commentId}`,
+        `/run/${postType}/post/${postId}/comment/${commentId}`,
         {},
         { headers: { Authorization: `${token}` } }
       );

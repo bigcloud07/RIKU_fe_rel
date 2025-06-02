@@ -536,7 +536,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           postStatus={postStatus}
           postDate={date}
         />}
-        <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
+        <CommentSection postId={postId!} postType="flash" userInfo={userInfo} refreshTrigger={refreshComments} />
 
 
 

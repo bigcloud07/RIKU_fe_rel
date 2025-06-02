@@ -586,7 +586,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         )}
 
 
-        <CommentSection postId={postId!} userInfo={userInfo} refreshTrigger={refreshComments} />
+        <CommentSection postId={postId!} postType="regular" userInfo={userInfo} refreshTrigger={refreshComments} />
 
         {/* 시작하기 버튼 */}
         <button
