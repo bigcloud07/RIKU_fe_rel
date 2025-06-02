@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Link 컴포넌트 import
+import { useNavigate } from "react-router-dom"; // Link 컴포넌트 import
 import customAxios from "../../apis/customAxios";
 import ActionBar from "../../components/ActionBar";
 import defaultProfileImg from "../../assets/default_profile.png";
-import { format } from "date-fns";
-import { ko } from "date-fns/locale";
 
 
 

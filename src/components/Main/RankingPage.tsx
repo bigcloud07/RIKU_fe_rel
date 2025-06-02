@@ -21,12 +21,12 @@ function RankingPage() {
 
   // "번개런 만들기" 페이지로 이동
   const navigateToMakeFlashRun = () => {
-    navigate("/run/make");
+    navigate("/make/flash");
   };
 
   // "번개런 참여하기" 페이지로 이동
   const navigateToParticipateFlashRun = () => {
-    navigate("/flashRun");
+    navigate("/flash");
   };
 
   //Tailwind를 사용하여 스타일링 진행

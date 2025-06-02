@@ -4,12 +4,12 @@ import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
 import time from "../../assets/FlashRunDetail/time.svg";
 import TabButton from "./TapButton";
-import AttendanceList from "./AttendanceList";
+
 import customAxios from "../../apis/customAxios";
 import flashrunimage from "../../assets/Run-img/flashrunimage.jpg"; // 번개런 기본이미지
 import BackBtnimg from "../../assets/BackBtn.svg"
 import pacermark from "../../assets/pacer-mark.svg"
-import CommentSection from "./CommentSection";
+import CommentSection from "../common/CommentSection";
 import EditableAttendanceList from "./EditableAttendanceList"
 import { motion } from "framer-motion";
 
@@ -18,7 +18,7 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { useNavigate } from "react-router-dom";
-import TabNavigationUI from "../TabNavigationUI";
+
 import TabNavigationUI_detail from "../TabNavigationUI_detail";
 
 interface Participant {

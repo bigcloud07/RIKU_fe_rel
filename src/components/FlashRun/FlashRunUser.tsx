@@ -4,20 +4,20 @@ import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
 import time from "../../assets/FlashRunDetail/time.svg";
 import TabButton from "./TapButton";
-import AttendanceList from "./AttendanceList";
+
 import customAxios from "../../apis/customAxios";
 import flashrunimage from "../../assets/Run-img/flashrunimage.jpg"; // 번개런 기본이미지
 import { Link, useNavigate } from "react-router-dom";
 import BackBtnimg from "../../assets/BackBtn.svg"
 import pacermark from "../../assets/pacer-mark.svg"
-import CommentSection from "./CommentSection";
+import CommentSection from "../common/CommentSection";
 import EditableAttendanceList from "./EditableAttendanceList";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import TabNavigationUI from "../TabNavigationUI";
+
 import TabNavigationUI_detail from "../TabNavigationUI_detail";
 
 

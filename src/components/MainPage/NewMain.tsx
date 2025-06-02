@@ -11,14 +11,14 @@ import img1 from "../../assets/main_new.jpg"
 import img2 from "../../assets/Main-img/main-moving-images/1.png";
 import img3 from "../../assets/Main-img/main-moving-images/2.png";
 import img4 from "../../assets/Main-img/main-moving-images/3.jpg";
-import TopBarimg from "../../assets/Top-bar.svg";
+
 import customAxios from "../../apis/customAxios";
 import NOWimg from "../../assets/Main-img/NewOpenStatus.svg";
 import PROGRESSimg from "../../assets/progress.svg";
 import CLODESDimg from "../../assets/Main-img/NewClosedStatus.svg";
 import CANCELEDimg from "../../assets/Main-img/NewCanceledStatus.svg";
 import ARGENTimg from "../../assets/Main-img/NewUrgentStatus.svg"
-import imageCompression from "browser-image-compression";
+
 
 
 interface EventData {
@@ -252,16 +252,16 @@ const NewMain: React.FC = () => {
   };
 
   const handleflashRunMake = () => {
-    navigate("/run/make");
+    navigate("/make/flash");
   };
   const handleRegularRunMake = () => {
-    navigate("/regular/make");
+    navigate("/make/regular");
   };
   const handleEventMake = () => {
-    navigate("/event/make");
+    navigate("/make/event");
   };
   const handleTrainingtMake = () => {
-    navigate("/training/make");
+    navigate("/make/training");
   };
 
   return (
@@ -309,7 +309,7 @@ const NewMain: React.FC = () => {
             statusImg={getStatusImg(maindata.flashRun.poststatus, maindata.flashRun.rawDate)}
             imageUrl={maindata.flashRun.postimgurl || flashImage}
             event_type="번개런"
-            path="/FlashRun"
+            path="/flash"
           />
         </div>
         <div className="cursor-pointer">

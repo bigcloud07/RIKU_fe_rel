@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { replace, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import customAxios from '../../apis/customAxios';
-import { motion } from "framer-motion";
 import BackIcon from "../../assets/BackBtn.svg";
-import removeicon from "../../assets/remove-icon.svg";
-import { DateNtime } from "./DateNtime";
-import { DateInput } from "./DateInput";
-import { TimePickerBottomSheet } from "./TimePickerBottomSheet";
+import { DateInput } from "../common/DateInput";
+import { TimePickerBottomSheet } from "../common/TimePickerBottomSheet";
 import imageCompression from "browser-image-compression";
 
 
@@ -172,7 +169,7 @@ function EventEdit() {
 
       if (response.data.isSuccess) {
         alert("행사가 성공적으로 수정되었습니다!");
-        navigate(`/run/event/${postId}`, { replace: true });
+        navigate(`/event/${postId}`, { replace: true });
       } else {
         alert(`요청 실패: ${response.data.responseMessage}`);
       }

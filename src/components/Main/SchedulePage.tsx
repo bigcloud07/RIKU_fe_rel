@@ -123,16 +123,16 @@ function SchedulePage() {
   }
 
   const handleflashRunMake = () => {
-    navigate("/run/make");
+    navigate("/make/flash");
   };
   const handleRegularRunMake = () => {
-    navigate("/regular/make");
+    navigate("/make/regular");
   };
   const handleEventMake = () => {
-    navigate("/event/make");
+    navigate("/make/event");
   };
   const handleTrainingtMake = () => {
-    navigate("/training/make");
+    navigate("/make/training");
   };
 
   //캘린더 일별 조회 메소드

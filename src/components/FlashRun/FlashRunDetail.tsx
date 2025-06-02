@@ -1,5 +1,3 @@
-//서버통신 페이지
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import customAxios from "../../apis/customAxios";
@@ -21,8 +19,8 @@ interface DetailData {
   userName: string;
   participantsNum: number;
   participants: Participant[];
-  adminId : number,
-  postimgurl : string
+  adminId: number,
+  postimgurl: string
 }
 
 const FlashRunDetail: React.FC = () => {
@@ -41,7 +39,7 @@ const FlashRunDetail: React.FC = () => {
             Authorization: `${token}`,
           },
         });
-        
+
         if (response.data.isSuccess) {
           const result = response.data.result;
           setDetailData({
@@ -56,9 +54,9 @@ const FlashRunDetail: React.FC = () => {
             userName: result.userName,
             participantsNum: result.participantsNum,
             participants: result.participants,
-            adminId:result.postCreatorInfo.userId,
-            postimgurl:result.postImageUrl,
-            
+            adminId: result.postCreatorInfo.userId,
+            postimgurl: result.postImageUrl,
+
           });
         } else {
           console.error("데이터를 불러오지 못했습니다:", response.data.responseMessage);
@@ -82,10 +80,10 @@ const FlashRunDetail: React.FC = () => {
   if (!detailData) {
     return <div>데이터가 없습니다.</div>;
   }
-  if(detailData.adminId == myId) // 내 userId와 게시글 만든 사람의 Id 비교후 렌더링
-    return <FlashRunAdmin {...detailData} postId={postId}/>;
+  if (detailData.adminId == myId) // 내 userId와 게시글 만든 사람의 Id 비교후 렌더링
+    return <FlashRunAdmin {...detailData} postId={postId} />;
   else
-    return <FlashRunUser {...detailData} postId={postId}/>
+    return <FlashRunUser {...detailData} postId={postId} />
 };
 
 export default FlashRunDetail;

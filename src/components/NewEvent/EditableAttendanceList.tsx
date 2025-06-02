@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
-import { BsCircle } from "react-icons/bs";
+
 import customAxios from "../../apis/customAxios";
-import checkedicon from "../../assets/checkedicon.svg"
+
 import peopleimg from "../../assets/people_darkgreen.svg"
 
 interface User {
