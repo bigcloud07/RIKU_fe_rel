@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
+
 import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
 import time from "../../assets/FlashRunDetail/time.svg";
@@ -11,7 +12,8 @@ import { useNavigate } from "react-router-dom";
 import BackBtnimg from "../../assets/BackBtn.svg"
 import pacermark from "../../assets/pacer-mark.svg"
 import CommentSection from "../common/CommentSection";
-import EditableAttendanceList from "./EditableAttendanceList";
+import EditableAttendanceList, { EditableAttendanceListHandle } from "./EditableAttendanceList";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
@@ -84,27 +86,32 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
 
   const [isClosing, setIsClosing] = useState(false); // 출석 종료 중 여부
 
+
+
+
+
+  const attendanceListRef = useRef<EditableAttendanceListHandle>(null);
+
   const handleCloseAttendance = async () => {
     const confirmClose = window.confirm("출석을 종료하시겠습니까?");
     if (!confirmClose) return;
 
     try {
       setIsClosing(true);
-      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
-      const response = await customAxios.patch(
-        `/run/event/post/${postId}/close`,
-        {},
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
+      // 명단 자동 저장
+      if (attendanceListRef.current) {
+        await attendanceListRef.current.saveAttendance();
+      }
+
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const response = await customAxios.patch(`/run/event/post/${postId}/close`, {}, {
+        headers: { Authorization: `${token}` },
+      });
 
       if (response.data.isSuccess) {
         alert("출석이 성공적으로 종료되었습니다.");
-        setPostStatus("CLOSED"); // 게시글 상태를 갱신
+        setPostStatus("CLOSED");
       } else {
         alert(response.data.responseMessage || "출석 종료에 실패했습니다.");
       }
@@ -115,7 +122,6 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
       setIsClosing(false);
     }
   };
-
 
 
 
@@ -639,15 +645,19 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
           </div>
         </>
       )}
-      {activeTab === "명단" && <EditableAttendanceList
-        postId={postId!}
-        runType="event"
-        users={currentParticipants}
-        onUsersChange={(newUsers) => setCurrentParticipants(newUsers)}
-        canEdit={true}
-        postStatus={postStatus}
-        postDate={date}
-      />}
+      {/* 명단 탭 렌더링 시 ref 연결 */}
+      {activeTab === "명단" && (
+        <EditableAttendanceList
+          ref={attendanceListRef}
+          postId={postId!}
+          runType="event"
+          users={currentParticipants}
+          onUsersChange={setCurrentParticipants}
+          canEdit={true}
+          postStatus={postStatus}
+          postDate={date}
+        />
+      )}
       <div className="">
         <CommentSection postId={postId!} postType="event" userInfo={userInfo} refreshTrigger={refreshComments} />
       </div>
@@ -655,14 +665,9 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
       <button
         onClick={handleCloseAttendance}
         disabled={postStatus === "CLOSED" || isClosing}
-        className={`w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-[100px] ${postStatus === "CLOSED" ? "bg-kuLightGray text-kuDarkGray" : "bg-kuGreen text-white"
-          }`}
+        className={`w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-[100px] ${postStatus === "CLOSED" ? "bg-kuLightGray text-kuDarkGray" : "bg-kuGreen text-white"}`}
       >
-        {isClosing
-          ? "종료 중..."
-          : postStatus === "CLOSED"
-            ? "모집 종료"
-            : "출석 종료"}
+        {isClosing ? "종료 중..." : postStatus === "CLOSED" ? "모집 종료" : "출석 종료"}
       </button>
 
 

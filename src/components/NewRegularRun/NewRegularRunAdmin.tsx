@@ -161,27 +161,48 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   const [postStatus, setPostStatus] = useState<string>("");
 
   const handleModalStartClick = async () => {
-    const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
-    if (!confirmClose) return;
+  const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
+  if (!confirmClose) return;
 
-    if (!code) return;
-    try {
-      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const response = await customAxios.patch(`/run/regular/post/${postId}/close`, {}, {
+  if (!code) return;
+
+  try {
+    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+
+    //수정된 출석 정보가 있다면 먼저 저장
+    if (Object.keys(editedAttendance).length > 0) {
+      const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
+        userId: Number(userId),
+        isAttend,
+      }));
+
+      await customAxios.patch(`/run/regular/post/${postId}/manual-attend`, payload, {
         headers: { Authorization: `${token}` },
       });
 
-      if (response.data.isSuccess) {
-        setIsFinished(true);
-        setIsModalOpen(false);
-        alert("출석이 종료되었습니다.");
-      } else {
-        setError(response.data.responseMessage);
-      }
-    } catch (error) {
-      setError("출석 종료 처리에 실패했습니다.");
+      setEditedAttendance({});
+      setIsEditMode(false);
     }
-  };
+
+    // 출석 종료 처리
+    const response = await customAxios.patch(`/run/regular/post/${postId}/close`, {}, {
+      headers: { Authorization: `${token}` },
+    });
+
+    if (response.data.isSuccess) {
+      setIsFinished(true);
+      setPostStatus("CLOSED");
+      setIsModalOpen(false);
+      alert("출석이 종료되었습니다.");
+    } else {
+      setError(response.data.responseMessage);
+    }
+  } catch (error) {
+    console.error(error);
+    setError("출석 종료 처리에 실패했습니다.");
+  }
+};
+
 
 
   const handleTabChange = async (tab: "소개" | "명단") => {
