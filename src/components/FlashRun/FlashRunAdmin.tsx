@@ -117,29 +117,53 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
   const [postStatus, setPostStatus] = useState<string>("");
   const handleModalStartClick = async () => {
-    const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
-    if (!confirmClose) return;
+  const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
+  if (!confirmClose) return;
 
-    if (!code) return;
-    try {
-      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const response = await customAxios.patch(`/run/flash/post/${postId}/close`, {}, {
+  if (!code) return;
+
+  try {
+    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+    
+    // ✅ 출석 데이터 준비
+    const attendanceData = editableParticipants.map((user) => ({
+      userId: user.userId,
+      isAttend: user.status === "ATTENDED",
+    }));
+
+    //  출석 상태 먼저 반영
+    await customAxios.patch(
+      `/run/flash/post/${postId}/manual-attend`,
+      attendanceData,
+      {
         headers: { Authorization: `${token}` },
-      });
-
-      if (response.data.isSuccess) {
-        setIsFinished(true); // 버튼 비활성화 처리
-        setPostStatus("CLOSED");
-        setIsModalOpen(false);
-        alert("출석이 종료되었습니다.");
-
-      } else {
-        setError(response.data.responseMessage);
       }
-    } catch (error) {
-      setError("출석 종료 처리에 실패했습니다.");
+    );
+
+    //  출석 종료 처리
+    const response = await customAxios.patch(
+      `/run/flash/post/${postId}/close`,
+      {},
+      {
+        headers: { Authorization: `${token}` },
+      }
+    );
+
+    if (response.data.isSuccess) {
+      setIsFinished(true);
+      setPostStatus("CLOSED");
+      setIsModalOpen(false);
+      alert("출석이 종료되었습니다.");
+    } else {
+      setError(response.data.responseMessage);
     }
-  };
+  } catch (error) {
+    console.error(error);
+    setError("출석 종료 처리에 실패했습니다.");
+  }
+};
+
+
 
   const handleCloseModal = () => setIsModalOpen(false);
 
