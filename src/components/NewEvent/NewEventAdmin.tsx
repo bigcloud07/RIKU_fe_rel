@@ -262,7 +262,7 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
           setCreatorName(result.postCreatorInfo?.userName || "");
         }
 
-        // ✅ 댓글 최신화 트리거
+        // 댓글 최신화 트리거
         setRefreshComments((prev) => !prev);
       } else {
         setError(response.data.responseMessage);
@@ -398,7 +398,7 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
       );
 
       if (response.data.isSuccess) {
-        setUserStatus(""); // ✅ 초기 상태로 설정
+        setUserStatus(""); // 초기 상태로 설정
         setButtonText("참여하기");
         setError(null);
       } else {
@@ -462,11 +462,10 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
                       return;
                     }
 
-                    // 🔥 정확한 비교 로직
                     const now = new Date();
 
                     const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
-                    const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
+                    const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // KST로 변환
 
                     if (now > runKstDate) {
                       alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");

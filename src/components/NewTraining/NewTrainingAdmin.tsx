@@ -428,11 +428,10 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                       return;
                     }
 
-                    // 🔥 정확한 비교 로직
                     const now = new Date();
 
                     const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
-                    const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
+                    const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // KST로 변환
 
                     if (now > runKstDate) {
                       alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");

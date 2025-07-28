@@ -268,9 +268,9 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
 
   const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
 
-  // 명단 수정 관련 로직
+  
 
-  // ✅ NewRegularRunAdmin.tsx 중 명단 관련 핵심 부분만 발췌
+  
 
   // 출석 상태 상태
   const [isEditMode, setIsEditMode] = useState(false);
@@ -427,11 +427,10 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
                         return;
                       }
 
-                      // 🔥 정확한 비교 로직
                       const now = new Date();
 
                       const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
-                      const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
+                      const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // KST로 변환
 
                       if (now > runKstDate) {
                         alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");

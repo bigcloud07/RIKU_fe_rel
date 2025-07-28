@@ -275,7 +275,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     }
   };
 
-  // ✅ 수정된 handleJoinConfirm
+  
   const handleJoinConfirm = async () => {
     const isCancel = selectedGroup === "";
 
@@ -300,8 +300,8 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           setButtonText("참여하기");
           setSelectedGroup("");
         } else {
-          setUserStatus("PENDING"); // ✅ 직접 "PENDING"으로 세팅해버려
-          setButtonText("출석하기"); // ✅ 바로 "출석하기"로 버튼 텍스트 변경
+          setUserStatus("PENDING"); 
+          setButtonText("출석하기"); 
           setIsGroupModalOpen(false);
         }
 

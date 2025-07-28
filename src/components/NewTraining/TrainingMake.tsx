@@ -232,7 +232,7 @@ function TrainingMake() {
       const [hours, minutes] = dateTime.time.split(":").map(Number);
       const selectedDate = dateTime.date!;
 
-      // ✅ 1. KST 기준으로 조립
+
       const kstDate = new Date(
         selectedDate.getFullYear(),
         selectedDate.getMonth(),
@@ -241,10 +241,9 @@ function TrainingMake() {
         minutes,
         0
       );
-      // ✅ 2. UTC 기준으로 변환
+
       const utcDate = new Date(kstDate.getTime() - 9 * 60 * 60 * 1000);
 
-      // ✅ 3. 문자열 직접 생성 (🔥 중요: toISOString() 사용하지 말 것!)
       const pad = (n: number) => n.toString().padStart(2, "0");
       const eventDateTime = `${utcDate.getFullYear()}-${pad(utcDate.getMonth() + 1)}-${pad(utcDate.getDate())}T${pad(utcDate.getHours())}:${pad(utcDate.getMinutes())}:${pad(utcDate.getSeconds())}`;
 

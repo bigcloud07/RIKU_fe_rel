@@ -105,7 +105,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
         setButtonText("출석하기");
         setError(null);
 
-        await fetchParticipants(); // 🔥 명단 즉시 반영
+        await fetchParticipants(); // 명단 즉시 반영
       } else {
         if (response.data.responseMessage === "이미 참여한 유저입니다.") {
           alert("이미 참여했습니다.");
@@ -191,7 +191,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
           setCreatorName(result.postCreatorInfo?.userName || "");
         }
 
-        // ✅ 댓글 최신화 트리거
+        // 댓글 최신화 트리거
         setRefreshComments((prev) => !prev);
       } else {
         setError(response.data.responseMessage);
@@ -325,7 +325,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
       );
 
       if (response.data.isSuccess) {
-        setUserStatus(""); // ✅ 초기 상태로 설정
+        setUserStatus(""); 
         setButtonText("참여하기");
         setError(null);
       } else {
@@ -474,7 +474,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
         runType="event"
         users={currentParticipants}
         onUsersChange={(newUsers) => setCurrentParticipants(newUsers)}
-        canEdit={userInfo.userId === postCreatorId} // 🔥 이 부분!
+        canEdit={userInfo.userId === postCreatorId} 
       />}
       <CommentSection postId={postId!} postType="event" userInfo={userInfo} refreshTrigger={refreshComments} />
 

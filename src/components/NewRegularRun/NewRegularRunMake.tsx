@@ -220,7 +220,7 @@ function NewRegularRunMake() {
       const [hours, minutes] = dateTime.time.split(":").map(Number);
       const selected = dateTime.date!;
 
-      // ✅ 1. KST 기준으로 조립
+
       const kstDate = new Date(
         selected.getFullYear(),
         selected.getMonth(),
@@ -230,10 +230,9 @@ function NewRegularRunMake() {
         0
       );
 
-      // ✅ 2. UTC 기준으로 변환
+
       const utcDate = new Date(kstDate.getTime() - 9 * 60 * 60 * 1000);
 
-      // ✅ 3. 문자열 직접 생성 (🔥 중요: toISOString() 사용하지 말 것!)
       const pad = (n: number) => n.toString().padStart(2, "0");
       const eventDateTime = `${utcDate.getFullYear()}-${pad(utcDate.getMonth() + 1)}-${pad(utcDate.getDate())}T${pad(utcDate.getHours())}:${pad(utcDate.getMinutes())}:${pad(utcDate.getSeconds())}`;
 
@@ -253,7 +252,6 @@ function NewRegularRunMake() {
         formData.append(`pacers[${index}].pace`, group.pace);
       });
 
-      // ✅ 여기!!! formData 잘 들어갔는지 확인용 콘솔
       for (const pair of formData.entries()) {
         console.log(`${pair[0]}:`, pair[1]);
       }

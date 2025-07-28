@@ -88,7 +88,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       );
 
       if (response.data.isSuccess) {
-        const newStatus = response.data.result.status; // ✅ API에서 받은 상태값 사용
+        const newStatus = response.data.result.status; // API에서 받은 상태값 사용
         setUserStatus(newStatus); // 상태 업데이트
         setButtonText(newStatus === "PENDING" ? "출석하기" : "참여하기"); // 상태에 맞는 버튼 텍스트 설정
         setError(null);
@@ -115,7 +115,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
-        `/run/flash/post/${postId}/attend`, // ✅ attend 엔드포인트로 변경
+        `/run/flash/post/${postId}/attend`, // attend 엔드포인트로 변경
         { code },
         {
           headers: {
@@ -125,7 +125,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       );
 
       if (response.data.isSuccess) {
-        setUserStatus("ATTENDED"); // ✅ 출석 상태로 업데이트
+        setUserStatus("ATTENDED"); // 출석 상태로 업데이트
         setButtonText("출석완료");
         setError(null);
         setIsModalOpen(false);
@@ -173,7 +173,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           setCreatorName(result.postCreatorInfo?.userName || "");
         }
 
-        // ✅ 댓글 최신화 트리거
+        // 댓글 최신화 트리거
         setRefreshComments((prev) => !prev);
       } else {
         setError(response.data.responseMessage);
@@ -213,7 +213,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setPostCreatorName(result.postCreatorInfo.userName);
 
-          // 🔥 로그인된 사용자의 참가 상태 찾기
+          // 로그인된 사용자의 참가 상태 찾기
           const currentUser = result.participants.find(
             (participant: any) => participant.userId === result.userInfo.userId
           );
@@ -286,7 +286,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       );
 
       if (response.data.isSuccess) {
-        setUserStatus(""); // ✅ 초기 상태로 설정
+        setUserStatus(""); //  초기 상태로 설정
         setButtonText("참여하기");
         setError(null);
       } else {
