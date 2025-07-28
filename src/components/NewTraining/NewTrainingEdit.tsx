@@ -70,7 +70,7 @@ function NewTrainingEdit() {
         });
         setPacerGroups(result.pacers.map((p: any) => ({
           id: p.group,
-          pacer: p.pacerName || "",  // ✅ pacerName으로 저장
+          pacer: p.pacerName || "",  // pacerName으로 저장
           distance: p.distance,
           pace: p.pace,
         })));
@@ -231,7 +231,7 @@ function NewTrainingEdit() {
 
         if (!matchedPacer) {
           console.warn(`❗ pacerId 매칭 실패 - group ${group.id}:`, group);
-          throw new Error(`pacer 매칭 실패 - 그룹 ${group.id}`); // 🚨 여기서 에러를 던지자
+          throw new Error(`pacer 매칭 실패 - 그룹 ${group.id}`); 
         }
 
         formData.append(`pacers[${index}].group`, group.id);
@@ -240,7 +240,6 @@ function NewTrainingEdit() {
         formData.append(`pacers[${index}].pace`, group.pace);
       });
 
-      // ✅ ⬇️ 여기서 콘솔 확인 (요청 직전!)
       for (const [key, value] of formData.entries()) {
         if (value instanceof File) {
           console.log(`${key}: [File] name=${value.name}, size=${value.size}`);

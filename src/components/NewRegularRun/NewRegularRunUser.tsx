@@ -183,7 +183,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
       if (res.data.isSuccess) {
         if (isCancel) {
-          // ✅ 참여 취소 처리
+          //  참여 취소 처리
           setUserStatus("");
           setButtonText("참여하기");
           setSelectedGroup("");
@@ -191,13 +191,12 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           return;
         }
 
-        // ✅ 그룹 참여 성공
+        //  그룹 참여 성공
         setUserStatus("PENDING"); // 무조건 직접 세팅
         setButtonText("출석하기");
         setSelectedGroup(selectedGroup); // 선택했던 그룹
         setIsGroupModalOpen(false);
 
-        // 🔥 추가로 participantsNum도 1 증가시켜서 바로 반영하고 싶으면 여기서 직접 setParticipantsNum(prev => prev + 1) 해도 돼
       } else {
         setError(res.data.responseMessage);
       }
@@ -367,7 +366,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
         <CommentSection postId={postId!} postType="regular" userInfo={userInfo} refreshTrigger={refreshComments} />
 
-        {/* ✅ 참여 상태에 따른 버튼 렌더링 */}
+        {/* 참여 상태에 따른 버튼 렌더링 */}
 
         <div key={buttonRefreshKey} className="mb-[100px]">
           {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (

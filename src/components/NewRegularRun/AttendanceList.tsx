@@ -71,7 +71,7 @@ const AttendanceList: React.FC<AttendanceListProps> = ({
           )}
         </div>
 
-        {/* ✅ 작성자인 경우에만 명단 수정/저장 버튼 노출 */}
+        {/*  작성자인 경우에만 명단 수정/저장 버튼 노출 */}
         {userInfoName === postCreatorName && (
           <button
             className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${isEditMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"

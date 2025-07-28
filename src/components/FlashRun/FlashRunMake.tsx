@@ -40,7 +40,7 @@ function FlashRunMake() {
     try {
       const compressedFile = await imageCompression(file, {
         maxSizeMB: 5,        // 1MB 이하로
-        maxWidthOrHeight: 1000, // (선택) 너무 큰 해상도도 제한
+        maxWidthOrHeight: 1000, // 해상도 제한
         useWebWorker: true,
       });
   
@@ -118,7 +118,6 @@ function FlashRunMake() {
       const [hours, minutes] = dateTime.time.split(":").map(Number);
       const selected = dateTime.date!;
 
-      // ✅ 1. KST 기준으로 조립
       const kstDate = new Date(
         selected.getFullYear(),
         selected.getMonth(),
@@ -128,10 +127,8 @@ function FlashRunMake() {
         0
       );
 
-      // ✅ 2. UTC 기준으로 변환
       const utcDate = new Date(kstDate.getTime() - 9 * 60 * 60 * 1000);
 
-      // ✅ 3. 문자열 직접 생성 (🔥 중요: toISOString() 사용하지 말 것!)
       const pad = (n: number) => n.toString().padStart(2, "0");
       const eventDateTime = `${utcDate.getFullYear()}-${pad(utcDate.getMonth() + 1)}-${pad(utcDate.getDate())}T${pad(utcDate.getHours())}:${pad(utcDate.getMinutes())}:${pad(utcDate.getSeconds())}`;
 

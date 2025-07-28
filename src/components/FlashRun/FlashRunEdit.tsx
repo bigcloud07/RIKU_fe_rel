@@ -62,8 +62,8 @@ function FlashRunEdit() {
     try {
       const compressedFile = await imageCompression(file, {
         maxSizeMB: 5,             // 1MB 이하로 압축
-        maxWidthOrHeight: 1000,   // (선택) 해상도 제한
-        useWebWorker: true,       // 웹워커로 비동기 압축
+        maxWidthOrHeight: 1000,   // 해상도 제한
+        useWebWorker: true,       
       });
 
       setPostImage(compressedFile);
@@ -76,7 +76,7 @@ function FlashRunEdit() {
       alert("대표 이미지 압축 중 오류가 발생했습니다.");
     }
 
-    e.target.value = ""; // ✅ input 초기화
+    e.target.value = ""; // 
   };
 
 
@@ -126,7 +126,7 @@ function FlashRunEdit() {
     if (toRemove.startsWith("http")) {
       setOriginalAttachmentUrls(prev => prev.filter(url => url !== toRemove));
     } else {
-      // base64일 경우 → newAttachmentFiles에서도 제거
+      // base64일 경우, newAttachmentFiles에서도 제거
       setNewAttachmentFiles(prev => {
         const newFiles = [...prev];
         newFiles.splice(index - originalAttachmentUrls.length, 1);
@@ -150,7 +150,7 @@ function FlashRunEdit() {
       const [hours, minutes] = dateTime.time.split(":").map(Number);
       const selected = dateTime.date!;
 
-      // ✅ 1. KST 기준으로 조립
+  
       const kstDate = new Date(
         selected.getFullYear(),
         selected.getMonth(),
@@ -160,10 +160,9 @@ function FlashRunEdit() {
         0
       );
 
-      // ✅ 2. UTC 기준으로 변환
+     
       const utcDate = new Date(kstDate.getTime() - 9 * 60 * 60 * 1000);
 
-      // ✅ 3. 문자열 직접 생성 (🔥 중요: toISOString() 사용하지 말 것!)
       const pad = (n: number) => n.toString().padStart(2, "0");
       const eventDateTime = `${utcDate.getFullYear()}-${pad(utcDate.getMonth() + 1)}-${pad(utcDate.getDate())}T${pad(utcDate.getHours())}:${pad(utcDate.getMinutes())}:${pad(utcDate.getSeconds())}`;
 
@@ -176,7 +175,7 @@ function FlashRunEdit() {
       if (dateTime.date) formData.append("date", eventDateTime);
       if (postImage) formData.append("postImage", postImage);
 
-      // 🔥 기존 S3 이미지들을 File로 변환해서 append
+      // 기존 S3 이미지들을 File로 변환해서 append
       for (let i = 0; i < originalAttachmentUrls.length; i++) {
         const url = originalAttachmentUrls[i];
         const res = await fetch(url);
@@ -185,12 +184,12 @@ function FlashRunEdit() {
         formData.append("attachments", file);
       }
 
-      // 🔥 새로 업로드된 이미지들도 append
+      // 새로 업로드된 이미지들도 append
       for (const file of newAttachmentFiles) {
         formData.append("attachments", file);
       }
 
-      // ✅ ⬇️ 여기서 콘솔 확인 (요청 직전!)
+      // 디버깅용: FormData 내용 출력
       for (const [key, value] of formData.entries()) {
         if (value instanceof File) {
           console.log(`${key}: [File] name=${value.name}, size=${value.size}`);
@@ -208,7 +207,7 @@ function FlashRunEdit() {
         },
       });
 
-      console.log("요청된 최종 엔드포인트:", res.config.url); // ✅ 실제 요청된 URL
+      console.log("요청된 최종 엔드포인트:", res.config.url); 
       if (res.data.isSuccess) {
         alert("번개런이 성공적으로 수정되었습니다!");
         navigate(`/flash/${postId}`, { replace: true });

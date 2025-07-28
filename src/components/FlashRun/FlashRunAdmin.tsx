@@ -125,7 +125,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   try {
     const token = JSON.parse(localStorage.getItem("accessToken") || "null");
     
-    // ✅ 출석 데이터 준비
+    // 출석 데이터 준비
     const attendanceData = editableParticipants.map((user) => ({
       userId: user.userId,
       isAttend: user.status === "ATTENDED",
@@ -373,7 +373,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                         return;
                       }
 
-                      // 🔥 정확한 비교 로직
+                      // 정확한 비교 로직
                       const now = new Date();
 
                       const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
