@@ -33,20 +33,20 @@ RIKU는 매주 다양한 러닝 활동(정규런, 번개런, 훈련 등)을 운�
 
 ## 🖼️ 메인 화면
 
-![메인화면](./assets/readme_asset/main.png)
+![메인화면](./src/assets/readme_asset/main.png)
 
 ## 📋 러닝 목록
 
-![러닝목록](./assets/readme_asset/1.png)
+![러닝목록](./src/assets/readme_asset/1.png)
 
 ## 🏃 상세 페이지 (참여 & 출석)
 
-![상세페이지](./assets/readme_asset/3.png)
-![상세페이지](./assets/readme_asset/4.png)
+![상세페이지](./src/assets/readme_asset/3.png)
+![상세페이지](./src/assets/readme_asset/4.png)
 
 ## 🏅 랭킹 페이지
 
-![랭킹페이지](./assets/readme_asset/5.png)
+![랭킹페이지](./src/assets/readme_asset/5.png)
 
 ## Frontend 기술스택
 - 언어/프레임워크: TypeScript, React
