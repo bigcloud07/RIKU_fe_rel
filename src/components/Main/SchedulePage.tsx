@@ -433,21 +433,7 @@ function SchedulePage() {
           <span className="text-xl font-bold mb-4">일정이 없습니다.</span>
         )}
       </div>
-      {/* 플로팅 버튼 */}
-      <button
-        onClick={toggleFloatingButton}
-        className={`fixed bottom-20 w-16 h-16 rounded-full bg-kuDarkGreen text-white flex items-center justify-center shadow-lg hover:bg-kuDarkGreen-dark focus:outline-none z-50 transition-transform duration-300 
-          right-4
-          ${isFloatingButtonOpen ? "rotate-45" : "rotate-0"
-          }`}
-      >
-        <img
-          src={plusBtn}
-          alt="플로팅 버튼 아이콘"
-          className={`w-8 h-8 transition-transform duration-300 ${isFloatingButtonOpen ? "rotate-20" : "rotate-0"
-            }`}
-        />
-      </button>
+      
 
       {/* 연/월을 선택하는 모달창이 열렸을 때 나타나는 옵션들 */}
       {isModalOpen && (
@@ -530,19 +516,52 @@ function SchedulePage() {
         </div>
       )}
 
+      {/* 플로팅 버튼 */}
+      <button
+        onClick={toggleFloatingButton}
+        className={`fixed bottom-20 
+    left-1/2 
+    translate-x-[calc(215px-100%-20px)]
+    zfold:translate-x-[calc(215px-100%-50px)]     
+    iphonese:translate-x-[calc(215px-100%-35px)]  
+    iphonepro:translate-x-[calc(215px-100%-30px)]
+    iphonepromax:translate-x-[calc(215px-100%-12px)]
+    lg:translate-x-[calc(215px-100%-10px)]      /* 큰 화면: 오른쪽 네비 옆 */
+    w-16 h-16 rounded-full bg-kuDarkGreen text-white
+    flex items-center justify-center shadow-lg hover:bg-kuDarkGreen-dark
+    focus:outline-none z-50 transition-transform duration-300
+    ${isFloatingButtonOpen ? "rotate-45" : "rotate-0"}`}
+      >
+        <img
+          src={plusBtn}
+          alt="플로팅 버튼 아이콘"
+          className={`w-8 h-8 transition-transform duration-300 
+      ${isFloatingButtonOpen ? "rotate-20" : "rotate-0"}`}
+        />
+      </button>
+
+      {/* 플로팅 버튼 메뉴 */}
       {isFloatingButtonOpen && (
         <div
           onClick={() => setIsFloatingButtonOpen(false)}
-          className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out flex justify-end items-end p-8 z-40"
+          className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out flex justify-end items-end z-40"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="fixed bottom-40 right-10 flex flex-col space-y-4 pointer-events-auto"
+            className={`fixed bottom-40 left-1/2 
+        translate-x-[calc(215px-100%-35px)]
+        zfold:translate-x-[calc(215px-100%-60px)]     
+        iphonese:translate-x-[calc(215px-100%-45px)]  
+        iphonepro:translate-x-[calc(215px-100%-35px)]
+        iphonepromax:translate-x-[calc(215px-100%-22px)]
+        lg:translate-x-[calc(215px-100%-20px)] // 데스크탑
+        flex flex-col space-y-4 pointer-events-auto`}
           >
-            {/* 번개런 일정 추가하기 - 모든 사용자 사용 가능 */}
+            {/* 번개런 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showFirstButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                } bg-white text-black hover:bg-gray-100`}
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform 
+          ${showFirstButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
+          bg-white text-black hover:bg-gray-100`}
               onClick={handleflashRunMake}
             >
               번개런 일정 추가하기
@@ -550,11 +569,11 @@ function SchedulePage() {
 
             {/* 정규런 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showSecondButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                } ${userRole === "ADMIN" || userRole === "PACER"
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform 
+          ${showSecondButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
+          ${userRole === "ADMIN" || userRole === "PACER"
                   ? "bg-white text-black hover:bg-gray-100"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
               onClick={
                 userRole === "ADMIN" || userRole === "PACER"
                   ? handleRegularRunMake
@@ -566,11 +585,11 @@ function SchedulePage() {
 
             {/* 훈련 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showThirdButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                } ${userRole === "ADMIN" || userRole === "PACER"
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform 
+          ${showThirdButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
+          ${userRole === "ADMIN" || userRole === "PACER"
                   ? "bg-white text-black hover:bg-gray-100"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
               onClick={
                 userRole === "ADMIN" || userRole === "PACER"
                   ? handleTrainingtMake
@@ -582,11 +601,11 @@ function SchedulePage() {
 
             {/* 행사 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showFourthButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                } ${userRole === "ADMIN"
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform 
+          ${showFourthButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
+          ${userRole === "ADMIN"
                   ? "bg-white text-black hover:bg-gray-100"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
               onClick={
                 userRole === "ADMIN"
                   ? handleEventMake
