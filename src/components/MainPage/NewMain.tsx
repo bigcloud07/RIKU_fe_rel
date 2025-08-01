@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import NewMainCard from "./NewMainCard";
 import flashImage from "../../assets/default_flashRun.jpeg";
@@ -18,6 +18,9 @@ import PROGRESSimg from "../../assets/progress.svg";
 import CLODESDimg from "../../assets/Main-img/NewClosedStatus.svg";
 import CANCELEDimg from "../../assets/Main-img/NewCanceledStatus.svg";
 import ARGENTimg from "../../assets/Main-img/NewUrgentStatus.svg"
+
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+
 
 
 
@@ -39,17 +42,17 @@ interface MainData {
 
 const NewMain: React.FC = () => {
   const getStatusImg = (status: string | null | undefined, date?: string) => {
-    
+
     if (!status || !date) return undefined;
 
     const utcDate = new Date(date);
     const kstDate = new Date(utcDate.getTime() + 9 * 60 * 60 * 1000);
     const now = new Date();
 
-   
+
 
     if (kstDate <= now && (status === "NOW" || status === "URGENT")) {
-      
+
       return PROGRESSimg;
     }
 
@@ -90,6 +93,10 @@ const NewMain: React.FC = () => {
   });
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [startX, setStartX] = useState<number | null>(null);
+  const slideRef = useRef<HTMLDivElement | null>(null);
+
+
   const [isFloatingButtonOpen, setIsFloatingButtonOpen] = useState(false);
 
   const [showFirstButton, setShowFirstButton] = useState(false);
@@ -118,22 +125,10 @@ const NewMain: React.FC = () => {
 
   // 슬라이드 변경 로직
   useEffect(() => {
-    let frameId: number;
-    let timeoutId: NodeJS.Timeout;
-
-    const advanceSlide = () => {
-      frameId = requestAnimationFrame(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-        timeoutId = setTimeout(advanceSlide, 3000); // 다음 슬라이드까지 대기
-      });
-    };
-
-    timeoutId = setTimeout(advanceSlide, 3000);
-
-    return () => {
-      clearTimeout(timeoutId);
-      cancelAnimationFrame(frameId);
-    };
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 3000);
+    return () => clearInterval(interval);
   }, [images.length]);
 
 
@@ -153,7 +148,7 @@ const NewMain: React.FC = () => {
           };
 
           const result = response.data.result;
-          
+
           //userRole저장
           setUserRole(result.userRole || null);
 
@@ -181,28 +176,28 @@ const NewMain: React.FC = () => {
                   ? "URGENT"
                   : result.flashRun?.postStatus,
               },
-              training: result.trainingRun?.postStatus === "CANCELED"
+            training: result.trainingRun?.postStatus === "CANCELED"
               ? { location: "등록된 훈련이\n없습니다" }
               : {
-                  location: result.trainingRun?.title || "등록된 훈련이\n없습니다",
-                  date: formatDate(result.trainingRun?.date),
-                  rawDate: result.trainingRun?.date,
-                  postimgurl: result.trainingRun?.postImageUrl,
-                  poststatus: isWithinOneHour(result.trainingRun?.date)
-                    ? "URGENT"
-                    : result.trainingRun?.postStatus,
-                },
-                event: result.eventRun?.postStatus === "CANCELED"
-                ? { location: "등록된 행사가\n없습니다" }
-                : {
-                    location: result.eventRun?.title || "등록된 행사가\n없습니다",
-                    date: formatDate(result.eventRun?.date),
-                    rawDate: result.eventRun?.date,
-                    postimgurl: result.eventRun?.postImageUrl,
-                    poststatus: isWithinOneHour(result.eventRun?.date)
-                      ? "URGENT"
-                      : result.eventRun?.postStatus,
-                  },
+                location: result.trainingRun?.title || "등록된 훈련이\n없습니다",
+                date: formatDate(result.trainingRun?.date),
+                rawDate: result.trainingRun?.date,
+                postimgurl: result.trainingRun?.postImageUrl,
+                poststatus: isWithinOneHour(result.trainingRun?.date)
+                  ? "URGENT"
+                  : result.trainingRun?.postStatus,
+              },
+            event: result.eventRun?.postStatus === "CANCELED"
+              ? { location: "등록된 행사가\n없습니다" }
+              : {
+                location: result.eventRun?.title || "등록된 행사가\n없습니다",
+                date: formatDate(result.eventRun?.date),
+                rawDate: result.eventRun?.date,
+                postimgurl: result.eventRun?.postImageUrl,
+                poststatus: isWithinOneHour(result.eventRun?.date)
+                  ? "URGENT"
+                  : result.eventRun?.postStatus,
+              },
           });
 
         } else {
@@ -264,26 +259,58 @@ const NewMain: React.FC = () => {
     navigate("/make/training");
   };
 
+
+
+
   return (
     <div className="flex flex-col items-center justify-center">
       {/* 상단바 */}
       <div className="h-[56px]"></div>
 
       {/* 슬라이드쇼 */}
-      <div className="max-w-[430px] w-full h-[300px]  mx-auto m-0">
-        <div className="flex justify-center items-center h-full">
-          <img
-            src={images[currentIndex]}
-            alt={`Slide ${currentIndex + 1}`}
-            className="w-full h-full object-cover transition-opacity duration-500"
-          />
+      <div className="max-w-[430px] w-full h-[300px] mx-auto m-0 relative">
+        <div className="flex justify-center items-center h-full relative">
+          <div className="max-w-[430px] w-full h-[300px] mx-auto relative overflow-hidden">
+            <picture className="block w-full h-full">
+              <source srcSet={images[currentIndex]} type="image/webp" />
+              <img
+                src={images[currentIndex]}
+                alt={`메인 배너 ${currentIndex + 1}`}
+                className="w-full h-full object-cover block"
+                fetchPriority={currentIndex === 0 ? "high" : undefined}
+                loading={currentIndex === 0 ? "eager" : "lazy"}
+              />
+            </picture>
+
+            {/* 왼쪽 화살표 */}
+            <button
+              onClick={() => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50
+             text-white p-1.5 rounded-full shadow-md transition transform hover:scale-110"
+            >
+              <HiChevronLeft className="text-2xl" />
+            </button>
+
+            {/* 오른쪽 화살표 */}
+            <button
+              onClick={() => setCurrentIndex((prev) => (prev + 1) % images.length)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50
+             text-white p-1.5 rounded-full shadow-md transition transform hover:scale-110"
+            >
+              <HiChevronRight className="text-2xl" />
+            </button>
+          </div>
         </div>
+
+        {/* 하단 점(dot) 네비게이션 */}
         <div className="flex max-w-[430px] w-full h-[40px] justify-center items-center space-x-2 bg-kuDarkGreen">
           {images.map((_, index) => (
             <span
               key={index}
-              className={`h-2 w-2 rounded-full transition-[opacity,transform] duration-300 ease-in-out ${currentIndex === index ? "bg-white/80 scale-125" : "bg-white/40 scale-100"
-                }`}
+              onClick={() => handleDotClick(index)}
+              className={`h-2 w-2 rounded-full transition-[opacity,transform] duration-300 ease-in-out cursor-pointer 
+          ${currentIndex === index ? "bg-white/80 scale-125" : "bg-white/40 scale-100"}
+        `}
               style={{ willChange: "transform, opacity" }}
             />
           ))}
@@ -337,34 +364,49 @@ const NewMain: React.FC = () => {
       {/* 플로팅 버튼 */}
       <button
         onClick={toggleFloatingButton}
-        className={`fixed bottom-20 w-16 h-16 rounded-full bg-kuDarkGreen text-white flex items-center justify-center shadow-lg hover:bg-kuDarkGreen-dark focus:outline-none z-50 transition-transform duration-300 ${isFloatingButtonOpen ? "rotate-45" : "rotate-0"
-
-          }
-          right-4
-          `}
+        className={`fixed bottom-20 
+    left-1/2 
+    translate-x-[calc(215px-100%-20px)]
+    zfold:translate-x-[calc(215px-100%-50px)]     
+    iphonese:translate-x-[calc(215px-100%-35px)]  
+    iphonepro:translate-x-[calc(215px-100%-30px)]
+    iphonepromax:translate-x-[calc(215px-100%-12px)]
+    lg:translate-x-[calc(215px-100%-10px)]      /* 큰 화면: 오른쪽 네비 옆 */
+    w-16 h-16 rounded-full bg-kuDarkGreen text-white
+    flex items-center justify-center shadow-lg hover:bg-kuDarkGreen-dark
+    focus:outline-none z-50 transition-transform duration-300
+    ${isFloatingButtonOpen ? "rotate-45" : "rotate-0"}`}
       >
         <img
           src={plusBtn}
           alt="플로팅 버튼 아이콘"
-          className={`w-8 h-8 transition-transform duration-300 ${isFloatingButtonOpen ? "rotate-20" : "rotate-0"
-            }`}
+          className={`w-8 h-8 transition-transform duration-300 
+      ${isFloatingButtonOpen ? "rotate-20" : "rotate-0"}`}
         />
       </button>
 
-      {/* 플로팅 버튼이 열렸을 때 나타나는 옵션들 */}
+      {/* 플로팅 버튼 메뉴 */}
       {isFloatingButtonOpen && (
         <div
           onClick={() => setIsFloatingButtonOpen(false)}
-          className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out flex justify-end items-end p-8 z-40"
+          className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out flex justify-end items-end z-40"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="fixed bottom-40 right-10 flex flex-col space-y-4 pointer-events-auto"
+            className={`fixed bottom-40 left-1/2 
+        translate-x-[calc(215px-100%-35px)]
+        zfold:translate-x-[calc(215px-100%-60px)]     
+        iphonese:translate-x-[calc(215px-100%-45px)]  
+        iphonepro:translate-x-[calc(215px-100%-35px)]
+        iphonepromax:translate-x-[calc(215px-100%-22px)]
+        lg:translate-x-[calc(215px-100%-20px)] // 데스크탑
+        flex flex-col space-y-4 pointer-events-auto`}
           >
-            {/* 번개런 일정 추가하기 - 모든 사용자 사용 가능 */}
+            {/* 번개런 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showFirstButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                } bg-white text-black hover:bg-gray-100`}
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform 
+          ${showFirstButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
+          bg-white text-black hover:bg-gray-100`}
               onClick={handleflashRunMake}
             >
               번개런 일정 추가하기
@@ -372,11 +414,11 @@ const NewMain: React.FC = () => {
 
             {/* 정규런 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showSecondButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                } ${userRole === "ADMIN" || userRole === "PACER"
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform 
+          ${showSecondButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
+          ${userRole === "ADMIN" || userRole === "PACER"
                   ? "bg-white text-black hover:bg-gray-100"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
               onClick={
                 userRole === "ADMIN" || userRole === "PACER"
                   ? handleRegularRunMake
@@ -388,11 +430,11 @@ const NewMain: React.FC = () => {
 
             {/* 훈련 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showThirdButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                } ${userRole === "ADMIN" || userRole === "PACER"
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform 
+          ${showThirdButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
+          ${userRole === "ADMIN" || userRole === "PACER"
                   ? "bg-white text-black hover:bg-gray-100"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
               onClick={
                 userRole === "ADMIN" || userRole === "PACER"
                   ? handleTrainingtMake
@@ -404,11 +446,11 @@ const NewMain: React.FC = () => {
 
             {/* 행사 일정 추가하기 */}
             <button
-              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform ${showFourthButton ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-                } ${userRole === "ADMIN"
+              className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform 
+          ${showFourthButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
+          ${userRole === "ADMIN"
                   ? "bg-white text-black hover:bg-gray-100"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
               onClick={
                 userRole === "ADMIN"
                   ? handleEventMake

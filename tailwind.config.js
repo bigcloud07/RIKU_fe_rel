@@ -59,7 +59,10 @@ module.exports = {
         sans: ['"Apple SD Gothic Neo"', "sans-serif"],
       },
       screens: {
-        iphone: "393px", // iPhone 15 Pro 대응
+        zfold: "344px", // Z Fold 5 대응
+        iphonese: "375px", // iPhone SE 대응
+        iphonepro: "390px", // iPhone 15 Pro 대응
+        iphonepromax: "430px", // iPhone 15 Pro Max 대응
         sm: "640px",
         md: "768px",
         lg: "1024px",

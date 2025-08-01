@@ -7,7 +7,7 @@ interface User {
   userId: number;
   userName: string;
   userProfileImg?: string | null;
-  status: "ATTENDED" | "PENDING";
+  status: "ATTENDED" | "PENDING" | "ABSENT"; 
   canEdit: string;
 }
 
@@ -30,15 +30,18 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
   ({ postId, runType, users, onUsersChange, onSaveComplete, canEdit, postStatus, postDate }, ref) => {
     const [editMode, setEditMode] = useState(false);
 
+    // ✅ 3단계 순환 토글: ATTENDED → ABSENT → PENDING → ATTENDED
     const handleToggle = (userId: number) => {
-      const updated = users.map((user) =>
-        user.userId === userId
-          ? {
-              ...user,
-              status: user.status === "ATTENDED" ? "PENDING" : "ATTENDED",
-            }
-          : user
-      );
+      const updated = users.map((user) => {
+        if (user.userId !== userId) return user;
+
+        let newStatus: User["status"];
+        if (user.status === "ATTENDED") newStatus = "ABSENT";
+        else if (user.status === "ABSENT") newStatus = "PENDING";
+        else newStatus = "ATTENDED";
+
+        return { ...user, status: newStatus };
+      });
       onUsersChange(updated);
     };
 
@@ -75,13 +78,18 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
 
     return (
       <div className="flex flex-col p-5 gap-3">
+        {/* 상단 인원 수 */}
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-1">
             <img src={peopleimg} alt="체크 아이콘" className="w-[24px] h-[17px]" />
             <span className="text-[16px] font-semibold">
-              <span className="text-kuDarkGreen">{users.filter((u) => u.status === "ATTENDED").length}</span> / {users.length}
+              <span className="text-kuDarkGreen">
+                {users.filter((u) => u.status === "ATTENDED").length}
+              </span>{" "}
+              / {users.length}
             </span>
           </div>
+
           {canEdit && (
             <button
               onClick={() => {
@@ -101,18 +109,35 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
                 }
                 editMode ? handleSave() : setEditMode(true);
               }}
-              className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${editMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"}`}
+              className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${
+                editMode
+                  ? "bg-kuDarkGreen text-white"
+                  : "bg-kuLightGray text-kuDarkGray"
+              }`}
             >
               {editMode ? "명단 저장" : "명단 수정"}
             </button>
           )}
         </div>
 
+        {/* 유저 목록 */}
         {users.map((user, index) => {
-          const isAttended = user.status === "ATTENDED";
+          const backgroundClass =
+            user.status === "ATTENDED"
+              ? "bg-[#F0F4DD]" // 연두색
+              : user.status === "ABSENT"
+              ? "bg-[#ECEBE4]"
+              : "bg-[#F0F4DD]"
+
           return (
-            <div key={user.userId} className="flex items-center gap-3 w-[335px] h-[56px] px-4 py-2.5 rounded-lg bg-[#F0F4DD]">
+            <div
+              key={user.userId}
+              className={`flex items-center gap-3 w-[335px] h-[56px] px-4 py-2.5 rounded-lg ${backgroundClass}`}
+            >
+              {/* 순번 */}
               <div className="w-5 text-center text-gray-500 font-semibold">{index + 1}</div>
+
+              {/* 프로필 */}
               <div className="w-10 h-10 rounded-full bg-gray-400 text-white font-bold flex items-center justify-center overflow-hidden">
                 {user.userProfileImg ? (
                   <img src={user.userProfileImg} alt="profile" className="w-full h-full object-cover" />
@@ -120,18 +145,22 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
                   user.userName?.charAt(0) || "?"
                 )}
               </div>
+
+              {/* 이름 */}
               <div className="flex-1 text-left">{user.userName}</div>
+
+              {/* 상태 아이콘 */}
               {editMode ? (
                 <div className="cursor-pointer" onClick={() => handleToggle(user.userId)}>
-                  {isAttended ? (
+                  {user.status === "ATTENDED" ? (
                     <FaCheckCircle size={24} color="#4CAF50" />
-                  ) : (
+                  ) : user.status === "PENDING" ? (
                     <div className="w-[24px] h-[24px] border border-kuDarkGreen rounded-full"></div>
-                  )}
+                  ) : null /* ABSENT는 아이콘 없음 */}
                 </div>
-              ) : isAttended ? (
+              ) : user.status === "ATTENDED" ? (
                 <FaCheckCircle size={24} color="#4CAF50" />
-              ) : null}
+              ) : null /* ABSENT와 PENDING은 아이콘 없음 */}
             </div>
           );
         })}
