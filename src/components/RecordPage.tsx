@@ -213,11 +213,11 @@ const RecordPage: React.FC = () => {
     const goPrev = () => setStep(1);
 
     // 유틸: iOS/안드/모바일 체크
-const isIOS = () => /iP(hone|od|ad)/i.test(navigator.userAgent);
-const isMobile = () => /Mobi|Android/i.test(navigator.userAgent);
+    const isIOS = () => /iP(hone|od|ad)/i.test(navigator.userAgent);
+    const isMobile = () => /Mobi|Android/i.test(navigator.userAgent);
 
-// PNG 다운로드 (모바일 대응)
-const handleDownload = async () => {
+    // PNG 다운로드 (모바일 대응)
+    const handleDownload = async () => {
   const node = canvasRef.current;
   if (!node) return;
   if (run.photoPreview && !imageReady) {
@@ -225,76 +225,76 @@ const handleDownload = async () => {
     return;
   }
 
-  // 모바일에선 pixelRatio 낮춰 OOM 방지
-  const safePixelRatio = isMobile() ? 1 : 2;
+  // 다크모드 잠시 해제
+  const root = document.documentElement;
+  const hadDark = root.classList.contains("dark");
+  if (hadDark) root.classList.remove("dark");
 
   try {
+    // 모바일은 OOM 방지 위해 1로 낮추는 것도 추천
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const pixelRatio = isMobile ? 1 : 2;
+
     const blob = await (await import("html-to-image")).toBlob(node, {
       cacheBust: true,
-      pixelRatio: safePixelRatio,
+      pixelRatio,
       width: 640,
       height: 640,
       backgroundColor: "#ffffff",
-      style: { width: "640px", height: "640px", transform: "none" },
+      style: { width: "640px", height: "640px", transform: "none", colorScheme: "light" },
     });
     if (!blob) throw new Error("이미지 생성 실패");
 
     const filename = `riku-certificate-${run.date || "run"}.png`;
-
-    // 1) iOS: 공유 시트가 되면 가장 좋아요
-    if (
-      isIOS() &&
-      "share" in navigator &&
-      "canShare" in navigator &&
-      (navigator as any).canShare?.({ files: [new File([blob], filename, { type: "image/png" })] })
-    ) {
-      await (navigator as any).share({
-        files: [new File([blob], filename, { type: "image/png" })],
-        title: "RIKU 기록증",
-        text: "기록증 이미지",
-      });
-      return;
-    }
-
-    // 2) 일반 브라우저: 다운로드 링크
     const url = URL.createObjectURL(blob);
 
-    // 안드로이드/데스크톱: download 속성 사용
-    if (!isIOS()) {
+    // iOS면 새 탭 열어서 길게 눌러 저장
+    const isiOS = /iP(hone|od|ad)/i.test(navigator.userAgent);
+    if (isiOS) {
+      const win = window.open("", "_blank");
+      if (win) {
+        win.document.write(`
+          <html>
+            <head>
+              <meta name="viewport" content="width=device-width,initial-scale=1"/>
+              <meta name="color-scheme" content="light">
+              <style>
+                :root{ color-scheme: light; }
+                body{ margin:0; background:#fff; }
+                img{ display:block; width:100%; height:auto; }
+              </style>
+            </head>
+            <body>
+              <img src="${url}" alt="certificate"/>
+              <div style="padding:12px;font:14px/1.4 -apple-system,system-ui">
+                iOS는 이미지 길게 눌러 "사진 저장"을 선택하세요.
+              </div>
+            </body>
+          </html>
+        `);
+        win.document.close();
+      } else {
+        alert("팝업이 차단되었어요. 팝업 허용 후 다시 시도해 주세요.");
+      }
+    } else {
       const a = document.createElement("a");
       a.href = url;
       a.download = filename;
       document.body.appendChild(a);
       a.click();
       a.remove();
-      // 약간의 지연 후 URL 해제
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-      return;
     }
 
-    // 3) iOS fallback: 새 탭에 이미지 열기(롱탭 저장 유도)
-    const win = window.open("", "_blank"); // 먼저 탭 핸들 확보
-    if (win) {
-      // 이미지 태그로 주입 (iOS가 data/file URL 직접 다운로드 잘 못함)
-      win.document.write(`
-        <html><head><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
-        <body style="margin:0">
-          <img src="${url}" style="width:100%;height:auto;display:block" alt="certificate"/>
-          <div style="padding:12px;font:14px/1.4 -apple-system,system-ui">
-            iOS에서는 이미지 위를 길게 눌러 "사진 저장"을 선택하세요.
-          </div>
-        </body></html>
-      `);
-      win.document.close();
-    } else {
-      // 팝업이 막힌 경우 안내
-      alert("팝업이 차단되었어요. 브라우저 팝업 허용 후 다시 시도해 주세요.");
-    }
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   } catch (e) {
     console.error(e);
-    alert("이미지 생성/저장 중 오류가 발생했습니다. 다른 브라우저에서 다시 시도해 주세요.");
+    alert("이미지 저장 중 오류가 발생했습니다.");
+  } finally {
+    // 다크모드 복구
+    if (hadDark) root.classList.add("dark");
   }
 };
+
 
     // 미리보기 자동 스케일
     const PREVIEW_BASE = 640;
@@ -576,6 +576,9 @@ const handleDownload = async () => {
                                 transform: `scale(${scale})`,
                                 transformOrigin: "top left",
                                 visibility: scale === 0 ? "hidden" : "visible", // 스케일 적용 전 숨김
+                                colorScheme: "light",
+                                WebkitPrintColorAdjust: "exact",
+                                printColorAdjust: "exact",
                             }}
                         >
                             {/* 템플릿 렌더링 */}
