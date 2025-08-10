@@ -227,111 +227,93 @@ const RecordPage: React.FC = () => {
             return;
         }
 
-        // 다크모드 영향 최소화
+        // 다크모드 영향 최소화(선택)
         const root = document.documentElement;
         const hadDark = root.classList.contains("dark");
         if (hadDark) root.classList.remove("dark");
 
-        // ★ iOS는 팝업을 '클릭 직후' 먼저 연다 + 즉시 로딩 화면 작성
-        const isiOS = isIOS();
-        let win: Window | null = null;
-        if (isiOS) {
-            win = window.open("", "_blank");
-            if (!win) {
-                alert("팝업이 차단되었어요. 브라우저 설정에서 팝업을 허용한 뒤 다시 시도해 주세요.");
-                if (hadDark) root.classList.add("dark");
-                return;
-            }
-            win.document.write(`
-      <!doctype html>
-      <html>
-        <head>
-          <meta name="viewport" content="width=device-width,initial-scale=1" />
-          <meta name="color-scheme" content="light" />
-          <title>기록증 생성 중...</title>
-          <style>
-            :root{ color-scheme: light; }
-            html,body{ height:100%; margin:0; background:#fff; }
-            body{ display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; font:14px/1.4 -apple-system,system-ui; color:#333; }
-            .spinner{ width:32px; height:32px; border:3px solid #eee; border-top-color:#0a0; border-radius:50%; animation:spin 1s linear infinite; }
-            @keyframes spin{to{transform:rotate(360deg)}}
-          </style>
-        </head>
-        <body>
-          <div class="spinner"></div>
-          <div>이미지 생성 중...</div>
-        </body>
-      </html>
-    `);
-            win.document.close();
-        }
-
         try {
-            // 폰트/리소스 로딩 보장
             try { await (document as any).fonts?.ready; } catch { }
 
             const pixelRatio = isMobile() ? 1 : 2;
-
-            // 사파리는 JPEG가 성공률이 더 높음 (dataURL→blob 변환)
-            const toImage = await import("html-to-image");
-            const useJpeg = isiOS;
-
-            const blob = useJpeg
-                ? await toImage
-                    .toJpeg(node, {
-                        cacheBust: true,
-                        pixelRatio,
-                        width: 640,
-                        height: 640,
-                        quality: 0.95,
-                        backgroundColor: "#ffffff",
-                        style: { width: "640px", height: "640px", transform: "none", colorScheme: "light" },
-                    })
-                    .then((dataUrl) => fetch(dataUrl).then((r) => r.blob()))
-                : await toImage.toBlob(node, {
-                    cacheBust: true,
-                    pixelRatio,
-                    width: 640,
-                    height: 640,
-                    backgroundColor: "#ffffff",
-                    style: { width: "640px", height: "640px", transform: "none", colorScheme: "light" },
-                });
-
+            const { toBlob } = await import("html-to-image");
+            const blob = await toBlob(node, {
+                cacheBust: true,
+                pixelRatio,
+                width: 640,
+                height: 640,
+                backgroundColor: "#ffffff",
+                style: { width: "640px", height: "640px", transform: "none", colorScheme: "light" },
+            });
             if (!blob) throw new Error("이미지 생성 실패");
 
-            const filename = `riku-certificate-${run.date || "run"}${useJpeg ? ".jpg" : ".png"}`;
-            const url = URL.createObjectURL(blob);
+            const filename = `riku-certificate-${run.date || "run"}.png`;
 
-            if (isiOS && win) {
-                // ★ 로딩 페이지였던 새 탭에 이미지 주입 (길게 눌러 저장)
-                win.document.body.innerHTML = `
-        <img id="cert" style="max-width:100vw;max-height:80vh;display:block;margin:0 auto" alt="certificate"/>
-        <div style="padding:12px;text-align:center;">이미지를 길게 눌러 “사진 저장”을 선택하세요.</div>
-      `;
-                (win.document.getElementById("cert") as HTMLImageElement).src = url;
+            // 1) ✅ 가능하면 '공유 시트'로 처리 (한 창 유지, 새 탭 X)
+            const canShareFile =
+                typeof navigator !== "undefined" &&
+                "share" in navigator &&
+                // @ts-ignore
+                ("canShare" in navigator ? (navigator as any).canShare?.({ files: [new File([blob], filename, { type: "image/png" })] }) : true);
 
-                // 너무 빨리 revoke하면 못 볼 수 있음
-                setTimeout(() => URL.revokeObjectURL(url), 5000);
+            if (canShareFile) {
+                // @ts-ignore
+                await (navigator as any).share({
+                    files: [new File([blob], filename, { type: "image/png" })],
+                    title: "RIKU 기록증",
+                    text: "기록증 이미지",
+                });
+                return; // 끝
+            }
+
+            // 2) 데스크톱/안드로이드 등: 일반 다운로드 (한 창 유지)
+            if (!isIOS()) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
                 return;
             }
 
-            // 안드/데스크톱: 일반 다운로드
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            // 3) iOS에서 공유도 안되면… (불가피한 최후의 수단) 새 탭 열어서 길게 눌러 저장
+            const url = URL.createObjectURL(blob);
+            const win = window.open("", "_blank");
+            if (win) {
+                win.document.write(`
+        <!doctype html>
+        <html><head>
+          <meta name="viewport" content="width=device-width,initial-scale=1" />
+          <meta name="color-scheme" content="light" />
+          <title>${filename}</title>
+          <style>
+            :root{ color-scheme: light; }
+            html,body{height:100%;margin:0;background:#fff;}
+            body{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;font:14px/1.4 -apple-system,system-ui;color:#333;}
+            img{max-width:100vw;max-height:80vh;display:block;}
+          </style>
+        </head>
+        <body>
+          <img src="${url}" alt="certificate"/>
+          <div>이미지를 길게 눌러 “사진 저장”을 선택하세요.</div>
+        </body></html>
+      `);
+                win.document.close();
+                setTimeout(() => URL.revokeObjectURL(url), 5000);
+            } else {
+                alert("팝업이 차단되었어요. 브라우저 설정에서 팝업을 허용한 뒤 다시 시도해 주세요.");
+            }
         } catch (e) {
             console.error(e);
-            // 실패 시, 열어둔 탭 닫기
-            try { win?.close(); } catch { }
-            alert("이미지 생성/저장 중 오류가 발생했습니다. (사파리) 다른 브라우저도 시도해 보세요.");
+            alert("이미지 저장 중 오류가 발생했습니다.");
         } finally {
             if (hadDark) root.classList.add("dark");
         }
     };
+
 
 
 
