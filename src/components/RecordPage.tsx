@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState, useEffect } from "react";
+import React, { useMemo, useRef, useState, useEffect, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toPng } from "html-to-image";
 import { DayPicker } from "react-day-picker";
@@ -236,7 +236,15 @@ const RecordPage: React.FC = () => {
     // 미리보기 자동 스케일
     const PREVIEW_BASE = 640;
     const previewWrapRef = useRef<HTMLDivElement>(null);
-    const [scale, setScale] = useState(1);
+    const [scale, setScale] = useState(0);
+
+    useLayoutEffect(() => {
+        const el = previewWrapRef.current;
+        if (!el) return;
+        // 첫 계산 선적용
+        const w = el.clientWidth;
+        setScale(Math.min(1, w / PREVIEW_BASE));
+    }, [step]); // step===2로 갈 때도 재계산
 
     useEffect(() => {
         const el = previewWrapRef.current;
@@ -259,7 +267,7 @@ const RecordPage: React.FC = () => {
             </div>
             {/* 1단계: 입력 */}
             {step === 1 && (
-                <section className="space-y-6 p-4">
+                <section className="space-y-6 p-4 pt-0">
                     {/* 제목 */}
                     <div>
                         <label className="mb-1 block text-sm font-medium">러닝 제목</label>
@@ -504,6 +512,7 @@ const RecordPage: React.FC = () => {
                                 height: PREVIEW_BASE,
                                 transform: `scale(${scale})`,
                                 transformOrigin: "top left",
+                                visibility: scale === 0 ? "hidden" : "visible", // 스케일 적용 전 숨김
                             }}
                         >
                             {/* 템플릿 렌더링 */}
