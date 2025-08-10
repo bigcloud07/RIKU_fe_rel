@@ -56,7 +56,9 @@ module.exports = {
         triangle: "polygon(50% 0%, 0% 100%, 100% 100%)",
       },
       fontFamily: {
-        sans: ['"Apple SD Gothic Neo"', "sans-serif"],
+        sans: ["sans-serif"],
+        paperlogy: ['Paperlogy'],
+        AppleSDGGothicNeo: ['Apple SD Gothic Neo'],
       },
       screens: {
         zfold: "344px", // Z Fold 5 대응
