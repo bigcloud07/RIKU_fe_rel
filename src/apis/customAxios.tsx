@@ -28,7 +28,7 @@ customAxios.interceptors.response.use(
     if (error.response.status === 401) {
       localStorage.removeItem('accessToken');
       window.location.href = '/';
-      return new Promise(() => {}); // 후속 실행 완전 차단
+      return new Promise(() => {}); // 후속 실행 차단
     }
     
 

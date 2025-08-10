@@ -199,6 +199,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           headers: { Authorization: `${token}` },
         });
         if (response.data.isSuccess) {
+          console.log("Post data fetched successfully:", response.data.result);
           const result = response.data.result;
 
 
@@ -507,6 +508,8 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           </div>
         </div>
       )}
+
+      
       <TabNavigationUI_detail />
     </div>
   );

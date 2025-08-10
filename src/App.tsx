@@ -39,16 +39,16 @@ import EventEdit from "./components/NewEvent/EventEdit";
 
 import ProfileFixPage from "./components/Main/ProfileFixPage";
 import ActivityDetailPage from "./components/Main/ActivityDetailPage";
-import RecordOutPage from "./RecordOutPage";
-import RecordOutPage2 from "./RecordOutPage2";
 import OnbordingPage from "./OnBoradingPage";
 import RunList from "./components/common/RunList";
+
+import RecordPage from "./components/RecordPage";
 
 function App() {
   return (
     <Provider store={store}>
       <Router>
-        <div className="min-w-{375px} max-w-full font-['Apple SD Gothic Neo'] overflow-y-auto">
+        <div className="min-w-{375px} max-w-full font-AppleSDGothicNeo overflow-y-auto">
           <Routes>
             <Route path="/" element={<OnbordingPage />} />
             <Route path="/login" element={<LoginPage />} />
@@ -67,6 +67,7 @@ function App() {
               <Route path="/regular/:postId" element={<NewRegularRunDetail />} />
               <Route path="/training/:postId" element={<NewTrainingDetail />} />
               <Route path="/event/:postId" element={<NewEventDetail />} />
+              <Route path="/record" element={<RecordPage />} />
 
               <Route path="/admin" element={<AdminPage />} />
 
@@ -88,8 +89,8 @@ function App() {
               <Route path="/start" element={<OnbordingPage />} />
 
               {/* 컴포넌트 테스트 sandbox */}
-              <Route path="/sandbox" element={<RecordOutPage />} />
-              <Route path="/sandbox2" element={<RecordOutPage2 />} />
+             
+              
             </Route>
           </Routes>
         </div>

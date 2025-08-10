@@ -365,6 +365,9 @@ function MyPage() {
       <div className="w-full max-w-sm mt-4">
         {renderButton("운영진 페이지", rightArrow_Icon, handleToAdminPageClick)}
       </div>
+      <div className="w-full max-w-sm mt-4">
+        {renderButton("기록증 만들기", rightArrow_Icon, () => navigate("/Record"))}
+      </div>
 
       <div className="flex w-full max-w-sm mt-8 mb-8 justify-center">
         <span
