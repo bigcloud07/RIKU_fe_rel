@@ -212,110 +212,70 @@ const RecordPage: React.FC = () => {
     };
     const goPrev = () => setStep(1);
 
+    // 유틸: iOS 판별
+const isIOS = () => /iP(hone|od|ad)/.test(navigator.userAgent);
 
+// 기존 handleDownload 교체
+const handleDownload = async () => {
+  if (!canvasRef.current) return;
+  if (run.photoPreview && !imageReady) {
+    alert("이미지 로딩 중입니다. 잠시만 기다려 주세요.");
+    return;
+  }
 
-    // PNG 다운로드 (모바일 대응)
-    // 유틸
-    const isIOS = () => /iP(hone|od|ad)/i.test(navigator.userAgent);
-    const isMobile = () => /Mobi|Android/i.test(navigator.userAgent);
+  // 1) 캔버스를 PNG data URL로 생성
+  const dataUrl = await toPng(canvasRef.current, {
+    cacheBust: true,
+    pixelRatio: 2,
+    width: 640,
+    height: 640,
+    backgroundColor: "#ffffff",
+    style: { width: "640px", height: "640px", transform: "none" },
+  });
 
-    const handleDownload = async () => {
-        const node = canvasRef.current;
-        if (!node) return;
-        if (run.photoPreview && !imageReady) {
-            alert("이미지 로딩 중입니다. 잠시만 기다려 주세요.");
-            return;
-        }
+  // 2) data URL → Blob
+  const blob = await (await fetch(dataUrl)).blob();
+  const fileName = `riku-certificate-${run.date || "run"}.png`;
 
-        // 다크모드 영향 최소화(선택)
-        const root = document.documentElement;
-        const hadDark = root.classList.contains("dark");
-        if (hadDark) root.classList.remove("dark");
+  // 3) iOS 우선 처리
+  if (isIOS()) {
+    // 3-1) Web Share API 지원되면 "공유"로 저장 유도(사진 앱 저장 포함)
+    const file = new File([blob], fileName, { type: "image/png" });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          files: [file],
+          title: "RIKU 기록증",
+          text: "기록증 이미지를 저장/공유하세요.",
+        });
+        return;
+      } catch {
+        // 사용자가 공유 취소한 경우 등 -> 아래 blob URL 미리보기로 폴백
+      }
+    }
 
-        try {
-            try { await (document as any).fonts?.ready; } catch { }
+    // 3-2) 폴백: 새 탭/현재 탭에 미리보기 열고 '길게 눌러 저장'
+    const url = URL.createObjectURL(blob);
+    // 새 탭이 팝업으로 막히면 같은 탭으로 열기
+    const win = window.open(url, "_blank", "noopener,noreferrer");
+    if (!win) {
+      window.location.href = url; // 동일 탭
+    }
+    // iOS에서 즉시 revoke하면 이미지가 사라질 수 있어 약간 지연
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
+    return;
+  }
 
-            const pixelRatio = isMobile() ? 1 : 2;
-            const { toBlob } = await import("html-to-image");
-            const blob = await toBlob(node, {
-                cacheBust: true,
-                pixelRatio,
-                width: 640,
-                height: 640,
-                backgroundColor: "#ffffff",
-                style: { width: "640px", height: "640px", transform: "none", colorScheme: "light" },
-            });
-            if (!blob) throw new Error("이미지 생성 실패");
-
-            const filename = `riku-certificate-${run.date || "run"}.png`;
-
-            // 1) ✅ 가능하면 '공유 시트'로 처리 (한 창 유지, 새 탭 X)
-            const canShareFile =
-                typeof navigator !== "undefined" &&
-                "share" in navigator &&
-                // @ts-ignore
-                ("canShare" in navigator ? (navigator as any).canShare?.({ files: [new File([blob], filename, { type: "image/png" })] }) : true);
-
-            if (canShareFile) {
-                // @ts-ignore
-                await (navigator as any).share({
-                    files: [new File([blob], filename, { type: "image/png" })],
-                    title: "RIKU 기록증",
-                    text: "기록증 이미지",
-                });
-                return; // 끝
-            }
-
-            // 2) 데스크톱/안드로이드 등: 일반 다운로드 (한 창 유지)
-            if (!isIOS()) {
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = filename;
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-                setTimeout(() => URL.revokeObjectURL(url), 1000);
-                return;
-            }
-
-            // 3) iOS에서 공유도 안되면… (불가피한 최후의 수단) 새 탭 열어서 길게 눌러 저장
-            const url = URL.createObjectURL(blob);
-            const win = window.open("", "_blank");
-            if (win) {
-                win.document.write(`
-        <!doctype html>
-        <html><head>
-          <meta name="viewport" content="width=device-width,initial-scale=1" />
-          <meta name="color-scheme" content="light" />
-          <title>${filename}</title>
-          <style>
-            :root{ color-scheme: light; }
-            html,body{height:100%;margin:0;background:#fff;}
-            body{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;font:14px/1.4 -apple-system,system-ui;color:#333;}
-            img{max-width:100vw;max-height:80vh;display:block;}
-          </style>
-        </head>
-        <body>
-          <img src="${url}" alt="certificate"/>
-          <div>이미지를 길게 눌러 “사진 저장”을 선택하세요.</div>
-        </body></html>
-      `);
-                win.document.close();
-                setTimeout(() => URL.revokeObjectURL(url), 5000);
-            } else {
-                alert("팝업이 차단되었어요. 브라우저 설정에서 팝업을 허용한 뒤 다시 시도해 주세요.");
-            }
-        } catch (e) {
-            console.error(e);
-            alert("이미지 저장 중 오류가 발생했습니다.");
-        } finally {
-            if (hadDark) root.classList.add("dark");
-        }
-    };
-
-
-
+  // 4) iOS 외: a[download]로 정상 다운로드
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+};
 
     // 미리보기 자동 스케일
     const PREVIEW_BASE = 640;
@@ -597,9 +557,6 @@ const RecordPage: React.FC = () => {
                                 transform: `scale(${scale})`,
                                 transformOrigin: "top left",
                                 visibility: scale === 0 ? "hidden" : "visible", // 스케일 적용 전 숨김
-                                colorScheme: "light",
-                                WebkitPrintColorAdjust: "exact",
-                                printColorAdjust: "exact",
                             }}
                         >
                             {/* 템플릿 렌더링 */}
@@ -1081,4 +1038,3 @@ const TemplateE: React.FC<{
         </div>
     );
 };
-
