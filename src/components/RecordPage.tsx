@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toPng } from "html-to-image";
 import { DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
+import { domToBlob } from "modern-screenshot";
 import "react-day-picker/dist/style.css";
 
 /* ====== 에셋 ====== */
@@ -212,70 +213,51 @@ const RecordPage: React.FC = () => {
     };
     const goPrev = () => setStep(1);
 
-    // 유틸: iOS 판별
-const isIOS = () => /iP(hone|od|ad)/.test(navigator.userAgent);
 
-// 기존 handleDownload 교체
-const handleDownload = async () => {
-  if (!canvasRef.current) return;
-  if (run.photoPreview && !imageReady) {
-    alert("이미지 로딩 중입니다. 잠시만 기다려 주세요.");
-    return;
-  }
 
-  // 1) 캔버스를 PNG data URL로 생성
-  const dataUrl = await toPng(canvasRef.current, {
-    cacheBust: true,
-    pixelRatio: 2,
-    width: 640,
-    height: 640,
-    backgroundColor: "#ffffff",
-    style: { width: "640px", height: "640px", transform: "none" },
-  });
 
-  // 2) data URL → Blob
-  const blob = await (await fetch(dataUrl)).blob();
-  const fileName = `riku-certificate-${run.date || "run"}.png`;
+    // 유틸: iOS 감지
+    const isIOS = () => /iP(hone|od|ad)/.test(navigator.userAgent);
 
-  // 3) iOS 우선 처리
-  if (isIOS()) {
-    // 3-1) Web Share API 지원되면 "공유"로 저장 유도(사진 앱 저장 포함)
-    const file = new File([blob], fileName, { type: "image/png" });
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      try {
-        await navigator.share({
-          files: [file],
-          title: "RIKU 기록증",
-          text: "기록증 이미지를 저장/공유하세요.",
+    const EXPORT_SIZE = 640; // CSS 크기
+    const DPR = Math.max(3, Math.floor(window.devicePixelRatio || 1)); // 2~3 추천
+
+    const handleDownload = async () => {
+        if (!canvasRef.current) return;
+        if (run.photoPreview && !imageReady) return alert("이미지 로딩 중입니다.");
+
+        // 🔥 핵심: pixelRatio로 해상도 업스케일
+        const blob = await domToBlob(canvasRef.current, {
+            width: EXPORT_SIZE,
+            height: EXPORT_SIZE,
+            pixelRatio: DPR, // <<<<<<<<<<<<<<<<<<<<<<
+            backgroundColor: "#ffffff",
+            style: {
+                width: `${EXPORT_SIZE}px`,
+                height: `${EXPORT_SIZE}px`,
+                transform: "none",
+                transformOrigin: "top left",
+            },
         });
-        return;
-      } catch {
-        // 사용자가 공유 취소한 경우 등 -> 아래 blob URL 미리보기로 폴백
-      }
-    }
 
-    // 3-2) 폴백: 새 탭/현재 탭에 미리보기 열고 '길게 눌러 저장'
-    const url = URL.createObjectURL(blob);
-    // 새 탭이 팝업으로 막히면 같은 탭으로 열기
-    const win = window.open(url, "_blank", "noopener,noreferrer");
-    if (!win) {
-      window.location.href = url; // 동일 탭
-    }
-    // iOS에서 즉시 revoke하면 이미지가 사라질 수 있어 약간 지연
-    setTimeout(() => URL.revokeObjectURL(url), 60_000);
-    return;
-  }
+        const fileName = `riku-certificate-${run.date || "run"}.png`;
+        const url = URL.createObjectURL(blob);
 
-  // 4) iOS 외: a[download]로 정상 다운로드
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = fileName;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-};
+        if (isIOS()) {
+            const win = window.open(url, "_blank", "noopener,noreferrer");
+            if (!win) window.location.href = url;
+            setTimeout(() => URL.revokeObjectURL(url), 60000);
+            return;
+        }
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+    };
 
     // 미리보기 자동 스케일
     const PREVIEW_BASE = 640;
