@@ -719,7 +719,7 @@ const TemplateA: React.FC<{
         <div className="absolute right-[29px] top-[46px] z-10 text-[14px] font-semibold w-[160px]">
             <div className="flex justify-between gap-6"><span className="underline font-paperlogy font-bold">TIME</span><span className="text-right">{time}</span></div>
             <div className="flex justify-between gap-6"><span className="underline font-paperlogy font-bold">PACE</span><span className="text-right">{pace}</span></div>
-            <div className="flex justify-between gap-6"><span className="underline font-paperlogy font-bold">KILOMETER</span><span className="text-right">{distanceKm.toFixed(2)}km</span></div>
+            <div className="flex justify-between gap-6"><span className="underline font-paperlogy font-bold">DISTANCE</span><span className="text-right">{distanceKm.toFixed(2)}km</span></div>
         </div>
 
         {/* 좌상단 서브 카피 */}
@@ -800,7 +800,7 @@ const TemplateB: React.FC<{
                         <span className="text-right">{pace}</span>
                     </div>
                     <div className="grid grid-cols-[110px_1fr] items-center gap-x-6">
-                        <span className="flex items-center gap-2"><img className="w-6 h-6 object-contain" src={icoDist} alt="kilometer" /><span>KILOMETER</span></span>
+                        <span className="flex items-center gap-2"><img className="w-6 h-6 object-contain" src={icoDist} alt="DISTANCE" /><span>DISTANCE</span></span>
                         <span className="text-right">{distanceKm.toFixed(2)}km</span>
                     </div>
                 </div>
@@ -939,12 +939,12 @@ const TemplateD: React.FC<{
                     {date || "YYYY.MM.DD"}
                 </div>
                 <div
-    className="
+                    className="
       mt-2 text-[18px] font-paperlogy font-normal
       max-w-[430px] leading-snug tracking-[0.01em]
       truncate whitespace-nowrap
     "
-  >
+                >
                     {title || "러닝 제목"}
                 </div>
             </div>
@@ -1003,7 +1003,7 @@ const TemplateE: React.FC<{
                     <span className="tracking-wide opacity-80 text-left">_PACE</span>
                     <span className="text-right">{pace}</span>
 
-                    <span className="tracking-wide opacity-80 text-left">_KILOMETER</span>
+                    <span className="tracking-wide opacity-80 text-left">_DISTANCE</span>
                     <span className="text-right">{distanceKm.toFixed(2)}km</span>
                 </div>
             </div>
