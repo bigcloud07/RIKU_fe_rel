@@ -724,7 +724,8 @@ const TemplateA: React.FC<{
 
         {/* 좌상단 서브 카피 */}
         <div className="absolute left-7 top-[43px] z-10 text-[14px] font-paperlogy font-semibold">
-            KONKUK. UNIV<br />RUNING CREW-
+            KONKUK. UNIV<br />
+            <span className="whitespace-nowrap">RUNNING CREW-</span>
         </div>
 
         {/* 로고 */}
@@ -778,12 +779,14 @@ const TemplateB: React.FC<{
             {/* 좌하단 텍스트/표 */}
             <div className={`absolute left-9 bottom-9 z-10 ${textColor}`}>
                 <div className="mb-1 text-sm font-paperlogy font-bold tracking-widest"><span>{date || "YYYY_MM_DD"}</span></div>
-                <div className="mb-4 text-3xl font-paperlogy font-bold
-                        leading-tight tracking-[0.01em]
-                        break-keep line-clamp-2"
-                    style={{ display: "-webkit-box", WebkitBoxOrient: "vertical" }}>
+                <div
+                    className={`
+                    mb-4 text-3xl font-paperlogy font-bold leading-tight tracking-[0.01em]
+                    overflow-hidden line-clamp-2
+                     max-w-[430px]`}
+                >
                     {title || "러닝 제목"}
-                    </div>
+                </div>
 
                 {/* 기록 표 */}
                 <div className="space-y-1 text-sm font-paperlogy font-bold tabular-nums">
@@ -934,10 +937,14 @@ const TemplateD: React.FC<{
                 <div className="text-[13px] font-paperlogy font-bold tracking-wide opacity-90">
                     {date || "YYYY.MM.DD"}
                 </div>
-                <div className="mt-2 text-[18px] font-paperlogy font-normal max-w-[260px]
-                leading-snug tracking-[0.01em]
-                break-keep line-clamp-2"
-                style={{ display: "-webkit-box", WebkitBoxOrient: "vertical" }}>
+                <div
+                    className="
+      mt-2 text-[18px] font-paperlogy font-normal
+      max-w-[300px] leading-snug tracking-[0.01em]
+      overflow-hidden break-words
+      [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]
+    "
+                >
                     {title || "러닝 제목"}
                 </div>
             </div>
@@ -981,7 +988,7 @@ const TemplateE: React.FC<{
             {/* 좌상단: RIKU 텍스트 + 제목 */}
             <div className="absolute left-6 top-7 z-10">
                 <img src={RikuTextBlack} alt="RIKU" className="h-6 w-auto mb-3" />
-                 <div className="text-[28px] leading-tight font-paperlogy font-bold tracking-tight
+                <div className="text-[28px] leading-tight font-paperlogy font-bold tracking-tight
                 whitespace-nowrap overflow-hidden text-ellipsis break-keep">
                     {title || "러닝 제목"}
                 </div>
