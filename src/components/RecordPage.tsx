@@ -780,10 +780,11 @@ const TemplateB: React.FC<{
             <div className={`absolute left-9 bottom-9 z-10 ${textColor}`}>
                 <div className="mb-1 text-sm font-paperlogy font-bold tracking-widest"><span>{date || "YYYY_MM_DD"}</span></div>
                 <div
-                    className={`
-                    mb-4 text-3xl font-paperlogy font-bold leading-tight tracking-[0.01em]
-                    overflow-hidden line-clamp-2
-                     max-w-[430px]`}
+                    className="
+      mb-4 text-3xl font-paperlogy font-bold leading-tight tracking-[0.01em]
+      max-w-[430px] whitespace-nowrap overflow-hidden text-ellipsis
+     
+    "
                 >
                     {title || "러닝 제목"}
                 </div>
@@ -938,13 +939,12 @@ const TemplateD: React.FC<{
                     {date || "YYYY.MM.DD"}
                 </div>
                 <div
-                    className="
+    className="
       mt-2 text-[18px] font-paperlogy font-normal
-      max-w-[300px] leading-snug tracking-[0.01em]
-      overflow-hidden break-words
-      [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]
+      max-w-[430px] leading-snug tracking-[0.01em]
+      truncate whitespace-nowrap
     "
-                >
+  >
                     {title || "러닝 제목"}
                 </div>
             </div>
