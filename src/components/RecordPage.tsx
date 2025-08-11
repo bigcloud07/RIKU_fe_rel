@@ -6,17 +6,17 @@ import { domToBlob } from "modern-screenshot";
 import "react-day-picker/dist/style.css";
 
 /* ====== 에셋 ====== */
-import RikuTextBlack from "../assets/RecordAsset/Riku_text_black.svg";
-import RikuTextWhite from "../assets/RecordAsset/Riku_text_white.svg";
-import RikuCowWhite from "../assets/RecordAsset/Riku_cow_white.svg";
-import RikuCowBlack from "../assets/RecordAsset/Riku_cow_black.svg";
-import Distance_black from "../assets/RecordAsset/Distance_black.svg";
-import Distance_white from "../assets/RecordAsset/Distance_white.svg";
-import Pace_black from "../assets/RecordAsset/Pace_black.svg";
-import Pace_white from "../assets/RecordAsset/Pace_white.svg";
-import Time_black from "../assets/RecordAsset/Time_black.svg";
-import Time_white from "../assets/RecordAsset/Time_white.svg";
-import Film from "../assets/RecordAsset/film.svg"; // 필름 템플릿 배경
+import RikuTextBlack from "../assets/RecordAsset/Riku_text_black.png";
+import RikuTextWhite from "../assets/RecordAsset/Riku_text_white.png";
+import RikuCowWhite from "../assets/RecordAsset/Riku_cow_white.png";
+import RikuCowBlack from "../assets/RecordAsset/Riku_cow_black.png";
+import Distance_black from "../assets/RecordAsset/Distance_black.png";
+import Distance_white from "../assets/RecordAsset/Distance_white.png";
+import Pace_black from "../assets/RecordAsset/Pace_black.png";
+import Pace_white from "../assets/RecordAsset/Pace_white.png";
+import Time_black from "../assets/RecordAsset/Time_black.png";
+import Time_white from "../assets/RecordAsset/Time_white.png";
+import Film from "../assets/RecordAsset/film.png"; // 필름 템플릿 배경
 import BackIcon from "../assets/BackBtn.svg";
 import defalultImg from "../assets/RecordAsset/defaultImg.jpg"; // 기본 이미지
 
