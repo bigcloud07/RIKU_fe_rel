@@ -1,6 +1,5 @@
 import React, { useMemo, useRef, useState, useEffect, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { toPng } from "html-to-image";
 import { DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import { domToBlob } from "modern-screenshot";
@@ -19,6 +18,7 @@ import Time_black from "../assets/RecordAsset/Time_black.svg";
 import Time_white from "../assets/RecordAsset/Time_white.svg";
 import Film from "../assets/RecordAsset/film.svg"; // 필름 템플릿 배경
 import BackIcon from "../assets/BackBtn.svg";
+import defalultImg from "../assets/RecordAsset/defaultImg.jpg"; // 기본 이미지
 
 import TemplateAImg from "../assets/RecordAsset/templateA.jpeg";
 import TemplateBImg from "../assets/RecordAsset/templateB.jpeg";
@@ -225,11 +225,11 @@ const RecordPage: React.FC = () => {
         if (run.photoPreview && !imageReady) return alert("이미지 로딩 중입니다.");
 
         // 해상도 업스케일
-        const blob = await domToBlob(canvasRef.current, {
+        const blob = await domToBlob(canvasRef.current!, {
             width: EXPORT_SIZE,
             height: EXPORT_SIZE,
-            pixelRatio: DPR,
             backgroundColor: "#ffffff",
+            scale: DPR, 
             style: {
                 width: `${EXPORT_SIZE}px`,
                 height: `${EXPORT_SIZE}px`,
@@ -518,7 +518,7 @@ const RecordPage: React.FC = () => {
 
             {/* 2단계: 템플릿/미리보기/다운로드 */}
             {step === 2 && (
-                <section className="space-y-6 p-4">
+                <section className="space-y-6 p-4 pt-0">
                     {/* 미리보기 래퍼: 정사각형, 내부 스케일 */}
                     <div
                         ref={previewWrapRef}
@@ -544,7 +544,7 @@ const RecordPage: React.FC = () => {
                                     time={fmtTime(run.timeHH, run.timeMM, run.timeSS)}
                                     pace={fmtPace(run.paceMM, run.paceSS)}
                                     distanceKm={run.distanceKm || autoDistance}
-                                    photoUrl={run.photoPreview}
+                                    photoUrl={run.photoPreview || defalultImg}
                                     onImageLoad={() => setImageReady(true)}
                                     onImageError={() => setImageReady(true)}
                                 />
@@ -556,9 +556,9 @@ const RecordPage: React.FC = () => {
                                     time={fmtTime(run.timeHH, run.timeMM, run.timeSS)}
                                     pace={fmtPace(run.paceMM, run.paceSS)}
                                     distanceKm={run.distanceKm || autoDistance}
-                                    photoUrl={run.photoPreview}
+                                    photoUrl={run.photoPreview || defalultImg}
                                     theme={templateBTheme}
-                                    
+
                                 />
                             )}
                             {template === "templateC" && (
@@ -567,9 +567,9 @@ const RecordPage: React.FC = () => {
                                     time={fmtTime(run.timeHH, run.timeMM, run.timeSS)}
                                     pace={fmtPace(run.paceMM, run.paceSS)}
                                     distanceKm={run.distanceKm || autoDistance}
-                                    photoUrl={run.photoPreview}
+                                    photoUrl={run.photoPreview || defalultImg}
                                     theme={templateCTheme}
-                                   
+
                                 />
                             )}
                             {template === "templateD" && (
@@ -579,9 +579,9 @@ const RecordPage: React.FC = () => {
                                     time={fmtTime(run.timeHH, run.timeMM, run.timeSS)}
                                     pace={fmtPace(run.paceMM, run.paceSS)}
                                     distanceKm={run.distanceKm || autoDistance}
-                                    photoUrl={run.photoPreview}
+                                    photoUrl={run.photoPreview || defalultImg}
                                     theme={templateDTheme}
-                                    
+
                                 />
                             )}
                             {template === "templateE" && (
@@ -591,7 +591,7 @@ const RecordPage: React.FC = () => {
                                     time={fmtTime(run.timeHH, run.timeMM, run.timeSS)}
                                     pace={fmtPace(run.paceMM, run.paceSS)}
                                     distanceKm={run.distanceKm || autoDistance}
-                                    photoUrl={run.photoPreview}
+                                    photoUrl={run.photoPreview || defalultImg}
                                 />
                             )}
 
