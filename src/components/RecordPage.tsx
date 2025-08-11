@@ -61,7 +61,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ value, onChange, label, name 
                 </legend>
             )}
 
-            {/* ✅ 가로 전체폭, 버튼 1:1 비율, 좁은 화면에서도 안전 */}
+
             <div className="flex w-full overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm"
                 role="radiogroup" aria-label={label || "색상 모드 선택"}>
                 {/* Black */}
@@ -229,7 +229,7 @@ const RecordPage: React.FC = () => {
             width: EXPORT_SIZE,
             height: EXPORT_SIZE,
             backgroundColor: "#ffffff",
-            scale: DPR, 
+            scale: DPR,
             style: {
                 width: `${EXPORT_SIZE}px`,
                 height: `${EXPORT_SIZE}px`,
@@ -708,24 +708,27 @@ const TemplateA: React.FC<{
 }> = ({ title, date, time, pace, distanceKm, photoUrl, onImageLoad, onImageError }) => (
     <div className="relative w-full h-full overflow-hidden bg-white">
         {/* 상단 중앙 제목 */}
-        <div className="absolute top-[10px] left-1/2 -translate-x-1/2 text-[22px] font-paperlogy font-bold text-center">
+        <div className="absolute top-[12px] left-24 right-24
+                text-[22px] font-paperlogy font-bold text-center
+                leading-tight tracking-[0.01em]
+               whitespace-nowrap overflow-hidden text-ellipsis break-keep">
             {title || "러닝 제목"}
         </div>
 
         {/* 우상단 정보 */}
-        <div className="absolute right-6 top-11 z-10 text-[14px] font-semibold">
+        <div className="absolute right-[29px] top-[46px] z-10 text-[14px] font-semibold w-[160px]">
             <div className="flex justify-between gap-6"><span className="underline font-paperlogy font-bold">TIME</span><span className="text-right">{time}</span></div>
             <div className="flex justify-between gap-6"><span className="underline font-paperlogy font-bold">PACE</span><span className="text-right">{pace}</span></div>
             <div className="flex justify-between gap-6"><span className="underline font-paperlogy font-bold">KILOMETER</span><span className="text-right">{distanceKm.toFixed(2)}km</span></div>
         </div>
 
         {/* 좌상단 서브 카피 */}
-        <div className="absolute left-7 top-10 z-10 text-[14px] font-paperlogy font-semibold">
+        <div className="absolute left-7 top-[43px] z-10 text-[14px] font-paperlogy font-semibold">
             KONKUK. UNIV<br />RUNING CREW-
         </div>
 
         {/* 로고 */}
-        <img src={RikuTextBlack} alt="RIKU" className="absolute left-6 top-[90px] h-6 w-auto" />
+        <img src={RikuTextBlack} alt="RIKU" className="absolute left-6 top-[92px] h-6 w-auto" />
 
         {/* 사진 영역 */}
         <div className="absolute left-6 right-6 top-[130px] bottom-[76px] overflow-hidden bg-gray-100">
@@ -775,7 +778,12 @@ const TemplateB: React.FC<{
             {/* 좌하단 텍스트/표 */}
             <div className={`absolute left-9 bottom-9 z-10 ${textColor}`}>
                 <div className="mb-1 text-sm font-paperlogy font-bold tracking-widest"><span>{date || "YYYY_MM_DD"}</span></div>
-                <div className="mb-4 text-3xl font-paperlogy font-bold">{title || "러닝 제목"}</div>
+                <div className="mb-4 text-3xl font-paperlogy font-bold
+                        leading-tight tracking-[0.01em]
+                        break-keep line-clamp-2"
+                    style={{ display: "-webkit-box", WebkitBoxOrient: "vertical" }}>
+                    {title || "러닝 제목"}
+                    </div>
 
                 {/* 기록 표 */}
                 <div className="space-y-1 text-sm font-paperlogy font-bold tabular-nums">
@@ -926,7 +934,10 @@ const TemplateD: React.FC<{
                 <div className="text-[13px] font-paperlogy font-bold tracking-wide opacity-90">
                     {date || "YYYY.MM.DD"}
                 </div>
-                <div className="mt-2 text-[18px] font-paperlogy font-normal max-w-[260px] leading-snug">
+                <div className="mt-2 text-[18px] font-paperlogy font-normal max-w-[260px]
+                leading-snug tracking-[0.01em]
+                break-keep line-clamp-2"
+                style={{ display: "-webkit-box", WebkitBoxOrient: "vertical" }}>
                     {title || "러닝 제목"}
                 </div>
             </div>
@@ -970,7 +981,8 @@ const TemplateE: React.FC<{
             {/* 좌상단: RIKU 텍스트 + 제목 */}
             <div className="absolute left-6 top-7 z-10">
                 <img src={RikuTextBlack} alt="RIKU" className="h-6 w-auto mb-3" />
-                <div className="text-[28px] leading-tight font-paperlogy font-bold tracking-tight">
+                 <div className="text-[28px] leading-tight font-paperlogy font-bold tracking-tight
+                whitespace-nowrap overflow-hidden text-ellipsis break-keep">
                     {title || "러닝 제목"}
                 </div>
             </div>

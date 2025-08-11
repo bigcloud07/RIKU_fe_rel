@@ -8,6 +8,12 @@
   color-scheme: light; /* 브라우저 다크모드 비활성 */
 }
 
+/* 이미지, SVG, 동영상, 캔버스 등 자동 색 반전 막기 */
+img, svg, canvas, video {
+  filter: none !important;
+  mix-blend-mode: normal;
+}
+
 @media (prefers-color-scheme: dark) {
   html, body {
     background: #ffffff;
@@ -102,3 +108,5 @@ code {
   src: url('./assets/fonts/Paperlogy/Paperlogy-9Black.ttf') format('truetype');
   font-weight: 900;
 }
+
+html { -webkit-text-size-adjust: 100%; } /* 안드로이드 자동 글자확대 방지 */
