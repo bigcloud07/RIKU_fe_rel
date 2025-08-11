@@ -101,82 +101,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ value, onChange, label, name 
     );
 };
 
-// iOS 감지
-const isIOS = () => /iP(hone|od|ad)/.test(navigator.userAgent);
 
-// 새 탭 미리보기 + 다운로드 버튼 내장
-function openPreviewWithDownload(blob: Blob, fileName: string) {
-    const imgURL = URL.createObjectURL(blob);
-    const win = window.open("", "_blank");
-    if (!win) {
-        window.location.href = imgURL;
-        return;
-    }
-
-    const html = `
-<!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>${fileName}</title>
-<style>
-  body { margin:0; background:#111; color:#fff; font-family:system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
-  .bar { position:sticky; top:0; display:flex; gap:8px; align-items:center; justify-content:space-between;
-         padding:12px 16px; background:#111; border-bottom:1px solid #333; }
-  .btn { padding:10px 14px; border-radius:10px; border:1px solid #444; background:#1f8a5b; color:#fff; font-weight:600; cursor:pointer; }
-  .btn:disabled{ opacity:.6; cursor:not-allowed; }
-  .wrap { display:flex; justify-content:center; align-items:center; padding:16px; }
-  img { max-width:100%; height:auto; display:block; }
-  .hint { font-size:12px; color:#aaa; margin-left:12px; }
-</style>
-</head>
-<body>
-  <div class="bar">
-    <div>
-      <strong>${fileName}</strong>
-      ${isIOS() ? `<span class="hint">iOS는 '이미지 길게 눌러 ▶ 사진에 저장'이 더 안정적입니다.</span>` : ""}
-    </div>
-    <div>
-      <button id="download" class="btn">다운로드</button>
-    </div>
-  </div>
-  <div class="wrap">
-    <img id="preview" alt="certificate" src="${imgURL}"/>
-  </div>
-
-  <script>
-    (function(){
-      const fileName = ${JSON.stringify(fileName)};
-      const imgURL = ${JSON.stringify(imgURL)};
-      const btn = document.getElementById('download');
-
-      btn.addEventListener('click', function(){
-        try {
-          const a = document.createElement('a');
-          a.href = imgURL;
-          a.download = fileName;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-        } catch (e) {
-          alert('다운로드를 시작하지 못했습니다. 이미지를 길게 눌러 저장해 주세요.');
-        }
-      });
-
-      window.addEventListener('pagehide', function(){
-        try { URL.revokeObjectURL(imgURL); } catch(e){}
-      });
-    })();
-  </script>
-</body>
-</html>
-  `;
-
-    win.document.open();
-    win.document.write(html);
-    win.document.close();
-}
 
 
 
@@ -292,22 +217,18 @@ const RecordPage: React.FC = () => {
 
 
 
-
-    // 유틸: iOS 감지
-    const isIOS = () => /iP(hone|od|ad)/.test(navigator.userAgent);
-
-    const EXPORT_SIZE = 640; // CSS 크기
-    const DPR = Math.max(3, Math.floor(window.devicePixelRatio || 1)); // 2~3 추천
+    const EXPORT_SIZE = 1280;
+    const DPR = 4;
 
     const handleDownload = async () => {
         if (!canvasRef.current) return;
         if (run.photoPreview && !imageReady) return alert("이미지 로딩 중입니다.");
 
-        // 🔥 핵심: pixelRatio로 해상도 업스케일
+        // 🔥 해상도 업스케일
         const blob = await domToBlob(canvasRef.current, {
             width: EXPORT_SIZE,
             height: EXPORT_SIZE,
-            pixelRatio: DPR, // <<<<<<<<<<<<<<<<<<<<<<
+            pixelRatio: DPR,
             backgroundColor: "#ffffff",
             style: {
                 width: `${EXPORT_SIZE}px`,
@@ -317,23 +238,19 @@ const RecordPage: React.FC = () => {
             },
         });
 
+        if (!blob) return;
+
         const fileName = `riku-certificate-${run.date || "run"}.png`;
-        openPreviewWithDownload(blob, fileName);
         const url = URL.createObjectURL(blob);
 
-        if (isIOS()) {
-            const win = window.open(url, "_blank", "noopener,noreferrer");
-            if (!win) window.location.href = url;
-            setTimeout(() => URL.revokeObjectURL(url), 60000);
-            return;
-        }
-
+        // 바로 다운로드
         const a = document.createElement("a");
         a.href = url;
         a.download = fileName;
         document.body.appendChild(a);
         a.click();
-        a.remove();
+        document.body.removeChild(a);
+
         URL.revokeObjectURL(url);
     };
 
@@ -641,6 +558,7 @@ const RecordPage: React.FC = () => {
                                     distanceKm={run.distanceKm || autoDistance}
                                     photoUrl={run.photoPreview}
                                     theme={templateBTheme}
+                                    
                                 />
                             )}
                             {template === "templateC" && (
@@ -651,6 +569,7 @@ const RecordPage: React.FC = () => {
                                     distanceKm={run.distanceKm || autoDistance}
                                     photoUrl={run.photoPreview}
                                     theme={templateCTheme}
+                                   
                                 />
                             )}
                             {template === "templateD" && (
@@ -662,6 +581,7 @@ const RecordPage: React.FC = () => {
                                     distanceKm={run.distanceKm || autoDistance}
                                     photoUrl={run.photoPreview}
                                     theme={templateDTheme}
+                                    
                                 />
                             )}
                             {template === "templateE" && (
