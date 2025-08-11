@@ -217,14 +217,14 @@ const RecordPage: React.FC = () => {
 
 
 
-    const EXPORT_SIZE = 1280;
-    const DPR = 4;
+    const EXPORT_SIZE = 640;
+    const DPR = 3;
 
     const handleDownload = async () => {
         if (!canvasRef.current) return;
         if (run.photoPreview && !imageReady) return alert("이미지 로딩 중입니다.");
 
-        // 🔥 해상도 업스케일
+        // 해상도 업스케일
         const blob = await domToBlob(canvasRef.current, {
             width: EXPORT_SIZE,
             height: EXPORT_SIZE,
@@ -240,7 +240,7 @@ const RecordPage: React.FC = () => {
 
         if (!blob) return;
 
-        const fileName = `riku-certificate-${run.date || "run"}.png`;
+        const fileName = `riku-record-${run.date || "run"}.png`;
         const url = URL.createObjectURL(blob);
 
         // 바로 다운로드
@@ -713,7 +713,7 @@ const TemplateA: React.FC<{
         </div>
 
         {/* 우상단 정보 */}
-        <div className="absolute right-6 top-10 z-10 text-[14px] font-semibold">
+        <div className="absolute right-6 top-11 z-10 text-[14px] font-semibold">
             <div className="flex justify-between gap-6"><span className="underline font-paperlogy font-bold">TIME</span><span className="text-right">{time}</span></div>
             <div className="flex justify-between gap-6"><span className="underline font-paperlogy font-bold">PACE</span><span className="text-right">{pace}</span></div>
             <div className="flex justify-between gap-6"><span className="underline font-paperlogy font-bold">KILOMETER</span><span className="text-right">{distanceKm.toFixed(2)}km</span></div>
