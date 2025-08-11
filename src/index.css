@@ -3,6 +3,22 @@
 @tailwind components;
 @tailwind utilities;
 
+
+:root {
+  color-scheme: light; /* 브라우저 다크모드 비활성 */
+}
+
+@media (prefers-color-scheme: dark) {
+  html, body {
+    background: #ffffff;
+    color: #111111;
+  }
+  img, video, canvas, picture {
+    filter: none !important; /* 이미지 색 반전 방지 */
+    mix-blend-mode: normal;
+  }
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
