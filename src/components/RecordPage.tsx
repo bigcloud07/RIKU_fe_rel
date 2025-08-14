@@ -152,11 +152,11 @@ const RecordPage: React.FC = () => {
     const [run, setRun] = useState<RunData>({
         title: "",
         date: "",
-        timeHH: "0",
-        timeMM: "00",
-        timeSS: "00",
-        paceMM: "00",
-        paceSS: "00",
+        timeHH: "",
+        timeMM: "",
+        timeSS: "",
+        paceMM: "",
+        paceSS: "",
         distanceKm: 0,
         photo: null,
         photoPreview: undefined,
@@ -384,21 +384,24 @@ const RecordPage: React.FC = () => {
                                 className="w-20 rounded-xl border p-3 text-center"
                                 value={run.timeHH}
                                 onChange={(e) => setField("timeHH", e.target.value.replace(/\D/g, ""))}
-                                placeholder="HH"
+                                placeholder="00"
+                                maxLength={2}
                             />
                             <span className="self-center">:</span>
                             <input
                                 className="w-20 rounded-xl border p-3 text-center"
                                 value={run.timeMM}
                                 onChange={(e) => setField("timeMM", e.target.value.replace(/\D/g, ""))}
-                                placeholder="MM"
+                                placeholder="00"
+                                maxLength={2}
                             />
                             <span className="self-center">:</span>
                             <input
                                 className="w-20 rounded-xl border p-3 text-center"
                                 value={run.timeSS}
                                 onChange={(e) => setField("timeSS", e.target.value.replace(/\D/g, ""))}
-                                placeholder="SS"
+                                placeholder="00"
+                                maxLength={2}
                             />
                         </div>
                     </div>
@@ -411,14 +414,16 @@ const RecordPage: React.FC = () => {
                                 className="w-20 rounded-xl border p-3 text-center"
                                 value={run.paceMM}
                                 onChange={(e) => setRun((p) => ({ ...p, paceMM: e.target.value.replace(/\D/g, "") }))}
-                                placeholder="MM"
+                                placeholder="00"
+                                maxLength={2}
                             />
                             <span className="self-center">분</span>
                             <input
                                 className="w-20 rounded-xl border p-3 text-center"
                                 value={run.paceSS}
                                 onChange={(e) => setRun((p) => ({ ...p, paceSS: e.target.value.replace(/\D/g, "") }))}
-                                placeholder="SS"
+                                placeholder="00"
+                                maxLength={2}
                             />
                             <span className="self-center">초</span>
                         </div>
@@ -995,7 +1000,7 @@ const TemplateE: React.FC<{
             </div>
 
             {/* 우상단: 기록 표 */}
-            <div className="absolute right-9 top-7 z-10 font-paperlogy font-bold tabular-nums">
+            <div className="absolute right-9 top-[34px] z-10 font-paperlogy font-bold tabular-nums">
                 <div className="grid grid-cols-[110px_1fr] gap-x-4 gap-y-2 text-[16px] leading-none">
                     <span className="tracking-wide opacity-80 text-left">_TIME</span>
                     <span className="text-right">{time}</span>
