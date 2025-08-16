@@ -5,7 +5,7 @@ import { ko } from "date-fns/locale";
 import { domToBlob } from "modern-screenshot";
 import "react-day-picker/dist/style.css";
 
-/* ====== 에셋 ====== */
+
 import RikuTextBlack from "../assets/RecordAsset/Riku_text_black.png";
 import RikuTextWhite from "../assets/RecordAsset/Riku_text_white.png";
 import RikuCowWhite from "../assets/RecordAsset/Riku_cow_white.png";
@@ -300,7 +300,7 @@ const RecordPage: React.FC = () => {
                         />
                     </div>
 
-                    {/* 날짜 (모달 달력 오픈) */}
+                    {/* 날짜 */}
                     <div>
                         <label className="mb-1 block text-sm font-medium">날짜</label>
 
@@ -354,7 +354,7 @@ const RecordPage: React.FC = () => {
                                                 chevron: "fill-black",
                                                 disabled: "text-gray-300 cursor-not-allowed",
                                             }}
-                                        // 필요 시 제한: disabled={{ before: new Date() }}  // 오늘 이전 비활성화
+                                       
                                         />
                                     </div>
 
@@ -706,7 +706,7 @@ const RecordPage: React.FC = () => {
 
 export default RecordPage;
 
-/* ===== 템플릿 A: 사진 꽉차게(object-cover) ===== */
+/* ===== 템플릿 A ===== 필름스타일 (1) */
 const TemplateA: React.FC<{
     title: string; date: string; time: string; pace: string; distanceKm: number;
     photoUrl?: string; onImageLoad?: () => void; onImageError?: () => void;
@@ -754,7 +754,7 @@ const TemplateA: React.FC<{
     </div>
 );
 
-/* ===== 템플릿 B (배경 = 업로드 사진, 테마 지원) ===== */
+/* ===== 템플릿 B  ===== */
 const TemplateB: React.FC<{
     title: string; date: string; time: string; pace: string; distanceKm: number; photoUrl?: string; theme?: ThemeBW;
 }> = ({ title, date, time, pace, distanceKm, photoUrl, theme = "black" }) => {
@@ -814,7 +814,7 @@ const TemplateB: React.FC<{
     );
 };
 
-/* ===== 템플릿 C (배경, 상단 중앙 로고, 하단 중앙 정보, 테마) ===== */
+/* ===== 템플릿 C ===== */
 const TemplateC: React.FC<{
     date: string; time: string; pace: string; distanceKm: number; photoUrl?: string; theme?: ThemeBW;
 }> = ({ date, time, pace, distanceKm, photoUrl, theme = "white" }) => {
@@ -877,7 +877,7 @@ const TemplateC: React.FC<{
     );
 };
 
-/* ===== 템플릿 D (새 레이아웃: 우상단 로고2, 좌하단 기록, 우하단 날짜·제목, 테마) ===== */
+/* ===== 템플릿 D  ===== */
 const TemplateD: React.FC<{
     title: string;
     date: string;        // YYYY.MM.DD
@@ -954,7 +954,7 @@ const TemplateD: React.FC<{
                 </div>
             </div>
 
-            {/* (옵션) 하단 그라데이션 가독성 보강 */}
+            {/* 하단 그라데이션 가독성 보강 -> 추후 필요하면 주석 해제*/}
             {/*
       <div className={`pointer-events-none absolute inset-x-0 bottom-0 h-40
         ${isWhite ? "bg-gradient-to-t from-black/30 to-transparent"
@@ -964,15 +964,7 @@ const TemplateD: React.FC<{
     );
 };
 
-/* ===== 템플릿 E =====
-   - 배경: film.svg (import Film)
-   - 좌상단: RIKU 텍스트 로고 + 러닝 제목
-   - 우상단: TIME / PACE / KILOMETER
-   - 중앙: 업로드 사진(비율 유지, 잘림 허용)
-   - 좌하단: RIKU 소 로고
-   - 우하단: 날짜 (YYYYMMDD)
-   - 색상: 흑/백 단일(요청 사양), 필요 시 테마 쉽게 확장 가능
-*/
+/* ===== 템플릿 E ===== 필름스타일 (2) */
 const TemplateE: React.FC<{
     title: string;
     date: string;        // YYYYMMDD
@@ -983,7 +975,7 @@ const TemplateE: React.FC<{
 }> = ({ title, date, time, pace, distanceKm, photoUrl }) => {
     return (
         <div className="relative w-full h-full overflow-hidden bg-white">
-            {/* 배경 film.svg */}
+            {/* 배경 */}
             <img
                 src={Film}
                 alt="film frame"
@@ -1013,7 +1005,7 @@ const TemplateE: React.FC<{
                 </div>
             </div>
 
-            {/* 중앙 이미지 영역 (프레임 안쪽 여백 감안해서 배치) */}
+            {/* 중앙 이미지 영역 */}
             <div className="absolute top-[130px] left-[110px] right-[32px] bottom-[65px] overflow-hidden bg-neutral-200">
                 {photoUrl ? (
                     <img
