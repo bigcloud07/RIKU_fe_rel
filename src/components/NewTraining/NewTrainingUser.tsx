@@ -435,7 +435,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
               }`}
           />
           {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
-            <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none">
+            <div className="absolute inset-0 flex justify-center items-center z-1 pointer-events-none bg-opacity-40 bg-black">
               <div className="transform -translate-y-[60%] text-white text-xl font-bold bg-opacity-60 px-4 py-2 rounded">
                 {postStatus === "CANCELED" ? "취소된 훈련입니다." : "마감된 훈련입니다."}
               </div>

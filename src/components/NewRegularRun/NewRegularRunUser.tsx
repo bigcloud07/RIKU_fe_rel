@@ -261,7 +261,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
               className={`w-full h-full object-cover ${postStatus === "CANCELED" || postStatus === "CLOSED" ? "brightness-50" : ""}`}
             />
             {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
-              <div className="absolute inset-0 flex justify-center items-center">
+              <div className="absolute inset-0 flex justify-center items-center bg-opacity-40 bg-black">
                 <div className="text-white text-lg font-bold bg-opacity-60 px-4 py-2 rounded">
                   {postStatus === "CANCELED" ? "취소된 러닝입니다." : "마감된 러닝입니다."}
                 </div>

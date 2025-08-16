@@ -497,7 +497,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
 
         {/* 상태 메시지 오버레이 */}
         {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
-          <div className="absolute top-0 left-0 w-full h-[308px] flex justify-center items-center z-10 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-[308px] flex justify-center items-center z-1 pointer-events-none bg-opacity-40 bg-black">
             <div className="transform -translate-y-[60%] text-white text-lg font-bold bg-opacity-60 px-4 py-2 rounded">
               {postStatus === "CANCELED" ? "취소된 훈련입니다." : "마감된 훈련입니다."}
             </div>
