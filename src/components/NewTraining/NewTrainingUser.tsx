@@ -19,7 +19,7 @@ import { Pagination } from "swiper/modules";
 import checkedicon from "../../assets/checkedicon.svg"
 import "swiper/css";
 import "swiper/css/pagination";
-import TabNavigationUI from "../TabNavigationUI";
+import { motion } from "framer-motion";
 import TabNavigationUI_detail from "../TabNavigationUI_detail";
 
 interface Participant {
@@ -58,10 +58,16 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [participantsNum, setParticipantsNum] = useState<number>(0);
   const [pacers, setPacers] = useState<Pacer[]>([]);
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
+  const [userInfo, setUserInfo] = useState<{
+    userId: number;
+    userName: string;
+    userProfileImg: string;
+    userRole: string;
+  }>({
     userId: 0,
     userName: "",
     userProfileImg: "",
+    userRole: "",
   });
 
 
@@ -188,7 +194,12 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           setParticipantsNum(result.participantsNum || 0);
           setPacers(result.pacers || []);
           setAttachmentUrls(result.attachmentUrls || []);
-          setUserInfo(result.userInfo || {});
+          setUserInfo({
+            userId: result.userInfo?.userId || 0,
+            userName: result.userInfo?.userName || "",
+            userProfileImg: result.userInfo?.userProfileImg || "",
+            userRole: result.userInfo?.userRole || "",
+          });
           setPostCreatorName(result.postCreatorInfo.userName);
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setGroupedParticipants(result.groupedParticipants || []);
@@ -275,7 +286,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     }
   };
 
-  
+
   const handleJoinConfirm = async () => {
     const isCancel = selectedGroup === "";
 
@@ -300,8 +311,8 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           setButtonText("참여하기");
           setSelectedGroup("");
         } else {
-          setUserStatus("PENDING"); 
-          setButtonText("출석하기"); 
+          setUserStatus("PENDING");
+          setButtonText("출석하기");
           setIsGroupModalOpen(false);
         }
 
@@ -399,6 +410,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           userId: result.userInfo?.userId || 0,
           userName: result.userInfo?.userName || "",
           userProfileImg: result.userInfo?.userProfileImg || "",
+          userRole: result.userInfo?.userRole || "",
         });
 
         // 댓글도 항상 최신화
@@ -417,7 +429,24 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     }
   };
 
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = React.useRef<HTMLDivElement>(null);
+  const dotButtonRef = React.useRef<HTMLDivElement>(null);
 
+  React.useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target as Node) &&
+        dotButtonRef.current &&
+        !dotButtonRef.current.contains(e.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+    };
+    if (showMenu) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showMenu]);
 
 
   return (
@@ -425,6 +454,71 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
       <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
         훈련
+        {userInfo.userRole === "ADMIN" && (
+          <div
+            ref={dotButtonRef}
+            className="absolute right-[5px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowMenu((prev) => !prev);
+            }}
+          >
+            <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
+              {[...Array(3)].map((_, i) => (
+                <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+              ))}
+            </div>
+          </div>
+        )}
+
+
+        {userInfo.userRole === "ADMIN" && showMenu && (
+          <motion.div
+            ref={menuRef}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={{ hidden: {}, visible: {}, exit: {} }}
+            className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
+          >
+            <motion.button
+              key="삭제하기"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+              onClick={async () => {
+                const ok = window.confirm("정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.");
+                if (!ok) return;
+                try {
+                  const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                  if (!token) {
+                    alert("로그인이 필요합니다.");
+                    return;
+                  }
+                  const { data } = await customAxios.delete(
+                    `/run/training/post/${postId}`,
+                    { headers: { Authorization: `${token}` } }
+                  );
+                  if (data.isSuccess) {
+                    alert("게시글이 삭제되었습니다.");
+                    setShowMenu(false);
+                    // 목록으로 이동
+                    window.location.href = "/training";
+                  } else {
+                    alert(data.responseMessage || "삭제에 실패했습니다.");
+                  }
+                } catch (err) {
+                  console.error(err);
+                  alert("삭제 요청 중 오류가 발생했습니다.");
+                }
+              }}
+            >
+              삭제하기
+            </motion.button>
+          </motion.div>
+        )}
       </div>
 
       <div className="relative w-full pb-[125px]">

@@ -117,51 +117,51 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
   const [postStatus, setPostStatus] = useState<string>("");
   const handleModalStartClick = async () => {
-  const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
-  if (!confirmClose) return;
+    const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
+    if (!confirmClose) return;
 
-  if (!code) return;
+    if (!code) return;
 
-  try {
-    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-    
-    // 출석 데이터 준비
-    const attendanceData = editableParticipants.map((user) => ({
-      userId: user.userId,
-      isAttend: user.status === "ATTENDED",
-    }));
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
-    //  출석 상태 먼저 반영
-    await customAxios.patch(
-      `/run/flash/post/${postId}/manual-attendance`,
-      attendanceData,
-      {
-        headers: { Authorization: `${token}` },
+      // 출석 데이터 준비
+      const attendanceData = editableParticipants.map((user) => ({
+        userId: user.userId,
+        isAttend: user.status === "ATTENDED",
+      }));
+
+      //  출석 상태 먼저 반영
+      await customAxios.patch(
+        `/run/flash/post/${postId}/manual-attendance`,
+        attendanceData,
+        {
+          headers: { Authorization: `${token}` },
+        }
+      );
+
+      //  출석 종료 처리
+      const response = await customAxios.patch(
+        `/run/flash/post/${postId}/close`,
+        {},
+        {
+          headers: { Authorization: `${token}` },
+        }
+      );
+
+      if (response.data.isSuccess) {
+        setIsFinished(true);
+        setPostStatus("CLOSED");
+        setIsModalOpen(false);
+        alert("출석이 종료되었습니다.");
+      } else {
+        setError(response.data.responseMessage);
       }
-    );
-
-    //  출석 종료 처리
-    const response = await customAxios.patch(
-      `/run/flash/post/${postId}/close`,
-      {},
-      {
-        headers: { Authorization: `${token}` },
-      }
-    );
-
-    if (response.data.isSuccess) {
-      setIsFinished(true);
-      setPostStatus("CLOSED");
-      setIsModalOpen(false);
-      alert("출석이 종료되었습니다.");
-    } else {
-      setError(response.data.responseMessage);
+    } catch (error) {
+      console.error(error);
+      setError("출석 종료 처리에 실패했습니다.");
     }
-  } catch (error) {
-    console.error(error);
-    setError("출석 종료 처리에 실패했습니다.");
-  }
-};
+  };
 
 
 
@@ -189,6 +189,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           userId: result.userInfo?.userId || 0,
           userName: result.userInfo?.userName || "",
           userProfileImg: result.userInfo?.userProfileImg || "",
+          userRole: result.userInfo?.userRole || "",
         });
         setPostCreatorImg(result.postCreatorInfo?.userProfileImg || null);
         setCurrentParticipantsNum(result.participantsNum); // 참가자 수 갱신
@@ -235,7 +236,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
 
 
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
+  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string; userRole: String }>({
     userId: 0,
     userName: "",
     userProfileImg: "",
@@ -260,6 +261,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
             userProfileImg: result.userInfo?.userProfileImg || "",
+            userRole: result.userInfo?.userRole || "",
           });
           setDate(result.date);
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
@@ -350,13 +352,10 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
               initial="hidden"
               animate="visible"
               exit="exit"
-              variants={{
-                hidden: {},
-                visible: {},
-                exit: {},
-              }}
+              variants={{ hidden: {}, visible: {}, exit: {} }}
               className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
             >
+              
               {["수정하기", "취소하기"].map((label, index) => (
                 <motion.button
                   key={label}
@@ -372,18 +371,13 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                         alert("종료된 러닝이나 취소된 러닝은 수정이 불가능합니다.");
                         return;
                       }
-
-                      // 정확한 비교 로직
                       const now = new Date();
-
-                      const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
-                      const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // 🔥 KST로 변환
-
+                      const runUtcDate = new Date(date);
+                      const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000);
                       if (now > runKstDate) {
                         alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
                         return;
                       }
-
                       navigate(`/flash/edit/${postId}`, { replace: true });
                       setShowMenu(false);
                     } else {
@@ -391,7 +385,6 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                         alert("이미 종료되었거나 취소된 게시글은 취소할 수 없습니다.");
                         return;
                       }
-
                       const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
                       if (!confirmCancel) return;
 
@@ -401,21 +394,15 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                           alert("로그인이 필요합니다.");
                           return;
                         }
-
                         const { data } = await customAxios.patch(
                           `/run/flash/post/${postId}/cancel`,
                           {},
-                          {
-                            headers: {
-                              Authorization: `${token}`,
-                            },
-                          }
+                          { headers: { Authorization: `${token}` } }
                         );
-
                         if (data.isSuccess) {
                           alert("게시글이 성공적으로 취소되었습니다.");
                           setShowMenu(false);
-                          navigate("/FlashRun");
+                          navigate("/flash");
                         } else {
                           alert(data.responseMessage || "취소에 실패했습니다.");
                         }
@@ -429,6 +416,48 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                   {label}
                 </motion.button>
               ))}
+
+             
+              {userInfo.userRole === "ADMIN" && (
+                <motion.button
+                  key="삭제하기"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: 0.3, duration: 0.2 }}
+                  className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+                  onClick={async () => {
+                    const confirmDelete = window.confirm("정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.");
+                    if (!confirmDelete) return;
+
+                    try {
+                      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                      if (!token) {
+                        alert("로그인이 필요합니다.");
+                        return;
+                      }
+                      // ⚠️ 서버 명세에 맞춰 필요 시 경로/메서드 변경
+                      const { data } = await customAxios.delete(
+                        `/run/flash/post/${postId}`,
+                        { headers: { Authorization: `${token}` } }
+                      );
+
+                      if (data.isSuccess) {
+                        alert("게시글이 삭제되었습니다.");
+                        setShowMenu(false);
+                        navigate("/FlashRun");
+                      } else {
+                        alert(data.responseMessage || "삭제에 실패했습니다.");
+                      }
+                    } catch (error) {
+                      console.error(error);
+                      alert("삭제 요청 중 오류가 발생했습니다.");
+                    }
+                  }}
+                >
+                  삭제하기
+                </motion.button>
+              )}
             </motion.div>
           )}
 

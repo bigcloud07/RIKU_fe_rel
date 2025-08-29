@@ -64,10 +64,11 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   const [participantsNum, setParticipantsNum] = useState<number>(0);
   const [pacers, setPacers] = useState<Pacer[]>([]);
   const [postCreatorName, setPostCreatorName] = useState("");
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
+  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string, userRole: string }>({
     userId: 0,
     userName: "",
     userProfileImg: "",
+    userRole: "",
   });
   const [buttonText, setButtonText] = useState("시작하기");
   const handleCloseModal = () => setIsModalOpen(false);
@@ -99,6 +100,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
           userId: result.userInfo?.userId || 0,
           userName: result.userInfo?.userName || "",
           userProfileImg: result.userInfo?.userProfileImg || "",
+          userRole: result.userInfo?.userRole || "",
         });
         setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
         setGroupedParticipants(result.groupedParticipants || []);
@@ -161,47 +163,47 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
   const [postStatus, setPostStatus] = useState<string>("");
 
   const handleModalStartClick = async () => {
-  const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
-  if (!confirmClose) return;
+    const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
+    if (!confirmClose) return;
 
-  if (!code) return;
+    if (!code) return;
 
-  try {
-    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
-    //수정된 출석 정보가 있다면 먼저 저장
-    if (Object.keys(editedAttendance).length > 0) {
-      const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
-        userId: Number(userId),
-        isAttend,
-      }));
+      //수정된 출석 정보가 있다면 먼저 저장
+      if (Object.keys(editedAttendance).length > 0) {
+        const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
+          userId: Number(userId),
+          isAttend,
+        }));
 
-      await customAxios.patch(`/run/regular/post/${postId}/manual-attendance`, payload, {
+        await customAxios.patch(`/run/regular/post/${postId}/manual-attendance`, payload, {
+          headers: { Authorization: `${token}` },
+        });
+
+        setEditedAttendance({});
+        setIsEditMode(false);
+      }
+
+      // 출석 종료 처리
+      const response = await customAxios.patch(`/run/regular/post/${postId}/close`, {}, {
         headers: { Authorization: `${token}` },
       });
 
-      setEditedAttendance({});
-      setIsEditMode(false);
+      if (response.data.isSuccess) {
+        setIsFinished(true);
+        setPostStatus("CLOSED");
+        setIsModalOpen(false);
+        alert("출석이 종료되었습니다.");
+      } else {
+        setError(response.data.responseMessage);
+      }
+    } catch (error) {
+      console.error(error);
+      setError("출석 종료 처리에 실패했습니다.");
     }
-
-    // 출석 종료 처리
-    const response = await customAxios.patch(`/run/regular/post/${postId}/close`, {}, {
-      headers: { Authorization: `${token}` },
-    });
-
-    if (response.data.isSuccess) {
-      setIsFinished(true);
-      setPostStatus("CLOSED");
-      setIsModalOpen(false);
-      alert("출석이 종료되었습니다.");
-    } else {
-      setError(response.data.responseMessage);
-    }
-  } catch (error) {
-    console.error(error);
-    setError("출석 종료 처리에 실패했습니다.");
-  }
-};
+  };
 
 
 
@@ -229,6 +231,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
           userId: result.userInfo?.userId || 0,
           userName: result.userInfo?.userName || "",
           userProfileImg: result.userInfo?.userProfileImg || "",
+          userRole: result.userInfo?.userRole || "",
         });
 
 
@@ -268,9 +271,9 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
 
   const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
 
-  
 
-  
+
+
 
   // 출석 상태 상태
   const [isEditMode, setIsEditMode] = useState(false);
@@ -404,13 +407,10 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
               initial="hidden"
               animate="visible"
               exit="exit"
-              variants={{
-                hidden: {},
-                visible: {},
-                exit: {},
-              }}
+              variants={{ hidden: {}, visible: {}, exit: {} }}
               className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
             >
+              {/* 기본 메뉴: 수정하기, 취소하기 */}
               {["수정하기", "취소하기"].map((label, index) => (
                 <motion.button
                   key={label}
@@ -426,45 +426,33 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
                         alert("종료된 러닝이나 취소된 러닝은 수정이 불가능합니다.");
                         return;
                       }
-
                       const now = new Date();
-
-                      const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
-                      const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // KST로 변환
-
+                      const runUtcDate = new Date(date);
+                      const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000);
                       if (now > runKstDate) {
                         alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
                         return;
                       }
-
                       navigate(`/regular/edit/${postId}`, { replace: true });
                       setShowMenu(false);
-                    } else {
+                    } else if (label === "취소하기") {
                       if (postStatus === "CLOSED" || postStatus === "CANCELED") {
                         alert("이미 종료되었거나 취소된 게시글은 취소할 수 없습니다.");
                         return;
                       }
-
                       const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
                       if (!confirmCancel) return;
-
                       try {
                         const token = JSON.parse(localStorage.getItem("accessToken") || "null");
                         if (!token) {
                           alert("로그인이 필요합니다.");
                           return;
                         }
-
                         const { data } = await customAxios.patch(
                           `/run/regular/post/${postId}/cancel`,
                           {},
-                          {
-                            headers: {
-                              Authorization: `${token}`,
-                            },
-                          }
+                          { headers: { Authorization: `${token}` } }
                         );
-
                         if (data.isSuccess) {
                           alert("게시글이 성공적으로 취소되었습니다.");
                           setShowMenu(false);
@@ -482,8 +470,48 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
                   {label}
                 </motion.button>
               ))}
+
+           
+              {userInfo.userRole === "ADMIN" && (
+                <motion.button
+                  key="삭제하기"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: 0.3, duration: 0.2 }}
+                  className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+                  onClick={async () => {
+                    const confirmDelete = window.confirm("정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.");
+                    if (!confirmDelete) return;
+                    try {
+                      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                      if (!token) {
+                        alert("로그인이 필요합니다.");
+                        return;
+                      }
+                      const { data } = await customAxios.delete(
+                        `/run/regular/post/${postId}`,
+                        { headers: { Authorization: `${token}` } }
+                      );
+                      if (data.isSuccess) {
+                        alert("게시글이 삭제되었습니다.");
+                        setShowMenu(false);
+                        navigate("/regular");
+                      } else {
+                        alert(data.responseMessage || "삭제에 실패했습니다.");
+                      }
+                    } catch (error) {
+                      console.error(error);
+                      alert("삭제 요청 중 오류가 발생했습니다.");
+                    }
+                  }}
+                >
+                  삭제하기
+                </motion.button>
+              )}
             </motion.div>
           )}
+
 
         </div>
 

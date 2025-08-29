@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import customAxios from "../../apis/customAxios";
 import RegularRunlogo from "../../assets/regularRunMark.svg";
@@ -17,7 +17,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-
+import { motion } from "framer-motion";
 
 import checkedicon from "../../assets/checkedicon.svg"
 
@@ -42,7 +42,12 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const [participantsNum, setParticipantsNum] = useState(0);
   const [pacers, setPacers] = useState<any[]>([]);
   const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
-  const [userInfo, setUserInfo] = useState({ userId: 0, userName: "", userProfileImg: "" });
+  const [userInfo, setUserInfo] = useState({
+    userId: 0,
+    userName: "",
+    userProfileImg: "",
+    userRole: "",
+  });
   const [postCreatorName, setPostCreatorName] = useState("");
   const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
   const [refreshComments, setRefreshComments] = useState(false);
@@ -60,6 +65,25 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const [postStatus, setPostStatus] = useState("");
   const [buttonRefreshKey, setButtonRefreshKey] = useState(0);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const dotButtonRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target as Node) &&
+        dotButtonRef.current &&
+        !dotButtonRef.current.contains(e.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+    };
+    if (showMenu) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showMenu]);
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -82,7 +106,12 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           setParticipantsNum(result.participantsNum || 0);
           setPacers(result.pacers || []);
           setAttachmentUrls(result.attachmentUrls || []);
-          setUserInfo(result.userInfo || {});
+          setUserInfo({
+            userId: result.userInfo?.userId || 0,
+            userName: result.userInfo?.userName || "",
+            userProfileImg: result.userInfo?.userProfileImg || "",
+            userRole: result.userInfo?.userRole || "",
+          });
           setPostCreatorName(result.postCreatorInfo.userName);
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setGroupedParticipants(result.groupedParticipants || []);
@@ -252,6 +281,77 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
             onClick={handleBack}
           />
           정규런
+
+
+          {userInfo.userRole === "ADMIN" && (
+            <div
+              ref={dotButtonRef}
+              className="absolute right-[8px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowMenu((prev) => !prev);
+              }}
+            >
+              <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
+                {[...Array(3)].map((_, i) => (
+                  <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+                ))}
+              </div>
+            </div>
+          )}
+
+
+          {userInfo.userRole === "ADMIN" && showMenu && (
+            <motion.div
+              ref={menuRef}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={{ hidden: {}, visible: {}, exit: {} }}
+              className="absolute top-[50px] right-[16px] z-20 flex flex-col gap-y-2"
+            >
+              <motion.button
+                key="삭제하기"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+                onClick={async () => {
+                  const confirmDelete = window.confirm("정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.");
+                  if (!confirmDelete) return;
+
+                  try {
+                    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                    if (!token) {
+                      alert("로그인이 필요합니다.");
+                      return;
+                    }
+
+                    // ✅ 삭제 API 호출 (서버 명세 확인 필요)
+                    const { data } = await customAxios.delete(
+                      `/run/regular/post/${postId}`,
+                      { headers: { Authorization: `${token}` } }
+                    );
+
+                    if (data.isSuccess) {
+                      alert("게시글이 삭제되었습니다.");
+                      setShowMenu(false);
+                      navigate("/regular");
+                    } else {
+                      alert(data.responseMessage || "삭제에 실패했습니다.");
+                    }
+                  } catch (error) {
+                    console.error(error);
+                    alert("삭제 요청 중 오류가 발생했습니다.");
+                  }
+                }}
+              >
+                삭제하기
+              </motion.button>
+            </motion.div>
+          )}
+
         </div>
 
         <div className="relative w-full pb-[90px]">
@@ -294,7 +394,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
         <div className="mt-[70px]">
           <TabButton leftLabel="소개" rightLabel="명단" onTabChange={setActiveTab} />
         </div>
-       
+
         {activeTab === "소개" && (
           <>
             <div className="flex items-start text-left w-full mt-[24px] my-2 max-w-[349px]">

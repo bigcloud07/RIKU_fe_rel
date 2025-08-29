@@ -76,10 +76,16 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
 
 
 
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
+  const [userInfo, setUserInfo] = useState<{
+    userId: number;
+    userName: string;
+    userProfileImg: string;
+    userRole: string;
+  }>({
     userId: 0,
     userName: "",
     userProfileImg: "",
+    userRole: "",
   });
 
   const toggleAttendance = (userId: number, originalStatus: string) => {
@@ -162,6 +168,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
             userProfileImg: result.userInfo?.userProfileImg || "",
+            userRole: result.userInfo?.userRole || "",
           });
           setPostCreatorName(result.postCreatorInfo?.userName || "");
           setTrainingtype(result.trainingType);
@@ -208,6 +215,8 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           userId: result.userInfo?.userId || 0,
           userName: result.userInfo?.userName || "",
           userProfileImg: result.userInfo?.userProfileImg || "",
+          userRole: result.userInfo?.userRole || "",
+
         });
 
 
@@ -248,47 +257,47 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   const [isFinished, setIsFinished] = useState(false);
 
   const handleModalStartClick = async () => {
-  const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
-  if (!confirmClose) return;
+    const confirmClose = window.confirm("정말 출석을 종료하시겠습니까?");
+    if (!confirmClose) return;
 
-  if (!code) return;
+    if (!code) return;
 
-  try {
-    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
-    //수정된 출석 상태가 있다면 먼저 반영
-    if (Object.keys(editedAttendance).length > 0) {
-      const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
-        userId: Number(userId),
-        isAttend,
-      }));
+      //수정된 출석 상태가 있다면 먼저 반영
+      if (Object.keys(editedAttendance).length > 0) {
+        const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
+          userId: Number(userId),
+          isAttend,
+        }));
 
-      await customAxios.patch(`/run/training/post/${postId}/manual-attendance`, payload, {
+        await customAxios.patch(`/run/training/post/${postId}/manual-attendance`, payload, {
+          headers: { Authorization: `${token}` },
+        });
+
+        setEditedAttendance({});
+        setIsEditMode(false);
+      }
+
+      //출석 종료 API 호출
+      const response = await customAxios.patch(`/run/training/post/${postId}/close`, {}, {
         headers: { Authorization: `${token}` },
       });
 
-      setEditedAttendance({});
-      setIsEditMode(false);
+      if (response.data.isSuccess) {
+        setIsFinished(true); // 버튼 비활성화 처리
+        setPostStatus("CLOSED");
+        setIsModalOpen(false);
+        alert("출석이 종료되었습니다.");
+      } else {
+        setError(response.data.responseMessage);
+      }
+    } catch (error) {
+      console.error(error);
+      setError("출석 종료 처리에 실패했습니다.");
     }
-
-    //출석 종료 API 호출
-    const response = await customAxios.patch(`/run/training/post/${postId}/close`, {}, {
-      headers: { Authorization: `${token}` },
-    });
-
-    if (response.data.isSuccess) {
-      setIsFinished(true); // 버튼 비활성화 처리
-      setPostStatus("CLOSED");
-      setIsModalOpen(false);
-      alert("출석이 종료되었습니다.");
-    } else {
-      setError(response.data.responseMessage);
-    }
-  } catch (error) {
-    console.error(error);
-    setError("출석 종료 처리에 실패했습니다.");
-  }
-};
+  };
 
 
 
@@ -483,6 +492,44 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                 {label}
               </motion.button>
             ))}
+
+            {userInfo.userRole === "ADMIN" && (
+              <motion.button
+                key="삭제하기"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ delay: 0.3, duration: 0.2 }}
+                className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+                onClick={async () => {
+                  const ok = window.confirm("정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.");
+                  if (!ok) return;
+                  try {
+                    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                    if (!token) {
+                      alert("로그인이 필요합니다.");
+                      return;
+                    }
+                    const { data } = await customAxios.delete(
+                      `/run/training/post/${postId}`,
+                      { headers: { Authorization: `${token}` } }
+                    );
+                    if (data.isSuccess) {
+                      alert("게시글이 삭제되었습니다.");
+                      setShowMenu(false);
+                      navigate("/training");
+                    } else {
+                      alert(data.responseMessage || "삭제에 실패했습니다.");
+                    }
+                  } catch (err) {
+                    console.error(err);
+                    alert("삭제 요청 중 오류가 발생했습니다.");
+                  }
+                }}
+              >
+                삭제하기
+              </motion.button>
+            )}
           </motion.div>
         )}
       </div>
