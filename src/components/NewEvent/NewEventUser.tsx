@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
 import time from "../../assets/FlashRunDetail/time.svg";
@@ -176,6 +176,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
           userId: result.userInfo?.userId || 0,
           userName: result.userInfo?.userName || "",
           userProfileImg: result.userInfo?.userProfileImg || "",
+          userRole: result.userInfo?.userRole || "",
         });
         setPostCreatorImg(result.postCreatorInfo?.userProfileImg || null);
         setCurrentParticipantsNum(result.participantsNum); // 참가자 수 갱신
@@ -200,10 +201,16 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
       setError("데이터를 불러오는 데 실패했습니다.");
     }
   };
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string }>({
+  const [userInfo, setUserInfo] = useState<{
+    userId: number;
+    userName: string;
+    userProfileImg: string;
+    userRole: string;
+  }>({
     userId: 0,
     userName: "",
     userProfileImg: "",
+    userRole: "",
   });
 
   const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
@@ -227,6 +234,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
             userId: result.userInfo?.userId || 0,
             userName: result.userInfo?.userName || "",
             userProfileImg: result.userInfo?.userProfileImg || "",
+            userRole: result.userInfo?.userRole || "",
           });
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setPostCreatorName(result.postCreatorInfo.userName);
@@ -325,7 +333,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
       );
 
       if (response.data.isSuccess) {
-        setUserStatus(""); 
+        setUserStatus("");
         setButtonText("참여하기");
         setError(null);
       } else {
@@ -336,7 +344,24 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
     }
   };
 
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const dotButtonRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target as Node) &&
+        dotButtonRef.current &&
+        !dotButtonRef.current.contains(e.target as Node)
+      ) {
+        setShowMenu(false);
+      }
+    };
+    if (showMenu) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showMenu]);
 
 
   return (
@@ -345,6 +370,69 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
       <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-center text-xl font-semibold justify-center items-center">
         <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate(-1)}></img>
         행사
+         {userInfo.userRole === "ADMIN" && (
+    <div
+      ref={dotButtonRef}
+      className="absolute right-[5px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
+      onClick={(e) => {
+        e.stopPropagation();
+        setShowMenu((prev) => !prev);
+      }}
+    >
+      <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
+        {[...Array(3)].map((_, i) => (
+          <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+        ))}
+      </div>
+    </div>
+  )}
+
+  {/* ✅ ADMIN 전용 하위 메뉴: 삭제하기 */}
+  {userInfo.userRole === "ADMIN" && showMenu && (
+    <motion.div
+      ref={menuRef}
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
+    >
+      <motion.button
+        key="삭제하기"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.2 }}
+        className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+        onClick={async () => {
+          const ok = window.confirm("정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.");
+          if (!ok) return;
+          try {
+            const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+            if (!token) {
+              alert("로그인이 필요합니다.");
+              return;
+            }
+            const { data } = await customAxios.delete(
+              `/run/event/post/${postId}`,
+              { headers: { Authorization: `${token}` } }
+            );
+            if (data.isSuccess) {
+              alert("게시글이 삭제되었습니다.");
+              setShowMenu(false);
+              navigate("/event");
+            } else {
+              alert(data.responseMessage || "삭제에 실패했습니다.");
+            }
+          } catch (err) {
+            console.error(err);
+            alert("삭제 요청 중 오류가 발생했습니다.");
+          }
+        }}
+      >
+        삭제하기
+      </motion.button>
+    </motion.div>
+  )}
       </div>
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-full pb-[50px]">
@@ -474,7 +562,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
         runType="event"
         users={currentParticipants}
         onUsersChange={(newUsers) => setCurrentParticipants(newUsers)}
-        canEdit={userInfo.userId === postCreatorId} 
+        canEdit={userInfo.userId === postCreatorId}
       />}
       <CommentSection postId={postId!} postType="event" userInfo={userInfo} refreshTrigger={refreshComments} />
 
