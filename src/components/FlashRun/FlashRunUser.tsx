@@ -341,7 +341,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
             </div>
             <div className="flex items-center my-1.5">
               <object data={people} className="w-[24px] h-[24px] mr-2 font-bold font-#366943" />
-              <span className="font-bold text-kuDarkGreen">{participantsNum}</span>
+              <span className="font-bold text-kuDarkGreen">{currentParticipantsNum}</span>
             </div>
           </div>
         </div>

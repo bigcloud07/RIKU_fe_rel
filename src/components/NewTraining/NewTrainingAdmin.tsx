@@ -100,7 +100,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
     }));
 
     try {
-      await customAxios.patch(`/run/training/post/${postId}/manual-attend`, payload, {
+      await customAxios.patch(`/run/training/post/${postId}/manual-attendance`, payload, {
         headers: { Authorization: `${token}` },
       });
       alert("출석 정보가 저장되었습니다.");
@@ -263,7 +263,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
         isAttend,
       }));
 
-      await customAxios.patch(`/run/training/post/${postId}/manual-attend`, payload, {
+      await customAxios.patch(`/run/training/post/${postId}/manual-attendance`, payload, {
         headers: { Authorization: `${token}` },
       });
 
