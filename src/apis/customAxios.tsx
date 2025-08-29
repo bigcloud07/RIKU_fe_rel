@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosError, AxiosResponse } from 'axios';
 
 // Axios 인스턴스 생성
 const customAxios: AxiosInstance = axios.create({
-  baseURL: 'https://riku-server.shop1/',
+  baseURL: 'https://riku-server.shop/',
   timeout: 30000, // 기본 타임아웃 설정 (10초), 추후에 오버라이드 가능
 });
 
