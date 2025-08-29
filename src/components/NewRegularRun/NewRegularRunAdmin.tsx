@@ -176,7 +176,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
         isAttend,
       }));
 
-      await customAxios.patch(`/run/regular/post/${postId}/manual-attend`, payload, {
+      await customAxios.patch(`/run/regular/post/${postId}/manual-attendance`, payload, {
         headers: { Authorization: `${token}` },
       });
 
@@ -294,7 +294,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
     }));
 
     try {
-      await customAxios.patch(`/run/regular/post/${postId}/manual-attend`, payload, {
+      await customAxios.patch(`/run/regular/post/${postId}/manual-attendance`, payload, {
         headers: { Authorization: `${token}` },
       });
       alert("출석 정보가 저장되었습니다.");

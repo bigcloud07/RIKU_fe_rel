@@ -111,7 +111,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     }));
 
     try {
-      await customAxios.patch(`/run/training/post/${postId}/manual-attend`, payload, {
+      await customAxios.patch(`/run/training/post/${postId}/manual-attendance`, payload, {
         headers: { Authorization: `${token}` },
       });
       alert("출석 정보가 저장되었습니다.");
