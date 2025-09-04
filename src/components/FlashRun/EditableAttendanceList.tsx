@@ -21,6 +21,7 @@ interface EditableAttendanceListProps {
   canEdit?: boolean;
   postStatus?: string;
   postDate?: string;
+  userRole?: string;
 }
 
 
@@ -33,7 +34,8 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
   onSaveComplete,
   canEdit,
   postDate,
-  postStatus
+  postStatus,
+  userRole,
 }) => {
   const [editMode, setEditMode] = useState(false);
 
@@ -95,15 +97,17 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
           <button
             onClick={() => {
               if (!editMode) {
-                // 🔍 상태 조건 먼저 확인
+                // 🔍 상태 조건 먼저 확인 (단, ADMIN은 예외)
                 if (postStatus === "CLOSED" || postStatus === "CANCELED") {
-                  alert("출석이 종료되어 명단 수정이 불가능합니다.");
-                  return;
+                  if (userRole !== "ADMIN") {  // ADMIN일 경우 통과
+                    alert("출석이 종료되어 명단 수정이 불가능합니다.");
+                    return;
+                  }
                 }
 
-                // 🔍 시간 조건 확인
-                if (postDate) {
-                  const localNow = new Date(); // 현재 로컬 시간
+                // 🔍 시간 조건 확인 (ADMIN은 시간 조건도 무시 가능하도록)
+                if (postDate && userRole !== "ADMIN") {
+                  const localNow = new Date();
                   const postDateKST = new Date(new Date(postDate).getTime() + 9 * 60 * 60 * 1000);
 
                   if (localNow < postDateKST) {
@@ -124,7 +128,6 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
           >
             {editMode ? "명단 저장" : "명단 수정"}
           </button>
-
         )}
       </div>
 
@@ -135,7 +138,7 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
           user.status === "ATTENDED"
             ? "bg-[#F0F4DD]" // 참석
             : user.status === "ABSENT"
-              ? "bg-[#ECEBE4]"  
+              ? "bg-[#ECEBE4]"
               : "bg-[#F0F4DD]"; // 대기  
         return (
           <div

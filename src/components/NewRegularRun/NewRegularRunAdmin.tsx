@@ -364,21 +364,27 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
 
 
 
-    if (postStatus === "CLOSED" || postStatus === "CANCELED") {
-      alert("출석이 종료되어 명단 수정이 불가능합니다.");
-      return;
-    }
+    // 취소 글은 누구도 편집 불가
+  if (postStatus === "CANCELED") {
+    alert("취소된 러닝은 명단을 수정할 수 없습니다.");
+    return;
+  }
 
-    if (userInfo.userRole === "ADMIN") {
-      setIsEditMode(true);
-      return;
-    }
+  // ADMIN 은 CLOSED 여도 편집 허용
+  if (userInfo.userRole === "ADMIN") {
+    setIsEditMode(true);
+    return;
+  }
 
-
-    if (now < postDateKST) {
-      alert("아직 명단 수정을 할 수 없습니다.");
-      return;
-    }
+  // 일반 작성자/유저는 기존 정책 유지
+  if (postStatus === "CLOSED") {
+    alert("출석이 종료되어 명단 수정이 불가능합니다.");
+    return;
+  }
+  if (now < postDateKST) {
+    alert("아직 명단 수정을 할 수 없습니다.");
+    return;
+  }
 
     setIsEditMode(true);
   };
