@@ -240,6 +240,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     userId: 0,
     userName: "",
     userProfileImg: "",
+    userRole: "",
   });
 
   const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);

@@ -379,7 +379,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                       return;
                     }
 
-                    // ✅ 삭제 API 호출 (서버 명세 확인 필요)
+                    
                     const { data } = await customAxios.delete(
                       `/run/regular/post/${postId}`,
                       { headers: { Authorization: `${token}` } }
