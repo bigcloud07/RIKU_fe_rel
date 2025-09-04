@@ -297,14 +297,27 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
     }));
 
     try {
-      await customAxios.patch(`/run/regular/post/${postId}/manual-attendance`, payload, {
-        headers: { Authorization: `${token}` },
-      });
-      alert("출석 정보가 저장되었습니다.");
-      setIsEditMode(false);
-      setEditedAttendance({});
-      await fetchPostData();
-    } catch {
+    // ADMIN + CLOSED => fix-attendance 사용
+    if (postStatus === "CLOSED" && userInfo.userRole === "ADMIN") {
+      await customAxios.patch(
+        `/run/regular/post/${postId}/fix-attendance`,
+        payload,
+        { headers: { Authorization: `${token}` } }
+      );
+    } else {
+      // 기존 경로
+      await customAxios.patch(
+        `/run/regular/post/${postId}/manual-attendance`,
+        payload,
+        { headers: { Authorization: `${token}` } }
+      );
+    }
+
+    alert("출석 정보가 저장되었습니다.");
+    setIsEditMode(false);
+    setEditedAttendance({});
+    await fetchPostData();
+  } catch {
       alert("저장에 실패했습니다.");
     }
   };
@@ -349,10 +362,18 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
     const now = new Date(); // 현재 로컬 시간
     const postDateKST = new Date(new Date(date).getTime() + 9 * 60 * 60 * 1000);
 
+
+
     if (postStatus === "CLOSED" || postStatus === "CANCELED") {
       alert("출석이 종료되어 명단 수정이 불가능합니다.");
       return;
     }
+
+    if (userInfo.userRole === "ADMIN") {
+      setIsEditMode(true);
+      return;
+    }
+
 
     if (now < postDateKST) {
       alert("아직 명단 수정을 할 수 없습니다.");
@@ -471,7 +492,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
                 </motion.button>
               ))}
 
-           
+
               {userInfo.userRole === "ADMIN" && (
                 <motion.button
                   key="삭제하기"
@@ -629,6 +650,7 @@ const NewRegularRunAdmin: React.FC<Props> = ({ postId }) => {
               onToggleEditMode={handleEditAttempt} // 여기서 조건 검사 포함된 함수 전달
               userInfoName={userInfo.userName}
               postCreatorName={postCreatorName}
+              canEdit={userInfo.userRole === "ADMIN" || userInfo.userName === postCreatorName}
             />
           </>
         )}
