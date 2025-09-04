@@ -239,6 +239,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setPostCreatorName(result.postCreatorInfo.userName);
           setPostStatus(result.postStatus);
+          setPostCreatorId(result.postCreatorInfo?.userId ?? null);
 
           const currentUser = result.participants.find(
             (p: any) => p.userId === result.userInfo.userId
@@ -563,6 +564,9 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
         users={currentParticipants}
         onUsersChange={(newUsers) => setCurrentParticipants(newUsers)}
         canEdit={userInfo.userId === postCreatorId}
+        postStatus={postStatus}
+        postDate={date}
+        userRole={userInfo.userRole}   
       />}
       <CommentSection postId={postId!} postType="event" userInfo={userInfo} refreshTrigger={refreshComments} />
 

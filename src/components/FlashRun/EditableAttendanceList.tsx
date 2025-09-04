@@ -54,32 +54,55 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
   const handleSave = async () => {
     const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
-    // status를 확실하게 명시해줘야 타입 에러 방지됨
+    // 서버에 보낼 payload (종료 전/후 동일)
     const payload = users.map((user) => ({
       userId: user.userId,
       isAttend: user.status === "ATTENDED",
     }));
 
-    try {
-      const response = await customAxios.patch(
-        `/run/${runType}/post/${postId}/manual-attend`,
-        payload,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
+    // 종료 여부에 따라 엔드포인트 분기
+    const base = `/run/${runType}/post/${postId}`;
+    const endpoint =
+      postStatus === "CLOSED" ? `${base}/fix-attendance` : `${base}/manual-attendance`;
 
-      if (response.data.isSuccess) {
+    try {
+      const { data } = await customAxios.patch(endpoint, payload, {
+        headers: { Authorization: `${token}` },
+      });
+
+      if (data.isSuccess) {
         alert("명단이 저장되었습니다.");
         setEditMode(false);
-        if (onSaveComplete) onSaveComplete();
+        onSaveComplete?.();
       } else {
-        alert(response.data.responseMessage);
+        alert(data.responseMessage || "저장에 실패했습니다.");
       }
     } catch (err) {
       alert("저장 중 오류가 발생했습니다.");
+    }
+  };
+
+  const onClickEditOrSave = () => {
+    if (!editMode) {
+      // 상태 제약: ADMIN은 예외
+      if (postStatus === "CLOSED" || postStatus === "CANCELED") {
+        if (userRole !== "ADMIN") {
+          alert("출석이 종료되어 명단 수정이 불가능합니다.");
+          return;
+        }
+      }
+      // 시간 제약: ADMIN은 예외
+      if (postDate && userRole !== "ADMIN") {
+        const now = new Date();
+        const kst = new Date(new Date(postDate).getTime() + 9 * 60 * 60 * 1000);
+        if (now < kst) {
+          alert("아직 명단 수정을 할 수 없습니다.");
+          return;
+        }
+      }
+      setEditMode(true);
+    } else {
+      handleSave();
     }
   };
 
@@ -97,34 +120,27 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
           <button
             onClick={() => {
               if (!editMode) {
-                // 🔍 상태 조건 먼저 확인 (단, ADMIN은 예외)
+                // 상태 제약: ADMIN은 예외
                 if (postStatus === "CLOSED" || postStatus === "CANCELED") {
-                  if (userRole !== "ADMIN") {  // ADMIN일 경우 통과
+                  if (userRole !== "ADMIN") {
                     alert("출석이 종료되어 명단 수정이 불가능합니다.");
                     return;
                   }
                 }
-
-                // 🔍 시간 조건 확인 (ADMIN은 시간 조건도 무시 가능하도록)
-                if (postDate && userRole !== "ADMIN") {
-                  const localNow = new Date();
-                  const postDateKST = new Date(new Date(postDate).getTime() + 9 * 60 * 60 * 1000);
-
-                  if (localNow < postDateKST) {
+                // 시간 제약: ADMIN은 예외
+                if (postDate) {
+                  const now = new Date();
+                  const kst = new Date(new Date(postDate).getTime() + 9 * 60 * 60 * 1000);
+                  if (now < kst) {
                     alert("아직 명단 수정을 할 수 없습니다.");
                     return;
                   }
                 }
               }
-
-              // 조건 모두 통과 → 수정모드 활성화 또는 저장
-              if (editMode) {
-                handleSave();
-              } else {
-                setEditMode(true);
-              }
+              editMode ? handleSave() : setEditMode(true);
             }}
-            className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${editMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"}`}
+            className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${editMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"
+              }`}
           >
             {editMode ? "명단 저장" : "명단 수정"}
           </button>

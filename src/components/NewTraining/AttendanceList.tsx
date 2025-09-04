@@ -23,6 +23,8 @@ interface AttendanceListProps {
   onToggleEditMode?: () => void;
   userInfoName: string;
   postCreatorName: string;
+  userRole?: string;
+  postStatus?: string;
 }
 
 const AttendanceList: React.FC<AttendanceListProps> = ({
@@ -34,6 +36,8 @@ const AttendanceList: React.FC<AttendanceListProps> = ({
   toggleAttendance = () => { },
   onSaveAttendance = () => { },
   onToggleEditMode = () => { },
+  userRole,
+  postStatus,
 }) => {
   const allParticipants = (groupedParticipants || []).flatMap((group) => group.participants);
 
@@ -73,15 +77,15 @@ const AttendanceList: React.FC<AttendanceListProps> = ({
         </div>
 
         {/* 작성자인 경우에만 명단 수정/저장 버튼 노출 */}
-        {userInfoName === postCreatorName && (
-          <button
-            className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${isEditMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"
-              }`}
-            onClick={isEditMode ? onSaveAttendance : onToggleEditMode}
-          >
-            {isEditMode ? "명단 저장" : "명단 수정"}
-          </button>
-        )}
+        {(userRole === "ADMIN" || userInfoName === postCreatorName) &&
+          (postStatus !== "CLOSED" || userRole === "ADMIN") && (
+            <button
+              className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${isEditMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"}`}
+              onClick={isEditMode ? onSaveAttendance : onToggleEditMode}
+            >
+              {isEditMode ? "명단 저장" : "명단 수정"}
+            </button>
+          )}
       </div>
 
       {groupedParticipants.map((group) =>
