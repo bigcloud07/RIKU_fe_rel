@@ -109,26 +109,25 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     });
   };
 
+
   const saveAttendanceChanges = async () => {
     const token = JSON.parse(localStorage.getItem("accessToken") || "null");
     const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
       userId: Number(userId),
       isAttend,
     }));
-
     try {
-      await customAxios.patch(`/run/training/post/${postId}/manual-attendance`, payload, {
-        headers: { Authorization: `${token}` },
-      });
+      const base = `/run/training/post/${postId}`;
+      const endpoint = postStatus === "CLOSED" ? `${base}/fix-attendance` : `${base}/manual-attendance`;
+      await customAxios.patch(endpoint, payload, { headers: { Authorization: `${token}` } });
       alert("출석 정보가 저장되었습니다.");
       setIsEditMode(false);
       setEditedAttendance({});
-      await fetchParticipantsInfo(); // 최신 데이터 반영
+      await fetchParticipantsInfo(); // ✅ 저장 후 재조회
     } catch {
       alert("저장에 실패했습니다.");
     }
   };
-
 
 
   useEffect(() => {
@@ -448,6 +447,38 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showMenu]);
 
+  const handleEditAttempt = () => {
+    const now = new Date(); // 현재 로컬 시간
+    const postDateKST = new Date(new Date(date).getTime() + 9 * 60 * 60 * 1000);
+
+    if (now < postDateKST) {
+      alert("아직 명단 수정을 할 수 없습니다.");
+      return;
+    }
+
+
+    // 취소 글은 누구도 편집 불가
+    if (postStatus === "CANCELED") {
+      alert("취소된 러닝은 명단을 수정할 수 없습니다.");
+      return;
+    }
+
+    // ADMIN 은 CLOSED 여도 편집 허용
+    if (userInfo.userRole === "ADMIN") {
+      setIsEditMode(true);
+      return;
+    }
+
+    // 일반 작성자/유저는 기존 정책 유지
+    if (postStatus === "CLOSED") {
+      alert("출석이 종료되어 명단 수정이 불가능합니다.");
+      return;
+    }
+
+
+    setIsEditMode(true);
+  };
+
 
   return (
     <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center" onClick={handleOutsideClick}>
@@ -650,10 +681,16 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
       {activeTab === "명단" &&
         <AttendanceList
-          key={JSON.stringify(groupedParticipants)} // ⬅️ 이거 추가!
           groupedParticipants={groupedParticipants}
+          isEditMode={isEditMode}
+          editedAttendance={editedAttendance}
+          toggleAttendance={toggleAttendance}
+          onSaveAttendance={saveAttendanceChanges}
+          onToggleEditMode={handleEditAttempt}
           userInfoName={userInfo.userName}
           postCreatorName={postCreatorName}
+          userRole={userInfo.userRole}     
+          postStatus={postStatus}
         />
       }
 

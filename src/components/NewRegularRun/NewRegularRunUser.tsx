@@ -282,18 +282,34 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   };
 
   const handleEditAttempt = () => {
-    // 취소글은 누구도 수정 불가
+    const now = new Date(); // 현재 로컬 시간
+    const postDateKST = new Date(new Date(date).getTime() + 9 * 60 * 60 * 1000);
+
+
+    if (now < postDateKST) {
+      alert("아직 명단 수정을 할 수 없습니다.");
+      return;
+    }
+    // 취소 글은 누구도 편집 불가
     if (postStatus === "CANCELED") {
       alert("취소된 러닝은 명단을 수정할 수 없습니다.");
       return;
     }
-    // ADMIN이면 출석 종료 후에도 편집 허용
+
+    // ADMIN 은 CLOSED 여도 편집 허용
     if (userInfo.userRole === "ADMIN") {
       setIsEditMode(true);
       return;
     }
-    // ADMIN이 아니면 권한 없음 (작성자도 아닌 페이지이므로)
-    alert("명단을 수정할 권한이 없습니다.");
+
+    // 일반 작성자/유저는 기존 정책 유지
+    if (postStatus === "CLOSED") {
+      alert("출석이 종료되어 명단 수정이 불가능합니다.");
+      return;
+    }
+
+
+    setIsEditMode(true);
   };
 
   const saveAttendanceChanges = async () => {
@@ -379,7 +395,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                       return;
                     }
 
-                    
+
                     const { data } = await customAxios.delete(
                       `/run/regular/post/${postId}`,
                       { headers: { Authorization: `${token}` } }

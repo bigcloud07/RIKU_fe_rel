@@ -104,15 +104,14 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
       userId: Number(userId),
       isAttend,
     }));
-
     try {
-      await customAxios.patch(`/run/training/post/${postId}/manual-attendance`, payload, {
-        headers: { Authorization: `${token}` },
-      });
+      const base = `/run/training/post/${postId}`;
+      const endpoint = postStatus === "CLOSED" ? `${base}/fix-attendance` : `${base}/manual-attendance`;
+      await customAxios.patch(endpoint, payload, { headers: { Authorization: `${token}` } });
       alert("출석 정보가 저장되었습니다.");
       setIsEditMode(false);
       setEditedAttendance({});
-      await fetchParticipantsInfo(); // 최신 데이터 반영
+      await refetchPost(); // ✅ 저장 후 재조회
     } catch {
       alert("저장에 실패했습니다.");
     }
@@ -265,31 +264,26 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
-      //수정된 출석 상태가 있다면 먼저 반영
       if (Object.keys(editedAttendance).length > 0) {
         const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
           userId: Number(userId),
           isAttend,
         }));
-
-        await customAxios.patch(`/run/training/post/${postId}/manual-attendance`, payload, {
-          headers: { Authorization: `${token}` },
-        });
-
-        setEditedAttendance({});
-        setIsEditMode(false);
+        const base = `/run/training/post/${postId}`;
+        const endpoint = postStatus === "CLOSED" ? `${base}/fix-attendance` : `${base}/manual-attendance`;
+        await customAxios.patch(endpoint, payload, { headers: { Authorization: `${token}` } });
+        setEditedAttendance({}); setIsEditMode(false);
       }
 
-      //출석 종료 API 호출
       const response = await customAxios.patch(`/run/training/post/${postId}/close`, {}, {
         headers: { Authorization: `${token}` },
       });
-
       if (response.data.isSuccess) {
-        setIsFinished(true); // 버튼 비활성화 처리
+        setIsFinished(true);
         setPostStatus("CLOSED");
         setIsModalOpen(false);
         alert("출석이 종료되었습니다.");
+        await refetchPost();
       } else {
         setError(response.data.responseMessage);
       }
@@ -371,17 +365,63 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
     const now = new Date(); // 현재 로컬 시간
     const postDateKST = new Date(new Date(date).getTime() + 9 * 60 * 60 * 1000);
 
-    if (postStatus === "CLOSED" || postStatus === "CANCELED") {
-      alert("출석이 종료되어 명단 수정이 불가능합니다.");
-      return;
-    }
-
     if (now < postDateKST) {
       alert("아직 명단 수정을 할 수 없습니다.");
       return;
     }
 
+
+    // 취소 글은 누구도 편집 불가
+    if (postStatus === "CANCELED") {
+      alert("취소된 러닝은 명단을 수정할 수 없습니다.");
+      return;
+    }
+
+    // ADMIN 은 CLOSED 여도 편집 허용
+    if (userInfo.userRole === "ADMIN") {
+      setIsEditMode(true);
+      return;
+    }
+
+    // 일반 작성자/유저는 기존 정책 유지
+    if (postStatus === "CLOSED") {
+      alert("출석이 종료되어 명단 수정이 불가능합니다.");
+      return;
+    }
+
+
     setIsEditMode(true);
+  };
+
+  const refetchPost = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const { data } = await customAxios.get(`/run/training/post/${postId}`, {
+        headers: { Authorization: `${token}` },
+      });
+      if (data.isSuccess) {
+        const r = data.result;
+        setParticipants(r.participants || []);
+        setParticipantsNum(r.participantsNum || 0);
+        setGroupedParticipants(r.groupedParticipants || []);
+        setAttachmentUrls(r.attachmentUrls || []);
+        setPacers(r.pacers || []);
+        setTitle(r.title); setLocation(r.location); setDate(r.date);
+        setContent(r.content); setPostImageUrl(r.postImageUrl);
+        setPostStatus(r.postStatus);
+        setPostCreatorName(r.postCreatorInfo?.userName || "");
+        setPostCreatorImg(r.postCreatorInfo?.userProfileImg || null);
+        setUserInfo({
+          userId: r.userInfo?.userId || 0,
+          userName: r.userInfo?.userName || "",
+          userProfileImg: r.userInfo?.userProfileImg || "",
+          userRole: r.userInfo?.userRole || "",
+        });
+        setRefreshComments(prev => !prev);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
 
@@ -674,6 +714,8 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           onToggleEditMode={handleEditAttempt}
           userInfoName={userInfo.userName}
           postCreatorName={postCreatorName}
+          userRole={userInfo.userRole}       
+          postStatus={postStatus}            
         />
       )}
 

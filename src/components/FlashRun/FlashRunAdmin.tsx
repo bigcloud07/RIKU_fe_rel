@@ -201,7 +201,11 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
             userId: p.userId,
             userName: p.userName,
             userProfileImg: p.userProfileImg || null,
-            status: p.status === "ATTENDED" ? "ATTENDED" : "PENDING",
+            status: p.status === "ATTENDED"
+              ? "ATTENDED"
+              : p.status === "ABSENT"
+                ? "ABSENT"
+                : "PENDING",
           }));
           setEditableParticipants(converted);
         }
@@ -268,7 +272,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setPostCreatorName(result.postCreatorInfo.userName);
 
-
+          console.log("Fetched post data:", result); // 디버깅용 로그
         } else {
           setError(response.data.responseMessage);
         }
@@ -322,6 +326,41 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     };
   }, [showMenu]);
 
+  const refetchPost = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const { data } = await customAxios.get(`/run/flash/post/${postId}`, {
+        headers: { Authorization: `${token}` },
+      });
+      if (data.isSuccess) {
+        const r = data.result;
+
+        // 참가자/카운트/상태 등 최신화
+        const converted = r.participants.map((p: any) => ({
+          userId: p.userId,
+          userName: p.userName,
+          userProfileImg: p.userProfileImg || null,
+          status:
+            p.status === "ATTENDED"
+              ? "ATTENDED"
+              : p.status === "ABSENT"
+                ? "ABSENT"
+                : "PENDING",
+        }));
+        setEditableParticipants(converted);
+        setCurrentParticipantsNum(r.participantsNum);
+        setPostStatus(r.postStatus);
+        setDate(r.date);
+
+        //댓글도 재렌더
+        setRefreshComments(prev => !prev);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+
 
 
 
@@ -356,7 +395,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
               variants={{ hidden: {}, visible: {}, exit: {} }}
               className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
             >
-              
+
               {["수정하기", "취소하기"].map((label, index) => (
                 <motion.button
                   key={label}
@@ -418,7 +457,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                 </motion.button>
               ))}
 
-             
+
               {userInfo.userRole === "ADMIN" && (
                 <motion.button
                   key="삭제하기"
@@ -437,7 +476,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                         alert("로그인이 필요합니다.");
                         return;
                       }
-                      // ⚠️ 서버 명세에 맞춰 필요 시 경로/메서드 변경
+                      
                       const { data } = await customAxios.delete(
                         `/run/flash/post/${postId}`,
                         { headers: { Authorization: `${token}` } }
@@ -446,7 +485,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                       if (data.isSuccess) {
                         alert("게시글이 삭제되었습니다.");
                         setShowMenu(false);
-                        navigate("/FlashRun");
+                        navigate("/flash");
                       } else {
                         alert(data.responseMessage || "삭제에 실패했습니다.");
                       }
@@ -589,6 +628,8 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           canEdit={true} // 관리자용이므로 무조건 true
           postStatus={postStatus}
           postDate={date}
+          userRole={userInfo.userRole}
+          onSaveComplete={refetchPost}
         />}
         <CommentSection postId={postId!} postType="flash" userInfo={userInfo} refreshTrigger={refreshComments} />
 
