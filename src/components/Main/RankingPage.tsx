@@ -19,18 +19,19 @@ interface SimpleUserInfo {
 function RankingPage() {
   //상위 10명 정보를 저장한 top20_Info (서버에서 받아온 정보로 업데이트할 것임)
   const [top20_Info, setTop20_Info] = useState<SimpleUserInfo[]>([]);
-  const [isRankingInfoLoaded, setRankingInfoLoaded] = useState(false); //랭킹 정보가 모두 불러와 졌는지 체크
+  const [isLoading, setIsLoading] = useState(false); //랭킹 정보가 모두 불러와 졌는지 체크
+  const [error, setError] = useState<string | null>(null); // 에러 상태 관리
 
   //자신의 정보 myInfo (안 불러져왔을 경우 표시할 placeholder 격의 데이터 하나 넣어놓을 것임)
   const [myInfo, setMyInfo] = useState<SimpleUserInfo>({
-    userName: "라이쿠",
+    userName: "정보없음",
     userProfileImg: "https://via.placeholder.com/48",
     totalPoints: 111,
     userId: 1,
   });
 
   //자신의 랭킹 정보 myRankingInfo
-  const [myRankingInfo, setMyRankingInfo] = useState<number>(12);
+  const [myRankingInfo, setMyRankingInfo] = useState<number>(0);
 
   //현재 하단 순위표에 보여줄 인원수(top10 혹은 top20), 이걸로 렌더링할 갯수 조절할 것임
   const [viewCount, setViewCount] = useState(10);
@@ -47,6 +48,8 @@ function RankingPage() {
     const url = "/ranking";
 
     try {
+      setIsLoading(true); // 현재 데이터 로딩 중임을 표시
+      setError(null); // 에러 상태 null로 설정
       const response = await customAxios.get(
         url, //요청 url
         {
@@ -82,10 +85,11 @@ function RankingPage() {
       setTop20_Info(top20);
       setMyInfo(my);
       setMyRankingInfo(myRank);
-      setRankingInfoLoaded(true);
     } catch (error) {
       alert("서버 요청 중 오류 발생!");
-      console.error("요청 실패: ", error);
+      setError("요청 실패: " + error);
+    } finally {
+      setIsLoading(false); // 데이터 로딩 완료 표시
     }
   }
 
@@ -94,53 +98,68 @@ function RankingPage() {
     fetchRankingInfo();
   }, []);
 
-  if (!isRankingInfoLoaded) {
-    <div className="min-h-screen flex flex-col items-center justify-center bg-kuDarkGreen py-20 px-4">
-      <span className="text-gray-400 text-sm animate-pulse">로딩 중입니다...</span>
-    </div>;
+  // 에러 상태가 있을 경우의 렌더링 ('다시 시도' 했을 때 재시도할 수 있도록 설계)
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-kuDarkGreen py-20 px-4">
+        <div className="text-center">
+          <span className="text-red-400 text-lg mb-4 block">{error}</span>
+          <button
+            onClick={fetchRankingInfo}
+            className="bg-kuLightGreen text-kuDarkGreen px-6 py-2 rounded-xl font-semibold hover:bg-opacity-90 transition-colors"
+          >
+            다시 시도
+          </button>
+        </div>
+      </div>
+    );
   }
 
-  //Tailwind를 사용하여 스타일링 진행
+  // 로딩 중일 때 렌더링 (Skeleton UI 사용)
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-kuDarkGreen py-20 px-4">
+        <span className="text-white text-2xl font-bold">로딩 중입니다...</span>
+      </div>
+    );
+  }
+
+  // 메인 콘텐츠 렌더링 (로딩 다 되었을 때, 여기가 렌더링 될 것임)
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-kuDarkGreen py-20 px-4">
-      {/* fade-in 애니메이션을 위한 껍데기 (초록색 배경은 남겨두고, 그 안의 elemente들에 대해서 애니메이션을 적용해야 했기 때문에 해당 설계 방식을 택함) */}
+      {/* 기존에 Top3 프로필 카드가 애니메이션이 들어가 있음 -> 여기에도 애니메이션을 넣어야 자연스러움 */}
       <div className="animate-fade-in">
         {/* 상단의 Top3 프로필 카드 */}
-        <div className="w-full max-w-sm bg-kuDarkGreen rounded-xl flex flex-col justify-center items-center">
+        <div className="w-full max-w-sm rounded-xl flex flex-col justify-center items-center">
           <span className="w-fit text-center font-semibold text-kuDarkGreen bg-white py-1 px-8 rounded-xl">
             Top 3
           </span>
-          {/* Top3 섹션(top20_Info 배열의 길이가 3 미만일 경우, "집계 준비중"이라고 띄울 것임) */}
-          {top20_Info.length > 3 ? (
+          <div className="w-full h-[294px]">
             <div className="flex flex-row justify-between items-end my-4 gap-3">
               {/* 2nd 섹션 */}
               <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-600 opacity-0">
                 <span className="block text-center text-2xl font-bold mb-1 text-whiteSmoke">
                   2nd
                 </span>
-                {/* 프로필 이미지 (userProfileImg 값이 null일 경우 기본 프사 url을, 아닐 경우 불러온 url을 src로 삼는다) */}
                 <div className="w-full aspect-square bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
                   <img
-                    src={top20_Info[1].userProfileImg ?? defaultProfileImg}
-                    alt="1st"
+                    src={top20_Info[1]?.userProfileImg ?? defaultProfileImg}
+                    alt="2nd"
                     className="w-full h-full object-cover"
                   />
                 </div>
-
-                {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
                 <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
                   <span className="block text-center text-lg font-bold text-black">
-                    {top20_Info[1].userName}
+                    {top20_Info[1]?.userName}
                   </span>
                   <span className="block text-center text-sm text-kuDarkGreen font-semibold">
-                    {top20_Info[1].totalPoints}P
+                    {top20_Info[1]?.totalPoints}P
                   </span>
                 </div>
               </div>
 
               {/* 1st 섹션 */}
               <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-1000 opacity-0">
-                {/* 1st 섹션에는 라이쿠 뿔이 양옆으로 들어가야 한다, 따라서 따로 div를 판다 */}
                 <div className="flex flex-row items-end justify-between space-x-1 mb-1">
                   <img
                     src={rikuHorn_left}
@@ -157,22 +176,19 @@ function RankingPage() {
                   />
                 </div>
                 <div className="flex flex-col items-center -space-y-4">
-                  {/* 프로필 이미지 */}
                   <div className="w-full aspect-square bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
                     <img
-                      src={top20_Info[0].userProfileImg ?? defaultProfileImg}
+                      src={top20_Info[0]?.userProfileImg ?? defaultProfileImg}
                       alt="1st"
                       className="w-full h-full object-cover"
                     />
                   </div>
-
-                  {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
                   <div className="w-full bg-kuBeige rounded-xl pt-4 pb-14">
                     <span className="block text-center text-lg font-bold text-black">
-                      {top20_Info[0].userName}
+                      {top20_Info[0]?.userName}
                     </span>
                     <span className="block text-center text-sm text-kuDarkGreen font-semibold">
-                      {top20_Info[0].totalPoints}P
+                      {top20_Info[0]?.totalPoints}P
                     </span>
                   </div>
                 </div>
@@ -183,32 +199,24 @@ function RankingPage() {
                 <span className="block text-center text-2xl font-bold text-whiteSmoke mb-1">
                   3rd
                 </span>
-                {/* 프로필 이미지 */}
                 <div className="w-full aspect-square bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
                   <img
-                    src={top20_Info[2].userProfileImg ?? defaultProfileImg}
-                    alt="1st"
+                    src={top20_Info[2]?.userProfileImg ?? defaultProfileImg}
+                    alt="3rd"
                     className="w-full h-full object-cover"
                   />
                 </div>
-
-                {/* 이름 및 포인트 정보 (겹쳐진 부분) */}
                 <div className="w-full bg-kuBeige rounded-xl -mt-4 py-4">
                   <span className="block text-center text-lg font-bold text-black">
-                    {top20_Info[2].userName}
+                    {top20_Info[2]?.userName}
                   </span>
                   <span className="block text-center text-sm text-kuDarkGreen font-semibold">
-                    {top20_Info[2].totalPoints}P
+                    {top20_Info[2]?.totalPoints}P
                   </span>
                 </div>
               </div>
             </div>
-          ) : (
-            <span className="w-[375px] mx-auto text-center text-3xl font-extrabold text-white mt-8 mb-8 animate-fade-up animation-delay-400 opacity-0">
-              집계 준비중입니다..
-              {/* 현재는 우선 375px 크기로 너비를 고정해 놓은 상태, 추후 반응형 설계를 위해 수정해야 할 듯 */}
-            </span>
-          )}
+          </div>
         </div>
 
         {/* "이번달 내 순위" 내용을 표현하는 부분 */}
@@ -232,13 +240,12 @@ function RankingPage() {
           <span className="text-kuDarkGreen text-xl font-bold mr-3">{myInfo.totalPoints}P</span>
         </div>
 
-        {/* 그 밑의 4위부터 회원들 랭킹 프로필 카드 (받아온 랭킹 정보를 바탕으로 map 함수로 return할 것임) */}
+        {/* 그 밑의 4위부터 회원들 랭킹 프로필 카드 */}
         {top20_Info.slice(3, viewCount).map((user, index) => (
           <div
             key={index}
             className="w-full max-w-sm bg-kuWarmGray rounded-xl flex flex-row justify-between items-center px-3 py-2 mb-2"
           >
-            {/* 왼쪽 영역: 순위, 프로필 이미지, 이름 */}
             <div className="flex flex-row items-center">
               <span className="text-kuDarkGray text-sm font-bold mr-4">{user.userId}</span>
               <img
@@ -248,7 +255,6 @@ function RankingPage() {
               />
               <span className="text-black text-base">{user.userName}</span>
             </div>
-            {/* 오른쪽 영역: 포인트 */}
             <span className="text-kuDarkGreen text-base font-semibold mr-3">
               {user.totalPoints}P
             </span>
@@ -257,7 +263,7 @@ function RankingPage() {
 
         {/* 하단의 '전체보기' 버튼 */}
         <div
-          className="w-full max-w-sm bg-kuBeige rounded-xl text-center py-2 mt-4 mb-12"
+          className="w-full max-w-sm bg-kuBeige rounded-xl text-center py-2 mt-4 mb-12 cursor-pointer hover:bg-opacity-90 transition-colors"
           onClick={toggleViewCount}
         >
           <span className="text-black text-base font-normal">
