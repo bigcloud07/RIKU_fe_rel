@@ -1,6 +1,11 @@
 # NPM dependencies
 node_modules/
 
+# npm run build를 통해 생성되는 빌드 파일
+dist/
+dist-ssr/
+*.local
+
 # IDE configurations
 .idea
 .vscode/*
