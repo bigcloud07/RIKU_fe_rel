@@ -70,6 +70,9 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const dotButtonRef = useRef<HTMLDivElement>(null);
 
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editedAttendance, setEditedAttendance] = useState<{ [userId: number]: boolean }>({});
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -271,6 +274,70 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
       .padStart(2, "0")}:${kstDate.getMinutes().toString().padStart(2, "0")}`;
   };
 
+  const toggleAttendance = (userId: number, originalStatus: string) => {
+    setEditedAttendance(prev => {
+      const current = userId in prev ? prev[userId] : originalStatus === "ATTENDED";
+      return { ...prev, [userId]: !current };
+    });
+  };
+
+  const handleEditAttempt = () => {
+    const now = new Date(); // 현재 로컬 시간
+    const postDateKST = new Date(new Date(date).getTime() + 9 * 60 * 60 * 1000);
+
+
+    if (now < postDateKST) {
+      alert("아직 명단 수정을 할 수 없습니다.");
+      return;
+    }
+    // 취소 글은 누구도 편집 불가
+    if (postStatus === "CANCELED") {
+      alert("취소된 러닝은 명단을 수정할 수 없습니다.");
+      return;
+    }
+
+    // ADMIN 은 CLOSED 여도 편집 허용
+    if (userInfo.userRole === "ADMIN") {
+      setIsEditMode(true);
+      return;
+    }
+
+    // 일반 작성자/유저는 기존 정책 유지
+    if (postStatus === "CLOSED") {
+      alert("출석이 종료되어 명단 수정이 불가능합니다.");
+      return;
+    }
+
+
+    setIsEditMode(true);
+  };
+
+  const saveAttendanceChanges = async () => {
+    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+    const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
+      userId: Number(userId),
+      isAttend,
+    }));
+
+    try {
+      const endpoint =
+        postStatus === "CLOSED" && userInfo.userRole === "ADMIN"
+          ? `/run/regular/post/${postId}/fix-attendance`      // ✅ 종료 후 ADMIN 전용
+          : `/run/regular/post/${postId}/manual-attendance`;  // 기존 경로
+
+      await customAxios.patch(endpoint, payload, {
+        headers: { Authorization: `${token}` },
+      });
+
+      alert("출석 정보가 저장되었습니다.");
+      setIsEditMode(false);
+      setEditedAttendance({});
+      await fetchParticipantsInfo(); // 목록 최신화
+    } catch {
+      alert("저장에 실패했습니다.");
+    }
+  };
+
   return (
     <div className="w-full min-h-screen bg-white overflow-y-auto overflow-x-hidden">
       <div className="flex flex-col items-center text-center justify-center w-full max-w-[430px] mx-auto">
@@ -328,7 +395,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                       return;
                     }
 
-                    // ✅ 삭제 API 호출 (서버 명세 확인 필요)
+
                     const { data } = await customAxios.delete(
                       `/run/regular/post/${postId}`,
                       { headers: { Authorization: `${token}` } }
@@ -459,8 +526,17 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           <AttendanceList
             key={JSON.stringify(groupedParticipants)}
             groupedParticipants={groupedParticipants}
+            // 🔽 편집 모드 관련 props 전달
+            isEditMode={isEditMode}
+            editedAttendance={editedAttendance}
+            toggleAttendance={toggleAttendance}
+            onSaveAttendance={saveAttendanceChanges}
+            onToggleEditMode={handleEditAttempt}
+            // 표시용
             userInfoName={userInfo.userName}
             postCreatorName={postCreatorName}
+            // 🔽 ADMIN이면 버튼 노출
+            canEdit={userInfo.userRole === "ADMIN"}
           />
         )}
 

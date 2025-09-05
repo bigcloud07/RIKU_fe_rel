@@ -23,6 +23,7 @@ interface AttendanceListProps {
   onToggleEditMode?: () => void;
   userInfoName: string;
   postCreatorName: string;
+  canEdit?: boolean;
 }
 
 const AttendanceList: React.FC<AttendanceListProps> = ({
@@ -34,6 +35,7 @@ const AttendanceList: React.FC<AttendanceListProps> = ({
   toggleAttendance = () => { },
   onSaveAttendance = () => { },
   onToggleEditMode = () => { },
+  canEdit = false,
 }) => {
   const allParticipants = groupedParticipants.flatMap((group) => group.participants);
 
@@ -72,7 +74,7 @@ const AttendanceList: React.FC<AttendanceListProps> = ({
         </div>
 
         {/*  작성자인 경우에만 명단 수정/저장 버튼 노출 */}
-        {userInfoName === postCreatorName && (
+        {(userInfoName === postCreatorName || canEdit) && (
           <button
             className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${isEditMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"
               }`}

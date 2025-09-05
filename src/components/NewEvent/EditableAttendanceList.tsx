@@ -7,7 +7,7 @@ interface User {
   userId: number;
   userName: string;
   userProfileImg?: string | null;
-  status: "ATTENDED" | "PENDING" | "ABSENT"; 
+  status: "ATTENDED" | "PENDING" | "ABSENT";
   canEdit: string;
 }
 
@@ -24,23 +24,20 @@ interface EditableAttendanceListProps {
   canEdit?: boolean;
   postStatus?: string;
   postDate?: string;
+  userRole?: string;
 }
 
 const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, EditableAttendanceListProps>(
-  ({ postId, runType, users, onUsersChange, onSaveComplete, canEdit, postStatus, postDate }, ref) => {
+  ({ postId, runType, users, onUsersChange, onSaveComplete, canEdit, postStatus, postDate, userRole }, ref) => {
     const [editMode, setEditMode] = useState(false);
 
-    // ✅ 3단계 순환 토글: ATTENDED → ABSENT → PENDING → ATTENDED
-    const handleToggle = (userId: number) => {
+
+     const handleToggle = (userId: number) => {
       const updated = users.map((user) => {
         if (user.userId !== userId) return user;
 
-        let newStatus: User["status"];
-        if (user.status === "ATTENDED") newStatus = "ABSENT";
-        else if (user.status === "ABSENT") newStatus = "PENDING";
-        else newStatus = "ATTENDED";
-
-        return { ...user, status: newStatus };
+        const next = user.status === "ATTENDED" ? "ABSENT" : "ATTENDED";
+        return { ...user, status: next };
       });
       onUsersChange(updated);
     };
@@ -48,26 +45,28 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
     const handleSave = async () => {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
-      const payload = users.map((user) => ({
-        userId: user.userId,
-        isAttend: user.status === "ATTENDED",
+      const payload = users.map((u) => ({
+        userId: u.userId,
+        isAttend: u.status === "ATTENDED",
       }));
 
-      try {
-        const response = await customAxios.patch(
-          `/run/${runType}/post/${postId}/manual-attend`,
-          payload,
-          { headers: { Authorization: `${token}` } }
-        );
+      // 종료 여부에 따라 엔드포인트 분기
+      const base = `/run/${runType}/post/${postId}`;
+      const endpoint =
+        postStatus === "CLOSED" ? `${base}/fix-attendance` : `${base}/manual-attendance`;
 
-        if (response.data.isSuccess) {
+      try {
+        const { data } = await customAxios.patch(endpoint, payload, {
+          headers: { Authorization: `${token}` },
+        });
+        if (data.isSuccess) {
           alert("명단이 저장되었습니다.");
           setEditMode(false);
-          if (onSaveComplete) onSaveComplete();
+          onSaveComplete?.();
         } else {
-          alert(response.data.responseMessage);
+          alert(data.responseMessage || "저장에 실패했습니다.");
         }
-      } catch (err) {
+      } catch {
         alert("저장 중 오류가 발생했습니다.");
       }
     };
@@ -75,6 +74,33 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
     useImperativeHandle(ref, () => ({
       saveAttendance: handleSave,
     }));
+
+    const handleEditOrSaveClick = () => {
+      if (!editMode) {
+        // 종료/취소 상태: ADMIN만 편집 허용
+        if (postStatus === "CLOSED" || postStatus === "CANCELED") {
+          if (userRole !== "ADMIN") {
+            alert("출석이 종료되어 명단 수정이 불가능합니다.");
+            return;
+          }
+        } else {
+          // 시작 전 일반 사용자 편집 제한
+          if (postDate) {
+            const now = new Date();
+            const postKST = new Date(new Date(postDate).getTime() + 9 * 60 * 60 * 1000);
+            if (now < postKST) {
+              alert("아직 명단 수정을 할 수 없습니다.");
+              return;
+            }
+          }
+        }
+        setEditMode(true);
+      } else {
+        handleSave();
+      }
+    };
+
+    const attendedCount = users.filter((u) => u.status === "ATTENDED").length;
 
     return (
       <div className="flex flex-col p-5 gap-3">
@@ -90,30 +116,11 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
             </span>
           </div>
 
-          {canEdit && (
+          {(canEdit || userRole === "ADMIN") && (
             <button
-              onClick={() => {
-                if (!editMode) {
-                  if (postStatus === "CLOSED" || postStatus === "CANCELED") {
-                    alert("출석이 종료되어 명단 수정이 불가능합니다.");
-                    return;
-                  }
-                  if (postDate) {
-                    const now = new Date();
-                    const postKST = new Date(new Date(postDate).getTime() + 9 * 60 * 60 * 1000);
-                    if (now < postKST) {
-                      alert("아직 명단 수정을 할 수 없습니다.");
-                      return;
-                    }
-                  }
-                }
-                editMode ? handleSave() : setEditMode(true);
-              }}
-              className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${
-                editMode
-                  ? "bg-kuDarkGreen text-white"
-                  : "bg-kuLightGray text-kuDarkGray"
-              }`}
+              onClick={handleEditOrSaveClick}   // 변경
+              className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${editMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"
+                }`}
             >
               {editMode ? "명단 저장" : "명단 수정"}
             </button>
@@ -126,8 +133,8 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
             user.status === "ATTENDED"
               ? "bg-[#F0F4DD]" // 연두색
               : user.status === "ABSENT"
-              ? "bg-[#ECEBE4]"
-              : "bg-[#F0F4DD]"
+                ? "bg-[#ECEBE4]"
+                : "bg-[#F0F4DD]"
 
           return (
             <div
@@ -154,13 +161,13 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
                 <div className="cursor-pointer" onClick={() => handleToggle(user.userId)}>
                   {user.status === "ATTENDED" ? (
                     <FaCheckCircle size={24} color="#4CAF50" />
-                  ) : user.status === "PENDING" ? (
-                    <div className="w-[24px] h-[24px] border border-kuDarkGreen rounded-full"></div>
-                  ) : null /* ABSENT는 아이콘 없음 */}
+                  ) : (
+                    <div className="w-[24px] h-[24px] border rounded-full border-[#366943]" />
+                  )}
                 </div>
               ) : user.status === "ATTENDED" ? (
                 <FaCheckCircle size={24} color="#4CAF50" />
-              ) : null /* ABSENT와 PENDING은 아이콘 없음 */}
+              ) : null}
             </div>
           );
         })}

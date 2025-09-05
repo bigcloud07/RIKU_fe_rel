@@ -44,6 +44,7 @@ interface FlashRunUserData {
   userStatus?: string; // 유저의 현재 상태 (참여, 출석 등)
   postimgurl?: string;
   attachmentUrls?: string[];
+  userRole?: string;
 }
 
 const NewEventAdmin: React.FC<FlashRunUserData> = ({
@@ -56,6 +57,7 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
   userName,
   postId,
   postimgurl,
+  userRole
 }) => {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState<"소개" | "명단">("소개");
@@ -688,6 +690,7 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
           canEdit={true}
           postStatus={postStatus}
           postDate={date}
+          userRole={userInfo.userRole}   
         />
       )}
       <div className="">

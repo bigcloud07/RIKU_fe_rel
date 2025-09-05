@@ -312,7 +312,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
   const menuRef = React.useRef<HTMLDivElement>(null);
   const dotButtonRef = React.useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
         menuRef.current &&
@@ -327,6 +327,25 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showMenu]);
 
+  const refetchPost = async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+      const { data } = await customAxios.get(`/run/flash/post/${postId}`, {
+        headers: { Authorization: `${token}` },
+      });
+      if (data.isSuccess) {
+        const r = data.result;
+        setCurrentParticipants(r.participants);        // 사용자 화면은 서버 그대로 사용
+        setCurrentParticipantsNum(r.participantsNum);
+        setPostStatus(r.postStatus);
+        setDate(r.date);
+        setRefreshComments(prev => !prev);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
 
 
   return (
@@ -336,70 +355,70 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
         <img src={BackBtnimg} className="absolute left-[24px]" onClick={() => navigate(-1)}></img>
         번개런
         {userInfo.userRole === "ADMIN" && (
-        <div
-          ref={dotButtonRef}
-          className="absolute right-[8px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowMenu((prev) => !prev);
-          }}
-        >
-          <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
-            {[...Array(3)].map((_, i) => (
-              <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
-            ))}
+          <div
+            ref={dotButtonRef}
+            className="absolute right-[8px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowMenu((prev) => !prev);
+            }}
+          >
+            <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
+              {[...Array(3)].map((_, i) => (
+                <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {userInfo.userRole === "ADMIN" && showMenu && (
-        <motion.div
-          ref={menuRef}
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="absolute top-[50px] right-[16px] z-20 flex flex-col gap-y-2"
-        >
-          <motion.button
-            key="삭제하기"
+        {userInfo.userRole === "ADMIN" && showMenu && (
+          <motion.div
+            ref={menuRef}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
-            onClick={async () => {
-              const ok = window.confirm("정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.");
-              if (!ok) return;
-              try {
-                const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-                if (!token) {
-                  alert("로그인이 필요합니다.");
-                  return;
-                }
-                const { data } = await customAxios.delete(
-                  `/run/flash/post/${postId}`,
-                  { headers: { Authorization: `${token}` } }
-                );
-                if (data.isSuccess) {
-                  alert("게시글이 삭제되었습니다.");
-                  setShowMenu(false);
-                  
-                  window.location.href = "/flash";
-                } else {
-                  alert(data.responseMessage || "삭제에 실패했습니다.");
-                }
-              } catch (err) {
-                console.error(err);
-                alert("삭제 요청 중 오류가 발생했습니다.");
-              }
-            }}
+            className="absolute top-[50px] right-[16px] z-20 flex flex-col gap-y-2"
           >
-            삭제하기
-          </motion.button>
-        </motion.div>
-      )}
+            <motion.button
+              key="삭제하기"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
+              onClick={async () => {
+                const ok = window.confirm("정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.");
+                if (!ok) return;
+                try {
+                  const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                  if (!token) {
+                    alert("로그인이 필요합니다.");
+                    return;
+                  }
+                  const { data } = await customAxios.delete(
+                    `/run/flash/post/${postId}`,
+                    { headers: { Authorization: `${token}` } }
+                  );
+                  if (data.isSuccess) {
+                    alert("게시글이 삭제되었습니다.");
+                    setShowMenu(false);
+
+                    window.location.href = "/flash";
+                  } else {
+                    alert(data.responseMessage || "삭제에 실패했습니다.");
+                  }
+                } catch (err) {
+                  console.error(err);
+                  alert("삭제 요청 중 오류가 발생했습니다.");
+                }
+              }}
+            >
+              삭제하기
+            </motion.button>
+          </motion.div>
+        )}
       </div>
-      
+
       {/* 러닝 포스팅 사진 */}
       <div className="relative w-full pb-[50px]">
         <div className="relative w-full h-[250px] overflow-hidden">
@@ -524,7 +543,11 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           runType="flash"
           users={currentParticipants}
           onUsersChange={(newUsers) => setCurrentParticipants(newUsers)}
-          canEdit={userInfo.userId === postCreatorId}
+          canEdit={userInfo.userRole === "ADMIN"}
+          userRole={userInfo.userRole}
+          postStatus={postStatus}
+          postDate={date}
+          onSaveComplete={refetchPost}
         />
       )}
       <CommentSection postId={postId!} postType="flash" userInfo={userInfo} refreshTrigger={refreshComments} />
