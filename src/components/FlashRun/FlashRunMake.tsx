@@ -39,8 +39,8 @@ function FlashRunMake() {
   
     try {
       const compressedFile = await imageCompression(file, {
-        maxSizeMB: 5,        // 1MB 이하로
-        maxWidthOrHeight: 1000, // 해상도 제한
+        maxSizeMB: 5,        
+        maxWidthOrHeight: 1224, 
         useWebWorker: true,
       });
   
@@ -77,7 +77,7 @@ function FlashRunMake() {
       for (const file of selectedArray) {
         const compressedFile = await imageCompression(file, {
           maxSizeMB: 5,
-          maxWidthOrHeight: 1000,
+          maxWidthOrHeight: 1224,
           useWebWorker: true,
         });
   

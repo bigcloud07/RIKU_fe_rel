@@ -469,7 +469,7 @@ function TrainingMake() {
                         className="w-full text-center border-gray-400 focus:outline-none"
                       >
                         <option value="">-</option>
-                        {pacers.map((pacer) => (
+                        {pacers && pacers.map((pacer) => (
                           <option key={pacer.id} value={pacer.id}>{pacer.name}</option>
                         ))}
                       </select>
