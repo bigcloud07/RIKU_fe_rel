@@ -141,7 +141,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
       // );
 
       //  출석 종료 처리
-      const response = await customAxios.patch(
+      const response = await customAxios.patch(햐
         `/run/flash/post/${postId}/close`,
         {},
         {
