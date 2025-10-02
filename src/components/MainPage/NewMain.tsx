@@ -273,7 +273,13 @@ const NewMain: React.FC = () => {
       <div className="max-w-[430px] w-full h-[300px] mx-auto m-0 relative">
         <div className="flex justify-center items-center h-full relative">
           <div className="max-w-[430px] w-full h-[300px] mx-auto relative overflow-hidden">
-            <picture className="block w-full h-full">
+            <picture className="block w-full h-full"
+              onClick={() => {
+                if (currentIndex === 0) {
+                  navigate("/Record");
+                }
+              }}
+            >
               <source srcSet={images[currentIndex]} type="image/webp" />
               <img
                 src={images[currentIndex]}
@@ -281,6 +287,7 @@ const NewMain: React.FC = () => {
                 className="w-full h-full object-cover block"
                 fetchPriority={currentIndex === 0 ? "high" : undefined}
                 loading={currentIndex === 0 ? "eager" : "lazy"}
+
               />
             </picture>
 
