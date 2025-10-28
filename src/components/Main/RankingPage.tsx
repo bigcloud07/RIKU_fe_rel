@@ -63,12 +63,14 @@ function RankingPage() {
       let idx: number = 1;
 
       //상위 10명의 정보를 넣어둘 배열 top20 (response.data.result의 "top20"에서 정보를 가져온다)
-      let top20: SimpleUserInfo[] = response.data.result.top20?.map((user: SimpleUserInfo) => ({
-        userId: idx++,
-        userName: user.userName,
-        userProfileImg: user.userProfileImg || null,
-        totalPoints: user.totalPoints,
-      }));
+      let top20: SimpleUserInfo[] = response.data.result.top20
+        ?.map((user: SimpleUserInfo) => ({
+          userId: idx++,
+          userName: user.userName,
+          userProfileImg: user.userProfileImg || null,
+          totalPoints: user.totalPoints,
+        })) // 김용주와 박종빈 제외 (--> 2025년 하반기 기준 회장/부회장)
+        .filter((user: SimpleUserInfo) => user.userName !== "김용주" && user.userName !== "박종빈");
 
       //공동 순위 처리해야 함
       for (let i: number = 0; i < top20.length; i++) {
@@ -218,28 +220,31 @@ function RankingPage() {
             </div>
           </div>
         </div>
+        {/* 자신의 랭킹 정보가 있을 경우 표시 (-> userRanking 값이 -1일 경우 해당 컴포넌트 비활성화 처리해야 함) */}
+        {myRankingInfo !== -1 && (
+          <>
+            {/* "이번달 내 순위" 내용을 표현하는 부분 */}
+            <div className="w-full max-w-sm text-left m-4">
+              <span className="text-xl font-bold pr-4 text-whiteSmoke">이번 학기 내 순위</span>
+              <span className="text-xl font-bold pr-4 text-whiteSmoke">|</span>
+              <span className="text-xl font-bold text-kuLightGreen">{myRankingInfo}</span>
+            </div>
 
-        {/* "이번달 내 순위" 내용을 표현하는 부분 */}
-        <div className="w-full max-w-sm text-left m-4">
-          <span className="text-xl font-bold pr-4 text-whiteSmoke">이번 학기 내 순위</span>
-          <span className="text-xl font-bold pr-4 text-whiteSmoke">|</span>
-          <span className="text-xl font-bold text-kuLightGreen">{myRankingInfo}</span>
-        </div>
-
-        {/* 자신의 랭킹을 표시하는 카드 섹션 */}
-        <div className="w-full max-w-sm bg-kuLightGray rounded-xl flex flex-row justify-between items-center px-3 py-2 mb-6">
-          <div className="flex flex-row flex-start items-center">
-            <span className="text-kuDarkGray text-base font-bold mr-4">{myRankingInfo}</span>
-            <img
-              src={myInfo.userProfileImg ?? defaultProfileImg}
-              alt="myProfileImg"
-              className="w-16 h-16 rounded-full mr-4 object-cover"
-            />
-            <span className="text-black text-xl font-bold">{myInfo.userName}</span>
-          </div>
-          <span className="text-kuDarkGreen text-xl font-bold mr-3">{myInfo.totalPoints}P</span>
-        </div>
-
+            {/* 자신의 랭킹을 표시하는 카드 섹션 */}
+            <div className="w-full max-w-sm bg-kuLightGray rounded-xl flex flex-row justify-between items-center px-3 py-2 mb-6">
+              <div className="flex flex-row flex-start items-center">
+                <span className="text-kuDarkGray text-base font-bold mr-4">{myRankingInfo}</span>
+                <img
+                  src={myInfo.userProfileImg ?? defaultProfileImg}
+                  alt="myProfileImg"
+                  className="w-16 h-16 rounded-full mr-4 object-cover"
+                />
+                <span className="text-black text-xl font-bold">{myInfo.userName}</span>
+              </div>
+              <span className="text-kuDarkGreen text-xl font-bold mr-3">{myInfo.totalPoints}P</span>
+            </div>
+          </>
+        )}
         {/* 그 밑의 4위부터 회원들 랭킹 프로필 카드 */}
         {top20_Info.slice(3, viewCount).map((user, index) => (
           <div
