@@ -394,7 +394,7 @@ function NewRegularRunMake() {
                 <div className="text-lg font-semibold">{bottomSheetType === 'distance' ? "거리 선택" : "페이스 선택"}</div>
                 {bottomSheetType === 'distance' ? (
                   <select className="mt-4 p-2 border border-gray-300 rounded-lg w-24 text-center" value={selectedDistance} onChange={(e) => setSelectedDistance(e.target.value)}>
-                    {Array.from({ length: 20 }, (_, i) => `${i + 1}`).map((km) => (
+                    {Array.from({ length: 90 }, (_, i) => `${i + 1}`).map((km) => (
                       <option key={km} value={km}>{km} km</option>
                     ))}
                   </select>
