@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 //Icon들 import
-import MainIcon from '../assets/navi-icon/main-icon.svg?react';
-import CalendarIcon from '../assets/navi-icon/calendar-icon.svg?react';
-import RankingIcon from '../assets/navi-icon/ranking-icon.svg?react';
-import MyPageIcon from '../assets/navi-icon/mypage-icon.svg?react';
+import MainIcon from "../assets/navi-icon/main-icon.svg?react";
+import CalendarIcon from "../assets/navi-icon/calendar-icon.svg?react";
+import RankingIcon from "../assets/navi-icon/ranking-icon.svg?react";
+import MyPageIcon from "../assets/navi-icon/mypage-icon.svg?react";
 
 const NavBar: React.FC = () => {
-
   const navigate = useNavigate(); //네비게이팅을 위해 useNavigate() 훅 사용
   const location = useLocation(); //현재 경로 가져오기
   const [selectedTab, setSelectedTab] = useState<string>("main"); //초기에는 main
@@ -19,7 +18,7 @@ const NavBar: React.FC = () => {
     "/tab/schedule-page": "schedule-page",
     "/tab/ranking-page": "ranking-page",
     "/tab/my-page": "my-page",
-  }
+  };
 
   //현재 경로에 따라 selectedTab을 업데이트(location 객체를 활용하여..)
   useEffect(() => {
@@ -47,7 +46,6 @@ const NavBar: React.FC = () => {
       {/* 네비게이션 바 */}
 
       <nav className="fixed bottom-0 left-1/2 transform -translate-x-1/2 flex justify-between items-center max-w-[430px] w-full h-16 border-t-[1.5px] border-gray-300 bg-white z-[1000]">
-
         {/* 홈 아이콘 */}
         <div
           className="w-1/4 flex flex-col items-center cursor-pointer"
@@ -60,9 +58,13 @@ const NavBar: React.FC = () => {
         {/* 일정 아이콘 */}
         <div
           className="w-1/4 flex flex-col items-center cursor-pointer"
-          onClick={() => handleNavigation("/tab/schedule-page", "schedule-page")}
+          onClick={() =>
+            handleNavigation("/tab/schedule-page", "schedule-page")
+          }
         >
-          <CalendarIcon className={`w-6 h-6 ${getIconColor("schedule-page")}`} />
+          <CalendarIcon
+            className={`w-6 h-6 ${getIconColor("schedule-page")}`}
+          />
           <div className={`text-xs ${getTextColor("schedule-page")}`}>일정</div>
         </div>
 
@@ -89,6 +91,3 @@ const NavBar: React.FC = () => {
 };
 
 export default NavBar;
-
-
-

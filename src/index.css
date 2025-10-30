@@ -3,23 +3,29 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   color-scheme: light; /* 브라우저 다크모드 비활성 */
 }
 
 /* 이미지, SVG, 동영상, 캔버스 등 자동 색 반전 막기 */
-img, svg, canvas, video {
+img,
+svg,
+canvas,
+video {
   filter: none !important;
   mix-blend-mode: normal;
 }
 
 @media (prefers-color-scheme: dark) {
-  html, body {
+  html,
+  body {
     background: #ffffff;
     color: #111111;
   }
-  img, video, canvas, picture {
+  img,
+  video,
+  canvas,
+  picture {
     filter: none !important; /* 이미지 색 반전 방지 */
     mix-blend-mode: normal;
   }
@@ -27,7 +33,8 @@ img, svg, canvas, video {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -39,7 +46,8 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 @font-face {
@@ -47,7 +55,8 @@ code {
   font-weight: 100;
   font-style: normal;
   font-display: swap;
-  src: url("https://cdn.jsdelivr.net/gh/fonts-archive/AppleSDGothicNeo/AppleSDGothicNeo-Thin.woff2")
+  src:
+    url("https://cdn.jsdelivr.net/gh/fonts-archive/AppleSDGothicNeo/AppleSDGothicNeo-Thin.woff2")
       format("woff2"),
     url("https://cdn.jsdelivr.net/gh/fonts-archive/AppleSDGothicNeo/AppleSDGothicNeo-Thin.ttf")
       format("truetype");
@@ -56,57 +65,62 @@ code {
 /* 페이퍼로지 폰트 */
 
 @font-face {
-  font-family: 'Paperlogy';
-  src: url('./assets/fonts/Paperlogy/Paperlogy-1Thin.ttf') format('truetype');
+  font-family: "Paperlogy";
+  src: url("./assets/fonts/Paperlogy/Paperlogy-1Thin.ttf") format("truetype");
   font-weight: 100;
 }
 
 @font-face {
-  font-family: 'Paperlogy';
-  src: url('./assets/fonts/Paperlogy/Paperlogy-2ExtraLight.ttf') format('truetype');
+  font-family: "Paperlogy";
+  src: url("./assets/fonts/Paperlogy/Paperlogy-2ExtraLight.ttf")
+    format("truetype");
   font-weight: 200;
 }
 
 @font-face {
-  font-family: 'Paperlogy';
-  src: url('./assets/fonts/Paperlogy/Paperlogy-3Light.ttf') format('truetype');
+  font-family: "Paperlogy";
+  src: url("./assets/fonts/Paperlogy/Paperlogy-3Light.ttf") format("truetype");
   font-weight: 300;
 }
 
 @font-face {
-  font-family: 'Paperlogy';
-  src: url('./assets/fonts/Paperlogy/Paperlogy-4Regular.ttf') format('truetype');
+  font-family: "Paperlogy";
+  src: url("./assets/fonts/Paperlogy/Paperlogy-4Regular.ttf") format("truetype");
   font-weight: 400;
 }
 
 @font-face {
-  font-family: 'Paperlogy';
-  src: url('./assets/fonts/Paperlogy/Paperlogy-5Medium.ttf') format('truetype');
+  font-family: "Paperlogy";
+  src: url("./assets/fonts/Paperlogy/Paperlogy-5Medium.ttf") format("truetype");
   font-weight: 500;
 }
 
 @font-face {
-  font-family: 'Paperlogy';
-  src: url('./assets/fonts/Paperlogy/Paperlogy-6SemiBold.ttf') format('truetype');
+  font-family: "Paperlogy";
+  src: url("./assets/fonts/Paperlogy/Paperlogy-6SemiBold.ttf")
+    format("truetype");
   font-weight: 600;
 }
 
 @font-face {
-  font-family: 'Paperlogy';
-  src: url('./assets/fonts/Paperlogy/Paperlogy-7Bold.ttf') format('truetype');
+  font-family: "Paperlogy";
+  src: url("./assets/fonts/Paperlogy/Paperlogy-7Bold.ttf") format("truetype");
   font-weight: 700;
 }
 
 @font-face {
-  font-family: 'Paperlogy';
-  src: url('./assets/fonts/Paperlogy/Paperlogy-8ExtraBold.ttf') format('truetype');
+  font-family: "Paperlogy";
+  src: url("./assets/fonts/Paperlogy/Paperlogy-8ExtraBold.ttf")
+    format("truetype");
   font-weight: 800;
 }
 
 @font-face {
-  font-family: 'Paperlogy';
-  src: url('./assets/fonts/Paperlogy/Paperlogy-9Black.ttf') format('truetype');
+  font-family: "Paperlogy";
+  src: url("./assets/fonts/Paperlogy/Paperlogy-9Black.ttf") format("truetype");
   font-weight: 900;
 }
 
-html { -webkit-text-size-adjust: 100%; } /* 안드로이드 자동 글자확대 방지 */
+html {
+  -webkit-text-size-adjust: 100%;
+} /* 안드로이드 자동 글자확대 방지 */

@@ -1,4 +1,3 @@
-//러닝 리스트 Page
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
@@ -44,7 +43,6 @@ const RunList: React.FC = () => {
 
   const current = config[runType ?? "regular"];
 
-  // 조사 분기 함수 => 이 / 가 
   const getSubjectParticle = (word: string) => {
     const lastChar = word[word.length - 1];
     const code = lastChar.charCodeAt(0);
@@ -145,11 +143,13 @@ const RunList: React.FC = () => {
           ) : (
             <div className="flex flex-col items-center justify-center w-[335px] h-[200px] bg-kuLightGray rounded-lg mt-4">
               <p className="text-[18px] font-semibold text-black">
-              현재 진행중인 {current.title}
-              {getSubjectParticle(current.title)} 없습니다.
+                현재 진행중인 {current.title}
+                {getSubjectParticle(current.title)} 없습니다.
               </p>
               {runType === "flash" && (
-                <p className="text-[14px] text-gray-500 mt-2">직접 러닝을 만들어보는 건 어떨까요?</p>
+                <p className="text-[14px] text-gray-500 mt-2">
+                  직접 러닝을 만들어보는 건 어떨까요?
+                </p>
               )}
             </div>
           )}
@@ -158,7 +158,9 @@ const RunList: React.FC = () => {
 
       {/* 예정된 러닝 */}
       <div className="w-[375px] mt-4">
-        <h2 className="text-[20px] font-semibold ml-5">예정된 {current.title}</h2>
+        <h2 className="text-[20px] font-semibold ml-5">
+          예정된 {current.title}
+        </h2>
         <div className="flex flex-col space-y-[12px] mt-[16px] ml-[20px]">
           {upcomingRuns.map((run) => {
             const { kst, formattedDate, formattedTime } = toKST(run.date);
@@ -187,7 +189,9 @@ const RunList: React.FC = () => {
         <h2 className="text-[20px] font-semibold ml-5">지난 {current.title}</h2>
         <div className="grid grid-cols-3 gap-x-[12px] gap-y-[16px] mt-[20px] px-3">
           {[...pastRuns]
-            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+            .sort(
+              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+            )
             .slice(0, 6)
             .map((run) => {
               const { formattedDate } = toKST(run.date);

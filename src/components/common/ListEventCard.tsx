@@ -8,11 +8,8 @@ import defaultimg from "../../assets/CardDefaultImg.svg";
 interface EventCardProps {
   location: string;
   postimg?: string;
-  runDate: string; // 전체 ISO 날짜 문자열 (예: 2025-03-27T15:00:00)
-  runState: "NOW" | "CANCELED" | "CLOSED";
-  date: string; // 가공된 날짜 문자열 (예: 2025.03.27)
-  time: string; // 가공된 시간 문자열 (예: 15:00)
-  participants: string;
+  runDate: string; runState: "NOW" | "CANCELED" | "CLOSED";
+  date: string; time: string; participants: string;
   onClick: () => void;
 }
 
@@ -26,7 +23,6 @@ const ListEventCard: React.FC<EventCardProps> = ({
   participants,
   onClick,
 }) => {
-  // 상태에 따라 뱃지 이미지 선택
   const getStatusImage = () => {
     switch (runState) {
       case "NOW":
@@ -39,7 +35,6 @@ const ListEventCard: React.FC<EventCardProps> = ({
         return NOWimg;
     }
   };
-
 
   return (
     <div
@@ -60,7 +55,9 @@ const ListEventCard: React.FC<EventCardProps> = ({
       {/* 참가자 수 */}
       <div className="absolute top-[20px] left-[280px] flex items-center space-x-1">
         <img src={peopleimg} className="w-[20px] h-[20px]" alt="참가자" />
-        <div className="text-[12px] font-bold text-black/60">{participants}</div>
+        <div className="text-[12px] font-bold text-black/60">
+          {participants}
+        </div>
       </div>
 
       {/* 러닝 장소 또는 제목 */}
@@ -71,12 +68,9 @@ const ListEventCard: React.FC<EventCardProps> = ({
       {/* 러닝 이미지 */}
       <div className="absolute top-[106px] left-[16px] justify-center">
         <div className="w-[303px] h-[200px] overflow-hidden">
-          <img className="w-full h-full object-cover rounded-[8px]"
-            src={
-              postimg
-                ? postimg
-                : defaultimg
-            }
+          <img
+            className="w-full h-full object-cover rounded-[8px]"
+            src={postimg ? postimg : defaultimg}
           />
         </div>
       </div>
@@ -85,4 +79,3 @@ const ListEventCard: React.FC<EventCardProps> = ({
 };
 
 export default ListEventCard;
-

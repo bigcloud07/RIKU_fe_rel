@@ -10,7 +10,10 @@ interface DateInputProps {
   onChange: (date: Date | null) => void;
 }
 
-export const DateInput: React.FC<DateInputProps> = ({ selectedDate, onChange }) => {
+export const DateInput: React.FC<DateInputProps> = ({
+  selectedDate,
+  onChange,
+}) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const formatDate = (date: Date | null) => {
@@ -57,19 +60,21 @@ export const DateInput: React.FC<DateInputProps> = ({ selectedDate, onChange }) 
                     selected={selectedDate || undefined}
                     onSelect={(date) => onChange(date ?? null)}
                     locale={ko}
-                    disabled={{ before: today }} // 오늘만 선택 가능
+                    disabled={{ before: today }}
                     classNames={{
                       caption: "mb-4 text-black",
                       table: "w-full border-collapse",
-                      head_row: "grid grid-cols-7 text-center text-gray-500 text-sm",
+                      head_row:
+                        "grid grid-cols-7 text-center text-gray-500 text-sm",
                       head_cell: "py-2",
                       row: "grid grid-cols-7",
                       cell: "w-[40px] h-[40px] text-base text-center text-gray-800 hover:bg-gray-100 rounded-full flex items-center justify-center cursor-pointer",
-                      selected: "bg-kuDarkGreen text-white font-semibold rounded-full",
+                      selected:
+                        "bg-kuDarkGreen text-white font-semibold rounded-full",
                       today: "text-kuDarkGreen font-bold",
                       outside: "text-gray-300",
                       chevron: "fill-black",
-                      disabled: "text-gray-300 cursor-not-allowed", // 비활성화된 날짜 스타일
+                      disabled: "text-gray-300 cursor-not-allowed",
                     }}
                   />
                 </div>

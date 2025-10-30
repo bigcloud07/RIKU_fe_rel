@@ -27,12 +27,27 @@ interface EditableAttendanceListProps {
   userRole?: string;
 }
 
-const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, EditableAttendanceListProps>(
-  ({ postId, runType, users, onUsersChange, onSaveComplete, canEdit, postStatus, postDate, userRole }, ref) => {
+const EditableAttendanceList = forwardRef<
+  EditableAttendanceListHandle,
+  EditableAttendanceListProps
+>(
+  (
+    {
+      postId,
+      runType,
+      users,
+      onUsersChange,
+      onSaveComplete,
+      canEdit,
+      postStatus,
+      postDate,
+      userRole,
+    },
+    ref,
+  ) => {
     const [editMode, setEditMode] = useState(false);
 
-
-     const handleToggle = (userId: number) => {
+    const handleToggle = (userId: number) => {
       const updated = users.map((user) => {
         if (user.userId !== userId) return user;
 
@@ -50,10 +65,11 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
         isAttend: u.status === "ATTENDED",
       }));
 
-      // 종료 여부에 따라 엔드포인트 분기
       const base = `/run/${runType}/post/${postId}`;
       const endpoint =
-        postStatus === "CLOSED" ? `${base}/fix-attendance` : `${base}/manual-attendance`;
+        postStatus === "CLOSED"
+          ? `${base}/fix-attendance`
+          : `${base}/manual-attendance`;
 
       try {
         const { data } = await customAxios.patch(endpoint, payload, {
@@ -77,17 +93,17 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
 
     const handleEditOrSaveClick = () => {
       if (!editMode) {
-        // 종료/취소 상태: ADMIN만 편집 허용
         if (postStatus === "CLOSED" || postStatus === "CANCELED") {
           if (userRole !== "ADMIN") {
             alert("출석이 종료되어 명단 수정이 불가능합니다.");
             return;
           }
         } else {
-          // 시작 전 일반 사용자 편집 제한
           if (postDate) {
             const now = new Date();
-            const postKST = new Date(new Date(postDate).getTime() + 9 * 60 * 60 * 1000);
+            const postKST = new Date(
+              new Date(postDate).getTime() + 9 * 60 * 60 * 1000,
+            );
             if (now < postKST) {
               alert("아직 명단 수정을 할 수 없습니다.");
               return;
@@ -107,7 +123,11 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
         {/* 상단 인원 수 */}
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-1">
-            <img src={peopleimg} alt="체크 아이콘" className="w-[24px] h-[17px]" />
+            <img
+              src={peopleimg}
+              alt="체크 아이콘"
+              className="w-[24px] h-[17px]"
+            />
             <span className="text-[16px] font-semibold">
               <span className="text-kuDarkGreen">
                 {users.filter((u) => u.status === "ATTENDED").length}
@@ -118,8 +138,9 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
 
           {(canEdit || userRole === "ADMIN") && (
             <button
-              onClick={handleEditOrSaveClick}   // 변경
-              className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${editMode ? "bg-kuDarkGreen text-white" : "bg-kuLightGray text-kuDarkGray"
+              onClick={handleEditOrSaveClick} className={`text-[12px] w-[72px] h-[24px] font-semibold rounded-[10px] ${editMode
+                  ? "bg-kuDarkGreen text-white"
+                  : "bg-kuLightGray text-kuDarkGray"
                 }`}
             >
               {editMode ? "명단 저장" : "명단 수정"}
@@ -131,10 +152,9 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
         {users.map((user, index) => {
           const backgroundClass =
             user.status === "ATTENDED"
-              ? "bg-[#F0F4DD]" // 연두색
-              : user.status === "ABSENT"
+              ? "bg-[#F0F4DD]" : user.status === "ABSENT"
                 ? "bg-[#ECEBE4]"
-                : "bg-[#F0F4DD]"
+                : "bg-[#F0F4DD]";
 
           return (
             <div
@@ -142,12 +162,18 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
               className={`flex items-center gap-3 w-[335px] h-[56px] px-4 py-2.5 rounded-lg ${backgroundClass}`}
             >
               {/* 순번 */}
-              <div className="w-5 text-center text-gray-500 font-semibold">{index + 1}</div>
+              <div className="w-5 text-center text-gray-500 font-semibold">
+                {index + 1}
+              </div>
 
               {/* 프로필 */}
               <div className="w-10 h-10 rounded-full bg-gray-400 text-white font-bold flex items-center justify-center overflow-hidden">
                 {user.userProfileImg ? (
-                  <img src={user.userProfileImg} alt="profile" className="w-full h-full object-cover" />
+                  <img
+                    src={user.userProfileImg}
+                    alt="profile"
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   user.userName?.charAt(0) || "?"
                 )}
@@ -158,7 +184,10 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
 
               {/* 상태 아이콘 */}
               {editMode ? (
-                <div className="cursor-pointer" onClick={() => handleToggle(user.userId)}>
+                <div
+                  className="cursor-pointer"
+                  onClick={() => handleToggle(user.userId)}
+                >
                   {user.status === "ATTENDED" ? (
                     <FaCheckCircle size={24} color="#4CAF50" />
                   ) : (
@@ -173,7 +202,7 @@ const EditableAttendanceList = forwardRef<EditableAttendanceListHandle, Editable
         })}
       </div>
     );
-  }
+  },
 );
 
 export default EditableAttendanceList;

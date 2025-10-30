@@ -1,19 +1,19 @@
-declare module '*.png' {
+declare module "*.png" {
   const pngUrl: string;
   export default pngUrl;
 }
 
-declare module '*.jpg' {
+declare module "*.jpg" {
   const jpgUrl: string;
   export default jpgUrl;
 }
 
-declare module '*.jpeg' {
+declare module "*.jpeg" {
   const jpegUrl: string;
   export default jpegUrl;
 }
 
-declare module '*.svg' {
+declare module "*.svg" {
   const value: string;
   export default value;
 }
@@ -23,7 +23,7 @@ declare module "*.svg" {
   export default value;
 }
 
-declare module '*.mp4' {
+declare module "*.mp4" {
   const src: string;
   export default src;
 }

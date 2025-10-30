@@ -8,10 +8,14 @@ import { setPassword } from "../../redux/slices/signupSlice"; //Action Creator�
 //비밀번호가 유효한지 확인하는 메소드 validatePassword
 function validatePassword(password: string) {
   // 영문, 숫자, 특수문자 조합 8~20자리까지 가능
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
+  const passwordRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
 
   if (!passwordRegex.test(password)) {
-    return { valid: false, message: "영문, 숫자, 특수문자 조합 8~20자리까지 가능합니다." };
+    return {
+      valid: false,
+      message: "영문, 숫자, 특수문자 조합 8~20자리까지 가능합니다.",
+    };
   } else {
     return { valid: true, message: "유효한 비밀번호 형식입니다" };
   }
@@ -22,7 +26,8 @@ function PasswordInput() {
   const [password, setPasswordInput] = useState<string>("");
   const [passwordConfirm, setPasswordConfirm] = useState<string>("");
   const [validationMessage, setValidationMessage] = useState<string>("");
-  const [validationMessageInConfirm, setValidationMessageInConfirm] = useState<string>("");
+  const [validationMessageInConfirm, setValidationMessageInConfirm] =
+    useState<string>("");
   const [isValidPW, setIsValidPW] = useState<boolean>(false);
   const [isValidPWConfirm, setIsValidPWConfirm] = useState<boolean>(false);
   const navigate = useNavigate(); //제출 후에 다음 화면으로 넘어가기 위해 useNavigate() hook 활용!
@@ -39,7 +44,9 @@ function PasswordInput() {
   };
 
   //'비밀번호' 입력 란의 입력 값이 바뀔 때마다 취하는 액션을 정의한 handleChangeInPasswordConfirm 메소드
-  const handleChangeInPasswordConfirm = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInPasswordConfirm = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setPasswordConfirm(e.target.value);
   };
 
@@ -97,12 +104,18 @@ function PasswordInput() {
             onChange={handleChangeInPassword}
             placeholder="비밀번호"
             className={`w-full px-4 py-2 border ${
-              password === "" ? "border-gray-300" : isValidPW ? "border-gray-300" : "border-red-500"
+              password === ""
+                ? "border-gray-300"
+                : isValidPW
+                  ? "border-gray-300"
+                  : "border-red-500"
             } rounded-md focus:outline-none`}
           />
           <div className="w-full max-w-sm">
             {!(isValidPW || password === "") && (
-              <p className="text-red-500 text-sm text-left mt-2">{validationMessage}</p>
+              <p className="text-red-500 text-sm text-left mt-2">
+                {validationMessage}
+              </p>
             )}
           </div>
         </div>
@@ -118,8 +131,8 @@ function PasswordInput() {
               passwordConfirm === ""
                 ? "border-gray-300"
                 : isValidPWConfirm
-                ? "border-kuDarkGreen"
-                : "border-red-500"
+                  ? "border-kuDarkGreen"
+                  : "border-red-500"
             } rounded-md focus:outline-none`}
           />
           <div className="w-full max-w-sm">
@@ -129,7 +142,9 @@ function PasswordInput() {
                   {validationMessageInConfirm}
                 </p>
               ) : (
-                <p className="text-red-500 text-sm mt-2 text-left">{validationMessageInConfirm}</p>
+                <p className="text-red-500 text-sm mt-2 text-left">
+                  {validationMessageInConfirm}
+                </p>
               )
             ) : null}
           </div>

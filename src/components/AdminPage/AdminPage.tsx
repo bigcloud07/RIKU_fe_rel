@@ -42,7 +42,7 @@ function AdminPage() {
           headers: {
             Authorization: accessToken, //accessToken을 헤더로 추가해서 요청 보냄
           },
-        }
+        },
       );
 
       let fetchedMembers = response.data.result.map((user: Member) => ({
@@ -79,7 +79,7 @@ function AdminPage() {
 
     //이미 변경된 회원이 있다면 기존 정보를 제거하고 새 정보로 업데이트 해야 함
     const updatedRoleChangedMembers = roleChangedMembers.filter(
-      (member) => member.studentId !== changedMember.studentId
+      (member) => member.studentId !== changedMember.studentId,
     );
     updatedRoleChangedMembers.push(changedMember);
 
@@ -99,7 +99,7 @@ function AdminPage() {
 
     //바뀐 멤버가 기존의 roleChangedMembers에 있는지 확인 후 추가 or 교체
     const updatedRoleChanged = roleChangedMembers.filter(
-      (m) => m.studentId !== changedMember.studentId
+      (m) => m.studentId !== changedMember.studentId,
     );
     updatedRoleChanged.push(changedMember);
 
@@ -112,7 +112,7 @@ function AdminPage() {
   function compareValues(
     a: string | number | boolean | null,
     b: string | number | boolean | null,
-    direction: "asc" | "desc"
+    direction: "asc" | "desc",
   ) {
     //telNum 옵션에서 null이 발생할 수 있음, 이에 대해선 예외 처리를 해주어야 함
     if (a === null || b === null) return a === b ? 0 : a === null ? 1 : -1;
@@ -140,7 +140,11 @@ function AdminPage() {
     let sortDirection: "asc" | "desc" = "asc"; //내림차순(desc) 혹은 오름차순(asc) 옵션 관련한 자료형 sortDirection 선언
 
     //sortConfig 값이 null이 아니라면, sortDirection을 반전 시킨다
-    if (sortConfig && sortConfig.key === key && sortConfig.sortDirection === "asc") {
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.sortDirection === "asc"
+    ) {
       sortDirection = "desc";
     }
 
@@ -161,11 +165,13 @@ function AdminPage() {
       const accessToken = JSON.parse(localStorage.getItem("accessToken") || ""); //localStorage에 저장된 accessToken 값이 없으면 ''으로 초기화
       const url = "/admin";
       //roleChangedMembers 배열의 요소들에서 studentId, userName만을 추출
-      const payload = roleChangedMembers.map(({ studentId, userRole, isPacer }) => ({
-        studentId,
-        userRole,
-        isPacer,
-      }));
+      const payload = roleChangedMembers.map(
+        ({ studentId, userRole, isPacer }) => ({
+          studentId,
+          userRole,
+          isPacer,
+        }),
+      );
       //바뀐 친구가 없다면(roleChangedMembers에 들어간 놈이 아무것도 없다면..)
       if (payload.length === 0) {
         alert("현재 바뀐 정보가 없습니다.");
@@ -202,7 +208,8 @@ function AdminPage() {
       </div>
       <div className="flex items-center ml-4 mbs-4">
         <span className="text-sm font-bold">
-          참고 사항: 표의 제목을 누르실 경우, 각 항목에 대해 정렬하여 조회하실 수 있습니다
+          참고 사항: 표의 제목을 누르실 경우, 각 항목에 대해 정렬하여 조회하실
+          수 있습니다
         </span>
       </div>
       <div className="overflow-x-auto">
@@ -236,7 +243,7 @@ function AdminPage() {
                         "participationCount",
                         "userRole",
                         "isPacer",
-                      ][index] as keyof Member
+                      ][index] as keyof Member,
                     )
                   }
                 >
@@ -255,7 +262,9 @@ function AdminPage() {
                 <td className="px-4 py-2 border-b">{member.major}</td>
                 <td className="px-4 py-2 border-b">{member.phone}</td>
                 <td className="px-4 py-2 border-b">{member.points}</td>
-                <td className="px-4 py-2 border-b">{member.participationCount}</td>
+                <td className="px-4 py-2 border-b">
+                  {member.participationCount}
+                </td>
                 <td className="px-4 py-2 border-b">
                   <select
                     value={member.userRole}

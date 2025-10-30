@@ -57,8 +57,8 @@ module.exports = {
       },
       fontFamily: {
         sans: ["sans-serif"],
-        paperlogy: ['Paperlogy'],
-        AppleSDGGothicNeo: ['Apple SD Gothic Neo'],
+        paperlogy: ["Paperlogy"],
+        AppleSDGGothicNeo: ["Apple SD Gothic Neo"],
       },
       screens: {
         zfold: "344px", // Z Fold 5 대응
@@ -78,7 +78,7 @@ module.exports = {
         Object.entries(animationDelay).map(([key, value]) => [
           `.animation-delay-${key}`,
           { "animation-delay": value },
-        ])
+        ]),
       );
 
       addUtilities(utilities, ["responsive", "hover"]);

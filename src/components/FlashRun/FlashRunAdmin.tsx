@@ -6,11 +6,10 @@ import time from "../../assets/FlashRunDetail/time.svg";
 import TabButton from "./TapButton";
 
 import customAxios from "../../apis/customAxios";
-import flashrunimage from "../../assets/Run-img/flashrunimage.jpg"; // 번개런 기본이미지
-import BackBtnimg from "../../assets/BackBtn.svg"
-import pacermark from "../../assets/pacer-mark.svg"
+import flashrunimage from "../../assets/Run-img/flashrunimage.jpg"; import BackBtnimg from "../../assets/BackBtn.svg";
+import pacermark from "../../assets/pacer-mark.svg";
 import CommentSection from "../common/CommentSection";
-import EditableAttendanceList from "./EditableAttendanceList"
+import EditableAttendanceList from "./EditableAttendanceList";
 import { motion } from "framer-motion";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -37,8 +36,7 @@ interface FlashRunAdminData {
   content: string;
   userName: string;
   code?: string;
-  postId?: string; // 게시글 ID 추가
-  postimgurl: string
+  postId?: string; postimgurl: string;
 }
 
 interface EditableUser {
@@ -57,53 +55,44 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   content,
   userName,
   postId,
-  postimgurl
+  postimgurl,
 }) => {
   const [activeTab, setActiveTab] = useState<"소개" | "명단">("소개");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [buttonText, setButtonText] = useState("시작하기");
-  const [code, setCode] = useState(""); // 출석 코드
-  const [isInputDisabled, setIsInputDisabled] = useState(false);
+  const [code, setCode] = useState(""); const [isInputDisabled, setIsInputDisabled] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
-  const [error, setError] = useState<string | null>(null); // 에러 메시지
-  const [currentParticipants, setCurrentParticipants] = useState<Participant[]>(participants);
+  const [error, setError] = useState<string | null>(null); const [currentParticipants, setCurrentParticipants] =
+    useState<Participant[]>(participants);
   const [date, setDate] = useState("");
-  const [currentParticipantsNum, setCurrentParticipantsNum] = useState<number>(participantsNum); // 현재 불러오는 값
-  const [postCreatorName, setPostCreatorName] = useState("");
+  const [currentParticipantsNum, setCurrentParticipantsNum] =
+    useState<number>(participantsNum); const [postCreatorName, setPostCreatorName] = useState("");
 
+  const [editableParticipants, setEditableParticipants] = useState<
+    EditableUser[]
+  >([]);
 
-
-  const [editableParticipants, setEditableParticipants] = useState<EditableUser[]>([]);
-
-
-
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleBack = () => navigate(-1);
-
-
-
-
 
   const handleStartClick = async () => {
     if (!code) {
       try {
-        // 출석 코드 생성 API 호출
-        const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
+        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
         const response = await customAxios.post(
           `/run/flash/post/${postId}/code`,
           {},
           {
             headers: {
-              Authorization: `${token}`, // 적절한 토큰으로 교체
+              Authorization: `${token}`,
             },
-          }
+          },
         );
         if (response.data.isSuccess) {
           const generatedCode = response.data.result.code;
           setCode(generatedCode);
           setIsInputDisabled(true);
-          setError(null); // 에러 초기화
+          setError(null);
         } else {
           setError(response.data.responseMessage);
         }
@@ -125,28 +114,18 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
-      // 출석 데이터 준비
       const attendanceData = editableParticipants.map((user) => ({
         userId: user.userId,
         isAttend: user.status === "ATTENDED",
       }));
 
-      //  출석 상태 먼저 반영
-      // await customAxios.patch(
-      //   `/run/flash/post/${postId}/manual-attendance`,
-      //   attendanceData,
-      //   {
-      //     headers: { Authorization: `${token}` },
-      //   }
-      // );
 
-      //  출석 종료 처리
       const response = await customAxios.patch(
         `/run/flash/post/${postId}/close`,
         {},
         {
           headers: { Authorization: `${token}` },
-        }
+        },
       );
 
       if (response.data.isSuccess) {
@@ -162,8 +141,6 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
       setError("출석 종료 처리에 실패했습니다.");
     }
   };
-
-
 
   const handleCloseModal = () => setIsModalOpen(false);
 
@@ -183,7 +160,6 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
       if (response.data.isSuccess) {
         const result = response.data.result;
 
-        // 공통 업데이트 (댓글 관련 정보 등)
         setPostStatus(result.postStatus);
         setUserInfo({
           userId: result.userInfo?.userId || 0,
@@ -192,31 +168,27 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           userRole: result.userInfo?.userRole || "",
         });
         setPostCreatorImg(result.postCreatorInfo?.userProfileImg || null);
-        setCurrentParticipantsNum(result.participantsNum); // 참가자 수 갱신
-        setDate(result.date); // 날짜도 혹시 변경되었을 수 있음
-
-        // 탭 별 업데이트
+        setCurrentParticipantsNum(result.participantsNum); setDate(result.date);
         if (tab === "명단") {
           const converted = result.participants.map((p: any) => ({
             userId: p.userId,
             userName: p.userName,
             userProfileImg: p.userProfileImg || null,
-            status: p.status === "ATTENDED"
-              ? "ATTENDED"
-              : p.status === "ABSENT"
-                ? "ABSENT"
-                : "PENDING",
+            status:
+              p.status === "ATTENDED"
+                ? "ATTENDED"
+                : p.status === "ABSENT"
+                  ? "ABSENT"
+                  : "PENDING",
           }));
           setEditableParticipants(converted);
         }
-
 
         if (tab === "소개") {
           setAttachmentUrls(result.attachmentUrls || []);
           setCreatorName(result.postCreatorInfo?.userName || "");
         }
 
-        // ✅ 댓글 최신화 트리거
         setRefreshComments((prev) => !prev);
       } else {
         setError(response.data.responseMessage);
@@ -238,9 +210,12 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     }
   }, [postId, participants]);
 
-
-
-  const [userInfo, setUserInfo] = useState<{ userId: number; userName: string; userProfileImg: string; userRole: String }>({
+  const [userInfo, setUserInfo] = useState<{
+    userId: number;
+    userName: string;
+    userProfileImg: string;
+    userRole: String;
+  }>({
     userId: 0,
     userName: "",
     userProfileImg: "",
@@ -248,8 +223,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
   });
 
   const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
-  const [creatorName, setCreatorName] = useState(""); // 작성자 이름
-
+  const [creatorName, setCreatorName] = useState("");
   useEffect(() => {
     const fetchPostData = async () => {
       try {
@@ -272,7 +246,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setPostCreatorName(result.postCreatorInfo.userName);
 
-          console.log("Fetched post data:", result); // 디버깅용 로그
+          console.log("Fetched post data:", result);
         } else {
           setError(response.data.responseMessage);
         }
@@ -282,8 +256,6 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
     };
     fetchPostData();
   }, [postId]);
-
-
 
   const formatDateTime = (iso: string) => {
     const utcDate = new Date(iso);
@@ -299,11 +271,8 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
 
   const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
 
-  // 상단바 점 버튼 관련 코드
-  const [showMenu, setShowMenu] = useState(false); // 메뉴 열림 상태 추가
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [showMenu, setShowMenu] = useState(false); const menuRef = useRef<HTMLDivElement>(null);
   const dotButtonRef = useRef<HTMLDivElement>(null);
-
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -335,7 +304,6 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
       if (data.isSuccess) {
         const r = data.result;
 
-        // 참가자/카운트/상태 등 최신화
         const converted = r.participants.map((p: any) => ({
           userId: p.userId,
           userName: p.userName,
@@ -352,40 +320,40 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
         setPostStatus(r.postStatus);
         setDate(r.date);
 
-        //댓글도 재렌더
-        setRefreshComments(prev => !prev);
+        setRefreshComments((prev) => !prev);
       }
     } catch (e) {
       console.error(e);
     }
   };
 
-
-
-
-
   return (
     <div className="w-full min-h-screen overflow-y-auto bg-white">
       <div className="w-full max-w-[430px] mx-auto flex flex-col items-center text-center justify-center">
         {/* 상단바 */}
         <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
-          <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
+          <img
+            src={BackBtnimg}
+            className="absolute left-[24px] cursor-pointer"
+            onClick={handleBack}
+          />
           번개런
           <div
             ref={dotButtonRef}
             className="absolute right-[5px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
             onClick={(e) => {
-              e.stopPropagation(); // 이벤트 버블링 방지
-              setShowMenu((prev) => !prev);
+              e.stopPropagation(); setShowMenu((prev) => !prev);
             }}
           >
             <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
               {[...Array(3)].map((_, i) => (
-                <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+                <span
+                  key={i}
+                  className="w-[4px] h-[4px] bg-white rounded-full"
+                />
               ))}
             </div>
           </div>
-
           {showMenu && (
             <motion.div
               ref={menuRef}
@@ -395,7 +363,6 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
               variants={{ hidden: {}, visible: {}, exit: {} }}
               className="absolute top-[50px] right-[18px] z-20 flex flex-col gap-y-2"
             >
-
               {["수정하기", "취소하기"].map((label, index) => (
                 <motion.button
                   key={label}
@@ -407,13 +374,20 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                   className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
                   onClick={async () => {
                     if (label === "수정하기") {
-                      if (postStatus === "CLOSED" || postStatus === "CANCELED") {
-                        alert("종료된 러닝이나 취소된 러닝은 수정이 불가능합니다.");
+                      if (
+                        postStatus === "CLOSED" ||
+                        postStatus === "CANCELED"
+                      ) {
+                        alert(
+                          "종료된 러닝이나 취소된 러닝은 수정이 불가능합니다.",
+                        );
                         return;
                       }
                       const now = new Date();
                       const runUtcDate = new Date(date);
-                      const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000);
+                      const runKstDate = new Date(
+                        runUtcDate.getTime() + 9 * 60 * 60 * 1000,
+                      );
                       if (now > runKstDate) {
                         alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
                         return;
@@ -421,15 +395,23 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                       navigate(`/flash/edit/${postId}`, { replace: true });
                       setShowMenu(false);
                     } else {
-                      if (postStatus === "CLOSED" || postStatus === "CANCELED") {
-                        alert("이미 종료되었거나 취소된 게시글은 취소할 수 없습니다.");
+                      if (
+                        postStatus === "CLOSED" ||
+                        postStatus === "CANCELED"
+                      ) {
+                        alert(
+                          "이미 종료되었거나 취소된 게시글은 취소할 수 없습니다.",
+                        );
                         return;
                       }
-                      const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
+                      const confirmCancel =
+                        window.confirm("정말 게시글을 취소하시겠습니까?");
                       if (!confirmCancel) return;
 
                       try {
-                        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                        const token = JSON.parse(
+                          localStorage.getItem("accessToken") || "null",
+                        );
                         if (!token) {
                           alert("로그인이 필요합니다.");
                           return;
@@ -437,7 +419,7 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                         const { data } = await customAxios.patch(
                           `/run/flash/post/${postId}/cancel`,
                           {},
-                          { headers: { Authorization: `${token}` } }
+                          { headers: { Authorization: `${token}` } },
                         );
                         if (data.isSuccess) {
                           alert("게시글이 성공적으로 취소되었습니다.");
@@ -457,7 +439,6 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                 </motion.button>
               ))}
 
-
               {userInfo.userRole === "ADMIN" && (
                 <motion.button
                   key="삭제하기"
@@ -467,19 +448,23 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                   transition={{ delay: 0.3, duration: 0.2 }}
                   className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
                   onClick={async () => {
-                    const confirmDelete = window.confirm("정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.");
+                    const confirmDelete = window.confirm(
+                      "정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.",
+                    );
                     if (!confirmDelete) return;
 
                     try {
-                      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                      const token = JSON.parse(
+                        localStorage.getItem("accessToken") || "null",
+                      );
                       if (!token) {
                         alert("로그인이 필요합니다.");
                         return;
                       }
-                      
+
                       const { data } = await customAxios.delete(
                         `/run/flash/post/${postId}`,
-                        { headers: { Authorization: `${token}` } }
+                        { headers: { Authorization: `${token}` } },
                       );
 
                       if (data.isSuccess) {
@@ -500,20 +485,23 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
               )}
             </motion.div>
           )}
-
         </div>
         {/* 러닝 포스팅 사진 */}
         <div className="relative w-full max-w-[430px] pb-[10px]">
           <div className="relative w-full overflow-hidden">
             <img
               src={postimgurl || flashrunimage}
-              className={`w-full h-[308px] object-cover transition-all duration-300 ${showMenu || postStatus === "CANCELED" || postStatus === "CLOSED" ? "brightness-75" : ""
+              className={`w-full h-[308px] object-cover transition-all duration-300 ${showMenu || postStatus === "CANCELED" || postStatus === "CLOSED"
+                  ? "brightness-75"
+                  : ""
                 }`}
             />
             {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
               <div className="absolute inset-0 flex justify-center items-center bg-opacity-40 bg-black">
                 <div className="text-white text-lg font-bold bg-opacity-60 px-4 py-2 mb-10 rounded">
-                  {postStatus === "CANCELED" ? "취소된 러닝입니다." : "마감된 러닝입니다."}
+                  {postStatus === "CANCELED"
+                    ? "취소된 러닝입니다."
+                    : "마감된 러닝입니다."}
                 </div>
               </div>
             )}
@@ -522,7 +510,9 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
           <div className="absolute top-[234px] w-full px-5 rounded-t-[20px] bg-white">
             <div className="flex flex-col items-center mt-[14px]">
               <object data={FlashRunlogo} className="w-[60px] h-[24px]" />
-              <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
+              <div className="text-lg font-semibold mt-2 text-[24px]">
+                {title}
+              </div>
             </div>
             <div className="flex flex-col items-start w-full max-w-[360px] mt-[15px] ">
               <div className="flex items-center my-1.5">
@@ -534,8 +524,13 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                 <span>{formatDateTime(date)}</span>
               </div>
               <div className="flex items-center my-1.5">
-                <object data={people} className="font-bold text-kuDarkGreen w-[24px] h-[24px] mr-2" />
-                <span className="font-bold text-kuDarkGreen">{currentParticipantsNum}</span>
+                <object
+                  data={people}
+                  className="font-bold text-kuDarkGreen w-[24px] h-[24px] mr-2"
+                />
+                <span className="font-bold text-kuDarkGreen">
+                  {currentParticipantsNum}
+                </span>
               </div>
             </div>
           </div>
@@ -568,7 +563,6 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                 </div>
                 <span className="text-black font-semibold">{creatorName}</span>
               </div>
-
             </div>
             {attachmentUrls.length > 0 && (
               <div className="mt-5 w-full max-w-[320px]">
@@ -600,7 +594,9 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                 </div>
               </div>
             )}
-            <div className="flex flex-col items-start text-left w-full max-w-[327px] mt-2">세부 내용</div>
+            <div className="flex flex-col items-start text-left w-full max-w-[327px] mt-2">
+              세부 내용
+            </div>
             <div className="mt-1 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
               <div className="flex items-center gap-2 mb-2">
                 {postCreatorImg ? (
@@ -614,32 +610,40 @@ const FlashRunAdmin: React.FC<FlashRunAdminData> = ({
                     {postCreatorName.charAt(0)}
                   </div>
                 )}
-                <span className="text-sm font-medium text-black">{postCreatorName}</span>
+                <span className="text-sm font-medium text-black">
+                  {postCreatorName}
+                </span>
               </div>
-              <div className="text-black p-3 text-sm text-left whitespace-pre-wrap">{content}</div>
+              <div className="text-black p-3 text-sm text-left whitespace-pre-wrap">
+                {content}
+              </div>
             </div>
           </>
         )}
-        {activeTab === "명단" && <EditableAttendanceList
+        {activeTab === "명단" && (
+          <EditableAttendanceList
+            postId={postId!}
+            runType="flash"
+            users={editableParticipants}
+            onUsersChange={setEditableParticipants}
+            canEdit={true} postStatus={postStatus}
+            postDate={date}
+            userRole={userInfo.userRole}
+            onSaveComplete={refetchPost}
+          />
+        )}
+        <CommentSection
           postId={postId!}
-          runType="flash"
-          users={editableParticipants}
-          onUsersChange={setEditableParticipants}
-          canEdit={true} // 관리자용이므로 무조건 true
-          postStatus={postStatus}
-          postDate={date}
-          userRole={userInfo.userRole}
-          onSaveComplete={refetchPost}
-        />}
-        <CommentSection postId={postId!} postType="flash" userInfo={userInfo} refreshTrigger={refreshComments} />
-
-
+          postType="flash"
+          userInfo={userInfo}
+          refreshTrigger={refreshComments}
+        />
 
         {/* 시작하기 버튼 */}
         <button
           className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-[100px] ${isFinished || postStatus === "CLOSED"
-            ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
-            : "bg-[#366943] text-white"
+              ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
+              : "bg-[#366943] text-white"
             }`}
           onClick={handleStartClick}
           disabled={isFinished || postStatus === "CLOSED"}

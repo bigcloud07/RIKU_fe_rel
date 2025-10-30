@@ -20,13 +20,11 @@ import AdminPage from "./components/AdminPage/AdminPage";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 
-
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import NewRegularRunMake from "./components/NewRegularRun/NewRegularRunMake";
 import EventMake from "./components/NewEvent/EventMake";
 import TrainingMake from "./components/NewTraining/TrainingMake";
-
 
 import NewRegularRunDetail from "./components/NewRegularRun/NewRegularRunDetail";
 import NewTrainingDetail from "./components/NewTraining/NewTrainingDetail";
@@ -64,7 +62,10 @@ function App() {
               <Route path="/my-page" element={<MyPage />} />
               <Route path="/activity-detail" element={<ActivityDetailPage />} />
               <Route path="/flash/:postId" element={<FlashRunDetail />} />
-              <Route path="/regular/:postId" element={<NewRegularRunDetail />} />
+              <Route
+                path="/regular/:postId"
+                element={<NewRegularRunDetail />}
+              />
               <Route path="/training/:postId" element={<NewTrainingDetail />} />
               <Route path="/event/:postId" element={<NewEventDetail />} />
               <Route path="/record" element={<RecordPage />} />
@@ -80,17 +81,20 @@ function App() {
               <Route path="/main" element={<NewMain />} />
               <Route path="/:runType" element={<RunList />} />
 
-
-              <Route path="/regular/edit/:postId" element={<NewRegularRunEdit />} />
-              <Route path="/training/edit/:postId" element={<NewTrainingEdit />} />
+              <Route
+                path="/regular/edit/:postId"
+                element={<NewRegularRunEdit />}
+              />
+              <Route
+                path="/training/edit/:postId"
+                element={<NewTrainingEdit />}
+              />
               <Route path="/flash/edit/:postId" element={<FlashRunEdit />} />
               <Route path="/event/edit/:postId" element={<EventEdit />} />
               <Route path="/profilefix-page" element={<ProfileFixPage />} />
               <Route path="/start" element={<OnbordingPage />} />
 
               {/* 컴포넌트 테스트 sandbox */}
-             
-              
             </Route>
           </Routes>
         </div>

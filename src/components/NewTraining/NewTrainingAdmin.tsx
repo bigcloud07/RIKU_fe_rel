@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import customAxios from "../../apis/customAxios";
 
-
 import people from "../../assets/FlashRunDetail/people.svg";
 import place from "../../assets/FlashRunDetail/place.svg";
 import time from "../../assets/FlashRunDetail/time.svg";
@@ -72,9 +71,9 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   const [refreshComments, setRefreshComments] = useState(false);
 
   const [isEditMode, setIsEditMode] = useState(false);
-  const [editedAttendance, setEditedAttendance] = useState<{ [userId: number]: boolean }>({});
-
-
+  const [editedAttendance, setEditedAttendance] = useState<{
+    [userId: number]: boolean;
+  }>({});
 
   const [userInfo, setUserInfo] = useState<{
     userId: number;
@@ -90,7 +89,8 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
 
   const toggleAttendance = (userId: number, originalStatus: string) => {
     setEditedAttendance((prev) => {
-      const current = userId in prev ? prev[userId] : originalStatus === "ATTENDED";
+      const current =
+        userId in prev ? prev[userId] : originalStatus === "ATTENDED";
       return {
         ...prev,
         [userId]: !current,
@@ -100,18 +100,25 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
 
   const saveAttendanceChanges = async () => {
     const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-    const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
-      userId: Number(userId),
-      isAttend,
-    }));
+    const payload = Object.entries(editedAttendance).map(
+      ([userId, isAttend]) => ({
+        userId: Number(userId),
+        isAttend,
+      }),
+    );
     try {
       const base = `/run/training/post/${postId}`;
-      const endpoint = postStatus === "CLOSED" ? `${base}/fix-attendance` : `${base}/manual-attendance`;
-      await customAxios.patch(endpoint, payload, { headers: { Authorization: `${token}` } });
+      const endpoint =
+        postStatus === "CLOSED"
+          ? `${base}/fix-attendance`
+          : `${base}/manual-attendance`;
+      await customAxios.patch(endpoint, payload, {
+        headers: { Authorization: `${token}` },
+      });
       alert("출석 정보가 저장되었습니다.");
       setIsEditMode(false);
       setEditedAttendance({});
-      await refetchPost(); // ✅ 저장 후 재조회
+      await refetchPost();
     } catch {
       alert("저장에 실패했습니다.");
     }
@@ -142,7 +149,6 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   }, [activeTab]);
   const [trainingType, setTrainingType] = useState("");
 
-
   const [groupedParticipants, setGroupedParticipants] = useState<any[]>([]);
 
   useEffect(() => {
@@ -171,9 +177,8 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           });
           setPostCreatorName(result.postCreatorInfo?.userName || "");
           setTrainingtype(result.trainingType);
-          setPostStatus(result.postStatus); // CLOSED, NOW 등
-          setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
-          console.log(response.data)
+          setPostStatus(result.postStatus); setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
+          console.log(response.data);
         } else {
           setError(response.data.responseMessage);
         }
@@ -215,11 +220,8 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           userName: result.userInfo?.userName || "",
           userProfileImg: result.userInfo?.userProfileImg || "",
           userRole: result.userInfo?.userRole || "",
-
         });
 
-
-        // 댓글도 항상 최신화
         setRefreshComments((prev) => !prev);
       } else {
         setError(response.data.responseMessage);
@@ -229,16 +231,17 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
     }
   };
 
-
   const handleStartClick = async () => {
-
-
     if (!code) {
       try {
         const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-        const response = await customAxios.post(`/run/training/post/${postId}/code`, {}, {
-          headers: { Authorization: `${token}` },
-        });
+        const response = await customAxios.post(
+          `/run/training/post/${postId}/code`,
+          {},
+          {
+            headers: { Authorization: `${token}` },
+          },
+        );
         if (response.data.isSuccess) {
           setCode(response.data.result.code);
           setIsModalOpen(true);
@@ -249,7 +252,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
         setError("출석 코드 생성에 실패했습니다.");
       }
     }
-    setIsModalOpen(true)
+    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => setIsModalOpen(false);
@@ -265,19 +268,31 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
 
       if (Object.keys(editedAttendance).length > 0) {
-        const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
-          userId: Number(userId),
-          isAttend,
-        }));
+        const payload = Object.entries(editedAttendance).map(
+          ([userId, isAttend]) => ({
+            userId: Number(userId),
+            isAttend,
+          }),
+        );
         const base = `/run/training/post/${postId}`;
-        const endpoint = postStatus === "CLOSED" ? `${base}/fix-attendance` : `${base}/manual-attendance`;
-        await customAxios.patch(endpoint, payload, { headers: { Authorization: `${token}` } });
-        setEditedAttendance({}); setIsEditMode(false);
+        const endpoint =
+          postStatus === "CLOSED"
+            ? `${base}/fix-attendance`
+            : `${base}/manual-attendance`;
+        await customAxios.patch(endpoint, payload, {
+          headers: { Authorization: `${token}` },
+        });
+        setEditedAttendance({});
+        setIsEditMode(false);
       }
 
-      const response = await customAxios.patch(`/run/training/post/${postId}/close`, {}, {
-        headers: { Authorization: `${token}` },
-      });
+      const response = await customAxios.patch(
+        `/run/training/post/${postId}/close`,
+        {},
+        {
+          headers: { Authorization: `${token}` },
+        },
+      );
       if (response.data.isSuccess) {
         setIsFinished(true);
         setPostStatus("CLOSED");
@@ -293,39 +308,36 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
     }
   };
 
-
-
-
   const getTrainingDescription = (type: string) => {
     switch (type) {
-      case 'LSD':
+      case "LSD":
         return (
           <>
-            <span className="font-bold">LSD</span>란 Long Slow Distance의 약자로, 장거리 달리기 훈련입니다.
+            <span className="font-bold">LSD</span>란 Long Slow Distance의
+            약자로, 장거리 달리기 훈련입니다.
           </>
         );
-      // 다른 trainingtype에 대한 설명을 추가할 수 있습니다.
-      case '인터벌':
+      case "인터벌":
         return (
           <>
-            <span className="font-bold">인터벌</span> 훈련 이란 짧은 고강도 러닝과, 휴식 또는 저강도의 회복러닝을 번갈아가며 하는 훈련입니다.
+            <span className="font-bold">인터벌</span> 훈련 이란 짧은 고강도
+            러닝과, 휴식 또는 저강도의 회복러닝을 번갈아가며 하는 훈련입니다.
           </>
         );
-      case '조깅':
+      case "조깅":
         return (
           <>
-            <span className="font-bold">조깅</span>이란 느린 속도로 가볍게 달리는 훈련입니다.
+            <span className="font-bold">조깅</span>이란 느린 속도로 가볍게
+            달리는 훈련입니다.
           </>
         );
       default:
-        return '';
+        return "";
     }
   };
 
-
-  // 말풍선 외부를 클릭했을 때 숨기기
   const handleOutsideClick = (event: React.MouseEvent) => {
-    if (!event.target.closest('.tooltip-container') && isTooltipVisible) {
+    if (!event.target.closest(".tooltip-container") && isTooltipVisible) {
       setIsTooltipVisible(false);
     }
   };
@@ -333,11 +345,8 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
   const [postStatus, setPostStatus] = useState<string>("");
   const [postCreatorImg, setPostCreatorImg] = useState<string | null>(null);
 
-  // 상단바 점 버튼 관련 코드
-  const [showMenu, setShowMenu] = useState(false); // 메뉴 열림 상태 추가
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [showMenu, setShowMenu] = useState(false); const menuRef = useRef<HTMLDivElement>(null);
   const dotButtonRef = useRef<HTMLDivElement>(null);
-
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -360,35 +369,28 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
     };
   }, [showMenu]);
 
-  // 명단 수정 조건 검사 후 진입 함수
   const handleEditAttempt = () => {
-    const now = new Date(); // 현재 로컬 시간
-    const postDateKST = new Date(new Date(date).getTime() + 9 * 60 * 60 * 1000);
+    const now = new Date(); const postDateKST = new Date(new Date(date).getTime() + 9 * 60 * 60 * 1000);
 
     if (now < postDateKST) {
       alert("아직 명단 수정을 할 수 없습니다.");
       return;
     }
 
-
-    // 취소 글은 누구도 편집 불가
     if (postStatus === "CANCELED") {
       alert("취소된 러닝은 명단을 수정할 수 없습니다.");
       return;
     }
 
-    // ADMIN 은 CLOSED 여도 편집 허용
     if (userInfo.userRole === "ADMIN") {
       setIsEditMode(true);
       return;
     }
 
-    // 일반 작성자/유저는 기존 정책 유지
     if (postStatus === "CLOSED") {
       alert("출석이 종료되어 명단 수정이 불가능합니다.");
       return;
     }
-
 
     setIsEditMode(true);
   };
@@ -406,8 +408,11 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
         setGroupedParticipants(r.groupedParticipants || []);
         setAttachmentUrls(r.attachmentUrls || []);
         setPacers(r.pacers || []);
-        setTitle(r.title); setLocation(r.location); setDate(r.date);
-        setContent(r.content); setPostImageUrl(r.postImageUrl);
+        setTitle(r.title);
+        setLocation(r.location);
+        setDate(r.date);
+        setContent(r.content);
+        setPostImageUrl(r.postImageUrl);
         setPostStatus(r.postStatus);
         setPostCreatorName(r.postCreatorInfo?.userName || "");
         setPostCreatorImg(r.postCreatorInfo?.userProfileImg || null);
@@ -417,28 +422,28 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           userProfileImg: r.userInfo?.userProfileImg || "",
           userRole: r.userInfo?.userRole || "",
         });
-        setRefreshComments(prev => !prev);
+        setRefreshComments((prev) => !prev);
       }
     } catch (e) {
       console.error(e);
     }
   };
 
-
-
-
   return (
-    <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center" >
+    <div className="flex flex-col items-center text-center max-w-[430px] mx-auto justify-center">
       {/* 상단바 */}
       <div className="relative flex bg-kuDarkGreen w-full h-[56px] text-white text-xl font-semibold justify-center items-center">
-        <img src={BackBtnimg} className="absolute left-[24px] cursor-pointer" onClick={handleBack} />
+        <img
+          src={BackBtnimg}
+          className="absolute left-[24px] cursor-pointer"
+          onClick={handleBack}
+        />
         훈련
         <div
           ref={dotButtonRef}
           className="absolute right-[5px] top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/20 cursor-pointer"
           onClick={(e) => {
-            e.stopPropagation(); // 이벤트 버블링 방지
-            setShowMenu((prev) => !prev);
+            e.stopPropagation(); setShowMenu((prev) => !prev);
           }}
         >
           <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
@@ -447,7 +452,6 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
             ))}
           </div>
         </div>
-
         {showMenu && (
           <motion.div
             ref={menuRef}
@@ -473,15 +477,18 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                 onClick={async () => {
                   if (label === "수정하기") {
                     if (postStatus === "CLOSED" || postStatus === "CANCELED") {
-                      alert("종료된 러닝이나 취소된 러닝은 수정이 불가능합니다.");
+                      alert(
+                        "종료된 러닝이나 취소된 러닝은 수정이 불가능합니다.",
+                      );
                       return;
                     }
 
                     const now = new Date();
 
-                    const runUtcDate = new Date(date); // 서버에서 받은 UTC 기준 date
-                    const runKstDate = new Date(runUtcDate.getTime() + 9 * 60 * 60 * 1000); // KST로 변환
-
+                    const runUtcDate = new Date(date); 
+                    const runKstDate = new Date(
+                      runUtcDate.getTime() + 9 * 60 * 60 * 1000,
+                    );
                     if (now > runKstDate) {
                       alert("집합 시간이 지난 게시글은 수정할 수 없습니다.");
                       return;
@@ -491,15 +498,20 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                     setShowMenu(false);
                   } else {
                     if (postStatus === "CLOSED" || postStatus === "CANCELED") {
-                      alert("이미 종료되었거나 취소된 게시글은 취소할 수 없습니다.");
+                      alert(
+                        "이미 종료되었거나 취소된 게시글은 취소할 수 없습니다.",
+                      );
                       return;
                     }
 
-                    const confirmCancel = window.confirm("정말 게시글을 취소하시겠습니까?");
+                    const confirmCancel =
+                      window.confirm("정말 게시글을 취소하시겠습니까?");
                     if (!confirmCancel) return;
 
                     try {
-                      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                      const token = JSON.parse(
+                        localStorage.getItem("accessToken") || "null",
+                      );
                       if (!token) {
                         alert("로그인이 필요합니다.");
                         return;
@@ -512,7 +524,7 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                           headers: {
                             Authorization: `${token}`,
                           },
-                        }
+                        },
                       );
 
                       if (data.isSuccess) {
@@ -542,17 +554,21 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                 transition={{ delay: 0.3, duration: 0.2 }}
                 className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
                 onClick={async () => {
-                  const ok = window.confirm("정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.");
+                  const ok = window.confirm(
+                    "정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.",
+                  );
                   if (!ok) return;
                   try {
-                    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                    const token = JSON.parse(
+                      localStorage.getItem("accessToken") || "null",
+                    );
                     if (!token) {
                       alert("로그인이 필요합니다.");
                       return;
                     }
                     const { data } = await customAxios.delete(
                       `/run/training/post/${postId}`,
-                      { headers: { Authorization: `${token}` } }
+                      { headers: { Authorization: `${token}` } },
                     );
                     if (data.isSuccess) {
                       alert("게시글이 삭제되었습니다.");
@@ -578,7 +594,9 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
         {/* 게시글 사진 */}
         <img
           src={postImageUrl || flashrunimage}
-          className={`z-0 w-full h-[308px] object-cover transition-all duration-300 ${showMenu || postStatus === "CANCELED" || postStatus === "CLOSED" ? "brightness-75" : ""
+          className={`z-0 w-full h-[308px] object-cover transition-all duration-300 ${showMenu || postStatus === "CANCELED" || postStatus === "CLOSED"
+              ? "brightness-75"
+              : ""
             }`}
         />
 
@@ -586,7 +604,9 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
         {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
           <div className="absolute top-0 left-0 w-full h-[308px] flex justify-center items-center z-1 pointer-events-none bg-opacity-40 bg-black">
             <div className="transform -translate-y-[60%] text-white text-lg font-bold bg-opacity-60 px-4 py-2 rounded">
-              {postStatus === "CANCELED" ? "취소된 훈련입니다." : "마감된 훈련입니다."}
+              {postStatus === "CANCELED"
+                ? "취소된 훈련입니다."
+                : "마감된 훈련입니다."}
             </div>
           </div>
         )}
@@ -622,7 +642,9 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
               )}
             </div>
 
-            <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
+            <div className="text-lg font-semibold mt-2 text-[24px]">
+              {title}
+            </div>
           </div>
           {/* 게시글 정보 */}
           <div className="flex flex-col items-start w-full max-w-[360px] px-5 mt-5">
@@ -636,16 +658,21 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
             </div>
             <div className="flex items-center my-1.5">
               <object data={people} className="w-[24px] h-[24px] mr-2" />
-              <span className="font-bold text-kuDarkGreen">{participantsNum}</span>
+              <span className="font-bold text-kuDarkGreen">
+                {participantsNum}
+              </span>
             </div>
           </div>
         </div>
       </div>
 
       <div className="mt-[135px]">
-        <TabButton leftLabel="소개" rightLabel="명단" onTabChange={handleTabChange} />
+        <TabButton
+          leftLabel="소개"
+          rightLabel="명단"
+          onTabChange={handleTabChange}
+        />
       </div>
-
 
       {activeTab === "소개" && (
         <>
@@ -682,7 +709,9 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
               </Swiper>
             </div>
           )}
-          <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">세부 내용</div>
+          <div className="flex flex-col mt-2 items-start text-left w-full max-w-[327px]">
+            세부 내용
+          </div>
           <div className="mt-2 w-[327px] border border-[#ECEBE4] rounded-lg p-4">
             <div className="flex items-center gap-2 mb-2">
               {postCreatorImg ? (
@@ -696,10 +725,14 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
                   {postCreatorName.charAt(0)}
                 </div>
               )}
-              <span className="text-sm font-medium text-black">{postCreatorName}</span>
+              <span className="text-sm font-medium text-black">
+                {postCreatorName}
+              </span>
             </div>
 
-            <div className="text-black p-3 text-sm text-left whitespace-pre-wrap">{content}</div>
+            <div className="text-black p-3 text-sm text-left whitespace-pre-wrap">
+              {content}
+            </div>
           </div>
         </>
       )}
@@ -714,18 +747,23 @@ const NewTrainingAdmin: React.FC<Props> = ({ postId }) => {
           onToggleEditMode={handleEditAttempt}
           userInfoName={userInfo.userName}
           postCreatorName={postCreatorName}
-          userRole={userInfo.userRole}       
-          postStatus={postStatus}            
+          userRole={userInfo.userRole}
+          postStatus={postStatus}
         />
       )}
 
-      <CommentSection postId={postId!} postType="training" userInfo={userInfo} refreshTrigger={refreshComments} />
+      <CommentSection
+        postId={postId!}
+        postType="training"
+        userInfo={userInfo}
+        refreshTrigger={refreshComments}
+      />
 
       {/* 시작하기 버튼 */}
       <button
         className={`flex justify-center items-center w-[327px] h-14 rounded-lg text-lg font-bold mt-20 mb-[100px] ${isFinished || postStatus === "CLOSED"
-          ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
-          : "bg-[#366943] text-white"
+            ? "bg-[#ECEBE4] text-[#757575] cursor-not-allowed"
+            : "bg-[#366943] text-white"
           }`}
         onClick={handleStartClick}
         disabled={isFinished || postStatus === "CLOSED"}

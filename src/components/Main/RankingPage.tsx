@@ -56,7 +56,7 @@ function RankingPage() {
           headers: {
             Authorization: accessToken, //accessToken을 헤더로 추가해서 요청 보냄
           },
-        }
+        },
       );
 
       //공동 순위 처리에 용이하도록 userId는 서버에서 받아온 정보가 아닌 순위대로 ++하는 idx로 선언(추후 공동 순위 처리 로직이 추가로 삽입됨)
@@ -70,7 +70,10 @@ function RankingPage() {
           userProfileImg: user.userProfileImg || null,
           totalPoints: user.totalPoints,
         })) // 김용주와 박종빈 제외 (--> 2025년 하반기 기준 회장/부회장)
-        .filter((user: SimpleUserInfo) => user.userName !== "김용주" && user.userName !== "박종빈");
+        .filter(
+          (user: SimpleUserInfo) =>
+            user.userName !== "김용주" && user.userName !== "박종빈",
+        );
 
       //공동 순위 처리해야 함
       for (let i: number = 0; i < top20.length; i++) {
@@ -225,23 +228,33 @@ function RankingPage() {
           <>
             {/* "이번달 내 순위" 내용을 표현하는 부분 */}
             <div className="w-full max-w-sm text-left m-4">
-              <span className="text-xl font-bold pr-4 text-whiteSmoke">이번 학기 내 순위</span>
+              <span className="text-xl font-bold pr-4 text-whiteSmoke">
+                이번 학기 내 순위
+              </span>
               <span className="text-xl font-bold pr-4 text-whiteSmoke">|</span>
-              <span className="text-xl font-bold text-kuLightGreen">{myRankingInfo}</span>
+              <span className="text-xl font-bold text-kuLightGreen">
+                {myRankingInfo}
+              </span>
             </div>
 
             {/* 자신의 랭킹을 표시하는 카드 섹션 */}
             <div className="w-full max-w-sm bg-kuLightGray rounded-xl flex flex-row justify-between items-center px-3 py-2 mb-6">
               <div className="flex flex-row flex-start items-center">
-                <span className="text-kuDarkGray text-base font-bold mr-4">{myRankingInfo}</span>
+                <span className="text-kuDarkGray text-base font-bold mr-4">
+                  {myRankingInfo}
+                </span>
                 <img
                   src={myInfo.userProfileImg ?? defaultProfileImg}
                   alt="myProfileImg"
                   className="w-16 h-16 rounded-full mr-4 object-cover"
                 />
-                <span className="text-black text-xl font-bold">{myInfo.userName}</span>
+                <span className="text-black text-xl font-bold">
+                  {myInfo.userName}
+                </span>
               </div>
-              <span className="text-kuDarkGreen text-xl font-bold mr-3">{myInfo.totalPoints}P</span>
+              <span className="text-kuDarkGreen text-xl font-bold mr-3">
+                {myInfo.totalPoints}P
+              </span>
             </div>
           </>
         )}
@@ -252,7 +265,9 @@ function RankingPage() {
             className="w-full max-w-sm bg-kuWarmGray rounded-xl flex flex-row justify-between items-center px-3 py-2 mb-2"
           >
             <div className="flex flex-row items-center">
-              <span className="text-kuDarkGray text-sm font-bold mr-4">{user.userId}</span>
+              <span className="text-kuDarkGray text-sm font-bold mr-4">
+                {user.userId}
+              </span>
               <img
                 src={user.userProfileImg ?? defaultProfileImg}
                 alt={`${user.userName} Profile`}

@@ -247,7 +247,7 @@ import {
   weeksToDays,
   yearsToDays,
   yearsToMonths,
-  yearsToQuarters
+  yearsToQuarters,
 } from "./chunk-JTEA6FHL.js";
 import "./chunk-DC5AMYBS.js";
 export {
@@ -500,6 +500,6 @@ export {
   weeksToDays,
   yearsToDays,
   yearsToMonths,
-  yearsToQuarters
+  yearsToQuarters,
 };
 //# sourceMappingURL=date-fns.js.map

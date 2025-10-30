@@ -1,6 +1,6 @@
 // src/redux/slices/signupSlice.ts
 // 회원가입 정보를 관리하는 SignupState Slice
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface SignupState {
   studentID: string;
@@ -8,20 +8,20 @@ interface SignupState {
   name: string;
   collegeName: string;
   departmentName: string;
-  telNum: string|null;
+  telNum: string | null;
 }
 
 const initialState: SignupState = {
-  studentID: '',
-  password: '',
-  name: '',
-  collegeName: '',
-  departmentName: '',
+  studentID: "",
+  password: "",
+  name: "",
+  collegeName: "",
+  departmentName: "",
   telNum: null,
 };
 
 const signupSlice = createSlice({
-  name: 'signup',
+  name: "signup",
   initialState,
   reducers: {
     setStudentID: (state, action: PayloadAction<string>) => {
@@ -39,7 +39,7 @@ const signupSlice = createSlice({
     setDepartmentName: (state, action: PayloadAction<string>) => {
       state.departmentName = action.payload;
     },
-    setTelNum: (state, action: PayloadAction<string|null>) => {
+    setTelNum: (state, action: PayloadAction<string | null>) => {
       state.telNum = action.payload;
     },
   },

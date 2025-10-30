@@ -12,14 +12,17 @@ export const TimePickerBottomSheet: React.FC<TimePickerBottomSheetProps> = ({
   time,
   onChange,
 }) => {
-  const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
-  const minutes = Array.from({ length: 12 }, (_, i) => String(i * 5).padStart(2, "0"));
+  const hours = Array.from({ length: 24 }, (_, i) =>
+    String(i).padStart(2, "0"),
+  );
+  const minutes = Array.from({ length: 12 }, (_, i) =>
+    String(i * 5).padStart(2, "0"),
+  );
 
   const [hour, setHour] = useState("00");
   const [minute, setMinute] = useState("00");
   const [isOpen, setIsOpen] = useState(false);
 
-  // 🧠 바텀시트 열릴 때마다 time 값을 기준으로 상태 세팅
   useEffect(() => {
     if (isOpen && time) {
       const [h, m] = time.split(":");
@@ -40,18 +43,21 @@ export const TimePickerBottomSheet: React.FC<TimePickerBottomSheetProps> = ({
     } else {
       document.body.style.overflow = "";
     }
-  
+
     return () => {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
-  
 
   return (
     <>
       <div className="my-2">시간</div>
       <div className="flex items-center my-2">
-        <img src={TimeIcon} alt="시간 아이콘" className="ml-[7.9px] w-[23.64px] h-[24px]" />
+        <img
+          src={TimeIcon}
+          alt="시간 아이콘"
+          className="ml-[7.9px] w-[23.64px] h-[24px]"
+        />
         <div
           onClick={() => setIsOpen(true)}
           className="ml-[24.4px] border-b border-gray-300 rounded px-4 py-1 text-[16px] w-full text-gray-600 cursor-pointer"
@@ -75,8 +81,6 @@ export const TimePickerBottomSheet: React.FC<TimePickerBottomSheetProps> = ({
               transition={{ type: "tween", duration: 0.3 }}
               className="w-full max-w-[430px] bg-white rounded-t-2xl px-4 pt-10 pb-4 mx-auto"
             >
-              {/* <div className="text-lg font-semibold text-center mb-4">시간 선택</div> */}
-
               <div className="flex justify-center gap-4">
                 <TimeWheelPicker
                   items={hours}
@@ -98,12 +102,6 @@ export const TimePickerBottomSheet: React.FC<TimePickerBottomSheetProps> = ({
                 >
                   적용하기
                 </button>
-                {/* <button
-                  onClick={() => setIsOpen(false)}
-                  className="w-full text-gray-500 text-sm"
-                >
-                  닫기
-                </button> */}
               </div>
             </motion.div>
           </motion.div>

@@ -42,7 +42,9 @@ export default function RankingSection() {
       }));
 
       for (let i = 1; i < formattedTop20.length; i++) {
-        if (formattedTop20[i].totalPoints === formattedTop20[i - 1].totalPoints) {
+        if (
+          formattedTop20[i].totalPoints === formattedTop20[i - 1].totalPoints
+        ) {
           formattedTop20[i].userId = formattedTop20[i - 1].userId;
         }
       }
@@ -73,7 +75,9 @@ export default function RankingSection() {
           <div className="flex flex-row justify-between items-end my-4 gap-3">
             {/* 2nd 섹션 */}
             <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-600 opacity-0">
-              <span className="block text-center text-2xl font-bold mb-1 text-whiteSmoke">2nd</span>
+              <span className="block text-center text-2xl font-bold mb-1 text-whiteSmoke">
+                2nd
+              </span>
               {/* 프로필 이미지 (userProfileImg 값이 null일 경우 기본 프사 url을, 아닐 경우 불러온 url을 src로 삼는다) */}
               <div className="w-full aspect-square bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
                 <img
@@ -136,7 +140,9 @@ export default function RankingSection() {
 
             {/* 3rd 섹션 */}
             <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-300 opacity-0">
-              <span className="block text-center text-2xl font-bold text-whiteSmoke mb-1">3rd</span>
+              <span className="block text-center text-2xl font-bold text-whiteSmoke mb-1">
+                3rd
+              </span>
               {/* 프로필 이미지 */}
               <div className="w-full aspect-square bg-gray-300 rounded-full flex items-center justify-center border-[6px] border-kuBeige overflow-hidden z-10">
                 <img
@@ -165,23 +171,33 @@ export default function RankingSection() {
         <div className="animate-fade-in">
           {/* "이번달 내 순위" 내용을 표현하는 부분 */}
           <div className="w-full max-w-sm text-left m-4">
-            <span className="text-xl font-bold pr-4 text-whiteSmoke">이번 학기 내 순위</span>
+            <span className="text-xl font-bold pr-4 text-whiteSmoke">
+              이번 학기 내 순위
+            </span>
             <span className="text-xl font-bold pr-4 text-whiteSmoke">|</span>
-            <span className="text-xl font-bold text-kuLightGreen">{myRanking}</span>
+            <span className="text-xl font-bold text-kuLightGreen">
+              {myRanking}
+            </span>
           </div>
 
           {/* 자신의 랭킹을 표시하는 카드 섹션 */}
           <div className="w-full max-w-sm bg-kuLightGray rounded-xl flex flex-row justify-between items-center px-3 py-2 mb-6">
             <div className="flex flex-row flex-start items-center">
-              <span className="text-kuDarkGray text-base font-bold mr-4">{myRanking}</span>
+              <span className="text-kuDarkGray text-base font-bold mr-4">
+                {myRanking}
+              </span>
               <img
                 src={myInfo.userProfileImg ?? defaultProfileImg}
                 alt="myProfileImg"
                 className="w-16 h-16 rounded-full mr-4 object-cover"
               />
-              <span className="text-black text-xl font-bold">{myInfo.userName}</span>
+              <span className="text-black text-xl font-bold">
+                {myInfo.userName}
+              </span>
             </div>
-            <span className="text-kuDarkGreen text-xl font-bold mr-3">{myInfo.totalPoints}P</span>
+            <span className="text-kuDarkGreen text-xl font-bold mr-3">
+              {myInfo.totalPoints}P
+            </span>
           </div>
 
           {/* 그 밑의 4위부터 회원들 랭킹 프로필 카드 (받아온 랭킹 정보를 바탕으로 map 함수로 return할 것임) */}
@@ -192,7 +208,9 @@ export default function RankingSection() {
             >
               {/* 왼쪽 영역: 순위, 프로필 이미지, 이름 */}
               <div className="flex flex-row items-center">
-                <span className="text-kuDarkGray text-sm font-bold mr-4">{user.userId}</span>
+                <span className="text-kuDarkGray text-sm font-bold mr-4">
+                  {user.userId}
+                </span>
                 <img
                   src={user.userProfileImg ?? defaultProfileImg}
                   alt={`${user.userName} Profile`}

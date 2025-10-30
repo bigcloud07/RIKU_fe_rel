@@ -1,8 +1,13 @@
 // queries/hooks.ts
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  getRegularPost, getRegularGroups, patchJoin, postAttend,
-  deletePost, patchManualAttendance, patchFixAttendance
+  getRegularPost,
+  getRegularGroups,
+  patchJoin,
+  postAttend,
+  deletePost,
+  patchManualAttendance,
+  patchFixAttendance,
 } from "../apis/regular";
 import { qk } from "./keys";
 
@@ -35,7 +40,9 @@ export const useJoinMutation = (postId: string) => {
     // 낙관적 업데이트: 상세 캐시를 직접 수정
     onMutate: async (group) => {
       await qc.cancelQueries({ queryKey: qk.regularDetail(postId) });
-      const prev = qc.getQueryData<Awaited<ReturnType<typeof getRegularPost>>>(qk.regularDetail(postId));
+      const prev = qc.getQueryData<Awaited<ReturnType<typeof getRegularPost>>>(
+        qk.regularDetail(postId),
+      );
       if (prev) {
         // 내 상태를 PENDING(or 해제)으로 미리 반영
         const me = prev.userInfo;
@@ -43,29 +50,39 @@ export const useJoinMutation = (postId: string) => {
 
         // 참여 취소
         if (!group) {
-          next.groupedParticipants = next.groupedParticipants.map(g => ({
+          next.groupedParticipants = next.groupedParticipants.map((g) => ({
             ...g,
-            participants: g.participants?.filter((p:any)=>p.userId!==me.userId) ?? []
+            participants:
+              g.participants?.filter((p: any) => p.userId !== me.userId) ?? [],
           }));
-          next.participants = next.participants.filter((p:any)=>p.userId!==me.userId);
+          next.participants = next.participants.filter(
+            (p: any) => p.userId !== me.userId,
+          );
           next.participantsNum = Math.max(0, next.participantsNum - 1);
         } else {
           // 기존 그룹에서 제거 후 선택 그룹에 추가
-          const removed = next.groupedParticipants.map(g => ({
+          const removed = next.groupedParticipants.map((g) => ({
             ...g,
-            participants: g.participants?.filter((p:any)=>p.userId!==me.userId) ?? []
+            participants:
+              g.participants?.filter((p: any) => p.userId !== me.userId) ?? [],
           }));
-          const idx = removed.findIndex(g => g.group === group);
+          const idx = removed.findIndex((g) => g.group === group);
           if (idx >= 0) {
             removed[idx] = {
               ...removed[idx],
-              participants: [...(removed[idx].participants ?? []), { userId: me.userId, userName: me.userName, status: "PENDING" }]
+              participants: [
+                ...(removed[idx].participants ?? []),
+                { userId: me.userId, userName: me.userName, status: "PENDING" },
+              ],
             };
           }
           next.groupedParticipants = removed;
           // participantsNum은 서버 정의에 맞춰 유지/증가 선택 (여기선 증가)
-          if (!prev.participants.some((p:any)=>p.userId===me.userId)) {
-            next.participants = [...prev.participants, { userId: me.userId, userName: me.userName, status: "PENDING" }];
+          if (!prev.participants.some((p: any) => p.userId === me.userId)) {
+            next.participants = [
+              ...prev.participants,
+              { userId: me.userId, userName: me.userName, status: "PENDING" },
+            ];
             next.participantsNum = prev.participantsNum + 1;
           }
         }
@@ -104,11 +121,17 @@ export const useDeletePostMutation = (postId: string) => {
   });
 };
 
-export const useSaveAttendanceMutation = (postId: string, forClosedAdmin: boolean) => {
+export const useSaveAttendanceMutation = (
+  postId: string,
+  forClosedAdmin: boolean,
+) => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (payload: {userId:number; isAttend:boolean}[]) =>
-      forClosedAdmin ? patchFixAttendance(postId, payload) : patchManualAttendance(postId, payload),
-    onSuccess: () => qc.invalidateQueries({ queryKey: qk.regularDetail(postId) }),
+    mutationFn: (payload: { userId: number; isAttend: boolean }[]) =>
+      forClosedAdmin
+        ? patchFixAttendance(postId, payload)
+        : patchManualAttendance(postId, payload),
+    onSuccess: () =>
+      qc.invalidateQueries({ queryKey: qk.regularDetail(postId) }),
   });
 };

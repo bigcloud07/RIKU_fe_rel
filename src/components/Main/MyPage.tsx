@@ -20,7 +20,10 @@ import {
 // 재사용 가능한 버튼 컴포넌트
 function renderButton(text: string, iconSrc: string, onClick: () => void) {
   return (
-    <button onClick={onClick} className="w-full flex justify-between items-center p-2">
+    <button
+      onClick={onClick}
+      className="w-full flex justify-between items-center p-2"
+    >
       <span className="text-xl font-normal text-gray-800">{text}</span>
       <img src={iconSrc} alt="Right Arrow Icon" className="h-5 w-5" />
     </button>
@@ -117,7 +120,7 @@ function MyPage() {
           headers: {
             Authorization: accessToken, //accessToken을 헤더로 추가해서 요청 보냄
           },
-        }
+        },
       );
 
       if (response.data.isSuccess === true) {
@@ -133,9 +136,11 @@ function MyPage() {
         };
         setUserInfo(data);
         setIsUserInfoLoaded(true); //데이터 로딩 완료 되었다는 표시
-        console.log(response.data)
+        console.log(response.data);
       } else if (response.data.isSuccess === false) {
-        alert(`서버에서 제대로 유저 정보를 불러오지 못했습니다: ${response.data.responseMessage}`);
+        alert(
+          `서버에서 제대로 유저 정보를 불러오지 못했습니다: ${response.data.responseMessage}`,
+        );
       }
     } catch (error) {
       alert("서버 요청 중 오류 발생!");
@@ -188,7 +193,7 @@ function MyPage() {
           headers: {
             Authorization: accessToken, //accessToken을 헤더로 추가해서 요청 보냄
           },
-        }
+        },
       );
       alert("출석이 완료됨!"); //"출석이 완료되었습니다"가 출력될 것
       setAttendChecked(true); //'출석됨'으로 표시
@@ -221,7 +226,8 @@ function MyPage() {
     if (userInfo.profileAttendanceDates.length > 0) {
       //profileAttendanceDates가 비어있지 않은 경우에만 수행
       const formattedDate = format(new Date(), "yyyy-MM-dd"); // 오늘 날짜를 formattedDate로 포맷팅
-      let isTodayAttended = userInfo.profileAttendanceDates.includes(formattedDate);
+      let isTodayAttended =
+        userInfo.profileAttendanceDates.includes(formattedDate);
       if (isTodayAttended) {
         // 오늘 날짜가 출석되어 있다면
         setAttendChecked(true); // 출석 더 이상 못하게 한다
@@ -233,7 +239,9 @@ function MyPage() {
   if (!isUserInfoLoaded) {
     return (
       <div className="min-h-screen flex justify-center items-center bg-white">
-        <span className="text-gray-400 text-sm animate-pulse">로딩 중입니다...</span>
+        <span className="text-gray-400 text-sm animate-pulse">
+          로딩 중입니다...
+        </span>
       </div>
     );
   }
@@ -253,7 +261,9 @@ function MyPage() {
             className="w-16 h-16 rounded-full mr-4"
           />
           <div className="text-start">
-            <p className="text-lg font-semibold text-gray-800">{userInfo.userName}</p>
+            <p className="text-lg font-semibold text-gray-800">
+              {userInfo.userName}
+            </p>
             <p className="text-sm text-gray-500">{userInfo.userRole}</p>
           </div>
           <button
@@ -267,7 +277,9 @@ function MyPage() {
         {/* 포인트와 활동 내역 섹션 */}
         <div className="flex justify-around mt-6 pt-4 border-t-2">
           <div className="text-center" onClick={handleParticipationCountClick}>
-            <p className="text-2xl font-bold text-gray-800">{userInfo.points}</p>
+            <p className="text-2xl font-bold text-gray-800">
+              {userInfo.points}
+            </p>
             <p className="text-sm text-gray-500">포인트</p>
           </div>
           <div className="text-center" onClick={handleParticipationCountClick}>
@@ -276,7 +288,9 @@ function MyPage() {
               userInfo.participationCount <= 0 ? (
                 <p className="text-2xl font-bold text-gray-800">-</p>
               ) : (
-                <p className="text-2xl font-bold text-gray-800">{userInfo.participationCount}</p>
+                <p className="text-2xl font-bold text-gray-800">
+                  {userInfo.participationCount}
+                </p>
               )
             }
             <p className="text-sm text-gray-500">활동 내역</p>
@@ -298,13 +312,17 @@ function MyPage() {
             >
               {week.map((day, subIndex) => {
                 const formattedDate = format(day, "yyyy-MM-dd");
-                let markerOn = userInfo.profileAttendanceDates.includes(formattedDate);
+                let markerOn =
+                  userInfo.profileAttendanceDates.includes(formattedDate);
                 let isToday = format(pointDate, "yyyy-MM-dd") === formattedDate; //오늘 날짜인지 아닌지 체크
                 let isCurrentMonth = getMonth(pointDate) === getMonth(day);
                 let style = isCurrentMonth ? "text-black" : "text-gray-400";
 
                 return (
-                  <div key={subIndex} className="flex flex-col items-center justify-center">
+                  <div
+                    key={subIndex}
+                    className="flex flex-col items-center justify-center"
+                  >
                     {/* 오늘 날짜에 대한 Marker 표시(출석 안했을 때만 표시) */}
                     {!attendChecked && isToday ? (
                       <>
@@ -329,16 +347,19 @@ function MyPage() {
               })}
             </div>
             {/* 마지막 줄이 아닌 경우에만 선을 추가 */}
-            {index < weeks.length - 1 && <div className="w-full h-px bg-gray-200" />}
+            {index < weeks.length - 1 && (
+              <div className="w-full h-px bg-gray-200" />
+            )}
           </>
         ))}
 
         {/* 출석하기 버튼 */}
         <button
-          className={`w-full mt-4 mb-2 py-3 ${!isAttendCheckBtnValid()
+          className={`w-full mt-4 mb-2 py-3 ${
+            !isAttendCheckBtnValid()
               ? "bg-kuDarkGreen hover:bg-kuGreen text-white"
               : "bg-kuLightGray text-gray-900 cursor-not-allowed"
-            } font-bold rounded-md transition-colors`}
+          } font-bold rounded-md transition-colors`}
           onClick={handleAttendCheckBtn}
           disabled={isAttendCheckBtnValid()}
         >
@@ -366,7 +387,9 @@ function MyPage() {
         {renderButton("운영진 페이지", rightArrow_Icon, handleToAdminPageClick)}
       </div>
       <div className="w-full max-w-sm mt-4">
-        {renderButton("기록증 만들기", rightArrow_Icon, () => navigate("/Record"))}
+        {renderButton("기록증 만들기", rightArrow_Icon, () =>
+          navigate("/Record"),
+        )}
       </div>
 
       <div className="flex w-full max-w-sm mt-8 mb-8 justify-center">

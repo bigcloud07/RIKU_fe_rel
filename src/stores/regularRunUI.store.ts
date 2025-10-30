@@ -39,7 +39,10 @@ export const useRegularRunUI = create<RegularRunUIState>((set, get) => ({
   disableEdit: () => set({ isEditMode: false }),
   toggleAttendance: (userId, originalStatus) => {
     const { editedAttendance } = get();
-    const current = userId in editedAttendance ? editedAttendance[userId] : originalStatus === "ATTENDED";
+    const current =
+      userId in editedAttendance
+        ? editedAttendance[userId]
+        : originalStatus === "ATTENDED";
     set({ editedAttendance: { ...editedAttendance, [userId]: !current } });
   },
   resetEdited: () => set({ editedAttendance: {} }),

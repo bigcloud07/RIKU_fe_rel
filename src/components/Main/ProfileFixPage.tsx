@@ -36,7 +36,9 @@ const InputField: React.FC<InputFieldProps> = ({
 
   return (
     <div className="mb-6 max-w-[430px] w-full mx-auto">
-      <label className="block mb-2 text-m font-semibold text-gray-700">{label}</label>
+      <label className="block mb-2 text-m font-semibold text-gray-700">
+        {label}
+      </label>
       <div className="relative w-full">
         <input
           className={`w-full border rounded-xl px-3 py-3 ${
@@ -73,7 +75,9 @@ const InputField: React.FC<InputFieldProps> = ({
         )}
       </div>
       {/*에러 메시지 렌더링 추가*/}
-      {hasError && errorMessage && <p className="mt-2 text-sm text-red-500">{errorMessage}</p>}
+      {hasError && errorMessage && (
+        <p className="mt-2 text-sm text-red-500">{errorMessage}</p>
+      )}
     </div>
   );
 };
@@ -86,7 +90,9 @@ const SchoolInfoInputField: React.FC<{
   onChange_2: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }> = ({ label, value, onChange_1, onChange_2 }) => (
   <div className="mb-6 max-w-[430px] w-full mx-auto">
-    <label className="block mb-2 text-m font-semibold text-gray-700">{label}</label>
+    <label className="block mb-2 text-m font-semibold text-gray-700">
+      {label}
+    </label>
     <input
       className="w-full border border-kuCoolGray rounded-xl px-3 py-3 mb-4 focus: outline-kuDarkGreen"
       value={value[0]}
@@ -106,10 +112,14 @@ const SchoolInfoInputField: React.FC<{
 //비밀번호가 유효한지 확인하는 메소드 validatePassword
 function validatePassword(password: string) {
   // 영문, 숫자, 특수문자 조합 8~20자리까지 가능
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
+  const passwordRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
 
   if (!passwordRegex.test(password)) {
-    return { valid: false, message: "영문, 숫자, 특수문자 조합 8~20자리까지 가능합니다." };
+    return {
+      valid: false,
+      message: "영문, 숫자, 특수문자 조합 8~20자리까지 가능합니다.",
+    };
   } else {
     return { valid: true, message: "유효한 비밀번호 형식입니다" };
   }
@@ -217,7 +227,12 @@ function ProfileFixPage() {
 
   function isFormsValid() {
     //비번도 비어있는 상태이고, 프사 선택도 안했다면, 가차없이 false 반환
-    if (password.trim() === "" && selectedImage === null && telNumChanged === false) return false;
+    if (
+      password.trim() === "" &&
+      selectedImage === null &&
+      telNumChanged === false
+    )
+      return false;
 
     if (isPasswordFormValid) {
       //비밀번호가 유효한 경우
@@ -257,7 +272,9 @@ function ProfileFixPage() {
     setPassword(value);
     if (typeof isValid === "boolean") {
       setIsPasswordValid(isValid);
-      setPasswordError(isValid ? "" : "영문, 숫자, 특수문자 조합 8~20자리까지 가능합니다.");
+      setPasswordError(
+        isValid ? "" : "영문, 숫자, 특수문자 조합 8~20자리까지 가능합니다.",
+      );
     }
   };
 
@@ -315,7 +332,12 @@ function ProfileFixPage() {
               onChange={handleTelNumChanged}
               placeholder="ex) 010-1111-2222"
             />
-            <InputField label="학번(ID)" value={studentID} onChange={setStudentID} disabled />
+            <InputField
+              label="학번(ID)"
+              value={studentID}
+              onChange={setStudentID}
+              disabled
+            />
             <InputField
               label="비밀번호"
               value={password}

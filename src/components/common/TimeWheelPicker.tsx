@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from "react";
 
 interface TimeWheelPickerProps {
   items: string[];
@@ -6,8 +6,11 @@ interface TimeWheelPickerProps {
   onSelect: (index: number) => void;
 }
 
-
-const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ items, selected, onSelect }) => {
+const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({
+  items,
+  selected,
+  onSelect,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const itemHeight = 56;
   const isAutoScrolling = useRef(false);
@@ -24,8 +27,7 @@ const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ items, selected, onSe
     }
   };
 
-  // ✅ selected 바뀔 때 정확한 포커싱 보장 (DOM 렌더 직후)
-  useLayoutEffect(() => {
+    useLayoutEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
@@ -35,8 +37,7 @@ const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ items, selected, onSe
     requestAnimationFrame(() => {
       container.scrollTo({
         top: expectedTop,
-        behavior: 'auto', // 최초 로딩 시엔 instant
-      });
+        behavior: "auto",       });
 
       setTimeout(() => {
         isAutoScrolling.current = false;
@@ -60,14 +61,13 @@ const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ items, selected, onSe
             key={index}
             onClick={() => onSelect(index)}
             className={`h-[56px] flex items-center justify-center snap-center cursor-pointer
-        ${index === selected ? 'text-black font-bold text-[50px] border-b border-t' : 'text-gray-400 text-[50px]'}
+        ${index === selected ? "text-black font-bold text-[50px] border-b border-t" : "text-gray-400 text-[50px]"}
       `}
           >
-            {item.padStart(2, '0')}
+            {item.padStart(2, "0")}
           </div>
         ))}
       </div>
-
     </div>
   );
 };

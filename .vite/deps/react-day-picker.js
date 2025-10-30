@@ -1,6 +1,4 @@
-import {
-  require_react
-} from "./chunk-TWJRYSII.js";
+import { require_react } from "./chunk-TWJRYSII.js";
 import {
   addDays,
   addMonths,
@@ -34,19 +32,16 @@ import {
   startOfISOWeek,
   startOfMonth,
   startOfWeek,
-  startOfYear
+  startOfYear,
 } from "./chunk-JTEA6FHL.js";
-import {
-  __export,
-  __toESM
-} from "./chunk-DC5AMYBS.js";
+import { __export, __toESM } from "./chunk-DC5AMYBS.js";
 
 // node_modules/react-day-picker/dist/esm/DayPicker.js
 var import_react31 = __toESM(require_react(), 1);
 
 // node_modules/react-day-picker/dist/esm/UI.js
 var UI;
-(function(UI2) {
+(function (UI2) {
   UI2["Root"] = "root";
   UI2["Chevron"] = "chevron";
   UI2["Day"] = "day";
@@ -73,7 +68,7 @@ var UI;
   UI2["YearsDropdown"] = "years_dropdown";
 })(UI || (UI = {}));
 var DayFlag;
-(function(DayFlag2) {
+(function (DayFlag2) {
   DayFlag2["disabled"] = "disabled";
   DayFlag2["hidden"] = "hidden";
   DayFlag2["outside"] = "outside";
@@ -81,7 +76,7 @@ var DayFlag;
   DayFlag2["today"] = "today";
 })(DayFlag || (DayFlag = {}));
 var SelectionState;
-(function(SelectionState2) {
+(function (SelectionState2) {
   SelectionState2["range_end"] = "range_end";
   SelectionState2["range_middle"] = "range_middle";
   SelectionState2["range_start"] = "range_start";
@@ -93,45 +88,45 @@ var dateFormats = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
-  short: "yyyy/MM/dd"
+  short: "yyyy/MM/dd",
 };
 var timeFormats = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats = {
   full: "{{date}} 'om' {{time}}",
   long: "{{date}} 'om' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong = {
   date: buildFormatLongFn({
     formats: dateFormats,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/af/_lib/localize.js
 var eraValues = {
   narrow: ["vC", "nC"],
   abbreviated: ["vC", "nC"],
-  wide: ["voor Christus", "na Christus"]
+  wide: ["voor Christus", "na Christus"],
 };
 var quarterValues = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
-  wide: ["1ste kwartaal", "2de kwartaal", "3de kwartaal", "4de kwartaal"]
+  wide: ["1ste kwartaal", "2de kwartaal", "3de kwartaal", "4de kwartaal"],
 };
 var monthValues = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -147,7 +142,7 @@ var monthValues = {
     "Sep",
     "Okt",
     "Nov",
-    "Des"
+    "Des",
   ],
   wide: [
     "Januarie",
@@ -161,8 +156,8 @@ var monthValues = {
     "September",
     "Oktober",
     "November",
-    "Desember"
-  ]
+    "Desember",
+  ],
 };
 var dayValues = {
   narrow: ["S", "M", "D", "W", "D", "V", "S"],
@@ -175,8 +170,8 @@ var dayValues = {
     "Woensdag",
     "Donderdag",
     "Vrydag",
-    "Saterdag"
-  ]
+    "Saterdag",
+  ],
 };
 var dayPeriodValues = {
   narrow: {
@@ -187,7 +182,7 @@ var dayPeriodValues = {
     morning: "oggend",
     afternoon: "middag",
     evening: "laat middag",
-    night: "aand"
+    night: "aand",
   },
   abbreviated: {
     am: "vm",
@@ -197,7 +192,7 @@ var dayPeriodValues = {
     morning: "oggend",
     afternoon: "middag",
     evening: "laat middag",
-    night: "aand"
+    night: "aand",
   },
   wide: {
     am: "vm",
@@ -207,8 +202,8 @@ var dayPeriodValues = {
     morning: "oggend",
     afternoon: "middag",
     evening: "laat middag",
-    night: "aand"
-  }
+    night: "aand",
+  },
 };
 var formattingDayPeriodValues = {
   narrow: {
@@ -219,7 +214,7 @@ var formattingDayPeriodValues = {
     morning: "uur die oggend",
     afternoon: "uur die middag",
     evening: "uur die aand",
-    night: "uur die aand"
+    night: "uur die aand",
   },
   abbreviated: {
     am: "vm",
@@ -229,7 +224,7 @@ var formattingDayPeriodValues = {
     morning: "uur die oggend",
     afternoon: "uur die middag",
     evening: "uur die aand",
-    night: "uur die aand"
+    night: "uur die aand",
   },
   wide: {
     am: "vm",
@@ -239,8 +234,8 @@ var formattingDayPeriodValues = {
     morning: "uur die oggend",
     afternoon: "uur die middag",
     evening: "uur die aand",
-    night: "uur die aand"
-  }
+    night: "uur die aand",
+  },
 };
 var ordinalNumber = (dirtyNumber) => {
   const number = Number(dirtyNumber);
@@ -260,27 +255,27 @@ var localize = {
   ordinalNumber,
   era: buildLocalizeFn({
     values: eraValues,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/af/_lib/match.js
@@ -289,23 +284,23 @@ var parseOrdinalNumberPattern = /\d+/i;
 var matchEraPatterns = {
   narrow: /^([vn]\.? ?C\.?)/,
   abbreviated: /^([vn]\. ?C\.?)/,
-  wide: /^((voor|na) Christus)/
+  wide: /^((voor|na) Christus)/,
 };
 var parseEraPatterns = {
-  any: [/^v/, /^n/]
+  any: [/^v/, /^n/],
 };
 var matchQuarterPatterns = {
   narrow: /^[1234]/i,
   abbreviated: /^K[1234]/i,
-  wide: /^[1234](st|d)e kwartaal/i
+  wide: /^[1234](st|d)e kwartaal/i,
 };
 var parseQuarterPatterns = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(Jan|Feb|Mrt|Apr|Mei|Jun|Jul|Aug|Sep|Okt|Nov|Dec)\.?/i,
-  wide: /^(Januarie|Februarie|Maart|April|Mei|Junie|Julie|Augustus|September|Oktober|November|Desember)/i
+  wide: /^(Januarie|Februarie|Maart|April|Mei|Junie|Julie|Augustus|September|Oktober|November|Desember)/i,
 };
 var parseMonthPatterns = {
   narrow: [
@@ -320,7 +315,7 @@ var parseMonthPatterns = {
     /^S/i,
     /^O/i,
     /^N/i,
-    /^D/i
+    /^D/i,
   ],
   any: [
     /^Jan/i,
@@ -334,21 +329,21 @@ var parseMonthPatterns = {
     /^Sep/i,
     /^Okt/i,
     /^Nov/i,
-    /^Dec/i
-  ]
+    /^Dec/i,
+  ],
 };
 var matchDayPatterns = {
   narrow: /^[smdwv]/i,
   short: /^(So|Ma|Di|Wo|Do|Vr|Sa)/i,
   abbreviated: /^(Son|Maa|Din|Woe|Don|Vry|Sat)/i,
-  wide: /^(Sondag|Maandag|Dinsdag|Woensdag|Donderdag|Vrydag|Saterdag)/i
+  wide: /^(Sondag|Maandag|Dinsdag|Woensdag|Donderdag|Vrydag|Saterdag)/i,
 };
 var parseDayPatterns = {
   narrow: [/^S/i, /^M/i, /^D/i, /^W/i, /^D/i, /^V/i, /^S/i],
-  any: [/^So/i, /^Ma/i, /^Di/i, /^Wo/i, /^Do/i, /^Vr/i, /^Sa/i]
+  any: [/^So/i, /^Ma/i, /^Di/i, /^Wo/i, /^Do/i, /^Vr/i, /^Sa/i],
 };
 var matchDayPeriodPatterns = {
-  any: /^(vm|nm|middernag|(?:uur )?die (oggend|middag|aand))/i
+  any: /^(vm|nm|middernag|(?:uur )?die (oggend|middag|aand))/i,
 };
 var parseDayPeriodPatterns = {
   any: {
@@ -359,46 +354,46 @@ var parseDayPeriodPatterns = {
     morning: /oggend/i,
     afternoon: /middag/i,
     evening: /laat middag/i,
-    night: /aand/i
-  }
+    night: /aand/i,
+  },
 };
 var match = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern,
     parsePattern: parseOrdinalNumberPattern,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ar/_lib/formatLong.js
@@ -406,45 +401,45 @@ var dateFormats2 = {
   full: "EEEE، do MMMM y",
   long: "do MMMM y",
   medium: "d MMM y",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats2 = {
   full: "HH:mm:ss",
   long: "HH:mm:ss",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats2 = {
   full: "{{date}} 'عند الساعة' {{time}}",
   long: "{{date}} 'عند الساعة' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong2 = {
   date: buildFormatLongFn({
     formats: dateFormats2,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats2,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats2,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ar/_lib/localize.js
 var eraValues2 = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م.", "ب.م."],
-  wide: ["قبل الميلاد", "بعد الميلاد"]
+  wide: ["قبل الميلاد", "بعد الميلاد"],
 };
 var quarterValues2 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ر1", "ر2", "ر3", "ر4"],
-  wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"]
+  wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"],
 };
 var monthValues2 = {
   narrow: ["ي", "ف", "م", "أ", "م", "ي", "ي", "أ", "س", "أ", "ن", "د"],
@@ -460,7 +455,7 @@ var monthValues2 = {
     "سبتمبر",
     "أكتوبر",
     "نوفمبر",
-    "ديسمبر"
+    "ديسمبر",
   ],
   wide: [
     "يناير",
@@ -474,8 +469,8 @@ var monthValues2 = {
     "سبتمبر",
     "أكتوبر",
     "نوفمبر",
-    "ديسمبر"
-  ]
+    "ديسمبر",
+  ],
 };
 var dayValues2 = {
   narrow: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
@@ -488,8 +483,8 @@ var dayValues2 = {
     "الأربعاء",
     "الخميس",
     "الجمعة",
-    "السبت"
-  ]
+    "السبت",
+  ],
 };
 var dayPeriodValues2 = {
   narrow: {
@@ -500,7 +495,7 @@ var dayPeriodValues2 = {
     afternoon: "بعد الظهر",
     evening: "المساء",
     night: "الليل",
-    midnight: "منتصف الليل"
+    midnight: "منتصف الليل",
   },
   abbreviated: {
     am: "ص",
@@ -510,7 +505,7 @@ var dayPeriodValues2 = {
     afternoon: "بعد الظهر",
     evening: "المساء",
     night: "الليل",
-    midnight: "منتصف الليل"
+    midnight: "منتصف الليل",
   },
   wide: {
     am: "ص",
@@ -520,8 +515,8 @@ var dayPeriodValues2 = {
     afternoon: "بعد الظهر",
     evening: "المساء",
     night: "الليل",
-    midnight: "منتصف الليل"
-  }
+    midnight: "منتصف الليل",
+  },
 };
 var formattingDayPeriodValues2 = {
   narrow: {
@@ -532,7 +527,7 @@ var formattingDayPeriodValues2 = {
     afternoon: "بعد الظهر",
     evening: "في المساء",
     night: "في الليل",
-    midnight: "منتصف الليل"
+    midnight: "منتصف الليل",
   },
   abbreviated: {
     am: "ص",
@@ -542,7 +537,7 @@ var formattingDayPeriodValues2 = {
     afternoon: "بعد الظهر",
     evening: "في المساء",
     night: "في الليل",
-    midnight: "منتصف الليل"
+    midnight: "منتصف الليل",
   },
   wide: {
     am: "ص",
@@ -552,35 +547,35 @@ var formattingDayPeriodValues2 = {
     afternoon: "بعد الظهر",
     evening: "في المساء",
     night: "في الليل",
-    midnight: "منتصف الليل"
-  }
+    midnight: "منتصف الليل",
+  },
 };
 var ordinalNumber2 = (num) => String(num);
 var localize2 = {
   ordinalNumber: ordinalNumber2,
   era: buildLocalizeFn({
     values: eraValues2,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues2,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues2,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues2,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues2,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues2,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ar/_lib/match.js
@@ -589,23 +584,24 @@ var parseOrdinalNumberPattern2 = /\d+/i;
 var matchEraPatterns2 = {
   narrow: /[قب]/,
   abbreviated: /[قب]\.م\./,
-  wide: /(قبل|بعد) الميلاد/
+  wide: /(قبل|بعد) الميلاد/,
 };
 var parseEraPatterns2 = {
-  any: [/قبل/, /بعد/]
+  any: [/قبل/, /بعد/],
 };
 var matchQuarterPatterns2 = {
   narrow: /^[1234]/i,
   abbreviated: /ر[1234]/,
-  wide: /الربع (الأول|الثاني|الثالث|الرابع)/
+  wide: /الربع (الأول|الثاني|الثالث|الرابع)/,
 };
 var parseQuarterPatterns2 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns2 = {
   narrow: /^[أيفمسند]/,
-  abbreviated: /^(يناير|فبراير|مارس|أبريل|مايو|يونيو|يوليو|أغسطس|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/,
-  wide: /^(يناير|فبراير|مارس|أبريل|مايو|يونيو|يوليو|أغسطس|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/
+  abbreviated:
+    /^(يناير|فبراير|مارس|أبريل|مايو|يونيو|يوليو|أغسطس|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/,
+  wide: /^(يناير|فبراير|مارس|أبريل|مايو|يونيو|يوليو|أغسطس|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/,
 };
 var parseMonthPatterns2 = {
   narrow: [
@@ -620,7 +616,7 @@ var parseMonthPatterns2 = {
     /^س/i,
     /^أ/i,
     /^ن/i,
-    /^د/i
+    /^د/i,
   ],
   any: [
     /^يناير/i,
@@ -634,14 +630,14 @@ var parseMonthPatterns2 = {
     /^سبتمبر/i,
     /^أكتوبر/i,
     /^نوفمبر/i,
-    /^ديسمبر/i
-  ]
+    /^ديسمبر/i,
+  ],
 };
 var matchDayPatterns2 = {
   narrow: /^[حنثرخجس]/i,
   short: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
   abbreviated: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
-  wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i
+  wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i,
 };
 var parseDayPatterns2 = {
   narrow: [/^ح/i, /^ن/i, /^ث/i, /^ر/i, /^خ/i, /^ج/i, /^س/i],
@@ -652,13 +648,13 @@ var parseDayPatterns2 = {
     /^الأربعاء/i,
     /^الخميس/i,
     /^الجمعة/i,
-    /^السبت/i
+    /^السبت/i,
   ],
-  any: [/^أح/i, /^اث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i]
+  any: [/^أح/i, /^اث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i],
 };
 var matchDayPeriodPatterns2 = {
   narrow: /^(ص|م|منتصف الليل|الظهر|بعد الظهر|في الصباح|في المساء|في الليل)/,
-  any: /^(ص|م|منتصف الليل|الظهر|بعد الظهر|في الصباح|في المساء|في الليل)/
+  any: /^(ص|م|منتصف الليل|الظهر|بعد الظهر|في الصباح|في المساء|في الليل)/,
 };
 var parseDayPeriodPatterns2 = {
   any: {
@@ -669,46 +665,46 @@ var parseDayPeriodPatterns2 = {
     afternoon: /بعد الظهر/,
     morning: /في الصباح/,
     evening: /في المساء/,
-    night: /في الليل/
-  }
+    night: /في الليل/,
+  },
 };
 var match2 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern2,
     parsePattern: parseOrdinalNumberPattern2,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns2,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns2,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns2,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns2,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns2,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns2,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns2,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns2,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns2,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns2,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-DZ/_lib/formatLong.js
@@ -716,45 +712,45 @@ var dateFormats3 = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
-  short: "MM/dd/yyyy"
+  short: "MM/dd/yyyy",
 };
 var timeFormats3 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats3 = {
   full: "{{date}} 'عند' {{time}}",
   long: "{{date}} 'عند' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong3 = {
   date: buildFormatLongFn({
     formats: dateFormats3,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats3,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats3,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-DZ/_lib/localize.js
 var eraValues3 = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م.", "ب.م."],
-  wide: ["قبل الميلاد", "بعد الميلاد"]
+  wide: ["قبل الميلاد", "بعد الميلاد"],
 };
 var quarterValues3 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ر1", "ر2", "ر3", "ر4"],
-  wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"]
+  wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"],
 };
 var monthValues3 = {
   narrow: ["ج", "ف", "م", "أ", "م", "ج", "ج", "أ", "س", "أ", "ن", "د"],
@@ -770,7 +766,7 @@ var monthValues3 = {
     "سبتـ",
     "أكتـ",
     "نوفـ",
-    "ديسـ"
+    "ديسـ",
   ],
   wide: [
     "جانفي",
@@ -784,8 +780,8 @@ var monthValues3 = {
     "سبتمبر",
     "أكتوبر",
     "نوفمبر",
-    "ديسمبر"
-  ]
+    "ديسمبر",
+  ],
 };
 var dayValues3 = {
   narrow: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
@@ -798,8 +794,8 @@ var dayValues3 = {
     "الأربعاء",
     "الخميس",
     "الجمعة",
-    "السبت"
-  ]
+    "السبت",
+  ],
 };
 var dayPeriodValues3 = {
   narrow: {
@@ -810,7 +806,7 @@ var dayPeriodValues3 = {
     morning: "صباحاً",
     afternoon: "بعد الظهر",
     evening: "مساءاً",
-    night: "ليلاً"
+    night: "ليلاً",
   },
   abbreviated: {
     am: "ص",
@@ -820,7 +816,7 @@ var dayPeriodValues3 = {
     morning: "صباحاً",
     afternoon: "بعد الظهر",
     evening: "مساءاً",
-    night: "ليلاً"
+    night: "ليلاً",
   },
   wide: {
     am: "ص",
@@ -830,8 +826,8 @@ var dayPeriodValues3 = {
     morning: "صباحاً",
     afternoon: "بعد الظهر",
     evening: "مساءاً",
-    night: "ليلاً"
-  }
+    night: "ليلاً",
+  },
 };
 var formattingDayPeriodValues3 = {
   narrow: {
@@ -842,7 +838,7 @@ var formattingDayPeriodValues3 = {
     morning: "في الصباح",
     afternoon: "بعد الظـهر",
     evening: "في المساء",
-    night: "في الليل"
+    night: "في الليل",
   },
   abbreviated: {
     am: "ص",
@@ -852,7 +848,7 @@ var formattingDayPeriodValues3 = {
     morning: "في الصباح",
     afternoon: "بعد الظهر",
     evening: "في المساء",
-    night: "في الليل"
+    night: "في الليل",
   },
   wide: {
     am: "ص",
@@ -862,8 +858,8 @@ var formattingDayPeriodValues3 = {
     morning: "صباحاً",
     afternoon: "بعد الظـهر",
     evening: "في المساء",
-    night: "في الليل"
-  }
+    night: "في الليل",
+  },
 };
 var ordinalNumber3 = (dirtyNumber) => {
   return String(dirtyNumber);
@@ -872,27 +868,27 @@ var localize3 = {
   ordinalNumber: ordinalNumber3,
   era: buildLocalizeFn({
     values: eraValues3,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues3,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => Number(quarter) - 1
+    argumentCallback: (quarter) => Number(quarter) - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues3,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues3,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues3,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues3,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-DZ/_lib/match.js
@@ -901,23 +897,23 @@ var parseOrdinalNumberPattern3 = /\d+/i;
 var matchEraPatterns3 = {
   narrow: /^(ق|ب)/i,
   abbreviated: /^(ق\.?\s?م\.?|ق\.?\s?م\.?\s?|a\.?\s?d\.?|c\.?\s?)/i,
-  wide: /^(قبل الميلاد|قبل الميلاد|بعد الميلاد|بعد الميلاد)/i
+  wide: /^(قبل الميلاد|قبل الميلاد|بعد الميلاد|بعد الميلاد)/i,
 };
 var parseEraPatterns3 = {
-  any: [/^قبل/i, /^بعد/i]
+  any: [/^قبل/i, /^بعد/i],
 };
 var matchQuarterPatterns3 = {
   narrow: /^[1234]/i,
   abbreviated: /^ر[1234]/i,
-  wide: /^الربع [1234]/i
+  wide: /^الربع [1234]/i,
 };
 var parseQuarterPatterns3 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns3 = {
   narrow: /^[جفمأسند]/i,
   abbreviated: /^(جان|فيف|مار|أفر|ماي|جوا|جوي|أوت|سبت|أكت|نوف|ديس)/i,
-  wide: /^(جانفي|فيفري|مارس|أفريل|ماي|جوان|جويلية|أوت|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/i
+  wide: /^(جانفي|فيفري|مارس|أفريل|ماي|جوان|جويلية|أوت|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/i,
 };
 var parseMonthPatterns3 = {
   narrow: [
@@ -932,7 +928,7 @@ var parseMonthPatterns3 = {
     /^س/i,
     /^أ/i,
     /^ن/i,
-    /^د/i
+    /^د/i,
   ],
   any: [
     /^جان/i,
@@ -946,14 +942,14 @@ var parseMonthPatterns3 = {
     /^سبت/i,
     /^أكت/i,
     /^نوف/i,
-    /^ديس/i
-  ]
+    /^ديس/i,
+  ],
 };
 var matchDayPatterns3 = {
   narrow: /^[حنثرخجس]/i,
   short: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
   abbreviated: /^(أحد|اثن|ثلا|أرب|خمي|جمعة|سبت)/i,
-  wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i
+  wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i,
 };
 var parseDayPatterns3 = {
   narrow: [/^ح/i, /^ن/i, /^ث/i, /^ر/i, /^خ/i, /^ج/i, /^س/i],
@@ -964,13 +960,13 @@ var parseDayPatterns3 = {
     /^الأربعاء/i,
     /^الخميس/i,
     /^الجمعة/i,
-    /^السبت/i
+    /^السبت/i,
   ],
-  any: [/^أح/i, /^اث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i]
+  any: [/^أح/i, /^اث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i],
 };
 var matchDayPeriodPatterns3 = {
   narrow: /^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,
-  any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i
+  any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i,
 };
 var parseDayPeriodPatterns3 = {
   any: {
@@ -981,46 +977,46 @@ var parseDayPeriodPatterns3 = {
     morning: /morning/i,
     afternoon: /afternoon/i,
     evening: /evening/i,
-    night: /night/i
-  }
+    night: /night/i,
+  },
 };
 var match3 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern3,
     parsePattern: parseOrdinalNumberPattern3,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns3,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns3,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns3,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns3,
     defaultParseWidth: "any",
-    valueCallback: (index) => Number(index) + 1
+    valueCallback: (index) => Number(index) + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns3,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns3,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns3,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns3,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns3,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns3,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-EG/_lib/formatLong.js
@@ -1028,45 +1024,45 @@ var dateFormats4 = {
   full: "EEEE، do MMMM y",
   long: "do MMMM y",
   medium: "dd/MMM/y",
-  short: "d/MM/y"
+  short: "d/MM/y",
 };
 var timeFormats4 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats4 = {
   full: "{{date}} 'الساعة' {{time}}",
   long: "{{date}} 'الساعة' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong4 = {
   date: buildFormatLongFn({
     formats: dateFormats4,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats4,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats4,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-EG/_lib/localize.js
 var eraValues4 = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م", "ب.م"],
-  wide: ["قبل الميلاد", "بعد الميلاد"]
+  wide: ["قبل الميلاد", "بعد الميلاد"],
 };
 var quarterValues4 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ر1", "ر2", "ر3", "ر4"],
-  wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"]
+  wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"],
 };
 var monthValues4 = {
   narrow: ["ي", "ف", "م", "أ", "م", "ي", "ي", "أ", "س", "أ", "ن", "د"],
@@ -1082,7 +1078,7 @@ var monthValues4 = {
     "سبتـ",
     "أكتـ",
     "نوفـ",
-    "ديسـ"
+    "ديسـ",
   ],
   wide: [
     "يناير",
@@ -1096,8 +1092,8 @@ var monthValues4 = {
     "سبتمبر",
     "أكتوبر",
     "نوفمبر",
-    "ديسمبر"
-  ]
+    "ديسمبر",
+  ],
 };
 var dayValues4 = {
   narrow: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
@@ -1110,8 +1106,8 @@ var dayValues4 = {
     "الأربعاء",
     "الخميس",
     "الجمعة",
-    "السبت"
-  ]
+    "السبت",
+  ],
 };
 var dayPeriodValues4 = {
   narrow: {
@@ -1122,7 +1118,7 @@ var dayPeriodValues4 = {
     morning: "صباحاً",
     afternoon: "بعد الظهر",
     evening: "مساءً",
-    night: "ليلاً"
+    night: "ليلاً",
   },
   abbreviated: {
     am: "ص",
@@ -1132,7 +1128,7 @@ var dayPeriodValues4 = {
     morning: "صباحاً",
     afternoon: "بعد الظهر",
     evening: "مساءً",
-    night: "ليلاً"
+    night: "ليلاً",
   },
   wide: {
     am: "ص",
@@ -1142,8 +1138,8 @@ var dayPeriodValues4 = {
     morning: "صباحاً",
     afternoon: "بعد الظهر",
     evening: "مساءً",
-    night: "ليلاً"
-  }
+    night: "ليلاً",
+  },
 };
 var formattingDayPeriodValues4 = {
   narrow: {
@@ -1154,7 +1150,7 @@ var formattingDayPeriodValues4 = {
     morning: "في الصباح",
     afternoon: "بعد الظهر",
     evening: "في المساء",
-    night: "في الليل"
+    night: "في الليل",
   },
   abbreviated: {
     am: "ص",
@@ -1164,7 +1160,7 @@ var formattingDayPeriodValues4 = {
     morning: "في الصباح",
     afternoon: "بعد الظهر",
     evening: "في المساء",
-    night: "في الليل"
+    night: "في الليل",
   },
   wide: {
     am: "ص",
@@ -1174,8 +1170,8 @@ var formattingDayPeriodValues4 = {
     noon: "ظهراً",
     afternoon: "بعد الظهر",
     evening: "في المساء",
-    night: "في الليل"
-  }
+    night: "في الليل",
+  },
 };
 var ordinalNumber4 = (dirtyNumber, _options) => {
   return String(dirtyNumber);
@@ -1184,27 +1180,27 @@ var localize4 = {
   ordinalNumber: ordinalNumber4,
   era: buildLocalizeFn({
     values: eraValues4,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues4,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues4,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues4,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues4,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues4,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-EG/_lib/match.js
@@ -1213,24 +1209,24 @@ var parseOrdinalNumberPattern4 = /\d+/i;
 var matchEraPatterns4 = {
   narrow: /^(ق|ب)/g,
   abbreviated: /^(ق.م|ب.م)/g,
-  wide: /^(قبل الميلاد|بعد الميلاد)/g
+  wide: /^(قبل الميلاد|بعد الميلاد)/g,
 };
 var parseEraPatterns4 = {
-  any: [/^ق/g, /^ب/g]
+  any: [/^ق/g, /^ب/g],
 };
 var matchQuarterPatterns4 = {
   narrow: /^[1234]/,
   abbreviated: /^ر[1234]/,
-  wide: /^الربع (الأول|الثاني|الثالث|الرابع)/
+  wide: /^الربع (الأول|الثاني|الثالث|الرابع)/,
 };
 var parseQuarterPatterns4 = {
   wide: [/الربع الأول/, /الربع الثاني/, /الربع الثالث/, /الربع الرابع/],
-  any: [/1/, /2/, /3/, /4/]
+  any: [/1/, /2/, /3/, /4/],
 };
 var matchMonthPatterns4 = {
   narrow: /^(ي|ف|م|أ|س|ن|د)/,
   abbreviated: /^(ينا|فبر|مارس|أبريل|مايو|يونـ|يولـ|أغسـ|سبتـ|أكتـ|نوفـ|ديسـ)/,
-  wide: /^(يناير|فبراير|مارس|أبريل|مايو|يونيو|يوليو|أغسطس|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/
+  wide: /^(يناير|فبراير|مارس|أبريل|مايو|يونيو|يوليو|أغسطس|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/,
 };
 var parseMonthPatterns4 = {
   narrow: [
@@ -1245,7 +1241,7 @@ var parseMonthPatterns4 = {
     /^س/,
     /^أ/,
     /^ن/,
-    /^د/
+    /^د/,
   ],
   any: [
     /^ينا/,
@@ -1259,24 +1255,24 @@ var parseMonthPatterns4 = {
     /^سبت/,
     /^أكت/,
     /^نوف/,
-    /^ديس/
-  ]
+    /^ديس/,
+  ],
 };
 var matchDayPatterns4 = {
   narrow: /^(ح|ن|ث|ر|خ|ج|س)/,
   short: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/,
   abbreviated: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/,
-  wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/
+  wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/,
 };
 var parseDayPatterns4 = {
   narrow: [/^ح/, /^ن/, /^ث/, /^ر/, /^خ/, /^ج/, /^س/],
-  any: [/أحد/, /اثنين/, /ثلاثاء/, /أربعاء/, /خميس/, /جمعة/, /سبت/]
+  any: [/أحد/, /اثنين/, /ثلاثاء/, /أربعاء/, /خميس/, /جمعة/, /سبت/],
 };
 var matchDayPeriodPatterns4 = {
   narrow: /^(ص|م|ن|ظ|في الصباح|بعد الظهر|في المساء|في الليل)/,
   abbreviated: /^(ص|م|نصف الليل|ظهراً|في الصباح|بعد الظهر|في المساء|في الليل)/,
   wide: /^(ص|م|نصف الليل|في الصباح|ظهراً|بعد الظهر|في المساء|في الليل)/,
-  any: /^(ص|م|صباح|ظهر|مساء|ليل)/
+  any: /^(ص|م|صباح|ظهر|مساء|ليل)/,
 };
 var parseDayPeriodPatterns4 = {
   any: {
@@ -1287,48 +1283,48 @@ var parseDayPeriodPatterns4 = {
     morning: /^ص/,
     afternoon: /^بعد/,
     evening: /^م/,
-    night: /^ل/
-  }
+    night: /^ل/,
+  },
 };
 var match4 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern4,
     parsePattern: parseOrdinalNumberPattern4,
-    valueCallback: function(value) {
+    valueCallback: function (value) {
       return parseInt(value, 10);
-    }
+    },
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns4,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns4,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns4,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns4,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns4,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns4,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns4,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns4,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns4,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns4,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-MA/_lib/formatLong.js
@@ -1336,45 +1332,45 @@ var dateFormats5 = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
-  short: "MM/dd/yyyy"
+  short: "MM/dd/yyyy",
 };
 var timeFormats5 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats5 = {
   full: "{{date}} 'عند' {{time}}",
   long: "{{date}} 'عند' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong5 = {
   date: buildFormatLongFn({
     formats: dateFormats5,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats5,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats5,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-MA/_lib/localize.js
 var eraValues5 = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م.", "ب.م."],
-  wide: ["قبل الميلاد", "بعد الميلاد"]
+  wide: ["قبل الميلاد", "بعد الميلاد"],
 };
 var quarterValues5 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ر1", "ر2", "ر3", "ر4"],
-  wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"]
+  wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"],
 };
 var monthValues5 = {
   narrow: ["ي", "ف", "م", "أ", "م", "ي", "ي", "غ", "ش", "أ", "ن", "د"],
@@ -1390,7 +1386,7 @@ var monthValues5 = {
     "شتنـ",
     "أكتـ",
     "نونـ",
-    "دجنـ"
+    "دجنـ",
   ],
   wide: [
     "يناير",
@@ -1404,8 +1400,8 @@ var monthValues5 = {
     "شتنبر",
     "أكتوبر",
     "نونبر",
-    "دجنبر"
-  ]
+    "دجنبر",
+  ],
 };
 var dayValues5 = {
   narrow: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
@@ -1418,8 +1414,8 @@ var dayValues5 = {
     "الأربعاء",
     "الخميس",
     "الجمعة",
-    "السبت"
-  ]
+    "السبت",
+  ],
 };
 var dayPeriodValues5 = {
   narrow: {
@@ -1430,7 +1426,7 @@ var dayPeriodValues5 = {
     morning: "صباحاً",
     afternoon: "بعد الظهر",
     evening: "مساءاً",
-    night: "ليلاً"
+    night: "ليلاً",
   },
   abbreviated: {
     am: "ص",
@@ -1440,7 +1436,7 @@ var dayPeriodValues5 = {
     morning: "صباحاً",
     afternoon: "بعد الظهر",
     evening: "مساءاً",
-    night: "ليلاً"
+    night: "ليلاً",
   },
   wide: {
     am: "ص",
@@ -1450,8 +1446,8 @@ var dayPeriodValues5 = {
     morning: "صباحاً",
     afternoon: "بعد الظهر",
     evening: "مساءاً",
-    night: "ليلاً"
-  }
+    night: "ليلاً",
+  },
 };
 var formattingDayPeriodValues5 = {
   narrow: {
@@ -1462,7 +1458,7 @@ var formattingDayPeriodValues5 = {
     morning: "في الصباح",
     afternoon: "بعد الظـهر",
     evening: "في المساء",
-    night: "في الليل"
+    night: "في الليل",
   },
   abbreviated: {
     am: "ص",
@@ -1472,7 +1468,7 @@ var formattingDayPeriodValues5 = {
     morning: "في الصباح",
     afternoon: "بعد الظهر",
     evening: "في المساء",
-    night: "في الليل"
+    night: "في الليل",
   },
   wide: {
     am: "ص",
@@ -1482,8 +1478,8 @@ var formattingDayPeriodValues5 = {
     morning: "صباحاً",
     afternoon: "بعد الظـهر",
     evening: "في المساء",
-    night: "في الليل"
-  }
+    night: "في الليل",
+  },
 };
 var ordinalNumber5 = (dirtyNumber) => {
   return String(dirtyNumber);
@@ -1492,27 +1488,27 @@ var localize5 = {
   ordinalNumber: ordinalNumber5,
   era: buildLocalizeFn({
     values: eraValues5,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues5,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => Number(quarter) - 1
+    argumentCallback: (quarter) => Number(quarter) - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues5,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues5,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues5,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues5,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-MA/_lib/match.js
@@ -1521,23 +1517,23 @@ var parseOrdinalNumberPattern5 = /\d+/i;
 var matchEraPatterns5 = {
   narrow: /^(ق|ب)/i,
   abbreviated: /^(ق\.?\s?م\.?|ق\.?\s?م\.?\s?|a\.?\s?d\.?|c\.?\s?)/i,
-  wide: /^(قبل الميلاد|قبل الميلاد|بعد الميلاد|بعد الميلاد)/i
+  wide: /^(قبل الميلاد|قبل الميلاد|بعد الميلاد|بعد الميلاد)/i,
 };
 var parseEraPatterns5 = {
-  any: [/^قبل/i, /^بعد/i]
+  any: [/^قبل/i, /^بعد/i],
 };
 var matchQuarterPatterns5 = {
   narrow: /^[1234]/i,
   abbreviated: /^ر[1234]/i,
-  wide: /^الربع [1234]/i
+  wide: /^الربع [1234]/i,
 };
 var parseQuarterPatterns5 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns5 = {
   narrow: /^[يفمأمسند]/i,
   abbreviated: /^(ين|ف|مار|أب|ماي|يون|يول|غش|شت|أك|ن|د)/i,
-  wide: /^(ين|ف|مار|أب|ماي|يون|يول|غش|شت|أك|ن|د)/i
+  wide: /^(ين|ف|مار|أب|ماي|يون|يول|غش|شت|أك|ن|د)/i,
 };
 var parseMonthPatterns5 = {
   narrow: [
@@ -1552,7 +1548,7 @@ var parseMonthPatterns5 = {
     /^ش/i,
     /^أ/i,
     /^ن/i,
-    /^د/i
+    /^د/i,
   ],
   any: [
     /^ين/i,
@@ -1566,14 +1562,14 @@ var parseMonthPatterns5 = {
     /^ش/i,
     /^أك/i,
     /^ن/i,
-    /^د/i
-  ]
+    /^د/i,
+  ],
 };
 var matchDayPatterns5 = {
   narrow: /^[حنثرخجس]/i,
   short: /^(أحد|إثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
   abbreviated: /^(أحد|إثن|ثلا|أرب|خمي|جمعة|سبت)/i,
-  wide: /^(الأحد|الإثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i
+  wide: /^(الأحد|الإثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i,
 };
 var parseDayPatterns5 = {
   narrow: [/^ح/i, /^ن/i, /^ث/i, /^ر/i, /^خ/i, /^ج/i, /^س/i],
@@ -1584,13 +1580,13 @@ var parseDayPatterns5 = {
     /^الأربعاء/i,
     /^الخميس/i,
     /^الجمعة/i,
-    /^السبت/i
+    /^السبت/i,
   ],
-  any: [/^أح/i, /^إث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i]
+  any: [/^أح/i, /^إث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i],
 };
 var matchDayPeriodPatterns5 = {
   narrow: /^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,
-  any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i
+  any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i,
 };
 var parseDayPeriodPatterns5 = {
   any: {
@@ -1601,46 +1597,46 @@ var parseDayPeriodPatterns5 = {
     morning: /morning/i,
     afternoon: /afternoon/i,
     evening: /evening/i,
-    night: /night/i
-  }
+    night: /night/i,
+  },
 };
 var match5 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern5,
     parsePattern: parseOrdinalNumberPattern5,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns5,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns5,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns5,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns5,
     defaultParseWidth: "any",
-    valueCallback: (index) => Number(index) + 1
+    valueCallback: (index) => Number(index) + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns5,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns5,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns5,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns5,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns5,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns5,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-SA/_lib/formatLong.js
@@ -1648,45 +1644,45 @@ var dateFormats6 = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
-  short: "MM/dd/yyyy"
+  short: "MM/dd/yyyy",
 };
 var timeFormats6 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats6 = {
   full: "{{date}} 'عند' {{time}}",
   long: "{{date}} 'عند' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong6 = {
   date: buildFormatLongFn({
     formats: dateFormats6,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats6,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats6,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-SA/_lib/localize.js
 var eraValues6 = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م.", "ب.م."],
-  wide: ["قبل الميلاد", "بعد الميلاد"]
+  wide: ["قبل الميلاد", "بعد الميلاد"],
 };
 var quarterValues6 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ر1", "ر2", "ر3", "ر4"],
-  wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"]
+  wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"],
 };
 var monthValues6 = {
   narrow: ["ي", "ف", "م", "أ", "م", "ي", "ي", "أ", "س", "أ", "ن", "د"],
@@ -1702,7 +1698,7 @@ var monthValues6 = {
     "سبتـ",
     "أكتـ",
     "نوفـ",
-    "ديسـ"
+    "ديسـ",
   ],
   wide: [
     "يناير",
@@ -1716,8 +1712,8 @@ var monthValues6 = {
     "سبتمبر",
     "أكتوبر",
     "نوفمبر",
-    "ديسمبر"
-  ]
+    "ديسمبر",
+  ],
 };
 var dayValues6 = {
   narrow: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
@@ -1730,8 +1726,8 @@ var dayValues6 = {
     "الأربعاء",
     "الخميس",
     "الجمعة",
-    "السبت"
-  ]
+    "السبت",
+  ],
 };
 var dayPeriodValues6 = {
   narrow: {
@@ -1742,7 +1738,7 @@ var dayPeriodValues6 = {
     morning: "صباحاً",
     afternoon: "بعد الظهر",
     evening: "مساءاً",
-    night: "ليلاً"
+    night: "ليلاً",
   },
   abbreviated: {
     am: "ص",
@@ -1752,7 +1748,7 @@ var dayPeriodValues6 = {
     morning: "صباحاً",
     afternoon: "بعد الظهر",
     evening: "مساءاً",
-    night: "ليلاً"
+    night: "ليلاً",
   },
   wide: {
     am: "ص",
@@ -1762,8 +1758,8 @@ var dayPeriodValues6 = {
     morning: "صباحاً",
     afternoon: "بعد الظهر",
     evening: "مساءاً",
-    night: "ليلاً"
-  }
+    night: "ليلاً",
+  },
 };
 var formattingDayPeriodValues6 = {
   narrow: {
@@ -1774,7 +1770,7 @@ var formattingDayPeriodValues6 = {
     morning: "في الصباح",
     afternoon: "بعد الظـهر",
     evening: "في المساء",
-    night: "في الليل"
+    night: "في الليل",
   },
   abbreviated: {
     am: "ص",
@@ -1784,7 +1780,7 @@ var formattingDayPeriodValues6 = {
     morning: "في الصباح",
     afternoon: "بعد الظهر",
     evening: "في المساء",
-    night: "في الليل"
+    night: "في الليل",
   },
   wide: {
     am: "ص",
@@ -1794,8 +1790,8 @@ var formattingDayPeriodValues6 = {
     morning: "صباحاً",
     afternoon: "بعد الظـهر",
     evening: "في المساء",
-    night: "في الليل"
-  }
+    night: "في الليل",
+  },
 };
 var ordinalNumber6 = (dirtyNumber) => {
   return String(dirtyNumber);
@@ -1804,27 +1800,27 @@ var localize6 = {
   ordinalNumber: ordinalNumber6,
   era: buildLocalizeFn({
     values: eraValues6,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues6,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues6,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues6,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues6,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues6,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-SA/_lib/match.js
@@ -1833,23 +1829,23 @@ var parseOrdinalNumberPattern6 = /\d+/i;
 var matchEraPatterns6 = {
   narrow: /^(ق|ب)/i,
   abbreviated: /^(ق\.?\s?م\.?|ق\.?\s?م\.?\s?|a\.?\s?d\.?|c\.?\s?)/i,
-  wide: /^(قبل الميلاد|قبل الميلاد|بعد الميلاد|بعد الميلاد)/i
+  wide: /^(قبل الميلاد|قبل الميلاد|بعد الميلاد|بعد الميلاد)/i,
 };
 var parseEraPatterns6 = {
-  any: [/^قبل/i, /^بعد/i]
+  any: [/^قبل/i, /^بعد/i],
 };
 var matchQuarterPatterns6 = {
   narrow: /^[1234]/i,
   abbreviated: /^ر[1234]/i,
-  wide: /^الربع [1234]/i
+  wide: /^الربع [1234]/i,
 };
 var parseQuarterPatterns6 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns6 = {
   narrow: /^[يفمأمسند]/i,
   abbreviated: /^(ين|ف|مار|أب|ماي|يون|يول|أغ|س|أك|ن|د)/i,
-  wide: /^(ين|ف|مار|أب|ماي|يون|يول|أغ|س|أك|ن|د)/i
+  wide: /^(ين|ف|مار|أب|ماي|يون|يول|أغ|س|أك|ن|د)/i,
 };
 var parseMonthPatterns6 = {
   narrow: [
@@ -1864,7 +1860,7 @@ var parseMonthPatterns6 = {
     /^س/i,
     /^أ/i,
     /^ن/i,
-    /^د/i
+    /^د/i,
   ],
   any: [
     /^ين/i,
@@ -1878,14 +1874,14 @@ var parseMonthPatterns6 = {
     /^س/i,
     /^أك/i,
     /^ن/i,
-    /^د/i
-  ]
+    /^د/i,
+  ],
 };
 var matchDayPatterns6 = {
   narrow: /^[حنثرخجس]/i,
   short: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
   abbreviated: /^(أحد|اثن|ثلا|أرب|خمي|جمعة|سبت)/i,
-  wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i
+  wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i,
 };
 var parseDayPatterns6 = {
   narrow: [/^ح/i, /^ن/i, /^ث/i, /^ر/i, /^خ/i, /^ج/i, /^س/i],
@@ -1896,13 +1892,13 @@ var parseDayPatterns6 = {
     /^الأربعاء/i,
     /^الخميس/i,
     /^الجمعة/i,
-    /^السبت/i
+    /^السبت/i,
   ],
-  any: [/^أح/i, /^اث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i]
+  any: [/^أح/i, /^اث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i],
 };
 var matchDayPeriodPatterns6 = {
   narrow: /^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,
-  any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i
+  any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i,
 };
 var parseDayPeriodPatterns6 = {
   any: {
@@ -1913,46 +1909,46 @@ var parseDayPeriodPatterns6 = {
     morning: /morning/i,
     afternoon: /afternoon/i,
     evening: /evening/i,
-    night: /night/i
-  }
+    night: /night/i,
+  },
 };
 var match6 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern6,
     parsePattern: parseOrdinalNumberPattern6,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns6,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns6,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns6,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns6,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns6,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns6,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns6,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns6,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns6,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns6,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-TN/_lib/formatLong.js
@@ -1960,45 +1956,45 @@ var dateFormats7 = {
   full: "EEEE، do MMMM y",
   long: "do MMMM y",
   medium: "d MMM y",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats7 = {
   full: "HH:mm:ss",
   long: "HH:mm:ss",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats7 = {
   full: "{{date}} 'مع' {{time}}",
   long: "{{date}} 'مع' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong7 = {
   date: buildFormatLongFn({
     formats: dateFormats7,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats7,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats7,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-TN/_lib/localize.js
 var eraValues7 = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م.", "ب.م."],
-  wide: ["قبل الميلاد", "بعد الميلاد"]
+  wide: ["قبل الميلاد", "بعد الميلاد"],
 };
 var quarterValues7 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ر1", "ر2", "ر3", "ر4"],
-  wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"]
+  wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"],
 };
 var monthValues7 = {
   narrow: ["د", "ن", "أ", "س", "أ", "ج", "ج", "م", "أ", "م", "ف", "ج"],
@@ -2014,7 +2010,7 @@ var monthValues7 = {
     "سبتمبر",
     "أكتوبر",
     "نوفمبر",
-    "ديسمبر"
+    "ديسمبر",
   ],
   wide: [
     "جانفي",
@@ -2028,8 +2024,8 @@ var monthValues7 = {
     "سبتمبر",
     "أكتوبر",
     "نوفمبر",
-    "ديسمبر"
-  ]
+    "ديسمبر",
+  ],
 };
 var dayValues7 = {
   narrow: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
@@ -2042,8 +2038,8 @@ var dayValues7 = {
     "الأربعاء",
     "الخميس",
     "الجمعة",
-    "السبت"
-  ]
+    "السبت",
+  ],
 };
 var dayPeriodValues7 = {
   narrow: {
@@ -2054,7 +2050,7 @@ var dayPeriodValues7 = {
     afternoon: "بعد القايلة",
     evening: "العشية",
     night: "الليل",
-    midnight: "نص الليل"
+    midnight: "نص الليل",
   },
   abbreviated: {
     am: "ص",
@@ -2064,7 +2060,7 @@ var dayPeriodValues7 = {
     afternoon: "بعد القايلة",
     evening: "العشية",
     night: "الليل",
-    midnight: "نص الليل"
+    midnight: "نص الليل",
   },
   wide: {
     am: "ص",
@@ -2074,8 +2070,8 @@ var dayPeriodValues7 = {
     afternoon: "بعد القايلة",
     evening: "العشية",
     night: "الليل",
-    midnight: "نص الليل"
-  }
+    midnight: "نص الليل",
+  },
 };
 var formattingDayPeriodValues7 = {
   narrow: {
@@ -2086,7 +2082,7 @@ var formattingDayPeriodValues7 = {
     afternoon: "بعد القايلة",
     evening: "في العشية",
     night: "في الليل",
-    midnight: "نص الليل"
+    midnight: "نص الليل",
   },
   abbreviated: {
     am: "ص",
@@ -2096,7 +2092,7 @@ var formattingDayPeriodValues7 = {
     afternoon: "بعد القايلة",
     evening: "في العشية",
     night: "في الليل",
-    midnight: "نص الليل"
+    midnight: "نص الليل",
   },
   wide: {
     am: "ص",
@@ -2106,35 +2102,35 @@ var formattingDayPeriodValues7 = {
     afternoon: "بعد القايلة",
     evening: "في العشية",
     night: "في الليل",
-    midnight: "نص الليل"
-  }
+    midnight: "نص الليل",
+  },
 };
 var ordinalNumber7 = (num) => String(num);
 var localize7 = {
   ordinalNumber: ordinalNumber7,
   era: buildLocalizeFn({
     values: eraValues7,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues7,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues7,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues7,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues7,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues7,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ar-TN/_lib/match.js
@@ -2143,23 +2139,24 @@ var parseOrdinalNumberPattern7 = /\d+/i;
 var matchEraPatterns7 = {
   narrow: /[قب]/,
   abbreviated: /[قب]\.م\./,
-  wide: /(قبل|بعد) الميلاد/
+  wide: /(قبل|بعد) الميلاد/,
 };
 var parseEraPatterns7 = {
-  any: [/قبل/, /بعد/]
+  any: [/قبل/, /بعد/],
 };
 var matchQuarterPatterns7 = {
   narrow: /^[1234]/i,
   abbreviated: /ر[1234]/,
-  wide: /الربع (الأول|الثاني|الثالث|الرابع)/
+  wide: /الربع (الأول|الثاني|الثالث|الرابع)/,
 };
 var parseQuarterPatterns7 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns7 = {
   narrow: /^[جفمأسند]/,
-  abbreviated: /^(جانفي|فيفري|مارس|أفريل|ماي|جوان|جويلية|أوت|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/,
-  wide: /^(جانفي|فيفري|مارس|أفريل|ماي|جوان|جويلية|أوت|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/
+  abbreviated:
+    /^(جانفي|فيفري|مارس|أفريل|ماي|جوان|جويلية|أوت|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/,
+  wide: /^(جانفي|فيفري|مارس|أفريل|ماي|جوان|جويلية|أوت|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/,
 };
 var parseMonthPatterns7 = {
   narrow: [
@@ -2174,7 +2171,7 @@ var parseMonthPatterns7 = {
     /^س/i,
     /^أ/i,
     /^ن/i,
-    /^د/i
+    /^د/i,
   ],
   any: [
     /^جانفي/i,
@@ -2188,14 +2185,14 @@ var parseMonthPatterns7 = {
     /^سبتمبر/i,
     /^أكتوبر/i,
     /^نوفمبر/i,
-    /^ديسمبر/i
-  ]
+    /^ديسمبر/i,
+  ],
 };
 var matchDayPatterns7 = {
   narrow: /^[حنثرخجس]/i,
   short: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
   abbreviated: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
-  wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i
+  wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i,
 };
 var parseDayPatterns7 = {
   narrow: [/^ح/i, /^ن/i, /^ث/i, /^ر/i, /^خ/i, /^ج/i, /^س/i],
@@ -2206,13 +2203,13 @@ var parseDayPatterns7 = {
     /^الأربعاء/i,
     /^الخميس/i,
     /^الجمعة/i,
-    /^السبت/i
+    /^السبت/i,
   ],
-  any: [/^أح/i, /^اث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i]
+  any: [/^أح/i, /^اث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i],
 };
 var matchDayPeriodPatterns7 = {
   narrow: /^(ص|ع|ن ل|ل|(في|مع) (صباح|قايلة|عشية|ليل))/,
-  any: /^([صع]|نص الليل|قايلة|(في|مع) (صباح|قايلة|عشية|ليل))/
+  any: /^([صع]|نص الليل|قايلة|(في|مع) (صباح|قايلة|عشية|ليل))/,
 };
 var parseDayPeriodPatterns7 = {
   any: {
@@ -2223,46 +2220,46 @@ var parseDayPeriodPatterns7 = {
     afternoon: /بعد القايلة/,
     morning: /صباح/,
     evening: /عشية/,
-    night: /ليل/
-  }
+    night: /ليل/,
+  },
 };
 var match7 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern7,
     parsePattern: parseOrdinalNumberPattern7,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns7,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns7,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns7,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns7,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns7,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns7,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns7,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns7,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns7,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns7,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/az/_lib/formatLong.js
@@ -2270,45 +2267,45 @@ var dateFormats8 = {
   full: "EEEE, do MMMM y 'il'",
   long: "do MMMM y 'il'",
   medium: "d MMM y 'il'",
-  short: "dd.MM.yyyy"
+  short: "dd.MM.yyyy",
 };
 var timeFormats8 = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats8 = {
   full: "{{date}} {{time}} - 'də'",
   long: "{{date}} {{time}} - 'də'",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong8 = {
   date: buildFormatLongFn({
     formats: dateFormats8,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats8,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats8,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/az/_lib/localize.js
 var eraValues8 = {
   narrow: ["e.ə", "b.e"],
   abbreviated: ["e.ə", "b.e"],
-  wide: ["eramızdan əvvəl", "bizim era"]
+  wide: ["eramızdan əvvəl", "bizim era"],
 };
 var quarterValues8 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
-  wide: ["1ci kvartal", "2ci kvartal", "3cü kvartal", "4cü kvartal"]
+  wide: ["1ci kvartal", "2ci kvartal", "3cü kvartal", "4cü kvartal"],
 };
 var monthValues8 = {
   narrow: ["Y", "F", "M", "A", "M", "İ", "İ", "A", "S", "O", "N", "D"],
@@ -2324,7 +2321,7 @@ var monthValues8 = {
     "Sen",
     "Okt",
     "Noy",
-    "Dek"
+    "Dek",
   ],
   wide: [
     "Yanvar",
@@ -2338,8 +2335,8 @@ var monthValues8 = {
     "Sentyabr",
     "Oktyabr",
     "Noyabr",
-    "Dekabr"
-  ]
+    "Dekabr",
+  ],
 };
 var dayValues8 = {
   narrow: ["B.", "B.e", "Ç.a", "Ç.", "C.a", "C.", "Ş."],
@@ -2352,8 +2349,8 @@ var dayValues8 = {
     "Çərşənbə",
     "Cümə axşamı",
     "Cümə",
-    "Şənbə"
-  ]
+    "Şənbə",
+  ],
 };
 var dayPeriodValues8 = {
   narrow: {
@@ -2364,7 +2361,7 @@ var dayPeriodValues8 = {
     morning: "səhər",
     afternoon: "gündüz",
     evening: "axşam",
-    night: "gecə"
+    night: "gecə",
   },
   abbreviated: {
     am: "AM",
@@ -2374,7 +2371,7 @@ var dayPeriodValues8 = {
     morning: "səhər",
     afternoon: "gündüz",
     evening: "axşam",
-    night: "gecə"
+    night: "gecə",
   },
   wide: {
     am: "a.m.",
@@ -2384,8 +2381,8 @@ var dayPeriodValues8 = {
     morning: "səhər",
     afternoon: "gündüz",
     evening: "axşam",
-    night: "gecə"
-  }
+    night: "gecə",
+  },
 };
 var formattingDayPeriodValues8 = {
   narrow: {
@@ -2396,7 +2393,7 @@ var formattingDayPeriodValues8 = {
     morning: "səhər",
     afternoon: "gündüz",
     evening: "axşam",
-    night: "gecə"
+    night: "gecə",
   },
   abbreviated: {
     am: "AM",
@@ -2406,7 +2403,7 @@ var formattingDayPeriodValues8 = {
     morning: "səhər",
     afternoon: "gündüz",
     evening: "axşam",
-    night: "gecə"
+    night: "gecə",
   },
   wide: {
     am: "a.m.",
@@ -2416,8 +2413,8 @@ var formattingDayPeriodValues8 = {
     morning: "səhər",
     afternoon: "gündüz",
     evening: "axşam",
-    night: "gecə"
-  }
+    night: "gecə",
+  },
 };
 var suffixes = {
   1: "-inci",
@@ -2437,14 +2434,14 @@ var suffixes = {
   10: "-uncu",
   30: "-uncu",
   60: "-ıncı",
-  90: "-ıncı"
+  90: "-ıncı",
 };
 var getSuffix = (number) => {
   if (number === 0) {
     return number + "-ıncı";
   }
   const a = number % 10;
-  const b = number % 100 - a;
+  const b = (number % 100) - a;
   const c = number >= 100 ? 100 : null;
   if (suffixes[a]) {
     return suffixes[a];
@@ -2464,27 +2461,27 @@ var localize8 = {
   ordinalNumber: ordinalNumber8,
   era: buildLocalizeFn({
     values: eraValues8,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues8,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues8,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues8,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues8,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues8,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/az/_lib/match.js
@@ -2493,23 +2490,23 @@ var parseOrdinalNumberPattern8 = /\d+/i;
 var matchEraPatterns8 = {
   narrow: /^(b|a)$/i,
   abbreviated: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)$/i,
-  wide: /^(bizim eradan əvvəl|bizim era)$/i
+  wide: /^(bizim eradan əvvəl|bizim era)$/i,
 };
 var parseEraPatterns8 = {
-  any: [/^b$/i, /^(a|c)$/i]
+  any: [/^b$/i, /^(a|c)$/i],
 };
 var matchQuarterPatterns8 = {
   narrow: /^[1234]$/i,
   abbreviated: /^K[1234]$/i,
-  wide: /^[1234](ci)? kvartal$/i
+  wide: /^[1234](ci)? kvartal$/i,
 };
 var parseQuarterPatterns8 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns8 = {
   narrow: /^[(?-i)yfmaisond]$/i,
   abbreviated: /^(Yan|Fev|Mar|Apr|May|İyun|İyul|Avq|Sen|Okt|Noy|Dek)$/i,
-  wide: /^(Yanvar|Fevral|Mart|Aprel|May|İyun|İyul|Avgust|Sentyabr|Oktyabr|Noyabr|Dekabr)$/i
+  wide: /^(Yanvar|Fevral|Mart|Aprel|May|İyun|İyul|Avgust|Sentyabr|Oktyabr|Noyabr|Dekabr)$/i,
 };
 var parseMonthPatterns8 = {
   narrow: [
@@ -2524,7 +2521,7 @@ var parseMonthPatterns8 = {
     /^[(?-i)s]$/i,
     /^[(?-i)o]$/i,
     /^[(?-i)n]$/i,
-    /^[(?-i)d]$/i
+    /^[(?-i)d]$/i,
   ],
   abbreviated: [
     /^Yan$/i,
@@ -2538,7 +2535,7 @@ var parseMonthPatterns8 = {
     /^Sen$/i,
     /^Okt$/i,
     /^Noy$/i,
-    /^Dek$/i
+    /^Dek$/i,
   ],
   wide: [
     /^Yanvar$/i,
@@ -2552,14 +2549,14 @@ var parseMonthPatterns8 = {
     /^Sentyabr$/i,
     /^Oktyabr$/i,
     /^Noyabr$/i,
-    /^Dekabr$/i
-  ]
+    /^Dekabr$/i,
+  ],
 };
 var matchDayPatterns8 = {
   narrow: /^(B\.|B\.e|Ç\.a|Ç\.|C\.a|C\.|Ş\.)$/i,
   short: /^(B\.|B\.e|Ç\.a|Ç\.|C\.a|C\.|Ş\.)$/i,
   abbreviated: /^(Baz\.e|Çər|Çər\.a|Cüm|Cüm\.a|Şə)$/i,
-  wide: /^(Bazar|Bazar ertəsi|Çərşənbə axşamı|Çərşənbə|Cümə axşamı|Cümə|Şənbə)$/i
+  wide: /^(Bazar|Bazar ertəsi|Çərşənbə axşamı|Çərşənbə|Cümə axşamı|Cümə|Şənbə)$/i,
 };
 var parseDayPatterns8 = {
   narrow: [
@@ -2569,7 +2566,7 @@ var parseDayPatterns8 = {
     /^Ç\.$/i,
     /^C\.a$/i,
     /^C\.$/i,
-    /^Ş\.$/i
+    /^Ş\.$/i,
   ],
   abbreviated: [
     /^Baz$/i,
@@ -2578,7 +2575,7 @@ var parseDayPatterns8 = {
     /^Çər$/i,
     /^Cüm\.a$/i,
     /^Cüm$/i,
-    /^Şə$/i
+    /^Şə$/i,
   ],
   wide: [
     /^Bazar$/i,
@@ -2587,7 +2584,7 @@ var parseDayPatterns8 = {
     /^Çərşənbə$/i,
     /^Cümə axşamı$/i,
     /^Cümə$/i,
-    /^Şənbə$/i
+    /^Şənbə$/i,
   ],
   any: [
     /^B\.$/i,
@@ -2596,12 +2593,12 @@ var parseDayPatterns8 = {
     /^Ç\.$/i,
     /^C\.a$/i,
     /^C\.$/i,
-    /^Ş\.$/i
-  ]
+    /^Ş\.$/i,
+  ],
 };
 var matchDayPeriodPatterns8 = {
   narrow: /^(a|p|gecəyarı|gün|səhər|gündüz|axşam|gecə)$/i,
-  any: /^(am|pm|a\.m\.|p\.m\.|AM|PM|gecəyarı|gün|səhər|gündüz|axşam|gecə)$/i
+  any: /^(am|pm|a\.m\.|p\.m\.|AM|PM|gecəyarı|gün|səhər|gündüz|axşam|gecə)$/i,
 };
 var parseDayPeriodPatterns8 = {
   any: {
@@ -2612,46 +2609,46 @@ var parseDayPeriodPatterns8 = {
     morning: /səhər$/i,
     afternoon: /gündüz$/i,
     evening: /axşam$/i,
-    night: /gecə$/i
-  }
+    night: /gecə$/i,
+  },
 };
 var match8 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern8,
     parsePattern: parseOrdinalNumberPattern8,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns8,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns8,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns8,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns8,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns8,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns8,
-    defaultParseWidth: "narrow"
+    defaultParseWidth: "narrow",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns8,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns8,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns8,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns8,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/be/_lib/formatDistance.js
@@ -2706,31 +2703,31 @@ var formatDistanceLocale = {
       one: "менш за секунду",
       singularNominative: "менш за {{count}} секунду",
       singularGenitive: "менш за {{count}} секунды",
-      pluralGenitive: "менш за {{count}} секунд"
+      pluralGenitive: "менш за {{count}} секунд",
     },
     future: {
       one: "менш, чым праз секунду",
       singularNominative: "менш, чым праз {{count}} секунду",
       singularGenitive: "менш, чым праз {{count}} секунды",
-      pluralGenitive: "менш, чым праз {{count}} секунд"
-    }
+      pluralGenitive: "менш, чым праз {{count}} секунд",
+    },
   }),
   xSeconds: buildLocalizeTokenFn({
     regular: {
       singularNominative: "{{count}} секунда",
       singularGenitive: "{{count}} секунды",
-      pluralGenitive: "{{count}} секунд"
+      pluralGenitive: "{{count}} секунд",
     },
     past: {
       singularNominative: "{{count}} секунду таму",
       singularGenitive: "{{count}} секунды таму",
-      pluralGenitive: "{{count}} секунд таму"
+      pluralGenitive: "{{count}} секунд таму",
     },
     future: {
       singularNominative: "праз {{count}} секунду",
       singularGenitive: "праз {{count}} секунды",
-      pluralGenitive: "праз {{count}} секунд"
-    }
+      pluralGenitive: "праз {{count}} секунд",
+    },
   }),
   halfAMinute,
   lessThanXMinutes: buildLocalizeTokenFn({
@@ -2738,149 +2735,149 @@ var formatDistanceLocale = {
       one: "менш за хвіліну",
       singularNominative: "менш за {{count}} хвіліну",
       singularGenitive: "менш за {{count}} хвіліны",
-      pluralGenitive: "менш за {{count}} хвілін"
+      pluralGenitive: "менш за {{count}} хвілін",
     },
     future: {
       one: "менш, чым праз хвіліну",
       singularNominative: "менш, чым праз {{count}} хвіліну",
       singularGenitive: "менш, чым праз {{count}} хвіліны",
-      pluralGenitive: "менш, чым праз {{count}} хвілін"
-    }
+      pluralGenitive: "менш, чым праз {{count}} хвілін",
+    },
   }),
   xMinutes: buildLocalizeTokenFn({
     regular: {
       singularNominative: "{{count}} хвіліна",
       singularGenitive: "{{count}} хвіліны",
-      pluralGenitive: "{{count}} хвілін"
+      pluralGenitive: "{{count}} хвілін",
     },
     past: {
       singularNominative: "{{count}} хвіліну таму",
       singularGenitive: "{{count}} хвіліны таму",
-      pluralGenitive: "{{count}} хвілін таму"
+      pluralGenitive: "{{count}} хвілін таму",
     },
     future: {
       singularNominative: "праз {{count}} хвіліну",
       singularGenitive: "праз {{count}} хвіліны",
-      pluralGenitive: "праз {{count}} хвілін"
-    }
+      pluralGenitive: "праз {{count}} хвілін",
+    },
   }),
   aboutXHours: buildLocalizeTokenFn({
     regular: {
       singularNominative: "каля {{count}} гадзіны",
       singularGenitive: "каля {{count}} гадзін",
-      pluralGenitive: "каля {{count}} гадзін"
+      pluralGenitive: "каля {{count}} гадзін",
     },
     future: {
       singularNominative: "прыблізна праз {{count}} гадзіну",
       singularGenitive: "прыблізна праз {{count}} гадзіны",
-      pluralGenitive: "прыблізна праз {{count}} гадзін"
-    }
+      pluralGenitive: "прыблізна праз {{count}} гадзін",
+    },
   }),
   xHours: buildLocalizeTokenFn({
     regular: {
       singularNominative: "{{count}} гадзіна",
       singularGenitive: "{{count}} гадзіны",
-      pluralGenitive: "{{count}} гадзін"
+      pluralGenitive: "{{count}} гадзін",
     },
     past: {
       singularNominative: "{{count}} гадзіну таму",
       singularGenitive: "{{count}} гадзіны таму",
-      pluralGenitive: "{{count}} гадзін таму"
+      pluralGenitive: "{{count}} гадзін таму",
     },
     future: {
       singularNominative: "праз {{count}} гадзіну",
       singularGenitive: "праз {{count}} гадзіны",
-      pluralGenitive: "праз {{count}} гадзін"
-    }
+      pluralGenitive: "праз {{count}} гадзін",
+    },
   }),
   xDays: buildLocalizeTokenFn({
     regular: {
       singularNominative: "{{count}} дзень",
       singularGenitive: "{{count}} дні",
-      pluralGenitive: "{{count}} дзён"
-    }
+      pluralGenitive: "{{count}} дзён",
+    },
   }),
   aboutXWeeks: buildLocalizeTokenFn({
     regular: {
       singularNominative: "каля {{count}} тыдні",
       singularGenitive: "каля {{count}} тыдняў",
-      pluralGenitive: "каля {{count}} тыдняў"
+      pluralGenitive: "каля {{count}} тыдняў",
     },
     future: {
       singularNominative: "прыблізна праз {{count}} тыдзень",
       singularGenitive: "прыблізна праз {{count}} тыдні",
-      pluralGenitive: "прыблізна праз {{count}} тыдняў"
-    }
+      pluralGenitive: "прыблізна праз {{count}} тыдняў",
+    },
   }),
   xWeeks: buildLocalizeTokenFn({
     regular: {
       singularNominative: "{{count}} тыдзень",
       singularGenitive: "{{count}} тыдні",
-      pluralGenitive: "{{count}} тыдняў"
-    }
+      pluralGenitive: "{{count}} тыдняў",
+    },
   }),
   aboutXMonths: buildLocalizeTokenFn({
     regular: {
       singularNominative: "каля {{count}} месяца",
       singularGenitive: "каля {{count}} месяцаў",
-      pluralGenitive: "каля {{count}} месяцаў"
+      pluralGenitive: "каля {{count}} месяцаў",
     },
     future: {
       singularNominative: "прыблізна праз {{count}} месяц",
       singularGenitive: "прыблізна праз {{count}} месяцы",
-      pluralGenitive: "прыблізна праз {{count}} месяцаў"
-    }
+      pluralGenitive: "прыблізна праз {{count}} месяцаў",
+    },
   }),
   xMonths: buildLocalizeTokenFn({
     regular: {
       singularNominative: "{{count}} месяц",
       singularGenitive: "{{count}} месяцы",
-      pluralGenitive: "{{count}} месяцаў"
-    }
+      pluralGenitive: "{{count}} месяцаў",
+    },
   }),
   aboutXYears: buildLocalizeTokenFn({
     regular: {
       singularNominative: "каля {{count}} года",
       singularGenitive: "каля {{count}} гадоў",
-      pluralGenitive: "каля {{count}} гадоў"
+      pluralGenitive: "каля {{count}} гадоў",
     },
     future: {
       singularNominative: "прыблізна праз {{count}} год",
       singularGenitive: "прыблізна праз {{count}} гады",
-      pluralGenitive: "прыблізна праз {{count}} гадоў"
-    }
+      pluralGenitive: "прыблізна праз {{count}} гадоў",
+    },
   }),
   xYears: buildLocalizeTokenFn({
     regular: {
       singularNominative: "{{count}} год",
       singularGenitive: "{{count}} гады",
-      pluralGenitive: "{{count}} гадоў"
-    }
+      pluralGenitive: "{{count}} гадоў",
+    },
   }),
   overXYears: buildLocalizeTokenFn({
     regular: {
       singularNominative: "больш за {{count}} год",
       singularGenitive: "больш за {{count}} гады",
-      pluralGenitive: "больш за {{count}} гадоў"
+      pluralGenitive: "больш за {{count}} гадоў",
     },
     future: {
       singularNominative: "больш, чым праз {{count}} год",
       singularGenitive: "больш, чым праз {{count}} гады",
-      pluralGenitive: "больш, чым праз {{count}} гадоў"
-    }
+      pluralGenitive: "больш, чым праз {{count}} гадоў",
+    },
   }),
   almostXYears: buildLocalizeTokenFn({
     regular: {
       singularNominative: "амаль {{count}} год",
       singularGenitive: "амаль {{count}} гады",
-      pluralGenitive: "амаль {{count}} гадоў"
+      pluralGenitive: "амаль {{count}} гадоў",
     },
     future: {
       singularNominative: "амаль праз {{count}} год",
       singularGenitive: "амаль праз {{count}} гады",
-      pluralGenitive: "амаль праз {{count}} гадоў"
-    }
-  })
+      pluralGenitive: "амаль праз {{count}} гадоў",
+    },
+  }),
 };
 
 // node_modules/date-fns/locale/be/_lib/formatLong.js
@@ -2888,42 +2885,42 @@ var dateFormats9 = {
   full: "EEEE, d MMMM y 'г.'",
   long: "d MMMM y 'г.'",
   medium: "d MMM y 'г.'",
-  short: "dd.MM.y"
+  short: "dd.MM.y",
 };
 var timeFormats9 = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats9 = {
-  any: "{{date}}, {{time}}"
+  any: "{{date}}, {{time}}",
 };
 var formatLong9 = {
   date: buildFormatLongFn({
     formats: dateFormats9,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats9,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats9,
-    defaultWidth: "any"
-  })
+    defaultWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/be/_lib/localize.js
 var eraValues9 = {
   narrow: ["да н.э.", "н.э."],
   abbreviated: ["да н. э.", "н. э."],
-  wide: ["да нашай эры", "нашай эры"]
+  wide: ["да нашай эры", "нашай эры"],
 };
 var quarterValues9 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-ы кв.", "2-і кв.", "3-і кв.", "4-ы кв."],
-  wide: ["1-ы квартал", "2-і квартал", "3-і квартал", "4-ы квартал"]
+  wide: ["1-ы квартал", "2-і квартал", "3-і квартал", "4-ы квартал"],
 };
 var monthValues9 = {
   narrow: ["С", "Л", "С", "К", "М", "Ч", "Л", "Ж", "В", "К", "Л", "С"],
@@ -2939,7 +2936,7 @@ var monthValues9 = {
     "вер.",
     "кастр.",
     "ліст.",
-    "снеж."
+    "снеж.",
   ],
   wide: [
     "студзень",
@@ -2953,8 +2950,8 @@ var monthValues9 = {
     "верасень",
     "кастрычнік",
     "лістапад",
-    "снежань"
-  ]
+    "снежань",
+  ],
 };
 var formattingMonthValues = {
   narrow: ["С", "Л", "С", "К", "М", "Ч", "Л", "Ж", "В", "К", "Л", "С"],
@@ -2970,7 +2967,7 @@ var formattingMonthValues = {
     "вер.",
     "кастр.",
     "ліст.",
-    "снеж."
+    "снеж.",
   ],
   wide: [
     "студзеня",
@@ -2984,8 +2981,8 @@ var formattingMonthValues = {
     "верасня",
     "кастрычніка",
     "лістапада",
-    "снежня"
-  ]
+    "снежня",
+  ],
 };
 var dayValues9 = {
   narrow: ["Н", "П", "А", "С", "Ч", "П", "С"],
@@ -2998,8 +2995,8 @@ var dayValues9 = {
     "серада",
     "чацвер",
     "пятніца",
-    "субота"
-  ]
+    "субота",
+  ],
 };
 var dayPeriodValues9 = {
   narrow: {
@@ -3010,7 +3007,7 @@ var dayPeriodValues9 = {
     morning: "ран.",
     afternoon: "дзень",
     evening: "веч.",
-    night: "ноч"
+    night: "ноч",
   },
   abbreviated: {
     am: "ДП",
@@ -3020,7 +3017,7 @@ var dayPeriodValues9 = {
     morning: "ран.",
     afternoon: "дзень",
     evening: "веч.",
-    night: "ноч"
+    night: "ноч",
   },
   wide: {
     am: "ДП",
@@ -3030,8 +3027,8 @@ var dayPeriodValues9 = {
     morning: "раніца",
     afternoon: "дзень",
     evening: "вечар",
-    night: "ноч"
-  }
+    night: "ноч",
+  },
 };
 var formattingDayPeriodValues9 = {
   narrow: {
@@ -3042,7 +3039,7 @@ var formattingDayPeriodValues9 = {
     morning: "ран.",
     afternoon: "дня",
     evening: "веч.",
-    night: "ночы"
+    night: "ночы",
   },
   abbreviated: {
     am: "ДП",
@@ -3052,7 +3049,7 @@ var formattingDayPeriodValues9 = {
     morning: "ран.",
     afternoon: "дня",
     evening: "веч.",
-    night: "ночы"
+    night: "ночы",
   },
   wide: {
     am: "ДП",
@@ -3062,8 +3059,8 @@ var formattingDayPeriodValues9 = {
     morning: "раніцы",
     afternoon: "дня",
     evening: "вечара",
-    night: "ночы"
-  }
+    night: "ночы",
+  },
 };
 var ordinalNumber9 = (dirtyNumber, options) => {
   const unit = String(options == null ? void 0 : options.unit);
@@ -3074,7 +3071,12 @@ var ordinalNumber9 = (dirtyNumber, options) => {
   } else if (unit === "hour" || unit === "minute" || unit === "second") {
     suffix = "-я";
   } else {
-    suffix = (number % 10 === 2 || number % 10 === 3) && number % 100 !== 12 && number % 100 !== 13 ? "-і" : "-ы";
+    suffix =
+      (number % 10 === 2 || number % 10 === 3) &&
+      number % 100 !== 12 &&
+      number % 100 !== 13
+        ? "-і"
+        : "-ы";
   }
   return number + suffix;
 };
@@ -3082,54 +3084,56 @@ var localize9 = {
   ordinalNumber: ordinalNumber9,
   era: buildLocalizeFn({
     values: eraValues9,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues9,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues9,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues9,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues9,
     defaultWidth: "any",
     formattingValues: formattingDayPeriodValues9,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/be/_lib/match.js
-var matchOrdinalNumberPattern9 = /^(\d+)(-?(е|я|га|і|ы|ае|ая|яя|шы|гі|ці|ты|мы))?/i;
+var matchOrdinalNumberPattern9 =
+  /^(\d+)(-?(е|я|га|і|ы|ае|ая|яя|шы|гі|ці|ты|мы))?/i;
 var parseOrdinalNumberPattern9 = /\d+/i;
 var matchEraPatterns9 = {
   narrow: /^((да )?н\.?\s?э\.?)/i,
   abbreviated: /^((да )?н\.?\s?э\.?)/i,
-  wide: /^(да нашай эры|нашай эры|наша эра)/i
+  wide: /^(да нашай эры|нашай эры|наша эра)/i,
 };
 var parseEraPatterns9 = {
-  any: [/^д/i, /^н/i]
+  any: [/^д/i, /^н/i],
 };
 var matchQuarterPatterns9 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?[ыі]?)? кв.?/i,
-  wide: /^[1234](-?[ыі]?)? квартал/i
+  wide: /^[1234](-?[ыі]?)? квартал/i,
 };
 var parseQuarterPatterns9 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns9 = {
   narrow: /^[слкмчжв]/i,
-  abbreviated: /^(студз|лют|сак|крас|ма[йя]|чэрв|ліп|жн|вер|кастр|ліст|снеж)\.?/i,
-  wide: /^(студзен[ья]|лют(ы|ага)|сакавіка?|красавіка?|ма[йя]|чэрвен[ья]|ліпен[ья]|жні(вень|ўня)|верас(ень|ня)|кастрычніка?|лістапада?|снеж(ань|ня))/i
+  abbreviated:
+    /^(студз|лют|сак|крас|ма[йя]|чэрв|ліп|жн|вер|кастр|ліст|снеж)\.?/i,
+  wide: /^(студзен[ья]|лют(ы|ага)|сакавіка?|красавіка?|ма[йя]|чэрвен[ья]|ліпен[ья]|жні(вень|ўня)|верас(ень|ня)|кастрычніка?|лістапада?|снеж(ань|ня))/i,
 };
 var parseMonthPatterns9 = {
   narrow: [
@@ -3144,7 +3148,7 @@ var parseMonthPatterns9 = {
     /^в/i,
     /^к/i,
     /^л/i,
-    /^с/i
+    /^с/i,
   ],
   any: [
     /^ст/i,
@@ -3158,23 +3162,23 @@ var parseMonthPatterns9 = {
     /^в/i,
     /^ка/i,
     /^ліс/i,
-    /^сн/i
-  ]
+    /^сн/i,
+  ],
 };
 var matchDayPatterns9 = {
   narrow: /^[нпасч]/i,
   short: /^(нд|ня|пн|па|аў|ат|ср|се|чц|ча|пт|пя|сб|су)\.?/i,
   abbreviated: /^(нядз?|ндз|пнд|пан|аўт|срд|сер|чцв|чац|птн|пят|суб).?/i,
-  wide: /^(нядзел[яі]|панядзел(ак|ка)|аўтор(ак|ка)|серад[аы]|чацв(ер|ярга)|пятніц[аы]|субот[аы])/i
+  wide: /^(нядзел[яі]|панядзел(ак|ка)|аўтор(ак|ка)|серад[аы]|чацв(ер|ярга)|пятніц[аы]|субот[аы])/i,
 };
 var parseDayPatterns9 = {
   narrow: [/^н/i, /^п/i, /^а/i, /^с/i, /^ч/i, /^п/i, /^с/i],
-  any: [/^н/i, /^п[ан]/i, /^а/i, /^с[ер]/i, /^ч/i, /^п[ят]/i, /^с[уб]/i]
+  any: [/^н/i, /^п[ан]/i, /^а/i, /^с[ер]/i, /^ч/i, /^п[ят]/i, /^с[уб]/i],
 };
 var matchDayPeriodPatterns9 = {
   narrow: /^([дп]п|поўн\.?|поўд\.?|ран\.?|дзень|дня|веч\.?|ночы?)/i,
   abbreviated: /^([дп]п|поўн\.?|поўд\.?|ран\.?|дзень|дня|веч\.?|ночы?)/i,
-  wide: /^([дп]п|поўнач|поўдзень|раніц[аы]|дзень|дня|вечара?|ночы?)/i
+  wide: /^([дп]п|поўнач|поўдзень|раніц[аы]|дзень|дня|вечара?|ночы?)/i,
 };
 var parseDayPeriodPatterns9 = {
   any: {
@@ -3185,46 +3189,46 @@ var parseDayPeriodPatterns9 = {
     morning: /^р/i,
     afternoon: /^д[зн]/i,
     evening: /^в/i,
-    night: /^н/i
-  }
+    night: /^н/i,
+  },
 };
 var match9 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern9,
     parsePattern: parseOrdinalNumberPattern9,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns9,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns9,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns9,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns9,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns9,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns9,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns9,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns9,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns9,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPeriodPatterns9,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/be-tarask/_lib/formatDistance.js
@@ -3279,31 +3283,31 @@ var formatDistanceLocale2 = {
       one: "менш за секунду",
       singularNominative: "менш за {{count}} секунду",
       singularGenitive: "менш за {{count}} секунды",
-      pluralGenitive: "менш за {{count}} секунд"
+      pluralGenitive: "менш за {{count}} секунд",
     },
     future: {
       one: "менш, чым праз секунду",
       singularNominative: "менш, чым праз {{count}} секунду",
       singularGenitive: "менш, чым праз {{count}} секунды",
-      pluralGenitive: "менш, чым праз {{count}} секунд"
-    }
+      pluralGenitive: "менш, чым праз {{count}} секунд",
+    },
   }),
   xSeconds: buildLocalizeTokenFn2({
     regular: {
       singularNominative: "{{count}} секунда",
       singularGenitive: "{{count}} секунды",
-      pluralGenitive: "{{count}} секунд"
+      pluralGenitive: "{{count}} секунд",
     },
     past: {
       singularNominative: "{{count}} секунду таму",
       singularGenitive: "{{count}} секунды таму",
-      pluralGenitive: "{{count}} секунд таму"
+      pluralGenitive: "{{count}} секунд таму",
     },
     future: {
       singularNominative: "праз {{count}} секунду",
       singularGenitive: "праз {{count}} секунды",
-      pluralGenitive: "праз {{count}} секунд"
-    }
+      pluralGenitive: "праз {{count}} секунд",
+    },
   }),
   halfAMinute: halfAMinute2,
   lessThanXMinutes: buildLocalizeTokenFn2({
@@ -3311,149 +3315,149 @@ var formatDistanceLocale2 = {
       one: "менш за хвіліну",
       singularNominative: "менш за {{count}} хвіліну",
       singularGenitive: "менш за {{count}} хвіліны",
-      pluralGenitive: "менш за {{count}} хвілін"
+      pluralGenitive: "менш за {{count}} хвілін",
     },
     future: {
       one: "менш, чым праз хвіліну",
       singularNominative: "менш, чым праз {{count}} хвіліну",
       singularGenitive: "менш, чым праз {{count}} хвіліны",
-      pluralGenitive: "менш, чым праз {{count}} хвілін"
-    }
+      pluralGenitive: "менш, чым праз {{count}} хвілін",
+    },
   }),
   xMinutes: buildLocalizeTokenFn2({
     regular: {
       singularNominative: "{{count}} хвіліна",
       singularGenitive: "{{count}} хвіліны",
-      pluralGenitive: "{{count}} хвілін"
+      pluralGenitive: "{{count}} хвілін",
     },
     past: {
       singularNominative: "{{count}} хвіліну таму",
       singularGenitive: "{{count}} хвіліны таму",
-      pluralGenitive: "{{count}} хвілін таму"
+      pluralGenitive: "{{count}} хвілін таму",
     },
     future: {
       singularNominative: "праз {{count}} хвіліну",
       singularGenitive: "праз {{count}} хвіліны",
-      pluralGenitive: "праз {{count}} хвілін"
-    }
+      pluralGenitive: "праз {{count}} хвілін",
+    },
   }),
   aboutXHours: buildLocalizeTokenFn2({
     regular: {
       singularNominative: "каля {{count}} гадзіны",
       singularGenitive: "каля {{count}} гадзін",
-      pluralGenitive: "каля {{count}} гадзін"
+      pluralGenitive: "каля {{count}} гадзін",
     },
     future: {
       singularNominative: "прыблізна праз {{count}} гадзіну",
       singularGenitive: "прыблізна праз {{count}} гадзіны",
-      pluralGenitive: "прыблізна праз {{count}} гадзін"
-    }
+      pluralGenitive: "прыблізна праз {{count}} гадзін",
+    },
   }),
   xHours: buildLocalizeTokenFn2({
     regular: {
       singularNominative: "{{count}} гадзіна",
       singularGenitive: "{{count}} гадзіны",
-      pluralGenitive: "{{count}} гадзін"
+      pluralGenitive: "{{count}} гадзін",
     },
     past: {
       singularNominative: "{{count}} гадзіну таму",
       singularGenitive: "{{count}} гадзіны таму",
-      pluralGenitive: "{{count}} гадзін таму"
+      pluralGenitive: "{{count}} гадзін таму",
     },
     future: {
       singularNominative: "праз {{count}} гадзіну",
       singularGenitive: "праз {{count}} гадзіны",
-      pluralGenitive: "праз {{count}} гадзін"
-    }
+      pluralGenitive: "праз {{count}} гадзін",
+    },
   }),
   xDays: buildLocalizeTokenFn2({
     regular: {
       singularNominative: "{{count}} дзень",
       singularGenitive: "{{count}} дні",
-      pluralGenitive: "{{count}} дзён"
-    }
+      pluralGenitive: "{{count}} дзён",
+    },
   }),
   aboutXWeeks: buildLocalizeTokenFn2({
     regular: {
       singularNominative: "каля {{count}} тыдні",
       singularGenitive: "каля {{count}} тыдняў",
-      pluralGenitive: "каля {{count}} тыдняў"
+      pluralGenitive: "каля {{count}} тыдняў",
     },
     future: {
       singularNominative: "прыблізна праз {{count}} тыдзень",
       singularGenitive: "прыблізна праз {{count}} тыдні",
-      pluralGenitive: "прыблізна праз {{count}} тыдняў"
-    }
+      pluralGenitive: "прыблізна праз {{count}} тыдняў",
+    },
   }),
   xWeeks: buildLocalizeTokenFn2({
     regular: {
       singularNominative: "{{count}} тыдзень",
       singularGenitive: "{{count}} тыдні",
-      pluralGenitive: "{{count}} тыдняў"
-    }
+      pluralGenitive: "{{count}} тыдняў",
+    },
   }),
   aboutXMonths: buildLocalizeTokenFn2({
     regular: {
       singularNominative: "каля {{count}} месяца",
       singularGenitive: "каля {{count}} месяцаў",
-      pluralGenitive: "каля {{count}} месяцаў"
+      pluralGenitive: "каля {{count}} месяцаў",
     },
     future: {
       singularNominative: "прыблізна праз {{count}} месяц",
       singularGenitive: "прыблізна праз {{count}} месяцы",
-      pluralGenitive: "прыблізна праз {{count}} месяцаў"
-    }
+      pluralGenitive: "прыблізна праз {{count}} месяцаў",
+    },
   }),
   xMonths: buildLocalizeTokenFn2({
     regular: {
       singularNominative: "{{count}} месяц",
       singularGenitive: "{{count}} месяцы",
-      pluralGenitive: "{{count}} месяцаў"
-    }
+      pluralGenitive: "{{count}} месяцаў",
+    },
   }),
   aboutXYears: buildLocalizeTokenFn2({
     regular: {
       singularNominative: "каля {{count}} года",
       singularGenitive: "каля {{count}} гадоў",
-      pluralGenitive: "каля {{count}} гадоў"
+      pluralGenitive: "каля {{count}} гадоў",
     },
     future: {
       singularNominative: "прыблізна праз {{count}} год",
       singularGenitive: "прыблізна праз {{count}} гады",
-      pluralGenitive: "прыблізна праз {{count}} гадоў"
-    }
+      pluralGenitive: "прыблізна праз {{count}} гадоў",
+    },
   }),
   xYears: buildLocalizeTokenFn2({
     regular: {
       singularNominative: "{{count}} год",
       singularGenitive: "{{count}} гады",
-      pluralGenitive: "{{count}} гадоў"
-    }
+      pluralGenitive: "{{count}} гадоў",
+    },
   }),
   overXYears: buildLocalizeTokenFn2({
     regular: {
       singularNominative: "больш за {{count}} год",
       singularGenitive: "больш за {{count}} гады",
-      pluralGenitive: "больш за {{count}} гадоў"
+      pluralGenitive: "больш за {{count}} гадоў",
     },
     future: {
       singularNominative: "больш, чым праз {{count}} год",
       singularGenitive: "больш, чым праз {{count}} гады",
-      pluralGenitive: "больш, чым праз {{count}} гадоў"
-    }
+      pluralGenitive: "больш, чым праз {{count}} гадоў",
+    },
   }),
   almostXYears: buildLocalizeTokenFn2({
     regular: {
       singularNominative: "амаль {{count}} год",
       singularGenitive: "амаль {{count}} гады",
-      pluralGenitive: "амаль {{count}} гадоў"
+      pluralGenitive: "амаль {{count}} гадоў",
     },
     future: {
       singularNominative: "амаль праз {{count}} год",
       singularGenitive: "амаль праз {{count}} гады",
-      pluralGenitive: "амаль праз {{count}} гадоў"
-    }
-  })
+      pluralGenitive: "амаль праз {{count}} гадоў",
+    },
+  }),
 };
 
 // node_modules/date-fns/locale/be-tarask/_lib/formatLong.js
@@ -3461,42 +3465,42 @@ var dateFormats10 = {
   full: "EEEE, d MMMM y 'г.'",
   long: "d MMMM y 'г.'",
   medium: "d MMM y 'г.'",
-  short: "dd.MM.y"
+  short: "dd.MM.y",
 };
 var timeFormats10 = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats10 = {
-  any: "{{date}}, {{time}}"
+  any: "{{date}}, {{time}}",
 };
 var formatLong10 = {
   date: buildFormatLongFn({
     formats: dateFormats10,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats10,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats10,
-    defaultWidth: "any"
-  })
+    defaultWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/be-tarask/_lib/localize.js
 var eraValues10 = {
   narrow: ["да н.э.", "н.э."],
   abbreviated: ["да н. э.", "н. э."],
-  wide: ["да нашай эры", "нашай эры"]
+  wide: ["да нашай эры", "нашай эры"],
 };
 var quarterValues10 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-ы кв.", "2-і кв.", "3-і кв.", "4-ы кв."],
-  wide: ["1-ы квартал", "2-і квартал", "3-і квартал", "4-ы квартал"]
+  wide: ["1-ы квартал", "2-і квартал", "3-і квартал", "4-ы квартал"],
 };
 var monthValues10 = {
   narrow: ["С", "Л", "С", "К", "Т", "Ч", "Л", "Ж", "В", "К", "Л", "С"],
@@ -3512,7 +3516,7 @@ var monthValues10 = {
     "вер.",
     "кастр.",
     "ліст.",
-    "сьнеж."
+    "сьнеж.",
   ],
   wide: [
     "студзень",
@@ -3526,8 +3530,8 @@ var monthValues10 = {
     "верасень",
     "кастрычнік",
     "лістапад",
-    "сьнежань"
-  ]
+    "сьнежань",
+  ],
 };
 var formattingMonthValues2 = {
   narrow: ["С", "Л", "С", "К", "Т", "Ч", "Л", "Ж", "В", "К", "Л", "С"],
@@ -3543,7 +3547,7 @@ var formattingMonthValues2 = {
     "вер.",
     "кастр.",
     "ліст.",
-    "сьнеж."
+    "сьнеж.",
   ],
   wide: [
     "студзеня",
@@ -3557,8 +3561,8 @@ var formattingMonthValues2 = {
     "верасня",
     "кастрычніка",
     "лістапада",
-    "сьнежня"
-  ]
+    "сьнежня",
+  ],
 };
 var dayValues10 = {
   narrow: ["Н", "П", "А", "С", "Ч", "П", "С"],
@@ -3571,8 +3575,8 @@ var dayValues10 = {
     "серада",
     "чацьвер",
     "пятніца",
-    "субота"
-  ]
+    "субота",
+  ],
 };
 var dayPeriodValues10 = {
   narrow: {
@@ -3583,7 +3587,7 @@ var dayPeriodValues10 = {
     morning: "ран.",
     afternoon: "дзень",
     evening: "веч.",
-    night: "ноч"
+    night: "ноч",
   },
   abbreviated: {
     am: "ДП",
@@ -3593,7 +3597,7 @@ var dayPeriodValues10 = {
     morning: "ран.",
     afternoon: "дзень",
     evening: "веч.",
-    night: "ноч"
+    night: "ноч",
   },
   wide: {
     am: "ДП",
@@ -3603,8 +3607,8 @@ var dayPeriodValues10 = {
     morning: "раніца",
     afternoon: "дзень",
     evening: "вечар",
-    night: "ноч"
-  }
+    night: "ноч",
+  },
 };
 var formattingDayPeriodValues10 = {
   narrow: {
@@ -3615,7 +3619,7 @@ var formattingDayPeriodValues10 = {
     morning: "ран.",
     afternoon: "дня",
     evening: "веч.",
-    night: "ночы"
+    night: "ночы",
   },
   abbreviated: {
     am: "ДП",
@@ -3625,7 +3629,7 @@ var formattingDayPeriodValues10 = {
     morning: "ран.",
     afternoon: "дня",
     evening: "веч.",
-    night: "ночы"
+    night: "ночы",
   },
   wide: {
     am: "ДП",
@@ -3635,8 +3639,8 @@ var formattingDayPeriodValues10 = {
     morning: "раніцы",
     afternoon: "дня",
     evening: "вечара",
-    night: "ночы"
-  }
+    night: "ночы",
+  },
 };
 var ordinalNumber10 = (dirtyNumber, options) => {
   const unit = String(options == null ? void 0 : options.unit);
@@ -3647,7 +3651,12 @@ var ordinalNumber10 = (dirtyNumber, options) => {
   } else if (unit === "hour" || unit === "minute" || unit === "second") {
     suffix = "-я";
   } else {
-    suffix = (number % 10 === 2 || number % 10 === 3) && number % 100 !== 12 && number % 100 !== 13 ? "-і" : "-ы";
+    suffix =
+      (number % 10 === 2 || number % 10 === 3) &&
+      number % 100 !== 12 &&
+      number % 100 !== 13
+        ? "-і"
+        : "-ы";
   }
   return number + suffix;
 };
@@ -3655,54 +3664,56 @@ var localize10 = {
   ordinalNumber: ordinalNumber10,
   era: buildLocalizeFn({
     values: eraValues10,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues10,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues10,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues2,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues10,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues10,
     defaultWidth: "any",
     formattingValues: formattingDayPeriodValues10,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/be-tarask/_lib/match.js
-var matchOrdinalNumberPattern10 = /^(\d+)(-?(е|я|га|і|ы|ае|ая|яя|шы|гі|ці|ты|мы))?/i;
+var matchOrdinalNumberPattern10 =
+  /^(\d+)(-?(е|я|га|і|ы|ае|ая|яя|шы|гі|ці|ты|мы))?/i;
 var parseOrdinalNumberPattern10 = /\d+/i;
 var matchEraPatterns10 = {
   narrow: /^((да )?н\.?\s?э\.?)/i,
   abbreviated: /^((да )?н\.?\s?э\.?)/i,
-  wide: /^(да нашай эры|нашай эры|наша эра)/i
+  wide: /^(да нашай эры|нашай эры|наша эра)/i,
 };
 var parseEraPatterns10 = {
-  any: [/^д/i, /^н/i]
+  any: [/^д/i, /^н/i],
 };
 var matchQuarterPatterns10 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?[ыі]?)? кв.?/i,
-  wide: /^[1234](-?[ыі]?)? квартал/i
+  wide: /^[1234](-?[ыі]?)? квартал/i,
 };
 var parseQuarterPatterns10 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns10 = {
   narrow: /^[слкмчжв]/i,
-  abbreviated: /^(студз|лют|сак|крас|тр(ав)?|чэрв|ліп|жн|вер|кастр|ліст|сьнеж)\.?/i,
-  wide: /^(студзен[ья]|лют(ы|ага)|сакавіка?|красавіка?|тра(вень|ўня)|чэрвен[ья]|ліпен[ья]|жні(вень|ўня)|верас(ень|ня)|кастрычніка?|лістапада?|сьнеж(ань|ня))/i
+  abbreviated:
+    /^(студз|лют|сак|крас|тр(ав)?|чэрв|ліп|жн|вер|кастр|ліст|сьнеж)\.?/i,
+  wide: /^(студзен[ья]|лют(ы|ага)|сакавіка?|красавіка?|тра(вень|ўня)|чэрвен[ья]|ліпен[ья]|жні(вень|ўня)|верас(ень|ня)|кастрычніка?|лістапада?|сьнеж(ань|ня))/i,
 };
 var parseMonthPatterns10 = {
   narrow: [
@@ -3717,7 +3728,7 @@ var parseMonthPatterns10 = {
     /^в/i,
     /^к/i,
     /^л/i,
-    /^с/i
+    /^с/i,
   ],
   any: [
     /^ст/i,
@@ -3731,23 +3742,23 @@ var parseMonthPatterns10 = {
     /^в/i,
     /^ка/i,
     /^ліс/i,
-    /^сн/i
-  ]
+    /^сн/i,
+  ],
 };
 var matchDayPatterns10 = {
   narrow: /^[нпасч]/i,
   short: /^(нд|ня|пн|па|аў|ат|ср|се|чц|ча|пт|пя|сб|су)\.?/i,
   abbreviated: /^(нядз?|ндз|пнд|пан|аўт|срд|сер|чцьв|чаць|птн|пят|суб).?/i,
-  wide: /^(нядзел[яі]|панядзел(ак|ка)|аўтор(ак|ка)|серад[аы]|чацьв(ер|ярга)|пятніц[аы]|субот[аы])/i
+  wide: /^(нядзел[яі]|панядзел(ак|ка)|аўтор(ак|ка)|серад[аы]|чацьв(ер|ярга)|пятніц[аы]|субот[аы])/i,
 };
 var parseDayPatterns10 = {
   narrow: [/^н/i, /^п/i, /^а/i, /^с/i, /^ч/i, /^п/i, /^с/i],
-  any: [/^н/i, /^п[ан]/i, /^а/i, /^с[ер]/i, /^ч/i, /^п[ят]/i, /^с[уб]/i]
+  any: [/^н/i, /^п[ан]/i, /^а/i, /^с[ер]/i, /^ч/i, /^п[ят]/i, /^с[уб]/i],
 };
 var matchDayPeriodPatterns10 = {
   narrow: /^([дп]п|поўн\.?|поўд\.?|ран\.?|дзень|дня|веч\.?|ночы?)/i,
   abbreviated: /^([дп]п|поўн\.?|поўд\.?|ран\.?|дзень|дня|веч\.?|ночы?)/i,
-  wide: /^([дп]п|поўнач|поўдзень|раніц[аы]|дзень|дня|вечара?|ночы?)/i
+  wide: /^([дп]п|поўнач|поўдзень|раніц[аы]|дзень|дня|вечара?|ночы?)/i,
 };
 var parseDayPeriodPatterns10 = {
   any: {
@@ -3758,46 +3769,46 @@ var parseDayPeriodPatterns10 = {
     morning: /^р/i,
     afternoon: /^д[зн]/i,
     evening: /^в/i,
-    night: /^н/i
-  }
+    night: /^н/i,
+  },
 };
 var match10 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern10,
     parsePattern: parseOrdinalNumberPattern10,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns10,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns10,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns10,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns10,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns10,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns10,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns10,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns10,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns10,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPeriodPatterns10,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/bg/_lib/formatLong.js
@@ -3805,37 +3816,37 @@ var dateFormats11 = {
   full: "EEEE, dd MMMM yyyy",
   long: "dd MMMM yyyy",
   medium: "dd MMM yyyy",
-  short: "dd.MM.yyyy"
+  short: "dd.MM.yyyy",
 };
 var timeFormats11 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats11 = {
-  any: "{{date}} {{time}}"
+  any: "{{date}} {{time}}",
 };
 var formatLong11 = {
   date: buildFormatLongFn({
     formats: dateFormats11,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats11,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats11,
-    defaultWidth: "any"
-  })
+    defaultWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/bg/_lib/localize.js
 var eraValues11 = {
   narrow: ["пр.н.е.", "н.е."],
   abbreviated: ["преди н. е.", "н. е."],
-  wide: ["преди новата ера", "новата ера"]
+  wide: ["преди новата ера", "новата ера"],
 };
 var quarterValues11 = {
   narrow: ["1", "2", "3", "4"],
@@ -3844,8 +3855,8 @@ var quarterValues11 = {
     "1-во тримесечие",
     "2-ро тримесечие",
     "3-то тримесечие",
-    "4-то тримесечие"
-  ]
+    "4-то тримесечие",
+  ],
 };
 var monthValues11 = {
   abbreviated: [
@@ -3860,7 +3871,7 @@ var monthValues11 = {
     "сеп",
     "окт",
     "ное",
-    "дек"
+    "дек",
   ],
   wide: [
     "януари",
@@ -3874,8 +3885,8 @@ var monthValues11 = {
     "септември",
     "октомври",
     "ноември",
-    "декември"
-  ]
+    "декември",
+  ],
 };
 var dayValues11 = {
   narrow: ["Н", "П", "В", "С", "Ч", "П", "С"],
@@ -3888,8 +3899,8 @@ var dayValues11 = {
     "сряда",
     "четвъртък",
     "петък",
-    "събота"
-  ]
+    "събота",
+  ],
 };
 var dayPeriodValues11 = {
   wide: {
@@ -3900,17 +3911,23 @@ var dayPeriodValues11 = {
     morning: "сутринта",
     afternoon: "следобед",
     evening: "вечерта",
-    night: "през нощта"
-  }
+    night: "през нощта",
+  },
 };
 function isFeminine(unit) {
-  return unit === "year" || unit === "week" || unit === "minute" || unit === "second";
+  return (
+    unit === "year" || unit === "week" || unit === "minute" || unit === "second"
+  );
 }
 function isNeuter(unit) {
   return unit === "quarter";
 }
 function numberWithSuffix(number, unit, masculine, feminine, neuter) {
-  const suffix = isNeuter(unit) ? neuter : isFeminine(unit) ? feminine : masculine;
+  const suffix = isNeuter(unit)
+    ? neuter
+    : isFeminine(unit)
+      ? feminine
+      : masculine;
   return number + "-" + suffix;
 }
 var ordinalNumber11 = (dirtyNumber, options) => {
@@ -3941,59 +3958,60 @@ var localize11 = {
   ordinalNumber: ordinalNumber11,
   era: buildLocalizeFn({
     values: eraValues11,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues11,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues11,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues11,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues11,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/bg/_lib/match.js
-var matchOrdinalNumberPattern11 = /^(\d+)(-?[врмт][аи]|-?т?(ен|на)|-?(ев|ева))?/i;
+var matchOrdinalNumberPattern11 =
+  /^(\d+)(-?[врмт][аи]|-?т?(ен|на)|-?(ев|ева))?/i;
 var parseOrdinalNumberPattern11 = /\d+/i;
 var matchEraPatterns11 = {
   narrow: /^((пр)?н\.?\s?е\.?)/i,
   abbreviated: /^((пр)?н\.?\s?е\.?)/i,
-  wide: /^(преди новата ера|новата ера|нова ера)/i
+  wide: /^(преди новата ера|новата ера|нова ера)/i,
 };
 var parseEraPatterns11 = {
-  any: [/^п/i, /^н/i]
+  any: [/^п/i, /^н/i],
 };
 var matchQuarterPatterns11 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?[врт]?o?)? тримес.?/i,
-  wide: /^[1234](-?[врт]?о?)? тримесечие/i
+  wide: /^[1234](-?[врт]?о?)? тримесечие/i,
 };
 var parseQuarterPatterns11 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchDayPatterns11 = {
   narrow: /^[нпвсч]/i,
   short: /^(нд|пн|вт|ср|чт|пт|сб)/i,
   abbreviated: /^(нед|пон|вто|сря|чет|пет|съб)/i,
-  wide: /^(неделя|понеделник|вторник|сряда|четвъртък|петък|събота)/i
+  wide: /^(неделя|понеделник|вторник|сряда|четвъртък|петък|събота)/i,
 };
 var parseDayPatterns11 = {
   narrow: [/^н/i, /^п/i, /^в/i, /^с/i, /^ч/i, /^п/i, /^с/i],
-  any: [/^н[ед]/i, /^п[он]/i, /^вт/i, /^ср/i, /^ч[ет]/i, /^п[ет]/i, /^с[ъб]/i]
+  any: [/^н[ед]/i, /^п[он]/i, /^вт/i, /^ср/i, /^ч[ет]/i, /^п[ет]/i, /^с[ъб]/i],
 };
 var matchMonthPatterns11 = {
   abbreviated: /^(яну|фев|мар|апр|май|юни|юли|авг|сеп|окт|ное|дек)/i,
-  wide: /^(януари|февруари|март|април|май|юни|юли|август|септември|октомври|ноември|декември)/i
+  wide: /^(януари|февруари|март|април|май|юни|юли|август|септември|октомври|ноември|декември)/i,
 };
 var parseMonthPatterns11 = {
   any: [
@@ -4008,11 +4026,11 @@ var parseMonthPatterns11 = {
     /^се/i,
     /^окт/i,
     /^но/i,
-    /^де/i
-  ]
+    /^де/i,
+  ],
 };
 var matchDayPeriodPatterns11 = {
-  any: /^(преди о|след о|в по|на о|през|веч|сут|следо)/i
+  any: /^(преди о|след о|в по|на о|през|веч|сут|следо)/i,
 };
 var parseDayPeriodPatterns11 = {
   any: {
@@ -4023,46 +4041,46 @@ var parseDayPeriodPatterns11 = {
     morning: /^сут/i,
     afternoon: /^следо/i,
     evening: /^веч/i,
-    night: /^през н/i
-  }
+    night: /^през н/i,
+  },
 };
 var match11 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern11,
     parsePattern: parseOrdinalNumberPattern11,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns11,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns11,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns11,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns11,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns11,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns11,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns11,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns11,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns11,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns11,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/bn/_lib/localize.js
@@ -4077,7 +4095,7 @@ var numberValues = {
     7: "৭",
     8: "৮",
     9: "৯",
-    0: "০"
+    0: "০",
   },
   number: {
     "১": "1",
@@ -4089,18 +4107,18 @@ var numberValues = {
     "৭": "7",
     "৮": "8",
     "৯": "9",
-    "০": "0"
-  }
+    "০": "0",
+  },
 };
 var eraValues12 = {
   narrow: ["খ্রিঃপূঃ", "খ্রিঃ"],
   abbreviated: ["খ্রিঃপূর্ব", "খ্রিঃ"],
-  wide: ["খ্রিস্টপূর্ব", "খ্রিস্টাব্দ"]
+  wide: ["খ্রিস্টপূর্ব", "খ্রিস্টাব্দ"],
 };
 var quarterValues12 = {
   narrow: ["১", "২", "৩", "৪"],
   abbreviated: ["১ত্রৈ", "২ত্রৈ", "৩ত্রৈ", "৪ত্রৈ"],
-  wide: ["১ম ত্রৈমাসিক", "২য় ত্রৈমাসিক", "৩য় ত্রৈমাসিক", "৪র্থ ত্রৈমাসিক"]
+  wide: ["১ম ত্রৈমাসিক", "২য় ত্রৈমাসিক", "৩য় ত্রৈমাসিক", "৪র্থ ত্রৈমাসিক"],
 };
 var monthValues12 = {
   narrow: [
@@ -4115,7 +4133,7 @@ var monthValues12 = {
     "সেপ্ট",
     "অক্টো",
     "নভে",
-    "ডিসে"
+    "ডিসে",
   ],
   abbreviated: [
     "জানু",
@@ -4129,7 +4147,7 @@ var monthValues12 = {
     "সেপ্ট",
     "অক্টো",
     "নভে",
-    "ডিসে"
+    "ডিসে",
   ],
   wide: [
     "জানুয়ারি",
@@ -4143,8 +4161,8 @@ var monthValues12 = {
     "সেপ্টেম্বর",
     "অক্টোবর",
     "নভেম্বর",
-    "ডিসেম্বর"
-  ]
+    "ডিসেম্বর",
+  ],
 };
 var dayValues12 = {
   narrow: ["র", "সো", "ম", "বু", "বৃ", "শু", "শ"],
@@ -4157,8 +4175,8 @@ var dayValues12 = {
     "বুধবার",
     "বৃহস্পতিবার ",
     "শুক্রবার",
-    "শনিবার"
-  ]
+    "শনিবার",
+  ],
 };
 var dayPeriodValues12 = {
   narrow: {
@@ -4169,7 +4187,7 @@ var dayPeriodValues12 = {
     morning: "সকাল",
     afternoon: "বিকাল",
     evening: "সন্ধ্যা",
-    night: "রাত"
+    night: "রাত",
   },
   abbreviated: {
     am: "পূর্বাহ্ন",
@@ -4179,7 +4197,7 @@ var dayPeriodValues12 = {
     morning: "সকাল",
     afternoon: "বিকাল",
     evening: "সন্ধ্যা",
-    night: "রাত"
+    night: "রাত",
   },
   wide: {
     am: "পূর্বাহ্ন",
@@ -4189,8 +4207,8 @@ var dayPeriodValues12 = {
     morning: "সকাল",
     afternoon: "বিকাল",
     evening: "সন্ধ্যা",
-    night: "রাত"
-  }
+    night: "রাত",
+  },
 };
 var formattingDayPeriodValues11 = {
   narrow: {
@@ -4201,7 +4219,7 @@ var formattingDayPeriodValues11 = {
     morning: "সকাল",
     afternoon: "বিকাল",
     evening: "সন্ধ্যা",
-    night: "রাত"
+    night: "রাত",
   },
   abbreviated: {
     am: "পূর্বাহ্ন",
@@ -4211,7 +4229,7 @@ var formattingDayPeriodValues11 = {
     morning: "সকাল",
     afternoon: "বিকাল",
     evening: "সন্ধ্যা",
-    night: "রাত"
+    night: "রাত",
   },
   wide: {
     am: "পূর্বাহ্ন",
@@ -4221,8 +4239,8 @@ var formattingDayPeriodValues11 = {
     morning: "সকাল",
     afternoon: "বিকাল",
     evening: "সন্ধ্যা",
-    night: "রাত"
-  }
+    night: "রাত",
+  },
 };
 function dateOrdinalNumber(number, localeNumber) {
   if (number > 18 && number <= 31) {
@@ -4263,7 +4281,7 @@ var ordinalNumber12 = (dirtyNumber, options) => {
   }
 };
 function numberToLocale(enNumber) {
-  return enNumber.toString().replace(/\d/g, function(match85) {
+  return enNumber.toString().replace(/\d/g, function (match85) {
     return numberValues.locale[match85];
   });
 }
@@ -4271,27 +4289,27 @@ var localize12 = {
   ordinalNumber: ordinalNumber12,
   era: buildLocalizeFn({
     values: eraValues12,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues12,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues12,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues12,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues12,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues11,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/bn/_lib/formatLong.js
@@ -4299,33 +4317,33 @@ var dateFormats12 = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
-  short: "MM/dd/yyyy"
+  short: "MM/dd/yyyy",
 };
 var timeFormats12 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats12 = {
   full: "{{date}} {{time}} 'সময়'",
   long: "{{date}} {{time}} 'সময়'",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong12 = {
   date: buildFormatLongFn({
     formats: dateFormats12,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats12,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats12,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/bn/_lib/match.js
@@ -4334,25 +4352,27 @@ var parseOrdinalNumberPattern12 = /\d+/i;
 var matchEraPatterns12 = {
   narrow: /^(খ্রিঃপূঃ|খ্রিঃ)/i,
   abbreviated: /^(খ্রিঃপূর্ব|খ্রিঃ)/i,
-  wide: /^(খ্রিস্টপূর্ব|খ্রিস্টাব্দ)/i
+  wide: /^(খ্রিস্টপূর্ব|খ্রিস্টাব্দ)/i,
 };
 var parseEraPatterns12 = {
   narrow: [/^খ্রিঃপূঃ/i, /^খ্রিঃ/i],
   abbreviated: [/^খ্রিঃপূর্ব/i, /^খ্রিঃ/i],
-  wide: [/^খ্রিস্টপূর্ব/i, /^খ্রিস্টাব্দ/i]
+  wide: [/^খ্রিস্টপূর্ব/i, /^খ্রিস্টাব্দ/i],
 };
 var matchQuarterPatterns12 = {
   narrow: /^[১২৩৪]/i,
   abbreviated: /^[১২৩৪]ত্রৈ/i,
-  wide: /^[১২৩৪](ম|য়|র্থ)? ত্রৈমাসিক/i
+  wide: /^[১২৩৪](ম|য়|র্থ)? ত্রৈমাসিক/i,
 };
 var parseQuarterPatterns12 = {
-  any: [/১/i, /২/i, /৩/i, /৪/i]
+  any: [/১/i, /২/i, /৩/i, /৪/i],
 };
 var matchMonthPatterns12 = {
-  narrow: /^(জানু|ফেব্রু|মার্চ|এপ্রিল|মে|জুন|জুলাই|আগস্ট|সেপ্ট|অক্টো|নভে|ডিসে)/i,
-  abbreviated: /^(জানু|ফেব্রু|মার্চ|এপ্রিল|মে|জুন|জুলাই|আগস্ট|সেপ্ট|অক্টো|নভে|ডিসে)/i,
-  wide: /^(জানুয়ারি|ফেব্রুয়ারি|মার্চ|এপ্রিল|মে|জুন|জুলাই|আগস্ট|সেপ্টেম্বর|অক্টোবর|নভেম্বর|ডিসেম্বর)/i
+  narrow:
+    /^(জানু|ফেব্রু|মার্চ|এপ্রিল|মে|জুন|জুলাই|আগস্ট|সেপ্ট|অক্টো|নভে|ডিসে)/i,
+  abbreviated:
+    /^(জানু|ফেব্রু|মার্চ|এপ্রিল|মে|জুন|জুলাই|আগস্ট|সেপ্ট|অক্টো|নভে|ডিসে)/i,
+  wide: /^(জানুয়ারি|ফেব্রুয়ারি|মার্চ|এপ্রিল|মে|জুন|জুলাই|আগস্ট|সেপ্টেম্বর|অক্টোবর|নভেম্বর|ডিসেম্বর)/i,
 };
 var parseMonthPatterns12 = {
   any: [
@@ -4367,14 +4387,14 @@ var parseMonthPatterns12 = {
     /^সেপ্ট/i,
     /^অক্টো/i,
     /^নভে/i,
-    /^ডিসে/i
-  ]
+    /^ডিসে/i,
+  ],
 };
 var matchDayPatterns12 = {
   narrow: /^(র|সো|ম|বু|বৃ|শু|শ)+/i,
   short: /^(রবি|সোম|মঙ্গল|বুধ|বৃহ|শুক্র|শনি)+/i,
   abbreviated: /^(রবি|সোম|মঙ্গল|বুধ|বৃহ|শুক্র|শনি)+/i,
-  wide: /^(রবিবার|সোমবার|মঙ্গলবার|বুধবার|বৃহস্পতিবার |শুক্রবার|শনিবার)+/i
+  wide: /^(রবিবার|সোমবার|মঙ্গলবার|বুধবার|বৃহস্পতিবার |শুক্রবার|শনিবার)+/i,
 };
 var parseDayPatterns12 = {
   narrow: [/^র/i, /^সো/i, /^ম/i, /^বু/i, /^বৃ/i, /^শু/i, /^শ/i],
@@ -4386,7 +4406,7 @@ var parseDayPatterns12 = {
     /^বুধ/i,
     /^বৃহ/i,
     /^শুক্র/i,
-    /^শনি/i
+    /^শনি/i,
   ],
   wide: [
     /^রবিবার/i,
@@ -4395,13 +4415,13 @@ var parseDayPatterns12 = {
     /^বুধবার/i,
     /^বৃহস্পতিবার /i,
     /^শুক্রবার/i,
-    /^শনিবার/i
-  ]
+    /^শনিবার/i,
+  ],
 };
 var matchDayPeriodPatterns12 = {
   narrow: /^(পূ|অপ|মধ্যরাত|মধ্যাহ্ন|সকাল|বিকাল|সন্ধ্যা|রাত)/i,
   abbreviated: /^(পূর্বাহ্ন|অপরাহ্ন|মধ্যরাত|মধ্যাহ্ন|সকাল|বিকাল|সন্ধ্যা|রাত)/i,
-  wide: /^(পূর্বাহ্ন|অপরাহ্ন|মধ্যরাত|মধ্যাহ্ন|সকাল|বিকাল|সন্ধ্যা|রাত)/i
+  wide: /^(পূর্বাহ্ন|অপরাহ্ন|মধ্যরাত|মধ্যাহ্ন|সকাল|বিকাল|সন্ধ্যা|রাত)/i,
 };
 var parseDayPeriodPatterns12 = {
   any: {
@@ -4412,46 +4432,46 @@ var parseDayPeriodPatterns12 = {
     morning: /সকাল/i,
     afternoon: /বিকাল/i,
     evening: /সন্ধ্যা/i,
-    night: /রাত/i
-  }
+    night: /রাত/i,
+  },
 };
 var match12 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern12,
     parsePattern: parseOrdinalNumberPattern12,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns12,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns12,
-    defaultParseWidth: "wide"
+    defaultParseWidth: "wide",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns12,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns12,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns12,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns12,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns12,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns12,
-    defaultParseWidth: "wide"
+    defaultParseWidth: "wide",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns12,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPeriodPatterns12,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/bs/_lib/formatLong.js
@@ -4459,45 +4479,45 @@ var dateFormats13 = {
   full: "EEEE, d. MMMM yyyy.",
   long: "d. MMMM yyyy.",
   medium: "d. MMM yy.",
-  short: "dd. MM. yy."
+  short: "dd. MM. yy.",
 };
 var timeFormats13 = {
   full: "HH:mm:ss (zzzz)",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats13 = {
   full: "{{date}} 'u' {{time}}",
   long: "{{date}} 'u' {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong13 = {
   date: buildFormatLongFn({
     formats: dateFormats13,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats13,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats13,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/bs/_lib/localize.js
 var eraValues13 = {
   narrow: ["pr.n.e.", "AD"],
   abbreviated: ["pr. Hr.", "po. Hr."],
-  wide: ["Prije Hrista", "Poslije Hrista"]
+  wide: ["Prije Hrista", "Poslije Hrista"],
 };
 var quarterValues13 = {
   narrow: ["1.", "2.", "3.", "4."],
   abbreviated: ["1. kv.", "2. kv.", "3. kv.", "4. kv."],
-  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
+  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"],
 };
 var monthValues13 = {
   narrow: [
@@ -4512,7 +4532,7 @@ var monthValues13 = {
     "9.",
     "10.",
     "11.",
-    "12."
+    "12.",
   ],
   abbreviated: [
     "jan",
@@ -4526,7 +4546,7 @@ var monthValues13 = {
     "sep",
     "okt",
     "nov",
-    "dec"
+    "dec",
   ],
   wide: [
     "januar",
@@ -4540,8 +4560,8 @@ var monthValues13 = {
     "septembar",
     "oktobar",
     "novembar",
-    "decembar"
-  ]
+    "decembar",
+  ],
 };
 var formattingMonthValues3 = {
   narrow: [
@@ -4556,7 +4576,7 @@ var formattingMonthValues3 = {
     "9.",
     "10.",
     "11.",
-    "12."
+    "12.",
   ],
   abbreviated: [
     "jan",
@@ -4570,7 +4590,7 @@ var formattingMonthValues3 = {
     "sep",
     "okt",
     "nov",
-    "dec"
+    "dec",
   ],
   wide: [
     "januar",
@@ -4584,8 +4604,8 @@ var formattingMonthValues3 = {
     "septembar",
     "oktobar",
     "novembar",
-    "decembar"
-  ]
+    "decembar",
+  ],
 };
 var dayValues13 = {
   narrow: ["N", "P", "U", "S", "Č", "P", "S"],
@@ -4598,8 +4618,8 @@ var dayValues13 = {
     "srijeda",
     "četvrtak",
     "petak",
-    "subota"
-  ]
+    "subota",
+  ],
 };
 var dayPeriodValues13 = {
   narrow: {
@@ -4610,7 +4630,7 @@ var dayPeriodValues13 = {
     morning: "ujutru",
     afternoon: "popodne",
     evening: "uveče",
-    night: "noću"
+    night: "noću",
   },
   abbreviated: {
     am: "AM",
@@ -4620,7 +4640,7 @@ var dayPeriodValues13 = {
     morning: "ujutru",
     afternoon: "popodne",
     evening: "uveče",
-    night: "noću"
+    night: "noću",
   },
   wide: {
     am: "AM",
@@ -4630,8 +4650,8 @@ var dayPeriodValues13 = {
     morning: "ujutru",
     afternoon: "poslije podne",
     evening: "uveče",
-    night: "noću"
-  }
+    night: "noću",
+  },
 };
 var formattingDayPeriodValues12 = {
   narrow: {
@@ -4642,7 +4662,7 @@ var formattingDayPeriodValues12 = {
     morning: "ujutru",
     afternoon: "popodne",
     evening: "uveče",
-    night: "noću"
+    night: "noću",
   },
   abbreviated: {
     am: "AM",
@@ -4652,7 +4672,7 @@ var formattingDayPeriodValues12 = {
     morning: "ujutru",
     afternoon: "popodne",
     evening: "uveče",
-    night: "noću"
+    night: "noću",
   },
   wide: {
     am: "AM",
@@ -4662,8 +4682,8 @@ var formattingDayPeriodValues12 = {
     morning: "ujutru",
     afternoon: "poslije podne",
     evening: "uveče",
-    night: "noću"
-  }
+    night: "noću",
+  },
 };
 var ordinalNumber13 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -4673,29 +4693,29 @@ var localize13 = {
   ordinalNumber: ordinalNumber13,
   era: buildLocalizeFn({
     values: eraValues13,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues13,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues13,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues3,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues13,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues13,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues12,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/bs/_lib/match.js
@@ -4704,23 +4724,23 @@ var parseOrdinalNumberPattern13 = /\d+/i;
 var matchEraPatterns13 = {
   narrow: /^(pr\.n\.e\.|AD)/i,
   abbreviated: /^(pr\.\s?Hr\.|po\.\s?Hr\.)/i,
-  wide: /^(Prije Hrista|prije nove ere|Poslije Hrista|nova era)/i
+  wide: /^(Prije Hrista|prije nove ere|Poslije Hrista|nova era)/i,
 };
 var parseEraPatterns13 = {
-  any: [/^pr/i, /^(po|nova)/i]
+  any: [/^pr/i, /^(po|nova)/i],
 };
 var matchQuarterPatterns13 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]\.\s?kv\.?/i,
-  wide: /^[1234]\. kvartal/i
+  wide: /^[1234]\. kvartal/i,
 };
 var parseQuarterPatterns13 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns13 = {
   narrow: /^(10|11|12|[123456789])\./i,
   abbreviated: /^(jan|feb|mar|apr|maj|jun|jul|avg|sep|okt|nov|dec)/i,
-  wide: /^((januar|januara)|(februar|februara)|(mart|marta)|(april|aprila)|(maj|maja)|(juni|juna)|(juli|jula)|(avgust|avgusta)|(septembar|septembra)|(oktobar|oktobra)|(novembar|novembra)|(decembar|decembra))/i
+  wide: /^((januar|januara)|(februar|februara)|(mart|marta)|(april|aprila)|(maj|maja)|(juni|juna)|(juli|jula)|(avgust|avgusta)|(septembar|septembra)|(oktobar|oktobra)|(novembar|novembra)|(decembar|decembra))/i,
 };
 var parseMonthPatterns13 = {
   narrow: [
@@ -4735,7 +4755,7 @@ var parseMonthPatterns13 = {
     /^9/i,
     /^10/i,
     /^11/i,
-    /^12/i
+    /^12/i,
   ],
   any: [
     /^ja/i,
@@ -4749,21 +4769,21 @@ var parseMonthPatterns13 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns13 = {
   narrow: /^[npusčc]/i,
   short: /^(ned|pon|uto|sre|(čet|cet)|pet|sub)/i,
   abbreviated: /^(ned|pon|uto|sre|(čet|cet)|pet|sub)/i,
-  wide: /^(nedjelja|ponedjeljak|utorak|srijeda|(četvrtak|cetvrtak)|petak|subota)/i
+  wide: /^(nedjelja|ponedjeljak|utorak|srijeda|(četvrtak|cetvrtak)|petak|subota)/i,
 };
 var parseDayPatterns13 = {
   narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
-  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
+  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i],
 };
 var matchDayPeriodPatterns13 = {
-  any: /^(am|pm|ponoc|ponoć|(po)?podne|uvece|uveče|noću|poslije podne|ujutru)/i
+  any: /^(am|pm|ponoc|ponoć|(po)?podne|uvece|uveče|noću|poslije podne|ujutru)/i,
 };
 var parseDayPeriodPatterns13 = {
   any: {
@@ -4774,46 +4794,46 @@ var parseDayPeriodPatterns13 = {
     morning: /jutro/i,
     afternoon: /(poslije\s|po)+podne/i,
     evening: /(uvece|uveče)/i,
-    night: /(nocu|noću)/i
-  }
+    night: /(nocu|noću)/i,
+  },
 };
 var match13 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern13,
     parsePattern: parseOrdinalNumberPattern13,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns13,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns13,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns13,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns13,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns13,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns13,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns13,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns13,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns13,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns13,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ca/_lib/formatLong.js
@@ -4821,45 +4841,45 @@ var dateFormats14 = {
   full: "EEEE, d 'de' MMMM y",
   long: "d 'de' MMMM y",
   medium: "d MMM y",
-  short: "dd/MM/y"
+  short: "dd/MM/y",
 };
 var timeFormats14 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats14 = {
   full: "{{date}} 'a les' {{time}}",
   long: "{{date}} 'a les' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong14 = {
   date: buildFormatLongFn({
     formats: dateFormats14,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats14,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats14,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ca/_lib/localize.js
 var eraValues14 = {
   narrow: ["aC", "dC"],
   abbreviated: ["a. de C.", "d. de C."],
-  wide: ["abans de Crist", "després de Crist"]
+  wide: ["abans de Crist", "després de Crist"],
 };
 var quarterValues14 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["T1", "T2", "T3", "T4"],
-  wide: ["1r trimestre", "2n trimestre", "3r trimestre", "4t trimestre"]
+  wide: ["1r trimestre", "2n trimestre", "3r trimestre", "4t trimestre"],
 };
 var monthValues14 = {
   narrow: [
@@ -4874,7 +4894,7 @@ var monthValues14 = {
     "ST",
     "OC",
     "NV",
-    "DS"
+    "DS",
   ],
   /**
    * Les abreviatures dels mesos de l'any es formen seguint una de les normes generals de formació d'abreviatures.
@@ -4893,7 +4913,7 @@ var monthValues14 = {
     "set.",
     "oct.",
     "nov.",
-    "des."
+    "des.",
   ],
   wide: [
     "gener",
@@ -4907,8 +4927,8 @@ var monthValues14 = {
     "setembre",
     "octubre",
     "novembre",
-    "desembre"
-  ]
+    "desembre",
+  ],
 };
 var dayValues14 = {
   narrow: ["dg.", "dl.", "dt.", "dm.", "dj.", "dv.", "ds."],
@@ -4921,8 +4941,8 @@ var dayValues14 = {
     "dimecres",
     "dijous",
     "divendres",
-    "dissabte"
-  ]
+    "dissabte",
+  ],
 };
 var dayPeriodValues14 = {
   narrow: {
@@ -4933,7 +4953,7 @@ var dayPeriodValues14 = {
     morning: "matí",
     afternoon: "tarda",
     evening: "vespre",
-    night: "nit"
+    night: "nit",
   },
   abbreviated: {
     am: "a.m.",
@@ -4943,7 +4963,7 @@ var dayPeriodValues14 = {
     morning: "matí",
     afternoon: "tarda",
     evening: "vespre",
-    night: "nit"
+    night: "nit",
   },
   wide: {
     am: "ante meridiem",
@@ -4953,8 +4973,8 @@ var dayPeriodValues14 = {
     morning: "matí",
     afternoon: "tarda",
     evening: "vespre",
-    night: "nit"
-  }
+    night: "nit",
+  },
 };
 var formattingDayPeriodValues13 = {
   narrow: {
@@ -4965,7 +4985,7 @@ var formattingDayPeriodValues13 = {
     morning: "del matí",
     afternoon: "de la tarda",
     evening: "del vespre",
-    night: "de la nit"
+    night: "de la nit",
   },
   abbreviated: {
     am: "AM",
@@ -4975,7 +4995,7 @@ var formattingDayPeriodValues13 = {
     morning: "del matí",
     afternoon: "de la tarda",
     evening: "del vespre",
-    night: "de la nit"
+    night: "de la nit",
   },
   wide: {
     am: "ante meridiem",
@@ -4985,8 +5005,8 @@ var formattingDayPeriodValues13 = {
     morning: "del matí",
     afternoon: "de la tarda",
     evening: "del vespre",
-    night: "de la nit"
-  }
+    night: "de la nit",
+  },
 };
 var ordinalNumber14 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -5009,27 +5029,27 @@ var localize14 = {
   ordinalNumber: ordinalNumber14,
   era: buildLocalizeFn({
     values: eraValues14,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues14,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues14,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues14,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues14,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues13,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ca/_lib/match.js
@@ -5038,25 +5058,26 @@ var parseOrdinalNumberPattern14 = /\d+/i;
 var matchEraPatterns14 = {
   narrow: /^(aC|dC)/i,
   abbreviated: /^(a. de C.|d. de C.)/i,
-  wide: /^(abans de Crist|despr[eé]s de Crist)/i
+  wide: /^(abans de Crist|despr[eé]s de Crist)/i,
 };
 var parseEraPatterns14 = {
   narrow: [/^aC/i, /^dC/i],
   abbreviated: [/^(a. de C.)/i, /^(d. de C.)/i],
-  wide: [/^(abans de Crist)/i, /^(despr[eé]s de Crist)/i]
+  wide: [/^(abans de Crist)/i, /^(despr[eé]s de Crist)/i],
 };
 var matchQuarterPatterns14 = {
   narrow: /^[1234]/i,
   abbreviated: /^T[1234]/i,
-  wide: /^[1234](è|r|n|r|t)? trimestre/i
+  wide: /^[1234](è|r|n|r|t)? trimestre/i,
 };
 var parseQuarterPatterns14 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns14 = {
   narrow: /^(GN|FB|MÇ|AB|MG|JN|JL|AG|ST|OC|NV|DS)/i,
-  abbreviated: /^(gen.|febr.|març|abr.|maig|juny|jul.|ag.|set.|oct.|nov.|des.)/i,
-  wide: /^(gener|febrer|març|abril|maig|juny|juliol|agost|setembre|octubre|novembre|desembre)/i
+  abbreviated:
+    /^(gen.|febr.|març|abr.|maig|juny|jul.|ag.|set.|oct.|nov.|des.)/i,
+  wide: /^(gener|febrer|març|abril|maig|juny|juliol|agost|setembre|octubre|novembre|desembre)/i,
 };
 var parseMonthPatterns14 = {
   narrow: [
@@ -5071,7 +5092,7 @@ var parseMonthPatterns14 = {
     /^ST/i,
     /^OC/i,
     /^NV/i,
-    /^DS/i
+    /^DS/i,
   ],
   abbreviated: [
     /^gen./i,
@@ -5085,7 +5106,7 @@ var parseMonthPatterns14 = {
     /^set./i,
     /^oct./i,
     /^nov./i,
-    /^des./i
+    /^des./i,
   ],
   wide: [
     /^gener/i,
@@ -5099,14 +5120,14 @@ var parseMonthPatterns14 = {
     /^setembre/i,
     /^octubre/i,
     /^novembre/i,
-    /^desembre/i
-  ]
+    /^desembre/i,
+  ],
 };
 var matchDayPatterns14 = {
   narrow: /^(dg\.|dl\.|dt\.|dm\.|dj\.|dv\.|ds\.)/i,
   short: /^(dg\.|dl\.|dt\.|dm\.|dj\.|dv\.|ds\.)/i,
   abbreviated: /^(dg\.|dl\.|dt\.|dm\.|dj\.|dv\.|ds\.)/i,
-  wide: /^(diumenge|dilluns|dimarts|dimecres|dijous|divendres|dissabte)/i
+  wide: /^(diumenge|dilluns|dimarts|dimecres|dijous|divendres|dissabte)/i,
 };
 var parseDayPatterns14 = {
   narrow: [/^dg./i, /^dl./i, /^dt./i, /^dm./i, /^dj./i, /^dv./i, /^ds./i],
@@ -5118,13 +5139,14 @@ var parseDayPatterns14 = {
     /^dimecres/i,
     /^dijous/i,
     /^divendres/i,
-    /^disssabte/i
-  ]
+    /^disssabte/i,
+  ],
 };
 var matchDayPeriodPatterns14 = {
   narrow: /^(a|p|mn|md|(del|de la) (matí|tarda|vespre|nit))/i,
-  abbreviated: /^([ap]\.?\s?m\.?|mitjanit|migdia|(del|de la) (matí|tarda|vespre|nit))/i,
-  wide: /^(ante meridiem|post meridiem|mitjanit|migdia|(del|de la) (matí|tarda|vespre|nit))/i
+  abbreviated:
+    /^([ap]\.?\s?m\.?|mitjanit|migdia|(del|de la) (matí|tarda|vespre|nit))/i,
+  wide: /^(ante meridiem|post meridiem|mitjanit|migdia|(del|de la) (matí|tarda|vespre|nit))/i,
 };
 var parseDayPeriodPatterns14 = {
   any: {
@@ -5135,46 +5157,46 @@ var parseDayPeriodPatterns14 = {
     morning: /matí/i,
     afternoon: /tarda/i,
     evening: /vespre/i,
-    night: /nit/i
-  }
+    night: /nit/i,
+  },
 };
 var match14 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern14,
     parsePattern: parseOrdinalNumberPattern14,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns14,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns14,
-    defaultParseWidth: "wide"
+    defaultParseWidth: "wide",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns14,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns14,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns14,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns14,
-    defaultParseWidth: "wide"
+    defaultParseWidth: "wide",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns14,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns14,
-    defaultParseWidth: "wide"
+    defaultParseWidth: "wide",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns14,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPeriodPatterns14,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ckb/_lib/formatLong.js
@@ -5182,45 +5204,45 @@ var dateFormats15 = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
-  short: "MM/dd/yyyy"
+  short: "MM/dd/yyyy",
 };
 var timeFormats15 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats15 = {
   full: "{{date}} 'کاتژمێر' {{time}}",
   long: "{{date}} 'کاتژمێر' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong15 = {
   date: buildFormatLongFn({
     formats: dateFormats15,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats15,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats15,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ckb/_lib/localize.js
 var eraValues15 = {
   narrow: ["پ", "د"],
   abbreviated: ["پ-ز", "د-ز"],
-  wide: ["پێش زاین", "دوای زاین"]
+  wide: ["پێش زاین", "دوای زاین"],
 };
 var quarterValues15 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["چ1م", "چ2م", "چ3م", "چ4م"],
-  wide: ["چارەگی یەکەم", "چارەگی دووەم", "چارەگی سێیەم", "چارەگی چوارەم"]
+  wide: ["چارەگی یەکەم", "چارەگی دووەم", "چارەگی سێیەم", "چارەگی چوارەم"],
 };
 var monthValues15 = {
   narrow: [
@@ -5235,7 +5257,7 @@ var monthValues15 = {
     "ئە",
     "تش-ی",
     "تش-د",
-    "ک-ی"
+    "ک-ی",
   ],
   abbreviated: [
     "کان-دوو",
@@ -5249,7 +5271,7 @@ var monthValues15 = {
     "ئەل",
     "تش-یەک",
     "تش-دوو",
-    "کان-یەک"
+    "کان-یەک",
   ],
   wide: [
     "کانوونی دووەم",
@@ -5263,8 +5285,8 @@ var monthValues15 = {
     "ئەیلول",
     "تشرینی یەکەم",
     "تشرینی دووەم",
-    "کانوونی یەکەم"
-  ]
+    "کانوونی یەکەم",
+  ],
 };
 var dayValues15 = {
   narrow: ["ی-ش", "د-ش", "س-ش", "چ-ش", "پ-ش", "هە", "ش"],
@@ -5276,7 +5298,7 @@ var dayValues15 = {
     "چوار-شەم",
     "پێنج-شەم",
     "هەینی",
-    "شەمە"
+    "شەمە",
   ],
   wide: [
     "یەک شەمە",
@@ -5285,8 +5307,8 @@ var dayValues15 = {
     "چوار شەمە",
     "پێنج شەمە",
     "هەینی",
-    "شەمە"
-  ]
+    "شەمە",
+  ],
 };
 var dayPeriodValues15 = {
   narrow: {
@@ -5297,7 +5319,7 @@ var dayPeriodValues15 = {
     morning: "بەیانی",
     afternoon: "دوای نیوەڕۆ",
     evening: "ئێوارە",
-    night: "شەو"
+    night: "شەو",
   },
   abbreviated: {
     am: "پ-ن",
@@ -5307,7 +5329,7 @@ var dayPeriodValues15 = {
     morning: "بەیانی",
     afternoon: "دوای نیوەڕۆ",
     evening: "ئێوارە",
-    night: "شەو"
+    night: "شەو",
   },
   wide: {
     am: "پێش نیوەڕۆ",
@@ -5317,8 +5339,8 @@ var dayPeriodValues15 = {
     morning: "بەیانی",
     afternoon: "دوای نیوەڕۆ",
     evening: "ئێوارە",
-    night: "شەو"
-  }
+    night: "شەو",
+  },
 };
 var formattingDayPeriodValues14 = {
   narrow: {
@@ -5329,7 +5351,7 @@ var formattingDayPeriodValues14 = {
     morning: "لە بەیانیدا",
     afternoon: "لە دوای نیوەڕۆدا",
     evening: "لە ئێوارەدا",
-    night: "لە شەودا"
+    night: "لە شەودا",
   },
   abbreviated: {
     am: "پ-ن",
@@ -5339,7 +5361,7 @@ var formattingDayPeriodValues14 = {
     morning: "لە بەیانیدا",
     afternoon: "لە دوای نیوەڕۆدا",
     evening: "لە ئێوارەدا",
-    night: "لە شەودا"
+    night: "لە شەودا",
   },
   wide: {
     am: "پێش نیوەڕۆ",
@@ -5349,8 +5371,8 @@ var formattingDayPeriodValues14 = {
     morning: "لە بەیانیدا",
     afternoon: "لە دوای نیوەڕۆدا",
     evening: "لە ئێوارەدا",
-    night: "لە شەودا"
-  }
+    night: "لە شەودا",
+  },
 };
 var ordinalNumber15 = (dirtyNumber, _options) => {
   return String(dirtyNumber);
@@ -5359,27 +5381,27 @@ var localize15 = {
   ordinalNumber: ordinalNumber15,
   era: buildLocalizeFn({
     values: eraValues15,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues15,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues15,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues15,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues15,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues14,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ckb/_lib/match.js
@@ -5388,24 +5410,25 @@ var parseOrdinalNumberPattern15 = /\d+/i;
 var matchEraPatterns15 = {
   narrow: /^(پ|د)/i,
   abbreviated: /^(پ-ز|د.ز)/i,
-  wide: /^(پێش زاین| دوای زاین)/i
+  wide: /^(پێش زاین| دوای زاین)/i,
 };
 var parseEraPatterns15 = {
-  any: [/^د/g, /^پ/g]
+  any: [/^د/g, /^پ/g],
 };
 var matchQuarterPatterns15 = {
   narrow: /^[1234]/i,
   abbreviated: /^م[1234]چ/i,
-  wide: /^(یەکەم|دووەم|سێیەم| چوارەم) (چارەگی)? quarter/i
+  wide: /^(یەکەم|دووەم|سێیەم| چوارەم) (چارەگی)? quarter/i,
 };
 var parseQuarterPatterns15 = {
   wide: [/چارەگی یەکەم/, /چارەگی دووەم/, /چارەگی سيیەم/, /چارەگی چوارەم/],
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns15 = {
   narrow: /^(ک-د|ش|ئا|ن|م|ح|ت|ئە|تش-ی|تش-د|ک-ی)/i,
-  abbreviated: /^(کان-دوو|شوب|ئاد|نیس|مایس|حوز|تەم|ئاب|ئەل|تش-یەک|تش-دوو|کان-یەک)/i,
-  wide: /^(کانوونی دووەم|شوبات|ئادار|نیسان|مایس|حوزەیران|تەمموز|ئاب|ئەیلول|تشرینی یەکەم|تشرینی دووەم|کانوونی یەکەم)/i
+  abbreviated:
+    /^(کان-دوو|شوب|ئاد|نیس|مایس|حوز|تەم|ئاب|ئەل|تش-یەک|تش-دوو|کان-یەک)/i,
+  wide: /^(کانوونی دووەم|شوبات|ئادار|نیسان|مایس|حوزەیران|تەمموز|ئاب|ئەیلول|تشرینی یەکەم|تشرینی دووەم|کانوونی یەکەم)/i,
 };
 var parseMonthPatterns15 = {
   narrow: [
@@ -5420,7 +5443,7 @@ var parseMonthPatterns15 = {
     /^ئە/i,
     /^تش-ی/i,
     /^تش-د/i,
-    /^ک-ی/i
+    /^ک-ی/i,
   ],
   any: [
     /^کان-دوو/i,
@@ -5434,24 +5457,24 @@ var parseMonthPatterns15 = {
     /^ئەل/i,
     /^تش-یەک/i,
     /^تش-دوو/i,
-    /^|کان-یەک/i
-  ]
+    /^|کان-یەک/i,
+  ],
 };
 var matchDayPatterns15 = {
   narrow: /^(ش|ی|د|س|چ|پ|هە)/i,
   short: /^(یە-شە|دوو-شە|سێ-شە|چو-شە|پێ-شە|هە|شە)/i,
   abbreviated: /^(یەک-شەم|دوو-شەم|سێ-شەم|چوار-شەم|پێنخ-شەم|هەینی|شەمە)/i,
-  wide: /^(یەک شەمە|دوو شەمە|سێ شەمە|چوار شەمە|پێنج شەمە|هەینی|شەمە)/i
+  wide: /^(یەک شەمە|دوو شەمە|سێ شەمە|چوار شەمە|پێنج شەمە|هەینی|شەمە)/i,
 };
 var parseDayPatterns15 = {
   narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
-  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
+  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i],
 };
 var matchDayPeriodPatterns15 = {
   narrow: /^(پ|د|ن-ش|ن| (بەیانی|دوای نیوەڕۆ|ئێوارە|شەو))/i,
   abbreviated: /^(پ-ن|د-ن|نیوە شەو|نیوەڕۆ|بەیانی|دوای نیوەڕۆ|ئێوارە|شەو)/,
   wide: /^(پێش نیوەڕۆ|دوای نیوەڕۆ|نیوەڕۆ|نیوە شەو|لەبەیانیدا|لەدواینیوەڕۆدا|لە ئێوارەدا|لە شەودا)/,
-  any: /^(پ|د|بەیانی|نیوەڕۆ|ئێوارە|شەو)/
+  any: /^(پ|د|بەیانی|نیوەڕۆ|ئێوارە|شەو)/,
 };
 var parseDayPeriodPatterns15 = {
   any: {
@@ -5462,46 +5485,46 @@ var parseDayPeriodPatterns15 = {
     morning: /بەیانی/i,
     afternoon: /دواینیوەڕۆ/i,
     evening: /ئێوارە/i,
-    night: /شەو/i
-  }
+    night: /شەو/i,
+  },
 };
 var match15 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern15,
     parsePattern: parseOrdinalNumberPattern15,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns15,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns15,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns15,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns15,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns15,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns15,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns15,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns15,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns15,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns15,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/cs/_lib/formatLong.js
@@ -5509,45 +5532,45 @@ var dateFormats16 = {
   full: "EEEE, d. MMMM yyyy",
   long: "d. MMMM yyyy",
   medium: "d. M. yyyy",
-  short: "dd.MM.yyyy"
+  short: "dd.MM.yyyy",
 };
 var timeFormats16 = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats16 = {
   full: "{{date}} 'v' {{time}}",
   long: "{{date}} 'v' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong16 = {
   date: buildFormatLongFn({
     formats: dateFormats16,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats16,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats16,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/cs/_lib/localize.js
 var eraValues16 = {
   narrow: ["př. n. l.", "n. l."],
   abbreviated: ["př. n. l.", "n. l."],
-  wide: ["před naším letopočtem", "našeho letopočtu"]
+  wide: ["před naším letopočtem", "našeho letopočtu"],
 };
 var quarterValues16 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1. čtvrtletí", "2. čtvrtletí", "3. čtvrtletí", "4. čtvrtletí"],
-  wide: ["1. čtvrtletí", "2. čtvrtletí", "3. čtvrtletí", "4. čtvrtletí"]
+  wide: ["1. čtvrtletí", "2. čtvrtletí", "3. čtvrtletí", "4. čtvrtletí"],
 };
 var monthValues16 = {
   narrow: ["L", "Ú", "B", "D", "K", "Č", "Č", "S", "Z", "Ř", "L", "P"],
@@ -5563,7 +5586,7 @@ var monthValues16 = {
     "zář",
     "říj",
     "lis",
-    "pro"
+    "pro",
   ],
   wide: [
     "leden",
@@ -5577,8 +5600,8 @@ var monthValues16 = {
     "září",
     "říjen",
     "listopad",
-    "prosinec"
-  ]
+    "prosinec",
+  ],
 };
 var formattingMonthValues4 = {
   narrow: ["L", "Ú", "B", "D", "K", "Č", "Č", "S", "Z", "Ř", "L", "P"],
@@ -5594,7 +5617,7 @@ var formattingMonthValues4 = {
     "zář",
     "říj",
     "lis",
-    "pro"
+    "pro",
   ],
   wide: [
     "ledna",
@@ -5608,14 +5631,14 @@ var formattingMonthValues4 = {
     "září",
     "října",
     "listopadu",
-    "prosince"
-  ]
+    "prosince",
+  ],
 };
 var dayValues16 = {
   narrow: ["ne", "po", "út", "st", "čt", "pá", "so"],
   short: ["ne", "po", "út", "st", "čt", "pá", "so"],
   abbreviated: ["ned", "pon", "úte", "stř", "čtv", "pát", "sob"],
-  wide: ["neděle", "pondělí", "úterý", "středa", "čtvrtek", "pátek", "sobota"]
+  wide: ["neděle", "pondělí", "úterý", "středa", "čtvrtek", "pátek", "sobota"],
 };
 var dayPeriodValues16 = {
   narrow: {
@@ -5626,7 +5649,7 @@ var dayPeriodValues16 = {
     morning: "ráno",
     afternoon: "odpoledne",
     evening: "večer",
-    night: "noc"
+    night: "noc",
   },
   abbreviated: {
     am: "dop.",
@@ -5636,7 +5659,7 @@ var dayPeriodValues16 = {
     morning: "ráno",
     afternoon: "odpoledne",
     evening: "večer",
-    night: "noc"
+    night: "noc",
   },
   wide: {
     am: "dopoledne",
@@ -5646,8 +5669,8 @@ var dayPeriodValues16 = {
     morning: "ráno",
     afternoon: "odpoledne",
     evening: "večer",
-    night: "noc"
-  }
+    night: "noc",
+  },
 };
 var formattingDayPeriodValues15 = {
   narrow: {
@@ -5658,7 +5681,7 @@ var formattingDayPeriodValues15 = {
     morning: "ráno",
     afternoon: "odpoledne",
     evening: "večer",
-    night: "noc"
+    night: "noc",
   },
   abbreviated: {
     am: "dop.",
@@ -5668,7 +5691,7 @@ var formattingDayPeriodValues15 = {
     morning: "ráno",
     afternoon: "odpoledne",
     evening: "večer",
-    night: "noc"
+    night: "noc",
   },
   wide: {
     am: "dopoledne",
@@ -5678,8 +5701,8 @@ var formattingDayPeriodValues15 = {
     morning: "ráno",
     afternoon: "odpoledne",
     evening: "večer",
-    night: "noc"
-  }
+    night: "noc",
+  },
 };
 var ordinalNumber16 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -5689,29 +5712,29 @@ var localize16 = {
   ordinalNumber: ordinalNumber16,
   era: buildLocalizeFn({
     values: eraValues16,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues16,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues16,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues4,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues16,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues16,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues15,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/cs/_lib/match.js
@@ -5720,23 +5743,24 @@ var parseOrdinalNumberPattern16 = /\d+/i;
 var matchEraPatterns16 = {
   narrow: /^(p[řr](\.|ed) Kr\.|p[řr](\.|ed) n\. l\.|po Kr\.|n\. l\.)/i,
   abbreviated: /^(p[řr](\.|ed) Kr\.|p[řr](\.|ed) n\. l\.|po Kr\.|n\. l\.)/i,
-  wide: /^(p[řr](\.|ed) Kristem|p[řr](\.|ed) na[šs][íi]m letopo[čc]tem|po Kristu|na[šs]eho letopo[čc]tu)/i
+  wide: /^(p[řr](\.|ed) Kristem|p[řr](\.|ed) na[šs][íi]m letopo[čc]tem|po Kristu|na[šs]eho letopo[čc]tu)/i,
 };
 var parseEraPatterns16 = {
-  any: [/^p[řr]/i, /^(po|n)/i]
+  any: [/^p[řr]/i, /^(po|n)/i],
 };
 var matchQuarterPatterns16 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]\. [čc]tvrtlet[íi]/i,
-  wide: /^[1234]\. [čc]tvrtlet[íi]/i
+  wide: /^[1234]\. [čc]tvrtlet[íi]/i,
 };
 var parseQuarterPatterns16 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns16 = {
   narrow: /^[lúubdkčcszřrlp]/i,
-  abbreviated: /^(led|[úu]no|b[řr]e|dub|kv[ěe]|[čc]vn|[čc]vc|srp|z[áa][řr]|[řr][íi]j|lis|pro)/i,
-  wide: /^(leden|ledna|[úu]nora?|b[řr]ezen|b[řr]ezna|duben|dubna|kv[ěe]ten|kv[ěe]tna|[čc]erven(ec|ce)?|[čc]ervna|srpen|srpna|z[áa][řr][íi]|[řr][íi]jen|[řr][íi]jna|listopad(a|u)?|prosinec|prosince)/i
+  abbreviated:
+    /^(led|[úu]no|b[řr]e|dub|kv[ěe]|[čc]vn|[čc]vc|srp|z[áa][řr]|[řr][íi]j|lis|pro)/i,
+  wide: /^(leden|ledna|[úu]nora?|b[řr]ezen|b[řr]ezna|duben|dubna|kv[ěe]ten|kv[ěe]tna|[čc]erven(ec|ce)?|[čc]ervna|srpen|srpna|z[áa][řr][íi]|[řr][íi]jen|[řr][íi]jna|listopad(a|u)?|prosinec|prosince)/i,
 };
 var parseMonthPatterns16 = {
   narrow: [
@@ -5751,7 +5775,7 @@ var parseMonthPatterns16 = {
     /^z/i,
     /^[řr]/i,
     /^l/i,
-    /^p/i
+    /^p/i,
   ],
   any: [
     /^led/i,
@@ -5765,21 +5789,21 @@ var parseMonthPatterns16 = {
     /^z[áa][řr]/i,
     /^[řr][íi]j/i,
     /^lis/i,
-    /^pro/i
-  ]
+    /^pro/i,
+  ],
 };
 var matchDayPatterns16 = {
   narrow: /^[npuúsčps]/i,
   short: /^(ne|po|[úu]t|st|[čc]t|p[áa]|so)/i,
   abbreviated: /^(ned|pon|[úu]te|st[rř]|[čc]tv|p[áa]t|sob)/i,
-  wide: /^(ned[ěe]le|pond[ěe]l[íi]|[úu]ter[ýy]|st[řr]eda|[čc]tvrtek|p[áa]tek|sobota)/i
+  wide: /^(ned[ěe]le|pond[ěe]l[íi]|[úu]ter[ýy]|st[řr]eda|[čc]tvrtek|p[áa]tek|sobota)/i,
 };
 var parseDayPatterns16 = {
   narrow: [/^n/i, /^p/i, /^[úu]/i, /^s/i, /^[čc]/i, /^p/i, /^s/i],
-  any: [/^ne/i, /^po/i, /^[úu]t/i, /^st/i, /^[čc]t/i, /^p[áa]/i, /^so/i]
+  any: [/^ne/i, /^po/i, /^[úu]t/i, /^st/i, /^[čc]t/i, /^p[áa]/i, /^so/i],
 };
 var matchDayPeriodPatterns16 = {
-  any: /^dopoledne|dop\.?|odpoledne|odp\.?|p[ůu]lnoc|poledne|r[áa]no|odpoledne|ve[čc]er|(v )?noci?/i
+  any: /^dopoledne|dop\.?|odpoledne|odp\.?|p[ůu]lnoc|poledne|r[áa]no|odpoledne|ve[čc]er|(v )?noci?/i,
 };
 var parseDayPeriodPatterns16 = {
   any: {
@@ -5790,46 +5814,46 @@ var parseDayPeriodPatterns16 = {
     morning: /r[áa]no/i,
     afternoon: /odpoledne/i,
     evening: /ve[čc]er/i,
-    night: /noc/i
-  }
+    night: /noc/i,
+  },
 };
 var match16 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern16,
     parsePattern: parseOrdinalNumberPattern16,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns16,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns16,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns16,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns16,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns16,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns16,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns16,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns16,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns16,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns16,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/cy/_lib/formatLong.js
@@ -5837,45 +5861,45 @@ var dateFormats17 = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats17 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats17 = {
   full: "{{date}} 'am' {{time}}",
   long: "{{date}} 'am' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong17 = {
   date: buildFormatLongFn({
     formats: dateFormats17,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats17,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats17,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/cy/_lib/localize.js
 var eraValues17 = {
   narrow: ["C", "O"],
   abbreviated: ["CC", "OC"],
-  wide: ["Cyn Crist", "Ar ôl Crist"]
+  wide: ["Cyn Crist", "Ar ôl Crist"],
 };
 var quarterValues17 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Ch1", "Ch2", "Ch3", "Ch4"],
-  wide: ["Chwarter 1af", "2ail chwarter", "3ydd chwarter", "4ydd chwarter"]
+  wide: ["Chwarter 1af", "2ail chwarter", "3ydd chwarter", "4ydd chwarter"],
 };
 var monthValues17 = {
   narrow: ["I", "Ch", "Ma", "E", "Mi", "Me", "G", "A", "Md", "H", "T", "Rh"],
@@ -5891,7 +5915,7 @@ var monthValues17 = {
     "Med",
     "Hyd",
     "Tach",
-    "Rhag"
+    "Rhag",
   ],
   wide: [
     "Ionawr",
@@ -5905,8 +5929,8 @@ var monthValues17 = {
     "Medi",
     "Hydref",
     "Tachwedd",
-    "Rhagfyr"
-  ]
+    "Rhagfyr",
+  ],
 };
 var dayValues17 = {
   narrow: ["S", "Ll", "M", "M", "I", "G", "S"],
@@ -5919,8 +5943,8 @@ var dayValues17 = {
     "dydd Mercher",
     "dydd Iau",
     "dydd Gwener",
-    "dydd Sadwrn"
-  ]
+    "dydd Sadwrn",
+  ],
 };
 var dayPeriodValues17 = {
   narrow: {
@@ -5931,7 +5955,7 @@ var dayPeriodValues17 = {
     morning: "bore",
     afternoon: "prynhawn",
     evening: "gyda'r nos",
-    night: "nos"
+    night: "nos",
   },
   abbreviated: {
     am: "yb",
@@ -5941,7 +5965,7 @@ var dayPeriodValues17 = {
     morning: "bore",
     afternoon: "prynhawn",
     evening: "gyda'r nos",
-    night: "nos"
+    night: "nos",
   },
   wide: {
     am: "y.b.",
@@ -5951,8 +5975,8 @@ var dayPeriodValues17 = {
     morning: "bore",
     afternoon: "prynhawn",
     evening: "gyda'r nos",
-    night: "nos"
-  }
+    night: "nos",
+  },
 };
 var formattingDayPeriodValues16 = {
   narrow: {
@@ -5963,7 +5987,7 @@ var formattingDayPeriodValues16 = {
     morning: "yn y bore",
     afternoon: "yn y prynhawn",
     evening: "gyda'r nos",
-    night: "yn y nos"
+    night: "yn y nos",
   },
   abbreviated: {
     am: "yb",
@@ -5973,7 +5997,7 @@ var formattingDayPeriodValues16 = {
     morning: "yn y bore",
     afternoon: "yn y prynhawn",
     evening: "gyda'r nos",
-    night: "yn y nos"
+    night: "yn y nos",
   },
   wide: {
     am: "y.b.",
@@ -5983,8 +6007,8 @@ var formattingDayPeriodValues16 = {
     morning: "yn y bore",
     afternoon: "yn y prynhawn",
     evening: "gyda'r nos",
-    night: "yn y nos"
-  }
+    night: "yn y nos",
+  },
 };
 var ordinalNumber17 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -6018,7 +6042,7 @@ var ordinalNumber17 = (dirtyNumber, _options) => {
       case 19:
         return number + "eg";
     }
-  } else if (number >= 50 && number <= 60 || number === 80 || number >= 100) {
+  } else if ((number >= 50 && number <= 60) || number === 80 || number >= 100) {
     return number + "fed";
   }
   return number + "ain";
@@ -6027,27 +6051,27 @@ var localize17 = {
   ordinalNumber: ordinalNumber17,
   era: buildLocalizeFn({
     values: eraValues17,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues17,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues17,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues17,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues17,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues16,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/cy/_lib/match.js
@@ -6056,24 +6080,24 @@ var parseOrdinalNumberPattern17 = /\d+/i;
 var matchEraPatterns17 = {
   narrow: /^(c|o)/i,
   abbreviated: /^(c\.?\s?c\.?|o\.?\s?c\.?)/i,
-  wide: /^(cyn christ|ar ôl crist|ar ol crist)/i
+  wide: /^(cyn christ|ar ôl crist|ar ol crist)/i,
 };
 var parseEraPatterns17 = {
   wide: [/^c/i, /^(ar ôl crist|ar ol crist)/i],
-  any: [/^c/i, /^o/i]
+  any: [/^c/i, /^o/i],
 };
 var matchQuarterPatterns17 = {
   narrow: /^[1234]/i,
   abbreviated: /^ch[1234]/i,
-  wide: /^(chwarter 1af)|([234](ail|ydd)? chwarter)/i
+  wide: /^(chwarter 1af)|([234](ail|ydd)? chwarter)/i,
 };
 var parseQuarterPatterns17 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns17 = {
   narrow: /^(i|ch|m|e|g|a|h|t|rh)/i,
   abbreviated: /^(ion|chwe|maw|ebr|mai|meh|gor|aws|med|hyd|tach|rhag)/i,
-  wide: /^(ionawr|chwefror|mawrth|ebrill|mai|mehefin|gorffennaf|awst|medi|hydref|tachwedd|rhagfyr)/i
+  wide: /^(ionawr|chwefror|mawrth|ebrill|mai|mehefin|gorffennaf|awst|medi|hydref|tachwedd|rhagfyr)/i,
 };
 var parseMonthPatterns17 = {
   narrow: [
@@ -6088,7 +6112,7 @@ var parseMonthPatterns17 = {
     /^m/i,
     /^h/i,
     /^t/i,
-    /^rh/i
+    /^rh/i,
   ],
   any: [
     /^io/i,
@@ -6102,14 +6126,14 @@ var parseMonthPatterns17 = {
     /^med/i,
     /^h/i,
     /^t/i,
-    /^rh/i
-  ]
+    /^rh/i,
+  ],
 };
 var matchDayPatterns17 = {
   narrow: /^(s|ll|m|i|g)/i,
   short: /^(su|ll|ma|me|ia|gw|sa)/i,
   abbreviated: /^(sul|llun|maw|mer|iau|gwe|sad)/i,
-  wide: /^dydd (sul|llun|mawrth|mercher|iau|gwener|sadwrn)/i
+  wide: /^dydd (sul|llun|mawrth|mercher|iau|gwener|sadwrn)/i,
 };
 var parseDayPatterns17 = {
   narrow: [/^s/i, /^ll/i, /^m/i, /^m/i, /^i/i, /^g/i, /^s/i],
@@ -6120,13 +6144,13 @@ var parseDayPatterns17 = {
     /^dydd me/i,
     /^dydd i/i,
     /^dydd g/i,
-    /^dydd sa/i
+    /^dydd sa/i,
   ],
-  any: [/^su/i, /^ll/i, /^ma/i, /^me/i, /^i/i, /^g/i, /^sa/i]
+  any: [/^su/i, /^ll/i, /^ma/i, /^me/i, /^i/i, /^g/i, /^sa/i],
 };
 var matchDayPeriodPatterns17 = {
   narrow: /^(b|h|hn|hd|(yn y|y|yr|gyda'r) (bore|prynhawn|nos|hwyr))/i,
-  any: /^(y\.?\s?[bh]\.?|hanner nos|hanner dydd|(yn y|y|yr|gyda'r) (bore|prynhawn|nos|hwyr))/i
+  any: /^(y\.?\s?[bh]\.?|hanner nos|hanner dydd|(yn y|y|yr|gyda'r) (bore|prynhawn|nos|hwyr))/i,
 };
 var parseDayPeriodPatterns17 = {
   any: {
@@ -6137,46 +6161,46 @@ var parseDayPeriodPatterns17 = {
     morning: /bore/i,
     afternoon: /prynhawn/i,
     evening: /^gyda'r nos$/i,
-    night: /blah/i
-  }
+    night: /blah/i,
+  },
 };
 var match17 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern17,
     parsePattern: parseOrdinalNumberPattern17,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns17,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns17,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns17,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns17,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns17,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns17,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns17,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns17,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns17,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns17,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/da/_lib/formatLong.js
@@ -6184,45 +6208,45 @@ var dateFormats18 = {
   full: "EEEE 'den' d. MMMM y",
   long: "d. MMMM y",
   medium: "d. MMM y",
-  short: "dd/MM/y"
+  short: "dd/MM/y",
 };
 var timeFormats18 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats18 = {
   full: "{{date}} 'kl'. {{time}}",
   long: "{{date}} 'kl'. {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong18 = {
   date: buildFormatLongFn({
     formats: dateFormats18,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats18,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats18,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/da/_lib/localize.js
 var eraValues18 = {
   narrow: ["fvt", "vt"],
   abbreviated: ["f.v.t.", "v.t."],
-  wide: ["før vesterlandsk tidsregning", "vesterlandsk tidsregning"]
+  wide: ["før vesterlandsk tidsregning", "vesterlandsk tidsregning"],
 };
 var quarterValues18 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1. kvt.", "2. kvt.", "3. kvt.", "4. kvt."],
-  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
+  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"],
 };
 var monthValues18 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -6238,7 +6262,7 @@ var monthValues18 = {
     "sep.",
     "okt.",
     "nov.",
-    "dec."
+    "dec.",
   ],
   wide: [
     "januar",
@@ -6252,8 +6276,8 @@ var monthValues18 = {
     "september",
     "oktober",
     "november",
-    "december"
-  ]
+    "december",
+  ],
 };
 var dayValues18 = {
   narrow: ["S", "M", "T", "O", "T", "F", "L"],
@@ -6266,8 +6290,8 @@ var dayValues18 = {
     "onsdag",
     "torsdag",
     "fredag",
-    "lørdag"
-  ]
+    "lørdag",
+  ],
 };
 var dayPeriodValues18 = {
   narrow: {
@@ -6278,7 +6302,7 @@ var dayPeriodValues18 = {
     morning: "morgen",
     afternoon: "eftermiddag",
     evening: "aften",
-    night: "nat"
+    night: "nat",
   },
   abbreviated: {
     am: "AM",
@@ -6288,7 +6312,7 @@ var dayPeriodValues18 = {
     morning: "morgen",
     afternoon: "eftermiddag",
     evening: "aften",
-    night: "nat"
+    night: "nat",
   },
   wide: {
     am: "a.m.",
@@ -6298,8 +6322,8 @@ var dayPeriodValues18 = {
     morning: "morgen",
     afternoon: "eftermiddag",
     evening: "aften",
-    night: "nat"
-  }
+    night: "nat",
+  },
 };
 var formattingDayPeriodValues17 = {
   narrow: {
@@ -6310,7 +6334,7 @@ var formattingDayPeriodValues17 = {
     morning: "om morgenen",
     afternoon: "om eftermiddagen",
     evening: "om aftenen",
-    night: "om natten"
+    night: "om natten",
   },
   abbreviated: {
     am: "AM",
@@ -6320,7 +6344,7 @@ var formattingDayPeriodValues17 = {
     morning: "om morgenen",
     afternoon: "om eftermiddagen",
     evening: "om aftenen",
-    night: "om natten"
+    night: "om natten",
   },
   wide: {
     am: "a.m.",
@@ -6330,8 +6354,8 @@ var formattingDayPeriodValues17 = {
     morning: "om morgenen",
     afternoon: "om eftermiddagen",
     evening: "om aftenen",
-    night: "om natten"
-  }
+    night: "om natten",
+  },
 };
 var ordinalNumber18 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -6341,27 +6365,27 @@ var localize18 = {
   ordinalNumber: ordinalNumber18,
   era: buildLocalizeFn({
     values: eraValues18,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues18,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues18,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues18,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues18,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues17,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/da/_lib/match.js
@@ -6370,23 +6394,23 @@ var parseOrdinalNumberPattern18 = /\d+/i;
 var matchEraPatterns18 = {
   narrow: /^(fKr|fvt|eKr|vt)/i,
   abbreviated: /^(f\.Kr\.?|f\.v\.t\.?|e\.Kr\.?|v\.t\.)/i,
-  wide: /^(f.Kr.|før vesterlandsk tidsregning|e.Kr.|vesterlandsk tidsregning)/i
+  wide: /^(f.Kr.|før vesterlandsk tidsregning|e.Kr.|vesterlandsk tidsregning)/i,
 };
 var parseEraPatterns18 = {
-  any: [/^f/i, /^(v|e)/i]
+  any: [/^f/i, /^(v|e)/i],
 };
 var matchQuarterPatterns18 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]. kvt\./i,
-  wide: /^[1234]\.? kvartal/i
+  wide: /^[1234]\.? kvartal/i,
 };
 var parseQuarterPatterns18 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns18 = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan.|feb.|mar.|apr.|maj|jun.|jul.|aug.|sep.|okt.|nov.|dec.)/i,
-  wide: /^(januar|februar|marts|april|maj|juni|juli|august|september|oktober|november|december)/i
+  wide: /^(januar|februar|marts|april|maj|juni|juli|august|september|oktober|november|december)/i,
 };
 var parseMonthPatterns18 = {
   narrow: [
@@ -6401,7 +6425,7 @@ var parseMonthPatterns18 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -6415,22 +6439,22 @@ var parseMonthPatterns18 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns18 = {
   narrow: /^[smtofl]/i,
   short: /^(søn.|man.|tir.|ons.|tor.|fre.|lør.)/i,
   abbreviated: /^(søn|man|tir|ons|tor|fre|lør)/i,
-  wide: /^(søndag|mandag|tirsdag|onsdag|torsdag|fredag|lørdag)/i
+  wide: /^(søndag|mandag|tirsdag|onsdag|torsdag|fredag|lørdag)/i,
 };
 var parseDayPatterns18 = {
   narrow: [/^s/i, /^m/i, /^t/i, /^o/i, /^t/i, /^f/i, /^l/i],
-  any: [/^s/i, /^m/i, /^ti/i, /^o/i, /^to/i, /^f/i, /^l/i]
+  any: [/^s/i, /^m/i, /^ti/i, /^o/i, /^to/i, /^f/i, /^l/i],
 };
 var matchDayPeriodPatterns18 = {
   narrow: /^(a|p|midnat|middag|(om) (morgenen|eftermiddagen|aftenen|natten))/i,
-  any: /^([ap]\.?\s?m\.?|midnat|middag|(om) (morgenen|eftermiddagen|aftenen|natten))/i
+  any: /^([ap]\.?\s?m\.?|midnat|middag|(om) (morgenen|eftermiddagen|aftenen|natten))/i,
 };
 var parseDayPeriodPatterns18 = {
   any: {
@@ -6441,46 +6465,46 @@ var parseDayPeriodPatterns18 = {
     morning: /morgen/i,
     afternoon: /eftermiddag/i,
     evening: /aften/i,
-    night: /nat/i
-  }
+    night: /nat/i,
+  },
 };
 var match18 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern18,
     parsePattern: parseOrdinalNumberPattern18,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns18,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns18,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns18,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns18,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns18,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns18,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns18,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns18,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns18,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns18,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/de/_lib/formatLong.js
@@ -6491,46 +6515,46 @@ var dateFormats19 = {
   // 7. Januar 2018
   medium: "do MMM y",
   // 7. Jan. 2018
-  short: "dd.MM.y"
+  short: "dd.MM.y",
   // 07.01.2018
 };
 var timeFormats19 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats19 = {
   full: "{{date}} 'um' {{time}}",
   long: "{{date}} 'um' {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong19 = {
   date: buildFormatLongFn({
     formats: dateFormats19,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats19,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats19,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/de/_lib/localize.js
 var eraValues19 = {
   narrow: ["v.Chr.", "n.Chr."],
   abbreviated: ["v.Chr.", "n.Chr."],
-  wide: ["vor Christus", "nach Christus"]
+  wide: ["vor Christus", "nach Christus"],
 };
 var quarterValues19 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["1. Quartal", "2. Quartal", "3. Quartal", "4. Quartal"]
+  wide: ["1. Quartal", "2. Quartal", "3. Quartal", "4. Quartal"],
 };
 var monthValues19 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -6546,7 +6570,7 @@ var monthValues19 = {
     "Sep",
     "Okt",
     "Nov",
-    "Dez"
+    "Dez",
   ],
   wide: [
     "Januar",
@@ -6560,8 +6584,8 @@ var monthValues19 = {
     "September",
     "Oktober",
     "November",
-    "Dezember"
-  ]
+    "Dezember",
+  ],
 };
 var formattingMonthValues5 = {
   narrow: monthValues19.narrow,
@@ -6577,9 +6601,9 @@ var formattingMonthValues5 = {
     "Sep.",
     "Okt.",
     "Nov.",
-    "Dez."
+    "Dez.",
   ],
-  wide: monthValues19.wide
+  wide: monthValues19.wide,
 };
 var dayValues19 = {
   narrow: ["S", "M", "D", "M", "D", "F", "S"],
@@ -6592,8 +6616,8 @@ var dayValues19 = {
     "Mittwoch",
     "Donnerstag",
     "Freitag",
-    "Samstag"
-  ]
+    "Samstag",
+  ],
 };
 var dayPeriodValues19 = {
   narrow: {
@@ -6604,7 +6628,7 @@ var dayPeriodValues19 = {
     morning: "Morgen",
     afternoon: "Nachm.",
     evening: "Abend",
-    night: "Nacht"
+    night: "Nacht",
   },
   abbreviated: {
     am: "vorm.",
@@ -6614,7 +6638,7 @@ var dayPeriodValues19 = {
     morning: "Morgen",
     afternoon: "Nachmittag",
     evening: "Abend",
-    night: "Nacht"
+    night: "Nacht",
   },
   wide: {
     am: "vormittags",
@@ -6624,8 +6648,8 @@ var dayPeriodValues19 = {
     morning: "Morgen",
     afternoon: "Nachmittag",
     evening: "Abend",
-    night: "Nacht"
-  }
+    night: "Nacht",
+  },
 };
 var formattingDayPeriodValues18 = {
   narrow: {
@@ -6636,7 +6660,7 @@ var formattingDayPeriodValues18 = {
     morning: "morgens",
     afternoon: "nachm.",
     evening: "abends",
-    night: "nachts"
+    night: "nachts",
   },
   abbreviated: {
     am: "vorm.",
@@ -6646,7 +6670,7 @@ var formattingDayPeriodValues18 = {
     morning: "morgens",
     afternoon: "nachmittags",
     evening: "abends",
-    night: "nachts"
+    night: "nachts",
   },
   wide: {
     am: "vormittags",
@@ -6656,8 +6680,8 @@ var formattingDayPeriodValues18 = {
     morning: "morgens",
     afternoon: "nachmittags",
     evening: "abends",
-    night: "nachts"
-  }
+    night: "nachts",
+  },
 };
 var ordinalNumber19 = (dirtyNumber) => {
   const number = Number(dirtyNumber);
@@ -6667,28 +6691,28 @@ var localize19 = {
   ordinalNumber: ordinalNumber19,
   era: buildLocalizeFn({
     values: eraValues19,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues19,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues19,
     formattingValues: formattingMonthValues5,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues19,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues19,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues18,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/de/_lib/match.js
@@ -6697,23 +6721,24 @@ var parseOrdinalNumberPattern19 = /\d+/i;
 var matchEraPatterns19 = {
   narrow: /^(v\.? ?Chr\.?|n\.? ?Chr\.?)/i,
   abbreviated: /^(v\.? ?Chr\.?|n\.? ?Chr\.?)/i,
-  wide: /^(vor Christus|vor unserer Zeitrechnung|nach Christus|unserer Zeitrechnung)/i
+  wide: /^(vor Christus|vor unserer Zeitrechnung|nach Christus|unserer Zeitrechnung)/i,
 };
 var parseEraPatterns19 = {
-  any: [/^v/i, /^n/i]
+  any: [/^v/i, /^n/i],
 };
 var matchQuarterPatterns19 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234](\.)? Quartal/i
+  wide: /^[1234](\.)? Quartal/i,
 };
 var parseQuarterPatterns19 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns19 = {
   narrow: /^[jfmasond]/i,
-  abbreviated: /^(j[aä]n|feb|mär[z]?|apr|mai|jun[i]?|jul[i]?|aug|sep|okt|nov|dez)\.?/i,
-  wide: /^(januar|februar|märz|april|mai|juni|juli|august|september|oktober|november|dezember)/i
+  abbreviated:
+    /^(j[aä]n|feb|mär[z]?|apr|mai|jun[i]?|jul[i]?|aug|sep|okt|nov|dez)\.?/i,
+  wide: /^(januar|februar|märz|april|mai|juni|juli|august|september|oktober|november|dezember)/i,
 };
 var parseMonthPatterns19 = {
   narrow: [
@@ -6728,7 +6753,7 @@ var parseMonthPatterns19 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^j[aä]/i,
@@ -6742,22 +6767,23 @@ var parseMonthPatterns19 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns19 = {
   narrow: /^[smdmf]/i,
   short: /^(so|mo|di|mi|do|fr|sa)/i,
   abbreviated: /^(son?|mon?|die?|mit?|don?|fre?|sam?)\.?/i,
-  wide: /^(sonntag|montag|dienstag|mittwoch|donnerstag|freitag|samstag)/i
+  wide: /^(sonntag|montag|dienstag|mittwoch|donnerstag|freitag|samstag)/i,
 };
 var parseDayPatterns19 = {
-  any: [/^so/i, /^mo/i, /^di/i, /^mi/i, /^do/i, /^f/i, /^sa/i]
+  any: [/^so/i, /^mo/i, /^di/i, /^mi/i, /^do/i, /^f/i, /^sa/i],
 };
 var matchDayPeriodPatterns19 = {
   narrow: /^(vm\.?|nm\.?|Mitternacht|Mittag|morgens|nachm\.?|abends|nachts)/i,
-  abbreviated: /^(vorm\.?|nachm\.?|Mitternacht|Mittag|morgens|nachm\.?|abends|nachts)/i,
-  wide: /^(vormittags|nachmittags|Mitternacht|Mittag|morgens|nachmittags|abends|nachts)/i
+  abbreviated:
+    /^(vorm\.?|nachm\.?|Mitternacht|Mittag|morgens|nachm\.?|abends|nachts)/i,
+  wide: /^(vormittags|nachmittags|Mitternacht|Mittag|morgens|nachmittags|abends|nachts)/i,
 };
 var parseDayPeriodPatterns19 = {
   any: {
@@ -6769,59 +6795,59 @@ var parseDayPeriodPatterns19 = {
     afternoon: /nachmittags/i,
     // will never be matched. Afternoon is matched by `pm`
     evening: /abends/i,
-    night: /nachts/i
+    night: /nachts/i,
     // will never be matched. Night is matched by `pm`
-  }
+  },
 };
 var match19 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern19,
     parsePattern: parseOrdinalNumberPattern19,
-    valueCallback: (value) => parseInt(value)
+    valueCallback: (value) => parseInt(value),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns19,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns19,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns19,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns19,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns19,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns19,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns19,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns19,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns19,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPeriodPatterns19,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/de-AT/_lib/localize.js
 var eraValues20 = {
   narrow: ["v.Chr.", "n.Chr."],
   abbreviated: ["v.Chr.", "n.Chr."],
-  wide: ["vor Christus", "nach Christus"]
+  wide: ["vor Christus", "nach Christus"],
 };
 var quarterValues20 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["1. Quartal", "2. Quartal", "3. Quartal", "4. Quartal"]
+  wide: ["1. Quartal", "2. Quartal", "3. Quartal", "4. Quartal"],
 };
 var monthValues20 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -6837,7 +6863,7 @@ var monthValues20 = {
     "Sep",
     "Okt",
     "Nov",
-    "Dez"
+    "Dez",
   ],
   wide: [
     "Jänner",
@@ -6851,8 +6877,8 @@ var monthValues20 = {
     "September",
     "Oktober",
     "November",
-    "Dezember"
-  ]
+    "Dezember",
+  ],
 };
 var formattingMonthValues6 = {
   narrow: monthValues20.narrow,
@@ -6868,9 +6894,9 @@ var formattingMonthValues6 = {
     "Sep.",
     "Okt.",
     "Nov.",
-    "Dez."
+    "Dez.",
   ],
-  wide: monthValues20.wide
+  wide: monthValues20.wide,
 };
 var dayValues20 = {
   narrow: ["S", "M", "D", "M", "D", "F", "S"],
@@ -6883,8 +6909,8 @@ var dayValues20 = {
     "Mittwoch",
     "Donnerstag",
     "Freitag",
-    "Samstag"
-  ]
+    "Samstag",
+  ],
 };
 var dayPeriodValues20 = {
   narrow: {
@@ -6895,7 +6921,7 @@ var dayPeriodValues20 = {
     morning: "Morgen",
     afternoon: "Nachm.",
     evening: "Abend",
-    night: "Nacht"
+    night: "Nacht",
   },
   abbreviated: {
     am: "vorm.",
@@ -6905,7 +6931,7 @@ var dayPeriodValues20 = {
     morning: "Morgen",
     afternoon: "Nachmittag",
     evening: "Abend",
-    night: "Nacht"
+    night: "Nacht",
   },
   wide: {
     am: "vormittags",
@@ -6915,8 +6941,8 @@ var dayPeriodValues20 = {
     morning: "Morgen",
     afternoon: "Nachmittag",
     evening: "Abend",
-    night: "Nacht"
-  }
+    night: "Nacht",
+  },
 };
 var formattingDayPeriodValues19 = {
   narrow: {
@@ -6927,7 +6953,7 @@ var formattingDayPeriodValues19 = {
     morning: "morgens",
     afternoon: "nachm.",
     evening: "abends",
-    night: "nachts"
+    night: "nachts",
   },
   abbreviated: {
     am: "vorm.",
@@ -6937,7 +6963,7 @@ var formattingDayPeriodValues19 = {
     morning: "morgens",
     afternoon: "nachmittags",
     evening: "abends",
-    night: "nachts"
+    night: "nachts",
   },
   wide: {
     am: "vormittags",
@@ -6947,8 +6973,8 @@ var formattingDayPeriodValues19 = {
     morning: "morgens",
     afternoon: "nachmittags",
     evening: "abends",
-    night: "nachts"
-  }
+    night: "nachts",
+  },
 };
 var ordinalNumber20 = (dirtyNumber) => {
   const number = Number(dirtyNumber);
@@ -6958,28 +6984,28 @@ var localize20 = {
   ordinalNumber: ordinalNumber20,
   era: buildLocalizeFn({
     values: eraValues20,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues20,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues20,
     formattingValues: formattingMonthValues6,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues20,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues20,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues19,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/el/_lib/formatLong.js
@@ -6987,45 +7013,45 @@ var dateFormats20 = {
   full: "EEEE, d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
-  short: "d/M/yy"
+  short: "d/M/yy",
 };
 var timeFormats20 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats20 = {
   full: "{{date}} - {{time}}",
   long: "{{date}} - {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong20 = {
   date: buildFormatLongFn({
     formats: dateFormats20,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats20,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats20,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/el/_lib/localize.js
 var eraValues21 = {
   narrow: ["πΧ", "μΧ"],
   abbreviated: ["π.Χ.", "μ.Χ."],
-  wide: ["προ Χριστού", "μετά Χριστόν"]
+  wide: ["προ Χριστού", "μετά Χριστόν"],
 };
 var quarterValues21 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Τ1", "Τ2", "Τ3", "Τ4"],
-  wide: ["1ο τρίμηνο", "2ο τρίμηνο", "3ο τρίμηνο", "4ο τρίμηνο"]
+  wide: ["1ο τρίμηνο", "2ο τρίμηνο", "3ο τρίμηνο", "4ο τρίμηνο"],
 };
 var monthValues21 = {
   narrow: ["Ι", "Φ", "Μ", "Α", "Μ", "Ι", "Ι", "Α", "Σ", "Ο", "Ν", "Δ"],
@@ -7041,7 +7067,7 @@ var monthValues21 = {
     "Σεπ",
     "Οκτ",
     "Νοέ",
-    "Δεκ"
+    "Δεκ",
   ],
   wide: [
     "Ιανουάριος",
@@ -7055,8 +7081,8 @@ var monthValues21 = {
     "Σεπτέμβριος",
     "Οκτώβριος",
     "Νοέμβριος",
-    "Δεκέμβριος"
-  ]
+    "Δεκέμβριος",
+  ],
 };
 var formattingMonthValues7 = {
   narrow: ["Ι", "Φ", "Μ", "Α", "Μ", "Ι", "Ι", "Α", "Σ", "Ο", "Ν", "Δ"],
@@ -7072,7 +7098,7 @@ var formattingMonthValues7 = {
     "Σεπ",
     "Οκτ",
     "Νοε",
-    "Δεκ"
+    "Δεκ",
   ],
   wide: [
     "Ιανουαρίου",
@@ -7086,8 +7112,8 @@ var formattingMonthValues7 = {
     "Σεπτεμβρίου",
     "Οκτωβρίου",
     "Νοεμβρίου",
-    "Δεκεμβρίου"
-  ]
+    "Δεκεμβρίου",
+  ],
 };
 var dayValues21 = {
   narrow: ["Κ", "Δ", "T", "Τ", "Π", "Π", "Σ"],
@@ -7100,8 +7126,8 @@ var dayValues21 = {
     "Τετάρτη",
     "Πέμπτη",
     "Παρασκευή",
-    "Σάββατο"
-  ]
+    "Σάββατο",
+  ],
 };
 var dayPeriodValues21 = {
   narrow: {
@@ -7112,7 +7138,7 @@ var dayPeriodValues21 = {
     morning: "πρωί",
     afternoon: "απόγευμα",
     evening: "βράδυ",
-    night: "νύχτα"
+    night: "νύχτα",
   },
   abbreviated: {
     am: "π.μ.",
@@ -7122,7 +7148,7 @@ var dayPeriodValues21 = {
     morning: "πρωί",
     afternoon: "απόγευμα",
     evening: "βράδυ",
-    night: "νύχτα"
+    night: "νύχτα",
   },
   wide: {
     am: "π.μ.",
@@ -7132,8 +7158,8 @@ var dayPeriodValues21 = {
     morning: "πρωί",
     afternoon: "απόγευμα",
     evening: "βράδυ",
-    night: "νύχτα"
-  }
+    night: "νύχτα",
+  },
 };
 var ordinalNumber21 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
@@ -7141,7 +7167,13 @@ var ordinalNumber21 = (dirtyNumber, options) => {
   let suffix;
   if (unit === "year" || unit === "month") {
     suffix = "ος";
-  } else if (unit === "week" || unit === "dayOfYear" || unit === "day" || unit === "hour" || unit === "date") {
+  } else if (
+    unit === "week" ||
+    unit === "dayOfYear" ||
+    unit === "day" ||
+    unit === "hour" ||
+    unit === "date"
+  ) {
     suffix = "η";
   } else {
     suffix = "ο";
@@ -7152,27 +7184,27 @@ var localize21 = {
   ordinalNumber: ordinalNumber21,
   era: buildLocalizeFn({
     values: eraValues21,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues21,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues21,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues7,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues21,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues21,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/el/_lib/match.js
@@ -7181,23 +7213,24 @@ var parseOrdinalNumberPattern20 = /\d+/i;
 var matchEraPatterns20 = {
   narrow: /^(πΧ|μΧ)/i,
   abbreviated: /^(π\.?\s?χ\.?|π\.?\s?κ\.?\s?χ\.?|μ\.?\s?χ\.?|κ\.?\s?χ\.?)/i,
-  wide: /^(προ Χριστο(ύ|υ)|πριν απ(ό|ο) την Κοιν(ή|η) Χρονολογ(ί|ι)α|μετ(ά|α) Χριστ(ό|ο)ν|Κοιν(ή|η) Χρονολογ(ί|ι)α)/i
+  wide: /^(προ Χριστο(ύ|υ)|πριν απ(ό|ο) την Κοιν(ή|η) Χρονολογ(ί|ι)α|μετ(ά|α) Χριστ(ό|ο)ν|Κοιν(ή|η) Χρονολογ(ί|ι)α)/i,
 };
 var parseEraPatterns20 = {
-  any: [/^π/i, /^(μ|κ)/i]
+  any: [/^π/i, /^(μ|κ)/i],
 };
 var matchQuarterPatterns20 = {
   narrow: /^[1234]/i,
   abbreviated: /^τ[1234]/i,
-  wide: /^[1234]ο? τρ(ί|ι)μηνο/i
+  wide: /^[1234]ο? τρ(ί|ι)μηνο/i,
 };
 var parseQuarterPatterns20 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns20 = {
   narrow: /^[ιφμαμιιασονδ]/i,
-  abbreviated: /^(ιαν|φεβ|μ[άα]ρ|απρ|μ[άα][ιΐ]|ιο[ύυ]ν|ιο[ύυ]λ|α[ύυ]γ|σεπ|οκτ|νο[έε]|δεκ)/i,
-  wide: /^(μ[άα][ιΐ]|α[ύυ]γο[υύ]στ)(ος|ου)|(ιανου[άα]ρ|φεβρου[άα]ρ|μ[άα]ρτ|απρ[ίι]λ|ιο[ύυ]ν|ιο[ύυ]λ|σεπτ[έε]μβρ|οκτ[ώω]βρ|νο[έε]μβρ|δεκ[έε]μβρ)(ιος|ίου)/i
+  abbreviated:
+    /^(ιαν|φεβ|μ[άα]ρ|απρ|μ[άα][ιΐ]|ιο[ύυ]ν|ιο[ύυ]λ|α[ύυ]γ|σεπ|οκτ|νο[έε]|δεκ)/i,
+  wide: /^(μ[άα][ιΐ]|α[ύυ]γο[υύ]στ)(ος|ου)|(ιανου[άα]ρ|φεβρου[άα]ρ|μ[άα]ρτ|απρ[ίι]λ|ιο[ύυ]ν|ιο[ύυ]λ|σεπτ[έε]μβρ|οκτ[ώω]βρ|νο[έε]μβρ|δεκ[έε]μβρ)(ιος|ίου)/i,
 };
 var parseMonthPatterns20 = {
   narrow: [
@@ -7212,7 +7245,7 @@ var parseMonthPatterns20 = {
     /^σ/i,
     /^ο/i,
     /^ν/i,
-    /^δ/i
+    /^δ/i,
   ],
   any: [
     /^ια/i,
@@ -7226,22 +7259,23 @@ var parseMonthPatterns20 = {
     /^σ/i,
     /^ο/i,
     /^ν/i,
-    /^δ/i
-  ]
+    /^δ/i,
+  ],
 };
 var matchDayPatterns20 = {
   narrow: /^[κδτπσ]/i,
   short: /^(κυ|δε|τρ|τε|π[εέ]|π[αά]|σ[αά])/i,
   abbreviated: /^(κυρ|δευ|τρι|τετ|πεμ|παρ|σαβ)/i,
-  wide: /^(κυριακ(ή|η)|δευτ(έ|ε)ρα|τρ(ί|ι)τη|τετ(ά|α)ρτη|π(έ|ε)μπτη|παρασκευ(ή|η)|σ(ά|α)ββατο)/i
+  wide: /^(κυριακ(ή|η)|δευτ(έ|ε)ρα|τρ(ί|ι)τη|τετ(ά|α)ρτη|π(έ|ε)μπτη|παρασκευ(ή|η)|σ(ά|α)ββατο)/i,
 };
 var parseDayPatterns20 = {
   narrow: [/^κ/i, /^δ/i, /^τ/i, /^τ/i, /^π/i, /^π/i, /^σ/i],
-  any: [/^κ/i, /^δ/i, /^τρ/i, /^τε/i, /^π[εέ]/i, /^π[αά]/i, /^σ/i]
+  any: [/^κ/i, /^δ/i, /^τρ/i, /^τε/i, /^π[εέ]/i, /^π[αά]/i, /^σ/i],
 };
 var matchDayPeriodPatterns20 = {
-  narrow: /^(πμ|μμ|μεσ(ά|α)νυχτα|μεσημ(έ|ε)ρι|πρω(ί|ι)|απ(ό|ο)γευμα|βρ(ά|α)δυ|ν(ύ|υ)χτα)/i,
-  any: /^([πμ]\.?\s?μ\.?|μεσ(ά|α)νυχτα|μεσημ(έ|ε)ρι|πρω(ί|ι)|απ(ό|ο)γευμα|βρ(ά|α)δυ|ν(ύ|υ)χτα)/i
+  narrow:
+    /^(πμ|μμ|μεσ(ά|α)νυχτα|μεσημ(έ|ε)ρι|πρω(ί|ι)|απ(ό|ο)γευμα|βρ(ά|α)δυ|ν(ύ|υ)χτα)/i,
+  any: /^([πμ]\.?\s?μ\.?|μεσ(ά|α)νυχτα|μεσημ(έ|ε)ρι|πρω(ί|ι)|απ(ό|ο)γευμα|βρ(ά|α)δυ|ν(ύ|υ)χτα)/i,
 };
 var parseDayPeriodPatterns20 = {
   any: {
@@ -7252,46 +7286,46 @@ var parseDayPeriodPatterns20 = {
     morning: /πρω(ί|ι)/i,
     afternoon: /απ(ό|ο)γευμα/i,
     evening: /βρ(ά|α)δυ/i,
-    night: /ν(ύ|υ)χτα/i
-  }
+    night: /ν(ύ|υ)χτα/i,
+  },
 };
 var match20 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern20,
     parsePattern: parseOrdinalNumberPattern20,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns20,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns20,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns20,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns20,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns20,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns20,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns20,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns20,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns20,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns20,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/en-AU/_lib/formatLong.js
@@ -7299,33 +7333,33 @@ var dateFormats21 = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats21 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats21 = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong21 = {
   date: buildFormatLongFn({
     formats: dateFormats21,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats21,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats21,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/en-CA/_lib/formatLong.js
@@ -7333,33 +7367,33 @@ var dateFormats22 = {
   full: "EEEE, MMMM do, yyyy",
   long: "MMMM do, yyyy",
   medium: "MMM d, yyyy",
-  short: "yyyy-MM-dd"
+  short: "yyyy-MM-dd",
 };
 var timeFormats22 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats22 = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong22 = {
   date: buildFormatLongFn({
     formats: dateFormats22,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats22,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats22,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/en-GB/_lib/formatLong.js
@@ -7367,33 +7401,33 @@ var dateFormats23 = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats23 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats23 = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong23 = {
   date: buildFormatLongFn({
     formats: dateFormats23,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats23,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats23,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/en-IN/_lib/formatLong.js
@@ -7401,33 +7435,33 @@ var dateFormats24 = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM, yyyy",
   medium: "d MMM, yyyy",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats24 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats24 = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong24 = {
   date: buildFormatLongFn({
     formats: dateFormats24,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats24,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats24,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/en-NZ/_lib/formatLong.js
@@ -7435,33 +7469,33 @@ var dateFormats25 = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats25 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats25 = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong25 = {
   date: buildFormatLongFn({
     formats: dateFormats25,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats25,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats25,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/en-ZA/_lib/formatLong.js
@@ -7469,33 +7503,33 @@ var dateFormats26 = {
   full: "EEEE, dd MMMM yyyy",
   long: "dd MMMM yyyy",
   medium: "dd MMM yyyy",
-  short: "yyyy/MM/dd"
+  short: "yyyy/MM/dd",
 };
 var timeFormats26 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats26 = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong26 = {
   date: buildFormatLongFn({
     formats: dateFormats26,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats26,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats26,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/eo/_lib/formatLong.js
@@ -7503,37 +7537,37 @@ var dateFormats27 = {
   full: "EEEE, do 'de' MMMM y",
   long: "y-MMMM-dd",
   medium: "y-MMM-dd",
-  short: "yyyy-MM-dd"
+  short: "yyyy-MM-dd",
 };
 var timeFormats27 = {
   full: "Ho 'horo kaj' m:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats27 = {
-  any: "{{date}} {{time}}"
+  any: "{{date}} {{time}}",
 };
 var formatLong27 = {
   date: buildFormatLongFn({
     formats: dateFormats27,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats27,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats27,
-    defaultWidth: "any"
-  })
+    defaultWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/eo/_lib/localize.js
 var eraValues22 = {
   narrow: ["aK", "pK"],
   abbreviated: ["a.K.E.", "p.K.E."],
-  wide: ["antaŭ Komuna Erao", "Komuna Erao"]
+  wide: ["antaŭ Komuna Erao", "Komuna Erao"],
 };
 var quarterValues22 = {
   narrow: ["1", "2", "3", "4"],
@@ -7542,8 +7576,8 @@ var quarterValues22 = {
     "1-a kvaronjaro",
     "2-a kvaronjaro",
     "3-a kvaronjaro",
-    "4-a kvaronjaro"
-  ]
+    "4-a kvaronjaro",
+  ],
 };
 var monthValues22 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -7559,7 +7593,7 @@ var monthValues22 = {
     "sep",
     "okt",
     "nov",
-    "dec"
+    "dec",
   ],
   wide: [
     "januaro",
@@ -7573,8 +7607,8 @@ var monthValues22 = {
     "septembro",
     "oktobro",
     "novembro",
-    "decembro"
-  ]
+    "decembro",
+  ],
 };
 var dayValues22 = {
   narrow: ["D", "L", "M", "M", "Ĵ", "V", "S"],
@@ -7587,8 +7621,8 @@ var dayValues22 = {
     "merkredo",
     "ĵaŭdo",
     "vendredo",
-    "sabato"
-  ]
+    "sabato",
+  ],
 };
 var dayPeriodValues22 = {
   narrow: {
@@ -7599,7 +7633,7 @@ var dayPeriodValues22 = {
     morning: "matene",
     afternoon: "posttagmeze",
     evening: "vespere",
-    night: "nokte"
+    night: "nokte",
   },
   abbreviated: {
     am: "a.t.m.",
@@ -7609,7 +7643,7 @@ var dayPeriodValues22 = {
     morning: "matene",
     afternoon: "posttagmeze",
     evening: "vespere",
-    night: "nokte"
+    night: "nokte",
   },
   wide: {
     am: "antaŭtagmeze",
@@ -7619,8 +7653,8 @@ var dayPeriodValues22 = {
     morning: "matene",
     afternoon: "posttagmeze",
     evening: "vespere",
-    night: "nokte"
-  }
+    night: "nokte",
+  },
 };
 var ordinalNumber22 = (dirtyNumber) => {
   const number = Number(dirtyNumber);
@@ -7630,27 +7664,27 @@ var localize23 = {
   ordinalNumber: ordinalNumber22,
   era: buildLocalizeFn({
     values: eraValues22,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues22,
     defaultWidth: "wide",
-    argumentCallback: function(quarter) {
+    argumentCallback: function (quarter) {
       return Number(quarter) - 1;
-    }
+    },
   }),
   month: buildLocalizeFn({
     values: monthValues22,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues22,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues22,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/eo/_lib/match.js
@@ -7659,23 +7693,23 @@ var parseOrdinalNumberPattern21 = /\d+/i;
 var matchEraPatterns21 = {
   narrow: /^([ap]k)/i,
   abbreviated: /^([ap]\.?\s?k\.?\s?e\.?)/i,
-  wide: /^((antaǔ |post )?komuna erao)/i
+  wide: /^((antaǔ |post )?komuna erao)/i,
 };
 var parseEraPatterns21 = {
-  any: [/^a/i, /^[kp]/i]
+  any: [/^a/i, /^[kp]/i],
 };
 var matchQuarterPatterns21 = {
   narrow: /^[1234]/i,
   abbreviated: /^k[1234]/i,
-  wide: /^[1234](-?a)? kvaronjaro/i
+  wide: /^[1234](-?a)? kvaronjaro/i,
 };
 var parseQuarterPatterns21 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns21 = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mar|apr|maj|jun|jul|a(ŭ|ux|uh|u)g|sep|okt|nov|dec)/i,
-  wide: /^(januaro|februaro|marto|aprilo|majo|junio|julio|a(ŭ|ux|uh|u)gusto|septembro|oktobro|novembro|decembro)/i
+  wide: /^(januaro|februaro|marto|aprilo|majo|junio|julio|a(ŭ|ux|uh|u)gusto|septembro|oktobro|novembro|decembro)/i,
 };
 var parseMonthPatterns21 = {
   narrow: [
@@ -7690,7 +7724,7 @@ var parseMonthPatterns21 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -7704,23 +7738,24 @@ var parseMonthPatterns21 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns21 = {
   narrow: /^[dlmĵjvs]/i,
   short: /^(di|lu|ma|me|(ĵ|jx|jh|j)a|ve|sa)/i,
   abbreviated: /^(dim|lun|mar|mer|(ĵ|jx|jh|j)a(ŭ|ux|uh|u)|ven|sab)/i,
-  wide: /^(diman(ĉ|cx|ch|c)o|lundo|mardo|merkredo|(ĵ|jx|jh|j)a(ŭ|ux|uh|u)do|vendredo|sabato)/i
+  wide: /^(diman(ĉ|cx|ch|c)o|lundo|mardo|merkredo|(ĵ|jx|jh|j)a(ŭ|ux|uh|u)do|vendredo|sabato)/i,
 };
 var parseDayPatterns21 = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^(j|ĵ)/i, /^v/i, /^s/i],
-  any: [/^d/i, /^l/i, /^ma/i, /^me/i, /^(j|ĵ)/i, /^v/i, /^s/i]
+  any: [/^d/i, /^l/i, /^ma/i, /^me/i, /^(j|ĵ)/i, /^v/i, /^s/i],
 };
 var matchDayPeriodPatterns21 = {
   narrow: /^([ap]|(posttagmez|noktomez|tagmez|maten|vesper|nokt)[eo])/i,
-  abbreviated: /^([ap][.\s]?t[.\s]?m[.\s]?|(posttagmez|noktomez|tagmez|maten|vesper|nokt)[eo])/i,
-  wide: /^(anta(ŭ|ux)tagmez|posttagmez|noktomez|tagmez|maten|vesper|nokt)[eo]/i
+  abbreviated:
+    /^([ap][.\s]?t[.\s]?m[.\s]?|(posttagmez|noktomez|tagmez|maten|vesper|nokt)[eo])/i,
+  wide: /^(anta(ŭ|ux)tagmez|posttagmez|noktomez|tagmez|maten|vesper|nokt)[eo]/i,
 };
 var parseDayPeriodPatterns21 = {
   any: {
@@ -7731,50 +7766,50 @@ var parseDayPeriodPatterns21 = {
     morning: /^m/i,
     afternoon: /^posttagmeze/i,
     evening: /^v/i,
-    night: /^n/i
-  }
+    night: /^n/i,
+  },
 };
 var match22 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern21,
     parsePattern: parseOrdinalNumberPattern21,
-    valueCallback: function(value) {
+    valueCallback: function (value) {
       return parseInt(value, 10);
-    }
+    },
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns21,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns21,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns21,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns21,
     defaultParseWidth: "any",
-    valueCallback: function(index) {
+    valueCallback: function (index) {
       return index + 1;
-    }
+    },
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns21,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns21,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns21,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns21,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns21,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPeriodPatterns21,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/es/_lib/formatLong.js
@@ -7782,45 +7817,45 @@ var dateFormats28 = {
   full: "EEEE, d 'de' MMMM 'de' y",
   long: "d 'de' MMMM 'de' y",
   medium: "d MMM y",
-  short: "dd/MM/y"
+  short: "dd/MM/y",
 };
 var timeFormats28 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats28 = {
   full: "{{date}} 'a las' {{time}}",
   long: "{{date}} 'a las' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong28 = {
   date: buildFormatLongFn({
     formats: dateFormats28,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats28,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats28,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/es/_lib/localize.js
 var eraValues23 = {
   narrow: ["AC", "DC"],
   abbreviated: ["AC", "DC"],
-  wide: ["antes de cristo", "después de cristo"]
+  wide: ["antes de cristo", "después de cristo"],
 };
 var quarterValues23 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["T1", "T2", "T3", "T4"],
-  wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"]
+  wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"],
 };
 var monthValues23 = {
   narrow: ["e", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
@@ -7836,7 +7871,7 @@ var monthValues23 = {
     "sep",
     "oct",
     "nov",
-    "dic"
+    "dic",
   ],
   wide: [
     "enero",
@@ -7850,8 +7885,8 @@ var monthValues23 = {
     "septiembre",
     "octubre",
     "noviembre",
-    "diciembre"
-  ]
+    "diciembre",
+  ],
 };
 var dayValues23 = {
   narrow: ["d", "l", "m", "m", "j", "v", "s"],
@@ -7864,8 +7899,8 @@ var dayValues23 = {
     "miércoles",
     "jueves",
     "viernes",
-    "sábado"
-  ]
+    "sábado",
+  ],
 };
 var dayPeriodValues23 = {
   narrow: {
@@ -7876,7 +7911,7 @@ var dayPeriodValues23 = {
     morning: "mañana",
     afternoon: "tarde",
     evening: "tarde",
-    night: "noche"
+    night: "noche",
   },
   abbreviated: {
     am: "AM",
@@ -7886,7 +7921,7 @@ var dayPeriodValues23 = {
     morning: "mañana",
     afternoon: "tarde",
     evening: "tarde",
-    night: "noche"
+    night: "noche",
   },
   wide: {
     am: "a.m.",
@@ -7896,8 +7931,8 @@ var dayPeriodValues23 = {
     morning: "mañana",
     afternoon: "tarde",
     evening: "tarde",
-    night: "noche"
-  }
+    night: "noche",
+  },
 };
 var formattingDayPeriodValues20 = {
   narrow: {
@@ -7908,7 +7943,7 @@ var formattingDayPeriodValues20 = {
     morning: "de la mañana",
     afternoon: "de la tarde",
     evening: "de la tarde",
-    night: "de la noche"
+    night: "de la noche",
   },
   abbreviated: {
     am: "AM",
@@ -7918,7 +7953,7 @@ var formattingDayPeriodValues20 = {
     morning: "de la mañana",
     afternoon: "de la tarde",
     evening: "de la tarde",
-    night: "de la noche"
+    night: "de la noche",
   },
   wide: {
     am: "a.m.",
@@ -7928,8 +7963,8 @@ var formattingDayPeriodValues20 = {
     morning: "de la mañana",
     afternoon: "de la tarde",
     evening: "de la tarde",
-    night: "de la noche"
-  }
+    night: "de la noche",
+  },
 };
 var ordinalNumber23 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -7939,27 +7974,27 @@ var localize24 = {
   ordinalNumber: ordinalNumber23,
   era: buildLocalizeFn({
     values: eraValues23,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues23,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => Number(quarter) - 1
+    argumentCallback: (quarter) => Number(quarter) - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues23,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues23,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues23,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues20,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/es/_lib/match.js
@@ -7968,27 +8003,27 @@ var parseOrdinalNumberPattern22 = /\d+/i;
 var matchEraPatterns22 = {
   narrow: /^(ac|dc|a|d)/i,
   abbreviated: /^(a\.?\s?c\.?|a\.?\s?e\.?\s?c\.?|d\.?\s?c\.?|e\.?\s?c\.?)/i,
-  wide: /^(antes de cristo|antes de la era com[uú]n|despu[eé]s de cristo|era com[uú]n)/i
+  wide: /^(antes de cristo|antes de la era com[uú]n|despu[eé]s de cristo|era com[uú]n)/i,
 };
 var parseEraPatterns22 = {
   any: [/^ac/i, /^dc/i],
   wide: [
     /^(antes de cristo|antes de la era com[uú]n)/i,
-    /^(despu[eé]s de cristo|era com[uú]n)/i
-  ]
+    /^(despu[eé]s de cristo|era com[uú]n)/i,
+  ],
 };
 var matchQuarterPatterns22 = {
   narrow: /^[1234]/i,
   abbreviated: /^T[1234]/i,
-  wide: /^[1234](º)? trimestre/i
+  wide: /^[1234](º)? trimestre/i,
 };
 var parseQuarterPatterns22 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns22 = {
   narrow: /^[efmajsond]/i,
   abbreviated: /^(ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)/i,
-  wide: /^(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i
+  wide: /^(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i,
 };
 var parseMonthPatterns22 = {
   narrow: [
@@ -8003,7 +8038,7 @@ var parseMonthPatterns22 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^en/i,
@@ -8017,22 +8052,22 @@ var parseMonthPatterns22 = {
     /^sep/i,
     /^oct/i,
     /^nov/i,
-    /^dic/i
-  ]
+    /^dic/i,
+  ],
 };
 var matchDayPatterns22 = {
   narrow: /^[dlmjvs]/i,
   short: /^(do|lu|ma|mi|ju|vi|s[áa])/i,
   abbreviated: /^(dom|lun|mar|mi[ée]|jue|vie|s[áa]b)/i,
-  wide: /^(domingo|lunes|martes|mi[ée]rcoles|jueves|viernes|s[áa]bado)/i
+  wide: /^(domingo|lunes|martes|mi[ée]rcoles|jueves|viernes|s[áa]bado)/i,
 };
 var parseDayPatterns22 = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^j/i, /^v/i, /^s/i],
-  any: [/^do/i, /^lu/i, /^ma/i, /^mi/i, /^ju/i, /^vi/i, /^sa/i]
+  any: [/^do/i, /^lu/i, /^ma/i, /^mi/i, /^ju/i, /^vi/i, /^sa/i],
 };
 var matchDayPeriodPatterns22 = {
   narrow: /^(a|p|mn|md|(de la|a las) (mañana|tarde|noche))/i,
-  any: /^([ap]\.?\s?m\.?|medianoche|mediodia|(de la|a las) (mañana|tarde|noche))/i
+  any: /^([ap]\.?\s?m\.?|medianoche|mediodia|(de la|a las) (mañana|tarde|noche))/i,
 };
 var parseDayPeriodPatterns22 = {
   any: {
@@ -8043,48 +8078,48 @@ var parseDayPeriodPatterns22 = {
     morning: /mañana/i,
     afternoon: /tarde/i,
     evening: /tarde/i,
-    night: /noche/i
-  }
+    night: /noche/i,
+  },
 };
 var match23 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern22,
     parsePattern: parseOrdinalNumberPattern22,
-    valueCallback: function(value) {
+    valueCallback: function (value) {
       return parseInt(value, 10);
-    }
+    },
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns22,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns22,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns22,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns22,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns22,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns22,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns22,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns22,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns22,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns22,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/et/_lib/formatLong.js
@@ -8092,45 +8127,45 @@ var dateFormats29 = {
   full: "EEEE, d. MMMM y",
   long: "d. MMMM y",
   medium: "d. MMM y",
-  short: "dd.MM.y"
+  short: "dd.MM.y",
 };
 var timeFormats29 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats29 = {
   full: "{{date}} 'kell' {{time}}",
   long: "{{date}} 'kell' {{time}}",
   medium: "{{date}}. {{time}}",
-  short: "{{date}}. {{time}}"
+  short: "{{date}}. {{time}}",
 };
 var formatLong29 = {
   date: buildFormatLongFn({
     formats: dateFormats29,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats29,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats29,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/et/_lib/localize.js
 var eraValues24 = {
   narrow: ["e.m.a", "m.a.j"],
   abbreviated: ["e.m.a", "m.a.j"],
-  wide: ["enne meie ajaarvamist", "meie ajaarvamise järgi"]
+  wide: ["enne meie ajaarvamist", "meie ajaarvamise järgi"],
 };
 var quarterValues24 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
-  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
+  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"],
 };
 var monthValues24 = {
   narrow: ["J", "V", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -8146,7 +8181,7 @@ var monthValues24 = {
     "sept",
     "okt",
     "nov",
-    "dets"
+    "dets",
   ],
   wide: [
     "jaanuar",
@@ -8160,8 +8195,8 @@ var monthValues24 = {
     "september",
     "oktoober",
     "november",
-    "detsember"
-  ]
+    "detsember",
+  ],
 };
 var dayValues24 = {
   narrow: ["P", "E", "T", "K", "N", "R", "L"],
@@ -8173,7 +8208,7 @@ var dayValues24 = {
     "kolmap.",
     "neljap.",
     "reede.",
-    "laup."
+    "laup.",
   ],
   wide: [
     "pühapäev",
@@ -8182,8 +8217,8 @@ var dayValues24 = {
     "kolmapäev",
     "neljapäev",
     "reede",
-    "laupäev"
-  ]
+    "laupäev",
+  ],
 };
 var dayPeriodValues24 = {
   narrow: {
@@ -8194,7 +8229,7 @@ var dayPeriodValues24 = {
     morning: "hommik",
     afternoon: "pärastlõuna",
     evening: "õhtu",
-    night: "öö"
+    night: "öö",
   },
   abbreviated: {
     am: "AM",
@@ -8204,7 +8239,7 @@ var dayPeriodValues24 = {
     morning: "hommik",
     afternoon: "pärastlõuna",
     evening: "õhtu",
-    night: "öö"
+    night: "öö",
   },
   wide: {
     am: "AM",
@@ -8214,8 +8249,8 @@ var dayPeriodValues24 = {
     morning: "hommik",
     afternoon: "pärastlõuna",
     evening: "õhtu",
-    night: "öö"
-  }
+    night: "öö",
+  },
 };
 var formattingDayPeriodValues21 = {
   narrow: {
@@ -8226,7 +8261,7 @@ var formattingDayPeriodValues21 = {
     morning: "hommikul",
     afternoon: "pärastlõunal",
     evening: "õhtul",
-    night: "öösel"
+    night: "öösel",
   },
   abbreviated: {
     am: "AM",
@@ -8236,7 +8271,7 @@ var formattingDayPeriodValues21 = {
     morning: "hommikul",
     afternoon: "pärastlõunal",
     evening: "õhtul",
-    night: "öösel"
+    night: "öösel",
   },
   wide: {
     am: "AM",
@@ -8246,8 +8281,8 @@ var formattingDayPeriodValues21 = {
     morning: "hommikul",
     afternoon: "pärastlõunal",
     evening: "õhtul",
-    night: "öösel"
-  }
+    night: "öösel",
+  },
 };
 var ordinalNumber24 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -8257,31 +8292,31 @@ var localize25 = {
   ordinalNumber: ordinalNumber24,
   era: buildLocalizeFn({
     values: eraValues24,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues24,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues24,
     defaultWidth: "wide",
     formattingValues: monthValues24,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues24,
     defaultWidth: "wide",
     formattingValues: dayValues24,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues24,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues21,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/et/_lib/match.js
@@ -8290,23 +8325,23 @@ var parseOrdinalNumberPattern23 = /\d+/i;
 var matchEraPatterns23 = {
   narrow: /^(e\.m\.a|m\.a\.j|eKr|pKr)/i,
   abbreviated: /^(e\.m\.a|m\.a\.j|eKr|pKr)/i,
-  wide: /^(enne meie ajaarvamist|meie ajaarvamise järgi|enne Kristust|pärast Kristust)/i
+  wide: /^(enne meie ajaarvamist|meie ajaarvamise järgi|enne Kristust|pärast Kristust)/i,
 };
 var parseEraPatterns23 = {
-  any: [/^e/i, /^(m|p)/i]
+  any: [/^e/i, /^(m|p)/i],
 };
 var matchQuarterPatterns23 = {
   narrow: /^[1234]/i,
   abbreviated: /^K[1234]/i,
-  wide: /^[1234](\.)? kvartal/i
+  wide: /^[1234](\.)? kvartal/i,
 };
 var parseQuarterPatterns23 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns23 = {
   narrow: /^[jvmasond]/i,
   abbreviated: /^(jaan|veebr|märts|apr|mai|juuni|juuli|aug|sept|okt|nov|dets)/i,
-  wide: /^(jaanuar|veebruar|märts|aprill|mai|juuni|juuli|august|september|oktoober|november|detsember)/i
+  wide: /^(jaanuar|veebruar|märts|aprill|mai|juuni|juuli|august|september|oktoober|november|detsember)/i,
 };
 var parseMonthPatterns23 = {
   narrow: [
@@ -8321,7 +8356,7 @@ var parseMonthPatterns23 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -8335,20 +8370,20 @@ var parseMonthPatterns23 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns23 = {
   narrow: /^[petknrl]/i,
   short: /^[petknrl]/i,
   abbreviated: /^(püh?|esm?|tei?|kolm?|nel?|ree?|laup?)\.?/i,
-  wide: /^(pühapäev|esmaspäev|teisipäev|kolmapäev|neljapäev|reede|laupäev)/i
+  wide: /^(pühapäev|esmaspäev|teisipäev|kolmapäev|neljapäev|reede|laupäev)/i,
 };
 var parseDayPatterns23 = {
-  any: [/^p/i, /^e/i, /^t/i, /^k/i, /^n/i, /^r/i, /^l/i]
+  any: [/^p/i, /^e/i, /^t/i, /^k/i, /^n/i, /^r/i, /^l/i],
 };
 var matchDayPeriodPatterns23 = {
-  any: /^(am|pm|keskööl?|keskpäev(al)?|hommik(ul)?|pärastlõunal?|õhtul?|öö(sel)?)/i
+  any: /^(am|pm|keskööl?|keskpäev(al)?|hommik(ul)?|pärastlõunal?|õhtul?|öö(sel)?)/i,
 };
 var parseDayPeriodPatterns23 = {
   any: {
@@ -8359,46 +8394,46 @@ var parseDayPeriodPatterns23 = {
     morning: /hommik/i,
     afternoon: /pärastlõuna/i,
     evening: /õhtu/i,
-    night: /öö/i
-  }
+    night: /öö/i,
+  },
 };
 var match24 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern23,
     parsePattern: parseOrdinalNumberPattern23,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns23,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns23,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns23,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns23,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns23,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns23,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns23,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns23,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns23,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns23,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/eu/_lib/formatLong.js
@@ -8406,40 +8441,40 @@ var dateFormats30 = {
   full: "EEEE, y'ko' MMMM'ren' d'a' y'ren'",
   long: "y'ko' MMMM'ren' d'a'",
   medium: "y MMM d",
-  short: "yy/MM/dd"
+  short: "yy/MM/dd",
 };
 var timeFormats30 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats30 = {
   full: "{{date}} 'tan' {{time}}",
   long: "{{date}} 'tan' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong30 = {
   date: buildFormatLongFn({
     formats: dateFormats30,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats30,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats30,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/eu/_lib/localize.js
 var eraValues25 = {
   narrow: ["k.a.", "k.o."],
   abbreviated: ["k.a.", "k.o."],
-  wide: ["kristo aurretik", "kristo ondoren"]
+  wide: ["kristo aurretik", "kristo ondoren"],
 };
 var quarterValues25 = {
   narrow: ["1", "2", "3", "4"],
@@ -8448,8 +8483,8 @@ var quarterValues25 = {
     "1. hiruhilekoa",
     "2. hiruhilekoa",
     "3. hiruhilekoa",
-    "4. hiruhilekoa"
-  ]
+    "4. hiruhilekoa",
+  ],
 };
 var monthValues25 = {
   narrow: ["u", "o", "m", "a", "m", "e", "u", "a", "i", "u", "a", "a"],
@@ -8465,7 +8500,7 @@ var monthValues25 = {
     "ira",
     "urr",
     "aza",
-    "abe"
+    "abe",
   ],
   wide: [
     "urtarrila",
@@ -8479,8 +8514,8 @@ var monthValues25 = {
     "iraila",
     "urria",
     "azaroa",
-    "abendua"
-  ]
+    "abendua",
+  ],
 };
 var dayValues25 = {
   narrow: ["i", "a", "a", "a", "o", "o", "l"],
@@ -8493,8 +8528,8 @@ var dayValues25 = {
     "asteazkena",
     "osteguna",
     "ostirala",
-    "larunbata"
-  ]
+    "larunbata",
+  ],
 };
 var dayPeriodValues25 = {
   narrow: {
@@ -8505,7 +8540,7 @@ var dayPeriodValues25 = {
     morning: "goiza",
     afternoon: "arratsaldea",
     evening: "arratsaldea",
-    night: "gaua"
+    night: "gaua",
   },
   abbreviated: {
     am: "AM",
@@ -8515,7 +8550,7 @@ var dayPeriodValues25 = {
     morning: "goiza",
     afternoon: "arratsaldea",
     evening: "arratsaldea",
-    night: "gaua"
+    night: "gaua",
   },
   wide: {
     am: "a.m.",
@@ -8525,8 +8560,8 @@ var dayPeriodValues25 = {
     morning: "goiza",
     afternoon: "arratsaldea",
     evening: "arratsaldea",
-    night: "gaua"
-  }
+    night: "gaua",
+  },
 };
 var formattingDayPeriodValues22 = {
   narrow: {
@@ -8537,7 +8572,7 @@ var formattingDayPeriodValues22 = {
     morning: "goizean",
     afternoon: "arratsaldean",
     evening: "arratsaldean",
-    night: "gauean"
+    night: "gauean",
   },
   abbreviated: {
     am: "AM",
@@ -8547,7 +8582,7 @@ var formattingDayPeriodValues22 = {
     morning: "goizean",
     afternoon: "arratsaldean",
     evening: "arratsaldean",
-    night: "gauean"
+    night: "gauean",
   },
   wide: {
     am: "a.m.",
@@ -8557,8 +8592,8 @@ var formattingDayPeriodValues22 = {
     morning: "goizean",
     afternoon: "arratsaldean",
     evening: "arratsaldean",
-    night: "gauean"
-  }
+    night: "gauean",
+  },
 };
 var ordinalNumber25 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -8568,27 +8603,27 @@ var localize26 = {
   ordinalNumber: ordinalNumber25,
   era: buildLocalizeFn({
     values: eraValues25,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues25,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues25,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues25,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues25,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues22,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/eu/_lib/match.js
@@ -8597,25 +8632,25 @@ var parseOrdinalNumberPattern24 = /\d+/i;
 var matchEraPatterns24 = {
   narrow: /^(k.a.|k.o.)/i,
   abbreviated: /^(k.a.|k.o.)/i,
-  wide: /^(kristo aurretik|kristo ondoren)/i
+  wide: /^(kristo aurretik|kristo ondoren)/i,
 };
 var parseEraPatterns24 = {
   narrow: [/^k.a./i, /^k.o./i],
   abbreviated: [/^(k.a.)/i, /^(k.o.)/i],
-  wide: [/^(kristo aurretik)/i, /^(kristo ondoren)/i]
+  wide: [/^(kristo aurretik)/i, /^(kristo ondoren)/i],
 };
 var matchQuarterPatterns24 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]H/i,
-  wide: /^[1234](.)? hiruhilekoa/i
+  wide: /^[1234](.)? hiruhilekoa/i,
 };
 var parseQuarterPatterns24 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns24 = {
   narrow: /^[uomaei]/i,
   abbreviated: /^(urt|ots|mar|api|mai|eka|uzt|abu|ira|urr|aza|abe)/i,
-  wide: /^(urtarrila|otsaila|martxoa|apirila|maiatza|ekaina|uztaila|abuztua|iraila|urria|azaroa|abendua)/i
+  wide: /^(urtarrila|otsaila|martxoa|apirila|maiatza|ekaina|uztaila|abuztua|iraila|urria|azaroa|abendua)/i,
 };
 var parseMonthPatterns24 = {
   narrow: [
@@ -8630,7 +8665,7 @@ var parseMonthPatterns24 = {
     /^i/i,
     /^u/i,
     /^a/i,
-    /^a/i
+    /^a/i,
   ],
   any: [
     /^urt/i,
@@ -8644,14 +8679,14 @@ var parseMonthPatterns24 = {
     /^ira/i,
     /^urr/i,
     /^aza/i,
-    /^abe/i
-  ]
+    /^abe/i,
+  ],
 };
 var matchDayPatterns24 = {
   narrow: /^[iaol]/i,
   short: /^(ig|al|as|az|og|or|lr)/i,
   abbreviated: /^(iga|ast|ast|ast|ost|ost|lar)/i,
-  wide: /^(igandea|astelehena|asteartea|asteazkena|osteguna|ostirala|larunbata)/i
+  wide: /^(igandea|astelehena|asteartea|asteazkena|osteguna|ostirala|larunbata)/i,
 };
 var parseDayPatterns24 = {
   narrow: [/^i/i, /^a/i, /^a/i, /^a/i, /^o/i, /^o/i, /^l/i],
@@ -8664,12 +8699,12 @@ var parseDayPatterns24 = {
     /^asteazkena/i,
     /^osteguna/i,
     /^ostirala/i,
-    /^larunbata/i
-  ]
+    /^larunbata/i,
+  ],
 };
 var matchDayPeriodPatterns24 = {
   narrow: /^(a|p|ge|eg|((goiza|goizean)|arratsaldea|(gaua|gauean)))/i,
-  any: /^([ap]\.?\s?m\.?|gauerdia|eguerdia|((goiza|goizean)|arratsaldea|(gaua|gauean)))/i
+  any: /^([ap]\.?\s?m\.?|gauerdia|eguerdia|((goiza|goizean)|arratsaldea|(gaua|gauean)))/i,
 };
 var parseDayPeriodPatterns24 = {
   narrow: {
@@ -8680,7 +8715,7 @@ var parseDayPeriodPatterns24 = {
     morning: /goiz/i,
     afternoon: /arratsaldea/i,
     evening: /arratsaldea/i,
-    night: /gau/i
+    night: /gau/i,
   },
   any: {
     am: /^a/i,
@@ -8690,46 +8725,46 @@ var parseDayPeriodPatterns24 = {
     morning: /goiz/i,
     afternoon: /arratsaldea/i,
     evening: /arratsaldea/i,
-    night: /gau/i
-  }
+    night: /gau/i,
+  },
 };
 var match25 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern24,
     parsePattern: parseOrdinalNumberPattern24,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns24,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns24,
-    defaultParseWidth: "wide"
+    defaultParseWidth: "wide",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns24,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns24,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns24,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns24,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns24,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns24,
-    defaultParseWidth: "wide"
+    defaultParseWidth: "wide",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns24,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns24,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/fa-IR/_lib/formatLong.js
@@ -8737,45 +8772,45 @@ var dateFormats31 = {
   full: "EEEE do MMMM y",
   long: "do MMMM y",
   medium: "d MMM y",
-  short: "yyyy/MM/dd"
+  short: "yyyy/MM/dd",
 };
 var timeFormats31 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats31 = {
   full: "{{date}} 'در' {{time}}",
   long: "{{date}} 'در' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong31 = {
   date: buildFormatLongFn({
     formats: dateFormats31,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats31,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats31,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/fa-IR/_lib/localize.js
 var eraValues26 = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م.", "ب.م."],
-  wide: ["قبل از میلاد", "بعد از میلاد"]
+  wide: ["قبل از میلاد", "بعد از میلاد"],
 };
 var quarterValues26 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["س‌م1", "س‌م2", "س‌م3", "س‌م4"],
-  wide: ["سه‌ماهه 1", "سه‌ماهه 2", "سه‌ماهه 3", "سه‌ماهه 4"]
+  wide: ["سه‌ماهه 1", "سه‌ماهه 2", "سه‌ماهه 3", "سه‌ماهه 4"],
 };
 var monthValues26 = {
   narrow: ["ژ", "ف", "م", "آ", "م", "ج", "ج", "آ", "س", "ا", "ن", "د"],
@@ -8791,7 +8826,7 @@ var monthValues26 = {
     "سپتـ",
     "اکتـ",
     "نوامـ",
-    "دسامـ"
+    "دسامـ",
   ],
   wide: [
     "ژانویه",
@@ -8805,8 +8840,8 @@ var monthValues26 = {
     "سپتامبر",
     "اکتبر",
     "نوامبر",
-    "دسامبر"
-  ]
+    "دسامبر",
+  ],
 };
 var dayValues26 = {
   narrow: ["ی", "د", "س", "چ", "پ", "ج", "ش"],
@@ -8818,9 +8853,9 @@ var dayValues26 = {
     "چهارشنبه",
     "پنجشنبه",
     "جمعه",
-    "شنبه"
+    "شنبه",
   ],
-  wide: ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"]
+  wide: ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"],
 };
 var dayPeriodValues26 = {
   narrow: {
@@ -8831,7 +8866,7 @@ var dayPeriodValues26 = {
     morning: "ص",
     afternoon: "ب.ظ.",
     evening: "ع",
-    night: "ش"
+    night: "ش",
   },
   abbreviated: {
     am: "ق.ظ.",
@@ -8841,7 +8876,7 @@ var dayPeriodValues26 = {
     morning: "صبح",
     afternoon: "بعدازظهر",
     evening: "عصر",
-    night: "شب"
+    night: "شب",
   },
   wide: {
     am: "قبل‌ازظهر",
@@ -8851,8 +8886,8 @@ var dayPeriodValues26 = {
     morning: "صبح",
     afternoon: "بعدازظهر",
     evening: "عصر",
-    night: "شب"
-  }
+    night: "شب",
+  },
 };
 var formattingDayPeriodValues23 = {
   narrow: {
@@ -8863,7 +8898,7 @@ var formattingDayPeriodValues23 = {
     morning: "ص",
     afternoon: "ب.ظ.",
     evening: "ع",
-    night: "ش"
+    night: "ش",
   },
   abbreviated: {
     am: "ق.ظ.",
@@ -8873,7 +8908,7 @@ var formattingDayPeriodValues23 = {
     morning: "صبح",
     afternoon: "بعدازظهر",
     evening: "عصر",
-    night: "شب"
+    night: "شب",
   },
   wide: {
     am: "قبل‌ازظهر",
@@ -8883,8 +8918,8 @@ var formattingDayPeriodValues23 = {
     morning: "صبح",
     afternoon: "بعدازظهر",
     evening: "عصر",
-    night: "شب"
-  }
+    night: "شب",
+  },
 };
 var ordinalNumber26 = (dirtyNumber, _options) => {
   return String(dirtyNumber);
@@ -8893,27 +8928,27 @@ var localize27 = {
   ordinalNumber: ordinalNumber26,
   era: buildLocalizeFn({
     values: eraValues26,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues26,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues26,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues26,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues26,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues23,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/fa-IR/_lib/match.js
@@ -8922,23 +8957,24 @@ var parseOrdinalNumberPattern25 = /\d+/i;
 var matchEraPatterns25 = {
   narrow: /^(ق|ب)/i,
   abbreviated: /^(ق\.?\s?م\.?|ق\.?\s?د\.?\s?م\.?|م\.?\s?|د\.?\s?م\.?)/i,
-  wide: /^(قبل از میلاد|قبل از دوران مشترک|میلادی|دوران مشترک|بعد از میلاد)/i
+  wide: /^(قبل از میلاد|قبل از دوران مشترک|میلادی|دوران مشترک|بعد از میلاد)/i,
 };
 var parseEraPatterns25 = {
-  any: [/^قبل/i, /^بعد/i]
+  any: [/^قبل/i, /^بعد/i],
 };
 var matchQuarterPatterns25 = {
   narrow: /^[1234]/i,
   abbreviated: /^س‌م[1234]/i,
-  wide: /^سه‌ماهه [1234]/i
+  wide: /^سه‌ماهه [1234]/i,
 };
 var parseQuarterPatterns25 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns25 = {
   narrow: /^[جژفمآاماسند]/i,
-  abbreviated: /^(جنو|ژانـ|ژانویه|فوریه|فور|مارس|آوریل|آپر|مه|می|ژوئن|جون|جول|جولـ|ژوئیه|اوت|آگو|سپتمبر|سپتامبر|اکتبر|اکتوبر|نوامبر|نوامـ|دسامبر|دسامـ|دسم)/i,
-  wide: /^(ژانویه|جنوری|فبروری|فوریه|مارچ|مارس|آپریل|اپریل|ایپریل|آوریل|مه|می|ژوئن|جون|جولای|ژوئیه|آگست|اگست|آگوست|اوت|سپتمبر|سپتامبر|اکتبر|اکتوبر|نوامبر|نومبر|دسامبر|دسمبر)/i
+  abbreviated:
+    /^(جنو|ژانـ|ژانویه|فوریه|فور|مارس|آوریل|آپر|مه|می|ژوئن|جون|جول|جولـ|ژوئیه|اوت|آگو|سپتمبر|سپتامبر|اکتبر|اکتوبر|نوامبر|نوامـ|دسامبر|دسامـ|دسم)/i,
+  wide: /^(ژانویه|جنوری|فبروری|فوریه|مارچ|مارس|آپریل|اپریل|ایپریل|آوریل|مه|می|ژوئن|جون|جولای|ژوئیه|آگست|اگست|آگوست|اوت|سپتمبر|سپتامبر|اکتبر|اکتوبر|نوامبر|نومبر|دسامبر|دسمبر)/i,
 };
 var parseMonthPatterns25 = {
   narrow: [
@@ -8953,7 +8989,7 @@ var parseMonthPatterns25 = {
     /^س/i,
     /^ا/i,
     /^ن/i,
-    /^د/i
+    /^د/i,
   ],
   any: [
     /^ژا/i,
@@ -8967,14 +9003,14 @@ var parseMonthPatterns25 = {
     /^س/i,
     /^(اوک|اک)/i,
     /^ن/i,
-    /^د/i
-  ]
+    /^د/i,
+  ],
 };
 var matchDayPatterns25 = {
   narrow: /^[شیدسچپج]/i,
   short: /^(ش|ج|1ش|2ش|3ش|4ش|5ش)/i,
   abbreviated: /^(یکشنبه|دوشنبه|سه‌شنبه|چهارشنبه|پنج‌شنبه|جمعه|شنبه)/i,
-  wide: /^(یکشنبه|دوشنبه|سه‌شنبه|چهارشنبه|پنج‌شنبه|جمعه|شنبه)/i
+  wide: /^(یکشنبه|دوشنبه|سه‌شنبه|چهارشنبه|پنج‌شنبه|جمعه|شنبه)/i,
 };
 var parseDayPatterns25 = {
   narrow: [/^ی/i, /^دو/i, /^س/i, /^چ/i, /^پ/i, /^ج/i, /^ش/i],
@@ -8985,13 +9021,13 @@ var parseDayPatterns25 = {
     /^(چ|4ش|چهارشنبه)/i,
     /^(پ|5ش|پنجشنبه)/i,
     /^(ج|جمعه)/i,
-    /^(ش|شنبه)/i
-  ]
+    /^(ش|شنبه)/i,
+  ],
 };
 var matchDayPeriodPatterns25 = {
   narrow: /^(ب|ق|ن|ظ|ص|ب.ظ.|ع|ش)/i,
   abbreviated: /^(ق.ظ.|ب.ظ.|نیمه‌شب|ظهر|صبح|بعدازظهر|عصر|شب)/i,
-  wide: /^(قبل‌ازظهر|نیمه‌شب|ظهر|صبح|بعدازظهر|عصر|شب)/i
+  wide: /^(قبل‌ازظهر|نیمه‌شب|ظهر|صبح|بعدازظهر|عصر|شب)/i,
 };
 var parseDayPeriodPatterns25 = {
   any: {
@@ -9002,46 +9038,46 @@ var parseDayPeriodPatterns25 = {
     morning: /(ص|صبح)/i,
     afternoon: /(ب|ب.ظ.|بعدازظهر)/i,
     evening: /(ع|عصر)/i,
-    night: /(ش|شب)/i
-  }
+    night: /(ش|شب)/i,
+  },
 };
 var match26 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern25,
     parsePattern: parseOrdinalNumberPattern25,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns25,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns25,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns25,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns25,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns25,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns25,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns25,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns25,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns25,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPeriodPatterns25,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/fi/_lib/formatLong.js
@@ -9049,45 +9085,45 @@ var dateFormats32 = {
   full: "eeee d. MMMM y",
   long: "d. MMMM y",
   medium: "d. MMM y",
-  short: "d.M.y"
+  short: "d.M.y",
 };
 var timeFormats32 = {
   full: "HH.mm.ss zzzz",
   long: "HH.mm.ss z",
   medium: "HH.mm.ss",
-  short: "HH.mm"
+  short: "HH.mm",
 };
 var dateTimeFormats32 = {
   full: "{{date}} 'klo' {{time}}",
   long: "{{date}} 'klo' {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong32 = {
   date: buildFormatLongFn({
     formats: dateFormats32,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats32,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats32,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/fi/_lib/localize.js
 var eraValues27 = {
   narrow: ["eaa.", "jaa."],
   abbreviated: ["eaa.", "jaa."],
-  wide: ["ennen ajanlaskun alkua", "jälkeen ajanlaskun alun"]
+  wide: ["ennen ajanlaskun alkua", "jälkeen ajanlaskun alun"],
 };
 var quarterValues27 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["1. kvartaali", "2. kvartaali", "3. kvartaali", "4. kvartaali"]
+  wide: ["1. kvartaali", "2. kvartaali", "3. kvartaali", "4. kvartaali"],
 };
 var monthValues27 = {
   narrow: ["T", "H", "M", "H", "T", "K", "H", "E", "S", "L", "M", "J"],
@@ -9103,7 +9139,7 @@ var monthValues27 = {
     "syys",
     "loka",
     "marras",
-    "joulu"
+    "joulu",
   ],
   wide: [
     "tammikuu",
@@ -9117,8 +9153,8 @@ var monthValues27 = {
     "syyskuu",
     "lokakuu",
     "marraskuu",
-    "joulukuu"
-  ]
+    "joulukuu",
+  ],
 };
 var formattingMonthValues8 = {
   narrow: monthValues27.narrow,
@@ -9135,8 +9171,8 @@ var formattingMonthValues8 = {
     "syyskuuta",
     "lokakuuta",
     "marraskuuta",
-    "joulukuuta"
-  ]
+    "joulukuuta",
+  ],
 };
 var dayValues27 = {
   narrow: ["S", "M", "T", "K", "T", "P", "L"],
@@ -9149,8 +9185,8 @@ var dayValues27 = {
     "keskiviikko",
     "torstai",
     "perjantai",
-    "lauantai"
-  ]
+    "lauantai",
+  ],
 };
 var formattingDayValues = {
   narrow: dayValues27.narrow,
@@ -9163,8 +9199,8 @@ var formattingDayValues = {
     "keskiviikkona",
     "torstaina",
     "perjantaina",
-    "lauantaina"
-  ]
+    "lauantaina",
+  ],
 };
 var dayPeriodValues27 = {
   narrow: {
@@ -9175,7 +9211,7 @@ var dayPeriodValues27 = {
     morning: "ap",
     afternoon: "ip",
     evening: "illalla",
-    night: "yöllä"
+    night: "yöllä",
   },
   abbreviated: {
     am: "ap",
@@ -9185,7 +9221,7 @@ var dayPeriodValues27 = {
     morning: "ap",
     afternoon: "ip",
     evening: "illalla",
-    night: "yöllä"
+    night: "yöllä",
   },
   wide: {
     am: "ap",
@@ -9195,8 +9231,8 @@ var dayPeriodValues27 = {
     morning: "aamupäivällä",
     afternoon: "iltapäivällä",
     evening: "illalla",
-    night: "yöllä"
-  }
+    night: "yöllä",
+  },
 };
 var ordinalNumber27 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -9206,29 +9242,29 @@ var localize28 = {
   ordinalNumber: ordinalNumber27,
   era: buildLocalizeFn({
     values: eraValues27,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues27,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues27,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues8,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues27,
     defaultWidth: "wide",
     formattingValues: formattingDayValues,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues27,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/fi/_lib/match.js
@@ -9237,23 +9273,24 @@ var parseOrdinalNumberPattern26 = /\d+/i;
 var matchEraPatterns26 = {
   narrow: /^(e|j)/i,
   abbreviated: /^(eaa.|jaa.)/i,
-  wide: /^(ennen ajanlaskun alkua|jälkeen ajanlaskun alun)/i
+  wide: /^(ennen ajanlaskun alkua|jälkeen ajanlaskun alun)/i,
 };
 var parseEraPatterns26 = {
-  any: [/^e/i, /^j/i]
+  any: [/^e/i, /^j/i],
 };
 var matchQuarterPatterns26 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234]\.? kvartaali/i
+  wide: /^[1234]\.? kvartaali/i,
 };
 var parseQuarterPatterns26 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns26 = {
   narrow: /^[thmkeslj]/i,
-  abbreviated: /^(tammi|helmi|maalis|huhti|touko|kesä|heinä|elo|syys|loka|marras|joulu)/i,
-  wide: /^(tammikuu|helmikuu|maaliskuu|huhtikuu|toukokuu|kesäkuu|heinäkuu|elokuu|syyskuu|lokakuu|marraskuu|joulukuu)(ta)?/i
+  abbreviated:
+    /^(tammi|helmi|maalis|huhti|touko|kesä|heinä|elo|syys|loka|marras|joulu)/i,
+  wide: /^(tammikuu|helmikuu|maaliskuu|huhtikuu|toukokuu|kesäkuu|heinäkuu|elokuu|syyskuu|lokakuu|marraskuu|joulukuu)(ta)?/i,
 };
 var parseMonthPatterns26 = {
   narrow: [
@@ -9268,7 +9305,7 @@ var parseMonthPatterns26 = {
     /^s/i,
     /^l/i,
     /^m/i,
-    /^j/i
+    /^j/i,
   ],
   any: [
     /^ta/i,
@@ -9282,22 +9319,23 @@ var parseMonthPatterns26 = {
     /^s/i,
     /^l/i,
     /^mar/i,
-    /^j/i
-  ]
+    /^j/i,
+  ],
 };
 var matchDayPatterns26 = {
   narrow: /^[smtkpl]/i,
   short: /^(su|ma|ti|ke|to|pe|la)/i,
   abbreviated: /^(sunn.|maan.|tiis.|kesk.|torst.|perj.|la)/i,
-  wide: /^(sunnuntai|maanantai|tiistai|keskiviikko|torstai|perjantai|lauantai)(na)?/i
+  wide: /^(sunnuntai|maanantai|tiistai|keskiviikko|torstai|perjantai|lauantai)(na)?/i,
 };
 var parseDayPatterns26 = {
   narrow: [/^s/i, /^m/i, /^t/i, /^k/i, /^t/i, /^p/i, /^l/i],
-  any: [/^s/i, /^m/i, /^ti/i, /^k/i, /^to/i, /^p/i, /^l/i]
+  any: [/^s/i, /^m/i, /^ti/i, /^k/i, /^to/i, /^p/i, /^l/i],
 };
 var matchDayPeriodPatterns26 = {
-  narrow: /^(ap|ip|keskiyö|keskipäivä|aamupäivällä|iltapäivällä|illalla|yöllä)/i,
-  any: /^(ap|ip|keskiyöllä|keskipäivällä|aamupäivällä|iltapäivällä|illalla|yöllä)/i
+  narrow:
+    /^(ap|ip|keskiyö|keskipäivä|aamupäivällä|iltapäivällä|illalla|yöllä)/i,
+  any: /^(ap|ip|keskiyöllä|keskipäivällä|aamupäivällä|iltapäivällä|illalla|yöllä)/i,
 };
 var parseDayPeriodPatterns26 = {
   any: {
@@ -9308,46 +9346,46 @@ var parseDayPeriodPatterns26 = {
     morning: /aamupäivällä/i,
     afternoon: /iltapäivällä/i,
     evening: /illalla/i,
-    night: /yöllä/i
-  }
+    night: /yöllä/i,
+  },
 };
 var match27 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern26,
     parsePattern: parseOrdinalNumberPattern26,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns26,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns26,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns26,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns26,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns26,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns26,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns26,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns26,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns26,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns26,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/fr/_lib/formatLong.js
@@ -9355,45 +9393,45 @@ var dateFormats33 = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
-  short: "dd/MM/y"
+  short: "dd/MM/y",
 };
 var timeFormats33 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats33 = {
   full: "{{date}} 'à' {{time}}",
   long: "{{date}} 'à' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong33 = {
   date: buildFormatLongFn({
     formats: dateFormats33,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats33,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats33,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/fr/_lib/localize.js
 var eraValues28 = {
   narrow: ["av. J.-C", "ap. J.-C"],
   abbreviated: ["av. J.-C", "ap. J.-C"],
-  wide: ["avant Jésus-Christ", "après Jésus-Christ"]
+  wide: ["avant Jésus-Christ", "après Jésus-Christ"],
 };
 var quarterValues28 = {
   narrow: ["T1", "T2", "T3", "T4"],
   abbreviated: ["1er trim.", "2ème trim.", "3ème trim.", "4ème trim."],
-  wide: ["1er trimestre", "2ème trimestre", "3ème trimestre", "4ème trimestre"]
+  wide: ["1er trimestre", "2ème trimestre", "3ème trimestre", "4ème trimestre"],
 };
 var monthValues28 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -9409,7 +9447,7 @@ var monthValues28 = {
     "sept.",
     "oct.",
     "nov.",
-    "déc."
+    "déc.",
   ],
   wide: [
     "janvier",
@@ -9423,8 +9461,8 @@ var monthValues28 = {
     "septembre",
     "octobre",
     "novembre",
-    "décembre"
-  ]
+    "décembre",
+  ],
 };
 var dayValues28 = {
   narrow: ["D", "L", "M", "M", "J", "V", "S"],
@@ -9437,8 +9475,8 @@ var dayValues28 = {
     "mercredi",
     "jeudi",
     "vendredi",
-    "samedi"
-  ]
+    "samedi",
+  ],
 };
 var dayPeriodValues28 = {
   narrow: {
@@ -9449,7 +9487,7 @@ var dayPeriodValues28 = {
     morning: "mat.",
     afternoon: "ap.m.",
     evening: "soir",
-    night: "mat."
+    night: "mat.",
   },
   abbreviated: {
     am: "AM",
@@ -9459,7 +9497,7 @@ var dayPeriodValues28 = {
     morning: "matin",
     afternoon: "après-midi",
     evening: "soir",
-    night: "matin"
+    night: "matin",
   },
   wide: {
     am: "AM",
@@ -9469,8 +9507,8 @@ var dayPeriodValues28 = {
     morning: "du matin",
     afternoon: "de l’après-midi",
     evening: "du soir",
-    night: "du matin"
-  }
+    night: "du matin",
+  },
 };
 var ordinalNumber28 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
@@ -9490,35 +9528,37 @@ var localize29 = {
   preprocessor: (date, parts) => {
     if (date.getDate() === 1) return parts;
     const hasLongMonthToken = parts.some(
-      (part) => part.isToken && LONG_MONTHS_TOKENS.includes(part.value)
+      (part) => part.isToken && LONG_MONTHS_TOKENS.includes(part.value),
     );
     if (!hasLongMonthToken) return parts;
-    return parts.map(
-      (part) => part.isToken && part.value === "do" ? { isToken: true, value: "d" } : part
+    return parts.map((part) =>
+      part.isToken && part.value === "do"
+        ? { isToken: true, value: "d" }
+        : part,
     );
   },
   ordinalNumber: ordinalNumber28,
   era: buildLocalizeFn({
     values: eraValues28,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues28,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues28,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues28,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues28,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/fr/_lib/match.js
@@ -9527,23 +9567,24 @@ var parseOrdinalNumberPattern27 = /\d+/i;
 var matchEraPatterns27 = {
   narrow: /^(av\.J\.C|ap\.J\.C|ap\.J\.-C)/i,
   abbreviated: /^(av\.J\.-C|av\.J-C|apr\.J\.-C|apr\.J-C|ap\.J-C)/i,
-  wide: /^(avant Jésus-Christ|après Jésus-Christ)/i
+  wide: /^(avant Jésus-Christ|après Jésus-Christ)/i,
 };
 var parseEraPatterns27 = {
-  any: [/^av/i, /^ap/i]
+  any: [/^av/i, /^ap/i],
 };
 var matchQuarterPatterns27 = {
   narrow: /^T?[1234]/i,
   abbreviated: /^[1234](er|ème|e)? trim\.?/i,
-  wide: /^[1234](er|ème|e)? trimestre/i
+  wide: /^[1234](er|ème|e)? trimestre/i,
 };
 var parseQuarterPatterns27 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns27 = {
   narrow: /^[jfmasond]/i,
-  abbreviated: /^(janv|févr|mars|avr|mai|juin|juill|juil|août|sept|oct|nov|déc)\.?/i,
-  wide: /^(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)/i
+  abbreviated:
+    /^(janv|févr|mars|avr|mai|juin|juill|juil|août|sept|oct|nov|déc)\.?/i,
+  wide: /^(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)/i,
 };
 var parseMonthPatterns27 = {
   narrow: [
@@ -9558,7 +9599,7 @@ var parseMonthPatterns27 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -9572,22 +9613,22 @@ var parseMonthPatterns27 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns27 = {
   narrow: /^[lmjvsd]/i,
   short: /^(di|lu|ma|me|je|ve|sa)/i,
   abbreviated: /^(dim|lun|mar|mer|jeu|ven|sam)\.?/i,
-  wide: /^(dimanche|lundi|mardi|mercredi|jeudi|vendredi|samedi)/i
+  wide: /^(dimanche|lundi|mardi|mercredi|jeudi|vendredi|samedi)/i,
 };
 var parseDayPatterns27 = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^j/i, /^v/i, /^s/i],
-  any: [/^di/i, /^lu/i, /^ma/i, /^me/i, /^je/i, /^ve/i, /^sa/i]
+  any: [/^di/i, /^lu/i, /^ma/i, /^me/i, /^je/i, /^ve/i, /^sa/i],
 };
 var matchDayPeriodPatterns27 = {
   narrow: /^(a|p|minuit|midi|mat\.?|ap\.?m\.?|soir|nuit)/i,
-  any: /^([ap]\.?\s?m\.?|du matin|de l'après[-\s]midi|du soir|de la nuit)/i
+  any: /^([ap]\.?\s?m\.?|du matin|de l'après[-\s]midi|du soir|de la nuit)/i,
 };
 var parseDayPeriodPatterns27 = {
   any: {
@@ -9598,46 +9639,46 @@ var parseDayPeriodPatterns27 = {
     morning: /mat/i,
     afternoon: /ap/i,
     evening: /soir/i,
-    night: /nuit/i
-  }
+    night: /nuit/i,
+  },
 };
 var match28 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern27,
     parsePattern: parseOrdinalNumberPattern27,
-    valueCallback: (value) => parseInt(value)
+    valueCallback: (value) => parseInt(value),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns27,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns27,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns27,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns27,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns27,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns27,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns27,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns27,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns27,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns27,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/fr-CA/_lib/formatLong.js
@@ -9645,33 +9686,33 @@ var dateFormats34 = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
-  short: "yy-MM-dd"
+  short: "yy-MM-dd",
 };
 var timeFormats34 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats34 = {
   full: "{{date}} 'à' {{time}}",
   long: "{{date}} 'à' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong34 = {
   date: buildFormatLongFn({
     formats: dateFormats34,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats34,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats34,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/fr-CH/_lib/formatLong.js
@@ -9679,33 +9720,33 @@ var dateFormats35 = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
-  short: "dd.MM.y"
+  short: "dd.MM.y",
 };
 var timeFormats35 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats35 = {
   full: "{{date}} 'à' {{time}}",
   long: "{{date}} 'à' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong35 = {
   date: buildFormatLongFn({
     formats: dateFormats35,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats35,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats35,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/fy/_lib/formatLong.js
@@ -9713,45 +9754,45 @@ var dateFormats36 = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
-  short: "dd-MM-y"
+  short: "dd-MM-y",
 };
 var timeFormats36 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats36 = {
   full: "{{date}} 'om' {{time}}",
   long: "{{date}} 'om' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong36 = {
   date: buildFormatLongFn({
     formats: dateFormats36,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats36,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats36,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/fy/_lib/localize.js
 var eraValues29 = {
   narrow: ["f.K.", "n.K."],
   abbreviated: ["f.Kr.", "n.Kr."],
-  wide: ["foar Kristus", "nei Kristus"]
+  wide: ["foar Kristus", "nei Kristus"],
 };
 var quarterValues29 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
-  wide: ["1e fearnsjier", "2e fearnsjier", "3e fearnsjier", "4e fearnsjier"]
+  wide: ["1e fearnsjier", "2e fearnsjier", "3e fearnsjier", "4e fearnsjier"],
 };
 var monthValues29 = {
   narrow: ["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
@@ -9767,7 +9808,7 @@ var monthValues29 = {
     "sep.",
     "okt.",
     "nov.",
-    "des."
+    "des.",
   ],
   wide: [
     "jannewaris",
@@ -9781,8 +9822,8 @@ var monthValues29 = {
     "septimber",
     "oktober",
     "novimber",
-    "desimber"
-  ]
+    "desimber",
+  ],
 };
 var dayValues29 = {
   narrow: ["s", "m", "t", "w", "t", "f", "s"],
@@ -9795,8 +9836,8 @@ var dayValues29 = {
     "woansdei",
     "tongersdei",
     "freed",
-    "sneon"
-  ]
+    "sneon",
+  ],
 };
 var dayPeriodValues29 = {
   narrow: {
@@ -9807,7 +9848,7 @@ var dayPeriodValues29 = {
     morning: "moarns",
     afternoon: "middeis",
     evening: "jûns",
-    night: "nachts"
+    night: "nachts",
   },
   abbreviated: {
     am: "AM",
@@ -9817,7 +9858,7 @@ var dayPeriodValues29 = {
     morning: "moarns",
     afternoon: "middeis",
     evening: "jûns",
-    night: "nachts"
+    night: "nachts",
   },
   wide: {
     am: "AM",
@@ -9827,8 +9868,8 @@ var dayPeriodValues29 = {
     morning: "moarns",
     afternoon: "middeis",
     evening: "jûns",
-    night: "nachts"
-  }
+    night: "nachts",
+  },
 };
 var ordinalNumber29 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -9838,25 +9879,25 @@ var localize30 = {
   ordinalNumber: ordinalNumber29,
   era: buildLocalizeFn({
     values: eraValues29,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues29,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues29,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues29,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues29,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/fy/_lib/match.js
@@ -9865,23 +9906,24 @@ var parseOrdinalNumberPattern28 = /\d+/i;
 var matchEraPatterns28 = {
   narrow: /^([fn]\.? ?K\.?)/,
   abbreviated: /^([fn]\. ?Kr\.?)/,
-  wide: /^((foar|nei) Kristus)/
+  wide: /^((foar|nei) Kristus)/,
 };
 var parseEraPatterns28 = {
-  any: [/^f/, /^n/]
+  any: [/^f/, /^n/],
 };
 var matchQuarterPatterns28 = {
   narrow: /^[1234]/i,
   abbreviated: /^K[1234]/i,
-  wide: /^[1234]e fearnsjier/i
+  wide: /^[1234]e fearnsjier/i,
 };
 var parseQuarterPatterns28 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns28 = {
   narrow: /^[jfmasond]/i,
-  abbreviated: /^(jan.|feb.|mrt.|apr.|mai.|jun.|jul.|aug.|sep.|okt.|nov.|des.)/i,
-  wide: /^(jannewaris|febrewaris|maart|april|maaie|juny|july|augustus|septimber|oktober|novimber|desimber)/i
+  abbreviated:
+    /^(jan.|feb.|mrt.|apr.|mai.|jun.|jul.|aug.|sep.|okt.|nov.|des.)/i,
+  wide: /^(jannewaris|febrewaris|maart|april|maaie|juny|july|augustus|septimber|oktober|novimber|desimber)/i,
 };
 var parseMonthPatterns28 = {
   narrow: [
@@ -9896,7 +9938,7 @@ var parseMonthPatterns28 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^jan/i,
@@ -9910,21 +9952,21 @@ var parseMonthPatterns28 = {
     /^sep/i,
     /^okt/i,
     /^nov/i,
-    /^des/i
-  ]
+    /^des/i,
+  ],
 };
 var matchDayPatterns28 = {
   narrow: /^[smtwf]/i,
   short: /^(si|mo|ti|wo|to|fr|so)/i,
   abbreviated: /^(snein|moa|tii|woa|ton|fre|sneon)/i,
-  wide: /^(snein|moandei|tiisdei|woansdei|tongersdei|freed|sneon)/i
+  wide: /^(snein|moandei|tiisdei|woansdei|tongersdei|freed|sneon)/i,
 };
 var parseDayPatterns28 = {
   narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
-  any: [/^sn/i, /^mo/i, /^ti/i, /^wo/i, /^to/i, /^fr/i, /^sn/i]
+  any: [/^sn/i, /^mo/i, /^ti/i, /^wo/i, /^to/i, /^fr/i, /^sn/i],
 };
 var matchDayPeriodPatterns28 = {
-  any: /^(am|pm|middernacht|middeis|moarns|middei|jûns|nachts)/i
+  any: /^(am|pm|middernacht|middeis|moarns|middei|jûns|nachts)/i,
 };
 var parseDayPeriodPatterns28 = {
   any: {
@@ -9935,46 +9977,46 @@ var parseDayPeriodPatterns28 = {
     morning: /moarns/i,
     afternoon: /^middeis/i,
     evening: /jûns/i,
-    night: /nachts/i
-  }
+    night: /nachts/i,
+  },
 };
 var match29 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern28,
     parsePattern: parseOrdinalNumberPattern28,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns28,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns28,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns28,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns28,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns28,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns28,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns28,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns28,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns28,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns28,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/gd/_lib/formatLong.js
@@ -9982,40 +10024,40 @@ var dateFormats37 = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
-  short: "MM/dd/yyyy"
+  short: "MM/dd/yyyy",
 };
 var timeFormats37 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats37 = {
   full: "{{date}} 'aig' {{time}}",
   long: "{{date}} 'aig' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong37 = {
   date: buildFormatLongFn({
     formats: dateFormats37,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats37,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats37,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/gd/_lib/localize.js
 var eraValues30 = {
   narrow: ["R", "A"],
   abbreviated: ["RC", "AD"],
-  wide: ["ro Chrìosta", "anno domini"]
+  wide: ["ro Chrìosta", "anno domini"],
 };
 var quarterValues30 = {
   narrow: ["1", "2", "3", "4"],
@@ -10024,8 +10066,8 @@ var quarterValues30 = {
     "a' chiad chairteal",
     "an dàrna cairteal",
     "an treas cairteal",
-    "an ceathramh cairteal"
-  ]
+    "an ceathramh cairteal",
+  ],
 };
 var monthValues30 = {
   narrow: ["F", "G", "M", "G", "C", "Ò", "I", "L", "S", "D", "S", "D"],
@@ -10041,7 +10083,7 @@ var monthValues30 = {
     "Sult",
     "Dàmh",
     "Samh",
-    "Dùbh"
+    "Dùbh",
   ],
   wide: [
     "Am Faoilleach",
@@ -10055,8 +10097,8 @@ var monthValues30 = {
     "An t-Sultain",
     "An Dàmhair",
     "An t-Samhain",
-    "An Dùbhlachd"
-  ]
+    "An Dùbhlachd",
+  ],
 };
 var dayValues30 = {
   narrow: ["D", "L", "M", "C", "A", "H", "S"],
@@ -10069,8 +10111,8 @@ var dayValues30 = {
     "Diciadain",
     "Diardaoin",
     "Dihaoine",
-    "Disathairne"
-  ]
+    "Disathairne",
+  ],
 };
 var dayPeriodValues30 = {
   narrow: {
@@ -10081,7 +10123,7 @@ var dayPeriodValues30 = {
     morning: "madainn",
     afternoon: "feasgar",
     evening: "feasgar",
-    night: "oidhche"
+    night: "oidhche",
   },
   abbreviated: {
     am: "M.",
@@ -10091,7 +10133,7 @@ var dayPeriodValues30 = {
     morning: "madainn",
     afternoon: "feasgar",
     evening: "feasgar",
-    night: "oidhche"
+    night: "oidhche",
   },
   wide: {
     am: "m.",
@@ -10101,8 +10143,8 @@ var dayPeriodValues30 = {
     morning: "madainn",
     afternoon: "feasgar",
     evening: "feasgar",
-    night: "oidhche"
-  }
+    night: "oidhche",
+  },
 };
 var formattingDayPeriodValues24 = {
   narrow: {
@@ -10113,7 +10155,7 @@ var formattingDayPeriodValues24 = {
     morning: "sa mhadainn",
     afternoon: "feasgar",
     evening: "feasgar",
-    night: "air an oidhche"
+    night: "air an oidhche",
   },
   abbreviated: {
     am: "M.",
@@ -10123,7 +10165,7 @@ var formattingDayPeriodValues24 = {
     morning: "sa mhadainn",
     afternoon: "feasgar",
     evening: "feasgar",
-    night: "air an oidhche"
+    night: "air an oidhche",
   },
   wide: {
     am: "m.",
@@ -10133,8 +10175,8 @@ var formattingDayPeriodValues24 = {
     morning: "sa mhadainn",
     afternoon: "feasgar",
     evening: "feasgar",
-    night: "air an oidhche"
-  }
+    night: "air an oidhche",
+  },
 };
 var ordinalNumber30 = (dirtyNumber) => {
   const number = Number(dirtyNumber);
@@ -10156,27 +10198,27 @@ var localize31 = {
   ordinalNumber: ordinalNumber30,
   era: buildLocalizeFn({
     values: eraValues30,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues30,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues30,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues30,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues30,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues24,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/gd/_lib/match.js
@@ -10185,23 +10227,23 @@ var parseOrdinalNumberPattern29 = /\d+/i;
 var matchEraPatterns29 = {
   narrow: /^(r|a)/i,
   abbreviated: /^(r\.?\s?c\.?|r\.?\s?a\.?\s?c\.?|a\.?\s?d\.?|a\.?\s?c\.?)/i,
-  wide: /^(ro Chrìosta|ron aois choitchinn|anno domini|aois choitcheann)/i
+  wide: /^(ro Chrìosta|ron aois choitchinn|anno domini|aois choitcheann)/i,
 };
 var parseEraPatterns29 = {
-  any: [/^b/i, /^(a|c)/i]
+  any: [/^b/i, /^(a|c)/i],
 };
 var matchQuarterPatterns29 = {
   narrow: /^[1234]/i,
   abbreviated: /^c[1234]/i,
-  wide: /^[1234](cd|na|tr|mh)? cairteal/i
+  wide: /^[1234](cd|na|tr|mh)? cairteal/i,
 };
 var parseQuarterPatterns29 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns29 = {
   narrow: /^[fgmcòilsd]/i,
   abbreviated: /^(faoi|gear|màrt|gibl|cèit|ògmh|iuch|lùn|sult|dàmh|samh|dùbh)/i,
-  wide: /^(am faoilleach|an gearran|am màrt|an giblean|an cèitean|an t-Ògmhios|an t-Iuchar|an lùnastal|an t-Sultain|an dàmhair|an t-Samhain|an dùbhlachd)/i
+  wide: /^(am faoilleach|an gearran|am màrt|an giblean|an cèitean|an t-Ògmhios|an t-Iuchar|an lùnastal|an t-Sultain|an dàmhair|an t-Samhain|an dùbhlachd)/i,
 };
 var parseMonthPatterns29 = {
   narrow: [
@@ -10216,7 +10258,7 @@ var parseMonthPatterns29 = {
     /^s/i,
     /^d/i,
     /^s/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^fa/i,
@@ -10230,22 +10272,22 @@ var parseMonthPatterns29 = {
     /^su/i,
     /^d/i,
     /^sa/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns29 = {
   narrow: /^[dlmcahs]/i,
   short: /^(dò|lu|mà|ci|ar|ha|sa)/i,
   abbreviated: /^(did|dil|dim|dic|dia|dih|dis)/i,
-  wide: /^(didòmhnaich|diluain|dimàirt|diciadain|diardaoin|dihaoine|disathairne)/i
+  wide: /^(didòmhnaich|diluain|dimàirt|diciadain|diardaoin|dihaoine|disathairne)/i,
 };
 var parseDayPatterns29 = {
   narrow: [/^d/i, /^l/i, /^m/i, /^c/i, /^a/i, /^h/i, /^s/i],
-  any: [/^d/i, /^l/i, /^m/i, /^c/i, /^a/i, /^h/i, /^s/i]
+  any: [/^d/i, /^l/i, /^m/i, /^c/i, /^a/i, /^h/i, /^s/i],
 };
 var matchDayPeriodPatterns29 = {
   narrow: /^(a|p|mi|n|(san|aig) (madainn|feasgar|feasgar|oidhche))/i,
-  any: /^([ap]\.?\s?m\.?|meadhan oidhche|meadhan là|(san|aig) (madainn|feasgar|feasgar|oidhche))/i
+  any: /^([ap]\.?\s?m\.?|meadhan oidhche|meadhan là|(san|aig) (madainn|feasgar|feasgar|oidhche))/i,
 };
 var parseDayPeriodPatterns29 = {
   any: {
@@ -10256,46 +10298,46 @@ var parseDayPeriodPatterns29 = {
     morning: /sa mhadainn/i,
     afternoon: /feasgar/i,
     evening: /feasgar/i,
-    night: /air an oidhche/i
-  }
+    night: /air an oidhche/i,
+  },
 };
 var match30 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern29,
     parsePattern: parseOrdinalNumberPattern29,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns29,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns29,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns29,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns29,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns29,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns29,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns29,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns29,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns29,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns29,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/gl/_lib/formatLong.js
@@ -10303,45 +10345,45 @@ var dateFormats38 = {
   full: "EEEE, d 'de' MMMM y",
   long: "d 'de' MMMM y",
   medium: "d MMM y",
-  short: "dd/MM/y"
+  short: "dd/MM/y",
 };
 var timeFormats38 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats38 = {
   full: "{{date}} 'ás' {{time}}",
   long: "{{date}} 'ás' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong38 = {
   date: buildFormatLongFn({
     formats: dateFormats38,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats38,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats38,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/gl/_lib/localize.js
 var eraValues31 = {
   narrow: ["AC", "DC"],
   abbreviated: ["AC", "DC"],
-  wide: ["antes de cristo", "despois de cristo"]
+  wide: ["antes de cristo", "despois de cristo"],
 };
 var quarterValues31 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["T1", "T2", "T3", "T4"],
-  wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"]
+  wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"],
 };
 var monthValues31 = {
   narrow: ["e", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
@@ -10357,7 +10399,7 @@ var monthValues31 = {
     "set",
     "out",
     "nov",
-    "dec"
+    "dec",
   ],
   wide: [
     "xaneiro",
@@ -10371,14 +10413,14 @@ var monthValues31 = {
     "setembro",
     "outubro",
     "novembro",
-    "decembro"
-  ]
+    "decembro",
+  ],
 };
 var dayValues31 = {
   narrow: ["d", "l", "m", "m", "j", "v", "s"],
   short: ["do", "lu", "ma", "me", "xo", "ve", "sa"],
   abbreviated: ["dom", "lun", "mar", "mer", "xov", "ven", "sab"],
-  wide: ["domingo", "luns", "martes", "mércores", "xoves", "venres", "sábado"]
+  wide: ["domingo", "luns", "martes", "mércores", "xoves", "venres", "sábado"],
 };
 var dayPeriodValues31 = {
   narrow: {
@@ -10389,7 +10431,7 @@ var dayPeriodValues31 = {
     morning: "mañá",
     afternoon: "tarde",
     evening: "tarde",
-    night: "noite"
+    night: "noite",
   },
   abbreviated: {
     am: "AM",
@@ -10399,7 +10441,7 @@ var dayPeriodValues31 = {
     morning: "mañá",
     afternoon: "tarde",
     evening: "tardiña",
-    night: "noite"
+    night: "noite",
   },
   wide: {
     am: "a.m.",
@@ -10409,8 +10451,8 @@ var dayPeriodValues31 = {
     morning: "mañá",
     afternoon: "tarde",
     evening: "tardiña",
-    night: "noite"
-  }
+    night: "noite",
+  },
 };
 var formattingDayPeriodValues25 = {
   narrow: {
@@ -10421,7 +10463,7 @@ var formattingDayPeriodValues25 = {
     morning: "da mañá",
     afternoon: "da tarde",
     evening: "da tardiña",
-    night: "da noite"
+    night: "da noite",
   },
   abbreviated: {
     am: "AM",
@@ -10431,7 +10473,7 @@ var formattingDayPeriodValues25 = {
     morning: "da mañá",
     afternoon: "da tarde",
     evening: "da tardiña",
-    night: "da noite"
+    night: "da noite",
   },
   wide: {
     am: "a.m.",
@@ -10441,8 +10483,8 @@ var formattingDayPeriodValues25 = {
     morning: "da mañá",
     afternoon: "da tarde",
     evening: "da tardiña",
-    night: "da noite"
-  }
+    night: "da noite",
+  },
 };
 var ordinalNumber31 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -10452,27 +10494,27 @@ var localize32 = {
   ordinalNumber: ordinalNumber31,
   era: buildLocalizeFn({
     values: eraValues31,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues31,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues31,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues31,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues31,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues25,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/gl/_lib/match.js
@@ -10481,27 +10523,27 @@ var parseOrdinalNumberPattern30 = /\d+/i;
 var matchEraPatterns30 = {
   narrow: /^(ac|dc|a|d)/i,
   abbreviated: /^(a\.?\s?c\.?|a\.?\s?e\.?\s?c\.?|d\.?\s?c\.?|e\.?\s?c\.?)/i,
-  wide: /^(antes de cristo|antes da era com[uú]n|despois de cristo|era com[uú]n)/i
+  wide: /^(antes de cristo|antes da era com[uú]n|despois de cristo|era com[uú]n)/i,
 };
 var parseEraPatterns30 = {
   any: [/^ac/i, /^dc/i],
   wide: [
     /^(antes de cristo|antes da era com[uú]n)/i,
-    /^(despois de cristo|era com[uú]n)/i
-  ]
+    /^(despois de cristo|era com[uú]n)/i,
+  ],
 };
 var matchQuarterPatterns30 = {
   narrow: /^[1234]/i,
   abbreviated: /^T[1234]/i,
-  wide: /^[1234](º)? trimestre/i
+  wide: /^[1234](º)? trimestre/i,
 };
 var parseQuarterPatterns30 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns30 = {
   narrow: /^[xfmasond]/i,
   abbreviated: /^(xan|feb|mar|abr|mai|xun|xul|ago|set|out|nov|dec)/i,
-  wide: /^(xaneiro|febreiro|marzo|abril|maio|xuño|xullo|agosto|setembro|outubro|novembro|decembro)/i
+  wide: /^(xaneiro|febreiro|marzo|abril|maio|xuño|xullo|agosto|setembro|outubro|novembro|decembro)/i,
 };
 var parseMonthPatterns30 = {
   narrow: [
@@ -10516,7 +10558,7 @@ var parseMonthPatterns30 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^xan/i,
@@ -10530,22 +10572,22 @@ var parseMonthPatterns30 = {
     /^set/i,
     /^out/i,
     /^nov/i,
-    /^dec/i
-  ]
+    /^dec/i,
+  ],
 };
 var matchDayPatterns30 = {
   narrow: /^[dlmxvs]/i,
   short: /^(do|lu|ma|me|xo|ve|sa)/i,
   abbreviated: /^(dom|lun|mar|mer|xov|ven|sab)/i,
-  wide: /^(domingo|luns|martes|m[eé]rcores|xoves|venres|s[áa]bado)/i
+  wide: /^(domingo|luns|martes|m[eé]rcores|xoves|venres|s[áa]bado)/i,
 };
 var parseDayPatterns30 = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^x/i, /^v/i, /^s/i],
-  any: [/^do/i, /^lu/i, /^ma/i, /^me/i, /^xo/i, /^ve/i, /^sa/i]
+  any: [/^do/i, /^lu/i, /^ma/i, /^me/i, /^xo/i, /^ve/i, /^sa/i],
 };
 var matchDayPeriodPatterns30 = {
   narrow: /^(a|p|mn|md|(da|[aá]s) (mañ[aá]|tarde|noite))/i,
-  any: /^([ap]\.?\s?m\.?|medianoite|mediod[ií]a|(da|[aá]s) (mañ[aá]|tarde|noite))/i
+  any: /^([ap]\.?\s?m\.?|medianoite|mediod[ií]a|(da|[aá]s) (mañ[aá]|tarde|noite))/i,
 };
 var parseDayPeriodPatterns30 = {
   any: {
@@ -10556,46 +10598,46 @@ var parseDayPeriodPatterns30 = {
     morning: /mañ[aá]/i,
     afternoon: /tarde/i,
     evening: /tardiña/i,
-    night: /noite/i
-  }
+    night: /noite/i,
+  },
 };
 var match31 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern30,
     parsePattern: parseOrdinalNumberPattern30,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns30,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns30,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns30,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns30,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns30,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns30,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns30,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns30,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns30,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns30,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/gu/_lib/formatLong.js
@@ -10606,7 +10648,7 @@ var dateFormats39 = {
   // CLDR #1826
   medium: "d MMM, y",
   // CLDR #1827
-  short: "d/M/yy"
+  short: "d/M/yy",
   // CLDR #1828
 };
 var timeFormats39 = {
@@ -10616,7 +10658,7 @@ var timeFormats39 = {
   // CLDR #1830
   medium: "hh:mm:ss a",
   // CLDR #1831
-  short: "hh:mm a"
+  short: "hh:mm a",
   // CLDR #1832
 };
 var dateTimeFormats39 = {
@@ -10626,34 +10668,34 @@ var dateTimeFormats39 = {
   // CLDR #1834
   medium: "{{date}} {{time}}",
   // CLDR #1835
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
   // CLDR #1836
 };
 var formatLong39 = {
   date: buildFormatLongFn({
     formats: dateFormats39,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats39,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats39,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/gu/_lib/localize.js
 var eraValues32 = {
   narrow: ["ઈસપૂ", "ઈસ"],
   abbreviated: ["ઈ.સ.પૂર્વે", "ઈ.સ."],
-  wide: ["ઈસવીસન પૂર્વે", "ઈસવીસન"]
+  wide: ["ઈસવીસન પૂર્વે", "ઈસવીસન"],
 };
 var quarterValues32 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["1લો ત્રિમાસ", "2જો ત્રિમાસ", "3જો ત્રિમાસ", "4થો ત્રિમાસ"]
+  wide: ["1લો ત્રિમાસ", "2જો ત્રિમાસ", "3જો ત્રિમાસ", "4થો ત્રિમાસ"],
 };
 var monthValues32 = {
   narrow: ["જા", "ફે", "મા", "એ", "મે", "જૂ", "જુ", "ઓ", "સ", "ઓ", "ન", "ડિ"],
@@ -10669,7 +10711,7 @@ var monthValues32 = {
     "સપ્ટે",
     "ઓક્ટો",
     "નવે",
-    "ડિસે"
+    "ડિસે",
   ],
   wide: [
     "જાન્યુઆરી",
@@ -10683,8 +10725,8 @@ var monthValues32 = {
     "સપ્ટેમ્બર",
     "ઓક્ટોબર",
     "નવેમ્બર",
-    "ડિસેમ્બર"
-  ]
+    "ડિસેમ્બર",
+  ],
 };
 var dayValues32 = {
   narrow: ["ર", "સો", "મં", "બુ", "ગુ", "શુ", "શ"],
@@ -10697,8 +10739,8 @@ var dayValues32 = {
     "બુધવાર",
     "ગુરુવાર",
     "શુક્રવાર",
-    "શનિવાર"
-  ]
+    "શનિવાર",
+  ],
 };
 var dayPeriodValues32 = {
   narrow: {
@@ -10709,7 +10751,7 @@ var dayPeriodValues32 = {
     morning: "સવારે",
     afternoon: "બપોરે",
     evening: "સાંજે",
-    night: "રાત્રે"
+    night: "રાત્રે",
   },
   abbreviated: {
     am: "AM",
@@ -10719,7 +10761,7 @@ var dayPeriodValues32 = {
     morning: "સવારે",
     afternoon: "બપોરે",
     evening: "સાંજે",
-    night: "રાત્રે"
+    night: "રાત્રે",
   },
   wide: {
     am: "AM",
@@ -10729,8 +10771,8 @@ var dayPeriodValues32 = {
     morning: "સવારે",
     afternoon: "બપોરે",
     evening: "સાંજે",
-    night: "રાત્રે"
-  }
+    night: "રાત્રે",
+  },
 };
 var formattingDayPeriodValues26 = {
   narrow: {
@@ -10741,7 +10783,7 @@ var formattingDayPeriodValues26 = {
     morning: "સવારે",
     afternoon: "બપોરે",
     evening: "સાંજે",
-    night: "રાત્રે"
+    night: "રાત્રે",
   },
   abbreviated: {
     am: "AM",
@@ -10751,7 +10793,7 @@ var formattingDayPeriodValues26 = {
     morning: "સવારે",
     afternoon: "બપોરે",
     evening: "સાંજે",
-    night: "રાત્રે"
+    night: "રાત્રે",
   },
   wide: {
     am: "AM",
@@ -10761,8 +10803,8 @@ var formattingDayPeriodValues26 = {
     morning: "સવારે",
     afternoon: "બપોરે",
     evening: "સાંજે",
-    night: "રાત્રે"
-  }
+    night: "રાત્રે",
+  },
 };
 var ordinalNumber32 = (dirtyNumber, _options) => {
   return String(dirtyNumber);
@@ -10771,27 +10813,27 @@ var localize33 = {
   ordinalNumber: ordinalNumber32,
   era: buildLocalizeFn({
     values: eraValues32,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues32,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues32,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues32,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues32,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues26,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/gu/_lib/match.js
@@ -10800,24 +10842,25 @@ var parseOrdinalNumberPattern31 = /\d+/i;
 var matchEraPatterns31 = {
   narrow: /^(ઈસપૂ|ઈસ)/i,
   abbreviated: /^(ઈ\.સ\.પૂર્વે|ઈ\.સ\.)/i,
-  wide: /^(ઈસવીસન\sપૂર્વે|ઈસવીસન)/i
+  wide: /^(ઈસવીસન\sપૂર્વે|ઈસવીસન)/i,
 };
 var parseEraPatterns31 = {
-  any: [/^ઈસપૂ/i, /^ઈસ/i]
+  any: [/^ઈસપૂ/i, /^ઈસ/i],
 };
 var matchQuarterPatterns31 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234](લો|જો|થો)? ત્રિમાસ/i
+  wide: /^[1234](લો|જો|થો)? ત્રિમાસ/i,
 };
 var parseQuarterPatterns31 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns31 = {
   // eslint-disable-next-line no-misleading-character-class
   narrow: /^[જાફેમાએમેજૂજુઓસઓનડિ]/i,
-  abbreviated: /^(જાન્યુ|ફેબ્રુ|માર્ચ|એપ્રિલ|મે|જૂન|જુલાઈ|ઑગસ્ટ|સપ્ટે|ઓક્ટો|નવે|ડિસે)/i,
-  wide: /^(જાન્યુઆરી|ફેબ્રુઆરી|માર્ચ|એપ્રિલ|મે|જૂન|જુલાઇ|ઓગસ્ટ|સપ્ટેમ્બર|ઓક્ટોબર|નવેમ્બર|ડિસેમ્બર)/i
+  abbreviated:
+    /^(જાન્યુ|ફેબ્રુ|માર્ચ|એપ્રિલ|મે|જૂન|જુલાઈ|ઑગસ્ટ|સપ્ટે|ઓક્ટો|નવે|ડિસે)/i,
+  wide: /^(જાન્યુઆરી|ફેબ્રુઆરી|માર્ચ|એપ્રિલ|મે|જૂન|જુલાઇ|ઓગસ્ટ|સપ્ટેમ્બર|ઓક્ટોબર|નવેમ્બર|ડિસેમ્બર)/i,
 };
 var parseMonthPatterns31 = {
   narrow: [
@@ -10832,7 +10875,7 @@ var parseMonthPatterns31 = {
     /^સ/i,
     /^ઓક્ટો/i,
     /^ન/i,
-    /^ડિ/i
+    /^ડિ/i,
   ],
   any: [
     /^જા/i,
@@ -10846,22 +10889,22 @@ var parseMonthPatterns31 = {
     /^સ/i,
     /^ઓક્ટો/i,
     /^ન/i,
-    /^ડિ/i
-  ]
+    /^ડિ/i,
+  ],
 };
 var matchDayPatterns31 = {
   narrow: /^(ર|સો|મં|બુ|ગુ|શુ|શ)/i,
   short: /^(ર|સો|મં|બુ|ગુ|શુ|શ)/i,
   abbreviated: /^(રવિ|સોમ|મંગળ|બુધ|ગુરુ|શુક્ર|શનિ)/i,
-  wide: /^(રવિવાર|સોમવાર|મંગળવાર|બુધવાર|ગુરુવાર|શુક્રવાર|શનિવાર)/i
+  wide: /^(રવિવાર|સોમવાર|મંગળવાર|બુધવાર|ગુરુવાર|શુક્રવાર|શનિવાર)/i,
 };
 var parseDayPatterns31 = {
   narrow: [/^ર/i, /^સો/i, /^મં/i, /^બુ/i, /^ગુ/i, /^શુ/i, /^શ/i],
-  any: [/^ર/i, /^સો/i, /^મં/i, /^બુ/i, /^ગુ/i, /^શુ/i, /^શ/i]
+  any: [/^ર/i, /^સો/i, /^મં/i, /^બુ/i, /^ગુ/i, /^શુ/i, /^શ/i],
 };
 var matchDayPeriodPatterns31 = {
   narrow: /^(a|p|મ\.?|સ|બ|સાં|રા)/i,
-  any: /^(a|p|મ\.?|સ|બ|સાં|રા)/i
+  any: /^(a|p|મ\.?|સ|બ|સાં|રા)/i,
 };
 var parseDayPeriodPatterns31 = {
   any: {
@@ -10872,46 +10915,46 @@ var parseDayPeriodPatterns31 = {
     morning: /સ/i,
     afternoon: /બ/i,
     evening: /સાં/i,
-    night: /રા/i
-  }
+    night: /રા/i,
+  },
 };
 var match32 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern31,
     parsePattern: parseOrdinalNumberPattern31,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns31,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns31,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns31,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns31,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns31,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns31,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns31,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns31,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns31,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns31,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/he/_lib/formatLong.js
@@ -10919,45 +10962,45 @@ var dateFormats40 = {
   full: "EEEE, d בMMMM y",
   long: "d בMMMM y",
   medium: "d בMMM y",
-  short: "d.M.y"
+  short: "d.M.y",
 };
 var timeFormats40 = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats40 = {
   full: "{{date}} 'בשעה' {{time}}",
   long: "{{date}} 'בשעה' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong40 = {
   date: buildFormatLongFn({
     formats: dateFormats40,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats40,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats40,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/he/_lib/localize.js
 var eraValues33 = {
   narrow: ["לפנה״ס", "לספירה"],
   abbreviated: ["לפנה״ס", "לספירה"],
-  wide: ["לפני הספירה", "לספירה"]
+  wide: ["לפני הספירה", "לספירה"],
 };
 var quarterValues33 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["רבעון 1", "רבעון 2", "רבעון 3", "רבעון 4"]
+  wide: ["רבעון 1", "רבעון 2", "רבעון 3", "רבעון 4"],
 };
 var monthValues33 = {
   narrow: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
@@ -10973,7 +11016,7 @@ var monthValues33 = {
     "ספט׳",
     "אוק׳",
     "נוב׳",
-    "דצמ׳"
+    "דצמ׳",
   ],
   wide: [
     "ינואר",
@@ -10987,8 +11030,8 @@ var monthValues33 = {
     "ספטמבר",
     "אוקטובר",
     "נובמבר",
-    "דצמבר"
-  ]
+    "דצמבר",
+  ],
 };
 var dayValues33 = {
   narrow: ["א׳", "ב׳", "ג׳", "ד׳", "ה׳", "ו׳", "ש׳"],
@@ -11000,7 +11043,7 @@ var dayValues33 = {
     "יום ד׳",
     "יום ה׳",
     "יום ו׳",
-    "שבת"
+    "שבת",
   ],
   wide: [
     "יום ראשון",
@@ -11009,8 +11052,8 @@ var dayValues33 = {
     "יום רביעי",
     "יום חמישי",
     "יום שישי",
-    "יום שבת"
-  ]
+    "יום שבת",
+  ],
 };
 var dayPeriodValues33 = {
   narrow: {
@@ -11021,7 +11064,7 @@ var dayPeriodValues33 = {
     morning: "בוקר",
     afternoon: "אחר הצהריים",
     evening: "ערב",
-    night: "לילה"
+    night: "לילה",
   },
   abbreviated: {
     am: "לפנה״צ",
@@ -11031,7 +11074,7 @@ var dayPeriodValues33 = {
     morning: "בוקר",
     afternoon: "אחר הצהריים",
     evening: "ערב",
-    night: "לילה"
+    night: "לילה",
   },
   wide: {
     am: "לפנה״צ",
@@ -11041,8 +11084,8 @@ var dayPeriodValues33 = {
     morning: "בוקר",
     afternoon: "אחר הצהריים",
     evening: "ערב",
-    night: "לילה"
-  }
+    night: "לילה",
+  },
 };
 var formattingDayPeriodValues27 = {
   narrow: {
@@ -11053,7 +11096,7 @@ var formattingDayPeriodValues27 = {
     morning: "בבוקר",
     afternoon: "בצהריים",
     evening: "בערב",
-    night: "בלילה"
+    night: "בלילה",
   },
   abbreviated: {
     am: "לפנה״צ",
@@ -11063,7 +11106,7 @@ var formattingDayPeriodValues27 = {
     morning: "בבוקר",
     afternoon: "אחר הצהריים",
     evening: "בערב",
-    night: "בלילה"
+    night: "בלילה",
   },
   wide: {
     am: "לפנה״צ",
@@ -11073,8 +11116,8 @@ var formattingDayPeriodValues27 = {
     morning: "בבוקר",
     afternoon: "אחר הצהריים",
     evening: "בערב",
-    night: "בלילה"
-  }
+    night: "בלילה",
+  },
 };
 var ordinalNumber33 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
@@ -11091,7 +11134,7 @@ var ordinalNumber33 = (dirtyNumber, options) => {
     "שביעי",
     "שמיני",
     "תשיעי",
-    "עשירי"
+    "עשירי",
   ];
   const female = [
     "ראשונה",
@@ -11103,7 +11146,7 @@ var ordinalNumber33 = (dirtyNumber, options) => {
     "שביעית",
     "שמינית",
     "תשיעית",
-    "עשירית"
+    "עשירית",
   ];
   const index = number - 1;
   return isFemale ? female[index] : male[index];
@@ -11112,52 +11155,53 @@ var localize34 = {
   ordinalNumber: ordinalNumber33,
   era: buildLocalizeFn({
     values: eraValues33,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues33,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues33,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues33,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues33,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues27,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/he/_lib/match.js
-var matchOrdinalNumberPattern32 = /^(\d+|(ראשון|שני|שלישי|רביעי|חמישי|שישי|שביעי|שמיני|תשיעי|עשירי|ראשונה|שנייה|שלישית|רביעית|חמישית|שישית|שביעית|שמינית|תשיעית|עשירית))/i;
+var matchOrdinalNumberPattern32 =
+  /^(\d+|(ראשון|שני|שלישי|רביעי|חמישי|שישי|שביעי|שמיני|תשיעי|עשירי|ראשונה|שנייה|שלישית|רביעית|חמישית|שישית|שביעית|שמינית|תשיעית|עשירית))/i;
 var parseOrdinalNumberPattern32 = /^(\d+|רא|שנ|של|רב|ח|שי|שב|שמ|ת|ע)/i;
 var matchEraPatterns32 = {
   narrow: /^ל(ספירה|פנה״ס)/i,
   abbreviated: /^ל(ספירה|פנה״ס)/i,
-  wide: /^ל(פני ה)?ספירה/i
+  wide: /^ל(פני ה)?ספירה/i,
 };
 var parseEraPatterns32 = {
-  any: [/^לפ/i, /^לס/i]
+  any: [/^לפ/i, /^לס/i],
 };
 var matchQuarterPatterns32 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^רבעון [1234]/i
+  wide: /^רבעון [1234]/i,
 };
 var parseQuarterPatterns32 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns32 = {
   narrow: /^\d+/i,
   abbreviated: /^(ינו|פבר|מרץ|אפר|מאי|יוני|יולי|אוג|ספט|אוק|נוב|דצמ)׳?/i,
-  wide: /^(ינואר|פברואר|מרץ|אפריל|מאי|יוני|יולי|אוגוסט|ספטמבר|אוקטובר|נובמבר|דצמבר)/i
+  wide: /^(ינואר|פברואר|מרץ|אפריל|מאי|יוני|יולי|אוגוסט|ספטמבר|אוקטובר|נובמבר|דצמבר)/i,
 };
 var parseMonthPatterns32 = {
   narrow: [
@@ -11172,7 +11216,7 @@ var parseMonthPatterns32 = {
     /^9/i,
     /^10/i,
     /^11/i,
-    /^12/i
+    /^12/i,
   ],
   any: [
     /^ינ/i,
@@ -11186,22 +11230,22 @@ var parseMonthPatterns32 = {
     /^ס/i,
     /^אוק/i,
     /^נ/i,
-    /^ד/i
-  ]
+    /^ד/i,
+  ],
 };
 var matchDayPatterns32 = {
   narrow: /^[אבגדהוש]׳/i,
   short: /^[אבגדהוש]׳/i,
   abbreviated: /^(שבת|יום (א|ב|ג|ד|ה|ו)׳)/i,
-  wide: /^יום (ראשון|שני|שלישי|רביעי|חמישי|שישי|שבת)/i
+  wide: /^יום (ראשון|שני|שלישי|רביעי|חמישי|שישי|שבת)/i,
 };
 var parseDayPatterns32 = {
   abbreviated: [/א׳$/i, /ב׳$/i, /ג׳$/i, /ד׳$/i, /ה׳$/i, /ו׳$/i, /^ש/i],
   wide: [/ן$/i, /ני$/i, /לישי$/i, /עי$/i, /מישי$/i, /שישי$/i, /ת$/i],
-  any: [/^א/i, /^ב/i, /^ג/i, /^ד/i, /^ה/i, /^ו/i, /^ש/i]
+  any: [/^א/i, /^ב/i, /^ג/i, /^ד/i, /^ה/i, /^ו/i, /^ש/i],
 };
 var matchDayPeriodPatterns32 = {
-  any: /^(אחר ה|ב)?(חצות|צהריים|בוקר|ערב|לילה|אחה״צ|לפנה״צ)/i
+  any: /^(אחר ה|ב)?(חצות|צהריים|בוקר|ערב|לילה|אחה״צ|לפנה״צ)/i,
 };
 var parseDayPeriodPatterns32 = {
   any: {
@@ -11212,8 +11256,8 @@ var parseDayPeriodPatterns32 = {
     morning: /בוקר/i,
     afternoon: /בצ|אחר/i,
     evening: /ערב/i,
-    night: /לילה/i
-  }
+    night: /לילה/i,
+  },
 };
 var ordinalName = ["רא", "שנ", "של", "רב", "ח", "שי", "שב", "שמ", "ת", "ע"];
 var match33 = {
@@ -11223,39 +11267,39 @@ var match33 = {
     valueCallback: (value) => {
       const number = parseInt(value, 10);
       return isNaN(number) ? ordinalName.indexOf(value) + 1 : number;
-    }
+    },
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns32,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns32,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns32,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns32,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns32,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns32,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns32,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns32,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns32,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns32,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/hi/_lib/localize.js
@@ -11270,7 +11314,7 @@ var numberValues2 = {
     7: "७",
     8: "८",
     9: "९",
-    0: "०"
+    0: "०",
   },
   number: {
     "१": "1",
@@ -11282,18 +11326,18 @@ var numberValues2 = {
     "७": "7",
     "८": "8",
     "९": "9",
-    "०": "0"
-  }
+    "०": "0",
+  },
 };
 var eraValues34 = {
   narrow: ["ईसा-पूर्व", "ईस्वी"],
   abbreviated: ["ईसा-पूर्व", "ईस्वी"],
-  wide: ["ईसा-पूर्व", "ईसवी सन"]
+  wide: ["ईसा-पूर्व", "ईसवी सन"],
 };
 var quarterValues34 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ति1", "ति2", "ति3", "ति4"],
-  wide: ["पहली तिमाही", "दूसरी तिमाही", "तीसरी तिमाही", "चौथी तिमाही"]
+  wide: ["पहली तिमाही", "दूसरी तिमाही", "तीसरी तिमाही", "चौथी तिमाही"],
 };
 var monthValues34 = {
   narrow: [
@@ -11308,7 +11352,7 @@ var monthValues34 = {
     "सि",
     "अक्टू",
     "न",
-    "दि"
+    "दि",
   ],
   abbreviated: [
     "जन",
@@ -11322,7 +11366,7 @@ var monthValues34 = {
     "सित",
     "अक्टू",
     "नव",
-    "दिस"
+    "दिस",
   ],
   wide: [
     "जनवरी",
@@ -11336,8 +11380,8 @@ var monthValues34 = {
     "सितंबर",
     "अक्टूबर",
     "नवंबर",
-    "दिसंबर"
-  ]
+    "दिसंबर",
+  ],
 };
 var dayValues34 = {
   narrow: ["र", "सो", "मं", "बु", "गु", "शु", "श"],
@@ -11350,8 +11394,8 @@ var dayValues34 = {
     "बुधवार",
     "गुरुवार",
     "शुक्रवार",
-    "शनिवार"
-  ]
+    "शनिवार",
+  ],
 };
 var dayPeriodValues34 = {
   narrow: {
@@ -11362,7 +11406,7 @@ var dayPeriodValues34 = {
     morning: "सुबह",
     afternoon: "दोपहर",
     evening: "शाम",
-    night: "रात"
+    night: "रात",
   },
   abbreviated: {
     am: "पूर्वाह्न",
@@ -11372,7 +11416,7 @@ var dayPeriodValues34 = {
     morning: "सुबह",
     afternoon: "दोपहर",
     evening: "शाम",
-    night: "रात"
+    night: "रात",
   },
   wide: {
     am: "पूर्वाह्न",
@@ -11382,8 +11426,8 @@ var dayPeriodValues34 = {
     morning: "सुबह",
     afternoon: "दोपहर",
     evening: "शाम",
-    night: "रात"
-  }
+    night: "रात",
+  },
 };
 var formattingDayPeriodValues28 = {
   narrow: {
@@ -11394,7 +11438,7 @@ var formattingDayPeriodValues28 = {
     morning: "सुबह",
     afternoon: "दोपहर",
     evening: "शाम",
-    night: "रात"
+    night: "रात",
   },
   abbreviated: {
     am: "पूर्वाह्न",
@@ -11404,7 +11448,7 @@ var formattingDayPeriodValues28 = {
     morning: "सुबह",
     afternoon: "दोपहर",
     evening: "शाम",
-    night: "रात"
+    night: "रात",
   },
   wide: {
     am: "पूर्वाह्न",
@@ -11414,21 +11458,23 @@ var formattingDayPeriodValues28 = {
     morning: "सुबह",
     afternoon: "दोपहर",
     evening: "शाम",
-    night: "रात"
-  }
+    night: "रात",
+  },
 };
 var ordinalNumber34 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
   return numberToLocale2(number);
 };
 function localeToNumber(locale) {
-  const enNumber = locale.toString().replace(/[१२३४५६७८९०]/g, function(match85) {
-    return numberValues2.number[match85];
-  });
+  const enNumber = locale
+    .toString()
+    .replace(/[१२३४५६७८९०]/g, function (match85) {
+      return numberValues2.number[match85];
+    });
   return Number(enNumber);
 }
 function numberToLocale2(enNumber) {
-  return enNumber.toString().replace(/\d/g, function(match85) {
+  return enNumber.toString().replace(/\d/g, function (match85) {
     return numberValues2.locale[match85];
   });
 }
@@ -11436,27 +11482,27 @@ var localize35 = {
   ordinalNumber: ordinalNumber34,
   era: buildLocalizeFn({
     values: eraValues34,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues34,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues34,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues34,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues34,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues28,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/hi/_lib/formatLong.js
@@ -11467,7 +11513,7 @@ var dateFormats41 = {
   // CLDR #1788
   medium: "d MMM, y",
   // CLDR #1789
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
   // CLDR #1790
 };
 var timeFormats41 = {
@@ -11477,7 +11523,7 @@ var timeFormats41 = {
   // CLDR #1792
   medium: "h:mm:ss a",
   // CLDR #1793
-  short: "h:mm a"
+  short: "h:mm a",
   // CLDR #1794
 };
 var dateTimeFormats41 = {
@@ -11487,22 +11533,22 @@ var dateTimeFormats41 = {
   // CLDR #1796
   medium: "{{date}}, {{time}}",
   // CLDR #1797
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
   // CLDR #1798
 };
 var formatLong41 = {
   date: buildFormatLongFn({
     formats: dateFormats41,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats41,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats41,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/hi/_lib/match.js
@@ -11511,24 +11557,24 @@ var parseOrdinalNumberPattern33 = /^[०१२३४५६७८९]+/i;
 var matchEraPatterns33 = {
   narrow: /^(ईसा-पूर्व|ईस्वी)/i,
   abbreviated: /^(ईसा\.?\s?पूर्व\.?|ईसा\.?)/i,
-  wide: /^(ईसा-पूर्व|ईसवी पूर्व|ईसवी सन|ईसवी)/i
+  wide: /^(ईसा-पूर्व|ईसवी पूर्व|ईसवी सन|ईसवी)/i,
 };
 var parseEraPatterns33 = {
-  any: [/^b/i, /^(a|c)/i]
+  any: [/^b/i, /^(a|c)/i],
 };
 var matchQuarterPatterns33 = {
   narrow: /^[1234]/i,
   abbreviated: /^ति[1234]/i,
-  wide: /^[1234](पहली|दूसरी|तीसरी|चौथी)? तिमाही/i
+  wide: /^[1234](पहली|दूसरी|तीसरी|चौथी)? तिमाही/i,
 };
 var parseQuarterPatterns33 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns33 = {
   // eslint-disable-next-line no-misleading-character-class
   narrow: /^[जफ़माअप्मईजूनजुअगसिअक्तनदि]/i,
   abbreviated: /^(जन|फ़र|मार्च|अप्|मई|जून|जुल|अग|सित|अक्तू|नव|दिस)/i,
-  wide: /^(जनवरी|फ़रवरी|मार्च|अप्रैल|मई|जून|जुलाई|अगस्त|सितंबर|अक्तूबर|नवंबर|दिसंबर)/i
+  wide: /^(जनवरी|फ़रवरी|मार्च|अप्रैल|मई|जून|जुलाई|अगस्त|सितंबर|अक्तूबर|नवंबर|दिसंबर)/i,
 };
 var parseMonthPatterns33 = {
   narrow: [
@@ -11543,7 +11589,7 @@ var parseMonthPatterns33 = {
     /^सि/i,
     /^अक्तू/i,
     /^न/i,
-    /^दि/i
+    /^दि/i,
   ],
   any: [
     /^जन/i,
@@ -11557,23 +11603,23 @@ var parseMonthPatterns33 = {
     /^सि/i,
     /^अक्तू/i,
     /^नव/i,
-    /^दिस/i
-  ]
+    /^दिस/i,
+  ],
 };
 var matchDayPatterns33 = {
   // eslint-disable-next-line no-misleading-character-class
   narrow: /^[रविसोममंगलबुधगुरुशुक्रशनि]/i,
   short: /^(रवि|सोम|मंगल|बुध|गुरु|शुक्र|शनि)/i,
   abbreviated: /^(रवि|सोम|मंगल|बुध|गुरु|शुक्र|शनि)/i,
-  wide: /^(रविवार|सोमवार|मंगलवार|बुधवार|गुरुवार|शुक्रवार|शनिवार)/i
+  wide: /^(रविवार|सोमवार|मंगलवार|बुधवार|गुरुवार|शुक्रवार|शनिवार)/i,
 };
 var parseDayPatterns33 = {
   narrow: [/^रवि/i, /^सोम/i, /^मंगल/i, /^बुध/i, /^गुरु/i, /^शुक्र/i, /^शनि/i],
-  any: [/^रवि/i, /^सोम/i, /^मंगल/i, /^बुध/i, /^गुरु/i, /^शुक्र/i, /^शनि/i]
+  any: [/^रवि/i, /^सोम/i, /^मंगल/i, /^बुध/i, /^गुरु/i, /^शुक्र/i, /^शनि/i],
 };
 var matchDayPeriodPatterns33 = {
   narrow: /^(पू|अ|म|द.\?|सु|दो|शा|रा)/i,
-  any: /^(पूर्वाह्न|अपराह्न|म|द.\?|सु|दो|शा|रा)/i
+  any: /^(पूर्वाह्न|अपराह्न|म|द.\?|सु|दो|शा|रा)/i,
 };
 var parseDayPeriodPatterns33 = {
   any: {
@@ -11584,46 +11630,46 @@ var parseDayPeriodPatterns33 = {
     morning: /सु/i,
     afternoon: /दो/i,
     evening: /शा/i,
-    night: /रा/i
-  }
+    night: /रा/i,
+  },
 };
 var match34 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern33,
     parsePattern: parseOrdinalNumberPattern33,
-    valueCallback: localeToNumber
+    valueCallback: localeToNumber,
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns33,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns33,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns33,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns33,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns33,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns33,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns33,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns33,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns33,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns33,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/hr/_lib/formatLong.js
@@ -11631,45 +11677,45 @@ var dateFormats42 = {
   full: "EEEE, d. MMMM y.",
   long: "d. MMMM y.",
   medium: "d. MMM y.",
-  short: "dd. MM. y."
+  short: "dd. MM. y.",
 };
 var timeFormats42 = {
   full: "HH:mm:ss (zzzz)",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats42 = {
   full: "{{date}} 'u' {{time}}",
   long: "{{date}} 'u' {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong42 = {
   date: buildFormatLongFn({
     formats: dateFormats42,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats42,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats42,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/hr/_lib/localize.js
 var eraValues35 = {
   narrow: ["pr.n.e.", "AD"],
   abbreviated: ["pr. Kr.", "po. Kr."],
-  wide: ["Prije Krista", "Poslije Krista"]
+  wide: ["Prije Krista", "Poslije Krista"],
 };
 var quarterValues35 = {
   narrow: ["1.", "2.", "3.", "4."],
   abbreviated: ["1. kv.", "2. kv.", "3. kv.", "4. kv."],
-  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
+  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"],
 };
 var monthValues35 = {
   narrow: [
@@ -11684,7 +11730,7 @@ var monthValues35 = {
     "9.",
     "10.",
     "11.",
-    "12."
+    "12.",
   ],
   abbreviated: [
     "sij",
@@ -11698,7 +11744,7 @@ var monthValues35 = {
     "ruj",
     "lis",
     "stu",
-    "pro"
+    "pro",
   ],
   wide: [
     "siječanj",
@@ -11712,8 +11758,8 @@ var monthValues35 = {
     "rujan",
     "listopad",
     "studeni",
-    "prosinac"
-  ]
+    "prosinac",
+  ],
 };
 var formattingMonthValues9 = {
   narrow: [
@@ -11728,7 +11774,7 @@ var formattingMonthValues9 = {
     "9.",
     "10.",
     "11.",
-    "12."
+    "12.",
   ],
   abbreviated: [
     "sij",
@@ -11742,7 +11788,7 @@ var formattingMonthValues9 = {
     "ruj",
     "lis",
     "stu",
-    "pro"
+    "pro",
   ],
   wide: [
     "siječnja",
@@ -11756,8 +11802,8 @@ var formattingMonthValues9 = {
     "rujna",
     "listopada",
     "studenog",
-    "prosinca"
-  ]
+    "prosinca",
+  ],
 };
 var dayValues35 = {
   narrow: ["N", "P", "U", "S", "Č", "P", "S"],
@@ -11770,8 +11816,8 @@ var dayValues35 = {
     "srijeda",
     "četvrtak",
     "petak",
-    "subota"
-  ]
+    "subota",
+  ],
 };
 var formattingDayPeriodValues29 = {
   narrow: {
@@ -11782,7 +11828,7 @@ var formattingDayPeriodValues29 = {
     morning: "ujutro",
     afternoon: "popodne",
     evening: "navečer",
-    night: "noću"
+    night: "noću",
   },
   abbreviated: {
     am: "AM",
@@ -11792,7 +11838,7 @@ var formattingDayPeriodValues29 = {
     morning: "ujutro",
     afternoon: "popodne",
     evening: "navečer",
-    night: "noću"
+    night: "noću",
   },
   wide: {
     am: "AM",
@@ -11802,8 +11848,8 @@ var formattingDayPeriodValues29 = {
     morning: "ujutro",
     afternoon: "poslije podne",
     evening: "navečer",
-    night: "noću"
-  }
+    night: "noću",
+  },
 };
 var dayPeriodValues35 = {
   narrow: {
@@ -11814,7 +11860,7 @@ var dayPeriodValues35 = {
     morning: "ujutro",
     afternoon: "popodne",
     evening: "navečer",
-    night: "noću"
+    night: "noću",
   },
   abbreviated: {
     am: "AM",
@@ -11824,7 +11870,7 @@ var dayPeriodValues35 = {
     morning: "ujutro",
     afternoon: "popodne",
     evening: "navečer",
-    night: "noću"
+    night: "noću",
   },
   wide: {
     am: "AM",
@@ -11834,8 +11880,8 @@ var dayPeriodValues35 = {
     morning: "ujutro",
     afternoon: "poslije podne",
     evening: "navečer",
-    night: "noću"
-  }
+    night: "noću",
+  },
 };
 var ordinalNumber35 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -11845,29 +11891,29 @@ var localize36 = {
   ordinalNumber: ordinalNumber35,
   era: buildLocalizeFn({
     values: eraValues35,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues35,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues35,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues9,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues35,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues35,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues29,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/hr/_lib/match.js
@@ -11876,23 +11922,23 @@ var parseOrdinalNumberPattern34 = /\d+/i;
 var matchEraPatterns34 = {
   narrow: /^(pr\.n\.e\.|AD)/i,
   abbreviated: /^(pr\.\s?Kr\.|po\.\s?Kr\.)/i,
-  wide: /^(Prije Krista|prije nove ere|Poslije Krista|nova era)/i
+  wide: /^(Prije Krista|prije nove ere|Poslije Krista|nova era)/i,
 };
 var parseEraPatterns34 = {
-  any: [/^pr/i, /^(po|nova)/i]
+  any: [/^pr/i, /^(po|nova)/i],
 };
 var matchQuarterPatterns34 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]\.\s?kv\.?/i,
-  wide: /^[1234]\. kvartal/i
+  wide: /^[1234]\. kvartal/i,
 };
 var parseQuarterPatterns34 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns34 = {
   narrow: /^(10|11|12|[123456789])\./i,
   abbreviated: /^(sij|velj|(ožu|ozu)|tra|svi|lip|srp|kol|ruj|lis|stu|pro)/i,
-  wide: /^((siječanj|siječnja|sijecanj|sijecnja)|(veljača|veljače|veljaca|veljace)|(ožujak|ožujka|ozujak|ozujka)|(travanj|travnja)|(svibanj|svibnja)|(lipanj|lipnja)|(srpanj|srpnja)|(kolovoz|kolovoza)|(rujan|rujna)|(listopad|listopada)|(studeni|studenog)|(prosinac|prosinca))/i
+  wide: /^((siječanj|siječnja|sijecanj|sijecnja)|(veljača|veljače|veljaca|veljace)|(ožujak|ožujka|ozujak|ozujka)|(travanj|travnja)|(svibanj|svibnja)|(lipanj|lipnja)|(srpanj|srpnja)|(kolovoz|kolovoza)|(rujan|rujna)|(listopad|listopada)|(studeni|studenog)|(prosinac|prosinca))/i,
 };
 var parseMonthPatterns34 = {
   narrow: [
@@ -11907,7 +11953,7 @@ var parseMonthPatterns34 = {
     /9/i,
     /10/i,
     /11/i,
-    /12/i
+    /12/i,
   ],
   abbreviated: [
     /^sij/i,
@@ -11921,7 +11967,7 @@ var parseMonthPatterns34 = {
     /^ruj/i,
     /^lis/i,
     /^stu/i,
-    /^pro/i
+    /^pro/i,
   ],
   wide: [
     /^sij/i,
@@ -11935,21 +11981,21 @@ var parseMonthPatterns34 = {
     /^ruj/i,
     /^lis/i,
     /^stu/i,
-    /^pro/i
-  ]
+    /^pro/i,
+  ],
 };
 var matchDayPatterns34 = {
   narrow: /^[npusčc]/i,
   short: /^(ned|pon|uto|sri|(čet|cet)|pet|sub)/i,
   abbreviated: /^(ned|pon|uto|sri|(čet|cet)|pet|sub)/i,
-  wide: /^(nedjelja|ponedjeljak|utorak|srijeda|(četvrtak|cetvrtak)|petak|subota)/i
+  wide: /^(nedjelja|ponedjeljak|utorak|srijeda|(četvrtak|cetvrtak)|petak|subota)/i,
 };
 var parseDayPatterns34 = {
   narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
-  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
+  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i],
 };
 var matchDayPeriodPatterns34 = {
-  any: /^(am|pm|ponoc|ponoć|(po)?podne|navecer|navečer|noću|poslije podne|ujutro)/i
+  any: /^(am|pm|ponoc|ponoć|(po)?podne|navecer|navečer|noću|poslije podne|ujutro)/i,
 };
 var parseDayPeriodPatterns34 = {
   any: {
@@ -11960,46 +12006,46 @@ var parseDayPeriodPatterns34 = {
     morning: /jutro/i,
     afternoon: /(poslije\s|po)+podne/i,
     evening: /(navece|naveče)/i,
-    night: /(nocu|noću)/i
-  }
+    night: /(nocu|noću)/i,
+  },
 };
 var match35 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern34,
     parsePattern: parseOrdinalNumberPattern34,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns34,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns34,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns34,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns34,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns34,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns34,
-    defaultParseWidth: "wide"
+    defaultParseWidth: "wide",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns34,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns34,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns34,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns34,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ht/_lib/formatLong.js
@@ -12007,45 +12053,45 @@ var dateFormats43 = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
-  short: "dd/MM/y"
+  short: "dd/MM/y",
 };
 var timeFormats43 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats43 = {
   full: "{{date}} 'nan lè' {{time}}",
   long: "{{date}} 'nan lè' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong43 = {
   date: buildFormatLongFn({
     formats: dateFormats43,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats43,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats43,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ht/_lib/localize.js
 var eraValues36 = {
   narrow: ["av. J.-K", "ap. J.-K"],
   abbreviated: ["av. J.-K", "ap. J.-K"],
-  wide: ["anvan Jezi Kris", "apre Jezi Kris"]
+  wide: ["anvan Jezi Kris", "apre Jezi Kris"],
 };
 var quarterValues36 = {
   narrow: ["T1", "T2", "T3", "T4"],
   abbreviated: ["1ye trim.", "2yèm trim.", "3yèm trim.", "4yèm trim."],
-  wide: ["1ye trimès", "2yèm trimès", "3yèm trimès", "4yèm trimès"]
+  wide: ["1ye trimès", "2yèm trimès", "3yèm trimès", "4yèm trimès"],
 };
 var monthValues36 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "O", "S", "O", "N", "D"],
@@ -12061,7 +12107,7 @@ var monthValues36 = {
     "sept.",
     "okt.",
     "nov.",
-    "des."
+    "des.",
   ],
   wide: [
     "janvye",
@@ -12075,14 +12121,14 @@ var monthValues36 = {
     "septanm",
     "oktòb",
     "novanm",
-    "desanm"
-  ]
+    "desanm",
+  ],
 };
 var dayValues36 = {
   narrow: ["D", "L", "M", "M", "J", "V", "S"],
   short: ["di", "le", "ma", "mè", "je", "va", "sa"],
   abbreviated: ["dim.", "len.", "mad.", "mèk.", "jed.", "van.", "sam."],
-  wide: ["dimanch", "lendi", "madi", "mèkredi", "jedi", "vandredi", "samdi"]
+  wide: ["dimanch", "lendi", "madi", "mèkredi", "jedi", "vandredi", "samdi"],
 };
 var dayPeriodValues36 = {
   narrow: {
@@ -12093,7 +12139,7 @@ var dayPeriodValues36 = {
     morning: "mat.",
     afternoon: "ap.m.",
     evening: "swa",
-    night: "mat."
+    night: "mat.",
   },
   abbreviated: {
     am: "AM",
@@ -12103,7 +12149,7 @@ var dayPeriodValues36 = {
     morning: "maten",
     afternoon: "aprèmidi",
     evening: "swa",
-    night: "maten"
+    night: "maten",
   },
   wide: {
     am: "AM",
@@ -12113,8 +12159,8 @@ var dayPeriodValues36 = {
     morning: "nan maten",
     afternoon: "nan aprèmidi",
     evening: "nan aswè",
-    night: "nan maten"
-  }
+    night: "nan maten",
+  },
 };
 var ordinalNumber36 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -12126,25 +12172,25 @@ var localize37 = {
   ordinalNumber: ordinalNumber36,
   era: buildLocalizeFn({
     values: eraValues36,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues36,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues36,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues36,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues36,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ht/_lib/match.js
@@ -12153,23 +12199,23 @@ var parseOrdinalNumberPattern35 = /\d+/i;
 var matchEraPatterns35 = {
   narrow: /^(av\.J\.K|ap\.J\.K|ap\.J\.-K)/i,
   abbreviated: /^(av\.J\.-K|av\.J-K|apr\.J\.-K|apr\.J-K|ap\.J-K)/i,
-  wide: /^(avan Jezi Kris|apre Jezi Kris)/i
+  wide: /^(avan Jezi Kris|apre Jezi Kris)/i,
 };
 var parseEraPatterns35 = {
-  any: [/^av/i, /^ap/i]
+  any: [/^av/i, /^ap/i],
 };
 var matchQuarterPatterns35 = {
   narrow: /^[1234]/i,
   abbreviated: /^t[1234]/i,
-  wide: /^[1234](ye|yèm)? trimès/i
+  wide: /^[1234](ye|yèm)? trimès/i,
 };
 var parseQuarterPatterns35 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns35 = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(janv|fevr|mas|avr|me|jen|jiyè|out|sept|okt|nov|des)\.?/i,
-  wide: /^(janvye|fevrye|mas|avril|me|jen|jiyè|out|septanm|oktòb|novanm|desanm)/i
+  wide: /^(janvye|fevrye|mas|avril|me|jen|jiyè|out|septanm|oktòb|novanm|desanm)/i,
 };
 var parseMonthPatterns35 = {
   narrow: [
@@ -12184,7 +12230,7 @@ var parseMonthPatterns35 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -12198,22 +12244,22 @@ var parseMonthPatterns35 = {
     /^s/i,
     /^ok/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns35 = {
   narrow: /^[lmjvsd]/i,
   short: /^(di|le|ma|me|je|va|sa)/i,
   abbreviated: /^(dim|len|mad|mèk|jed|van|sam)\.?/i,
-  wide: /^(dimanch|lendi|madi|mèkredi|jedi|vandredi|samdi)/i
+  wide: /^(dimanch|lendi|madi|mèkredi|jedi|vandredi|samdi)/i,
 };
 var parseDayPatterns35 = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^j/i, /^v/i, /^s/i],
-  any: [/^di/i, /^le/i, /^ma/i, /^mè/i, /^je/i, /^va/i, /^sa/i]
+  any: [/^di/i, /^le/i, /^ma/i, /^mè/i, /^je/i, /^va/i, /^sa/i],
 };
 var matchDayPeriodPatterns35 = {
   narrow: /^(a|p|minwit|midi|mat\.?|ap\.?m\.?|swa)/i,
-  any: /^([ap]\.?\s?m\.?|nan maten|nan aprèmidi|nan aswè)/i
+  any: /^([ap]\.?\s?m\.?|nan maten|nan aprèmidi|nan aswè)/i,
 };
 var parseDayPeriodPatterns35 = {
   any: {
@@ -12224,46 +12270,46 @@ var parseDayPeriodPatterns35 = {
     morning: /mat/i,
     afternoon: /ap/i,
     evening: /sw/i,
-    night: /nwit/i
-  }
+    night: /nwit/i,
+  },
 };
 var match36 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern35,
     parsePattern: parseOrdinalNumberPattern35,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns35,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns35,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns35,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns35,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns35,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns35,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns35,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns35,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns35,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns35,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/hu/_lib/formatLong.js
@@ -12271,33 +12317,33 @@ var dateFormats44 = {
   full: "y. MMMM d., EEEE",
   long: "y. MMMM d.",
   medium: "y. MMM d.",
-  short: "y. MM. dd."
+  short: "y. MM. dd.",
 };
 var timeFormats44 = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats44 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong44 = {
   date: buildFormatLongFn({
     formats: dateFormats44,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats44,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats44,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/hu/_lib/formatRelative.js
@@ -12308,7 +12354,7 @@ var accusativeWeekdays = [
   "szerdán",
   "csütörtökön",
   "pénteken",
-  "szombaton"
+  "szombaton",
 ];
 function week(isFuture) {
   return (date) => {
@@ -12323,24 +12369,24 @@ var formatRelativeLocale = {
   today: "'ma' p'-kor'",
   tomorrow: "'holnap' p'-kor'",
   nextWeek: week(true),
-  other: "P"
+  other: "P",
 };
 
 // node_modules/date-fns/locale/hu/_lib/localize.js
 var eraValues37 = {
   narrow: ["ie.", "isz."],
   abbreviated: ["i. e.", "i. sz."],
-  wide: ["Krisztus előtt", "időszámításunk szerint"]
+  wide: ["Krisztus előtt", "időszámításunk szerint"],
 };
 var quarterValues37 = {
   narrow: ["1.", "2.", "3.", "4."],
   abbreviated: ["1. n.év", "2. n.év", "3. n.év", "4. n.év"],
-  wide: ["1. negyedév", "2. negyedév", "3. negyedév", "4. negyedév"]
+  wide: ["1. negyedév", "2. negyedév", "3. negyedév", "4. negyedév"],
 };
 var formattingQuarterValues = {
   narrow: ["I.", "II.", "III.", "IV."],
   abbreviated: ["I. n.év", "II. n.év", "III. n.év", "IV. n.év"],
-  wide: ["I. negyedév", "II. negyedév", "III. negyedév", "IV. negyedév"]
+  wide: ["I. negyedév", "II. negyedév", "III. negyedév", "IV. negyedév"],
 };
 var monthValues37 = {
   narrow: ["J", "F", "M", "Á", "M", "J", "J", "A", "Sz", "O", "N", "D"],
@@ -12356,7 +12402,7 @@ var monthValues37 = {
     "szept.",
     "okt.",
     "nov.",
-    "dec."
+    "dec.",
   ],
   wide: [
     "január",
@@ -12370,8 +12416,8 @@ var monthValues37 = {
     "szeptember",
     "október",
     "november",
-    "december"
-  ]
+    "december",
+  ],
 };
 var dayValues37 = {
   narrow: ["V", "H", "K", "Sz", "Cs", "P", "Sz"],
@@ -12384,8 +12430,8 @@ var dayValues37 = {
     "szerda",
     "csütörtök",
     "péntek",
-    "szombat"
-  ]
+    "szombat",
+  ],
 };
 var dayPeriodValues37 = {
   narrow: {
@@ -12396,7 +12442,7 @@ var dayPeriodValues37 = {
     morning: "reggel",
     afternoon: "du.",
     evening: "este",
-    night: "éjjel"
+    night: "éjjel",
   },
   abbreviated: {
     am: "de.",
@@ -12406,7 +12452,7 @@ var dayPeriodValues37 = {
     morning: "reggel",
     afternoon: "du.",
     evening: "este",
-    night: "éjjel"
+    night: "éjjel",
   },
   wide: {
     am: "de.",
@@ -12416,8 +12462,8 @@ var dayPeriodValues37 = {
     morning: "reggel",
     afternoon: "délután",
     evening: "este",
-    night: "éjjel"
-  }
+    night: "éjjel",
+  },
 };
 var ordinalNumber37 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -12427,27 +12473,27 @@ var localize38 = {
   ordinalNumber: ordinalNumber37,
   era: buildLocalizeFn({
     values: eraValues37,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues37,
     defaultWidth: "wide",
     argumentCallback: (quarter) => quarter - 1,
     formattingValues: formattingQuarterValues,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   month: buildLocalizeFn({
     values: monthValues37,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues37,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues37,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/hu/_lib/match.js
@@ -12456,25 +12502,26 @@ var parseOrdinalNumberPattern36 = /\d+/i;
 var matchEraPatterns36 = {
   narrow: /^(ie\.|isz\.)/i,
   abbreviated: /^(i\.\s?e\.?|b?\s?c\s?e|i\.\s?sz\.?)/i,
-  wide: /^(Krisztus előtt|időszámításunk előtt|időszámításunk szerint|i\. sz\.)/i
+  wide: /^(Krisztus előtt|időszámításunk előtt|időszámításunk szerint|i\. sz\.)/i,
 };
 var parseEraPatterns36 = {
   narrow: [/ie/i, /isz/i],
   abbreviated: [/^(i\.?\s?e\.?|b\s?ce)/i, /^(i\.?\s?sz\.?|c\s?e)/i],
-  any: [/előtt/i, /(szerint|i. sz.)/i]
+  any: [/előtt/i, /(szerint|i. sz.)/i],
 };
 var matchQuarterPatterns36 = {
   narrow: /^[1234]\.?/i,
   abbreviated: /^[1234]?\.?\s?n\.év/i,
-  wide: /^([1234]|I|II|III|IV)?\.?\s?negyedév/i
+  wide: /^([1234]|I|II|III|IV)?\.?\s?negyedév/i,
 };
 var parseQuarterPatterns36 = {
-  any: [/1|I$/i, /2|II$/i, /3|III/i, /4|IV/i]
+  any: [/1|I$/i, /2|II$/i, /3|III/i, /4|IV/i],
 };
 var matchMonthPatterns36 = {
   narrow: /^[jfmaásond]|sz/i,
-  abbreviated: /^(jan\.?|febr\.?|márc\.?|ápr\.?|máj\.?|jún\.?|júl\.?|aug\.?|szept\.?|okt\.?|nov\.?|dec\.?)/i,
-  wide: /^(január|február|március|április|május|június|július|augusztus|szeptember|október|november|december)/i
+  abbreviated:
+    /^(jan\.?|febr\.?|márc\.?|ápr\.?|máj\.?|jún\.?|júl\.?|aug\.?|szept\.?|okt\.?|nov\.?|dec\.?)/i,
+  wide: /^(január|február|március|április|május|június|július|augusztus|szeptember|október|november|december)/i,
 };
 var parseMonthPatterns36 = {
   narrow: [
@@ -12489,7 +12536,7 @@ var parseMonthPatterns36 = {
     /^s|sz/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -12503,21 +12550,21 @@ var parseMonthPatterns36 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns36 = {
   narrow: /^([vhkpc]|sz|cs|sz)/i,
   short: /^([vhkp]|sze|cs|szo)/i,
   abbreviated: /^([vhkp]|sze|cs|szo)/i,
-  wide: /^(vasárnap|hétfő|kedd|szerda|csütörtök|péntek|szombat)/i
+  wide: /^(vasárnap|hétfő|kedd|szerda|csütörtök|péntek|szombat)/i,
 };
 var parseDayPatterns36 = {
   narrow: [/^v/i, /^h/i, /^k/i, /^sz/i, /^c/i, /^p/i, /^sz/i],
-  any: [/^v/i, /^h/i, /^k/i, /^sze/i, /^c/i, /^p/i, /^szo/i]
+  any: [/^v/i, /^h/i, /^k/i, /^sze/i, /^c/i, /^p/i, /^szo/i],
 };
 var matchDayPeriodPatterns36 = {
-  any: /^((de|du)\.?|éjfél|délután|dél|reggel|este|éjjel)/i
+  any: /^((de|du)\.?|éjfél|délután|dél|reggel|este|éjjel)/i,
 };
 var parseDayPeriodPatterns36 = {
   any: {
@@ -12528,46 +12575,46 @@ var parseDayPeriodPatterns36 = {
     morning: /reg/i,
     afternoon: /^délu\.?/i,
     evening: /es/i,
-    night: /éjj/i
-  }
+    night: /éjj/i,
+  },
 };
 var match37 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern36,
     parsePattern: parseOrdinalNumberPattern36,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns36,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns36,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns36,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns36,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns36,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns36,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns36,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns36,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns36,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns36,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/hy/_lib/formatLong.js
@@ -12575,45 +12622,45 @@ var dateFormats45 = {
   full: "d MMMM, y, EEEE",
   long: "d MMMM, y",
   medium: "d MMM, y",
-  short: "dd.MM.yyyy"
+  short: "dd.MM.yyyy",
 };
 var timeFormats45 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats45 = {
   full: "{{date}} 'ժ․'{{time}}",
   long: "{{date}} 'ժ․'{{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong45 = {
   date: buildFormatLongFn({
     formats: dateFormats45,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats45,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats45,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/hy/_lib/localize.js
 var eraValues38 = {
   narrow: ["Ք", "Մ"],
   abbreviated: ["ՔԱ", "ՄԹ"],
-  wide: ["Քրիստոսից առաջ", "Մեր թվարկության"]
+  wide: ["Քրիստոսից առաջ", "Մեր թվարկության"],
 };
 var quarterValues38 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Ք1", "Ք2", "Ք3", "Ք4"],
-  wide: ["1֊ին քառորդ", "2֊րդ քառորդ", "3֊րդ քառորդ", "4֊րդ քառորդ"]
+  wide: ["1֊ին քառորդ", "2֊րդ քառորդ", "3֊րդ քառորդ", "4֊րդ քառորդ"],
 };
 var monthValues38 = {
   narrow: ["Հ", "Փ", "Մ", "Ա", "Մ", "Հ", "Հ", "Օ", "Ս", "Հ", "Ն", "Դ"],
@@ -12629,7 +12676,7 @@ var monthValues38 = {
     "սեպ",
     "հոկ",
     "նոյ",
-    "դեկ"
+    "դեկ",
   ],
   wide: [
     "հունվար",
@@ -12643,8 +12690,8 @@ var monthValues38 = {
     "սեպտեմբեր",
     "հոկտեմբեր",
     "նոյեմբեր",
-    "դեկտեմբեր"
-  ]
+    "դեկտեմբեր",
+  ],
 };
 var dayValues38 = {
   narrow: ["Կ", "Ե", "Ե", "Չ", "Հ", "Ո", "Շ"],
@@ -12657,8 +12704,8 @@ var dayValues38 = {
     "չորեքշաբթի",
     "հինգշաբթի",
     "ուրբաթ",
-    "շաբաթ"
-  ]
+    "շաբաթ",
+  ],
 };
 var dayPeriodValues38 = {
   narrow: {
@@ -12669,7 +12716,7 @@ var dayPeriodValues38 = {
     morning: "առավոտ",
     afternoon: "ցերեկ",
     evening: "երեկո",
-    night: "գիշեր"
+    night: "գիշեր",
   },
   abbreviated: {
     am: "AM",
@@ -12679,7 +12726,7 @@ var dayPeriodValues38 = {
     morning: "առավոտ",
     afternoon: "ցերեկ",
     evening: "երեկո",
-    night: "գիշեր"
+    night: "գիշեր",
   },
   wide: {
     am: "a.m.",
@@ -12689,8 +12736,8 @@ var dayPeriodValues38 = {
     morning: "առավոտ",
     afternoon: "ցերեկ",
     evening: "երեկո",
-    night: "գիշեր"
-  }
+    night: "գիշեր",
+  },
 };
 var formattingDayPeriodValues30 = {
   narrow: {
@@ -12701,7 +12748,7 @@ var formattingDayPeriodValues30 = {
     morning: "առավոտը",
     afternoon: "ցերեկը",
     evening: "երեկոյան",
-    night: "գիշերը"
+    night: "գիշերը",
   },
   abbreviated: {
     am: "AM",
@@ -12711,7 +12758,7 @@ var formattingDayPeriodValues30 = {
     morning: "առավոտը",
     afternoon: "ցերեկը",
     evening: "երեկոյան",
-    night: "գիշերը"
+    night: "գիշերը",
   },
   wide: {
     am: "a.m.",
@@ -12721,8 +12768,8 @@ var formattingDayPeriodValues30 = {
     morning: "առավոտը",
     afternoon: "ցերեկը",
     evening: "երեկոյան",
-    night: "գիշերը"
-  }
+    night: "գիշերը",
+  },
 };
 var ordinalNumber38 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -12738,27 +12785,27 @@ var localize39 = {
   ordinalNumber: ordinalNumber38,
   era: buildLocalizeFn({
     values: eraValues38,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues38,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues38,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues38,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues38,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues30,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/hy/_lib/match.js
@@ -12767,23 +12814,23 @@ var parseOrdinalNumberPattern37 = /\d+/i;
 var matchEraPatterns37 = {
   narrow: /^(Ք|Մ)/i,
   abbreviated: /^(Ք\.?\s?Ա\.?|Մ\.?\s?Թ\.?\s?Ա\.?|Մ\.?\s?Թ\.?|Ք\.?\s?Հ\.?)/i,
-  wide: /^(քրիստոսից առաջ|մեր թվարկությունից առաջ|մեր թվարկության|քրիստոսից հետո)/i
+  wide: /^(քրիստոսից առաջ|մեր թվարկությունից առաջ|մեր թվարկության|քրիստոսից հետո)/i,
 };
 var parseEraPatterns37 = {
-  any: [/^ք/i, /^մ/i]
+  any: [/^ք/i, /^մ/i],
 };
 var matchQuarterPatterns37 = {
   narrow: /^[1234]/i,
   abbreviated: /^ք[1234]/i,
-  wide: /^[1234]((-|֊)?(ին|րդ)) քառորդ/i
+  wide: /^[1234]((-|֊)?(ին|րդ)) քառորդ/i,
 };
 var parseQuarterPatterns37 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns37 = {
   narrow: /^[հփմաօսնդ]/i,
   abbreviated: /^(հուն|փետ|մար|ապր|մայ|հուն|հուլ|օգս|սեպ|հոկ|նոյ|դեկ)/i,
-  wide: /^(հունվար|փետրվար|մարտ|ապրիլ|մայիս|հունիս|հուլիս|օգոստոս|սեպտեմբեր|հոկտեմբեր|նոյեմբեր|դեկտեմբեր)/i
+  wide: /^(հունվար|փետրվար|մարտ|ապրիլ|մայիս|հունիս|հուլիս|օգոստոս|սեպտեմբեր|հոկտեմբեր|նոյեմբեր|դեկտեմբեր)/i,
 };
 var parseMonthPatterns37 = {
   narrow: [
@@ -12798,7 +12845,7 @@ var parseMonthPatterns37 = {
     /^ս/i,
     /^հ/i,
     /^ն/i,
-    /^դ/i
+    /^դ/i,
   ],
   any: [
     /^հու/i,
@@ -12812,24 +12859,24 @@ var parseMonthPatterns37 = {
     /^ս/i,
     /^հոկ/i,
     /^ն/i,
-    /^դ/i
-  ]
+    /^դ/i,
+  ],
 };
 var matchDayPatterns37 = {
   narrow: /^[եչհոշկ]/i,
   short: /^(կր|եր|եք|չք|հգ|ուր|շբ)/i,
   abbreviated: /^(կիր|երկ|երք|չոր|հնգ|ուրբ|շաբ)/i,
-  wide: /^(կիրակի|երկուշաբթի|երեքշաբթի|չորեքշաբթի|հինգշաբթի|ուրբաթ|շաբաթ)/i
+  wide: /^(կիրակի|երկուշաբթի|երեքշաբթի|չորեքշաբթի|հինգշաբթի|ուրբաթ|շաբաթ)/i,
 };
 var parseDayPatterns37 = {
   narrow: [/^կ/i, /^ե/i, /^ե/i, /^չ/i, /^հ/i, /^(ո|Ո)/, /^շ/i],
   short: [/^կ/i, /^եր/i, /^եք/i, /^չ/i, /^հ/i, /^(ո|Ո)/, /^շ/i],
   abbreviated: [/^կ/i, /^երկ/i, /^երք/i, /^չ/i, /^հ/i, /^(ո|Ո)/, /^շ/i],
-  wide: [/^կ/i, /^երկ/i, /^երե/i, /^չ/i, /^հ/i, /^(ո|Ո)/, /^շ/i]
+  wide: [/^կ/i, /^երկ/i, /^երե/i, /^չ/i, /^հ/i, /^(ո|Ո)/, /^շ/i],
 };
 var matchDayPeriodPatterns37 = {
   narrow: /^([ap]|կեսգշ|կեսօր|(առավոտը?|ցերեկը?|երեկո(յան)?|գիշերը?))/i,
-  any: /^([ap]\.?\s?m\.?|կեսգիշեր(ին)?|կեսօր(ին)?|(առավոտը?|ցերեկը?|երեկո(յան)?|գիշերը?))/i
+  any: /^([ap]\.?\s?m\.?|կեսգիշեր(ին)?|կեսօր(ին)?|(առավոտը?|ցերեկը?|երեկո(յան)?|գիշերը?))/i,
 };
 var parseDayPeriodPatterns37 = {
   any: {
@@ -12840,46 +12887,46 @@ var parseDayPeriodPatterns37 = {
     morning: /առավոտ/i,
     afternoon: /ցերեկ/i,
     evening: /երեկո/i,
-    night: /գիշեր/i
-  }
+    night: /գիշեր/i,
+  },
 };
 var match38 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern37,
     parsePattern: parseOrdinalNumberPattern37,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns37,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns37,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns37,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns37,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns37,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns37,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns37,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns37,
-    defaultParseWidth: "wide"
+    defaultParseWidth: "wide",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns37,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns37,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/id/_lib/formatLong.js
@@ -12887,45 +12934,45 @@ var dateFormats46 = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
-  short: "d/M/yyyy"
+  short: "d/M/yyyy",
 };
 var timeFormats46 = {
   full: "HH.mm.ss",
   long: "HH.mm.ss",
   medium: "HH.mm",
-  short: "HH.mm"
+  short: "HH.mm",
 };
 var dateTimeFormats46 = {
   full: "{{date}} 'pukul' {{time}}",
   long: "{{date}} 'pukul' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong46 = {
   date: buildFormatLongFn({
     formats: dateFormats46,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats46,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats46,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/id/_lib/localize.js
 var eraValues39 = {
   narrow: ["SM", "M"],
   abbreviated: ["SM", "M"],
-  wide: ["Sebelum Masehi", "Masehi"]
+  wide: ["Sebelum Masehi", "Masehi"],
 };
 var quarterValues39 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
-  wide: ["Kuartal ke-1", "Kuartal ke-2", "Kuartal ke-3", "Kuartal ke-4"]
+  wide: ["Kuartal ke-1", "Kuartal ke-2", "Kuartal ke-3", "Kuartal ke-4"],
 };
 var monthValues39 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -12941,7 +12988,7 @@ var monthValues39 = {
     "Sep",
     "Okt",
     "Nov",
-    "Des"
+    "Des",
   ],
   wide: [
     "Januari",
@@ -12955,14 +13002,14 @@ var monthValues39 = {
     "September",
     "Oktober",
     "November",
-    "Desember"
-  ]
+    "Desember",
+  ],
 };
 var dayValues39 = {
   narrow: ["M", "S", "S", "R", "K", "J", "S"],
   short: ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"],
   abbreviated: ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"],
-  wide: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"]
+  wide: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
 };
 var dayPeriodValues39 = {
   narrow: {
@@ -12973,7 +13020,7 @@ var dayPeriodValues39 = {
     morning: "pagi",
     afternoon: "siang",
     evening: "sore",
-    night: "malam"
+    night: "malam",
   },
   abbreviated: {
     am: "AM",
@@ -12983,7 +13030,7 @@ var dayPeriodValues39 = {
     morning: "pagi",
     afternoon: "siang",
     evening: "sore",
-    night: "malam"
+    night: "malam",
   },
   wide: {
     am: "AM",
@@ -12993,8 +13040,8 @@ var dayPeriodValues39 = {
     morning: "pagi",
     afternoon: "siang",
     evening: "sore",
-    night: "malam"
-  }
+    night: "malam",
+  },
 };
 var formattingDayPeriodValues31 = {
   narrow: {
@@ -13005,7 +13052,7 @@ var formattingDayPeriodValues31 = {
     morning: "pagi",
     afternoon: "siang",
     evening: "sore",
-    night: "malam"
+    night: "malam",
   },
   abbreviated: {
     am: "AM",
@@ -13015,7 +13062,7 @@ var formattingDayPeriodValues31 = {
     morning: "pagi",
     afternoon: "siang",
     evening: "sore",
-    night: "malam"
+    night: "malam",
   },
   wide: {
     am: "AM",
@@ -13025,8 +13072,8 @@ var formattingDayPeriodValues31 = {
     morning: "pagi",
     afternoon: "siang",
     evening: "sore",
-    night: "malam"
-  }
+    night: "malam",
+  },
 };
 var ordinalNumber39 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -13036,27 +13083,27 @@ var localize40 = {
   ordinalNumber: ordinalNumber39,
   era: buildLocalizeFn({
     values: eraValues39,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues39,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues39,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues39,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues39,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues31,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/id/_lib/match.js
@@ -13065,23 +13112,23 @@ var parseOrdinalNumberPattern38 = /\d+/i;
 var matchEraPatterns38 = {
   narrow: /^(sm|m)/i,
   abbreviated: /^(s\.?\s?m\.?|s\.?\s?e\.?\s?u\.?|m\.?|e\.?\s?u\.?)/i,
-  wide: /^(sebelum masehi|sebelum era umum|masehi|era umum)/i
+  wide: /^(sebelum masehi|sebelum era umum|masehi|era umum)/i,
 };
 var parseEraPatterns38 = {
-  any: [/^s/i, /^(m|e)/i]
+  any: [/^s/i, /^(m|e)/i],
 };
 var matchQuarterPatterns38 = {
   narrow: /^[1234]/i,
   abbreviated: /^K-?\s[1234]/i,
-  wide: /^Kuartal ke-?\s?[1234]/i
+  wide: /^Kuartal ke-?\s?[1234]/i,
 };
 var parseQuarterPatterns38 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns38 = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mar|apr|mei|jun|jul|agt|sep|okt|nov|des)/i,
-  wide: /^(januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember)/i
+  wide: /^(januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember)/i,
 };
 var parseMonthPatterns38 = {
   narrow: [
@@ -13096,7 +13143,7 @@ var parseMonthPatterns38 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -13110,22 +13157,22 @@ var parseMonthPatterns38 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns38 = {
   narrow: /^[srkjm]/i,
   short: /^(min|sen|sel|rab|kam|jum|sab)/i,
   abbreviated: /^(min|sen|sel|rab|kam|jum|sab)/i,
-  wide: /^(minggu|senin|selasa|rabu|kamis|jumat|sabtu)/i
+  wide: /^(minggu|senin|selasa|rabu|kamis|jumat|sabtu)/i,
 };
 var parseDayPatterns38 = {
   narrow: [/^m/i, /^s/i, /^s/i, /^r/i, /^k/i, /^j/i, /^s/i],
-  any: [/^m/i, /^sen/i, /^sel/i, /^r/i, /^k/i, /^j/i, /^sa/i]
+  any: [/^m/i, /^sen/i, /^sel/i, /^r/i, /^k/i, /^j/i, /^sa/i],
 };
 var matchDayPeriodPatterns38 = {
   narrow: /^(a|p|tengah m|tengah h|(di(\swaktu)?) (pagi|siang|sore|malam))/i,
-  any: /^([ap]\.?\s?m\.?|tengah malam|tengah hari|(di(\swaktu)?) (pagi|siang|sore|malam))/i
+  any: /^([ap]\.?\s?m\.?|tengah malam|tengah hari|(di(\swaktu)?) (pagi|siang|sore|malam))/i,
 };
 var parseDayPeriodPatterns38 = {
   any: {
@@ -13136,46 +13183,46 @@ var parseDayPeriodPatterns38 = {
     morning: /pagi/i,
     afternoon: /siang/i,
     evening: /sore/i,
-    night: /malam/i
-  }
+    night: /malam/i,
+  },
 };
 var match39 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern38,
     parsePattern: parseOrdinalNumberPattern38,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns38,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns38,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns38,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns38,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns38,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns38,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns38,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns38,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns38,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns38,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/is/_lib/formatLong.js
@@ -13183,45 +13230,45 @@ var dateFormats47 = {
   full: "EEEE, do MMMM y",
   long: "do MMMM y",
   medium: "do MMM y",
-  short: "d.MM.y"
+  short: "d.MM.y",
 };
 var timeFormats47 = {
   full: "'kl'. HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats47 = {
   full: "{{date}} 'kl.' {{time}}",
   long: "{{date}} 'kl.' {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong47 = {
   date: buildFormatLongFn({
     formats: dateFormats47,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats47,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats47,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/is/_lib/localize.js
 var eraValues40 = {
   narrow: ["f.Kr.", "e.Kr."],
   abbreviated: ["f.Kr.", "e.Kr."],
-  wide: ["fyrir Krist", "eftir Krist"]
+  wide: ["fyrir Krist", "eftir Krist"],
 };
 var quarterValues40 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1F", "2F", "3F", "4F"],
-  wide: ["1. fjórðungur", "2. fjórðungur", "3. fjórðungur", "4. fjórðungur"]
+  wide: ["1. fjórðungur", "2. fjórðungur", "3. fjórðungur", "4. fjórðungur"],
 };
 var monthValues40 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "Á", "S", "Ó", "N", "D"],
@@ -13237,7 +13284,7 @@ var monthValues40 = {
     "sept.",
     "okt.",
     "nóv.",
-    "des."
+    "des.",
   ],
   wide: [
     "janúar",
@@ -13251,8 +13298,8 @@ var monthValues40 = {
     "september",
     "október",
     "nóvember",
-    "desember"
-  ]
+    "desember",
+  ],
 };
 var dayValues40 = {
   narrow: ["S", "M", "Þ", "M", "F", "F", "L"],
@@ -13265,8 +13312,8 @@ var dayValues40 = {
     "miðvikudagur",
     "fimmtudagur",
     "föstudagur",
-    "laugardagur"
-  ]
+    "laugardagur",
+  ],
 };
 var dayPeriodValues40 = {
   narrow: {
@@ -13277,7 +13324,7 @@ var dayPeriodValues40 = {
     morning: "morgunn",
     afternoon: "síðdegi",
     evening: "kvöld",
-    night: "nótt"
+    night: "nótt",
   },
   abbreviated: {
     am: "f.h.",
@@ -13287,7 +13334,7 @@ var dayPeriodValues40 = {
     morning: "morgunn",
     afternoon: "síðdegi",
     evening: "kvöld",
-    night: "nótt"
+    night: "nótt",
   },
   wide: {
     am: "fyrir hádegi",
@@ -13297,8 +13344,8 @@ var dayPeriodValues40 = {
     morning: "morgunn",
     afternoon: "síðdegi",
     evening: "kvöld",
-    night: "nótt"
-  }
+    night: "nótt",
+  },
 };
 var formattingDayPeriodValues32 = {
   narrow: {
@@ -13309,7 +13356,7 @@ var formattingDayPeriodValues32 = {
     morning: "að morgni",
     afternoon: "síðdegis",
     evening: "um kvöld",
-    night: "um nótt"
+    night: "um nótt",
   },
   abbreviated: {
     am: "f.h.",
@@ -13319,7 +13366,7 @@ var formattingDayPeriodValues32 = {
     morning: "að morgni",
     afternoon: "síðdegis",
     evening: "um kvöld",
-    night: "um nótt"
+    night: "um nótt",
   },
   wide: {
     am: "fyrir hádegi",
@@ -13329,8 +13376,8 @@ var formattingDayPeriodValues32 = {
     morning: "að morgni",
     afternoon: "síðdegis",
     evening: "um kvöld",
-    night: "um nótt"
-  }
+    night: "um nótt",
+  },
 };
 var ordinalNumber40 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -13340,27 +13387,27 @@ var localize41 = {
   ordinalNumber: ordinalNumber40,
   era: buildLocalizeFn({
     values: eraValues40,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues40,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues40,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues40,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues40,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues32,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/is/_lib/match.js
@@ -13369,23 +13416,24 @@ var parseOrdinalNumberPattern39 = /\d+(\.)?/i;
 var matchEraPatterns39 = {
   narrow: /^(f\.Kr\.|e\.Kr\.)/i,
   abbreviated: /^(f\.Kr\.|e\.Kr\.)/i,
-  wide: /^(fyrir Krist|eftir Krist)/i
+  wide: /^(fyrir Krist|eftir Krist)/i,
 };
 var parseEraPatterns39 = {
-  any: [/^(f\.Kr\.)/i, /^(e\.Kr\.)/i]
+  any: [/^(f\.Kr\.)/i, /^(e\.Kr\.)/i],
 };
 var matchQuarterPatterns39 = {
   narrow: /^[1234]\.?/i,
   abbreviated: /^q[1234]\.?/i,
-  wide: /^[1234]\.? fjórðungur/i
+  wide: /^[1234]\.? fjórðungur/i,
 };
 var parseQuarterPatterns39 = {
-  any: [/1\.?/i, /2\.?/i, /3\.?/i, /4\.?/i]
+  any: [/1\.?/i, /2\.?/i, /3\.?/i, /4\.?/i],
 };
 var matchMonthPatterns39 = {
   narrow: /^[jfmásónd]/i,
-  abbreviated: /^(jan\.|feb\.|mars\.|apríl\.|maí|júní|júlí|águst|sep\.|oct\.|nov\.|dec\.)/i,
-  wide: /^(januar|febrúar|mars|apríl|maí|júní|júlí|águst|september|október|nóvember|desember)/i
+  abbreviated:
+    /^(jan\.|feb\.|mars\.|apríl\.|maí|júní|júlí|águst|sep\.|oct\.|nov\.|dec\.)/i,
+  wide: /^(januar|febrúar|mars|apríl|maí|júní|júlí|águst|september|október|nóvember|desember)/i,
 };
 var parseMonthPatterns39 = {
   narrow: [
@@ -13400,7 +13448,7 @@ var parseMonthPatterns39 = {
     /^s/i,
     /^ó/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -13414,22 +13462,22 @@ var parseMonthPatterns39 = {
     /^s/i,
     /^ó/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns39 = {
   narrow: /^[smtwf]/i,
   short: /^(su|má|þr|mi|fi|fö|la)/i,
   abbreviated: /^(sun|mán|þri|mið|fim|fös|lau)\.?/i,
-  wide: /^(sunnudagur|mánudagur|þriðjudagur|miðvikudagur|fimmtudagur|föstudagur|laugardagur)/i
+  wide: /^(sunnudagur|mánudagur|þriðjudagur|miðvikudagur|fimmtudagur|föstudagur|laugardagur)/i,
 };
 var parseDayPatterns39 = {
   narrow: [/^s/i, /^m/i, /^þ/i, /^m/i, /^f/i, /^f/i, /^l/i],
-  any: [/^su/i, /^má/i, /^þr/i, /^mi/i, /^fi/i, /^fö/i, /^la/i]
+  any: [/^su/i, /^má/i, /^þr/i, /^mi/i, /^fi/i, /^fö/i, /^la/i],
 };
 var matchDayPeriodPatterns39 = {
   narrow: /^(f|e|síðdegis|(á|að|um) (morgni|kvöld|nótt|miðnætti))/i,
-  any: /^(fyrir hádegi|eftir hádegi|[ef]\.?h\.?|síðdegis|morgunn|(á|að|um) (morgni|kvöld|nótt|miðnætti))/i
+  any: /^(fyrir hádegi|eftir hádegi|[ef]\.?h\.?|síðdegis|morgunn|(á|að|um) (morgni|kvöld|nótt|miðnætti))/i,
 };
 var parseDayPeriodPatterns39 = {
   any: {
@@ -13440,46 +13488,46 @@ var parseDayPeriodPatterns39 = {
     morning: /morgunn/i,
     afternoon: /síðdegi/i,
     evening: /kvöld/i,
-    night: /nótt/i
-  }
+    night: /nótt/i,
+  },
 };
 var match40 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern39,
     parsePattern: parseOrdinalNumberPattern39,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns39,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns39,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns39,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns39,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns39,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns39,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns39,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns39,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns39,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns39,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/it/_lib/formatLong.js
@@ -13487,45 +13535,45 @@ var dateFormats48 = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
-  short: "dd/MM/y"
+  short: "dd/MM/y",
 };
 var timeFormats48 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats48 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong48 = {
   date: buildFormatLongFn({
     formats: dateFormats48,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats48,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats48,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/it/_lib/localize.js
 var eraValues41 = {
   narrow: ["aC", "dC"],
   abbreviated: ["a.C.", "d.C."],
-  wide: ["avanti Cristo", "dopo Cristo"]
+  wide: ["avanti Cristo", "dopo Cristo"],
 };
 var quarterValues41 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["T1", "T2", "T3", "T4"],
-  wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"]
+  wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"],
 };
 var monthValues41 = {
   narrow: ["G", "F", "M", "A", "M", "G", "L", "A", "S", "O", "N", "D"],
@@ -13541,7 +13589,7 @@ var monthValues41 = {
     "set",
     "ott",
     "nov",
-    "dic"
+    "dic",
   ],
   wide: [
     "gennaio",
@@ -13555,8 +13603,8 @@ var monthValues41 = {
     "settembre",
     "ottobre",
     "novembre",
-    "dicembre"
-  ]
+    "dicembre",
+  ],
 };
 var dayValues41 = {
   narrow: ["D", "L", "M", "M", "G", "V", "S"],
@@ -13569,8 +13617,8 @@ var dayValues41 = {
     "mercoledì",
     "giovedì",
     "venerdì",
-    "sabato"
-  ]
+    "sabato",
+  ],
 };
 var dayPeriodValues41 = {
   narrow: {
@@ -13581,7 +13629,7 @@ var dayPeriodValues41 = {
     morning: "mattina",
     afternoon: "pomeriggio",
     evening: "sera",
-    night: "notte"
+    night: "notte",
   },
   abbreviated: {
     am: "AM",
@@ -13591,7 +13639,7 @@ var dayPeriodValues41 = {
     morning: "mattina",
     afternoon: "pomeriggio",
     evening: "sera",
-    night: "notte"
+    night: "notte",
   },
   wide: {
     am: "AM",
@@ -13601,8 +13649,8 @@ var dayPeriodValues41 = {
     morning: "mattina",
     afternoon: "pomeriggio",
     evening: "sera",
-    night: "notte"
-  }
+    night: "notte",
+  },
 };
 var formattingDayPeriodValues33 = {
   narrow: {
@@ -13613,7 +13661,7 @@ var formattingDayPeriodValues33 = {
     morning: "di mattina",
     afternoon: "del pomeriggio",
     evening: "di sera",
-    night: "di notte"
+    night: "di notte",
   },
   abbreviated: {
     am: "AM",
@@ -13623,7 +13671,7 @@ var formattingDayPeriodValues33 = {
     morning: "di mattina",
     afternoon: "del pomeriggio",
     evening: "di sera",
-    night: "di notte"
+    night: "di notte",
   },
   wide: {
     am: "AM",
@@ -13633,8 +13681,8 @@ var formattingDayPeriodValues33 = {
     morning: "di mattina",
     afternoon: "del pomeriggio",
     evening: "di sera",
-    night: "di notte"
-  }
+    night: "di notte",
+  },
 };
 var ordinalNumber41 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -13644,27 +13692,27 @@ var localize42 = {
   ordinalNumber: ordinalNumber41,
   era: buildLocalizeFn({
     values: eraValues41,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues41,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues41,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues41,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues41,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues33,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/it/_lib/match.js
@@ -13673,23 +13721,23 @@ var parseOrdinalNumberPattern40 = /\d+/i;
 var matchEraPatterns40 = {
   narrow: /^(aC|dC)/i,
   abbreviated: /^(a\.?\s?C\.?|a\.?\s?e\.?\s?v\.?|d\.?\s?C\.?|e\.?\s?v\.?)/i,
-  wide: /^(avanti Cristo|avanti Era Volgare|dopo Cristo|Era Volgare)/i
+  wide: /^(avanti Cristo|avanti Era Volgare|dopo Cristo|Era Volgare)/i,
 };
 var parseEraPatterns40 = {
-  any: [/^a/i, /^(d|e)/i]
+  any: [/^a/i, /^(d|e)/i],
 };
 var matchQuarterPatterns40 = {
   narrow: /^[1234]/i,
   abbreviated: /^t[1234]/i,
-  wide: /^[1234](º)? trimestre/i
+  wide: /^[1234](º)? trimestre/i,
 };
 var parseQuarterPatterns40 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns40 = {
   narrow: /^[gfmalsond]/i,
   abbreviated: /^(gen|feb|mar|apr|mag|giu|lug|ago|set|ott|nov|dic)/i,
-  wide: /^(gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)/i
+  wide: /^(gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)/i,
 };
 var parseMonthPatterns40 = {
   narrow: [
@@ -13704,7 +13752,7 @@ var parseMonthPatterns40 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ge/i,
@@ -13718,22 +13766,23 @@ var parseMonthPatterns40 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns40 = {
   narrow: /^[dlmgvs]/i,
   short: /^(do|lu|ma|me|gi|ve|sa)/i,
   abbreviated: /^(dom|lun|mar|mer|gio|ven|sab)/i,
-  wide: /^(domenica|luned[i|ì]|marted[i|ì]|mercoled[i|ì]|gioved[i|ì]|venerd[i|ì]|sabato)/i
+  wide: /^(domenica|luned[i|ì]|marted[i|ì]|mercoled[i|ì]|gioved[i|ì]|venerd[i|ì]|sabato)/i,
 };
 var parseDayPatterns40 = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^g/i, /^v/i, /^s/i],
-  any: [/^d/i, /^l/i, /^ma/i, /^me/i, /^g/i, /^v/i, /^s/i]
+  any: [/^d/i, /^l/i, /^ma/i, /^me/i, /^g/i, /^v/i, /^s/i],
 };
 var matchDayPeriodPatterns40 = {
-  narrow: /^(a|m\.|p|mezzanotte|mezzogiorno|(di|del) (mattina|pomeriggio|sera|notte))/i,
-  any: /^([ap]\.?\s?m\.?|mezzanotte|mezzogiorno|(di|del) (mattina|pomeriggio|sera|notte))/i
+  narrow:
+    /^(a|m\.|p|mezzanotte|mezzogiorno|(di|del) (mattina|pomeriggio|sera|notte))/i,
+  any: /^([ap]\.?\s?m\.?|mezzanotte|mezzogiorno|(di|del) (mattina|pomeriggio|sera|notte))/i,
 };
 var parseDayPeriodPatterns40 = {
   any: {
@@ -13744,46 +13793,46 @@ var parseDayPeriodPatterns40 = {
     morning: /mattina/i,
     afternoon: /pomeriggio/i,
     evening: /sera/i,
-    night: /notte/i
-  }
+    night: /notte/i,
+  },
 };
 var match41 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern40,
     parsePattern: parseOrdinalNumberPattern40,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns40,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns40,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns40,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns40,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns40,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns40,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns40,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns40,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns40,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns40,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/it-CH/_lib/formatLong.js
@@ -13791,33 +13840,33 @@ var dateFormats49 = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
-  short: "dd.MM.y"
+  short: "dd.MM.y",
 };
 var timeFormats49 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats49 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong49 = {
   date: buildFormatLongFn({
     formats: dateFormats49,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats49,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats49,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ja/_lib/formatLong.js
@@ -13825,45 +13874,45 @@ var dateFormats50 = {
   full: "y年M月d日EEEE",
   long: "y年M月d日",
   medium: "y/MM/dd",
-  short: "y/MM/dd"
+  short: "y/MM/dd",
 };
 var timeFormats50 = {
   full: "H時mm分ss秒 zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats50 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong50 = {
   date: buildFormatLongFn({
     formats: dateFormats50,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats50,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats50,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ja/_lib/localize.js
 var eraValues42 = {
   narrow: ["BC", "AC"],
   abbreviated: ["紀元前", "西暦"],
-  wide: ["紀元前", "西暦"]
+  wide: ["紀元前", "西暦"],
 };
 var quarterValues42 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["第1四半期", "第2四半期", "第3四半期", "第4四半期"]
+  wide: ["第1四半期", "第2四半期", "第3四半期", "第4四半期"],
 };
 var monthValues42 = {
   narrow: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
@@ -13879,7 +13928,7 @@ var monthValues42 = {
     "9月",
     "10月",
     "11月",
-    "12月"
+    "12月",
   ],
   wide: [
     "1月",
@@ -13893,14 +13942,14 @@ var monthValues42 = {
     "9月",
     "10月",
     "11月",
-    "12月"
-  ]
+    "12月",
+  ],
 };
 var dayValues42 = {
   narrow: ["日", "月", "火", "水", "木", "金", "土"],
   short: ["日", "月", "火", "水", "木", "金", "土"],
   abbreviated: ["日", "月", "火", "水", "木", "金", "土"],
-  wide: ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"]
+  wide: ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"],
 };
 var dayPeriodValues42 = {
   narrow: {
@@ -13911,7 +13960,7 @@ var dayPeriodValues42 = {
     morning: "朝",
     afternoon: "午後",
     evening: "夜",
-    night: "深夜"
+    night: "深夜",
   },
   abbreviated: {
     am: "午前",
@@ -13921,7 +13970,7 @@ var dayPeriodValues42 = {
     morning: "朝",
     afternoon: "午後",
     evening: "夜",
-    night: "深夜"
+    night: "深夜",
   },
   wide: {
     am: "午前",
@@ -13931,8 +13980,8 @@ var dayPeriodValues42 = {
     morning: "朝",
     afternoon: "午後",
     evening: "夜",
-    night: "深夜"
-  }
+    night: "深夜",
+  },
 };
 var formattingDayPeriodValues34 = {
   narrow: {
@@ -13943,7 +13992,7 @@ var formattingDayPeriodValues34 = {
     morning: "朝",
     afternoon: "午後",
     evening: "夜",
-    night: "深夜"
+    night: "深夜",
   },
   abbreviated: {
     am: "午前",
@@ -13953,7 +14002,7 @@ var formattingDayPeriodValues34 = {
     morning: "朝",
     afternoon: "午後",
     evening: "夜",
-    night: "深夜"
+    night: "深夜",
   },
   wide: {
     am: "午前",
@@ -13963,8 +14012,8 @@ var formattingDayPeriodValues34 = {
     morning: "朝",
     afternoon: "午後",
     evening: "夜",
-    night: "深夜"
-  }
+    night: "深夜",
+  },
 };
 var ordinalNumber42 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
@@ -13994,27 +14043,27 @@ var localize43 = {
   ordinalNumber: ordinalNumber42,
   era: buildLocalizeFn({
     values: eraValues42,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues42,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => Number(quarter) - 1
+    argumentCallback: (quarter) => Number(quarter) - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues42,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues42,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues42,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues34,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ja/_lib/match.js
@@ -14023,24 +14072,24 @@ var parseOrdinalNumberPattern41 = /\d+/i;
 var matchEraPatterns41 = {
   narrow: /^(B\.?C\.?|A\.?D\.?)/i,
   abbreviated: /^(紀元[前後]|西暦)/i,
-  wide: /^(紀元[前後]|西暦)/i
+  wide: /^(紀元[前後]|西暦)/i,
 };
 var parseEraPatterns41 = {
   narrow: [/^B/i, /^A/i],
-  any: [/^(紀元前)/i, /^(西暦|紀元後)/i]
+  any: [/^(紀元前)/i, /^(西暦|紀元後)/i],
 };
 var matchQuarterPatterns41 = {
   narrow: /^[1234]/i,
   abbreviated: /^Q[1234]/i,
-  wide: /^第[1234一二三四１２３４]四半期/i
+  wide: /^第[1234一二三四１２３４]四半期/i,
 };
 var parseQuarterPatterns41 = {
-  any: [/(1|一|１)/i, /(2|二|２)/i, /(3|三|３)/i, /(4|四|４)/i]
+  any: [/(1|一|１)/i, /(2|二|２)/i, /(3|三|３)/i, /(4|四|４)/i],
 };
 var matchMonthPatterns41 = {
   narrow: /^([123456789]|1[012])/,
   abbreviated: /^([123456789]|1[012])月/i,
-  wide: /^([123456789]|1[012])月/i
+  wide: /^([123456789]|1[012])月/i,
 };
 var parseMonthPatterns41 = {
   any: [
@@ -14055,20 +14104,20 @@ var parseMonthPatterns41 = {
     /^9/,
     /^10/,
     /^11/,
-    /^12/
-  ]
+    /^12/,
+  ],
 };
 var matchDayPatterns41 = {
   narrow: /^[日月火水木金土]/,
   short: /^[日月火水木金土]/,
   abbreviated: /^[日月火水木金土]/,
-  wide: /^[日月火水木金土]曜日/
+  wide: /^[日月火水木金土]曜日/,
 };
 var parseDayPatterns41 = {
-  any: [/^日/, /^月/, /^火/, /^水/, /^木/, /^金/, /^土/]
+  any: [/^日/, /^月/, /^火/, /^水/, /^木/, /^金/, /^土/],
 };
 var matchDayPeriodPatterns41 = {
-  any: /^(AM|PM|午前|午後|正午|深夜|真夜中|夜|朝)/i
+  any: /^(AM|PM|午前|午後|正午|深夜|真夜中|夜|朝)/i,
 };
 var parseDayPeriodPatterns41 = {
   any: {
@@ -14079,48 +14128,48 @@ var parseDayPeriodPatterns41 = {
     morning: /^朝/i,
     afternoon: /^午後/i,
     evening: /^夜/i,
-    night: /^深夜/i
-  }
+    night: /^深夜/i,
+  },
 };
 var match42 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern41,
     parsePattern: parseOrdinalNumberPattern41,
-    valueCallback: function(value) {
+    valueCallback: function (value) {
       return parseInt(value, 10);
-    }
+    },
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns41,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns41,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns41,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns41,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns41,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns41,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns41,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns41,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns41,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns41,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ja-Hira/_lib/formatLong.js
@@ -14128,45 +14177,45 @@ var dateFormats51 = {
   full: "yねんMがつdにちEEEE",
   long: "yねんMがつdにち",
   medium: "y/MM/dd",
-  short: "y/MM/dd"
+  short: "y/MM/dd",
 };
 var timeFormats51 = {
   full: "Hじmmふんssびょう zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats51 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong51 = {
   date: buildFormatLongFn({
     formats: dateFormats51,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats51,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats51,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ja-Hira/_lib/localize.js
 var eraValues43 = {
   narrow: ["BC", "AC"],
   abbreviated: ["きげんぜん", "せいれき"],
-  wide: ["きげんぜん", "せいれき"]
+  wide: ["きげんぜん", "せいれき"],
 };
 var quarterValues43 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["だい1しはんき", "だい2しはんき", "だい3しはんき", "だい4しはんき"]
+  wide: ["だい1しはんき", "だい2しはんき", "だい3しはんき", "だい4しはんき"],
 };
 var monthValues43 = {
   narrow: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
@@ -14182,7 +14231,7 @@ var monthValues43 = {
     "9がつ",
     "10がつ",
     "11がつ",
-    "12がつ"
+    "12がつ",
   ],
   wide: [
     "1がつ",
@@ -14196,8 +14245,8 @@ var monthValues43 = {
     "9がつ",
     "10がつ",
     "11がつ",
-    "12がつ"
-  ]
+    "12がつ",
+  ],
 };
 var dayValues43 = {
   narrow: ["にち", "げつ", "か", "すい", "もく", "きん", "ど"],
@@ -14210,8 +14259,8 @@ var dayValues43 = {
     "すいようび",
     "もくようび",
     "きんようび",
-    "どようび"
-  ]
+    "どようび",
+  ],
 };
 var dayPeriodValues43 = {
   narrow: {
@@ -14222,7 +14271,7 @@ var dayPeriodValues43 = {
     morning: "あさ",
     afternoon: "ごご",
     evening: "よる",
-    night: "しんや"
+    night: "しんや",
   },
   abbreviated: {
     am: "ごぜん",
@@ -14232,7 +14281,7 @@ var dayPeriodValues43 = {
     morning: "あさ",
     afternoon: "ごご",
     evening: "よる",
-    night: "しんや"
+    night: "しんや",
   },
   wide: {
     am: "ごぜん",
@@ -14242,8 +14291,8 @@ var dayPeriodValues43 = {
     morning: "あさ",
     afternoon: "ごご",
     evening: "よる",
-    night: "しんや"
-  }
+    night: "しんや",
+  },
 };
 var formattingDayPeriodValues35 = {
   narrow: {
@@ -14254,7 +14303,7 @@ var formattingDayPeriodValues35 = {
     morning: "あさ",
     afternoon: "ごご",
     evening: "よる",
-    night: "しんや"
+    night: "しんや",
   },
   abbreviated: {
     am: "ごぜん",
@@ -14264,7 +14313,7 @@ var formattingDayPeriodValues35 = {
     morning: "あさ",
     afternoon: "ごご",
     evening: "よる",
-    night: "しんや"
+    night: "しんや",
   },
   wide: {
     am: "ごぜん",
@@ -14274,8 +14323,8 @@ var formattingDayPeriodValues35 = {
     morning: "あさ",
     afternoon: "ごご",
     evening: "よる",
-    night: "しんや"
-  }
+    night: "しんや",
+  },
 };
 var ordinalNumber43 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
@@ -14305,53 +14354,54 @@ var localize44 = {
   ordinalNumber: ordinalNumber43,
   era: buildLocalizeFn({
     values: eraValues43,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues43,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => Number(quarter) - 1
+    argumentCallback: (quarter) => Number(quarter) - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues43,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues43,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues43,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues35,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ja-Hira/_lib/match.js
-var matchOrdinalNumberPattern42 = /^だ?い?\d+(ねん|しはんき|がつ|しゅう|にち|じ|ふん|びょう)?/i;
+var matchOrdinalNumberPattern42 =
+  /^だ?い?\d+(ねん|しはんき|がつ|しゅう|にち|じ|ふん|びょう)?/i;
 var parseOrdinalNumberPattern42 = /\d+/i;
 var matchEraPatterns42 = {
   narrow: /^(B\.?C\.?|A\.?D\.?)/i,
   abbreviated: /^(きげん[前後]|せいれき)/i,
-  wide: /^(きげん[前後]|せいれき)/i
+  wide: /^(きげん[前後]|せいれき)/i,
 };
 var parseEraPatterns42 = {
   narrow: [/^B/i, /^A/i],
-  any: [/^(きげんぜん)/i, /^(せいれき|きげんご)/i]
+  any: [/^(きげんぜん)/i, /^(せいれき|きげんご)/i],
 };
 var matchQuarterPatterns42 = {
   narrow: /^[1234]/i,
   abbreviated: /^Q[1234]/i,
-  wide: /^だい[1234一二三四１２３４]しはんき/i
+  wide: /^だい[1234一二三四１２３４]しはんき/i,
 };
 var parseQuarterPatterns42 = {
-  any: [/(1|一|１)/i, /(2|二|２)/i, /(3|三|３)/i, /(4|四|４)/i]
+  any: [/(1|一|１)/i, /(2|二|２)/i, /(3|三|３)/i, /(4|四|４)/i],
 };
 var matchMonthPatterns42 = {
   narrow: /^([123456789]|1[012])/,
   abbreviated: /^([123456789]|1[012])がつ/i,
-  wide: /^([123456789]|1[012])がつ/i
+  wide: /^([123456789]|1[012])がつ/i,
 };
 var parseMonthPatterns42 = {
   any: [
@@ -14366,20 +14416,20 @@ var parseMonthPatterns42 = {
     /^9/,
     /^10/,
     /^11/,
-    /^12/
-  ]
+    /^12/,
+  ],
 };
 var matchDayPatterns42 = {
   narrow: /^(にち|げつ|か|すい|もく|きん|ど)/,
   short: /^(にち|げつ|か|すい|もく|きん|ど)/,
   abbreviated: /^(にち|げつ|か|すい|もく|きん|ど)/,
-  wide: /^(にち|げつ|か|すい|もく|きん|ど)ようび/
+  wide: /^(にち|げつ|か|すい|もく|きん|ど)ようび/,
 };
 var parseDayPatterns42 = {
-  any: [/^にち/, /^げつ/, /^か/, /^すい/, /^もく/, /^きん/, /^ど/]
+  any: [/^にち/, /^げつ/, /^か/, /^すい/, /^もく/, /^きん/, /^ど/],
 };
 var matchDayPeriodPatterns42 = {
-  any: /^(AM|PM|ごぜん|ごご|しょうご|しんや|まよなか|よる|あさ)/i
+  any: /^(AM|PM|ごぜん|ごご|しょうご|しんや|まよなか|よる|あさ)/i,
 };
 var parseDayPeriodPatterns42 = {
   any: {
@@ -14390,48 +14440,48 @@ var parseDayPeriodPatterns42 = {
     morning: /^あさ/i,
     afternoon: /^ごご/i,
     evening: /^よる/i,
-    night: /^しんや/i
-  }
+    night: /^しんや/i,
+  },
 };
 var match43 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern42,
     parsePattern: parseOrdinalNumberPattern42,
-    valueCallback: function(value) {
+    valueCallback: function (value) {
       return parseInt(value, 10);
-    }
+    },
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns42,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns42,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns42,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns42,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns42,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns42,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns42,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns42,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns42,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns42,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ka/_lib/formatLong.js
@@ -14439,45 +14489,45 @@ var dateFormats52 = {
   full: "EEEE, do MMMM, y",
   long: "do, MMMM, y",
   medium: "d, MMM, y",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats52 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats52 = {
   full: "{{date}} {{time}}'-ზე'",
   long: "{{date}} {{time}}'-ზე'",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong52 = {
   date: buildFormatLongFn({
     formats: dateFormats52,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats52,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats52,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ka/_lib/localize.js
 var eraValues44 = {
   narrow: ["ჩ.წ-მდე", "ჩ.წ"],
   abbreviated: ["ჩვ.წ-მდე", "ჩვ.წ"],
-  wide: ["ჩვენს წელთაღრიცხვამდე", "ჩვენი წელთაღრიცხვით"]
+  wide: ["ჩვენს წელთაღრიცხვამდე", "ჩვენი წელთაღრიცხვით"],
 };
 var quarterValues44 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-ლი კვ", "2-ე კვ", "3-ე კვ", "4-ე კვ"],
-  wide: ["1-ლი კვარტალი", "2-ე კვარტალი", "3-ე კვარტალი", "4-ე კვარტალი"]
+  wide: ["1-ლი კვარტალი", "2-ე კვარტალი", "3-ე კვარტალი", "4-ე კვარტალი"],
 };
 var monthValues44 = {
   narrow: [
@@ -14492,7 +14542,7 @@ var monthValues44 = {
     "სე",
     "ოქ",
     "ნო",
-    "დე"
+    "დე",
   ],
   abbreviated: [
     "იან",
@@ -14506,7 +14556,7 @@ var monthValues44 = {
     "სექ",
     "ოქტ",
     "ნოე",
-    "დეკ"
+    "დეკ",
   ],
   wide: [
     "იანვარი",
@@ -14520,8 +14570,8 @@ var monthValues44 = {
     "სექტემბერი",
     "ოქტომბერი",
     "ნოემბერი",
-    "დეკემბერი"
-  ]
+    "დეკემბერი",
+  ],
 };
 var dayValues44 = {
   narrow: ["კვ", "ორ", "სა", "ოთ", "ხუ", "პა", "შა"],
@@ -14534,8 +14584,8 @@ var dayValues44 = {
     "ოთხშაბათი",
     "ხუთშაბათი",
     "პარასკევი",
-    "შაბათი"
-  ]
+    "შაბათი",
+  ],
 };
 var dayPeriodValues44 = {
   narrow: {
@@ -14546,7 +14596,7 @@ var dayPeriodValues44 = {
     morning: "დილა",
     afternoon: "საღამო",
     evening: "საღამო",
-    night: "ღამე"
+    night: "ღამე",
   },
   abbreviated: {
     am: "AM",
@@ -14556,7 +14606,7 @@ var dayPeriodValues44 = {
     morning: "დილა",
     afternoon: "საღამო",
     evening: "საღამო",
-    night: "ღამე"
+    night: "ღამე",
   },
   wide: {
     am: "a.m.",
@@ -14566,8 +14616,8 @@ var dayPeriodValues44 = {
     morning: "დილა",
     afternoon: "საღამო",
     evening: "საღამო",
-    night: "ღამე"
-  }
+    night: "ღამე",
+  },
 };
 var formattingDayPeriodValues36 = {
   narrow: {
@@ -14578,7 +14628,7 @@ var formattingDayPeriodValues36 = {
     morning: "დილით",
     afternoon: "ნაშუადღევს",
     evening: "საღამოს",
-    night: "ღამით"
+    night: "ღამით",
   },
   abbreviated: {
     am: "AM",
@@ -14588,7 +14638,7 @@ var formattingDayPeriodValues36 = {
     morning: "დილით",
     afternoon: "ნაშუადღევს",
     evening: "საღამოს",
-    night: "ღამით"
+    night: "ღამით",
   },
   wide: {
     am: "a.m.",
@@ -14598,8 +14648,8 @@ var formattingDayPeriodValues36 = {
     morning: "დილით",
     afternoon: "ნაშუადღევს",
     evening: "საღამოს",
-    night: "ღამით"
-  }
+    night: "ღამით",
+  },
 };
 var ordinalNumber44 = (dirtyNumber) => {
   const number = Number(dirtyNumber);
@@ -14612,27 +14662,27 @@ var localize45 = {
   ordinalNumber: ordinalNumber44,
   era: buildLocalizeFn({
     values: eraValues44,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues44,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues44,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues44,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues44,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues36,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ka/_lib/match.js
@@ -14641,24 +14691,24 @@ var parseOrdinalNumberPattern43 = /\d+/i;
 var matchEraPatterns43 = {
   narrow: /^(ჩვ?\.წ)/i,
   abbreviated: /^(ჩვ?\.წ)/i,
-  wide: /^(ჩვენს წელთაღრიცხვამდე|ქრისტეშობამდე|ჩვენი წელთაღრიცხვით|ქრისტეშობიდან)/i
+  wide: /^(ჩვენს წელთაღრიცხვამდე|ქრისტეშობამდე|ჩვენი წელთაღრიცხვით|ქრისტეშობიდან)/i,
 };
 var parseEraPatterns43 = {
   any: [
     /^(ჩვენს წელთაღრიცხვამდე|ქრისტეშობამდე)/i,
-    /^(ჩვენი წელთაღრიცხვით|ქრისტეშობიდან)/i
-  ]
+    /^(ჩვენი წელთაღრიცხვით|ქრისტეშობიდან)/i,
+  ],
 };
 var matchQuarterPatterns43 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]-(ლი|ე)? კვ/i,
-  wide: /^[1234]-(ლი|ე)? კვარტალი/i
+  wide: /^[1234]-(ლი|ე)? კვარტალი/i,
 };
 var parseQuarterPatterns43 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns43 = {
-  any: /^(ია|თე|მა|აპ|მს|ვნ|ვლ|აგ|სე|ოქ|ნო|დე)/i
+  any: /^(ია|თე|მა|აპ|მს|ვნ|ვლ|აგ|სე|ოქ|ნო|დე)/i,
 };
 var parseMonthPatterns43 = {
   any: [
@@ -14673,19 +14723,19 @@ var parseMonthPatterns43 = {
     /^ს/i,
     /^ო/i,
     /^ნ/i,
-    /^დ/i
-  ]
+    /^დ/i,
+  ],
 };
 var matchDayPatterns43 = {
   narrow: /^(კვ|ორ|სა|ოთ|ხუ|პა|შა)/i,
   short: /^(კვი|ორშ|სამ|ოთხ|ხუთ|პარ|შაბ)/i,
-  wide: /^(კვირა|ორშაბათი|სამშაბათი|ოთხშაბათი|ხუთშაბათი|პარასკევი|შაბათი)/i
+  wide: /^(კვირა|ორშაბათი|სამშაბათი|ოთხშაბათი|ხუთშაბათი|პარასკევი|შაბათი)/i,
 };
 var parseDayPatterns43 = {
-  any: [/^კვ/i, /^ორ/i, /^სა/i, /^ოთ/i, /^ხუ/i, /^პა/i, /^შა/i]
+  any: [/^კვ/i, /^ორ/i, /^სა/i, /^ოთ/i, /^ხუ/i, /^პა/i, /^შა/i],
 };
 var matchDayPeriodPatterns43 = {
-  any: /^([ap]\.?\s?m\.?|შუაღ|დილ)/i
+  any: /^([ap]\.?\s?m\.?|შუაღ|დილ)/i,
 };
 var parseDayPeriodPatterns43 = {
   any: {
@@ -14696,46 +14746,46 @@ var parseDayPeriodPatterns43 = {
     morning: /^დილ/i,
     afternoon: /ნაშუადღევს/i,
     evening: /საღამო/i,
-    night: /ღამ/i
-  }
+    night: /ღამ/i,
+  },
 };
 var match44 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern43,
     parsePattern: parseOrdinalNumberPattern43,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns43,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns43,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns43,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns43,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns43,
     defaultMatchWidth: "any",
     parsePatterns: parseMonthPatterns43,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns43,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns43,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns43,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns43,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/kk/_lib/formatLong.js
@@ -14743,42 +14793,42 @@ var dateFormats53 = {
   full: "EEEE, do MMMM y 'ж.'",
   long: "do MMMM y 'ж.'",
   medium: "d MMM y 'ж.'",
-  short: "dd.MM.yyyy"
+  short: "dd.MM.yyyy",
 };
 var timeFormats53 = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats53 = {
-  any: "{{date}}, {{time}}"
+  any: "{{date}}, {{time}}",
 };
 var formatLong53 = {
   date: buildFormatLongFn({
     formats: dateFormats53,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats53,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats53,
-    defaultWidth: "any"
-  })
+    defaultWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/kk/_lib/localize.js
 var eraValues45 = {
   narrow: ["б.з.д.", "б.з."],
   abbreviated: ["б.з.д.", "б.з."],
-  wide: ["біздің заманымызға дейін", "біздің заманымыз"]
+  wide: ["біздің заманымызға дейін", "біздің заманымыз"],
 };
 var quarterValues45 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-ші тоқ.", "2-ші тоқ.", "3-ші тоқ.", "4-ші тоқ."],
-  wide: ["1-ші тоқсан", "2-ші тоқсан", "3-ші тоқсан", "4-ші тоқсан"]
+  wide: ["1-ші тоқсан", "2-ші тоқсан", "3-ші тоқсан", "4-ші тоқсан"],
 };
 var monthValues45 = {
   narrow: ["Қ", "А", "Н", "С", "М", "М", "Ш", "Т", "Қ", "Қ", "Қ", "Ж"],
@@ -14794,7 +14844,7 @@ var monthValues45 = {
     "қыр",
     "қаз",
     "қар",
-    "жел"
+    "жел",
   ],
   wide: [
     "қаңтар",
@@ -14808,8 +14858,8 @@ var monthValues45 = {
     "қыркүйек",
     "қазан",
     "қараша",
-    "желтоқсан"
-  ]
+    "желтоқсан",
+  ],
 };
 var formattingMonthValues10 = {
   narrow: ["Қ", "А", "Н", "С", "М", "М", "Ш", "Т", "Қ", "Қ", "Қ", "Ж"],
@@ -14825,7 +14875,7 @@ var formattingMonthValues10 = {
     "қыр",
     "қаз",
     "қар",
-    "жел"
+    "жел",
   ],
   wide: [
     "қаңтар",
@@ -14839,8 +14889,8 @@ var formattingMonthValues10 = {
     "қыркүйек",
     "қазан",
     "қараша",
-    "желтоқсан"
-  ]
+    "желтоқсан",
+  ],
 };
 var dayValues45 = {
   narrow: ["Ж", "Д", "С", "С", "Б", "Ж", "С"],
@@ -14853,8 +14903,8 @@ var dayValues45 = {
     "сәрсенбі",
     "бейсенбі",
     "жұма",
-    "сенбі"
-  ]
+    "сенбі",
+  ],
 };
 var dayPeriodValues45 = {
   narrow: {
@@ -14865,7 +14915,7 @@ var dayPeriodValues45 = {
     morning: "таң",
     afternoon: "күндіз",
     evening: "кеш",
-    night: "түн"
+    night: "түн",
   },
   wide: {
     am: "ТД",
@@ -14875,8 +14925,8 @@ var dayPeriodValues45 = {
     morning: "таң",
     afternoon: "күндіз",
     evening: "кеш",
-    night: "түн"
-  }
+    night: "түн",
+  },
 };
 var formattingDayPeriodValues37 = {
   narrow: {
@@ -14887,7 +14937,7 @@ var formattingDayPeriodValues37 = {
     morning: "таң",
     afternoon: "күн",
     evening: "кеш",
-    night: "түн"
+    night: "түн",
   },
   wide: {
     am: "ТД",
@@ -14897,8 +14947,8 @@ var formattingDayPeriodValues37 = {
     morning: "таңертең",
     afternoon: "күндіз",
     evening: "кеште",
-    night: "түнде"
-  }
+    night: "түнде",
+  },
 };
 var suffixes2 = {
   0: "-ші",
@@ -14920,42 +14970,43 @@ var suffixes2 = {
   70: "-ші",
   80: "-ші",
   90: "-шы",
-  100: "-ші"
+  100: "-ші",
 };
 var ordinalNumber45 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
   const mod10 = number % 10;
   const b = number >= 100 ? 100 : null;
-  const suffix = suffixes2[number] || suffixes2[mod10] || b && suffixes2[b] || "";
+  const suffix =
+    suffixes2[number] || suffixes2[mod10] || (b && suffixes2[b]) || "";
   return number + suffix;
 };
 var localize46 = {
   ordinalNumber: ordinalNumber45,
   era: buildLocalizeFn({
     values: eraValues45,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues45,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues45,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues10,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues45,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues45,
     defaultWidth: "any",
     formattingValues: formattingDayPeriodValues37,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/kk/_lib/match.js
@@ -14964,23 +15015,23 @@ var parseOrdinalNumberPattern44 = /\d+/i;
 var matchEraPatterns44 = {
   narrow: /^((б )?з\.?\s?д\.?)/i,
   abbreviated: /^((б )?з\.?\s?д\.?)/i,
-  wide: /^(біздің заманымызға дейін|біздің заманымыз|біздің заманымыздан)/i
+  wide: /^(біздің заманымызға дейін|біздің заманымыз|біздің заманымыздан)/i,
 };
 var parseEraPatterns44 = {
-  any: [/^б/i, /^з/i]
+  any: [/^б/i, /^з/i],
 };
 var matchQuarterPatterns44 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?ші)? тоқ.?/i,
-  wide: /^[1234](-?ші)? тоқсан/i
+  wide: /^[1234](-?ші)? тоқсан/i,
 };
 var parseQuarterPatterns44 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns44 = {
   narrow: /^(қ|а|н|с|м|мау|ш|т|қыр|қаз|қар|ж)/i,
   abbreviated: /^(қаң|ақп|нау|сәу|мам|мау|шіл|там|қыр|қаз|қар|жел)/i,
-  wide: /^(қаңтар|ақпан|наурыз|сәуір|мамыр|маусым|шілде|тамыз|қыркүйек|қазан|қараша|желтоқсан)/i
+  wide: /^(қаңтар|ақпан|наурыз|сәуір|мамыр|маусым|шілде|тамыз|қыркүйек|қазан|қараша|желтоқсан)/i,
 };
 var parseMonthPatterns44 = {
   narrow: [
@@ -14995,7 +15046,7 @@ var parseMonthPatterns44 = {
     /^қ/i,
     /^қ/i,
     /^қ/i,
-    /^ж/i
+    /^ж/i,
   ],
   abbreviated: [
     /^қаң/i,
@@ -15009,7 +15060,7 @@ var parseMonthPatterns44 = {
     /^қыр/i,
     /^қаз/i,
     /^қар/i,
-    /^жел/i
+    /^жел/i,
   ],
   any: [
     /^қ/i,
@@ -15023,13 +15074,13 @@ var parseMonthPatterns44 = {
     /^қ/i,
     /^қ/i,
     /^қ/i,
-    /^ж/i
-  ]
+    /^ж/i,
+  ],
 };
 var matchDayPatterns44 = {
   narrow: /^(ж|д|с|с|б|ж|с)/i,
   short: /^(жс|дс|сс|ср|бс|жм|сб)/i,
-  wide: /^(жексенбі|дүйсенбі|сейсенбі|сәрсенбі|бейсенбі|жұма|сенбі)/i
+  wide: /^(жексенбі|дүйсенбі|сейсенбі|сәрсенбі|бейсенбі|жұма|сенбі)/i,
 };
 var parseDayPatterns44 = {
   narrow: [/^ж/i, /^д/i, /^с/i, /^с/i, /^б/i, /^ж/i, /^с/i],
@@ -15041,13 +15092,14 @@ var parseDayPatterns44 = {
     /^сә[р]/i,
     /^б[ей]/i,
     /^ж[ұм]/i,
-    /^се[н]/i
-  ]
+    /^се[н]/i,
+  ],
 };
 var matchDayPeriodPatterns44 = {
-  narrow: /^Т\.?\s?[ДК]\.?|түн ортасында|((түсте|таңертең|таңда|таңертең|таңмен|таң|күндіз|күн|кеште|кеш|түнде|түн)\.?)/i,
+  narrow:
+    /^Т\.?\s?[ДК]\.?|түн ортасында|((түсте|таңертең|таңда|таңертең|таңмен|таң|күндіз|күн|кеште|кеш|түнде|түн)\.?)/i,
   wide: /^Т\.?\s?[ДК]\.?|түн ортасында|((түсте|таңертең|таңда|таңертең|таңмен|таң|күндіз|күн|кеште|кеш|түнде|түн)\.?)/i,
-  any: /^Т\.?\s?[ДК]\.?|түн ортасында|((түсте|таңертең|таңда|таңертең|таңмен|таң|күндіз|күн|кеште|кеш|түнде|түн)\.?)/i
+  any: /^Т\.?\s?[ДК]\.?|түн ортасында|((түсте|таңертең|таңда|таңертең|таңмен|таң|күндіз|күн|кеште|кеш|түнде|түн)\.?)/i,
 };
 var parseDayPeriodPatterns44 = {
   any: {
@@ -15058,46 +15110,46 @@ var parseDayPeriodPatterns44 = {
     morning: /таң/i,
     afternoon: /түс/i,
     evening: /кеш/i,
-    night: /түн/i
-  }
+    night: /түн/i,
+  },
 };
 var match45 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern44,
     parsePattern: parseOrdinalNumberPattern44,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns44,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns44,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns44,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns44,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns44,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns44,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns44,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns44,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns44,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPeriodPatterns44,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/km/_lib/formatLong.js
@@ -15105,45 +15157,45 @@ var dateFormats54 = {
   full: "EEEE do MMMM y",
   long: "do MMMM y",
   medium: "d MMM y",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats54 = {
   full: "h:mm:ss a",
   long: "h:mm:ss a",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats54 = {
   full: "{{date}} 'ម៉ោង' {{time}}",
   long: "{{date}} 'ម៉ោង' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong54 = {
   date: buildFormatLongFn({
     formats: dateFormats54,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats54,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats54,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/km/_lib/localize.js
 var eraValues46 = {
   narrow: ["ម.គស", "គស"],
   abbreviated: ["មុនគ.ស", "គ.ស"],
-  wide: ["មុនគ្រិស្តសករាជ", "នៃគ្រិស្តសករាជ"]
+  wide: ["មុនគ្រិស្តសករាជ", "នៃគ្រិស្តសករាជ"],
 };
 var quarterValues46 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["ត្រីមាសទី 1", "ត្រីមាសទី 2", "ត្រីមាសទី 3", "ត្រីមាសទី 4"]
+  wide: ["ត្រីមាសទី 1", "ត្រីមាសទី 2", "ត្រីមាសទី 3", "ត្រីមាសទី 4"],
 };
 var monthValues46 = {
   narrow: [
@@ -15158,7 +15210,7 @@ var monthValues46 = {
     "កញ",
     "តុ",
     "វិ",
-    "ធ"
+    "ធ",
   ],
   abbreviated: [
     "មករា",
@@ -15172,7 +15224,7 @@ var monthValues46 = {
     "កញ្ញា",
     "តុលា",
     "វិច្ឆិកា",
-    "ធ្នូ"
+    "ធ្នូ",
   ],
   wide: [
     "មករា",
@@ -15186,14 +15238,14 @@ var monthValues46 = {
     "កញ្ញា",
     "តុលា",
     "វិច្ឆិកា",
-    "ធ្នូ"
-  ]
+    "ធ្នូ",
+  ],
 };
 var dayValues46 = {
   narrow: ["អា", "ច", "អ", "ព", "ព្រ", "សុ", "ស"],
   short: ["អា", "ច", "អ", "ព", "ព្រ", "សុ", "ស"],
   abbreviated: ["អា", "ច", "អ", "ព", "ព្រ", "សុ", "ស"],
-  wide: ["អាទិត្យ", "ចន្ទ", "អង្គារ", "ពុធ", "ព្រហស្បតិ៍", "សុក្រ", "សៅរ៍"]
+  wide: ["អាទិត្យ", "ចន្ទ", "អង្គារ", "ពុធ", "ព្រហស្បតិ៍", "សុក្រ", "សៅរ៍"],
 };
 var dayPeriodValues46 = {
   narrow: {
@@ -15204,7 +15256,7 @@ var dayPeriodValues46 = {
     morning: "ពេលព្រឹក",
     afternoon: "ពេលរសៀល",
     evening: "ពេលល្ងាច",
-    night: "ពេលយប់"
+    night: "ពេលយប់",
   },
   abbreviated: {
     am: "ព្រឹក",
@@ -15214,7 +15266,7 @@ var dayPeriodValues46 = {
     morning: "ពេលព្រឹក",
     afternoon: "ពេលរសៀល",
     evening: "ពេលល្ងាច",
-    night: "ពេលយប់"
+    night: "ពេលយប់",
   },
   wide: {
     am: "ព្រឹក",
@@ -15224,8 +15276,8 @@ var dayPeriodValues46 = {
     morning: "ពេលព្រឹក",
     afternoon: "ពេលរសៀល",
     evening: "ពេលល្ងាច",
-    night: "ពេលយប់"
-  }
+    night: "ពេលយប់",
+  },
 };
 var formattingDayPeriodValues38 = {
   narrow: {
@@ -15236,7 +15288,7 @@ var formattingDayPeriodValues38 = {
     morning: "ពេលព្រឹក",
     afternoon: "ពេលរសៀល",
     evening: "ពេលល្ងាច",
-    night: "ពេលយប់"
+    night: "ពេលយប់",
   },
   abbreviated: {
     am: "ព្រឹក",
@@ -15246,7 +15298,7 @@ var formattingDayPeriodValues38 = {
     morning: "ពេលព្រឹក",
     afternoon: "ពេលរសៀល",
     evening: "ពេលល្ងាច",
-    night: "ពេលយប់"
+    night: "ពេលយប់",
   },
   wide: {
     am: "ព្រឹក",
@@ -15256,8 +15308,8 @@ var formattingDayPeriodValues38 = {
     morning: "ពេលព្រឹក",
     afternoon: "ពេលរសៀល",
     evening: "ពេលល្ងាច",
-    night: "ពេលយប់"
-  }
+    night: "ពេលយប់",
+  },
 };
 var ordinalNumber46 = (dirtyNumber, _) => {
   const number = Number(dirtyNumber);
@@ -15267,27 +15319,27 @@ var localize47 = {
   ordinalNumber: ordinalNumber46,
   era: buildLocalizeFn({
     values: eraValues46,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues46,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues46,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues46,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues46,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues38,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/km/_lib/match.js
@@ -15296,23 +15348,24 @@ var parseOrdinalNumberPattern45 = /\d+/i;
 var matchEraPatterns45 = {
   narrow: /^(ម\.)?គស/i,
   abbreviated: /^(មុន)?គ\.ស/i,
-  wide: /^(មុន|នៃ)គ្រិស្តសករាជ/i
+  wide: /^(មុន|នៃ)គ្រិស្តសករាជ/i,
 };
 var parseEraPatterns45 = {
-  any: [/^(ម|មុន)គ\.?ស/i, /^(នៃ)?គ\.?ស/i]
+  any: [/^(ម|មុន)គ\.?ស/i, /^(នៃ)?គ\.?ស/i],
 };
 var matchQuarterPatterns45 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^(ត្រីមាស)(ទី)?\s?[1234]/i
+  wide: /^(ត្រីមាស)(ទី)?\s?[1234]/i,
 };
 var parseQuarterPatterns45 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns45 = {
   narrow: /^(ម\.ក|ក\.ម|មិ|ម\.ស|ឧ\.ស|ម\.ថ|ក\.ដ|សី|កញ|តុ|វិ|ធ)/i,
-  abbreviated: /^(មករា|កុម្ភៈ|មីនា|មេសា|ឧសភា|មិថុនា|កក្កដា|សីហា|កញ្ញា|តុលា|វិច្ឆិកា|ធ្នូ)/i,
-  wide: /^(មករា|កុម្ភៈ|មីនា|មេសា|ឧសភា|មិថុនា|កក្កដា|សីហា|កញ្ញា|តុលា|វិច្ឆិកា|ធ្នូ)/i
+  abbreviated:
+    /^(មករា|កុម្ភៈ|មីនា|មេសា|ឧសភា|មិថុនា|កក្កដា|សីហា|កញ្ញា|តុលា|វិច្ឆិកា|ធ្នូ)/i,
+  wide: /^(មករា|កុម្ភៈ|មីនា|មេសា|ឧសភា|មិថុនា|កក្កដា|សីហា|កញ្ញា|តុលា|វិច្ឆិកា|ធ្នូ)/i,
 };
 var parseMonthPatterns45 = {
   narrow: [
@@ -15327,7 +15380,7 @@ var parseMonthPatterns45 = {
     /^កញ/i,
     /^តុ/i,
     /^វិ/i,
-    /^ធ/i
+    /^ធ/i,
   ],
   any: [
     /^មក/i,
@@ -15341,22 +15394,23 @@ var parseMonthPatterns45 = {
     /^កញ/i,
     /^តុ/i,
     /^វិច/i,
-    /^ធ/i
-  ]
+    /^ធ/i,
+  ],
 };
 var matchDayPatterns45 = {
   narrow: /^(អា|ច|អ|ព|ព្រ|សុ|ស)/i,
   short: /^(អា|ច|អ|ព|ព្រ|សុ|ស)/i,
   abbreviated: /^(អា|ច|អ|ព|ព្រ|សុ|ស)/i,
-  wide: /^(អាទិត្យ|ចន្ទ|អង្គារ|ពុធ|ព្រហស្បតិ៍|សុក្រ|សៅរ៍)/i
+  wide: /^(អាទិត្យ|ចន្ទ|អង្គារ|ពុធ|ព្រហស្បតិ៍|សុក្រ|សៅរ៍)/i,
 };
 var parseDayPatterns45 = {
   narrow: [/^អា/i, /^ច/i, /^អ/i, /^ព/i, /^ព្រ/i, /^សុ/i, /^ស/i],
-  any: [/^អា/i, /^ច/i, /^អ/i, /^ព/i, /^ព្រ/i, /^សុ/i, /^សៅ/i]
+  any: [/^អា/i, /^ច/i, /^អ/i, /^ព/i, /^ព្រ/i, /^សុ/i, /^សៅ/i],
 };
 var matchDayPeriodPatterns45 = {
-  narrow: /^(ព្រឹក|ល្ងាច|ពេលព្រឹក|ពេលថ្ងៃត្រង់|ពេលល្ងាច|ពេលរសៀល|ពេលយប់|ពេលកណ្ដាលអធ្រាត្រ)/i,
-  any: /^(ព្រឹក|ល្ងាច|ពេលព្រឹក|ពេលថ្ងៃត្រង់|ពេលល្ងាច|ពេលរសៀល|ពេលយប់|ពេលកណ្ដាលអធ្រាត្រ)/i
+  narrow:
+    /^(ព្រឹក|ល្ងាច|ពេលព្រឹក|ពេលថ្ងៃត្រង់|ពេលល្ងាច|ពេលរសៀល|ពេលយប់|ពេលកណ្ដាលអធ្រាត្រ)/i,
+  any: /^(ព្រឹក|ល្ងាច|ពេលព្រឹក|ពេលថ្ងៃត្រង់|ពេលល្ងាច|ពេលរសៀល|ពេលយប់|ពេលកណ្ដាលអធ្រាត្រ)/i,
 };
 var parseDayPeriodPatterns45 = {
   any: {
@@ -15367,48 +15421,48 @@ var parseDayPeriodPatterns45 = {
     morning: /ពេលព្រឹក/i,
     afternoon: /ពេលរសៀល/i,
     evening: /ពេលល្ងាច/i,
-    night: /ពេលយប់/i
-  }
+    night: /ពេលយប់/i,
+  },
 };
 var match46 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern45,
     parsePattern: parseOrdinalNumberPattern45,
-    valueCallback: function(value) {
+    valueCallback: function (value) {
       return parseInt(value, 10);
-    }
+    },
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns45,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns45,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns45,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns45,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns45,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns45,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns45,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns45,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns45,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns45,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/kn/_lib/formatLong.js
@@ -15419,7 +15473,7 @@ var dateFormats55 = {
   // CLDR 1817
   medium: "MMM d, y",
   // CLDR 1818
-  short: "d/M/yy"
+  short: "d/M/yy",
   // CLDR 1819
 };
 var timeFormats55 = {
@@ -15429,7 +15483,7 @@ var timeFormats55 = {
   // CLDR 1821
   medium: "hh:mm:ss a",
   // CLDR 1822
-  short: "hh:mm a"
+  short: "hh:mm a",
   // CLDR 1823
 };
 var dateTimeFormats55 = {
@@ -15439,22 +15493,22 @@ var dateTimeFormats55 = {
   // CLDR 1825
   medium: "{{date}} {{time}}",
   // CLDR 1826
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
   // CLDR 1827
 };
 var formatLong55 = {
   date: buildFormatLongFn({
     formats: dateFormats55,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats55,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats55,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/kn/_lib/localize.js
@@ -15462,14 +15516,14 @@ var eraValues47 = {
   narrow: ["ಕ್ರಿ.ಪೂ", "ಕ್ರಿ.ಶ"],
   abbreviated: ["ಕ್ರಿ.ಪೂ", "ಕ್ರಿ.ಶ"],
   // CLDR #1618, #1620
-  wide: ["ಕ್ರಿಸ್ತ ಪೂರ್ವ", "ಕ್ರಿಸ್ತ ಶಕ"]
+  wide: ["ಕ್ರಿಸ್ತ ಪೂರ್ವ", "ಕ್ರಿಸ್ತ ಶಕ"],
   // CLDR #1614, #1616
 };
 var quarterValues47 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ತ್ರೈ 1", "ತ್ರೈ 2", "ತ್ರೈ 3", "ತ್ರೈ 4"],
   // CLDR #1630 - #1638
-  wide: ["1ನೇ ತ್ರೈಮಾಸಿಕ", "2ನೇ ತ್ರೈಮಾಸಿಕ", "3ನೇ ತ್ರೈಮಾಸಿಕ", "4ನೇ ತ್ರೈಮಾಸಿಕ"]
+  wide: ["1ನೇ ತ್ರೈಮಾಸಿಕ", "2ನೇ ತ್ರೈಮಾಸಿಕ", "3ನೇ ತ್ರೈಮಾಸಿಕ", "4ನೇ ತ್ರೈಮಾಸಿಕ"],
   // CLDR #1622 - #1629
 };
 var monthValues47 = {
@@ -15486,7 +15540,7 @@ var monthValues47 = {
     "ಸೆಪ್ಟೆಂ",
     "ಅಕ್ಟೋ",
     "ನವೆಂ",
-    "ಡಿಸೆಂ"
+    "ಡಿಸೆಂ",
   ],
   wide: [
     "ಜನವರಿ",
@@ -15500,8 +15554,8 @@ var monthValues47 = {
     "ಸೆಪ್ಟೆಂಬರ್",
     "ಅಕ್ಟೋಬರ್",
     "ನವೆಂಬರ್",
-    "ಡಿಸೆಂಬರ್"
-  ]
+    "ಡಿಸೆಂಬರ್",
+  ],
 };
 var dayValues47 = {
   narrow: ["ಭಾ", "ಸೋ", "ಮಂ", "ಬು", "ಗು", "ಶು", "ಶ"],
@@ -15514,8 +15568,8 @@ var dayValues47 = {
     "ಬುಧವಾರ",
     "ಗುರುವಾರ",
     "ಶುಕ್ರವಾರ",
-    "ಶನಿವಾರ"
-  ]
+    "ಶನಿವಾರ",
+  ],
 };
 var dayPeriodValues47 = {
   narrow: {
@@ -15526,7 +15580,7 @@ var dayPeriodValues47 = {
     morning: "ಬೆಳಗ್ಗೆ",
     afternoon: "ಮಧ್ಯಾಹ್ನ",
     evening: "ಸಂಜೆ",
-    night: "ರಾತ್ರಿ"
+    night: "ರಾತ್ರಿ",
   },
   abbreviated: {
     am: "ಪೂರ್ವಾಹ್ನ",
@@ -15536,7 +15590,7 @@ var dayPeriodValues47 = {
     morning: "ಬೆಳಗ್ಗೆ",
     afternoon: "ಮಧ್ಯಾನ್ಹ",
     evening: "ಸಂಜೆ",
-    night: "ರಾತ್ರಿ"
+    night: "ರಾತ್ರಿ",
   },
   wide: {
     am: "ಪೂರ್ವಾಹ್ನ",
@@ -15546,8 +15600,8 @@ var dayPeriodValues47 = {
     morning: "ಬೆಳಗ್ಗೆ",
     afternoon: "ಮಧ್ಯಾನ್ಹ",
     evening: "ಸಂಜೆ",
-    night: "ರಾತ್ರಿ"
-  }
+    night: "ರಾತ್ರಿ",
+  },
 };
 var formattingDayPeriodValues39 = {
   narrow: {
@@ -15558,7 +15612,7 @@ var formattingDayPeriodValues39 = {
     morning: "ಬೆಳಗ್ಗೆ",
     afternoon: "ಮಧ್ಯಾನ್ಹ",
     evening: "ಸಂಜೆ",
-    night: "ರಾತ್ರಿ"
+    night: "ರಾತ್ರಿ",
   },
   abbreviated: {
     am: "ಪೂರ್ವಾಹ್ನ",
@@ -15568,7 +15622,7 @@ var formattingDayPeriodValues39 = {
     morning: "ಬೆಳಗ್ಗೆ",
     afternoon: "ಮಧ್ಯಾನ್ಹ",
     evening: "ಸಂಜೆ",
-    night: "ರಾತ್ರಿ"
+    night: "ರಾತ್ರಿ",
   },
   wide: {
     am: "ಪೂರ್ವಾಹ್ನ",
@@ -15578,8 +15632,8 @@ var formattingDayPeriodValues39 = {
     morning: "ಬೆಳಗ್ಗೆ",
     afternoon: "ಮಧ್ಯಾನ್ಹ",
     evening: "ಸಂಜೆ",
-    night: "ರಾತ್ರಿ"
-  }
+    night: "ರಾತ್ರಿ",
+  },
 };
 var ordinalNumber47 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -15589,27 +15643,27 @@ var localize48 = {
   ordinalNumber: ordinalNumber47,
   era: buildLocalizeFn({
     values: eraValues47,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues47,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues47,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues47,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues47,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues39,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/kn/_lib/match.js
@@ -15618,23 +15672,24 @@ var parseOrdinalNumberPattern46 = /\d+/i;
 var matchEraPatterns46 = {
   narrow: /^(ಕ್ರಿ.ಪೂ|ಕ್ರಿ.ಶ)/i,
   abbreviated: /^(ಕ್ರಿ\.?\s?ಪೂ\.?|ಕ್ರಿ\.?\s?ಶ\.?|ಪ್ರ\.?\s?ಶ\.?)/i,
-  wide: /^(ಕ್ರಿಸ್ತ ಪೂರ್ವ|ಕ್ರಿಸ್ತ ಶಕ|ಪ್ರಸಕ್ತ ಶಕ)/i
+  wide: /^(ಕ್ರಿಸ್ತ ಪೂರ್ವ|ಕ್ರಿಸ್ತ ಶಕ|ಪ್ರಸಕ್ತ ಶಕ)/i,
 };
 var parseEraPatterns46 = {
-  any: [/^ಪೂ/i, /^(ಶ|ಪ್ರ)/i]
+  any: [/^ಪೂ/i, /^(ಶ|ಪ್ರ)/i],
 };
 var matchQuarterPatterns46 = {
   narrow: /^[1234]/i,
   abbreviated: /^ತ್ರೈ[1234]|ತ್ರೈ [1234]| [1234]ತ್ರೈ/i,
-  wide: /^[1234](ನೇ)? ತ್ರೈಮಾಸಿಕ/i
+  wide: /^[1234](ನೇ)? ತ್ರೈಮಾಸಿಕ/i,
 };
 var parseQuarterPatterns46 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns46 = {
   narrow: /^(ಜೂ|ಜು|ಜ|ಫೆ|ಮಾ|ಏ|ಮೇ|ಆ|ಸೆ|ಅ|ನ|ಡಿ)/i,
-  abbreviated: /^(ಜನ|ಫೆಬ್ರ|ಮಾರ್ಚ್|ಏಪ್ರಿ|ಮೇ|ಜೂನ್|ಜುಲೈ|ಆಗ|ಸೆಪ್ಟೆಂ|ಅಕ್ಟೋ|ನವೆಂ|ಡಿಸೆಂ)/i,
-  wide: /^(ಜನವರಿ|ಫೆಬ್ರವರಿ|ಮಾರ್ಚ್|ಏಪ್ರಿಲ್|ಮೇ|ಜೂನ್|ಜುಲೈ|ಆಗಸ್ಟ್|ಸೆಪ್ಟೆಂಬರ್|ಅಕ್ಟೋಬರ್|ನವೆಂಬರ್|ಡಿಸೆಂಬರ್)/i
+  abbreviated:
+    /^(ಜನ|ಫೆಬ್ರ|ಮಾರ್ಚ್|ಏಪ್ರಿ|ಮೇ|ಜೂನ್|ಜುಲೈ|ಆಗ|ಸೆಪ್ಟೆಂ|ಅಕ್ಟೋ|ನವೆಂ|ಡಿಸೆಂ)/i,
+  wide: /^(ಜನವರಿ|ಫೆಬ್ರವರಿ|ಮಾರ್ಚ್|ಏಪ್ರಿಲ್|ಮೇ|ಜೂನ್|ಜುಲೈ|ಆಗಸ್ಟ್|ಸೆಪ್ಟೆಂಬರ್|ಅಕ್ಟೋಬರ್|ನವೆಂಬರ್|ಡಿಸೆಂಬರ್)/i,
 };
 var parseMonthPatterns46 = {
   narrow: [
@@ -15649,7 +15704,7 @@ var parseMonthPatterns46 = {
     /^ಸೆ/i,
     /^ಅ/i,
     /^ನ/i,
-    /^ಡಿ/i
+    /^ಡಿ/i,
   ],
   any: [
     /^ಜನ/i,
@@ -15663,22 +15718,22 @@ var parseMonthPatterns46 = {
     /^ಸೆ/i,
     /^ಅ/i,
     /^ನ/i,
-    /^ಡಿ/i
-  ]
+    /^ಡಿ/i,
+  ],
 };
 var matchDayPatterns46 = {
   narrow: /^(ಭಾ|ಸೋ|ಮ|ಬು|ಗು|ಶು|ಶ)/i,
   short: /^(ಭಾನು|ಸೋಮ|ಮಂಗಳ|ಬುಧ|ಗುರು|ಶುಕ್ರ|ಶನಿ)/i,
   abbreviated: /^(ಭಾನು|ಸೋಮ|ಮಂಗಳ|ಬುಧ|ಗುರು|ಶುಕ್ರ|ಶನಿ)/i,
-  wide: /^(ಭಾನುವಾರ|ಸೋಮವಾರ|ಮಂಗಳವಾರ|ಬುಧವಾರ|ಗುರುವಾರ|ಶುಕ್ರವಾರ|ಶನಿವಾರ)/i
+  wide: /^(ಭಾನುವಾರ|ಸೋಮವಾರ|ಮಂಗಳವಾರ|ಬುಧವಾರ|ಗುರುವಾರ|ಶುಕ್ರವಾರ|ಶನಿವಾರ)/i,
 };
 var parseDayPatterns46 = {
   narrow: [/^ಭಾ/i, /^ಸೋ/i, /^ಮ/i, /^ಬು/i, /^ಗು/i, /^ಶು/i, /^ಶ/i],
-  any: [/^ಭಾ/i, /^ಸೋ/i, /^ಮ/i, /^ಬು/i, /^ಗು/i, /^ಶು/i, /^ಶ/i]
+  any: [/^ಭಾ/i, /^ಸೋ/i, /^ಮ/i, /^ಬು/i, /^ಗು/i, /^ಶು/i, /^ಶ/i],
 };
 var matchDayPeriodPatterns46 = {
   narrow: /^(ಪೂ|ಅ|ಮಧ್ಯರಾತ್ರಿ|ಮಧ್ಯಾನ್ಹ|ಬೆಳಗ್ಗೆ|ಸಂಜೆ|ರಾತ್ರಿ)/i,
-  any: /^(ಪೂರ್ವಾಹ್ನ|ಅಪರಾಹ್ನ|ಮಧ್ಯರಾತ್ರಿ|ಮಧ್ಯಾನ್ಹ|ಬೆಳಗ್ಗೆ|ಸಂಜೆ|ರಾತ್ರಿ)/i
+  any: /^(ಪೂರ್ವಾಹ್ನ|ಅಪರಾಹ್ನ|ಮಧ್ಯರಾತ್ರಿ|ಮಧ್ಯಾನ್ಹ|ಬೆಳಗ್ಗೆ|ಸಂಜೆ|ರಾತ್ರಿ)/i,
 };
 var parseDayPeriodPatterns46 = {
   any: {
@@ -15689,46 +15744,46 @@ var parseDayPeriodPatterns46 = {
     morning: /ಬೆಳಗ್ಗೆ/i,
     afternoon: /ಮಧ್ಯಾನ್ಹ/i,
     evening: /ಸಂಜೆ/i,
-    night: /ರಾತ್ರಿ/i
-  }
+    night: /ರಾತ್ರಿ/i,
+  },
 };
 var match47 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern46,
     parsePattern: parseOrdinalNumberPattern46,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns46,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns46,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns46,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns46,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns46,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns46,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns46,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns46,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns46,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns46,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ko/_lib/formatLong.js
@@ -15736,45 +15791,45 @@ var dateFormats56 = {
   full: "y년 M월 d일 EEEE",
   long: "y년 M월 d일",
   medium: "y.MM.dd",
-  short: "y.MM.dd"
+  short: "y.MM.dd",
 };
 var timeFormats56 = {
   full: "a H시 mm분 ss초 zzzz",
   long: "a H:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats56 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong56 = {
   date: buildFormatLongFn({
     formats: dateFormats56,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats56,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats56,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ko/_lib/localize.js
 var eraValues48 = {
   narrow: ["BC", "AD"],
   abbreviated: ["BC", "AD"],
-  wide: ["기원전", "서기"]
+  wide: ["기원전", "서기"],
 };
 var quarterValues48 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["1분기", "2분기", "3분기", "4분기"]
+  wide: ["1분기", "2분기", "3분기", "4분기"],
 };
 var monthValues48 = {
   narrow: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
@@ -15790,7 +15845,7 @@ var monthValues48 = {
     "9월",
     "10월",
     "11월",
-    "12월"
+    "12월",
   ],
   wide: [
     "1월",
@@ -15804,14 +15859,14 @@ var monthValues48 = {
     "9월",
     "10월",
     "11월",
-    "12월"
-  ]
+    "12월",
+  ],
 };
 var dayValues48 = {
   narrow: ["일", "월", "화", "수", "목", "금", "토"],
   short: ["일", "월", "화", "수", "목", "금", "토"],
   abbreviated: ["일", "월", "화", "수", "목", "금", "토"],
-  wide: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"]
+  wide: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
 };
 var dayPeriodValues48 = {
   narrow: {
@@ -15822,7 +15877,7 @@ var dayPeriodValues48 = {
     morning: "아침",
     afternoon: "오후",
     evening: "저녁",
-    night: "밤"
+    night: "밤",
   },
   abbreviated: {
     am: "오전",
@@ -15832,7 +15887,7 @@ var dayPeriodValues48 = {
     morning: "아침",
     afternoon: "오후",
     evening: "저녁",
-    night: "밤"
+    night: "밤",
   },
   wide: {
     am: "오전",
@@ -15842,8 +15897,8 @@ var dayPeriodValues48 = {
     morning: "아침",
     afternoon: "오후",
     evening: "저녁",
-    night: "밤"
-  }
+    night: "밤",
+  },
 };
 var formattingDayPeriodValues40 = {
   narrow: {
@@ -15854,7 +15909,7 @@ var formattingDayPeriodValues40 = {
     morning: "아침",
     afternoon: "오후",
     evening: "저녁",
-    night: "밤"
+    night: "밤",
   },
   abbreviated: {
     am: "오전",
@@ -15864,7 +15919,7 @@ var formattingDayPeriodValues40 = {
     morning: "아침",
     afternoon: "오후",
     evening: "저녁",
-    night: "밤"
+    night: "밤",
   },
   wide: {
     am: "오전",
@@ -15874,8 +15929,8 @@ var formattingDayPeriodValues40 = {
     morning: "아침",
     afternoon: "오후",
     evening: "저녁",
-    night: "밤"
-  }
+    night: "밤",
+  },
 };
 var ordinalNumber48 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
@@ -15894,27 +15949,27 @@ var localize49 = {
   ordinalNumber: ordinalNumber48,
   era: buildLocalizeFn({
     values: eraValues48,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues48,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues48,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues48,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues48,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues40,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ko/_lib/match.js
@@ -15923,23 +15978,23 @@ var parseOrdinalNumberPattern47 = /\d+/i;
 var matchEraPatterns47 = {
   narrow: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,
   abbreviated: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,
-  wide: /^(기원전|서기)/i
+  wide: /^(기원전|서기)/i,
 };
 var parseEraPatterns47 = {
-  any: [/^(bc|기원전)/i, /^(ad|서기)/i]
+  any: [/^(bc|기원전)/i, /^(ad|서기)/i],
 };
 var matchQuarterPatterns47 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234]사?분기/i
+  wide: /^[1234]사?분기/i,
 };
 var parseQuarterPatterns47 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns47 = {
   narrow: /^(1[012]|[123456789])/,
   abbreviated: /^(1[012]|[123456789])월/i,
-  wide: /^(1[012]|[123456789])월/i
+  wide: /^(1[012]|[123456789])월/i,
 };
 var parseMonthPatterns47 = {
   any: [
@@ -15954,20 +16009,20 @@ var parseMonthPatterns47 = {
     /^9/,
     /^10/,
     /^11/,
-    /^12/
-  ]
+    /^12/,
+  ],
 };
 var matchDayPatterns47 = {
   narrow: /^[일월화수목금토]/,
   short: /^[일월화수목금토]/,
   abbreviated: /^[일월화수목금토]/,
-  wide: /^[일월화수목금토]요일/
+  wide: /^[일월화수목금토]요일/,
 };
 var parseDayPatterns47 = {
-  any: [/^일/, /^월/, /^화/, /^수/, /^목/, /^금/, /^토/]
+  any: [/^일/, /^월/, /^화/, /^수/, /^목/, /^금/, /^토/],
 };
 var matchDayPeriodPatterns47 = {
-  any: /^(am|pm|오전|오후|자정|정오|아침|저녁|밤)/i
+  any: /^(am|pm|오전|오후|자정|정오|아침|저녁|밤)/i,
 };
 var parseDayPeriodPatterns47 = {
   any: {
@@ -15978,46 +16033,46 @@ var parseDayPeriodPatterns47 = {
     morning: /^아침/i,
     afternoon: /^오후/i,
     evening: /^저녁/i,
-    night: /^밤/i
-  }
+    night: /^밤/i,
+  },
 };
 var match48 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern47,
     parsePattern: parseOrdinalNumberPattern47,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns47,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns47,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns47,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns47,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns47,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns47,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns47,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns47,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns47,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns47,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/lb/_lib/formatLong.js
@@ -16028,46 +16083,46 @@ var dateFormats57 = {
   // 7. Januar 2018
   medium: "do MMM y",
   // 7. Jan 2018
-  short: "dd.MM.yy"
+  short: "dd.MM.yy",
   // 07.01.18
 };
 var timeFormats57 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats57 = {
   full: "{{date}} 'um' {{time}}",
   long: "{{date}} 'um' {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong57 = {
   date: buildFormatLongFn({
     formats: dateFormats57,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats57,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats57,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/lb/_lib/localize.js
 var eraValues49 = {
   narrow: ["v.Chr.", "n.Chr."],
   abbreviated: ["v.Chr.", "n.Chr."],
-  wide: ["viru Christus", "no Christus"]
+  wide: ["viru Christus", "no Christus"],
 };
 var quarterValues49 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["1. Quartal", "2. Quartal", "3. Quartal", "4. Quartal"]
+  wide: ["1. Quartal", "2. Quartal", "3. Quartal", "4. Quartal"],
 };
 var monthValues49 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -16083,7 +16138,7 @@ var monthValues49 = {
     "Sep",
     "Okt",
     "Nov",
-    "Dez"
+    "Dez",
   ],
   wide: [
     "Januar",
@@ -16097,8 +16152,8 @@ var monthValues49 = {
     "September",
     "Oktober",
     "November",
-    "Dezember"
-  ]
+    "Dezember",
+  ],
 };
 var dayValues49 = {
   narrow: ["S", "M", "D", "M", "D", "F", "S"],
@@ -16111,8 +16166,8 @@ var dayValues49 = {
     "Mëttwoch",
     "Donneschdeg",
     "Freideg",
-    "Samschdeg"
-  ]
+    "Samschdeg",
+  ],
 };
 var dayPeriodValues49 = {
   narrow: {
@@ -16123,7 +16178,7 @@ var dayPeriodValues49 = {
     morning: "Moien",
     afternoon: "Nomëtteg",
     evening: "Owend",
-    night: "Nuecht"
+    night: "Nuecht",
   },
   abbreviated: {
     am: "moies",
@@ -16133,7 +16188,7 @@ var dayPeriodValues49 = {
     morning: "Moien",
     afternoon: "Nomëtteg",
     evening: "Owend",
-    night: "Nuecht"
+    night: "Nuecht",
   },
   wide: {
     am: "moies",
@@ -16143,8 +16198,8 @@ var dayPeriodValues49 = {
     morning: "Moien",
     afternoon: "Nomëtteg",
     evening: "Owend",
-    night: "Nuecht"
-  }
+    night: "Nuecht",
+  },
 };
 var formattingDayPeriodValues41 = {
   narrow: {
@@ -16155,7 +16210,7 @@ var formattingDayPeriodValues41 = {
     morning: "moies",
     afternoon: "nomëttes",
     evening: "owes",
-    night: "nuets"
+    night: "nuets",
   },
   abbreviated: {
     am: "moies",
@@ -16165,7 +16220,7 @@ var formattingDayPeriodValues41 = {
     morning: "moies",
     afternoon: "nomëttes",
     evening: "owes",
-    night: "nuets"
+    night: "nuets",
   },
   wide: {
     am: "moies",
@@ -16175,8 +16230,8 @@ var formattingDayPeriodValues41 = {
     morning: "moies",
     afternoon: "nomëttes",
     evening: "owes",
-    night: "nuets"
-  }
+    night: "nuets",
+  },
 };
 var ordinalNumber49 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -16186,27 +16241,27 @@ var localize50 = {
   ordinalNumber: ordinalNumber49,
   era: buildLocalizeFn({
     values: eraValues49,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues49,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues49,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues49,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues49,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues41,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/lb/_lib/match.js
@@ -16215,23 +16270,23 @@ var parseOrdinalNumberPattern48 = /\d+/i;
 var matchEraPatterns48 = {
   narrow: /^(v\.? ?Chr\.?|n\.? ?Chr\.?)/i,
   abbreviated: /^(v\.? ?Chr\.?|n\.? ?Chr\.?)/i,
-  wide: /^(viru Christus|virun eiser Zäitrechnung|no Christus|eiser Zäitrechnung)/i
+  wide: /^(viru Christus|virun eiser Zäitrechnung|no Christus|eiser Zäitrechnung)/i,
 };
 var parseEraPatterns48 = {
-  any: [/^v/i, /^n/i]
+  any: [/^v/i, /^n/i],
 };
 var matchQuarterPatterns48 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234](\.)? Quartal/i
+  wide: /^[1234](\.)? Quartal/i,
 };
 var parseQuarterPatterns48 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns48 = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mäe|abr|mee|jun|jul|aug|sep|okt|nov|dez)/i,
-  wide: /^(januar|februar|mäerz|abrëll|mee|juni|juli|august|september|oktober|november|dezember)/i
+  wide: /^(januar|februar|mäerz|abrëll|mee|juni|juli|august|september|oktober|november|dezember)/i,
 };
 var parseMonthPatterns48 = {
   narrow: [
@@ -16246,7 +16301,7 @@ var parseMonthPatterns48 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -16260,22 +16315,23 @@ var parseMonthPatterns48 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns48 = {
   narrow: /^[smdf]/i,
   short: /^(so|mé|dë|më|do|fr|sa)/i,
   abbreviated: /^(son?|méi?|dën?|mët?|don?|fre?|sam?)\.?/i,
-  wide: /^(sonndeg|méindeg|dënschdeg|mëttwoch|donneschdeg|freideg|samschdeg)/i
+  wide: /^(sonndeg|méindeg|dënschdeg|mëttwoch|donneschdeg|freideg|samschdeg)/i,
 };
 var parseDayPatterns48 = {
-  any: [/^so/i, /^mé/i, /^dë/i, /^më/i, /^do/i, /^f/i, /^sa/i]
+  any: [/^so/i, /^mé/i, /^dë/i, /^më/i, /^do/i, /^f/i, /^sa/i],
 };
 var matchDayPeriodPatterns48 = {
   narrow: /^(mo\.?|nomë\.?|Mëtternuecht|mëttes|moies|nomëttes|owes|nuets)/i,
-  abbreviated: /^(moi\.?|nomët\.?|Mëtternuecht|mëttes|moies|nomëttes|owes|nuets)/i,
-  wide: /^(moies|nomëttes|Mëtternuecht|mëttes|moies|nomëttes|owes|nuets)/i
+  abbreviated:
+    /^(moi\.?|nomët\.?|Mëtternuecht|mëttes|moies|nomëttes|owes|nuets)/i,
+  wide: /^(moies|nomëttes|Mëtternuecht|mëttes|moies|nomëttes|owes|nuets)/i,
 };
 var parseDayPeriodPatterns48 = {
   any: {
@@ -16287,47 +16343,47 @@ var parseDayPeriodPatterns48 = {
     afternoon: /nomëttes/i,
     // will never be matched. Afternoon is matched by `pm`
     evening: /owes/i,
-    night: /nuets/i
+    night: /nuets/i,
     // will never be matched. Night is matched by `pm`
-  }
+  },
 };
 var match49 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern48,
     parsePattern: parseOrdinalNumberPattern48,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns48,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns48,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns48,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns48,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns48,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns48,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns48,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns48,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns48,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPeriodPatterns48,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/lt/_lib/formatLong.js
@@ -16335,50 +16391,50 @@ var dateFormats58 = {
   full: "y 'm'. MMMM d 'd'., EEEE",
   long: "y 'm'. MMMM d 'd'.",
   medium: "y-MM-dd",
-  short: "y-MM-dd"
+  short: "y-MM-dd",
 };
 var timeFormats58 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats58 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong58 = {
   date: buildFormatLongFn({
     formats: dateFormats58,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats58,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats58,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/lt/_lib/localize.js
 var eraValues50 = {
   narrow: ["pr. Kr.", "po Kr."],
   abbreviated: ["pr. Kr.", "po Kr."],
-  wide: ["prieš Kristų", "po Kristaus"]
+  wide: ["prieš Kristų", "po Kristaus"],
 };
 var quarterValues50 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["I ketv.", "II ketv.", "III ketv.", "IV ketv."],
-  wide: ["I ketvirtis", "II ketvirtis", "III ketvirtis", "IV ketvirtis"]
+  wide: ["I ketvirtis", "II ketvirtis", "III ketvirtis", "IV ketvirtis"],
 };
 var formattingQuarterValues2 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["I k.", "II k.", "III k.", "IV k."],
-  wide: ["I ketvirtis", "II ketvirtis", "III ketvirtis", "IV ketvirtis"]
+  wide: ["I ketvirtis", "II ketvirtis", "III ketvirtis", "IV ketvirtis"],
 };
 var monthValues50 = {
   narrow: ["S", "V", "K", "B", "G", "B", "L", "R", "R", "S", "L", "G"],
@@ -16394,7 +16450,7 @@ var monthValues50 = {
     "rugs.",
     "spal.",
     "lapkr.",
-    "gruod."
+    "gruod.",
   ],
   wide: [
     "sausis",
@@ -16408,8 +16464,8 @@ var monthValues50 = {
     "rugsėjis",
     "spalis",
     "lapkritis",
-    "gruodis"
-  ]
+    "gruodis",
+  ],
 };
 var formattingMonthValues11 = {
   narrow: ["S", "V", "K", "B", "G", "B", "L", "R", "R", "S", "L", "G"],
@@ -16425,7 +16481,7 @@ var formattingMonthValues11 = {
     "rugs.",
     "spal.",
     "lapkr.",
-    "gruod."
+    "gruod.",
   ],
   wide: [
     "sausio",
@@ -16439,8 +16495,8 @@ var formattingMonthValues11 = {
     "rugsėjo",
     "spalio",
     "lapkričio",
-    "gruodžio"
-  ]
+    "gruodžio",
+  ],
 };
 var dayValues50 = {
   narrow: ["S", "P", "A", "T", "K", "P", "Š"],
@@ -16453,8 +16509,8 @@ var dayValues50 = {
     "trečiadienis",
     "ketvirtadienis",
     "penktadienis",
-    "šeštadienis"
-  ]
+    "šeštadienis",
+  ],
 };
 var formattingDayValues2 = {
   narrow: ["S", "P", "A", "T", "K", "P", "Š"],
@@ -16467,8 +16523,8 @@ var formattingDayValues2 = {
     "trečiadienį",
     "ketvirtadienį",
     "penktadienį",
-    "šeštadienį"
-  ]
+    "šeštadienį",
+  ],
 };
 var dayPeriodValues50 = {
   narrow: {
@@ -16479,7 +16535,7 @@ var dayPeriodValues50 = {
     morning: "rytas",
     afternoon: "diena",
     evening: "vakaras",
-    night: "naktis"
+    night: "naktis",
   },
   abbreviated: {
     am: "priešpiet",
@@ -16489,7 +16545,7 @@ var dayPeriodValues50 = {
     morning: "rytas",
     afternoon: "diena",
     evening: "vakaras",
-    night: "naktis"
+    night: "naktis",
   },
   wide: {
     am: "priešpiet",
@@ -16499,8 +16555,8 @@ var dayPeriodValues50 = {
     morning: "rytas",
     afternoon: "diena",
     evening: "vakaras",
-    night: "naktis"
-  }
+    night: "naktis",
+  },
 };
 var formattingDayPeriodValues42 = {
   narrow: {
@@ -16511,7 +16567,7 @@ var formattingDayPeriodValues42 = {
     morning: "rytas",
     afternoon: "popietė",
     evening: "vakaras",
-    night: "naktis"
+    night: "naktis",
   },
   abbreviated: {
     am: "priešpiet",
@@ -16521,7 +16577,7 @@ var formattingDayPeriodValues42 = {
     morning: "rytas",
     afternoon: "popietė",
     evening: "vakaras",
-    night: "naktis"
+    night: "naktis",
   },
   wide: {
     am: "priešpiet",
@@ -16531,8 +16587,8 @@ var formattingDayPeriodValues42 = {
     morning: "rytas",
     afternoon: "popietė",
     evening: "vakaras",
-    night: "naktis"
-  }
+    night: "naktis",
+  },
 };
 var ordinalNumber50 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -16542,33 +16598,33 @@ var localize51 = {
   ordinalNumber: ordinalNumber50,
   era: buildLocalizeFn({
     values: eraValues50,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues50,
     defaultWidth: "wide",
     formattingValues: formattingQuarterValues2,
     defaultFormattingWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues50,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues11,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues50,
     defaultWidth: "wide",
     formattingValues: formattingDayValues2,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues50,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues42,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/lt/_lib/match.js
@@ -16577,25 +16633,26 @@ var parseOrdinalNumberPattern49 = /\d+/i;
 var matchEraPatterns49 = {
   narrow: /^p(r|o)\.?\s?(kr\.?|me)/i,
   abbreviated: /^(pr\.\s?(kr\.|m\.\s?e\.)|po\s?kr\.|mūsų eroje)/i,
-  wide: /^(prieš Kristų|prieš mūsų erą|po Kristaus|mūsų eroje)/i
+  wide: /^(prieš Kristų|prieš mūsų erą|po Kristaus|mūsų eroje)/i,
 };
 var parseEraPatterns49 = {
   wide: [/prieš/i, /(po|mūsų)/i],
-  any: [/^pr/i, /^(po|m)/i]
+  any: [/^pr/i, /^(po|m)/i],
 };
 var matchQuarterPatterns49 = {
   narrow: /^([1234])/i,
   abbreviated: /^(I|II|III|IV)\s?ketv?\.?/i,
-  wide: /^(I|II|III|IV)\s?ketvirtis/i
+  wide: /^(I|II|III|IV)\s?ketvirtis/i,
 };
 var parseQuarterPatterns49 = {
   narrow: [/1/i, /2/i, /3/i, /4/i],
-  any: [/I$/i, /II$/i, /III/i, /IV/i]
+  any: [/I$/i, /II$/i, /III/i, /IV/i],
 };
 var matchMonthPatterns49 = {
   narrow: /^[svkbglr]/i,
-  abbreviated: /^(saus\.|vas\.|kov\.|bal\.|geg\.|birž\.|liep\.|rugp\.|rugs\.|spal\.|lapkr\.|gruod\.)/i,
-  wide: /^(sausi(s|o)|vasari(s|o)|kov(a|o)s|balandž?i(s|o)|gegužės?|birželi(s|o)|liep(a|os)|rugpjū(t|č)i(s|o)|rugsėj(is|o)|spali(s|o)|lapkri(t|č)i(s|o)|gruodž?i(s|o))/i
+  abbreviated:
+    /^(saus\.|vas\.|kov\.|bal\.|geg\.|birž\.|liep\.|rugp\.|rugs\.|spal\.|lapkr\.|gruod\.)/i,
+  wide: /^(sausi(s|o)|vasari(s|o)|kov(a|o)s|balandž?i(s|o)|gegužės?|birželi(s|o)|liep(a|os)|rugpjū(t|č)i(s|o)|rugsėj(is|o)|spali(s|o)|lapkri(t|č)i(s|o)|gruodž?i(s|o))/i,
 };
 var parseMonthPatterns49 = {
   narrow: [
@@ -16610,7 +16667,7 @@ var parseMonthPatterns49 = {
     /^r/i,
     /^s/i,
     /^l/i,
-    /^g/i
+    /^g/i,
   ],
   any: [
     /^saus/i,
@@ -16624,23 +16681,24 @@ var parseMonthPatterns49 = {
     /^rugs/i,
     /^spal/i,
     /^lapkr/i,
-    /^gruod/i
-  ]
+    /^gruod/i,
+  ],
 };
 var matchDayPatterns49 = {
   narrow: /^[spatkš]/i,
   short: /^(sk|pr|an|tr|kt|pn|št)/i,
   abbreviated: /^(sk|pr|an|tr|kt|pn|št)/i,
-  wide: /^(sekmadien(is|į)|pirmadien(is|į)|antradien(is|į)|trečiadien(is|į)|ketvirtadien(is|į)|penktadien(is|į)|šeštadien(is|į))/i
+  wide: /^(sekmadien(is|į)|pirmadien(is|į)|antradien(is|į)|trečiadien(is|į)|ketvirtadien(is|į)|penktadien(is|į)|šeštadien(is|į))/i,
 };
 var parseDayPatterns49 = {
   narrow: [/^s/i, /^p/i, /^a/i, /^t/i, /^k/i, /^p/i, /^š/i],
   wide: [/^se/i, /^pi/i, /^an/i, /^tr/i, /^ke/i, /^pe/i, /^še/i],
-  any: [/^sk/i, /^pr/i, /^an/i, /^tr/i, /^kt/i, /^pn/i, /^št/i]
+  any: [/^sk/i, /^pr/i, /^an/i, /^tr/i, /^kt/i, /^pn/i, /^št/i],
 };
 var matchDayPeriodPatterns49 = {
-  narrow: /^(pr.\s?p.|pop.|vidurnaktis|(vidurdienis|perpiet)|rytas|(diena|popietė)|vakaras|naktis)/i,
-  any: /^(priešpiet|popiet$|vidurnaktis|(vidurdienis|perpiet)|rytas|(diena|popietė)|vakaras|naktis)/i
+  narrow:
+    /^(pr.\s?p.|pop.|vidurnaktis|(vidurdienis|perpiet)|rytas|(diena|popietė)|vakaras|naktis)/i,
+  any: /^(priešpiet|popiet$|vidurnaktis|(vidurdienis|perpiet)|rytas|(diena|popietė)|vakaras|naktis)/i,
 };
 var parseDayPeriodPatterns49 = {
   narrow: {
@@ -16651,7 +16709,7 @@ var parseDayPeriodPatterns49 = {
     morning: /rytas/i,
     afternoon: /(die|popietė)/i,
     evening: /vakaras/i,
-    night: /naktis/i
+    night: /naktis/i,
   },
   any: {
     am: /^pr/i,
@@ -16661,46 +16719,46 @@ var parseDayPeriodPatterns49 = {
     morning: /rytas/i,
     afternoon: /(die|popietė)/i,
     evening: /vakaras/i,
-    night: /naktis/i
-  }
+    night: /naktis/i,
+  },
 };
 var match50 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern49,
     parsePattern: parseOrdinalNumberPattern49,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns49,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns49,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns49,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns49,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns49,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns49,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns49,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns49,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns49,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns49,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/lv/_lib/formatDistance.js
@@ -16715,9 +16773,13 @@ function buildLocalizeTokenFn3(schema) {
     } else {
       const rem = count % 10 === 1 && count % 100 !== 11;
       if (options == null ? void 0 : options.addSuffix) {
-        return schema.other[0].replace("{{time}}", rem ? schema.other[3] : schema.other[4]).replace("{{count}}", String(count));
+        return schema.other[0]
+          .replace("{{time}}", rem ? schema.other[3] : schema.other[4])
+          .replace("{{count}}", String(count));
       } else {
-        return schema.other[0].replace("{{time}}", rem ? schema.other[1] : schema.other[2]).replace("{{count}}", String(count));
+        return schema.other[0]
+          .replace("{{time}}", rem ? schema.other[1] : schema.other[2])
+          .replace("{{count}}", String(count));
       }
     }
   };
@@ -16730,8 +16792,8 @@ var formatDistanceLocale3 = {
       "sekunde",
       "sekundes",
       "sekundes",
-      "sekundēm"
-    ]
+      "sekundēm",
+    ],
   }),
   xSeconds: buildLocalizeTokenFn3({
     one: ["1 {{time}}", "sekunde", "sekundes"],
@@ -16740,8 +16802,8 @@ var formatDistanceLocale3 = {
       "sekunde",
       "sekundes",
       "sekundes",
-      "sekundēm"
-    ]
+      "sekundēm",
+    ],
   }),
   halfAMinute: (_count, options) => {
     if (options == null ? void 0 : options.addSuffix) {
@@ -16757,12 +16819,12 @@ var formatDistanceLocale3 = {
       "minūte",
       "minūtes",
       "minūtes",
-      "minūtēm"
-    ]
+      "minūtēm",
+    ],
   }),
   xMinutes: buildLocalizeTokenFn3({
     one: ["1 {{time}}", "minūte", "minūtes"],
-    other: ["{{count}} {{time}}", "minūte", "minūtes", "minūtes", "minūtēm"]
+    other: ["{{count}} {{time}}", "minūte", "minūtes", "minūtes", "minūtēm"],
   }),
   aboutXHours: buildLocalizeTokenFn3({
     one: ["apmēram 1 {{time}}", "stunda", "stundas"],
@@ -16771,16 +16833,16 @@ var formatDistanceLocale3 = {
       "stunda",
       "stundas",
       "stundas",
-      "stundām"
-    ]
+      "stundām",
+    ],
   }),
   xHours: buildLocalizeTokenFn3({
     one: ["1 {{time}}", "stunda", "stundas"],
-    other: ["{{count}} {{time}}", "stunda", "stundas", "stundas", "stundām"]
+    other: ["{{count}} {{time}}", "stunda", "stundas", "stundas", "stundām"],
   }),
   xDays: buildLocalizeTokenFn3({
     one: ["1 {{time}}", "diena", "dienas"],
-    other: ["{{count}} {{time}}", "diena", "dienas", "dienas", "dienām"]
+    other: ["{{count}} {{time}}", "diena", "dienas", "dienas", "dienām"],
   }),
   aboutXWeeks: buildLocalizeTokenFn3({
     one: ["apmēram 1 {{time}}", "nedēļa", "nedēļas"],
@@ -16789,8 +16851,8 @@ var formatDistanceLocale3 = {
       "nedēļa",
       "nedēļu",
       "nedēļas",
-      "nedēļām"
-    ]
+      "nedēļām",
+    ],
   }),
   xWeeks: buildLocalizeTokenFn3({
     one: ["1 {{time}}", "nedēļa", "nedēļas"],
@@ -16800,8 +16862,8 @@ var formatDistanceLocale3 = {
       "nedēļa",
       "nedēļu",
       "nedēļas",
-      "nedēļām"
-    ]
+      "nedēļām",
+    ],
   }),
   aboutXMonths: buildLocalizeTokenFn3({
     one: ["apmēram 1 {{time}}", "mēnesis", "mēneša"],
@@ -16810,29 +16872,29 @@ var formatDistanceLocale3 = {
       "mēnesis",
       "mēneši",
       "mēneša",
-      "mēnešiem"
-    ]
+      "mēnešiem",
+    ],
   }),
   xMonths: buildLocalizeTokenFn3({
     one: ["1 {{time}}", "mēnesis", "mēneša"],
-    other: ["{{count}} {{time}}", "mēnesis", "mēneši", "mēneša", "mēnešiem"]
+    other: ["{{count}} {{time}}", "mēnesis", "mēneši", "mēneša", "mēnešiem"],
   }),
   aboutXYears: buildLocalizeTokenFn3({
     one: ["apmēram 1 {{time}}", "gads", "gada"],
-    other: ["apmēram {{count}} {{time}}", "gads", "gadi", "gada", "gadiem"]
+    other: ["apmēram {{count}} {{time}}", "gads", "gadi", "gada", "gadiem"],
   }),
   xYears: buildLocalizeTokenFn3({
     one: ["1 {{time}}", "gads", "gada"],
-    other: ["{{count}} {{time}}", "gads", "gadi", "gada", "gadiem"]
+    other: ["{{count}} {{time}}", "gads", "gadi", "gada", "gadiem"],
   }),
   overXYears: buildLocalizeTokenFn3({
     one: ["ilgāk par 1 {{time}}", "gadu", "gadu"],
-    other: ["vairāk nekā {{count}} {{time}}", "gads", "gadi", "gada", "gadiem"]
+    other: ["vairāk nekā {{count}} {{time}}", "gads", "gadi", "gada", "gadiem"],
   }),
   almostXYears: buildLocalizeTokenFn3({
     one: ["gandrīz 1 {{time}}", "gads", "gada"],
-    other: ["vairāk nekā {{count}} {{time}}", "gads", "gadi", "gada", "gadiem"]
-  })
+    other: ["vairāk nekā {{count}} {{time}}", "gads", "gadi", "gada", "gadiem"],
+  }),
 };
 
 // node_modules/date-fns/locale/lv/_lib/formatLong.js
@@ -16840,40 +16902,40 @@ var dateFormats59 = {
   full: "EEEE, y. 'gada' d. MMMM",
   long: "y. 'gada' d. MMMM",
   medium: "dd.MM.y.",
-  short: "dd.MM.y."
+  short: "dd.MM.y.",
 };
 var timeFormats59 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats59 = {
   full: "{{date}} 'plkst.' {{time}}",
   long: "{{date}} 'plkst.' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong59 = {
   date: buildFormatLongFn({
     formats: dateFormats59,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats59,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats59,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/lv/_lib/localize.js
 var eraValues51 = {
   narrow: ["p.m.ē", "m.ē"],
   abbreviated: ["p. m. ē.", "m. ē."],
-  wide: ["pirms mūsu ēras", "mūsu ērā"]
+  wide: ["pirms mūsu ēras", "mūsu ērā"],
 };
 var quarterValues51 = {
   narrow: ["1", "2", "3", "4"],
@@ -16882,8 +16944,8 @@ var quarterValues51 = {
     "pirmais ceturksnis",
     "otrais ceturksnis",
     "trešais ceturksnis",
-    "ceturtais ceturksnis"
-  ]
+    "ceturtais ceturksnis",
+  ],
 };
 var formattingQuarterValues3 = {
   narrow: ["1", "2", "3", "4"],
@@ -16892,8 +16954,8 @@ var formattingQuarterValues3 = {
     "pirmajā ceturksnī",
     "otrajā ceturksnī",
     "trešajā ceturksnī",
-    "ceturtajā ceturksnī"
-  ]
+    "ceturtajā ceturksnī",
+  ],
 };
 var monthValues51 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -16909,7 +16971,7 @@ var monthValues51 = {
     "sept.",
     "okt.",
     "nov.",
-    "dec."
+    "dec.",
   ],
   wide: [
     "janvāris",
@@ -16923,8 +16985,8 @@ var monthValues51 = {
     "septembris",
     "oktobris",
     "novembris",
-    "decembris"
-  ]
+    "decembris",
+  ],
 };
 var formattingMonthValues12 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -16940,7 +17002,7 @@ var formattingMonthValues12 = {
     "sept.",
     "okt.",
     "nov.",
-    "dec."
+    "dec.",
   ],
   wide: [
     "janvārī",
@@ -16954,8 +17016,8 @@ var formattingMonthValues12 = {
     "septembrī",
     "oktobrī",
     "novembrī",
-    "decembrī"
-  ]
+    "decembrī",
+  ],
 };
 var dayValues51 = {
   narrow: ["S", "P", "O", "T", "C", "P", "S"],
@@ -16967,7 +17029,7 @@ var dayValues51 = {
     "trešd.",
     "ceturtd.",
     "piektd.",
-    "sestd."
+    "sestd.",
   ],
   wide: [
     "svētdiena",
@@ -16976,8 +17038,8 @@ var dayValues51 = {
     "trešdiena",
     "ceturtdiena",
     "piektdiena",
-    "sestdiena"
-  ]
+    "sestdiena",
+  ],
 };
 var formattingDayValues3 = {
   narrow: ["S", "P", "O", "T", "C", "P", "S"],
@@ -16989,7 +17051,7 @@ var formattingDayValues3 = {
     "trešd.",
     "ceturtd.",
     "piektd.",
-    "sestd."
+    "sestd.",
   ],
   wide: [
     "svētdienā",
@@ -16998,8 +17060,8 @@ var formattingDayValues3 = {
     "trešdienā",
     "ceturtdienā",
     "piektdienā",
-    "sestdienā"
-  ]
+    "sestdienā",
+  ],
 };
 var dayPeriodValues51 = {
   narrow: {
@@ -17010,7 +17072,7 @@ var dayPeriodValues51 = {
     morning: "rīts",
     afternoon: "diena",
     evening: "vakars",
-    night: "nakts"
+    night: "nakts",
   },
   abbreviated: {
     am: "am",
@@ -17020,7 +17082,7 @@ var dayPeriodValues51 = {
     morning: "rīts",
     afternoon: "pēcpusd.",
     evening: "vakars",
-    night: "nakts"
+    night: "nakts",
   },
   wide: {
     am: "am",
@@ -17030,8 +17092,8 @@ var dayPeriodValues51 = {
     morning: "rīts",
     afternoon: "pēcpusdiena",
     evening: "vakars",
-    night: "nakts"
-  }
+    night: "nakts",
+  },
 };
 var formattingDayPeriodValues43 = {
   narrow: {
@@ -17042,7 +17104,7 @@ var formattingDayPeriodValues43 = {
     morning: "rītā",
     afternoon: "dienā",
     evening: "vakarā",
-    night: "naktī"
+    night: "naktī",
   },
   abbreviated: {
     am: "am",
@@ -17052,7 +17114,7 @@ var formattingDayPeriodValues43 = {
     morning: "rītā",
     afternoon: "pēcpusd.",
     evening: "vakarā",
-    night: "naktī"
+    night: "naktī",
   },
   wide: {
     am: "am",
@@ -17062,8 +17124,8 @@ var formattingDayPeriodValues43 = {
     morning: "rītā",
     afternoon: "pēcpusdienā",
     evening: "vakarā",
-    night: "naktī"
-  }
+    night: "naktī",
+  },
 };
 var ordinalNumber51 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -17073,33 +17135,33 @@ var localize52 = {
   ordinalNumber: ordinalNumber51,
   era: buildLocalizeFn({
     values: eraValues51,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues51,
     defaultWidth: "wide",
     formattingValues: formattingQuarterValues3,
     defaultFormattingWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues51,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues12,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues51,
     defaultWidth: "wide",
     formattingValues: formattingDayValues3,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues51,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues43,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/lv/_lib/match.js
@@ -17108,25 +17170,26 @@ var parseOrdinalNumberPattern50 = /\d+/i;
 var matchEraPatterns50 = {
   narrow: /^(p\.m\.ē|m\.ē)/i,
   abbreviated: /^(p\. m\. ē\.|m\. ē\.)/i,
-  wide: /^(pirms mūsu ēras|mūsu ērā)/i
+  wide: /^(pirms mūsu ēras|mūsu ērā)/i,
 };
 var parseEraPatterns50 = {
-  any: [/^p/i, /^m/i]
+  any: [/^p/i, /^m/i],
 };
 var matchQuarterPatterns50 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](\. cet\.)/i,
-  wide: /^(pirma(is|jā)|otra(is|jā)|treša(is|jā)|ceturta(is|jā)) ceturksn(is|ī)/i
+  wide: /^(pirma(is|jā)|otra(is|jā)|treša(is|jā)|ceturta(is|jā)) ceturksn(is|ī)/i,
 };
 var parseQuarterPatterns50 = {
   narrow: [/^1/i, /^2/i, /^3/i, /^4/i],
   abbreviated: [/^1/i, /^2/i, /^3/i, /^4/i],
-  wide: [/^p/i, /^o/i, /^t/i, /^c/i]
+  wide: [/^p/i, /^o/i, /^t/i, /^c/i],
 };
 var matchMonthPatterns50 = {
   narrow: /^[jfmasond]/i,
-  abbreviated: /^(janv\.|febr\.|marts|apr\.|maijs|jūn\.|jūl\.|aug\.|sept\.|okt\.|nov\.|dec\.)/i,
-  wide: /^(janvār(is|ī)|februār(is|ī)|mart[sā]|aprīl(is|ī)|maij[sā]|jūnij[sā]|jūlij[sā]|august[sā]|septembr(is|ī)|oktobr(is|ī)|novembr(is|ī)|decembr(is|ī))/i
+  abbreviated:
+    /^(janv\.|febr\.|marts|apr\.|maijs|jūn\.|jūl\.|aug\.|sept\.|okt\.|nov\.|dec\.)/i,
+  wide: /^(janvār(is|ī)|februār(is|ī)|mart[sā]|aprīl(is|ī)|maij[sā]|jūnij[sā]|jūlij[sā]|august[sā]|septembr(is|ī)|oktobr(is|ī)|novembr(is|ī)|decembr(is|ī))/i,
 };
 var parseMonthPatterns50 = {
   narrow: [
@@ -17141,7 +17204,7 @@ var parseMonthPatterns50 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -17155,23 +17218,23 @@ var parseMonthPatterns50 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns50 = {
   narrow: /^[spotc]/i,
   short: /^(sv|pi|o|t|c|pk|s)/i,
   abbreviated: /^(svētd\.|pirmd\.|otrd.\|trešd\.|ceturtd\.|piektd\.|sestd\.)/i,
-  wide: /^(svētdien(a|ā)|pirmdien(a|ā)|otrdien(a|ā)|trešdien(a|ā)|ceturtdien(a|ā)|piektdien(a|ā)|sestdien(a|ā))/i
+  wide: /^(svētdien(a|ā)|pirmdien(a|ā)|otrdien(a|ā)|trešdien(a|ā)|ceturtdien(a|ā)|piektdien(a|ā)|sestdien(a|ā))/i,
 };
 var parseDayPatterns50 = {
   narrow: [/^s/i, /^p/i, /^o/i, /^t/i, /^c/i, /^p/i, /^s/i],
-  any: [/^sv/i, /^pi/i, /^o/i, /^t/i, /^c/i, /^p/i, /^se/i]
+  any: [/^sv/i, /^pi/i, /^o/i, /^t/i, /^c/i, /^p/i, /^se/i],
 };
 var matchDayPeriodPatterns50 = {
   narrow: /^(am|pm|pusn\.|pusd\.|rīt(s|ā)|dien(a|ā)|vakar(s|ā)|nakt(s|ī))/,
   abbreviated: /^(am|pm|pusn\.|pusd\.|rīt(s|ā)|pēcpusd\.|vakar(s|ā)|nakt(s|ī))/,
-  wide: /^(am|pm|pusnakt(s|ī)|pusdienlaik(s|ā)|rīt(s|ā)|pēcpusdien(a|ā)|vakar(s|ā)|nakt(s|ī))/i
+  wide: /^(am|pm|pusnakt(s|ī)|pusdienlaik(s|ā)|rīt(s|ā)|pēcpusdien(a|ā)|vakar(s|ā)|nakt(s|ī))/i,
 };
 var parseDayPeriodPatterns50 = {
   any: {
@@ -17182,46 +17245,46 @@ var parseDayPeriodPatterns50 = {
     morning: /^r/i,
     afternoon: /^(d|pēc)/i,
     evening: /^v/i,
-    night: /^n/i
-  }
+    night: /^n/i,
+  },
 };
 var match51 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern50,
     parsePattern: parseOrdinalNumberPattern50,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns50,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns50,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns50,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns50,
     defaultParseWidth: "wide",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns50,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns50,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns50,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns50,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns50,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPeriodPatterns50,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/mk/_lib/formatLong.js
@@ -17229,42 +17292,42 @@ var dateFormats60 = {
   full: "EEEE, dd MMMM yyyy",
   long: "dd MMMM yyyy",
   medium: "dd MMM yyyy",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats60 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats60 = {
-  any: "{{date}} {{time}}"
+  any: "{{date}} {{time}}",
 };
 var formatLong60 = {
   date: buildFormatLongFn({
     formats: dateFormats60,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats60,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats60,
-    defaultWidth: "any"
-  })
+    defaultWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/mk/_lib/localize.js
 var eraValues52 = {
   narrow: ["пр.н.е.", "н.е."],
   abbreviated: ["пред н. е.", "н. е."],
-  wide: ["пред нашата ера", "нашата ера"]
+  wide: ["пред нашата ера", "нашата ера"],
 };
 var quarterValues52 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-ви кв.", "2-ри кв.", "3-ти кв.", "4-ти кв."],
-  wide: ["1-ви квартал", "2-ри квартал", "3-ти квартал", "4-ти квартал"]
+  wide: ["1-ви квартал", "2-ри квартал", "3-ти квартал", "4-ти квартал"],
 };
 var monthValues52 = {
   abbreviated: [
@@ -17279,7 +17342,7 @@ var monthValues52 = {
     "септ",
     "окт",
     "ноем",
-    "дек"
+    "дек",
   ],
   wide: [
     "јануари",
@@ -17293,8 +17356,8 @@ var monthValues52 = {
     "септември",
     "октомври",
     "ноември",
-    "декември"
-  ]
+    "декември",
+  ],
 };
 var dayValues52 = {
   narrow: ["Н", "П", "В", "С", "Ч", "П", "С"],
@@ -17307,8 +17370,8 @@ var dayValues52 = {
     "среда",
     "четврток",
     "петок",
-    "сабота"
-  ]
+    "сабота",
+  ],
 };
 var dayPeriodValues52 = {
   wide: {
@@ -17319,8 +17382,8 @@ var dayPeriodValues52 = {
     morning: "наутро",
     afternoon: "попладне",
     evening: "навечер",
-    night: "ноќе"
-  }
+    night: "ноќе",
+  },
 };
 var ordinalNumber52 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -17342,25 +17405,25 @@ var localize53 = {
   ordinalNumber: ordinalNumber52,
   era: buildLocalizeFn({
     values: eraValues52,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues52,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues52,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues52,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues52,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/mk/_lib/match.js
@@ -17369,32 +17432,32 @@ var parseOrdinalNumberPattern51 = /\d+/i;
 var matchEraPatterns51 = {
   narrow: /^((пр)?н\.?\s?е\.?)/i,
   abbreviated: /^((пр)?н\.?\s?е\.?)/i,
-  wide: /^(пред нашата ера|нашата ера)/i
+  wide: /^(пред нашата ера|нашата ера)/i,
 };
 var parseEraPatterns51 = {
-  any: [/^п/i, /^н/i]
+  any: [/^п/i, /^н/i],
 };
 var matchQuarterPatterns51 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?[врт]?и?)? кв.?/i,
-  wide: /^[1234](-?[врт]?и?)? квартал/i
+  wide: /^[1234](-?[врт]?и?)? квартал/i,
 };
 var parseQuarterPatterns51 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchDayPatterns51 = {
   narrow: /^[нпвсч]/i,
   short: /^(не|по|вт|ср|че|пе|са)/i,
   abbreviated: /^(нед|пон|вто|сре|чет|пет|саб)/i,
-  wide: /^(недела|понеделник|вторник|среда|четврток|петок|сабота)/i
+  wide: /^(недела|понеделник|вторник|среда|четврток|петок|сабота)/i,
 };
 var parseDayPatterns51 = {
   narrow: [/^н/i, /^п/i, /^в/i, /^с/i, /^ч/i, /^п/i, /^с/i],
-  any: [/^н[ед]/i, /^п[он]/i, /^вт/i, /^ср/i, /^ч[ет]/i, /^п[ет]/i, /^с[аб]/i]
+  any: [/^н[ед]/i, /^п[он]/i, /^вт/i, /^ср/i, /^ч[ет]/i, /^п[ет]/i, /^с[аб]/i],
 };
 var matchMonthPatterns51 = {
   abbreviated: /^(јан|фев|мар|апр|мај|јун|јул|авг|сеп|окт|ноем|дек)/i,
-  wide: /^(јануари|февруари|март|април|мај|јуни|јули|август|септември|октомври|ноември|декември)/i
+  wide: /^(јануари|февруари|март|април|мај|јуни|јули|август|септември|октомври|ноември|декември)/i,
 };
 var parseMonthPatterns51 = {
   any: [
@@ -17409,11 +17472,11 @@ var parseMonthPatterns51 = {
     /^се/i,
     /^окт/i,
     /^но/i,
-    /^де/i
-  ]
+    /^де/i,
+  ],
 };
 var matchDayPeriodPatterns51 = {
-  any: /^(претп|попл|полноќ|утро|пладне|вечер|ноќ)/i
+  any: /^(претп|попл|полноќ|утро|пладне|вечер|ноќ)/i,
 };
 var parseDayPeriodPatterns51 = {
   any: {
@@ -17424,46 +17487,46 @@ var parseDayPeriodPatterns51 = {
     morning: /наутро/i,
     afternoon: /попладне/i,
     evening: /навечер/i,
-    night: /ноќе/i
-  }
+    night: /ноќе/i,
+  },
 };
 var match52 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern51,
     parsePattern: parseOrdinalNumberPattern51,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns51,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns51,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns51,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns51,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns51,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns51,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns51,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns51,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns51,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns51,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/mn/_lib/formatLong.js
@@ -17471,45 +17534,45 @@ var dateFormats61 = {
   full: "y 'оны' MMMM'ын' d, EEEE 'гараг'",
   long: "y 'оны' MMMM'ын' d",
   medium: "y 'оны' MMM'ын' d",
-  short: "y.MM.dd"
+  short: "y.MM.dd",
 };
 var timeFormats61 = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats61 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong61 = {
   date: buildFormatLongFn({
     formats: dateFormats61,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats61,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats61,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/mn/_lib/localize.js
 var eraValues53 = {
   narrow: ["НТӨ", "НТ"],
   abbreviated: ["НТӨ", "НТ"],
-  wide: ["нийтийн тооллын өмнөх", "нийтийн тооллын"]
+  wide: ["нийтийн тооллын өмнөх", "нийтийн тооллын"],
 };
 var quarterValues53 = {
   narrow: ["I", "II", "III", "IV"],
   abbreviated: ["I улирал", "II улирал", "III улирал", "IV улирал"],
-  wide: ["1-р улирал", "2-р улирал", "3-р улирал", "4-р улирал"]
+  wide: ["1-р улирал", "2-р улирал", "3-р улирал", "4-р улирал"],
 };
 var monthValues53 = {
   narrow: [
@@ -17524,7 +17587,7 @@ var monthValues53 = {
     "IX",
     "X",
     "XI",
-    "XII"
+    "XII",
   ],
   abbreviated: [
     "1-р сар",
@@ -17538,7 +17601,7 @@ var monthValues53 = {
     "9-р сар",
     "10-р сар",
     "11-р сар",
-    "12-р сар"
+    "12-р сар",
   ],
   wide: [
     "Нэгдүгээр сар",
@@ -17552,8 +17615,8 @@ var monthValues53 = {
     "Есдүгээр сар",
     "Аравдугаар сар",
     "Арваннэгдүгээр сар",
-    "Арван хоёрдугаар сар"
-  ]
+    "Арван хоёрдугаар сар",
+  ],
 };
 var formattingMonthValues13 = {
   narrow: [
@@ -17568,7 +17631,7 @@ var formattingMonthValues13 = {
     "IX",
     "X",
     "XI",
-    "XII"
+    "XII",
   ],
   abbreviated: [
     "1-р сар",
@@ -17582,7 +17645,7 @@ var formattingMonthValues13 = {
     "9-р сар",
     "10-р сар",
     "11-р сар",
-    "12-р сар"
+    "12-р сар",
   ],
   wide: [
     "нэгдүгээр сар",
@@ -17596,20 +17659,20 @@ var formattingMonthValues13 = {
     "есдүгээр сар",
     "аравдугаар сар",
     "арваннэгдүгээр сар",
-    "арван хоёрдугаар сар"
-  ]
+    "арван хоёрдугаар сар",
+  ],
 };
 var dayValues53 = {
   narrow: ["Н", "Д", "М", "Л", "П", "Б", "Б"],
   short: ["Ня", "Да", "Мя", "Лх", "Пү", "Ба", "Бя"],
   abbreviated: ["Ням", "Дав", "Мяг", "Лха", "Пүр", "Баа", "Бям"],
-  wide: ["Ням", "Даваа", "Мягмар", "Лхагва", "Пүрэв", "Баасан", "Бямба"]
+  wide: ["Ням", "Даваа", "Мягмар", "Лхагва", "Пүрэв", "Баасан", "Бямба"],
 };
 var formattingDayValues4 = {
   narrow: ["Н", "Д", "М", "Л", "П", "Б", "Б"],
   short: ["Ня", "Да", "Мя", "Лх", "Пү", "Ба", "Бя"],
   abbreviated: ["Ням", "Дав", "Мяг", "Лха", "Пүр", "Баа", "Бям"],
-  wide: ["ням", "даваа", "мягмар", "лхагва", "пүрэв", "баасан", "бямба"]
+  wide: ["ням", "даваа", "мягмар", "лхагва", "пүрэв", "баасан", "бямба"],
 };
 var dayPeriodValues53 = {
   narrow: {
@@ -17620,7 +17683,7 @@ var dayPeriodValues53 = {
     morning: "өглөө",
     afternoon: "өдөр",
     evening: "орой",
-    night: "шөнө"
+    night: "шөнө",
   },
   abbreviated: {
     am: "ү.ө.",
@@ -17630,7 +17693,7 @@ var dayPeriodValues53 = {
     morning: "өглөө",
     afternoon: "өдөр",
     evening: "орой",
-    night: "шөнө"
+    night: "шөнө",
   },
   wide: {
     am: "ү.ө.",
@@ -17640,8 +17703,8 @@ var dayPeriodValues53 = {
     morning: "өглөө",
     afternoon: "өдөр",
     evening: "орой",
-    night: "шөнө"
-  }
+    night: "шөнө",
+  },
 };
 var ordinalNumber53 = (dirtyNumber, _options) => {
   return String(dirtyNumber);
@@ -17650,29 +17713,29 @@ var localize54 = {
   ordinalNumber: ordinalNumber53,
   era: buildLocalizeFn({
     values: eraValues53,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues53,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues53,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues13,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues53,
     defaultWidth: "wide",
     formattingValues: formattingDayValues4,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues53,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/mn/_lib/match.js
@@ -17681,23 +17744,24 @@ var parseOrdinalNumberPattern52 = /\d+/i;
 var matchEraPatterns52 = {
   narrow: /^(нтө|нт)/i,
   abbreviated: /^(нтө|нт)/i,
-  wide: /^(нийтийн тооллын өмнө|нийтийн тооллын)/i
+  wide: /^(нийтийн тооллын өмнө|нийтийн тооллын)/i,
 };
 var parseEraPatterns52 = {
-  any: [/^(нтө|нийтийн тооллын өмнө)/i, /^(нт|нийтийн тооллын)/i]
+  any: [/^(нтө|нийтийн тооллын өмнө)/i, /^(нт|нийтийн тооллын)/i],
 };
 var matchQuarterPatterns52 = {
   narrow: /^(iv|iii|ii|i)/i,
   abbreviated: /^(iv|iii|ii|i) улирал/i,
-  wide: /^[1-4]-р улирал/i
+  wide: /^[1-4]-р улирал/i,
 };
 var parseQuarterPatterns52 = {
-  any: [/^(i(\s|$)|1)/i, /^(ii(\s|$)|2)/i, /^(iii(\s|$)|3)/i, /^(iv(\s|$)|4)/i]
+  any: [/^(i(\s|$)|1)/i, /^(ii(\s|$)|2)/i, /^(iii(\s|$)|3)/i, /^(iv(\s|$)|4)/i],
 };
 var matchMonthPatterns52 = {
   narrow: /^(xii|xi|x|ix|viii|vii|vi|v|iv|iii|ii|i)/i,
-  abbreviated: /^(1-р сар|2-р сар|3-р сар|4-р сар|5-р сар|6-р сар|7-р сар|8-р сар|9-р сар|10-р сар|11-р сар|12-р сар)/i,
-  wide: /^(нэгдүгээр сар|хоёрдугаар сар|гуравдугаар сар|дөрөвдүгээр сар|тавдугаар сар|зургаадугаар сар|долоодугаар сар|наймдугаар сар|есдүгээр сар|аравдугаар сар|арван нэгдүгээр сар|арван хоёрдугаар сар)/i
+  abbreviated:
+    /^(1-р сар|2-р сар|3-р сар|4-р сар|5-р сар|6-р сар|7-р сар|8-р сар|9-р сар|10-р сар|11-р сар|12-р сар)/i,
+  wide: /^(нэгдүгээр сар|хоёрдугаар сар|гуравдугаар сар|дөрөвдүгээр сар|тавдугаар сар|зургаадугаар сар|долоодугаар сар|наймдугаар сар|есдүгээр сар|аравдугаар сар|арван нэгдүгээр сар|арван хоёрдугаар сар)/i,
 };
 var parseMonthPatterns52 = {
   narrow: [
@@ -17712,7 +17776,7 @@ var parseMonthPatterns52 = {
     /^ix$/i,
     /^x$/i,
     /^xi$/i,
-    /^xii$/i
+    /^xii$/i,
   ],
   any: [
     /^(1|нэгдүгээр)/i,
@@ -17726,22 +17790,22 @@ var parseMonthPatterns52 = {
     /^(9|есдүгээр)/i,
     /^(10|аравдугаар)/i,
     /^(11|арван нэгдүгээр)/i,
-    /^(12|арван хоёрдугаар)/i
-  ]
+    /^(12|арван хоёрдугаар)/i,
+  ],
 };
 var matchDayPatterns52 = {
   narrow: /^[ндмлпбб]/i,
   short: /^(ня|да|мя|лх|пү|ба|бя)/i,
   abbreviated: /^(ням|дав|мяг|лха|пүр|баа|бям)/i,
-  wide: /^(ням|даваа|мягмар|лхагва|пүрэв|баасан|бямба)/i
+  wide: /^(ням|даваа|мягмар|лхагва|пүрэв|баасан|бямба)/i,
 };
 var parseDayPatterns52 = {
   narrow: [/^н/i, /^д/i, /^м/i, /^л/i, /^п/i, /^б/i, /^б/i],
-  any: [/^ня/i, /^да/i, /^мя/i, /^лх/i, /^пү/i, /^ба/i, /^бя/i]
+  any: [/^ня/i, /^да/i, /^мя/i, /^лх/i, /^пү/i, /^ба/i, /^бя/i],
 };
 var matchDayPeriodPatterns52 = {
   narrow: /^(ү\.ө\.|ү\.х\.|шөнө дунд|үд дунд|өглөө|өдөр|орой|шөнө)/i,
-  any: /^(ү\.ө\.|ү\.х\.|шөнө дунд|үд дунд|өглөө|өдөр|орой|шөнө)/i
+  any: /^(ү\.ө\.|ү\.х\.|шөнө дунд|үд дунд|өглөө|өдөр|орой|шөнө)/i,
 };
 var parseDayPeriodPatterns52 = {
   any: {
@@ -17752,46 +17816,46 @@ var parseDayPeriodPatterns52 = {
     morning: /өглөө/i,
     afternoon: /өдөр/i,
     evening: /орой/i,
-    night: /шөнө/i
-  }
+    night: /шөнө/i,
+  },
 };
 var match53 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern52,
     parsePattern: parseOrdinalNumberPattern52,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns52,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns52,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns52,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns52,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns52,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns52,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns52,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns52,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns52,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns52,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ms/_lib/formatLong.js
@@ -17799,45 +17863,45 @@ var dateFormats62 = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
-  short: "d/M/yyyy"
+  short: "d/M/yyyy",
 };
 var timeFormats62 = {
   full: "HH.mm.ss",
   long: "HH.mm.ss",
   medium: "HH.mm",
-  short: "HH.mm"
+  short: "HH.mm",
 };
 var dateTimeFormats62 = {
   full: "{{date}} 'pukul' {{time}}",
   long: "{{date}} 'pukul' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong62 = {
   date: buildFormatLongFn({
     formats: dateFormats62,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats62,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats62,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ms/_lib/localize.js
 var eraValues54 = {
   narrow: ["SM", "M"],
   abbreviated: ["SM", "M"],
-  wide: ["Sebelum Masihi", "Masihi"]
+  wide: ["Sebelum Masihi", "Masihi"],
 };
 var quarterValues54 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["S1", "S2", "S3", "S4"],
-  wide: ["Suku pertama", "Suku kedua", "Suku ketiga", "Suku keempat"]
+  wide: ["Suku pertama", "Suku kedua", "Suku ketiga", "Suku keempat"],
 };
 var monthValues54 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "O", "S", "O", "N", "D"],
@@ -17853,7 +17917,7 @@ var monthValues54 = {
     "Sep",
     "Okt",
     "Nov",
-    "Dis"
+    "Dis",
   ],
   wide: [
     "Januari",
@@ -17867,14 +17931,14 @@ var monthValues54 = {
     "September",
     "Oktober",
     "November",
-    "Disember"
-  ]
+    "Disember",
+  ],
 };
 var dayValues54 = {
   narrow: ["A", "I", "S", "R", "K", "J", "S"],
   short: ["Ahd", "Isn", "Sel", "Rab", "Kha", "Jum", "Sab"],
   abbreviated: ["Ahd", "Isn", "Sel", "Rab", "Kha", "Jum", "Sab"],
-  wide: ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"]
+  wide: ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"],
 };
 var dayPeriodValues54 = {
   narrow: {
@@ -17885,7 +17949,7 @@ var dayPeriodValues54 = {
     morning: "pagi",
     afternoon: "tengah hari",
     evening: "petang",
-    night: "malam"
+    night: "malam",
   },
   abbreviated: {
     am: "AM",
@@ -17895,7 +17959,7 @@ var dayPeriodValues54 = {
     morning: "pagi",
     afternoon: "tengah hari",
     evening: "petang",
-    night: "malam"
+    night: "malam",
   },
   wide: {
     am: "a.m.",
@@ -17905,8 +17969,8 @@ var dayPeriodValues54 = {
     morning: "pagi",
     afternoon: "tengah hari",
     evening: "petang",
-    night: "malam"
-  }
+    night: "malam",
+  },
 };
 var formattingDayPeriodValues44 = {
   narrow: {
@@ -17917,7 +17981,7 @@ var formattingDayPeriodValues44 = {
     morning: "pagi",
     afternoon: "tengah hari",
     evening: "petang",
-    night: "malam"
+    night: "malam",
   },
   abbreviated: {
     am: "AM",
@@ -17927,7 +17991,7 @@ var formattingDayPeriodValues44 = {
     morning: "pagi",
     afternoon: "tengah hari",
     evening: "petang",
-    night: "malam"
+    night: "malam",
   },
   wide: {
     am: "a.m.",
@@ -17937,8 +18001,8 @@ var formattingDayPeriodValues44 = {
     morning: "pagi",
     afternoon: "tengah hari",
     evening: "petang",
-    night: "malam"
-  }
+    night: "malam",
+  },
 };
 var ordinalNumber54 = (dirtyNumber, _options) => {
   return "ke-" + Number(dirtyNumber);
@@ -17947,27 +18011,27 @@ var localize55 = {
   ordinalNumber: ordinalNumber54,
   era: buildLocalizeFn({
     values: eraValues54,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues54,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues54,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues54,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues54,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues44,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ms/_lib/match.js
@@ -17976,23 +18040,23 @@ var parseOrdinalNumberPattern53 = /petama|\d+/i;
 var matchEraPatterns53 = {
   narrow: /^(sm|m)/i,
   abbreviated: /^(s\.?\s?m\.?|m\.?)/i,
-  wide: /^(sebelum masihi|masihi)/i
+  wide: /^(sebelum masihi|masihi)/i,
 };
 var parseEraPatterns53 = {
-  any: [/^s/i, /^(m)/i]
+  any: [/^s/i, /^(m)/i],
 };
 var matchQuarterPatterns53 = {
   narrow: /^[1234]/i,
   abbreviated: /^S[1234]/i,
-  wide: /Suku (pertama|kedua|ketiga|keempat)/i
+  wide: /Suku (pertama|kedua|ketiga|keempat)/i,
 };
 var parseQuarterPatterns53 = {
-  any: [/pertama|1/i, /kedua|2/i, /ketiga|3/i, /keempat|4/i]
+  any: [/pertama|1/i, /kedua|2/i, /ketiga|3/i, /keempat|4/i],
 };
 var matchMonthPatterns53 = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mac|apr|mei|jun|jul|ogo|sep|okt|nov|dis)/i,
-  wide: /^(januari|februari|mac|april|mei|jun|julai|ogos|september|oktober|november|disember)/i
+  wide: /^(januari|februari|mac|april|mei|jun|julai|ogos|september|oktober|november|disember)/i,
 };
 var parseMonthPatterns53 = {
   narrow: [
@@ -18007,7 +18071,7 @@ var parseMonthPatterns53 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -18021,22 +18085,22 @@ var parseMonthPatterns53 = {
     /^s/i,
     /^ok/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns53 = {
   narrow: /^[aisrkj]/i,
   short: /^(ahd|isn|sel|rab|kha|jum|sab)/i,
   abbreviated: /^(ahd|isn|sel|rab|kha|jum|sab)/i,
-  wide: /^(ahad|isnin|selasa|rabu|khamis|jumaat|sabtu)/i
+  wide: /^(ahad|isnin|selasa|rabu|khamis|jumaat|sabtu)/i,
 };
 var parseDayPatterns53 = {
   narrow: [/^a/i, /^i/i, /^s/i, /^r/i, /^k/i, /^j/i, /^s/i],
-  any: [/^a/i, /^i/i, /^se/i, /^r/i, /^k/i, /^j/i, /^sa/i]
+  any: [/^a/i, /^i/i, /^se/i, /^r/i, /^k/i, /^j/i, /^sa/i],
 };
 var matchDayPeriodPatterns53 = {
   narrow: /^(am|pm|tengah malam|tengah hari|pagi|petang|malam)/i,
-  any: /^([ap]\.?\s?m\.?|tengah malam|tengah hari|pagi|petang|malam)/i
+  any: /^([ap]\.?\s?m\.?|tengah malam|tengah hari|pagi|petang|malam)/i,
 };
 var parseDayPeriodPatterns53 = {
   any: {
@@ -18047,46 +18111,46 @@ var parseDayPeriodPatterns53 = {
     morning: /pa/i,
     afternoon: /tengah h/i,
     evening: /pe/i,
-    night: /m/i
-  }
+    night: /m/i,
+  },
 };
 var match54 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern53,
     parsePattern: parseOrdinalNumberPattern53,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns53,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns53,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns53,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns53,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns53,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns53,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns53,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns53,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns53,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns53,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/mt/_lib/formatLong.js
@@ -18094,45 +18158,45 @@ var dateFormats63 = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats63 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats63 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong63 = {
   date: buildFormatLongFn({
     formats: dateFormats63,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats63,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats63,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/mt/_lib/localize.js
 var eraValues55 = {
   narrow: ["Q", "W"],
   abbreviated: ["QK", "WK"],
-  wide: ["qabel Kristu", "wara Kristu"]
+  wide: ["qabel Kristu", "wara Kristu"],
 };
 var quarterValues55 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
-  wide: ["1. kwart", "2. kwart", "3. kwart", "4. kwart"]
+  wide: ["1. kwart", "2. kwart", "3. kwart", "4. kwart"],
 };
 var monthValues55 = {
   narrow: ["J", "F", "M", "A", "M", "Ġ", "L", "A", "S", "O", "N", "D"],
@@ -18148,7 +18212,7 @@ var monthValues55 = {
     "Set",
     "Ott",
     "Nov",
-    "Diċ"
+    "Diċ",
   ],
   wide: [
     "Jannar",
@@ -18162,8 +18226,8 @@ var monthValues55 = {
     "Settembru",
     "Ottubru",
     "Novembru",
-    "Diċembru"
-  ]
+    "Diċembru",
+  ],
 };
 var dayValues55 = {
   narrow: ["Ħ", "T", "T", "E", "Ħ", "Ġ", "S"],
@@ -18176,8 +18240,8 @@ var dayValues55 = {
     "L-Erbgħa",
     "Il-Ħamis",
     "Il-Ġimgħa",
-    "Is-Sibt"
-  ]
+    "Is-Sibt",
+  ],
 };
 var dayPeriodValues55 = {
   narrow: {
@@ -18188,7 +18252,7 @@ var dayPeriodValues55 = {
     morning: "għodwa",
     afternoon: "wara nofsinhar",
     evening: "filgħaxija",
-    night: "lejl"
+    night: "lejl",
   },
   abbreviated: {
     am: "AM",
@@ -18198,7 +18262,7 @@ var dayPeriodValues55 = {
     morning: "għodwa",
     afternoon: "wara nofsinhar",
     evening: "filgħaxija",
-    night: "lejl"
+    night: "lejl",
   },
   wide: {
     am: "a.m.",
@@ -18208,8 +18272,8 @@ var dayPeriodValues55 = {
     morning: "għodwa",
     afternoon: "wara nofsinhar",
     evening: "filgħaxija",
-    night: "lejl"
-  }
+    night: "lejl",
+  },
 };
 var formattingDayPeriodValues45 = {
   narrow: {
@@ -18220,7 +18284,7 @@ var formattingDayPeriodValues45 = {
     morning: "filgħodu",
     afternoon: "wara nofsinhar",
     evening: "filgħaxija",
-    night: "billejl"
+    night: "billejl",
   },
   abbreviated: {
     am: "AM",
@@ -18230,7 +18294,7 @@ var formattingDayPeriodValues45 = {
     morning: "filgħodu",
     afternoon: "wara nofsinhar",
     evening: "filgħaxija",
-    night: "billejl"
+    night: "billejl",
   },
   wide: {
     am: "a.m.",
@@ -18240,8 +18304,8 @@ var formattingDayPeriodValues45 = {
     morning: "filgħodu",
     afternoon: "wara nofsinhar",
     evening: "filgħaxija",
-    night: "billejl"
-  }
+    night: "billejl",
+  },
 };
 var ordinalNumber55 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -18251,27 +18315,27 @@ var localize56 = {
   ordinalNumber: ordinalNumber55,
   era: buildLocalizeFn({
     values: eraValues55,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues55,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues55,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues55,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues55,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues45,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/mt/_lib/match.js
@@ -18280,23 +18344,23 @@ var parseOrdinalNumberPattern54 = /\d+/i;
 var matchEraPatterns54 = {
   narrow: /^(q|w)/i,
   abbreviated: /^(q\.?\s?k\.?|b\.?\s?c\.?\s?e\.?|w\.?\s?k\.?)/i,
-  wide: /^(qabel kristu|before common era|wara kristu|common era)/i
+  wide: /^(qabel kristu|before common era|wara kristu|common era)/i,
 };
 var parseEraPatterns54 = {
-  any: [/^(q|b)/i, /^(w|c)/i]
+  any: [/^(q|b)/i, /^(w|c)/i],
 };
 var matchQuarterPatterns54 = {
   narrow: /^[1234]/i,
   abbreviated: /^k[1234]/i,
-  wide: /^[1234](\.)? kwart/i
+  wide: /^[1234](\.)? kwart/i,
 };
 var parseQuarterPatterns54 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns54 = {
   narrow: /^[jfmaglsond]/i,
   abbreviated: /^(jan|fra|mar|apr|mej|ġun|lul|aww|set|ott|nov|diċ)/i,
-  wide: /^(jannar|frar|marzu|april|mejju|ġunju|lulju|awwissu|settembru|ottubru|novembru|diċembru)/i
+  wide: /^(jannar|frar|marzu|april|mejju|ġunju|lulju|awwissu|settembru|ottubru|novembru|diċembru)/i,
 };
 var parseMonthPatterns54 = {
   narrow: [
@@ -18311,7 +18375,7 @@ var parseMonthPatterns54 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -18325,14 +18389,14 @@ var parseMonthPatterns54 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns54 = {
   narrow: /^[ħteġs]/i,
   short: /^(ħa|tn|tl|er|ħa|ġi|si)/i,
   abbreviated: /^(ħad|tne|tli|erb|ħam|ġim|sib)/i,
-  wide: /^(il-ħadd|it-tnejn|it-tlieta|l-erbgħa|il-ħamis|il-ġimgħa|is-sibt)/i
+  wide: /^(il-ħadd|it-tnejn|it-tlieta|l-erbgħa|il-ħamis|il-ġimgħa|is-sibt)/i,
 };
 var parseDayPatterns54 = {
   narrow: [/^ħ/i, /^t/i, /^t/i, /^e/i, /^ħ/i, /^ġ/i, /^s/i],
@@ -18343,12 +18407,13 @@ var parseDayPatterns54 = {
     /^(l-)?er/i,
     /^(il-)?ham/i,
     /^(il-)?ġi/i,
-    /^(is-)?si/i
-  ]
+    /^(is-)?si/i,
+  ],
 };
 var matchDayPeriodPatterns54 = {
-  narrow: /^(a|p|f'nofsillejl|f'nofsinhar|(ta') (għodwa|wara nofsinhar|filgħaxija|lejl))/i,
-  any: /^([ap]\.?\s?m\.?|f'nofsillejl|f'nofsinhar|(ta') (għodwa|wara nofsinhar|filgħaxija|lejl))/i
+  narrow:
+    /^(a|p|f'nofsillejl|f'nofsinhar|(ta') (għodwa|wara nofsinhar|filgħaxija|lejl))/i,
+  any: /^([ap]\.?\s?m\.?|f'nofsillejl|f'nofsinhar|(ta') (għodwa|wara nofsinhar|filgħaxija|lejl))/i,
 };
 var parseDayPeriodPatterns54 = {
   any: {
@@ -18359,46 +18424,46 @@ var parseDayPeriodPatterns54 = {
     morning: /għodwa/i,
     afternoon: /wara(\s.*)nofsinhar/i,
     evening: /filgħaxija/i,
-    night: /lejl/i
-  }
+    night: /lejl/i,
+  },
 };
 var match55 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern54,
     parsePattern: parseOrdinalNumberPattern54,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns54,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns54,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns54,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns54,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns54,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns54,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns54,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns54,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns54,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns54,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/nb/_lib/formatLong.js
@@ -18406,45 +18471,45 @@ var dateFormats64 = {
   full: "EEEE d. MMMM y",
   long: "d. MMMM y",
   medium: "d. MMM y",
-  short: "dd.MM.y"
+  short: "dd.MM.y",
 };
 var timeFormats64 = {
   full: "'kl'. HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats64 = {
   full: "{{date}} 'kl.' {{time}}",
   long: "{{date}} 'kl.' {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong64 = {
   date: buildFormatLongFn({
     formats: dateFormats64,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats64,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats64,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/nb/_lib/localize.js
 var eraValues56 = {
   narrow: ["f.Kr.", "e.Kr."],
   abbreviated: ["f.Kr.", "e.Kr."],
-  wide: ["før Kristus", "etter Kristus"]
+  wide: ["før Kristus", "etter Kristus"],
 };
 var quarterValues56 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
+  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"],
 };
 var monthValues56 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -18460,7 +18525,7 @@ var monthValues56 = {
     "sep.",
     "okt.",
     "nov.",
-    "des."
+    "des.",
   ],
   wide: [
     "januar",
@@ -18474,8 +18539,8 @@ var monthValues56 = {
     "september",
     "oktober",
     "november",
-    "desember"
-  ]
+    "desember",
+  ],
 };
 var dayValues56 = {
   narrow: ["S", "M", "T", "O", "T", "F", "L"],
@@ -18488,8 +18553,8 @@ var dayValues56 = {
     "onsdag",
     "torsdag",
     "fredag",
-    "lørdag"
-  ]
+    "lørdag",
+  ],
 };
 var dayPeriodValues56 = {
   narrow: {
@@ -18500,7 +18565,7 @@ var dayPeriodValues56 = {
     morning: "på morg.",
     afternoon: "på etterm.",
     evening: "på kvelden",
-    night: "på natten"
+    night: "på natten",
   },
   abbreviated: {
     am: "a.m.",
@@ -18510,7 +18575,7 @@ var dayPeriodValues56 = {
     morning: "på morg.",
     afternoon: "på etterm.",
     evening: "på kvelden",
-    night: "på natten"
+    night: "på natten",
   },
   wide: {
     am: "a.m.",
@@ -18520,8 +18585,8 @@ var dayPeriodValues56 = {
     morning: "på morgenen",
     afternoon: "på ettermiddagen",
     evening: "på kvelden",
-    night: "på natten"
-  }
+    night: "på natten",
+  },
 };
 var ordinalNumber56 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -18531,25 +18596,25 @@ var localize57 = {
   ordinalNumber: ordinalNumber56,
   era: buildLocalizeFn({
     values: eraValues56,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues56,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues56,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues56,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues56,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/nb/_lib/match.js
@@ -18558,23 +18623,23 @@ var parseOrdinalNumberPattern55 = /\d+/i;
 var matchEraPatterns55 = {
   narrow: /^(f\.? ?Kr\.?|fvt\.?|e\.? ?Kr\.?|evt\.?)/i,
   abbreviated: /^(f\.? ?Kr\.?|fvt\.?|e\.? ?Kr\.?|evt\.?)/i,
-  wide: /^(før Kristus|før vår tid|etter Kristus|vår tid)/i
+  wide: /^(før Kristus|før vår tid|etter Kristus|vår tid)/i,
 };
 var parseEraPatterns55 = {
-  any: [/^f/i, /^e/i]
+  any: [/^f/i, /^e/i],
 };
 var matchQuarterPatterns55 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234](\.)? kvartal/i
+  wide: /^[1234](\.)? kvartal/i,
 };
 var parseQuarterPatterns55 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns55 = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mars?|apr|mai|juni?|juli?|aug|sep|okt|nov|des)\.?/i,
-  wide: /^(januar|februar|mars|april|mai|juni|juli|august|september|oktober|november|desember)/i
+  wide: /^(januar|februar|mars|april|mai|juni|juli|august|september|oktober|november|desember)/i,
 };
 var parseMonthPatterns55 = {
   narrow: [
@@ -18589,7 +18654,7 @@ var parseMonthPatterns55 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -18603,21 +18668,22 @@ var parseMonthPatterns55 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns55 = {
   narrow: /^[smtofl]/i,
   short: /^(sø|ma|ti|on|to|fr|lø)/i,
   abbreviated: /^(søn|man|tir|ons|tor|fre|lør)/i,
-  wide: /^(søndag|mandag|tirsdag|onsdag|torsdag|fredag|lørdag)/i
+  wide: /^(søndag|mandag|tirsdag|onsdag|torsdag|fredag|lørdag)/i,
 };
 var parseDayPatterns55 = {
-  any: [/^s/i, /^m/i, /^ti/i, /^o/i, /^to/i, /^f/i, /^l/i]
+  any: [/^s/i, /^m/i, /^ti/i, /^o/i, /^to/i, /^f/i, /^l/i],
 };
 var matchDayPeriodPatterns55 = {
-  narrow: /^(midnatt|middag|(på) (morgenen|ettermiddagen|kvelden|natten)|[ap])/i,
-  any: /^([ap]\.?\s?m\.?|midnatt|middag|(på) (morgenen|ettermiddagen|kvelden|natten))/i
+  narrow:
+    /^(midnatt|middag|(på) (morgenen|ettermiddagen|kvelden|natten)|[ap])/i,
+  any: /^([ap]\.?\s?m\.?|midnatt|middag|(på) (morgenen|ettermiddagen|kvelden|natten))/i,
 };
 var parseDayPeriodPatterns55 = {
   any: {
@@ -18628,46 +18694,46 @@ var parseDayPeriodPatterns55 = {
     morning: /morgen/i,
     afternoon: /ettermiddag/i,
     evening: /kveld/i,
-    night: /natt/i
-  }
+    night: /natt/i,
+  },
 };
 var match56 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern55,
     parsePattern: parseOrdinalNumberPattern55,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns55,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns55,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns55,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns55,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns55,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns55,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns55,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns55,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns55,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns55,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/nl/_lib/formatLong.js
@@ -18675,45 +18741,45 @@ var dateFormats65 = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
-  short: "dd-MM-y"
+  short: "dd-MM-y",
 };
 var timeFormats65 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats65 = {
   full: "{{date}} 'om' {{time}}",
   long: "{{date}} 'om' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong65 = {
   date: buildFormatLongFn({
     formats: dateFormats65,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats65,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats65,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/nl/_lib/localize.js
 var eraValues57 = {
   narrow: ["v.C.", "n.C."],
   abbreviated: ["v.Chr.", "n.Chr."],
-  wide: ["voor Christus", "na Christus"]
+  wide: ["voor Christus", "na Christus"],
 };
 var quarterValues57 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
-  wide: ["1e kwartaal", "2e kwartaal", "3e kwartaal", "4e kwartaal"]
+  wide: ["1e kwartaal", "2e kwartaal", "3e kwartaal", "4e kwartaal"],
 };
 var monthValues57 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -18729,7 +18795,7 @@ var monthValues57 = {
     "sep.",
     "okt.",
     "nov.",
-    "dec."
+    "dec.",
   ],
   wide: [
     "januari",
@@ -18743,8 +18809,8 @@ var monthValues57 = {
     "september",
     "oktober",
     "november",
-    "december"
-  ]
+    "december",
+  ],
 };
 var dayValues57 = {
   narrow: ["Z", "M", "D", "W", "D", "V", "Z"],
@@ -18757,8 +18823,8 @@ var dayValues57 = {
     "woensdag",
     "donderdag",
     "vrijdag",
-    "zaterdag"
-  ]
+    "zaterdag",
+  ],
 };
 var dayPeriodValues57 = {
   narrow: {
@@ -18769,7 +18835,7 @@ var dayPeriodValues57 = {
     morning: "'s ochtends",
     afternoon: "'s middags",
     evening: "'s avonds",
-    night: "'s nachts"
+    night: "'s nachts",
   },
   abbreviated: {
     am: "AM",
@@ -18779,7 +18845,7 @@ var dayPeriodValues57 = {
     morning: "'s ochtends",
     afternoon: "'s middags",
     evening: "'s avonds",
-    night: "'s nachts"
+    night: "'s nachts",
   },
   wide: {
     am: "AM",
@@ -18789,8 +18855,8 @@ var dayPeriodValues57 = {
     morning: "'s ochtends",
     afternoon: "'s middags",
     evening: "'s avonds",
-    night: "'s nachts"
-  }
+    night: "'s nachts",
+  },
 };
 var ordinalNumber57 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -18800,25 +18866,25 @@ var localize58 = {
   ordinalNumber: ordinalNumber57,
   era: buildLocalizeFn({
     values: eraValues57,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues57,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues57,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues57,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues57,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/nl/_lib/match.js
@@ -18827,23 +18893,23 @@ var parseOrdinalNumberPattern56 = /\d+/i;
 var matchEraPatterns56 = {
   narrow: /^([vn]\.? ?C\.?)/,
   abbreviated: /^([vn]\. ?Chr\.?)/,
-  wide: /^((voor|na) Christus)/
+  wide: /^((voor|na) Christus)/,
 };
 var parseEraPatterns56 = {
-  any: [/^v/, /^n/]
+  any: [/^v/, /^n/],
 };
 var matchQuarterPatterns56 = {
   narrow: /^[1234]/i,
   abbreviated: /^K[1234]/i,
-  wide: /^[1234]e kwartaal/i
+  wide: /^[1234]e kwartaal/i,
 };
 var parseQuarterPatterns56 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns56 = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan.|feb.|mrt.|apr.|mei|jun.|jul.|aug.|sep.|okt.|nov.|dec.)/i,
-  wide: /^(januari|februari|maart|april|mei|juni|juli|augustus|september|oktober|november|december)/i
+  wide: /^(januari|februari|maart|april|mei|juni|juli|augustus|september|oktober|november|december)/i,
 };
 var parseMonthPatterns56 = {
   narrow: [
@@ -18858,7 +18924,7 @@ var parseMonthPatterns56 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^jan/i,
@@ -18872,21 +18938,21 @@ var parseMonthPatterns56 = {
     /^sep/i,
     /^okt/i,
     /^nov/i,
-    /^dec/i
-  ]
+    /^dec/i,
+  ],
 };
 var matchDayPatterns56 = {
   narrow: /^[zmdwv]/i,
   short: /^(zo|ma|di|wo|do|vr|za)/i,
   abbreviated: /^(zon|maa|din|woe|don|vri|zat)/i,
-  wide: /^(zondag|maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag)/i
+  wide: /^(zondag|maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag)/i,
 };
 var parseDayPatterns56 = {
   narrow: [/^z/i, /^m/i, /^d/i, /^w/i, /^d/i, /^v/i, /^z/i],
-  any: [/^zo/i, /^ma/i, /^di/i, /^wo/i, /^do/i, /^vr/i, /^za/i]
+  any: [/^zo/i, /^ma/i, /^di/i, /^wo/i, /^do/i, /^vr/i, /^za/i],
 };
 var matchDayPeriodPatterns56 = {
-  any: /^(am|pm|middernacht|het middaguur|'s (ochtends|middags|avonds|nachts))/i
+  any: /^(am|pm|middernacht|het middaguur|'s (ochtends|middags|avonds|nachts))/i,
 };
 var parseDayPeriodPatterns56 = {
   any: {
@@ -18897,46 +18963,46 @@ var parseDayPeriodPatterns56 = {
     morning: /ochtend/i,
     afternoon: /middag/i,
     evening: /avond/i,
-    night: /nacht/i
-  }
+    night: /nacht/i,
+  },
 };
 var match57 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern56,
     parsePattern: parseOrdinalNumberPattern56,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns56,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns56,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns56,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns56,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns56,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns56,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns56,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns56,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns56,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns56,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/nl-BE/_lib/formatLong.js
@@ -18944,45 +19010,45 @@ var dateFormats66 = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
-  short: "dd.MM.y"
+  short: "dd.MM.y",
 };
 var timeFormats66 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats66 = {
   full: "{{date}} 'om' {{time}}",
   long: "{{date}} 'om' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong66 = {
   date: buildFormatLongFn({
     formats: dateFormats66,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats66,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats66,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/nl-BE/_lib/localize.js
 var eraValues58 = {
   narrow: ["v.C.", "n.C."],
   abbreviated: ["v.Chr.", "n.Chr."],
-  wide: ["voor Christus", "na Christus"]
+  wide: ["voor Christus", "na Christus"],
 };
 var quarterValues58 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
-  wide: ["1e kwartaal", "2e kwartaal", "3e kwartaal", "4e kwartaal"]
+  wide: ["1e kwartaal", "2e kwartaal", "3e kwartaal", "4e kwartaal"],
 };
 var monthValues58 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -18998,7 +19064,7 @@ var monthValues58 = {
     "sep.",
     "okt.",
     "nov.",
-    "dec."
+    "dec.",
   ],
   wide: [
     "januari",
@@ -19012,8 +19078,8 @@ var monthValues58 = {
     "september",
     "oktober",
     "november",
-    "december"
-  ]
+    "december",
+  ],
 };
 var dayValues58 = {
   narrow: ["Z", "M", "D", "W", "D", "V", "Z"],
@@ -19026,8 +19092,8 @@ var dayValues58 = {
     "woensdag",
     "donderdag",
     "vrijdag",
-    "zaterdag"
-  ]
+    "zaterdag",
+  ],
 };
 var dayPeriodValues58 = {
   narrow: {
@@ -19038,7 +19104,7 @@ var dayPeriodValues58 = {
     morning: "'s ochtends",
     afternoon: "'s namiddags",
     evening: "'s avonds",
-    night: "'s nachts"
+    night: "'s nachts",
   },
   abbreviated: {
     am: "AM",
@@ -19048,7 +19114,7 @@ var dayPeriodValues58 = {
     morning: "'s ochtends",
     afternoon: "'s namiddags",
     evening: "'s avonds",
-    night: "'s nachts"
+    night: "'s nachts",
   },
   wide: {
     am: "AM",
@@ -19058,8 +19124,8 @@ var dayPeriodValues58 = {
     morning: "'s ochtends",
     afternoon: "'s namiddags",
     evening: "'s avonds",
-    night: "'s nachts"
-  }
+    night: "'s nachts",
+  },
 };
 var ordinalNumber58 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -19069,25 +19135,25 @@ var localize59 = {
   ordinalNumber: ordinalNumber58,
   era: buildLocalizeFn({
     values: eraValues58,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues58,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues58,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues58,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues58,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/nl-BE/_lib/match.js
@@ -19096,23 +19162,23 @@ var parseOrdinalNumberPattern57 = /\d+/i;
 var matchEraPatterns57 = {
   narrow: /^([vn]\.? ?C\.?)/,
   abbreviated: /^([vn]\. ?Chr\.?)/,
-  wide: /^((voor|na) Christus)/
+  wide: /^((voor|na) Christus)/,
 };
 var parseEraPatterns57 = {
-  any: [/^v/, /^n/]
+  any: [/^v/, /^n/],
 };
 var matchQuarterPatterns57 = {
   narrow: /^[1234]/i,
   abbreviated: /^K[1234]/i,
-  wide: /^[1234]e kwartaal/i
+  wide: /^[1234]e kwartaal/i,
 };
 var parseQuarterPatterns57 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns57 = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan.|feb.|mrt.|apr.|mei|jun.|jul.|aug.|sep.|okt.|nov.|dec.)/i,
-  wide: /^(januari|februari|maart|april|mei|juni|juli|augustus|september|oktober|november|december)/i
+  wide: /^(januari|februari|maart|april|mei|juni|juli|augustus|september|oktober|november|december)/i,
 };
 var parseMonthPatterns57 = {
   narrow: [
@@ -19127,7 +19193,7 @@ var parseMonthPatterns57 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^jan/i,
@@ -19141,21 +19207,21 @@ var parseMonthPatterns57 = {
     /^sep/i,
     /^okt/i,
     /^nov/i,
-    /^dec/i
-  ]
+    /^dec/i,
+  ],
 };
 var matchDayPatterns57 = {
   narrow: /^[zmdwv]/i,
   short: /^(zo|ma|di|wo|do|vr|za)/i,
   abbreviated: /^(zon|maa|din|woe|don|vri|zat)/i,
-  wide: /^(zondag|maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag)/i
+  wide: /^(zondag|maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag)/i,
 };
 var parseDayPatterns57 = {
   narrow: [/^z/i, /^m/i, /^d/i, /^w/i, /^d/i, /^v/i, /^z/i],
-  any: [/^zo/i, /^ma/i, /^di/i, /^wo/i, /^do/i, /^vr/i, /^za/i]
+  any: [/^zo/i, /^ma/i, /^di/i, /^wo/i, /^do/i, /^vr/i, /^za/i],
 };
 var matchDayPeriodPatterns57 = {
-  any: /^(am|pm|middernacht|het middaguur|'s (ochtends|middags|avonds|nachts))/i
+  any: /^(am|pm|middernacht|het middaguur|'s (ochtends|middags|avonds|nachts))/i,
 };
 var parseDayPeriodPatterns57 = {
   any: {
@@ -19166,46 +19232,46 @@ var parseDayPeriodPatterns57 = {
     morning: /ochtend/i,
     afternoon: /middag/i,
     evening: /avond/i,
-    night: /nacht/i
-  }
+    night: /nacht/i,
+  },
 };
 var match58 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern57,
     parsePattern: parseOrdinalNumberPattern57,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns57,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns57,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns57,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns57,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns57,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns57,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns57,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns57,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns57,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns57,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/nn/_lib/formatLong.js
@@ -19213,45 +19279,45 @@ var dateFormats67 = {
   full: "EEEE d. MMMM y",
   long: "d. MMMM y",
   medium: "d. MMM y",
-  short: "dd.MM.y"
+  short: "dd.MM.y",
 };
 var timeFormats67 = {
   full: "'kl'. HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats67 = {
   full: "{{date}} 'kl.' {{time}}",
   long: "{{date}} 'kl.' {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong67 = {
   date: buildFormatLongFn({
     formats: dateFormats67,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats67,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats67,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/nn/_lib/localize.js
 var eraValues59 = {
   narrow: ["f.Kr.", "e.Kr."],
   abbreviated: ["f.Kr.", "e.Kr."],
-  wide: ["før Kristus", "etter Kristus"]
+  wide: ["før Kristus", "etter Kristus"],
 };
 var quarterValues59 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
+  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"],
 };
 var monthValues59 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -19267,7 +19333,7 @@ var monthValues59 = {
     "sep.",
     "okt.",
     "nov.",
-    "des."
+    "des.",
   ],
   wide: [
     "januar",
@@ -19281,8 +19347,8 @@ var monthValues59 = {
     "september",
     "oktober",
     "november",
-    "desember"
-  ]
+    "desember",
+  ],
 };
 var dayValues59 = {
   narrow: ["S", "M", "T", "O", "T", "F", "L"],
@@ -19295,8 +19361,8 @@ var dayValues59 = {
     "onsdag",
     "torsdag",
     "fredag",
-    "laurdag"
-  ]
+    "laurdag",
+  ],
 };
 var dayPeriodValues59 = {
   narrow: {
@@ -19307,7 +19373,7 @@ var dayPeriodValues59 = {
     morning: "på morg.",
     afternoon: "på etterm.",
     evening: "på kvelden",
-    night: "på natta"
+    night: "på natta",
   },
   abbreviated: {
     am: "a.m.",
@@ -19317,7 +19383,7 @@ var dayPeriodValues59 = {
     morning: "på morg.",
     afternoon: "på etterm.",
     evening: "på kvelden",
-    night: "på natta"
+    night: "på natta",
   },
   wide: {
     am: "a.m.",
@@ -19327,8 +19393,8 @@ var dayPeriodValues59 = {
     morning: "på morgonen",
     afternoon: "på ettermiddagen",
     evening: "på kvelden",
-    night: "på natta"
-  }
+    night: "på natta",
+  },
 };
 var ordinalNumber59 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -19338,25 +19404,25 @@ var localize60 = {
   ordinalNumber: ordinalNumber59,
   era: buildLocalizeFn({
     values: eraValues59,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues59,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues59,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues59,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues59,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/nn/_lib/match.js
@@ -19365,23 +19431,23 @@ var parseOrdinalNumberPattern58 = /\d+/i;
 var matchEraPatterns58 = {
   narrow: /^(f\.? ?Kr\.?|fvt\.?|e\.? ?Kr\.?|evt\.?)/i,
   abbreviated: /^(f\.? ?Kr\.?|fvt\.?|e\.? ?Kr\.?|evt\.?)/i,
-  wide: /^(før Kristus|før vår tid|etter Kristus|vår tid)/i
+  wide: /^(før Kristus|før vår tid|etter Kristus|vår tid)/i,
 };
 var parseEraPatterns58 = {
-  any: [/^f/i, /^e/i]
+  any: [/^f/i, /^e/i],
 };
 var matchQuarterPatterns58 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234](\.)? kvartal/i
+  wide: /^[1234](\.)? kvartal/i,
 };
 var parseQuarterPatterns58 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns58 = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mars?|apr|mai|juni?|juli?|aug|sep|okt|nov|des)\.?/i,
-  wide: /^(januar|februar|mars|april|mai|juni|juli|august|september|oktober|november|desember)/i
+  wide: /^(januar|februar|mars|april|mai|juni|juli|august|september|oktober|november|desember)/i,
 };
 var parseMonthPatterns58 = {
   narrow: [
@@ -19396,7 +19462,7 @@ var parseMonthPatterns58 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -19410,21 +19476,21 @@ var parseMonthPatterns58 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns58 = {
   narrow: /^[smtofl]/i,
   short: /^(su|må|ty|on|to|fr|la)/i,
   abbreviated: /^(sun|mån|tys|ons|tor|fre|laur)/i,
-  wide: /^(sundag|måndag|tysdag|onsdag|torsdag|fredag|laurdag)/i
+  wide: /^(sundag|måndag|tysdag|onsdag|torsdag|fredag|laurdag)/i,
 };
 var parseDayPatterns58 = {
-  any: [/^s/i, /^m/i, /^ty/i, /^o/i, /^to/i, /^f/i, /^l/i]
+  any: [/^s/i, /^m/i, /^ty/i, /^o/i, /^to/i, /^f/i, /^l/i],
 };
 var matchDayPeriodPatterns58 = {
   narrow: /^(midnatt|middag|(på) (morgonen|ettermiddagen|kvelden|natta)|[ap])/i,
-  any: /^([ap]\.?\s?m\.?|midnatt|middag|(på) (morgonen|ettermiddagen|kvelden|natta))/i
+  any: /^([ap]\.?\s?m\.?|midnatt|middag|(på) (morgonen|ettermiddagen|kvelden|natta))/i,
 };
 var parseDayPeriodPatterns58 = {
   any: {
@@ -19435,46 +19501,46 @@ var parseDayPeriodPatterns58 = {
     morning: /morgon/i,
     afternoon: /ettermiddag/i,
     evening: /kveld/i,
-    night: /natt/i
-  }
+    night: /natt/i,
+  },
 };
 var match59 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern58,
     parsePattern: parseOrdinalNumberPattern58,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns58,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns58,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns58,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns58,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns58,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns58,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns58,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns58,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns58,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns58,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/oc/_lib/formatLong.js
@@ -19482,45 +19548,45 @@ var dateFormats68 = {
   full: "EEEE d 'de' MMMM y",
   long: "d 'de' MMMM y",
   medium: "d MMM y",
-  short: "dd/MM/y"
+  short: "dd/MM/y",
 };
 var timeFormats68 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats68 = {
   full: "{{date}} 'a' {{time}}",
   long: "{{date}} 'a' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong68 = {
   date: buildFormatLongFn({
     formats: dateFormats68,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats68,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats68,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/oc/_lib/localize.js
 var eraValues60 = {
   narrow: ["ab. J.C.", "apr. J.C."],
   abbreviated: ["ab. J.C.", "apr. J.C."],
-  wide: ["abans Jèsus-Crist", "après Jèsus-Crist"]
+  wide: ["abans Jèsus-Crist", "après Jèsus-Crist"],
 };
 var quarterValues60 = {
   narrow: ["T1", "T2", "T3", "T4"],
   abbreviated: ["1èr trim.", "2nd trim.", "3en trim.", "4en trim."],
-  wide: ["1èr trimèstre", "2nd trimèstre", "3en trimèstre", "4en trimèstre"]
+  wide: ["1èr trimèstre", "2nd trimèstre", "3en trimèstre", "4en trimèstre"],
 };
 var monthValues60 = {
   narrow: [
@@ -19535,7 +19601,7 @@ var monthValues60 = {
     "ST",
     "OC",
     "NV",
-    "DC"
+    "DC",
   ],
   abbreviated: [
     "gen.",
@@ -19549,7 +19615,7 @@ var monthValues60 = {
     "set.",
     "oct.",
     "nov.",
-    "dec."
+    "dec.",
   ],
   wide: [
     "genièr",
@@ -19563,8 +19629,8 @@ var monthValues60 = {
     "setembre",
     "octòbre",
     "novembre",
-    "decembre"
-  ]
+    "decembre",
+  ],
 };
 var dayValues60 = {
   narrow: ["dg.", "dl.", "dm.", "dc.", "dj.", "dv.", "ds."],
@@ -19577,8 +19643,8 @@ var dayValues60 = {
     "dimècres",
     "dijòus",
     "divendres",
-    "dissabte"
-  ]
+    "dissabte",
+  ],
 };
 var dayPeriodValues60 = {
   narrow: {
@@ -19589,7 +19655,7 @@ var dayPeriodValues60 = {
     morning: "matin",
     afternoon: "aprèp-miègjorn",
     evening: "vèspre",
-    night: "nuèch"
+    night: "nuèch",
   },
   abbreviated: {
     am: "a.m.",
@@ -19599,7 +19665,7 @@ var dayPeriodValues60 = {
     morning: "matin",
     afternoon: "aprèp-miègjorn",
     evening: "vèspre",
-    night: "nuèch"
+    night: "nuèch",
   },
   wide: {
     am: "a.m.",
@@ -19609,8 +19675,8 @@ var dayPeriodValues60 = {
     morning: "matin",
     afternoon: "aprèp-miègjorn",
     evening: "vèspre",
-    night: "nuèch"
-  }
+    night: "nuèch",
+  },
 };
 var formattingDayPeriodValues46 = {
   narrow: {
@@ -19621,7 +19687,7 @@ var formattingDayPeriodValues46 = {
     morning: "del matin",
     afternoon: "de l’aprèp-miègjorn",
     evening: "del ser",
-    night: "de la nuèch"
+    night: "de la nuèch",
   },
   abbreviated: {
     am: "AM",
@@ -19631,7 +19697,7 @@ var formattingDayPeriodValues46 = {
     morning: "del matin",
     afternoon: "de l’aprèp-miègjorn",
     evening: "del ser",
-    night: "de la nuèch"
+    night: "de la nuèch",
   },
   wide: {
     am: "ante meridiem",
@@ -19641,8 +19707,8 @@ var formattingDayPeriodValues46 = {
     morning: "del matin",
     afternoon: "de l’aprèp-miègjorn",
     evening: "del ser",
-    night: "de la nuèch"
-  }
+    night: "de la nuèch",
+  },
 };
 var ordinalNumber60 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
@@ -19658,7 +19724,13 @@ var ordinalNumber60 = (dirtyNumber, options) => {
     default:
       ordinal = "en";
   }
-  if (unit === "year" || unit === "week" || unit === "hour" || unit === "minute" || unit === "second") {
+  if (
+    unit === "year" ||
+    unit === "week" ||
+    unit === "hour" ||
+    unit === "minute" ||
+    unit === "second"
+  ) {
     ordinal += "a";
   }
   return number + ordinal;
@@ -19667,27 +19739,27 @@ var localize61 = {
   ordinalNumber: ordinalNumber60,
   era: buildLocalizeFn({
     values: eraValues60,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues60,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues60,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues60,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues60,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues46,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/oc/_lib/match.js
@@ -19696,23 +19768,23 @@ var parseOrdinalNumberPattern59 = /\d+/i;
 var matchEraPatterns59 = {
   narrow: /^(ab\.J\.C|apr\.J\.C|apr\.J\.-C)/i,
   abbreviated: /^(ab\.J\.-C|ab\.J-C|apr\.J\.-C|apr\.J-C|ap\.J-C)/i,
-  wide: /^(abans Jèsus-Crist|après Jèsus-Crist)/i
+  wide: /^(abans Jèsus-Crist|après Jèsus-Crist)/i,
 };
 var parseEraPatterns59 = {
-  any: [/^ab/i, /^ap/i]
+  any: [/^ab/i, /^ap/i],
 };
 var matchQuarterPatterns59 = {
   narrow: /^T[1234]/i,
   abbreviated: /^[1234](èr|nd|en)? trim\.?/i,
-  wide: /^[1234](èr|nd|en)? trimèstre/i
+  wide: /^[1234](èr|nd|en)? trimèstre/i,
 };
 var parseQuarterPatterns59 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns59 = {
   narrow: /^(GN|FB|MÇ|AB|MA|JN|JL|AG|ST|OC|NV|DC)/i,
   abbreviated: /^(gen|febr|març|abr|mai|junh|jul|ag|set|oct|nov|dec)\.?/i,
-  wide: /^(genièr|febrièr|març|abril|mai|junh|julhet|agost|setembre|octòbre|novembre|decembre)/i
+  wide: /^(genièr|febrièr|març|abril|mai|junh|julhet|agost|setembre|octòbre|novembre|decembre)/i,
 };
 var parseMonthPatterns59 = {
   any: [
@@ -19727,14 +19799,14 @@ var parseMonthPatterns59 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns59 = {
   narrow: /^d[glmcjvs]\.?/i,
   short: /^d[glmcjvs]\.?/i,
   abbreviated: /^d[glmcjvs]\.?/i,
-  wide: /^(dimenge|diluns|dimars|dimècres|dijòus|divendres|dissabte)/i
+  wide: /^(dimenge|diluns|dimars|dimècres|dijòus|divendres|dissabte)/i,
 };
 var parseDayPatterns59 = {
   narrow: [/^dg/i, /^dl/i, /^dm/i, /^dc/i, /^dj/i, /^dv/i, /^ds/i],
@@ -19747,11 +19819,11 @@ var parseDayPatterns59 = {
     /^dc|dimè/i,
     /^dj|dij/i,
     /^dv|div/i,
-    /^ds|dis/i
-  ]
+    /^ds|dis/i,
+  ],
 };
 var matchDayPeriodPatterns59 = {
-  any: /(^(a\.?m|p\.?m))|(ante meridiem|post meridiem)|((del |de la |de l’)(matin|aprèp-miègjorn|vèspre|ser|nuèch))/i
+  any: /(^(a\.?m|p\.?m))|(ante meridiem|post meridiem)|((del |de la |de l’)(matin|aprèp-miègjorn|vèspre|ser|nuèch))/i,
 };
 var parseDayPeriodPatterns59 = {
   any: {
@@ -19762,46 +19834,46 @@ var parseDayPeriodPatterns59 = {
     morning: /matin/i,
     afternoon: /aprèp-miègjorn/i,
     evening: /vèspre|ser/i,
-    night: /nuèch/i
-  }
+    night: /nuèch/i,
+  },
 };
 var match60 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern59,
     parsePattern: parseOrdinalNumberPattern59,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns59,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns59,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns59,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns59,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns59,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns59,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns59,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns59,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns59,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns59,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/pl/_lib/formatLong.js
@@ -19809,45 +19881,45 @@ var dateFormats69 = {
   full: "EEEE, do MMMM y",
   long: "do MMMM y",
   medium: "do MMM y",
-  short: "dd.MM.y"
+  short: "dd.MM.y",
 };
 var timeFormats69 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats69 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong69 = {
   date: buildFormatLongFn({
     formats: dateFormats69,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats69,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats69,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/pl/_lib/localize.js
 var eraValues61 = {
   narrow: ["p.n.e.", "n.e."],
   abbreviated: ["p.n.e.", "n.e."],
-  wide: ["przed naszą erą", "naszej ery"]
+  wide: ["przed naszą erą", "naszej ery"],
 };
 var quarterValues61 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["I kw.", "II kw.", "III kw.", "IV kw."],
-  wide: ["I kwartał", "II kwartał", "III kwartał", "IV kwartał"]
+  wide: ["I kwartał", "II kwartał", "III kwartał", "IV kwartał"],
 };
 var monthValues61 = {
   narrow: ["S", "L", "M", "K", "M", "C", "L", "S", "W", "P", "L", "G"],
@@ -19863,7 +19935,7 @@ var monthValues61 = {
     "wrz",
     "paź",
     "lis",
-    "gru"
+    "gru",
   ],
   wide: [
     "styczeń",
@@ -19877,8 +19949,8 @@ var monthValues61 = {
     "wrzesień",
     "październik",
     "listopad",
-    "grudzień"
-  ]
+    "grudzień",
+  ],
 };
 var monthFormattingValues = {
   narrow: ["s", "l", "m", "k", "m", "c", "l", "s", "w", "p", "l", "g"],
@@ -19894,7 +19966,7 @@ var monthFormattingValues = {
     "wrz",
     "paź",
     "lis",
-    "gru"
+    "gru",
   ],
   wide: [
     "stycznia",
@@ -19908,8 +19980,8 @@ var monthFormattingValues = {
     "września",
     "października",
     "listopada",
-    "grudnia"
-  ]
+    "grudnia",
+  ],
 };
 var dayValues61 = {
   narrow: ["N", "P", "W", "Ś", "C", "P", "S"],
@@ -19922,8 +19994,8 @@ var dayValues61 = {
     "środa",
     "czwartek",
     "piątek",
-    "sobota"
-  ]
+    "sobota",
+  ],
 };
 var dayFormattingValues = {
   narrow: ["n", "p", "w", "ś", "c", "p", "s"],
@@ -19936,8 +20008,8 @@ var dayFormattingValues = {
     "środa",
     "czwartek",
     "piątek",
-    "sobota"
-  ]
+    "sobota",
+  ],
 };
 var dayPeriodValues61 = {
   narrow: {
@@ -19948,7 +20020,7 @@ var dayPeriodValues61 = {
     morning: "rano",
     afternoon: "popoł.",
     evening: "wiecz.",
-    night: "noc"
+    night: "noc",
   },
   abbreviated: {
     am: "AM",
@@ -19958,7 +20030,7 @@ var dayPeriodValues61 = {
     morning: "rano",
     afternoon: "popołudnie",
     evening: "wieczór",
-    night: "noc"
+    night: "noc",
   },
   wide: {
     am: "AM",
@@ -19968,8 +20040,8 @@ var dayPeriodValues61 = {
     morning: "rano",
     afternoon: "popołudnie",
     evening: "wieczór",
-    night: "noc"
-  }
+    night: "noc",
+  },
 };
 var dayPeriodFormattingValues = {
   narrow: {
@@ -19980,7 +20052,7 @@ var dayPeriodFormattingValues = {
     morning: "rano",
     afternoon: "po poł.",
     evening: "wiecz.",
-    night: "w nocy"
+    night: "w nocy",
   },
   abbreviated: {
     am: "AM",
@@ -19990,7 +20062,7 @@ var dayPeriodFormattingValues = {
     morning: "rano",
     afternoon: "po południu",
     evening: "wieczorem",
-    night: "w nocy"
+    night: "w nocy",
   },
   wide: {
     am: "AM",
@@ -20000,8 +20072,8 @@ var dayPeriodFormattingValues = {
     morning: "rano",
     afternoon: "po południu",
     evening: "wieczorem",
-    night: "w nocy"
-  }
+    night: "w nocy",
+  },
 };
 var ordinalNumber61 = (dirtyNumber, _options) => {
   return String(dirtyNumber);
@@ -20010,31 +20082,31 @@ var localize62 = {
   ordinalNumber: ordinalNumber61,
   era: buildLocalizeFn({
     values: eraValues61,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues61,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues61,
     defaultWidth: "wide",
     formattingValues: monthFormattingValues,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues61,
     defaultWidth: "wide",
     formattingValues: dayFormattingValues,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues61,
     defaultWidth: "wide",
     formattingValues: dayPeriodFormattingValues,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/pl/_lib/match.js
@@ -20043,24 +20115,24 @@ var parseOrdinalNumberPattern60 = /\d+/i;
 var matchEraPatterns60 = {
   narrow: /^(p\.?\s*n\.?\s*e\.?\s*|n\.?\s*e\.?\s*)/i,
   abbreviated: /^(p\.?\s*n\.?\s*e\.?\s*|n\.?\s*e\.?\s*)/i,
-  wide: /^(przed\s*nasz(ą|a)\s*er(ą|a)|naszej\s*ery)/i
+  wide: /^(przed\s*nasz(ą|a)\s*er(ą|a)|naszej\s*ery)/i,
 };
 var parseEraPatterns60 = {
-  any: [/^p/i, /^n/i]
+  any: [/^p/i, /^n/i],
 };
 var matchQuarterPatterns60 = {
   narrow: /^[1234]/i,
   abbreviated: /^(I|II|III|IV)\s*kw\.?/i,
-  wide: /^(I|II|III|IV)\s*kwarta(ł|l)/i
+  wide: /^(I|II|III|IV)\s*kwarta(ł|l)/i,
 };
 var parseQuarterPatterns60 = {
   narrow: [/1/i, /2/i, /3/i, /4/i],
-  any: [/^I kw/i, /^II kw/i, /^III kw/i, /^IV kw/i]
+  any: [/^I kw/i, /^II kw/i, /^III kw/i, /^IV kw/i],
 };
 var matchMonthPatterns60 = {
   narrow: /^[slmkcwpg]/i,
   abbreviated: /^(sty|lut|mar|kwi|maj|cze|lip|sie|wrz|pa(ź|z)|lis|gru)/i,
-  wide: /^(stycznia|stycze(ń|n)|lutego|luty|marca|marzec|kwietnia|kwiecie(ń|n)|maja|maj|czerwca|czerwiec|lipca|lipiec|sierpnia|sierpie(ń|n)|wrze(ś|s)nia|wrzesie(ń|n)|pa(ź|z)dziernika|pa(ź|z)dziernik|listopada|listopad|grudnia|grudzie(ń|n))/i
+  wide: /^(stycznia|stycze(ń|n)|lutego|luty|marca|marzec|kwietnia|kwiecie(ń|n)|maja|maj|czerwca|czerwiec|lipca|lipiec|sierpnia|sierpie(ń|n)|wrze(ś|s)nia|wrzesie(ń|n)|pa(ź|z)dziernika|pa(ź|z)dziernik|listopada|listopad|grudnia|grudzie(ń|n))/i,
 };
 var parseMonthPatterns60 = {
   narrow: [
@@ -20075,7 +20147,7 @@ var parseMonthPatterns60 = {
     /^w/i,
     /^p/i,
     /^l/i,
-    /^g/i
+    /^g/i,
   ],
   any: [
     /^st/i,
@@ -20089,23 +20161,24 @@ var parseMonthPatterns60 = {
     /^w/i,
     /^p/i,
     /^lis/i,
-    /^g/i
-  ]
+    /^g/i,
+  ],
 };
 var matchDayPatterns60 = {
   narrow: /^[npwścs]/i,
   short: /^(nie|pon|wto|(ś|s)ro|czw|pi(ą|a)|sob)/i,
   abbreviated: /^(niedz|pon|wt|(ś|s)r|czw|pt|sob)\.?/i,
-  wide: /^(niedziela|poniedzia(ł|l)ek|wtorek|(ś|s)roda|czwartek|pi(ą|a)tek|sobota)/i
+  wide: /^(niedziela|poniedzia(ł|l)ek|wtorek|(ś|s)roda|czwartek|pi(ą|a)tek|sobota)/i,
 };
 var parseDayPatterns60 = {
   narrow: [/^n/i, /^p/i, /^w/i, /^ś/i, /^c/i, /^p/i, /^s/i],
   abbreviated: [/^n/i, /^po/i, /^w/i, /^(ś|s)r/i, /^c/i, /^pt/i, /^so/i],
-  any: [/^n/i, /^po/i, /^w/i, /^(ś|s)r/i, /^c/i, /^pi/i, /^so/i]
+  any: [/^n/i, /^po/i, /^w/i, /^(ś|s)r/i, /^c/i, /^pi/i, /^so/i],
 };
 var matchDayPeriodPatterns60 = {
-  narrow: /^(^a$|^p$|pó(ł|l)n\.?|o\s*pó(ł|l)n\.?|po(ł|l)\.?|w\s*po(ł|l)\.?|po\s*po(ł|l)\.?|rano|wiecz\.?|noc|w\s*nocy)/i,
-  any: /^(am|pm|pó(ł|l)noc|o\s*pó(ł|l)nocy|po(ł|l)udnie|w\s*po(ł|l)udnie|popo(ł|l)udnie|po\s*po(ł|l)udniu|rano|wieczór|wieczorem|noc|w\s*nocy)/i
+  narrow:
+    /^(^a$|^p$|pó(ł|l)n\.?|o\s*pó(ł|l)n\.?|po(ł|l)\.?|w\s*po(ł|l)\.?|po\s*po(ł|l)\.?|rano|wiecz\.?|noc|w\s*nocy)/i,
+  any: /^(am|pm|pó(ł|l)noc|o\s*pó(ł|l)nocy|po(ł|l)udnie|w\s*po(ł|l)udnie|popo(ł|l)udnie|po\s*po(ł|l)udniu|rano|wieczór|wieczorem|noc|w\s*nocy)/i,
 };
 var parseDayPeriodPatterns60 = {
   narrow: {
@@ -20116,7 +20189,7 @@ var parseDayPeriodPatterns60 = {
     morning: /rano/i,
     afternoon: /po\s*po(ł|l)/i,
     evening: /wiecz/i,
-    night: /noc/i
+    night: /noc/i,
   },
   any: {
     am: /^am/i,
@@ -20126,46 +20199,46 @@ var parseDayPeriodPatterns60 = {
     morning: /rano/i,
     afternoon: /po\s*po(ł|l)/i,
     evening: /wiecz/i,
-    night: /noc/i
-  }
+    night: /noc/i,
+  },
 };
 var match61 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern60,
     parsePattern: parseOrdinalNumberPattern60,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns60,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns60,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns60,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns60,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns60,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns60,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns60,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns60,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns60,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns60,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/pt/_lib/formatLong.js
@@ -20173,45 +20246,45 @@ var dateFormats70 = {
   full: "EEEE, d 'de' MMMM 'de' y",
   long: "d 'de' MMMM 'de' y",
   medium: "d 'de' MMM 'de' y",
-  short: "dd/MM/y"
+  short: "dd/MM/y",
 };
 var timeFormats70 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats70 = {
   full: "{{date}} 'às' {{time}}",
   long: "{{date}} 'às' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong70 = {
   date: buildFormatLongFn({
     formats: dateFormats70,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats70,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats70,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/pt/_lib/localize.js
 var eraValues62 = {
   narrow: ["aC", "dC"],
   abbreviated: ["a.C.", "d.C."],
-  wide: ["antes de Cristo", "depois de Cristo"]
+  wide: ["antes de Cristo", "depois de Cristo"],
 };
 var quarterValues62 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["T1", "T2", "T3", "T4"],
-  wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"]
+  wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"],
 };
 var monthValues62 = {
   narrow: ["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
@@ -20227,7 +20300,7 @@ var monthValues62 = {
     "set",
     "out",
     "nov",
-    "dez"
+    "dez",
   ],
   wide: [
     "janeiro",
@@ -20241,8 +20314,8 @@ var monthValues62 = {
     "setembro",
     "outubro",
     "novembro",
-    "dezembro"
-  ]
+    "dezembro",
+  ],
 };
 var dayValues62 = {
   narrow: ["d", "s", "t", "q", "q", "s", "s"],
@@ -20255,8 +20328,8 @@ var dayValues62 = {
     "quarta-feira",
     "quinta-feira",
     "sexta-feira",
-    "sábado"
-  ]
+    "sábado",
+  ],
 };
 var dayPeriodValues62 = {
   narrow: {
@@ -20267,7 +20340,7 @@ var dayPeriodValues62 = {
     morning: "manhã",
     afternoon: "tarde",
     evening: "noite",
-    night: "madrugada"
+    night: "madrugada",
   },
   abbreviated: {
     am: "AM",
@@ -20277,7 +20350,7 @@ var dayPeriodValues62 = {
     morning: "manhã",
     afternoon: "tarde",
     evening: "noite",
-    night: "madrugada"
+    night: "madrugada",
   },
   wide: {
     am: "AM",
@@ -20287,8 +20360,8 @@ var dayPeriodValues62 = {
     morning: "manhã",
     afternoon: "tarde",
     evening: "noite",
-    night: "madrugada"
-  }
+    night: "madrugada",
+  },
 };
 var formattingDayPeriodValues47 = {
   narrow: {
@@ -20299,7 +20372,7 @@ var formattingDayPeriodValues47 = {
     morning: "da manhã",
     afternoon: "da tarde",
     evening: "da noite",
-    night: "da madrugada"
+    night: "da madrugada",
   },
   abbreviated: {
     am: "AM",
@@ -20309,7 +20382,7 @@ var formattingDayPeriodValues47 = {
     morning: "da manhã",
     afternoon: "da tarde",
     evening: "da noite",
-    night: "da madrugada"
+    night: "da madrugada",
   },
   wide: {
     am: "AM",
@@ -20319,8 +20392,8 @@ var formattingDayPeriodValues47 = {
     morning: "da manhã",
     afternoon: "da tarde",
     evening: "da noite",
-    night: "da madrugada"
-  }
+    night: "da madrugada",
+  },
 };
 var ordinalNumber62 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -20330,27 +20403,27 @@ var localize63 = {
   ordinalNumber: ordinalNumber62,
   era: buildLocalizeFn({
     values: eraValues62,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues62,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues62,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues62,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues62,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues47,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/pt/_lib/match.js
@@ -20359,27 +20432,27 @@ var parseOrdinalNumberPattern61 = /\d+/i;
 var matchEraPatterns61 = {
   narrow: /^(ac|dc|a|d)/i,
   abbreviated: /^(a\.?\s?c\.?|a\.?\s?e\.?\s?c\.?|d\.?\s?c\.?|e\.?\s?c\.?)/i,
-  wide: /^(antes de cristo|antes da era comum|depois de cristo|era comum)/i
+  wide: /^(antes de cristo|antes da era comum|depois de cristo|era comum)/i,
 };
 var parseEraPatterns61 = {
   any: [/^ac/i, /^dc/i],
   wide: [
     /^(antes de cristo|antes da era comum)/i,
-    /^(depois de cristo|era comum)/i
-  ]
+    /^(depois de cristo|era comum)/i,
+  ],
 };
 var matchQuarterPatterns61 = {
   narrow: /^[1234]/i,
   abbreviated: /^T[1234]/i,
-  wide: /^[1234](º|ª)? trimestre/i
+  wide: /^[1234](º|ª)? trimestre/i,
 };
 var parseQuarterPatterns61 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns61 = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)/i,
-  wide: /^(janeiro|fevereiro|março|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)/i
+  wide: /^(janeiro|fevereiro|março|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)/i,
 };
 var parseMonthPatterns61 = {
   narrow: [
@@ -20394,7 +20467,7 @@ var parseMonthPatterns61 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -20408,22 +20481,23 @@ var parseMonthPatterns61 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns61 = {
   narrow: /^[dstq]/i,
   short: /^(dom|seg|ter|qua|qui|sex|s[áa]b)/i,
   abbreviated: /^(dom|seg|ter|qua|qui|sex|s[áa]b)/i,
-  wide: /^(domingo|segunda-?\s?feira|terça-?\s?feira|quarta-?\s?feira|quinta-?\s?feira|sexta-?\s?feira|s[áa]bado)/i
+  wide: /^(domingo|segunda-?\s?feira|terça-?\s?feira|quarta-?\s?feira|quinta-?\s?feira|sexta-?\s?feira|s[áa]bado)/i,
 };
 var parseDayPatterns61 = {
   narrow: [/^d/i, /^s/i, /^t/i, /^q/i, /^q/i, /^s/i, /^s/i],
-  any: [/^d/i, /^seg/i, /^t/i, /^qua/i, /^qui/i, /^sex/i, /^s[áa]/i]
+  any: [/^d/i, /^seg/i, /^t/i, /^qua/i, /^qui/i, /^sex/i, /^s[áa]/i],
 };
 var matchDayPeriodPatterns61 = {
-  narrow: /^(a|p|meia-?\s?noite|meio-?\s?dia|(da) (manh[ãa]|tarde|noite|madrugada))/i,
-  any: /^([ap]\.?\s?m\.?|meia-?\s?noite|meio-?\s?dia|(da) (manh[ãa]|tarde|noite|madrugada))/i
+  narrow:
+    /^(a|p|meia-?\s?noite|meio-?\s?dia|(da) (manh[ãa]|tarde|noite|madrugada))/i,
+  any: /^([ap]\.?\s?m\.?|meia-?\s?noite|meio-?\s?dia|(da) (manh[ãa]|tarde|noite|madrugada))/i,
 };
 var parseDayPeriodPatterns61 = {
   any: {
@@ -20434,46 +20508,46 @@ var parseDayPeriodPatterns61 = {
     morning: /manh[ãa]/i,
     afternoon: /tarde/i,
     evening: /noite/i,
-    night: /madrugada/i
-  }
+    night: /madrugada/i,
+  },
 };
 var match62 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern61,
     parsePattern: parseOrdinalNumberPattern61,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns61,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns61,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns61,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns61,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns61,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns61,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns61,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns61,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns61,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns61,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/pt-BR/_lib/formatLong.js
@@ -20481,45 +20555,45 @@ var dateFormats71 = {
   full: "EEEE, d 'de' MMMM 'de' y",
   long: "d 'de' MMMM 'de' y",
   medium: "d MMM y",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats71 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats71 = {
   full: "{{date}} 'às' {{time}}",
   long: "{{date}} 'às' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong71 = {
   date: buildFormatLongFn({
     formats: dateFormats71,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats71,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats71,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/pt-BR/_lib/localize.js
 var eraValues63 = {
   narrow: ["AC", "DC"],
   abbreviated: ["AC", "DC"],
-  wide: ["antes de cristo", "depois de cristo"]
+  wide: ["antes de cristo", "depois de cristo"],
 };
 var quarterValues63 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["T1", "T2", "T3", "T4"],
-  wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"]
+  wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"],
 };
 var monthValues63 = {
   narrow: ["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
@@ -20535,7 +20609,7 @@ var monthValues63 = {
     "set",
     "out",
     "nov",
-    "dez"
+    "dez",
   ],
   wide: [
     "janeiro",
@@ -20549,8 +20623,8 @@ var monthValues63 = {
     "setembro",
     "outubro",
     "novembro",
-    "dezembro"
-  ]
+    "dezembro",
+  ],
 };
 var dayValues63 = {
   narrow: ["D", "S", "T", "Q", "Q", "S", "S"],
@@ -20562,7 +20636,7 @@ var dayValues63 = {
     "quarta",
     "quinta",
     "sexta",
-    "sábado"
+    "sábado",
   ],
   wide: [
     "domingo",
@@ -20571,8 +20645,8 @@ var dayValues63 = {
     "quarta-feira",
     "quinta-feira",
     "sexta-feira",
-    "sábado"
-  ]
+    "sábado",
+  ],
 };
 var dayPeriodValues63 = {
   narrow: {
@@ -20583,7 +20657,7 @@ var dayPeriodValues63 = {
     morning: "manhã",
     afternoon: "tarde",
     evening: "tarde",
-    night: "noite"
+    night: "noite",
   },
   abbreviated: {
     am: "AM",
@@ -20593,7 +20667,7 @@ var dayPeriodValues63 = {
     morning: "manhã",
     afternoon: "tarde",
     evening: "tarde",
-    night: "noite"
+    night: "noite",
   },
   wide: {
     am: "a.m.",
@@ -20603,8 +20677,8 @@ var dayPeriodValues63 = {
     morning: "manhã",
     afternoon: "tarde",
     evening: "tarde",
-    night: "noite"
-  }
+    night: "noite",
+  },
 };
 var formattingDayPeriodValues48 = {
   narrow: {
@@ -20615,7 +20689,7 @@ var formattingDayPeriodValues48 = {
     morning: "da manhã",
     afternoon: "da tarde",
     evening: "da tarde",
-    night: "da noite"
+    night: "da noite",
   },
   abbreviated: {
     am: "AM",
@@ -20625,7 +20699,7 @@ var formattingDayPeriodValues48 = {
     morning: "da manhã",
     afternoon: "da tarde",
     evening: "da tarde",
-    night: "da noite"
+    night: "da noite",
   },
   wide: {
     am: "a.m.",
@@ -20635,8 +20709,8 @@ var formattingDayPeriodValues48 = {
     morning: "da manhã",
     afternoon: "da tarde",
     evening: "da tarde",
-    night: "da noite"
-  }
+    night: "da noite",
+  },
 };
 var ordinalNumber63 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
@@ -20649,27 +20723,27 @@ var localize64 = {
   ordinalNumber: ordinalNumber63,
   era: buildLocalizeFn({
     values: eraValues63,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues63,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues63,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues63,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues63,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues48,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/pt-BR/_lib/match.js
@@ -20678,24 +20752,24 @@ var parseOrdinalNumberPattern62 = /\d+/i;
 var matchEraPatterns62 = {
   narrow: /^(ac|dc|a|d)/i,
   abbreviated: /^(a\.?\s?c\.?|d\.?\s?c\.?)/i,
-  wide: /^(antes de cristo|depois de cristo)/i
+  wide: /^(antes de cristo|depois de cristo)/i,
 };
 var parseEraPatterns62 = {
   any: [/^ac/i, /^dc/i],
-  wide: [/^antes de cristo/i, /^depois de cristo/i]
+  wide: [/^antes de cristo/i, /^depois de cristo/i],
 };
 var matchQuarterPatterns62 = {
   narrow: /^[1234]/i,
   abbreviated: /^T[1234]/i,
-  wide: /^[1234](º)? trimestre/i
+  wide: /^[1234](º)? trimestre/i,
 };
 var parseQuarterPatterns62 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns62 = {
   narrow: /^[jfmajsond]/i,
   abbreviated: /^(jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)/i,
-  wide: /^(janeiro|fevereiro|março|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)/i
+  wide: /^(janeiro|fevereiro|março|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)/i,
 };
 var parseMonthPatterns62 = {
   narrow: [
@@ -20710,7 +20784,7 @@ var parseMonthPatterns62 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -20724,23 +20798,23 @@ var parseMonthPatterns62 = {
     /^set/i,
     /^out/i,
     /^nov/i,
-    /^dez/i
-  ]
+    /^dez/i,
+  ],
 };
 var matchDayPatterns62 = {
   narrow: /^(dom|[23456]ª?|s[aá]b)/i,
   short: /^(dom|[23456]ª?|s[aá]b)/i,
   abbreviated: /^(dom|seg|ter|qua|qui|sex|s[aá]b)/i,
-  wide: /^(domingo|(segunda|ter[cç]a|quarta|quinta|sexta)([- ]feira)?|s[aá]bado)/i
+  wide: /^(domingo|(segunda|ter[cç]a|quarta|quinta|sexta)([- ]feira)?|s[aá]bado)/i,
 };
 var parseDayPatterns62 = {
   short: [/^d/i, /^2/i, /^3/i, /^4/i, /^5/i, /^6/i, /^s[aá]/i],
   narrow: [/^d/i, /^2/i, /^3/i, /^4/i, /^5/i, /^6/i, /^s[aá]/i],
-  any: [/^d/i, /^seg/i, /^t/i, /^qua/i, /^qui/i, /^sex/i, /^s[aá]b/i]
+  any: [/^d/i, /^seg/i, /^t/i, /^qua/i, /^qui/i, /^sex/i, /^s[aá]b/i],
 };
 var matchDayPeriodPatterns62 = {
   narrow: /^(a|p|mn|md|(da) (manhã|tarde|noite))/i,
-  any: /^([ap]\.?\s?m\.?|meia[-\s]noite|meio[-\s]dia|(da) (manhã|tarde|noite))/i
+  any: /^([ap]\.?\s?m\.?|meia[-\s]noite|meio[-\s]dia|(da) (manhã|tarde|noite))/i,
 };
 var parseDayPeriodPatterns62 = {
   any: {
@@ -20751,46 +20825,46 @@ var parseDayPeriodPatterns62 = {
     morning: /manhã/i,
     afternoon: /tarde/i,
     evening: /tarde/i,
-    night: /noite/i
-  }
+    night: /noite/i,
+  },
 };
 var match63 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern62,
     parsePattern: parseOrdinalNumberPattern62,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns62,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns62,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns62,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns62,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns62,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns62,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns62,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns62,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns62,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns62,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ro/_lib/formatLong.js
@@ -20798,40 +20872,40 @@ var dateFormats72 = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
-  short: "dd.MM.yyyy"
+  short: "dd.MM.yyyy",
 };
 var timeFormats72 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats72 = {
   full: "{{date}} 'la' {{time}}",
   long: "{{date}} 'la' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong72 = {
   date: buildFormatLongFn({
     formats: dateFormats72,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats72,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats72,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ro/_lib/localize.js
 var eraValues64 = {
   narrow: ["Î", "D"],
   abbreviated: ["Î.d.C.", "D.C."],
-  wide: ["Înainte de Cristos", "După Cristos"]
+  wide: ["Înainte de Cristos", "După Cristos"],
 };
 var quarterValues64 = {
   narrow: ["1", "2", "3", "4"],
@@ -20840,8 +20914,8 @@ var quarterValues64 = {
     "primul trimestru",
     "al doilea trimestru",
     "al treilea trimestru",
-    "al patrulea trimestru"
-  ]
+    "al patrulea trimestru",
+  ],
 };
 var monthValues64 = {
   narrow: ["I", "F", "M", "A", "M", "I", "I", "A", "S", "O", "N", "D"],
@@ -20857,7 +20931,7 @@ var monthValues64 = {
     "sep",
     "oct",
     "noi",
-    "dec"
+    "dec",
   ],
   wide: [
     "ianuarie",
@@ -20871,14 +20945,14 @@ var monthValues64 = {
     "septembrie",
     "octombrie",
     "noiembrie",
-    "decembrie"
-  ]
+    "decembrie",
+  ],
 };
 var dayValues64 = {
   narrow: ["d", "l", "m", "m", "j", "v", "s"],
   short: ["du", "lu", "ma", "mi", "jo", "vi", "sâ"],
   abbreviated: ["dum", "lun", "mar", "mie", "joi", "vin", "sâm"],
-  wide: ["duminică", "luni", "marți", "miercuri", "joi", "vineri", "sâmbătă"]
+  wide: ["duminică", "luni", "marți", "miercuri", "joi", "vineri", "sâmbătă"],
 };
 var dayPeriodValues64 = {
   narrow: {
@@ -20889,7 +20963,7 @@ var dayPeriodValues64 = {
     morning: "dim",
     afternoon: "da",
     evening: "s",
-    night: "n"
+    night: "n",
   },
   abbreviated: {
     am: "AM",
@@ -20899,7 +20973,7 @@ var dayPeriodValues64 = {
     morning: "dimineață",
     afternoon: "după-amiază",
     evening: "seară",
-    night: "noapte"
+    night: "noapte",
   },
   wide: {
     am: "a.m.",
@@ -20909,8 +20983,8 @@ var dayPeriodValues64 = {
     morning: "dimineață",
     afternoon: "după-amiază",
     evening: "seară",
-    night: "noapte"
-  }
+    night: "noapte",
+  },
 };
 var formattingDayPeriodValues49 = {
   narrow: {
@@ -20921,7 +20995,7 @@ var formattingDayPeriodValues49 = {
     morning: "dimineață",
     afternoon: "după-amiază",
     evening: "seară",
-    night: "noapte"
+    night: "noapte",
   },
   abbreviated: {
     am: "AM",
@@ -20931,7 +21005,7 @@ var formattingDayPeriodValues49 = {
     morning: "dimineață",
     afternoon: "după-amiază",
     evening: "seară",
-    night: "noapte"
+    night: "noapte",
   },
   wide: {
     am: "a.m.",
@@ -20941,8 +21015,8 @@ var formattingDayPeriodValues49 = {
     morning: "dimineață",
     afternoon: "după-amiază",
     evening: "seară",
-    night: "noapte"
-  }
+    night: "noapte",
+  },
 };
 var ordinalNumber64 = (dirtyNumber, _options) => {
   return String(dirtyNumber);
@@ -20951,27 +21025,27 @@ var localize65 = {
   ordinalNumber: ordinalNumber64,
   era: buildLocalizeFn({
     values: eraValues64,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues64,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues64,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues64,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues64,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues49,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ro/_lib/match.js
@@ -20979,28 +21053,29 @@ var matchOrdinalNumberPattern63 = /^(\d+)?/i;
 var parseOrdinalNumberPattern63 = /\d+/i;
 var matchEraPatterns63 = {
   narrow: /^(Î|D)/i,
-  abbreviated: /^(Î\.?\s?d\.?\s?C\.?|Î\.?\s?e\.?\s?n\.?|D\.?\s?C\.?|e\.?\s?n\.?)/i,
-  wide: /^(Înainte de Cristos|Înaintea erei noastre|După Cristos|Era noastră)/i
+  abbreviated:
+    /^(Î\.?\s?d\.?\s?C\.?|Î\.?\s?e\.?\s?n\.?|D\.?\s?C\.?|e\.?\s?n\.?)/i,
+  wide: /^(Înainte de Cristos|Înaintea erei noastre|După Cristos|Era noastră)/i,
 };
 var parseEraPatterns63 = {
   any: [/^ÎC/i, /^DC/i],
   wide: [
     /^(Înainte de Cristos|Înaintea erei noastre)/i,
-    /^(După Cristos|Era noastră)/i
-  ]
+    /^(După Cristos|Era noastră)/i,
+  ],
 };
 var matchQuarterPatterns63 = {
   narrow: /^[1234]/i,
   abbreviated: /^T[1234]/i,
-  wide: /^trimestrul [1234]/i
+  wide: /^trimestrul [1234]/i,
 };
 var parseQuarterPatterns63 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns63 = {
   narrow: /^[ifmaasond]/i,
   abbreviated: /^(ian|feb|mar|apr|mai|iun|iul|aug|sep|oct|noi|dec)/i,
-  wide: /^(ianuarie|februarie|martie|aprilie|mai|iunie|iulie|august|septembrie|octombrie|noiembrie|decembrie)/i
+  wide: /^(ianuarie|februarie|martie|aprilie|mai|iunie|iulie|august|septembrie|octombrie|noiembrie|decembrie)/i,
 };
 var parseMonthPatterns63 = {
   narrow: [
@@ -21015,7 +21090,7 @@ var parseMonthPatterns63 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ia/i,
@@ -21029,22 +21104,22 @@ var parseMonthPatterns63 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns63 = {
   narrow: /^[dlmjvs]/i,
   short: /^(d|l|ma|mi|j|v|s)/i,
   abbreviated: /^(dum|lun|mar|mie|jo|vi|sâ)/i,
-  wide: /^(duminica|luni|marţi|miercuri|joi|vineri|sâmbătă)/i
+  wide: /^(duminica|luni|marţi|miercuri|joi|vineri|sâmbătă)/i,
 };
 var parseDayPatterns63 = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^j/i, /^v/i, /^s/i],
-  any: [/^d/i, /^l/i, /^ma/i, /^mi/i, /^j/i, /^v/i, /^s/i]
+  any: [/^d/i, /^l/i, /^ma/i, /^mi/i, /^j/i, /^v/i, /^s/i],
 };
 var matchDayPeriodPatterns63 = {
   narrow: /^(a|p|mn|a|(dimineaţa|după-amiaza|seara|noaptea))/i,
-  any: /^([ap]\.?\s?m\.?|miezul nopții|amiaza|(dimineaţa|după-amiaza|seara|noaptea))/i
+  any: /^([ap]\.?\s?m\.?|miezul nopții|amiaza|(dimineaţa|după-amiaza|seara|noaptea))/i,
 };
 var parseDayPeriodPatterns63 = {
   any: {
@@ -21055,46 +21130,46 @@ var parseDayPeriodPatterns63 = {
     morning: /dimineaţa/i,
     afternoon: /după-amiaza/i,
     evening: /seara/i,
-    night: /noaptea/i
-  }
+    night: /noaptea/i,
+  },
 };
 var match64 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern63,
     parsePattern: parseOrdinalNumberPattern63,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns63,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns63,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns63,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns63,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns63,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns63,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns63,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns63,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns63,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns63,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ru/_lib/formatDistance.js
@@ -21139,31 +21214,31 @@ var formatDistanceLocale4 = {
       one: "меньше секунды",
       singularNominative: "меньше {{count}} секунды",
       singularGenitive: "меньше {{count}} секунд",
-      pluralGenitive: "меньше {{count}} секунд"
+      pluralGenitive: "меньше {{count}} секунд",
     },
     future: {
       one: "меньше, чем через секунду",
       singularNominative: "меньше, чем через {{count}} секунду",
       singularGenitive: "меньше, чем через {{count}} секунды",
-      pluralGenitive: "меньше, чем через {{count}} секунд"
-    }
+      pluralGenitive: "меньше, чем через {{count}} секунд",
+    },
   }),
   xSeconds: buildLocalizeTokenFn4({
     regular: {
       singularNominative: "{{count}} секунда",
       singularGenitive: "{{count}} секунды",
-      pluralGenitive: "{{count}} секунд"
+      pluralGenitive: "{{count}} секунд",
     },
     past: {
       singularNominative: "{{count}} секунду назад",
       singularGenitive: "{{count}} секунды назад",
-      pluralGenitive: "{{count}} секунд назад"
+      pluralGenitive: "{{count}} секунд назад",
     },
     future: {
       singularNominative: "через {{count}} секунду",
       singularGenitive: "через {{count}} секунды",
-      pluralGenitive: "через {{count}} секунд"
-    }
+      pluralGenitive: "через {{count}} секунд",
+    },
   }),
   halfAMinute: (_count, options) => {
     if (options == null ? void 0 : options.addSuffix) {
@@ -21180,139 +21255,139 @@ var formatDistanceLocale4 = {
       one: "меньше минуты",
       singularNominative: "меньше {{count}} минуты",
       singularGenitive: "меньше {{count}} минут",
-      pluralGenitive: "меньше {{count}} минут"
+      pluralGenitive: "меньше {{count}} минут",
     },
     future: {
       one: "меньше, чем через минуту",
       singularNominative: "меньше, чем через {{count}} минуту",
       singularGenitive: "меньше, чем через {{count}} минуты",
-      pluralGenitive: "меньше, чем через {{count}} минут"
-    }
+      pluralGenitive: "меньше, чем через {{count}} минут",
+    },
   }),
   xMinutes: buildLocalizeTokenFn4({
     regular: {
       singularNominative: "{{count}} минута",
       singularGenitive: "{{count}} минуты",
-      pluralGenitive: "{{count}} минут"
+      pluralGenitive: "{{count}} минут",
     },
     past: {
       singularNominative: "{{count}} минуту назад",
       singularGenitive: "{{count}} минуты назад",
-      pluralGenitive: "{{count}} минут назад"
+      pluralGenitive: "{{count}} минут назад",
     },
     future: {
       singularNominative: "через {{count}} минуту",
       singularGenitive: "через {{count}} минуты",
-      pluralGenitive: "через {{count}} минут"
-    }
+      pluralGenitive: "через {{count}} минут",
+    },
   }),
   aboutXHours: buildLocalizeTokenFn4({
     regular: {
       singularNominative: "около {{count}} часа",
       singularGenitive: "около {{count}} часов",
-      pluralGenitive: "около {{count}} часов"
+      pluralGenitive: "около {{count}} часов",
     },
     future: {
       singularNominative: "приблизительно через {{count}} час",
       singularGenitive: "приблизительно через {{count}} часа",
-      pluralGenitive: "приблизительно через {{count}} часов"
-    }
+      pluralGenitive: "приблизительно через {{count}} часов",
+    },
   }),
   xHours: buildLocalizeTokenFn4({
     regular: {
       singularNominative: "{{count}} час",
       singularGenitive: "{{count}} часа",
-      pluralGenitive: "{{count}} часов"
-    }
+      pluralGenitive: "{{count}} часов",
+    },
   }),
   xDays: buildLocalizeTokenFn4({
     regular: {
       singularNominative: "{{count}} день",
       singularGenitive: "{{count}} дня",
-      pluralGenitive: "{{count}} дней"
-    }
+      pluralGenitive: "{{count}} дней",
+    },
   }),
   aboutXWeeks: buildLocalizeTokenFn4({
     regular: {
       singularNominative: "около {{count}} недели",
       singularGenitive: "около {{count}} недель",
-      pluralGenitive: "около {{count}} недель"
+      pluralGenitive: "около {{count}} недель",
     },
     future: {
       singularNominative: "приблизительно через {{count}} неделю",
       singularGenitive: "приблизительно через {{count}} недели",
-      pluralGenitive: "приблизительно через {{count}} недель"
-    }
+      pluralGenitive: "приблизительно через {{count}} недель",
+    },
   }),
   xWeeks: buildLocalizeTokenFn4({
     regular: {
       singularNominative: "{{count}} неделя",
       singularGenitive: "{{count}} недели",
-      pluralGenitive: "{{count}} недель"
-    }
+      pluralGenitive: "{{count}} недель",
+    },
   }),
   aboutXMonths: buildLocalizeTokenFn4({
     regular: {
       singularNominative: "около {{count}} месяца",
       singularGenitive: "около {{count}} месяцев",
-      pluralGenitive: "около {{count}} месяцев"
+      pluralGenitive: "около {{count}} месяцев",
     },
     future: {
       singularNominative: "приблизительно через {{count}} месяц",
       singularGenitive: "приблизительно через {{count}} месяца",
-      pluralGenitive: "приблизительно через {{count}} месяцев"
-    }
+      pluralGenitive: "приблизительно через {{count}} месяцев",
+    },
   }),
   xMonths: buildLocalizeTokenFn4({
     regular: {
       singularNominative: "{{count}} месяц",
       singularGenitive: "{{count}} месяца",
-      pluralGenitive: "{{count}} месяцев"
-    }
+      pluralGenitive: "{{count}} месяцев",
+    },
   }),
   aboutXYears: buildLocalizeTokenFn4({
     regular: {
       singularNominative: "около {{count}} года",
       singularGenitive: "около {{count}} лет",
-      pluralGenitive: "около {{count}} лет"
+      pluralGenitive: "около {{count}} лет",
     },
     future: {
       singularNominative: "приблизительно через {{count}} год",
       singularGenitive: "приблизительно через {{count}} года",
-      pluralGenitive: "приблизительно через {{count}} лет"
-    }
+      pluralGenitive: "приблизительно через {{count}} лет",
+    },
   }),
   xYears: buildLocalizeTokenFn4({
     regular: {
       singularNominative: "{{count}} год",
       singularGenitive: "{{count}} года",
-      pluralGenitive: "{{count}} лет"
-    }
+      pluralGenitive: "{{count}} лет",
+    },
   }),
   overXYears: buildLocalizeTokenFn4({
     regular: {
       singularNominative: "больше {{count}} года",
       singularGenitive: "больше {{count}} лет",
-      pluralGenitive: "больше {{count}} лет"
+      pluralGenitive: "больше {{count}} лет",
     },
     future: {
       singularNominative: "больше, чем через {{count}} год",
       singularGenitive: "больше, чем через {{count}} года",
-      pluralGenitive: "больше, чем через {{count}} лет"
-    }
+      pluralGenitive: "больше, чем через {{count}} лет",
+    },
   }),
   almostXYears: buildLocalizeTokenFn4({
     regular: {
       singularNominative: "почти {{count}} год",
       singularGenitive: "почти {{count}} года",
-      pluralGenitive: "почти {{count}} лет"
+      pluralGenitive: "почти {{count}} лет",
     },
     future: {
       singularNominative: "почти через {{count}} год",
       singularGenitive: "почти через {{count}} года",
-      pluralGenitive: "почти через {{count}} лет"
-    }
-  })
+      pluralGenitive: "почти через {{count}} лет",
+    },
+  }),
 };
 
 // node_modules/date-fns/locale/ru/_lib/formatLong.js
@@ -21320,42 +21395,42 @@ var dateFormats73 = {
   full: "EEEE, d MMMM y 'г.'",
   long: "d MMMM y 'г.'",
   medium: "d MMM y 'г.'",
-  short: "dd.MM.y"
+  short: "dd.MM.y",
 };
 var timeFormats73 = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats73 = {
-  any: "{{date}}, {{time}}"
+  any: "{{date}}, {{time}}",
 };
 var formatLong73 = {
   date: buildFormatLongFn({
     formats: dateFormats73,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats73,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats73,
-    defaultWidth: "any"
-  })
+    defaultWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ru/_lib/localize.js
 var eraValues65 = {
   narrow: ["до н.э.", "н.э."],
   abbreviated: ["до н. э.", "н. э."],
-  wide: ["до нашей эры", "нашей эры"]
+  wide: ["до нашей эры", "нашей эры"],
 };
 var quarterValues65 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-й кв.", "2-й кв.", "3-й кв.", "4-й кв."],
-  wide: ["1-й квартал", "2-й квартал", "3-й квартал", "4-й квартал"]
+  wide: ["1-й квартал", "2-й квартал", "3-й квартал", "4-й квартал"],
 };
 var monthValues65 = {
   narrow: ["Я", "Ф", "М", "А", "М", "И", "И", "А", "С", "О", "Н", "Д"],
@@ -21371,7 +21446,7 @@ var monthValues65 = {
     "сент.",
     "окт.",
     "нояб.",
-    "дек."
+    "дек.",
   ],
   wide: [
     "январь",
@@ -21385,8 +21460,8 @@ var monthValues65 = {
     "сентябрь",
     "октябрь",
     "ноябрь",
-    "декабрь"
-  ]
+    "декабрь",
+  ],
 };
 var formattingMonthValues14 = {
   narrow: ["Я", "Ф", "М", "А", "М", "И", "И", "А", "С", "О", "Н", "Д"],
@@ -21402,7 +21477,7 @@ var formattingMonthValues14 = {
     "сент.",
     "окт.",
     "нояб.",
-    "дек."
+    "дек.",
   ],
   wide: [
     "января",
@@ -21416,8 +21491,8 @@ var formattingMonthValues14 = {
     "сентября",
     "октября",
     "ноября",
-    "декабря"
-  ]
+    "декабря",
+  ],
 };
 var dayValues65 = {
   narrow: ["В", "П", "В", "С", "Ч", "П", "С"],
@@ -21430,8 +21505,8 @@ var dayValues65 = {
     "среда",
     "четверг",
     "пятница",
-    "суббота"
-  ]
+    "суббота",
+  ],
 };
 var dayPeriodValues65 = {
   narrow: {
@@ -21442,7 +21517,7 @@ var dayPeriodValues65 = {
     morning: "утро",
     afternoon: "день",
     evening: "веч.",
-    night: "ночь"
+    night: "ночь",
   },
   abbreviated: {
     am: "ДП",
@@ -21452,7 +21527,7 @@ var dayPeriodValues65 = {
     morning: "утро",
     afternoon: "день",
     evening: "веч.",
-    night: "ночь"
+    night: "ночь",
   },
   wide: {
     am: "ДП",
@@ -21462,8 +21537,8 @@ var dayPeriodValues65 = {
     morning: "утро",
     afternoon: "день",
     evening: "вечер",
-    night: "ночь"
-  }
+    night: "ночь",
+  },
 };
 var formattingDayPeriodValues50 = {
   narrow: {
@@ -21474,7 +21549,7 @@ var formattingDayPeriodValues50 = {
     morning: "утра",
     afternoon: "дня",
     evening: "веч.",
-    night: "ночи"
+    night: "ночи",
   },
   abbreviated: {
     am: "ДП",
@@ -21484,7 +21559,7 @@ var formattingDayPeriodValues50 = {
     morning: "утра",
     afternoon: "дня",
     evening: "веч.",
-    night: "ночи"
+    night: "ночи",
   },
   wide: {
     am: "ДП",
@@ -21494,8 +21569,8 @@ var formattingDayPeriodValues50 = {
     morning: "утра",
     afternoon: "дня",
     evening: "вечера",
-    night: "ночи"
-  }
+    night: "ночи",
+  },
 };
 var ordinalNumber65 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
@@ -21514,29 +21589,29 @@ var localize66 = {
   ordinalNumber: ordinalNumber65,
   era: buildLocalizeFn({
     values: eraValues65,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues65,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues65,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues14,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues65,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues65,
     defaultWidth: "any",
     formattingValues: formattingDayPeriodValues50,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ru/_lib/match.js
@@ -21545,23 +21620,24 @@ var parseOrdinalNumberPattern64 = /\d+/i;
 var matchEraPatterns64 = {
   narrow: /^((до )?н\.?\s?э\.?)/i,
   abbreviated: /^((до )?н\.?\s?э\.?)/i,
-  wide: /^(до нашей эры|нашей эры|наша эра)/i
+  wide: /^(до нашей эры|нашей эры|наша эра)/i,
 };
 var parseEraPatterns64 = {
-  any: [/^д/i, /^н/i]
+  any: [/^д/i, /^н/i],
 };
 var matchQuarterPatterns64 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?[ыои]?й?)? кв.?/i,
-  wide: /^[1234](-?[ыои]?й?)? квартал/i
+  wide: /^[1234](-?[ыои]?й?)? квартал/i,
 };
 var parseQuarterPatterns64 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns64 = {
   narrow: /^[яфмаисонд]/i,
-  abbreviated: /^(янв|фев|март?|апр|ма[йя]|июн[ья]?|июл[ья]?|авг|сент?|окт|нояб?|дек)\.?/i,
-  wide: /^(январ[ья]|феврал[ья]|марта?|апрел[ья]|ма[йя]|июн[ья]|июл[ья]|августа?|сентябр[ья]|октябр[ья]|октябр[ья]|ноябр[ья]|декабр[ья])/i
+  abbreviated:
+    /^(янв|фев|март?|апр|ма[йя]|июн[ья]?|июл[ья]?|авг|сент?|окт|нояб?|дек)\.?/i,
+  wide: /^(январ[ья]|феврал[ья]|марта?|апрел[ья]|ма[йя]|июн[ья]|июл[ья]|августа?|сентябр[ья]|октябр[ья]|октябр[ья]|ноябр[ья]|декабр[ья])/i,
 };
 var parseMonthPatterns64 = {
   narrow: [
@@ -21576,7 +21652,7 @@ var parseMonthPatterns64 = {
     /^с/i,
     /^о/i,
     /^н/i,
-    /^я/i
+    /^я/i,
   ],
   any: [
     /^я/i,
@@ -21590,23 +21666,23 @@ var parseMonthPatterns64 = {
     /^с/i,
     /^о/i,
     /^н/i,
-    /^д/i
-  ]
+    /^д/i,
+  ],
 };
 var matchDayPatterns64 = {
   narrow: /^[впсч]/i,
   short: /^(вс|во|пн|по|вт|ср|чт|че|пт|пя|сб|су)\.?/i,
   abbreviated: /^(вск|вос|пнд|пон|втр|вто|срд|сре|чтв|чет|птн|пят|суб).?/i,
-  wide: /^(воскресень[ея]|понедельника?|вторника?|сред[аы]|четверга?|пятниц[аы]|суббот[аы])/i
+  wide: /^(воскресень[ея]|понедельника?|вторника?|сред[аы]|четверга?|пятниц[аы]|суббот[аы])/i,
 };
 var parseDayPatterns64 = {
   narrow: [/^в/i, /^п/i, /^в/i, /^с/i, /^ч/i, /^п/i, /^с/i],
-  any: [/^в[ос]/i, /^п[он]/i, /^в/i, /^ср/i, /^ч/i, /^п[ят]/i, /^с[уб]/i]
+  any: [/^в[ос]/i, /^п[он]/i, /^в/i, /^ср/i, /^ч/i, /^п[ят]/i, /^с[уб]/i],
 };
 var matchDayPeriodPatterns64 = {
   narrow: /^([дп]п|полн\.?|полд\.?|утр[оа]|день|дня|веч\.?|ноч[ьи])/i,
   abbreviated: /^([дп]п|полн\.?|полд\.?|утр[оа]|день|дня|веч\.?|ноч[ьи])/i,
-  wide: /^([дп]п|полночь|полдень|утр[оа]|день|дня|вечера?|ноч[ьи])/i
+  wide: /^([дп]п|полночь|полдень|утр[оа]|день|дня|вечера?|ноч[ьи])/i,
 };
 var parseDayPeriodPatterns64 = {
   any: {
@@ -21617,46 +21693,46 @@ var parseDayPeriodPatterns64 = {
     morning: /^у/i,
     afternoon: /^д[ен]/i,
     evening: /^в/i,
-    night: /^н/i
-  }
+    night: /^н/i,
+  },
 };
 var match65 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern64,
     parsePattern: parseOrdinalNumberPattern64,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns64,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns64,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns64,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns64,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns64,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns64,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns64,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns64,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns64,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPeriodPatterns64,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/se/_lib/formatLong.js
@@ -21664,45 +21740,45 @@ var dateFormats74 = {
   full: "EEEE MMMM d. 'b.' y",
   long: "MMMM d. 'b.' y",
   medium: "MMM d. 'b.' y",
-  short: "dd.MM.y"
+  short: "dd.MM.y",
 };
 var timeFormats74 = {
   full: "'dii.' HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats74 = {
   full: "{{date}} 'dii.' {{time}}",
   long: "{{date}} 'dii.' {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong74 = {
   date: buildFormatLongFn({
     formats: dateFormats74,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats74,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats74,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/se/_lib/localize.js
 var eraValues66 = {
   narrow: ["o.Kr.", "m.Kr."],
   abbreviated: ["o.Kr.", "m.Kr."],
-  wide: ["ovdal Kristusa", "maŋŋel Kristusa"]
+  wide: ["ovdal Kristusa", "maŋŋel Kristusa"],
 };
 var quarterValues66 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["1. kvartála", "2. kvartála", "3. kvartála", "4. kvartála"]
+  wide: ["1. kvartála", "2. kvartála", "3. kvartála", "4. kvartála"],
 };
 var monthValues66 = {
   narrow: ["O", "G", "N", "C", "M", "G", "S", "B", "Č", "G", "S", "J"],
@@ -21718,7 +21794,7 @@ var monthValues66 = {
     "čakč",
     "golg",
     "skáb",
-    "juov"
+    "juov",
   ],
   wide: [
     "ođđajagemánnu",
@@ -21732,8 +21808,8 @@ var monthValues66 = {
     "čakčamánnu",
     "golggotmánnu",
     "skábmamánnu",
-    "juovlamánnu"
-  ]
+    "juovlamánnu",
+  ],
 };
 var dayValues66 = {
   narrow: ["S", "V", "M", "G", "D", "B", "L"],
@@ -21746,8 +21822,8 @@ var dayValues66 = {
     "gaskavahkku",
     "duorastat",
     "bearjadat",
-    "lávvardat"
-  ]
+    "lávvardat",
+  ],
 };
 var dayPeriodValues66 = {
   narrow: {
@@ -21758,7 +21834,7 @@ var dayPeriodValues66 = {
     morning: "iđđes",
     afternoon: "maŋŋel gaska.",
     evening: "eahkes",
-    night: "ihkku"
+    night: "ihkku",
   },
   abbreviated: {
     am: "a.m.",
@@ -21768,7 +21844,7 @@ var dayPeriodValues66 = {
     morning: "iđđes",
     afternoon: "maŋŋel gaskabea.",
     evening: "eahkes",
-    night: "ihkku"
+    night: "ihkku",
   },
   wide: {
     am: "a.m.",
@@ -21778,8 +21854,8 @@ var dayPeriodValues66 = {
     morning: "iđđes",
     afternoon: "maŋŋel gaskabeaivvi",
     evening: "eahkes",
-    night: "ihkku"
-  }
+    night: "ihkku",
+  },
 };
 var ordinalNumber66 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -21789,25 +21865,25 @@ var localize67 = {
   ordinalNumber: ordinalNumber66,
   era: buildLocalizeFn({
     values: eraValues66,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues66,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues66,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues66,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues66,
-    defaultWidth: "wide"
-  })
+    defaultWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/se/_lib/match.js
@@ -21816,23 +21892,24 @@ var parseOrdinalNumberPattern65 = /\d+/i;
 var matchEraPatterns65 = {
   narrow: /^(o\.? ?Kr\.?|m\.? ?Kr\.?)/i,
   abbreviated: /^(o\.? ?Kr\.?|m\.? ?Kr\.?)/i,
-  wide: /^(ovdal Kristusa|ovdal min áiggi|maŋŋel Kristusa|min áigi)/i
+  wide: /^(ovdal Kristusa|ovdal min áiggi|maŋŋel Kristusa|min áigi)/i,
 };
 var parseEraPatterns65 = {
-  any: [/^o/i, /^m/i]
+  any: [/^o/i, /^m/i],
 };
 var matchQuarterPatterns65 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234](\.)? kvartála/i
+  wide: /^[1234](\.)? kvartála/i,
 };
 var parseQuarterPatterns65 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns65 = {
   narrow: /^[ogncmsbčj]/i,
-  abbreviated: /^(ođđa|guov|njuk|cuo|mies|geas|suoi|borg|čakč|golg|skáb|juov)\.?/i,
-  wide: /^(ođđajagemánnu|guovvamánnu|njukčamánnu|cuoŋománnu|miessemánnu|geassemánnu|suoidnemánnu|borgemánnu|čakčamánnu|golggotmánnu|skábmamánnu|juovlamánnu)/i
+  abbreviated:
+    /^(ođđa|guov|njuk|cuo|mies|geas|suoi|borg|čakč|golg|skáb|juov)\.?/i,
+  wide: /^(ođđajagemánnu|guovvamánnu|njukčamánnu|cuoŋománnu|miessemánnu|geassemánnu|suoidnemánnu|borgemánnu|čakčamánnu|golggotmánnu|skábmamánnu|juovlamánnu)/i,
 };
 var parseMonthPatterns65 = {
   narrow: [
@@ -21847,7 +21924,7 @@ var parseMonthPatterns65 = {
     /^č/i,
     /^g/i,
     /^s/i,
-    /^j/i
+    /^j/i,
   ],
   any: [
     /^o/i,
@@ -21861,21 +21938,22 @@ var parseMonthPatterns65 = {
     /^č/i,
     /^go/i,
     /^sk/i,
-    /^j/i
-  ]
+    /^j/i,
+  ],
 };
 var matchDayPatterns65 = {
   narrow: /^[svmgdbl]/i,
   short: /^(sotn|vuos|maŋ|gask|duor|bear|láv)/i,
   abbreviated: /^(sotn|vuos|maŋ|gask|duor|bear|láv)/i,
-  wide: /^(sotnabeaivi|vuossárga|maŋŋebárga|gaskavahkku|duorastat|bearjadat|lávvardat)/i
+  wide: /^(sotnabeaivi|vuossárga|maŋŋebárga|gaskavahkku|duorastat|bearjadat|lávvardat)/i,
 };
 var parseDayPatterns65 = {
-  any: [/^s/i, /^v/i, /^m/i, /^g/i, /^d/i, /^b/i, /^l/i]
+  any: [/^s/i, /^v/i, /^m/i, /^g/i, /^d/i, /^b/i, /^l/i],
 };
 var matchDayPeriodPatterns65 = {
-  narrow: /^(gaskaidja|gaskabeaivvi|(på) (iđđes|maŋŋel gaskabeaivvi|eahkes|ihkku)|[ap])/i,
-  any: /^([ap]\.?\s?m\.?|gaskaidja|gaskabeaivvi|(på) (iđđes|maŋŋel gaskabeaivvi|eahkes|ihkku))/i
+  narrow:
+    /^(gaskaidja|gaskabeaivvi|(på) (iđđes|maŋŋel gaskabeaivvi|eahkes|ihkku)|[ap])/i,
+  any: /^([ap]\.?\s?m\.?|gaskaidja|gaskabeaivvi|(på) (iđđes|maŋŋel gaskabeaivvi|eahkes|ihkku))/i,
 };
 var parseDayPeriodPatterns65 = {
   any: {
@@ -21886,46 +21964,46 @@ var parseDayPeriodPatterns65 = {
     morning: /iđđes/i,
     afternoon: /maŋŋel gaskabeaivvi/i,
     evening: /eahkes/i,
-    night: /ihkku/i
-  }
+    night: /ihkku/i,
+  },
 };
 var match66 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern65,
     parsePattern: parseOrdinalNumberPattern65,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns65,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns65,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns65,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns65,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns65,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns65,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns65,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns65,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns65,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns65,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/sk/_lib/formatLong.js
@@ -21933,45 +22011,45 @@ var dateFormats75 = {
   full: "EEEE d. MMMM y",
   long: "d. MMMM y",
   medium: "d. M. y",
-  short: "d. M. y"
+  short: "d. M. y",
 };
 var timeFormats75 = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats75 = {
   full: "{{date}}, {{time}}",
   long: "{{date}}, {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong75 = {
   date: buildFormatLongFn({
     formats: dateFormats75,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats75,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats75,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/sk/_lib/localize.js
 var eraValues67 = {
   narrow: ["pred Kr.", "po Kr."],
   abbreviated: ["pred Kr.", "po Kr."],
-  wide: ["pred Kristom", "po Kristovi"]
+  wide: ["pred Kristom", "po Kristovi"],
 };
 var quarterValues67 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["1. štvrťrok", "2. štvrťrok", "3. štvrťrok", "4. štvrťrok"]
+  wide: ["1. štvrťrok", "2. štvrťrok", "3. štvrťrok", "4. štvrťrok"],
 };
 var monthValues67 = {
   narrow: ["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
@@ -21987,7 +22065,7 @@ var monthValues67 = {
     "sep",
     "okt",
     "nov",
-    "dec"
+    "dec",
   ],
   wide: [
     "január",
@@ -22001,8 +22079,8 @@ var monthValues67 = {
     "september",
     "október",
     "november",
-    "december"
-  ]
+    "december",
+  ],
 };
 var formattingMonthValues15 = {
   narrow: ["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
@@ -22018,7 +22096,7 @@ var formattingMonthValues15 = {
     "sep",
     "okt",
     "nov",
-    "dec"
+    "dec",
   ],
   wide: [
     "januára",
@@ -22032,8 +22110,8 @@ var formattingMonthValues15 = {
     "septembra",
     "októbra",
     "novembra",
-    "decembra"
-  ]
+    "decembra",
+  ],
 };
 var dayValues67 = {
   narrow: ["n", "p", "u", "s", "š", "p", "s"],
@@ -22046,8 +22124,8 @@ var dayValues67 = {
     "streda",
     "štvrtok",
     "piatok",
-    "sobota"
-  ]
+    "sobota",
+  ],
 };
 var dayPeriodValues67 = {
   narrow: {
@@ -22058,7 +22136,7 @@ var dayPeriodValues67 = {
     morning: "ráno",
     afternoon: "pop.",
     evening: "več.",
-    night: "noc"
+    night: "noc",
   },
   abbreviated: {
     am: "AM",
@@ -22068,7 +22146,7 @@ var dayPeriodValues67 = {
     morning: "ráno",
     afternoon: "popol.",
     evening: "večer",
-    night: "noc"
+    night: "noc",
   },
   wide: {
     am: "AM",
@@ -22078,8 +22156,8 @@ var dayPeriodValues67 = {
     morning: "ráno",
     afternoon: "popoludnie",
     evening: "večer",
-    night: "noc"
-  }
+    night: "noc",
+  },
 };
 var formattingDayPeriodValues51 = {
   narrow: {
@@ -22090,7 +22168,7 @@ var formattingDayPeriodValues51 = {
     morning: "ráno",
     afternoon: "pop.",
     evening: "več.",
-    night: "v n."
+    night: "v n.",
   },
   abbreviated: {
     am: "AM",
@@ -22100,7 +22178,7 @@ var formattingDayPeriodValues51 = {
     morning: "ráno",
     afternoon: "popol.",
     evening: "večer",
-    night: "v noci"
+    night: "v noci",
   },
   wide: {
     am: "AM",
@@ -22110,8 +22188,8 @@ var formattingDayPeriodValues51 = {
     morning: "ráno",
     afternoon: "popoludní",
     evening: "večer",
-    night: "v noci"
-  }
+    night: "v noci",
+  },
 };
 var ordinalNumber67 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -22121,29 +22199,29 @@ var localize68 = {
   ordinalNumber: ordinalNumber67,
   era: buildLocalizeFn({
     values: eraValues67,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues67,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues67,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues15,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues67,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues67,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues51,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/sk/_lib/match.js
@@ -22152,23 +22230,23 @@ var parseOrdinalNumberPattern66 = /\d+/i;
 var matchEraPatterns66 = {
   narrow: /^(pred Kr\.|pred n\. l\.|po Kr\.|n\. l\.)/i,
   abbreviated: /^(pred Kr\.|pred n\. l\.|po Kr\.|n\. l\.)/i,
-  wide: /^(pred Kristom|pred na[šs][íi]m letopo[čc]tom|po Kristovi|n[áa][šs]ho letopo[čc]tu)/i
+  wide: /^(pred Kristom|pred na[šs][íi]m letopo[čc]tom|po Kristovi|n[áa][šs]ho letopo[čc]tu)/i,
 };
 var parseEraPatterns66 = {
-  any: [/^pr/i, /^(po|n)/i]
+  any: [/^pr/i, /^(po|n)/i],
 };
 var matchQuarterPatterns66 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234]\. [šs]tvr[ťt]rok/i
+  wide: /^[1234]\. [šs]tvr[ťt]rok/i,
 };
 var parseQuarterPatterns66 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns66 = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mar|apr|m[áa]j|j[úu]n|j[úu]l|aug|sep|okt|nov|dec)/i,
-  wide: /^(janu[áa]ra?|febru[áa]ra?|(marec|marca)|apr[íi]la?|m[áa]ja?|j[úu]na?|j[úu]la?|augusta?|(september|septembra)|(okt[óo]ber|okt[óo]bra)|(november|novembra)|(december|decembra))/i
+  wide: /^(janu[áa]ra?|febru[áa]ra?|(marec|marca)|apr[íi]la?|m[áa]ja?|j[úu]na?|j[úu]la?|augusta?|(september|septembra)|(okt[óo]ber|okt[óo]bra)|(november|novembra)|(december|decembra))/i,
 };
 var parseMonthPatterns66 = {
   narrow: [
@@ -22183,7 +22261,7 @@ var parseMonthPatterns66 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -22197,23 +22275,25 @@ var parseMonthPatterns66 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns66 = {
   narrow: /^[npusšp]/i,
   short: /^(ne|po|ut|st|št|pi|so)/i,
   abbreviated: /^(ne|po|ut|st|št|pi|so)/i,
-  wide: /^(nede[ľl]a|pondelok|utorok|streda|[šs]tvrtok|piatok|sobota])/i
+  wide: /^(nede[ľl]a|pondelok|utorok|streda|[šs]tvrtok|piatok|sobota])/i,
 };
 var parseDayPatterns66 = {
   narrow: [/^n/i, /^p/i, /^u/i, /^s/i, /^š/i, /^p/i, /^s/i],
-  any: [/^n/i, /^po/i, /^u/i, /^st/i, /^(št|stv)/i, /^pi/i, /^so/i]
+  any: [/^n/i, /^po/i, /^u/i, /^st/i, /^(št|stv)/i, /^pi/i, /^so/i],
 };
 var matchDayPeriodPatterns66 = {
-  narrow: /^(am|pm|(o )?poln\.?|(nap\.?|pol\.?)|r[áa]no|pop\.?|ve[čc]\.?|(v n\.?|noc))/i,
-  abbreviated: /^(am|pm|(o )?poln\.?|(napol\.?|pol\.?)|r[áa]no|pop\.?|ve[čc]er|(v )?noci?)/i,
-  any: /^(am|pm|(o )?polnoci?|(na)?poludnie|r[áa]no|popoludn(ie|í|i)|ve[čc]er|(v )?noci?)/i
+  narrow:
+    /^(am|pm|(o )?poln\.?|(nap\.?|pol\.?)|r[áa]no|pop\.?|ve[čc]\.?|(v n\.?|noc))/i,
+  abbreviated:
+    /^(am|pm|(o )?poln\.?|(napol\.?|pol\.?)|r[áa]no|pop\.?|ve[čc]er|(v )?noci?)/i,
+  any: /^(am|pm|(o )?polnoci?|(na)?poludnie|r[áa]no|popoludn(ie|í|i)|ve[čc]er|(v )?noci?)/i,
 };
 var parseDayPeriodPatterns66 = {
   any: {
@@ -22224,46 +22304,46 @@ var parseDayPeriodPatterns66 = {
     morning: /^r[áa]no/i,
     afternoon: /^pop/i,
     evening: /^ve[čc]/i,
-    night: /^(noc|v n\.)/i
-  }
+    night: /^(noc|v n\.)/i,
+  },
 };
 var match67 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern66,
     parsePattern: parseOrdinalNumberPattern66,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns66,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns66,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns66,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns66,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns66,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns66,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns66,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns66,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns66,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns66,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/sl/_lib/formatLong.js
@@ -22271,45 +22351,45 @@ var dateFormats76 = {
   full: "EEEE, dd. MMMM y",
   long: "dd. MMMM y",
   medium: "d. MMM y",
-  short: "d. MM. yy"
+  short: "d. MM. yy",
 };
 var timeFormats76 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats76 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong76 = {
   date: buildFormatLongFn({
     formats: dateFormats76,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats76,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats76,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/sl/_lib/localize.js
 var eraValues68 = {
   narrow: ["pr. n. št.", "po n. št."],
   abbreviated: ["pr. n. št.", "po n. št."],
-  wide: ["pred našim štetjem", "po našem štetju"]
+  wide: ["pred našim štetjem", "po našem štetju"],
 };
 var quarterValues68 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1. čet.", "2. čet.", "3. čet.", "4. čet."],
-  wide: ["1. četrtletje", "2. četrtletje", "3. četrtletje", "4. četrtletje"]
+  wide: ["1. četrtletje", "2. četrtletje", "3. četrtletje", "4. četrtletje"],
 };
 var monthValues68 = {
   narrow: ["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
@@ -22325,7 +22405,7 @@ var monthValues68 = {
     "sep.",
     "okt.",
     "nov.",
-    "dec."
+    "dec.",
   ],
   wide: [
     "januar",
@@ -22339,8 +22419,8 @@ var monthValues68 = {
     "september",
     "oktober",
     "november",
-    "december"
-  ]
+    "december",
+  ],
 };
 var dayValues68 = {
   narrow: ["n", "p", "t", "s", "č", "p", "s"],
@@ -22353,8 +22433,8 @@ var dayValues68 = {
     "sreda",
     "četrtek",
     "petek",
-    "sobota"
-  ]
+    "sobota",
+  ],
 };
 var dayPeriodValues68 = {
   narrow: {
@@ -22365,7 +22445,7 @@ var dayPeriodValues68 = {
     morning: "j",
     afternoon: "p",
     evening: "v",
-    night: "n"
+    night: "n",
   },
   abbreviated: {
     am: "dop.",
@@ -22375,7 +22455,7 @@ var dayPeriodValues68 = {
     morning: "jut.",
     afternoon: "pop.",
     evening: "več.",
-    night: "noč"
+    night: "noč",
   },
   wide: {
     am: "dop.",
@@ -22385,8 +22465,8 @@ var dayPeriodValues68 = {
     morning: "jutro",
     afternoon: "popoldne",
     evening: "večer",
-    night: "noč"
-  }
+    night: "noč",
+  },
 };
 var formattingDayPeriodValues52 = {
   narrow: {
@@ -22397,7 +22477,7 @@ var formattingDayPeriodValues52 = {
     morning: "zj",
     afternoon: "p",
     evening: "zv",
-    night: "po"
+    night: "po",
   },
   abbreviated: {
     am: "dop.",
@@ -22407,7 +22487,7 @@ var formattingDayPeriodValues52 = {
     morning: "zjut.",
     afternoon: "pop.",
     evening: "zveč.",
-    night: "ponoči"
+    night: "ponoči",
   },
   wide: {
     am: "dop.",
@@ -22417,8 +22497,8 @@ var formattingDayPeriodValues52 = {
     morning: "zjutraj",
     afternoon: "popoldan",
     evening: "zvečer",
-    night: "ponoči"
-  }
+    night: "ponoči",
+  },
 };
 var ordinalNumber68 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -22428,27 +22508,27 @@ var localize69 = {
   ordinalNumber: ordinalNumber68,
   era: buildLocalizeFn({
     values: eraValues68,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues68,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues68,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues68,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues68,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues52,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/sl/_lib/match.js
@@ -22456,23 +22536,24 @@ var matchOrdinalNumberPattern67 = /^(\d+)\./i;
 var parseOrdinalNumberPattern67 = /\d+/i;
 var matchEraPatterns67 = {
   abbreviated: /^(pr\. n\. št\.|po n\. št\.)/i,
-  wide: /^(pred Kristusom|pred na[sš]im [sš]tetjem|po Kristusu|po na[sš]em [sš]tetju|na[sš]ega [sš]tetja)/i
+  wide: /^(pred Kristusom|pred na[sš]im [sš]tetjem|po Kristusu|po na[sš]em [sš]tetju|na[sš]ega [sš]tetja)/i,
 };
 var parseEraPatterns67 = {
-  any: [/^pr/i, /^(po|na[sš]em)/i]
+  any: [/^pr/i, /^(po|na[sš]em)/i],
 };
 var matchQuarterPatterns67 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]\.\s?[čc]et\.?/i,
-  wide: /^[1234]\. [čc]etrtletje/i
+  wide: /^[1234]\. [čc]etrtletje/i,
 };
 var parseQuarterPatterns67 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns67 = {
   narrow: /^[jfmasond]/i,
-  abbreviated: /^(jan\.|feb\.|mar\.|apr\.|maj|jun\.|jul\.|avg\.|sep\.|okt\.|nov\.|dec\.)/i,
-  wide: /^(januar|februar|marec|april|maj|junij|julij|avgust|september|oktober|november|december)/i
+  abbreviated:
+    /^(jan\.|feb\.|mar\.|apr\.|maj|jun\.|jul\.|avg\.|sep\.|okt\.|nov\.|dec\.)/i,
+  wide: /^(januar|februar|marec|april|maj|junij|julij|avgust|september|oktober|november|december)/i,
 };
 var parseMonthPatterns67 = {
   narrow: [
@@ -22487,7 +22568,7 @@ var parseMonthPatterns67 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   abbreviated: [
     /^ja/i,
@@ -22501,7 +22582,7 @@ var parseMonthPatterns67 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   wide: [
     /^ja/i,
@@ -22515,22 +22596,22 @@ var parseMonthPatterns67 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns67 = {
   narrow: /^[nptsčc]/i,
   short: /^(ned\.|pon\.|tor\.|sre\.|[cč]et\.|pet\.|sob\.)/i,
   abbreviated: /^(ned\.|pon\.|tor\.|sre\.|[cč]et\.|pet\.|sob\.)/i,
-  wide: /^(nedelja|ponedeljek|torek|sreda|[cč]etrtek|petek|sobota)/i
+  wide: /^(nedelja|ponedeljek|torek|sreda|[cč]etrtek|petek|sobota)/i,
 };
 var parseDayPatterns67 = {
   narrow: [/^n/i, /^p/i, /^t/i, /^s/i, /^[cč]/i, /^p/i, /^s/i],
-  any: [/^n/i, /^po/i, /^t/i, /^sr/i, /^[cč]/i, /^pe/i, /^so/i]
+  any: [/^n/i, /^po/i, /^t/i, /^sr/i, /^[cč]/i, /^pe/i, /^so/i],
 };
 var matchDayPeriodPatterns67 = {
   narrow: /^(d|po?|z?v|n|z?j|24\.00|12\.00)/i,
-  any: /^(dop\.|pop\.|o?poln(\.|o[cč]i?)|o?pold(\.|ne)|z?ve[cč](\.|er)|(po)?no[cč]i?|popold(ne|an)|jut(\.|ro)|zjut(\.|raj))/i
+  any: /^(dop\.|pop\.|o?poln(\.|o[cč]i?)|o?pold(\.|ne)|z?ve[cč](\.|er)|(po)?no[cč]i?|popold(ne|an)|jut(\.|ro)|zjut(\.|raj))/i,
 };
 var parseDayPeriodPatterns67 = {
   narrow: {
@@ -22541,7 +22622,7 @@ var parseDayPeriodPatterns67 = {
     morning: /^(z?j)/i,
     afternoon: /^p/i,
     evening: /^(z?v)/i,
-    night: /^(n|po)/i
+    night: /^(n|po)/i,
   },
   any: {
     am: /^dop\./i,
@@ -22551,46 +22632,46 @@ var parseDayPeriodPatterns67 = {
     morning: /j/i,
     afternoon: /^pop\./i,
     evening: /^z?ve/i,
-    night: /(po)?no/i
-  }
+    night: /(po)?no/i,
+  },
 };
 var match68 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern67,
     parsePattern: parseOrdinalNumberPattern67,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns67,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns67,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns67,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns67,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns67,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns67,
-    defaultParseWidth: "wide"
+    defaultParseWidth: "wide",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns67,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns67,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns67,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns67,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/sq/_lib/formatLong.js
@@ -22598,45 +22679,45 @@ var dateFormats77 = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
-  short: "MM/dd/yyyy"
+  short: "MM/dd/yyyy",
 };
 var timeFormats77 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats77 = {
   full: "{{date}} 'në' {{time}}",
   long: "{{date}} 'në' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong77 = {
   date: buildFormatLongFn({
     formats: dateFormats77,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats77,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats77,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/sq/_lib/localize.js
 var eraValues69 = {
   narrow: ["P", "M"],
   abbreviated: ["PK", "MK"],
-  wide: ["Para Krishtit", "Mbas Krishtit"]
+  wide: ["Para Krishtit", "Mbas Krishtit"],
 };
 var quarterValues69 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["4-mujori I", "4-mujori II", "4-mujori III", "4-mujori IV"]
+  wide: ["4-mujori I", "4-mujori II", "4-mujori III", "4-mujori IV"],
 };
 var monthValues69 = {
   narrow: ["J", "S", "M", "P", "M", "Q", "K", "G", "S", "T", "N", "D"],
@@ -22652,7 +22733,7 @@ var monthValues69 = {
     "Sht",
     "Tet",
     "Nën",
-    "Dhj"
+    "Dhj",
   ],
   wide: [
     "Janar",
@@ -22666,14 +22747,14 @@ var monthValues69 = {
     "Shtator",
     "Tetor",
     "Nëntor",
-    "Dhjetor"
-  ]
+    "Dhjetor",
+  ],
 };
 var dayValues69 = {
   narrow: ["D", "H", "M", "M", "E", "P", "S"],
   short: ["Di", "Hë", "Ma", "Më", "En", "Pr", "Sh"],
   abbreviated: ["Die", "Hën", "Mar", "Mër", "Enj", "Pre", "Sht"],
-  wide: ["Dielë", "Hënë", "Martë", "Mërkurë", "Enjte", "Premte", "Shtunë"]
+  wide: ["Dielë", "Hënë", "Martë", "Mërkurë", "Enjte", "Premte", "Shtunë"],
 };
 var dayPeriodValues69 = {
   narrow: {
@@ -22684,7 +22765,7 @@ var dayPeriodValues69 = {
     morning: "mëngjes",
     afternoon: "dite",
     evening: "mbrëmje",
-    night: "natë"
+    night: "natë",
   },
   abbreviated: {
     am: "PD",
@@ -22694,7 +22775,7 @@ var dayPeriodValues69 = {
     morning: "mëngjes",
     afternoon: "mbasdite",
     evening: "mbrëmje",
-    night: "natë"
+    night: "natë",
   },
   wide: {
     am: "p.d.",
@@ -22704,8 +22785,8 @@ var dayPeriodValues69 = {
     morning: "mëngjes",
     afternoon: "mbasdite",
     evening: "mbrëmje",
-    night: "natë"
-  }
+    night: "natë",
+  },
 };
 var formattingDayPeriodValues53 = {
   narrow: {
@@ -22716,7 +22797,7 @@ var formattingDayPeriodValues53 = {
     morning: "në mëngjes",
     afternoon: "në mbasdite",
     evening: "në mbrëmje",
-    night: "në mesnatë"
+    night: "në mesnatë",
   },
   abbreviated: {
     am: "PD",
@@ -22726,7 +22807,7 @@ var formattingDayPeriodValues53 = {
     morning: "në mëngjes",
     afternoon: "në mbasdite",
     evening: "në mbrëmje",
-    night: "në mesnatë"
+    night: "në mesnatë",
   },
   wide: {
     am: "p.d.",
@@ -22736,12 +22817,13 @@ var formattingDayPeriodValues53 = {
     morning: "në mëngjes",
     afternoon: "në mbasdite",
     evening: "në mbrëmje",
-    night: "në mesnatë"
-  }
+    night: "në mesnatë",
+  },
 };
 var ordinalNumber69 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
-  if ((options == null ? void 0 : options.unit) === "hour") return String(number);
+  if ((options == null ? void 0 : options.unit) === "hour")
+    return String(number);
   if (number === 1) return number + "-rë";
   if (number === 4) return number + "t";
   return number + "-të";
@@ -22750,27 +22832,27 @@ var localize70 = {
   ordinalNumber: ordinalNumber69,
   era: buildLocalizeFn({
     values: eraValues69,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues69,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues69,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues69,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues69,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues53,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/sq/_lib/match.js
@@ -22779,23 +22861,23 @@ var parseOrdinalNumberPattern68 = /\d+/i;
 var matchEraPatterns68 = {
   narrow: /^(p|m)/i,
   abbreviated: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,
-  wide: /^(para krishtit|mbas krishtit)/i
+  wide: /^(para krishtit|mbas krishtit)/i,
 };
 var parseEraPatterns68 = {
-  any: [/^b/i, /^(p|m)/i]
+  any: [/^b/i, /^(p|m)/i],
 };
 var matchQuarterPatterns68 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234]-mujori (i{1,3}|iv)/i
+  wide: /^[1234]-mujori (i{1,3}|iv)/i,
 };
 var parseQuarterPatterns68 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns68 = {
   narrow: /^[jsmpqkftnd]/i,
   abbreviated: /^(jan|shk|mar|pri|maj|qer|kor|gus|sht|tet|nën|dhj)/i,
-  wide: /^(janar|shkurt|mars|prill|maj|qershor|korrik|gusht|shtator|tetor|nëntor|dhjetor)/i
+  wide: /^(janar|shkurt|mars|prill|maj|qershor|korrik|gusht|shtator|tetor|nëntor|dhjetor)/i,
 };
 var parseMonthPatterns68 = {
   narrow: [
@@ -22810,7 +22892,7 @@ var parseMonthPatterns68 = {
     /^s/i,
     /^t/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -22824,22 +22906,22 @@ var parseMonthPatterns68 = {
     /^sht/i,
     /^tet/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns68 = {
   narrow: /^[dhmeps]/i,
   short: /^(di|hë|ma|më|en|pr|sh)/i,
   abbreviated: /^(die|hën|mar|mër|enj|pre|sht)/i,
-  wide: /^(dielë|hënë|martë|mërkurë|enjte|premte|shtunë)/i
+  wide: /^(dielë|hënë|martë|mërkurë|enjte|premte|shtunë)/i,
 };
 var parseDayPatterns68 = {
   narrow: [/^d/i, /^h/i, /^m/i, /^m/i, /^e/i, /^p/i, /^s/i],
-  any: [/^d/i, /^h/i, /^ma/i, /^më/i, /^e/i, /^p/i, /^s/i]
+  any: [/^d/i, /^h/i, /^ma/i, /^më/i, /^e/i, /^p/i, /^s/i],
 };
 var matchDayPeriodPatterns68 = {
   narrow: /^(p|m|me|në (mëngjes|mbasdite|mbrëmje|mesnatë))/i,
-  any: /^([pm]\.?\s?d\.?|drek|në (mëngjes|mbasdite|mbrëmje|mesnatë))/i
+  any: /^([pm]\.?\s?d\.?|drek|në (mëngjes|mbasdite|mbrëmje|mesnatë))/i,
 };
 var parseDayPeriodPatterns68 = {
   any: {
@@ -22850,46 +22932,46 @@ var parseDayPeriodPatterns68 = {
     morning: /mëngjes/i,
     afternoon: /mbasdite/i,
     evening: /mbrëmje/i,
-    night: /natë/i
-  }
+    night: /natë/i,
+  },
 };
 var match69 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern68,
     parsePattern: parseOrdinalNumberPattern68,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns68,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns68,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns68,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns68,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns68,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns68,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns68,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns68,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns68,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns68,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/sr/_lib/formatLong.js
@@ -22897,45 +22979,45 @@ var dateFormats78 = {
   full: "EEEE, d. MMMM yyyy.",
   long: "d. MMMM yyyy.",
   medium: "d. MMM yy.",
-  short: "dd. MM. yy."
+  short: "dd. MM. yy.",
 };
 var timeFormats78 = {
   full: "HH:mm:ss (zzzz)",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats78 = {
   full: "{{date}} 'у' {{time}}",
   long: "{{date}} 'у' {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong78 = {
   date: buildFormatLongFn({
     formats: dateFormats78,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats78,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats78,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/sr/_lib/localize.js
 var eraValues70 = {
   narrow: ["пр.н.е.", "АД"],
   abbreviated: ["пр. Хр.", "по. Хр."],
-  wide: ["Пре Христа", "После Христа"]
+  wide: ["Пре Христа", "После Христа"],
 };
 var quarterValues70 = {
   narrow: ["1.", "2.", "3.", "4."],
   abbreviated: ["1. кв.", "2. кв.", "3. кв.", "4. кв."],
-  wide: ["1. квартал", "2. квартал", "3. квартал", "4. квартал"]
+  wide: ["1. квартал", "2. квартал", "3. квартал", "4. квартал"],
 };
 var monthValues70 = {
   narrow: [
@@ -22950,7 +23032,7 @@ var monthValues70 = {
     "9.",
     "10.",
     "11.",
-    "12."
+    "12.",
   ],
   abbreviated: [
     "јан",
@@ -22964,7 +23046,7 @@ var monthValues70 = {
     "сеп",
     "окт",
     "нов",
-    "дец"
+    "дец",
   ],
   wide: [
     "јануар",
@@ -22978,8 +23060,8 @@ var monthValues70 = {
     "септембар",
     "октобар",
     "новембар",
-    "децембар"
-  ]
+    "децембар",
+  ],
 };
 var formattingMonthValues16 = {
   narrow: [
@@ -22994,7 +23076,7 @@ var formattingMonthValues16 = {
     "9.",
     "10.",
     "11.",
-    "12."
+    "12.",
   ],
   abbreviated: [
     "јан",
@@ -23008,7 +23090,7 @@ var formattingMonthValues16 = {
     "сеп",
     "окт",
     "нов",
-    "дец"
+    "дец",
   ],
   wide: [
     "јануар",
@@ -23022,8 +23104,8 @@ var formattingMonthValues16 = {
     "септембар",
     "октобар",
     "новембар",
-    "децембар"
-  ]
+    "децембар",
+  ],
 };
 var dayValues70 = {
   narrow: ["Н", "П", "У", "С", "Ч", "П", "С"],
@@ -23036,8 +23118,8 @@ var dayValues70 = {
     "среда",
     "четвртак",
     "петак",
-    "субота"
-  ]
+    "субота",
+  ],
 };
 var formattingDayPeriodValues54 = {
   narrow: {
@@ -23048,7 +23130,7 @@ var formattingDayPeriodValues54 = {
     morning: "ујутру",
     afternoon: "поподне",
     evening: "увече",
-    night: "ноћу"
+    night: "ноћу",
   },
   abbreviated: {
     am: "АМ",
@@ -23058,7 +23140,7 @@ var formattingDayPeriodValues54 = {
     morning: "ујутру",
     afternoon: "поподне",
     evening: "увече",
-    night: "ноћу"
+    night: "ноћу",
   },
   wide: {
     am: "AM",
@@ -23068,8 +23150,8 @@ var formattingDayPeriodValues54 = {
     morning: "ујутру",
     afternoon: "после подне",
     evening: "увече",
-    night: "ноћу"
-  }
+    night: "ноћу",
+  },
 };
 var dayPeriodValues70 = {
   narrow: {
@@ -23080,7 +23162,7 @@ var dayPeriodValues70 = {
     morning: "ујутру",
     afternoon: "поподне",
     evening: "увече",
-    night: "ноћу"
+    night: "ноћу",
   },
   abbreviated: {
     am: "AM",
@@ -23090,7 +23172,7 @@ var dayPeriodValues70 = {
     morning: "ујутру",
     afternoon: "поподне",
     evening: "увече",
-    night: "ноћу"
+    night: "ноћу",
   },
   wide: {
     am: "AM",
@@ -23100,8 +23182,8 @@ var dayPeriodValues70 = {
     morning: "ујутру",
     afternoon: "после подне",
     evening: "увече",
-    night: "ноћу"
-  }
+    night: "ноћу",
+  },
 };
 var ordinalNumber70 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -23111,29 +23193,29 @@ var localize71 = {
   ordinalNumber: ordinalNumber70,
   era: buildLocalizeFn({
     values: eraValues70,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues70,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues70,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues16,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues70,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues70,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues54,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/sr/_lib/match.js
@@ -23142,23 +23224,23 @@ var parseOrdinalNumberPattern69 = /\d+/i;
 var matchEraPatterns69 = {
   narrow: /^(пр\.н\.е\.|АД)/i,
   abbreviated: /^(пр\.\s?Хр\.|по\.\s?Хр\.)/i,
-  wide: /^(Пре Христа|пре нове ере|После Христа|нова ера)/i
+  wide: /^(Пре Христа|пре нове ере|После Христа|нова ера)/i,
 };
 var parseEraPatterns69 = {
-  any: [/^пр/i, /^(по|нова)/i]
+  any: [/^пр/i, /^(по|нова)/i],
 };
 var matchQuarterPatterns69 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]\.\s?кв\.?/i,
-  wide: /^[1234]\. квартал/i
+  wide: /^[1234]\. квартал/i,
 };
 var parseQuarterPatterns69 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns69 = {
   narrow: /^(10|11|12|[123456789])\./i,
   abbreviated: /^(јан|феб|мар|апр|мај|јун|јул|авг|сеп|окт|нов|дец)/i,
-  wide: /^((јануар|јануара)|(фебруар|фебруара)|(март|марта)|(април|априла)|(мја|маја)|(јун|јуна)|(јул|јула)|(август|августа)|(септембар|септембра)|(октобар|октобра)|(новембар|новембра)|(децембар|децембра))/i
+  wide: /^((јануар|јануара)|(фебруар|фебруара)|(март|марта)|(април|априла)|(мја|маја)|(јун|јуна)|(јул|јула)|(август|августа)|(септембар|септембра)|(октобар|октобра)|(новембар|новембра)|(децембар|децембра))/i,
 };
 var parseMonthPatterns69 = {
   narrow: [
@@ -23173,7 +23255,7 @@ var parseMonthPatterns69 = {
     /^9/i,
     /^10/i,
     /^11/i,
-    /^12/i
+    /^12/i,
   ],
   any: [
     /^ја/i,
@@ -23187,21 +23269,21 @@ var parseMonthPatterns69 = {
     /^с/i,
     /^о/i,
     /^н/i,
-    /^д/i
-  ]
+    /^д/i,
+  ],
 };
 var matchDayPatterns69 = {
   narrow: /^[пусчн]/i,
   short: /^(нед|пон|уто|сре|чет|пет|суб)/i,
   abbreviated: /^(нед|пон|уто|сре|чет|пет|суб)/i,
-  wide: /^(недеља|понедељак|уторак|среда|четвртак|петак|субота)/i
+  wide: /^(недеља|понедељак|уторак|среда|четвртак|петак|субота)/i,
 };
 var parseDayPatterns69 = {
   narrow: [/^п/i, /^у/i, /^с/i, /^ч/i, /^п/i, /^с/i, /^н/i],
-  any: [/^нед/i, /^пон/i, /^уто/i, /^сре/i, /^чет/i, /^пет/i, /^суб/i]
+  any: [/^нед/i, /^пон/i, /^уто/i, /^сре/i, /^чет/i, /^пет/i, /^суб/i],
 };
 var matchDayPeriodPatterns69 = {
-  any: /^(ам|пм|поноћ|(по)?подне|увече|ноћу|после подне|ујутру)/i
+  any: /^(ам|пм|поноћ|(по)?подне|увече|ноћу|после подне|ујутру)/i,
 };
 var parseDayPeriodPatterns69 = {
   any: {
@@ -23212,46 +23294,46 @@ var parseDayPeriodPatterns69 = {
     morning: /ујутру/i,
     afternoon: /(после\s|по)+подне/i,
     evening: /(увече)/i,
-    night: /(ноћу)/i
-  }
+    night: /(ноћу)/i,
+  },
 };
 var match70 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern69,
     parsePattern: parseOrdinalNumberPattern69,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns69,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns69,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns69,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns69,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns69,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns69,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns69,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns69,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns69,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns69,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/sr-Latn/_lib/formatLong.js
@@ -23259,45 +23341,45 @@ var dateFormats79 = {
   full: "EEEE, d. MMMM yyyy.",
   long: "d. MMMM yyyy.",
   medium: "d. MMM yy.",
-  short: "dd. MM. yy."
+  short: "dd. MM. yy.",
 };
 var timeFormats79 = {
   full: "HH:mm:ss (zzzz)",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats79 = {
   full: "{{date}} 'u' {{time}}",
   long: "{{date}} 'u' {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong79 = {
   date: buildFormatLongFn({
     formats: dateFormats79,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats79,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats79,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/sr-Latn/_lib/localize.js
 var eraValues71 = {
   narrow: ["pr.n.e.", "AD"],
   abbreviated: ["pr. Hr.", "po. Hr."],
-  wide: ["Pre Hrista", "Posle Hrista"]
+  wide: ["Pre Hrista", "Posle Hrista"],
 };
 var quarterValues71 = {
   narrow: ["1.", "2.", "3.", "4."],
   abbreviated: ["1. kv.", "2. kv.", "3. kv.", "4. kv."],
-  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
+  wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"],
 };
 var monthValues71 = {
   narrow: [
@@ -23312,7 +23394,7 @@ var monthValues71 = {
     "9.",
     "10.",
     "11.",
-    "12."
+    "12.",
   ],
   abbreviated: [
     "jan",
@@ -23326,7 +23408,7 @@ var monthValues71 = {
     "sep",
     "okt",
     "nov",
-    "dec"
+    "dec",
   ],
   wide: [
     "januar",
@@ -23340,8 +23422,8 @@ var monthValues71 = {
     "septembar",
     "oktobar",
     "novembar",
-    "decembar"
-  ]
+    "decembar",
+  ],
 };
 var formattingMonthValues17 = {
   narrow: [
@@ -23356,7 +23438,7 @@ var formattingMonthValues17 = {
     "9.",
     "10.",
     "11.",
-    "12."
+    "12.",
   ],
   abbreviated: [
     "jan",
@@ -23370,7 +23452,7 @@ var formattingMonthValues17 = {
     "sep",
     "okt",
     "nov",
-    "dec"
+    "dec",
   ],
   wide: [
     "januar",
@@ -23384,8 +23466,8 @@ var formattingMonthValues17 = {
     "septembar",
     "oktobar",
     "novembar",
-    "decembar"
-  ]
+    "decembar",
+  ],
 };
 var dayValues71 = {
   narrow: ["N", "P", "U", "S", "Č", "P", "S"],
@@ -23398,8 +23480,8 @@ var dayValues71 = {
     "sreda",
     "četvrtak",
     "petak",
-    "subota"
-  ]
+    "subota",
+  ],
 };
 var formattingDayPeriodValues55 = {
   narrow: {
@@ -23410,7 +23492,7 @@ var formattingDayPeriodValues55 = {
     morning: "ujutru",
     afternoon: "popodne",
     evening: "uveče",
-    night: "noću"
+    night: "noću",
   },
   abbreviated: {
     am: "AM",
@@ -23420,7 +23502,7 @@ var formattingDayPeriodValues55 = {
     morning: "ujutru",
     afternoon: "popodne",
     evening: "uveče",
-    night: "noću"
+    night: "noću",
   },
   wide: {
     am: "AM",
@@ -23430,8 +23512,8 @@ var formattingDayPeriodValues55 = {
     morning: "ujutru",
     afternoon: "posle podne",
     evening: "uveče",
-    night: "noću"
-  }
+    night: "noću",
+  },
 };
 var dayPeriodValues71 = {
   narrow: {
@@ -23442,7 +23524,7 @@ var dayPeriodValues71 = {
     morning: "ujutru",
     afternoon: "popodne",
     evening: "uveče",
-    night: "noću"
+    night: "noću",
   },
   abbreviated: {
     am: "AM",
@@ -23452,7 +23534,7 @@ var dayPeriodValues71 = {
     morning: "ujutru",
     afternoon: "popodne",
     evening: "uveče",
-    night: "noću"
+    night: "noću",
   },
   wide: {
     am: "AM",
@@ -23462,8 +23544,8 @@ var dayPeriodValues71 = {
     morning: "ujutru",
     afternoon: "posle podne",
     evening: "uveče",
-    night: "noću"
-  }
+    night: "noću",
+  },
 };
 var ordinalNumber71 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -23473,29 +23555,29 @@ var localize72 = {
   ordinalNumber: ordinalNumber71,
   era: buildLocalizeFn({
     values: eraValues71,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues71,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues71,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues17,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues71,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues71,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues55,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/sr-Latn/_lib/match.js
@@ -23504,23 +23586,23 @@ var parseOrdinalNumberPattern70 = /\d+/i;
 var matchEraPatterns70 = {
   narrow: /^(pr\.n\.e\.|AD)/i,
   abbreviated: /^(pr\.\s?Hr\.|po\.\s?Hr\.)/i,
-  wide: /^(Pre Hrista|pre nove ere|Posle Hrista|nova era)/i
+  wide: /^(Pre Hrista|pre nove ere|Posle Hrista|nova era)/i,
 };
 var parseEraPatterns70 = {
-  any: [/^pr/i, /^(po|nova)/i]
+  any: [/^pr/i, /^(po|nova)/i],
 };
 var matchQuarterPatterns70 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]\.\s?kv\.?/i,
-  wide: /^[1234]\. kvartal/i
+  wide: /^[1234]\. kvartal/i,
 };
 var parseQuarterPatterns70 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns70 = {
   narrow: /^(10|11|12|[123456789])\./i,
   abbreviated: /^(jan|feb|mar|apr|maj|jun|jul|avg|sep|okt|nov|dec)/i,
-  wide: /^((januar|januara)|(februar|februara)|(mart|marta)|(april|aprila)|(maj|maja)|(jun|juna)|(jul|jula)|(avgust|avgusta)|(septembar|septembra)|(oktobar|oktobra)|(novembar|novembra)|(decembar|decembra))/i
+  wide: /^((januar|januara)|(februar|februara)|(mart|marta)|(april|aprila)|(maj|maja)|(jun|juna)|(jul|jula)|(avgust|avgusta)|(septembar|septembra)|(oktobar|oktobra)|(novembar|novembra)|(decembar|decembra))/i,
 };
 var parseMonthPatterns70 = {
   narrow: [
@@ -23535,7 +23617,7 @@ var parseMonthPatterns70 = {
     /^9/i,
     /^10/i,
     /^11/i,
-    /^12/i
+    /^12/i,
   ],
   any: [
     /^ja/i,
@@ -23549,21 +23631,21 @@ var parseMonthPatterns70 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns70 = {
   narrow: /^[npusčc]/i,
   short: /^(ned|pon|uto|sre|(čet|cet)|pet|sub)/i,
   abbreviated: /^(ned|pon|uto|sre|(čet|cet)|pet|sub)/i,
-  wide: /^(nedelja|ponedeljak|utorak|sreda|(četvrtak|cetvrtak)|petak|subota)/i
+  wide: /^(nedelja|ponedeljak|utorak|sreda|(četvrtak|cetvrtak)|petak|subota)/i,
 };
 var parseDayPatterns70 = {
   narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
-  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
+  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i],
 };
 var matchDayPeriodPatterns70 = {
-  any: /^(am|pm|ponoc|ponoć|(po)?podne|uvece|uveče|noću|posle podne|ujutru)/i
+  any: /^(am|pm|ponoc|ponoć|(po)?podne|uvece|uveče|noću|posle podne|ujutru)/i,
 };
 var parseDayPeriodPatterns70 = {
   any: {
@@ -23574,46 +23656,46 @@ var parseDayPeriodPatterns70 = {
     morning: /jutro/i,
     afternoon: /(posle\s|po)+podne/i,
     evening: /(uvece|uveče)/i,
-    night: /(nocu|noću)/i
-  }
+    night: /(nocu|noću)/i,
+  },
 };
 var match71 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern70,
     parsePattern: parseOrdinalNumberPattern70,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns70,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns70,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns70,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns70,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns70,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns70,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns70,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns70,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns70,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns70,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/sv/_lib/formatLong.js
@@ -23621,45 +23703,45 @@ var dateFormats80 = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
-  short: "y-MM-dd"
+  short: "y-MM-dd",
 };
 var timeFormats80 = {
   full: "'kl'. HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats80 = {
   full: "{{date}} 'kl.' {{time}}",
   long: "{{date}} 'kl.' {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong80 = {
   date: buildFormatLongFn({
     formats: dateFormats80,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats80,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats80,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/sv/_lib/localize.js
 var eraValues72 = {
   narrow: ["f.Kr.", "e.Kr."],
   abbreviated: ["f.Kr.", "e.Kr."],
-  wide: ["före Kristus", "efter Kristus"]
+  wide: ["före Kristus", "efter Kristus"],
 };
 var quarterValues72 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["1:a kvartalet", "2:a kvartalet", "3:e kvartalet", "4:e kvartalet"]
+  wide: ["1:a kvartalet", "2:a kvartalet", "3:e kvartalet", "4:e kvartalet"],
 };
 var monthValues72 = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
@@ -23675,7 +23757,7 @@ var monthValues72 = {
     "sep.",
     "okt.",
     "nov.",
-    "dec."
+    "dec.",
   ],
   wide: [
     "januari",
@@ -23689,14 +23771,14 @@ var monthValues72 = {
     "september",
     "oktober",
     "november",
-    "december"
-  ]
+    "december",
+  ],
 };
 var dayValues72 = {
   narrow: ["S", "M", "T", "O", "T", "F", "L"],
   short: ["sö", "må", "ti", "on", "to", "fr", "lö"],
   abbreviated: ["sön", "mån", "tis", "ons", "tors", "fre", "lör"],
-  wide: ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"]
+  wide: ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"],
 };
 var dayPeriodValues72 = {
   narrow: {
@@ -23707,7 +23789,7 @@ var dayPeriodValues72 = {
     morning: "morg.",
     afternoon: "efterm.",
     evening: "kväll",
-    night: "natt"
+    night: "natt",
   },
   abbreviated: {
     am: "f.m.",
@@ -23717,7 +23799,7 @@ var dayPeriodValues72 = {
     morning: "morgon",
     afternoon: "efterm.",
     evening: "kväll",
-    night: "natt"
+    night: "natt",
   },
   wide: {
     am: "förmiddag",
@@ -23727,8 +23809,8 @@ var dayPeriodValues72 = {
     morning: "morgon",
     afternoon: "eftermiddag",
     evening: "kväll",
-    night: "natt"
-  }
+    night: "natt",
+  },
 };
 var formattingDayPeriodValues56 = {
   narrow: {
@@ -23739,7 +23821,7 @@ var formattingDayPeriodValues56 = {
     morning: "på morg.",
     afternoon: "på efterm.",
     evening: "på kvällen",
-    night: "på natten"
+    night: "på natten",
   },
   abbreviated: {
     am: "fm",
@@ -23749,7 +23831,7 @@ var formattingDayPeriodValues56 = {
     morning: "på morg.",
     afternoon: "på efterm.",
     evening: "på kvällen",
-    night: "på natten"
+    night: "på natten",
   },
   wide: {
     am: "fm",
@@ -23759,8 +23841,8 @@ var formattingDayPeriodValues56 = {
     morning: "på morgonen",
     afternoon: "på eftermiddagen",
     evening: "på kvällen",
-    night: "på natten"
-  }
+    night: "på natten",
+  },
 };
 var ordinalNumber72 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -23778,27 +23860,27 @@ var localize73 = {
   ordinalNumber: ordinalNumber72,
   era: buildLocalizeFn({
     values: eraValues72,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues72,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues72,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues72,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues72,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues56,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/sv/_lib/match.js
@@ -23807,23 +23889,24 @@ var parseOrdinalNumberPattern71 = /\d+/i;
 var matchEraPatterns71 = {
   narrow: /^(f\.? ?Kr\.?|f\.? ?v\.? ?t\.?|e\.? ?Kr\.?|v\.? ?t\.?)/i,
   abbreviated: /^(f\.? ?Kr\.?|f\.? ?v\.? ?t\.?|e\.? ?Kr\.?|v\.? ?t\.?)/i,
-  wide: /^(före Kristus|före vår tid|efter Kristus|vår tid)/i
+  wide: /^(före Kristus|före vår tid|efter Kristus|vår tid)/i,
 };
 var parseEraPatterns71 = {
-  any: [/^f/i, /^[ev]/i]
+  any: [/^f/i, /^[ev]/i],
 };
 var matchQuarterPatterns71 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234](:a|:e)? kvartalet/i
+  wide: /^[1234](:a|:e)? kvartalet/i,
 };
 var parseQuarterPatterns71 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns71 = {
   narrow: /^[jfmasond]/i,
-  abbreviated: /^(jan|feb|mar[s]?|apr|maj|jun[i]?|jul[i]?|aug|sep|okt|nov|dec)\.?/i,
-  wide: /^(januari|februari|mars|april|maj|juni|juli|augusti|september|oktober|november|december)/i
+  abbreviated:
+    /^(jan|feb|mar[s]?|apr|maj|jun[i]?|jul[i]?|aug|sep|okt|nov|dec)\.?/i,
+  wide: /^(januari|februari|mars|april|maj|juni|juli|augusti|september|oktober|november|december)/i,
 };
 var parseMonthPatterns71 = {
   narrow: [
@@ -23838,7 +23921,7 @@ var parseMonthPatterns71 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ja/i,
@@ -23852,20 +23935,20 @@ var parseMonthPatterns71 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns71 = {
   narrow: /^[smtofl]/i,
   short: /^(sö|må|ti|on|to|fr|lö)/i,
   abbreviated: /^(sön|mån|tis|ons|tors|fre|lör)/i,
-  wide: /^(söndag|måndag|tisdag|onsdag|torsdag|fredag|lördag)/i
+  wide: /^(söndag|måndag|tisdag|onsdag|torsdag|fredag|lördag)/i,
 };
 var parseDayPatterns71 = {
-  any: [/^s/i, /^m/i, /^ti/i, /^o/i, /^to/i, /^f/i, /^l/i]
+  any: [/^s/i, /^m/i, /^ti/i, /^o/i, /^to/i, /^f/i, /^l/i],
 };
 var matchDayPeriodPatterns71 = {
-  any: /^([fe]\.?\s?m\.?|midn(att)?|midd(ag)?|(på) (morgonen|eftermiddagen|kvällen|natten))/i
+  any: /^([fe]\.?\s?m\.?|midn(att)?|midd(ag)?|(på) (morgonen|eftermiddagen|kvällen|natten))/i,
 };
 var parseDayPeriodPatterns71 = {
   any: {
@@ -23876,46 +23959,46 @@ var parseDayPeriodPatterns71 = {
     morning: /morgon/i,
     afternoon: /eftermiddag/i,
     evening: /kväll/i,
-    night: /natt/i
-  }
+    night: /natt/i,
+  },
 };
 var match72 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern71,
     parsePattern: parseOrdinalNumberPattern71,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns71,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns71,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns71,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns71,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns71,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns71,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns71,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns71,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns71,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns71,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ta/_lib/formatLong.js
@@ -23923,33 +24006,33 @@ var dateFormats81 = {
   full: "EEEE, d MMMM, y",
   long: "d MMMM, y",
   medium: "d MMM, y",
-  short: "d/M/yy"
+  short: "d/M/yy",
 };
 var timeFormats81 = {
   full: "a h:mm:ss zzzz",
   long: "a h:mm:ss z",
   medium: "a h:mm:ss",
-  short: "a h:mm"
+  short: "a h:mm",
 };
 var dateTimeFormats81 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong81 = {
   date: buildFormatLongFn({
     formats: dateFormats81,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats81,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats81,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ta/_lib/localize.js
@@ -23957,7 +24040,7 @@ var eraValues73 = {
   narrow: ["கி.மு.", "கி.பி."],
   abbreviated: ["கி.மு.", "கி.பி."],
   // CLDR #1624, #1626
-  wide: ["கிறிஸ்துவுக்கு முன்", "அன்னோ டோமினி"]
+  wide: ["கிறிஸ்துவுக்கு முன்", "அன்னோ டோமினி"],
   // CLDR #1620, #1622
 };
 var quarterValues73 = {
@@ -23970,8 +24053,8 @@ var quarterValues73 = {
     "ஒன்றாம் காலாண்டு",
     "இரண்டாம் காலாண்டு",
     "மூன்றாம் காலாண்டு",
-    "நான்காம் காலாண்டு"
-  ]
+    "நான்காம் காலாண்டு",
+  ],
 };
 var monthValues73 = {
   // CLDR #700 - #711
@@ -23989,7 +24072,7 @@ var monthValues73 = {
     "செப்.",
     "அக்.",
     "நவ.",
-    "டிச."
+    "டிச.",
   ],
   // CLDR #1652 - #1663
   wide: [
@@ -24015,9 +24098,9 @@ var monthValues73 = {
     // October
     "நவம்பர்",
     // November
-    "டிசம்பர்"
+    "டிசம்பர்",
     // December
-  ]
+  ],
 };
 var dayValues73 = {
   // CLDR #1766 - #1772
@@ -24040,9 +24123,9 @@ var dayValues73 = {
     // Thursday
     "வெள்ளி",
     // Friday
-    "சனி"
+    "சனி",
     // Saturday
-  ]
+  ],
 };
 var dayPeriodValues73 = {
   narrow: {
@@ -24053,7 +24136,7 @@ var dayPeriodValues73 = {
     morning: "கா.",
     afternoon: "மதி.",
     evening: "மா.",
-    night: "இர."
+    night: "இர.",
   },
   abbreviated: {
     am: "முற்பகல்",
@@ -24063,7 +24146,7 @@ var dayPeriodValues73 = {
     morning: "காலை",
     afternoon: "மதியம்",
     evening: "மாலை",
-    night: "இரவு"
+    night: "இரவு",
   },
   wide: {
     am: "முற்பகல்",
@@ -24073,8 +24156,8 @@ var dayPeriodValues73 = {
     morning: "காலை",
     afternoon: "மதியம்",
     evening: "மாலை",
-    night: "இரவு"
-  }
+    night: "இரவு",
+  },
 };
 var formattingDayPeriodValues57 = {
   narrow: {
@@ -24085,7 +24168,7 @@ var formattingDayPeriodValues57 = {
     morning: "கா.",
     afternoon: "மதி.",
     evening: "மா.",
-    night: "இர."
+    night: "இர.",
   },
   abbreviated: {
     am: "முற்பகல்",
@@ -24095,7 +24178,7 @@ var formattingDayPeriodValues57 = {
     morning: "காலை",
     afternoon: "மதியம்",
     evening: "மாலை",
-    night: "இரவு"
+    night: "இரவு",
   },
   wide: {
     am: "முற்பகல்",
@@ -24105,8 +24188,8 @@ var formattingDayPeriodValues57 = {
     morning: "காலை",
     afternoon: "மதியம்",
     evening: "மாலை",
-    night: "இரவு"
-  }
+    night: "இரவு",
+  },
 };
 var ordinalNumber73 = (dirtyNumber, _options) => {
   return String(dirtyNumber);
@@ -24115,27 +24198,27 @@ var localize74 = {
   ordinalNumber: ordinalNumber73,
   era: buildLocalizeFn({
     values: eraValues73,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues73,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues73,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues73,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues73,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues57,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ta/_lib/match.js
@@ -24144,15 +24227,15 @@ var parseOrdinalNumberPattern72 = /\d+/i;
 var matchEraPatterns72 = {
   narrow: /^(கி.மு.|கி.பி.)/i,
   abbreviated: /^(கி\.?\s?மு\.?|கி\.?\s?பி\.?)/,
-  wide: /^(கிறிஸ்துவுக்கு\sமுன்|அன்னோ\sடோமினி)/i
+  wide: /^(கிறிஸ்துவுக்கு\sமுன்|அன்னோ\sடோமினி)/i,
 };
 var parseEraPatterns72 = {
-  any: [/கி\.?\s?மு\.?/, /கி\.?\s?பி\.?/]
+  any: [/கி\.?\s?மு\.?/, /கி\.?\s?பி\.?/],
 };
 var matchQuarterPatterns72 = {
   narrow: /^[1234]/i,
   abbreviated: /^காலா.[1234]/i,
-  wide: /^(ஒன்றாம்|இரண்டாம்|மூன்றாம்|நான்காம்) காலாண்டு/i
+  wide: /^(ஒன்றாம்|இரண்டாம்|மூன்றாம்|நான்காம்) காலாண்டு/i,
 };
 var parseQuarterPatterns72 = {
   narrow: [/1/i, /2/i, /3/i, /4/i],
@@ -24160,13 +24243,13 @@ var parseQuarterPatterns72 = {
     /(1|காலா.1|ஒன்றாம்)/i,
     /(2|காலா.2|இரண்டாம்)/i,
     /(3|காலா.3|மூன்றாம்)/i,
-    /(4|காலா.4|நான்காம்)/i
-  ]
+    /(4|காலா.4|நான்காம்)/i,
+  ],
 };
 var matchMonthPatterns72 = {
   narrow: /^(ஜ|பி|மா|ஏ|மே|ஜூ|ஆ|செ|அ|ந|டி)$/i,
   abbreviated: /^(ஜன.|பிப்.|மார்.|ஏப்.|மே|ஜூன்|ஜூலை|ஆக.|செப்.|அக்.|நவ.|டிச.)/i,
-  wide: /^(ஜனவரி|பிப்ரவரி|மார்ச்|ஏப்ரல்|மே|ஜூன்|ஜூலை|ஆகஸ்ட்|செப்டம்பர்|அக்டோபர்|நவம்பர்|டிசம்பர்)/i
+  wide: /^(ஜனவரி|பிப்ரவரி|மார்ச்|ஏப்ரல்|மே|ஜூன்|ஜூலை|ஆகஸ்ட்|செப்டம்பர்|அக்டோபர்|நவம்பர்|டிசம்பர்)/i,
 };
 var parseMonthPatterns72 = {
   narrow: [
@@ -24181,7 +24264,7 @@ var parseMonthPatterns72 = {
     /^செ/i,
     /^அ/i,
     /^ந/i,
-    /^டி/i
+    /^டி/i,
   ],
   any: [
     /^ஜன/i,
@@ -24195,22 +24278,22 @@ var parseMonthPatterns72 = {
     /^செ/i,
     /^அ/i,
     /^ந/i,
-    /^டி/i
-  ]
+    /^டி/i,
+  ],
 };
 var matchDayPatterns72 = {
   narrow: /^(ஞா|தி|செ|பு|வி|வெ|ச)/i,
   short: /^(ஞா|தி|செ|பு|வி|வெ|ச)/i,
   abbreviated: /^(ஞாயி.|திங்.|செவ்.|புத.|வியா.|வெள்.|சனி)/i,
-  wide: /^(ஞாயிறு|திங்கள்|செவ்வாய்|புதன்|வியாழன்|வெள்ளி|சனி)/i
+  wide: /^(ஞாயிறு|திங்கள்|செவ்வாய்|புதன்|வியாழன்|வெள்ளி|சனி)/i,
 };
 var parseDayPatterns72 = {
   narrow: [/^ஞா/i, /^தி/i, /^செ/i, /^பு/i, /^வி/i, /^வெ/i, /^ச/i],
-  any: [/^ஞா/i, /^தி/i, /^செ/i, /^பு/i, /^வி/i, /^வெ/i, /^ச/i]
+  any: [/^ஞா/i, /^தி/i, /^செ/i, /^பு/i, /^வி/i, /^வெ/i, /^ச/i],
 };
 var matchDayPeriodPatterns72 = {
   narrow: /^(மு.ப|பி.ப|நள்|நண்|காலை|மதியம்|மாலை|இரவு)/i,
-  any: /^(மு.ப|பி.ப|முற்பகல்|பிற்பகல்|நள்ளிரவு|நண்பகல்|காலை|மதியம்|மாலை|இரவு)/i
+  any: /^(மு.ப|பி.ப|முற்பகல்|பிற்பகல்|நள்ளிரவு|நண்பகல்|காலை|மதியம்|மாலை|இரவு)/i,
 };
 var parseDayPeriodPatterns72 = {
   any: {
@@ -24221,46 +24304,46 @@ var parseDayPeriodPatterns72 = {
     morning: /காலை/i,
     afternoon: /மதியம்/i,
     evening: /மாலை/i,
-    night: /இரவு/i
-  }
+    night: /இரவு/i,
+  },
 };
 var match73 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern72,
     parsePattern: parseOrdinalNumberPattern72,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns72,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns72,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns72,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns72,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns72,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns72,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns72,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns72,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns72,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns72,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/te/_lib/formatLong.js
@@ -24268,45 +24351,45 @@ var dateFormats82 = {
   full: "d, MMMM y, EEEE",
   long: "d MMMM, y",
   medium: "d MMM, y",
-  short: "dd-MM-yy"
+  short: "dd-MM-yy",
 };
 var timeFormats82 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats82 = {
   full: "{{date}} {{time}}'కి'",
   long: "{{date}} {{time}}'కి'",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong82 = {
   date: buildFormatLongFn({
     formats: dateFormats82,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats82,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats82,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/te/_lib/localize.js
 var eraValues74 = {
   narrow: ["క్రీ.పూ.", "క్రీ.శ."],
   abbreviated: ["క్రీ.పూ.", "క్రీ.శ."],
-  wide: ["క్రీస్తు పూర్వం", "క్రీస్తుశకం"]
+  wide: ["క్రీస్తు పూర్వం", "క్రీస్తుశకం"],
 };
 var quarterValues74 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["త్రై1", "త్రై2", "త్రై3", "త్రై4"],
-  wide: ["1వ త్రైమాసికం", "2వ త్రైమాసికం", "3వ త్రైమాసికం", "4వ త్రైమాసికం"]
+  wide: ["1వ త్రైమాసికం", "2వ త్రైమాసికం", "3వ త్రైమాసికం", "4వ త్రైమాసికం"],
 };
 var monthValues74 = {
   narrow: ["జ", "ఫి", "మా", "ఏ", "మే", "జూ", "జు", "ఆ", "సె", "అ", "న", "డి"],
@@ -24322,7 +24405,7 @@ var monthValues74 = {
     "సెప్టెం",
     "అక్టో",
     "నవం",
-    "డిసెం"
+    "డిసెం",
   ],
   wide: [
     "జనవరి",
@@ -24336,8 +24419,8 @@ var monthValues74 = {
     "సెప్టెంబర్",
     "అక్టోబర్",
     "నవంబర్",
-    "డిసెంబర్"
-  ]
+    "డిసెంబర్",
+  ],
 };
 var dayValues74 = {
   narrow: ["ఆ", "సో", "మ", "బు", "గు", "శు", "శ"],
@@ -24350,8 +24433,8 @@ var dayValues74 = {
     "బుధవారం",
     "గురువారం",
     "శుక్రవారం",
-    "శనివారం"
-  ]
+    "శనివారం",
+  ],
 };
 var dayPeriodValues74 = {
   narrow: {
@@ -24362,7 +24445,7 @@ var dayPeriodValues74 = {
     morning: "ఉదయం",
     afternoon: "మధ్యాహ్నం",
     evening: "సాయంత్రం",
-    night: "రాత్రి"
+    night: "రాత్రి",
   },
   abbreviated: {
     am: "పూర్వాహ్నం",
@@ -24372,7 +24455,7 @@ var dayPeriodValues74 = {
     morning: "ఉదయం",
     afternoon: "మధ్యాహ్నం",
     evening: "సాయంత్రం",
-    night: "రాత్రి"
+    night: "రాత్రి",
   },
   wide: {
     am: "పూర్వాహ్నం",
@@ -24382,8 +24465,8 @@ var dayPeriodValues74 = {
     morning: "ఉదయం",
     afternoon: "మధ్యాహ్నం",
     evening: "సాయంత్రం",
-    night: "రాత్రి"
-  }
+    night: "రాత్రి",
+  },
 };
 var formattingDayPeriodValues58 = {
   narrow: {
@@ -24394,7 +24477,7 @@ var formattingDayPeriodValues58 = {
     morning: "ఉదయం",
     afternoon: "మధ్యాహ్నం",
     evening: "సాయంత్రం",
-    night: "రాత్రి"
+    night: "రాత్రి",
   },
   abbreviated: {
     am: "పూర్వాహ్నం",
@@ -24404,7 +24487,7 @@ var formattingDayPeriodValues58 = {
     morning: "ఉదయం",
     afternoon: "మధ్యాహ్నం",
     evening: "సాయంత్రం",
-    night: "రాత్రి"
+    night: "రాత్రి",
   },
   wide: {
     am: "పూర్వాహ్నం",
@@ -24414,8 +24497,8 @@ var formattingDayPeriodValues58 = {
     morning: "ఉదయం",
     afternoon: "మధ్యాహ్నం",
     evening: "సాయంత్రం",
-    night: "రాత్రి"
-  }
+    night: "రాత్రి",
+  },
 };
 var ordinalNumber74 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -24425,27 +24508,27 @@ var localize75 = {
   ordinalNumber: ordinalNumber74,
   era: buildLocalizeFn({
     values: eraValues74,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues74,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues74,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues74,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues74,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues58,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/te/_lib/match.js
@@ -24453,24 +24536,25 @@ var matchOrdinalNumberPattern73 = /^(\d+)(వ)?/i;
 var parseOrdinalNumberPattern73 = /\d+/i;
 var matchEraPatterns73 = {
   narrow: /^(క్రీ\.పూ\.|క్రీ\.శ\.)/i,
-  abbreviated: /^(క్రీ\.?\s?పూ\.?|ప్ర\.?\s?శ\.?\s?పూ\.?|క్రీ\.?\s?శ\.?|సా\.?\s?శ\.?)/i,
-  wide: /^(క్రీస్తు పూర్వం|ప్రస్తుత శకానికి పూర్వం|క్రీస్తు శకం|ప్రస్తుత శకం)/i
+  abbreviated:
+    /^(క్రీ\.?\s?పూ\.?|ప్ర\.?\s?శ\.?\s?పూ\.?|క్రీ\.?\s?శ\.?|సా\.?\s?శ\.?)/i,
+  wide: /^(క్రీస్తు పూర్వం|ప్రస్తుత శకానికి పూర్వం|క్రీస్తు శకం|ప్రస్తుత శకం)/i,
 };
 var parseEraPatterns73 = {
-  any: [/^(పూ|శ)/i, /^సా/i]
+  any: [/^(పూ|శ)/i, /^సా/i],
 };
 var matchQuarterPatterns73 = {
   narrow: /^[1234]/i,
   abbreviated: /^త్రై[1234]/i,
-  wide: /^[1234](వ)? త్రైమాసికం/i
+  wide: /^[1234](వ)? త్రైమాసికం/i,
 };
 var parseQuarterPatterns73 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns73 = {
   narrow: /^(జూ|జు|జ|ఫి|మా|ఏ|మే|ఆ|సె|అ|న|డి)/i,
   abbreviated: /^(జన|ఫిబ్ర|మార్చి|ఏప్రి|మే|జూన్|జులై|ఆగ|సెప్|అక్టో|నవ|డిసె)/i,
-  wide: /^(జనవరి|ఫిబ్రవరి|మార్చి|ఏప్రిల్|మే|జూన్|జులై|ఆగస్టు|సెప్టెంబర్|అక్టోబర్|నవంబర్|డిసెంబర్)/i
+  wide: /^(జనవరి|ఫిబ్రవరి|మార్చి|ఏప్రిల్|మే|జూన్|జులై|ఆగస్టు|సెప్టెంబర్|అక్టోబర్|నవంబర్|డిసెంబర్)/i,
 };
 var parseMonthPatterns73 = {
   narrow: [
@@ -24485,7 +24569,7 @@ var parseMonthPatterns73 = {
     /^సె/i,
     /^అ/i,
     /^న/i,
-    /^డి/i
+    /^డి/i,
   ],
   any: [
     /^జన/i,
@@ -24499,22 +24583,23 @@ var parseMonthPatterns73 = {
     /^సె/i,
     /^అ/i,
     /^న/i,
-    /^డి/i
-  ]
+    /^డి/i,
+  ],
 };
 var matchDayPatterns73 = {
   narrow: /^(ఆ|సో|మ|బు|గు|శు|శ)/i,
   short: /^(ఆది|సోమ|మం|బుధ|గురు|శుక్ర|శని)/i,
   abbreviated: /^(ఆది|సోమ|మం|బుధ|గురు|శుక్ర|శని)/i,
-  wide: /^(ఆదివారం|సోమవారం|మంగళవారం|బుధవారం|గురువారం|శుక్రవారం|శనివారం)/i
+  wide: /^(ఆదివారం|సోమవారం|మంగళవారం|బుధవారం|గురువారం|శుక్రవారం|శనివారం)/i,
 };
 var parseDayPatterns73 = {
   narrow: [/^ఆ/i, /^సో/i, /^మ/i, /^బు/i, /^గు/i, /^శు/i, /^శ/i],
-  any: [/^ఆది/i, /^సోమ/i, /^మం/i, /^బుధ/i, /^గురు/i, /^శుక్ర/i, /^శని/i]
+  any: [/^ఆది/i, /^సోమ/i, /^మం/i, /^బుధ/i, /^గురు/i, /^శుక్ర/i, /^శని/i],
 };
 var matchDayPeriodPatterns73 = {
-  narrow: /^(పూర్వాహ్నం|అపరాహ్నం|అర్ధరాత్రి|మిట్టమధ్యాహ్నం|ఉదయం|మధ్యాహ్నం|సాయంత్రం|రాత్రి)/i,
-  any: /^(పూర్వాహ్నం|అపరాహ్నం|అర్ధరాత్రి|మిట్టమధ్యాహ్నం|ఉదయం|మధ్యాహ్నం|సాయంత్రం|రాత్రి)/i
+  narrow:
+    /^(పూర్వాహ్నం|అపరాహ్నం|అర్ధరాత్రి|మిట్టమధ్యాహ్నం|ఉదయం|మధ్యాహ్నం|సాయంత్రం|రాత్రి)/i,
+  any: /^(పూర్వాహ్నం|అపరాహ్నం|అర్ధరాత్రి|మిట్టమధ్యాహ్నం|ఉదయం|మధ్యాహ్నం|సాయంత్రం|రాత్రి)/i,
 };
 var parseDayPeriodPatterns73 = {
   any: {
@@ -24525,46 +24610,46 @@ var parseDayPeriodPatterns73 = {
     morning: /ఉదయం/i,
     afternoon: /మధ్యాహ్నం/i,
     evening: /సాయంత్రం/i,
-    night: /రాత్రి/i
-  }
+    night: /రాత్రి/i,
+  },
 };
 var match74 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern73,
     parsePattern: parseOrdinalNumberPattern73,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns73,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns73,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns73,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns73,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns73,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns73,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns73,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns73,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns73,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns73,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/th/_lib/formatLong.js
@@ -24572,51 +24657,51 @@ var dateFormats83 = {
   full: "วันEEEEที่ do MMMM y",
   long: "do MMMM y",
   medium: "d MMM y",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats83 = {
   full: "H:mm:ss น. zzzz",
   long: "H:mm:ss น. z",
   medium: "H:mm:ss น.",
-  short: "H:mm น."
+  short: "H:mm น.",
 };
 var dateTimeFormats83 = {
   full: "{{date}} 'เวลา' {{time}}",
   long: "{{date}} 'เวลา' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong83 = {
   date: buildFormatLongFn({
     formats: dateFormats83,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats83,
-    defaultWidth: "medium"
+    defaultWidth: "medium",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats83,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/th/_lib/localize.js
 var eraValues75 = {
   narrow: ["B", "คศ"],
   abbreviated: ["BC", "ค.ศ."],
-  wide: ["ปีก่อนคริสตกาล", "คริสต์ศักราช"]
+  wide: ["ปีก่อนคริสตกาล", "คริสต์ศักราช"],
 };
 var quarterValues75 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["ไตรมาสแรก", "ไตรมาสที่สอง", "ไตรมาสที่สาม", "ไตรมาสที่สี่"]
+  wide: ["ไตรมาสแรก", "ไตรมาสที่สอง", "ไตรมาสที่สาม", "ไตรมาสที่สี่"],
 };
 var dayValues75 = {
   narrow: ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."],
   short: ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."],
   abbreviated: ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."],
-  wide: ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"]
+  wide: ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"],
 };
 var monthValues75 = {
   narrow: [
@@ -24631,7 +24716,7 @@ var monthValues75 = {
     "ก.ย.",
     "ต.ค.",
     "พ.ย.",
-    "ธ.ค."
+    "ธ.ค.",
   ],
   abbreviated: [
     "ม.ค.",
@@ -24645,7 +24730,7 @@ var monthValues75 = {
     "ก.ย.",
     "ต.ค.",
     "พ.ย.",
-    "ธ.ค."
+    "ธ.ค.",
   ],
   wide: [
     "มกราคม",
@@ -24659,8 +24744,8 @@ var monthValues75 = {
     "กันยายน",
     "ตุลาคม",
     "พฤศจิกายน",
-    "ธันวาคม"
-  ]
+    "ธันวาคม",
+  ],
 };
 var dayPeriodValues75 = {
   narrow: {
@@ -24671,7 +24756,7 @@ var dayPeriodValues75 = {
     morning: "เช้า",
     afternoon: "บ่าย",
     evening: "เย็น",
-    night: "กลางคืน"
+    night: "กลางคืน",
   },
   abbreviated: {
     am: "ก่อนเที่ยง",
@@ -24681,7 +24766,7 @@ var dayPeriodValues75 = {
     morning: "เช้า",
     afternoon: "บ่าย",
     evening: "เย็น",
-    night: "กลางคืน"
+    night: "กลางคืน",
   },
   wide: {
     am: "ก่อนเที่ยง",
@@ -24691,8 +24776,8 @@ var dayPeriodValues75 = {
     morning: "เช้า",
     afternoon: "บ่าย",
     evening: "เย็น",
-    night: "กลางคืน"
-  }
+    night: "กลางคืน",
+  },
 };
 var formattingDayPeriodValues59 = {
   narrow: {
@@ -24703,7 +24788,7 @@ var formattingDayPeriodValues59 = {
     morning: "ตอนเช้า",
     afternoon: "ตอนกลางวัน",
     evening: "ตอนเย็น",
-    night: "ตอนกลางคืน"
+    night: "ตอนกลางคืน",
   },
   abbreviated: {
     am: "ก่อนเที่ยง",
@@ -24713,7 +24798,7 @@ var formattingDayPeriodValues59 = {
     morning: "ตอนเช้า",
     afternoon: "ตอนกลางวัน",
     evening: "ตอนเย็น",
-    night: "ตอนกลางคืน"
+    night: "ตอนกลางคืน",
   },
   wide: {
     am: "ก่อนเที่ยง",
@@ -24723,8 +24808,8 @@ var formattingDayPeriodValues59 = {
     morning: "ตอนเช้า",
     afternoon: "ตอนกลางวัน",
     evening: "ตอนเย็น",
-    night: "ตอนกลางคืน"
-  }
+    night: "ตอนกลางคืน",
+  },
 };
 var ordinalNumber75 = (dirtyNumber, _options) => {
   return String(dirtyNumber);
@@ -24733,27 +24818,27 @@ var localize76 = {
   ordinalNumber: ordinalNumber75,
   era: buildLocalizeFn({
     values: eraValues75,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues75,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues75,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues75,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues75,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues59,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/th/_lib/match.js
@@ -24761,24 +24846,27 @@ var matchOrdinalNumberPattern74 = /^\d+/i;
 var parseOrdinalNumberPattern74 = /\d+/i;
 var matchEraPatterns74 = {
   narrow: /^([bB]|[aA]|คศ)/i,
-  abbreviated: /^([bB]\.?\s?[cC]\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?|ค\.?ศ\.?)/i,
-  wide: /^(ก่อนคริสตกาล|คริสต์ศักราช|คริสตกาล)/i
+  abbreviated:
+    /^([bB]\.?\s?[cC]\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?|ค\.?ศ\.?)/i,
+  wide: /^(ก่อนคริสตกาล|คริสต์ศักราช|คริสตกาล)/i,
 };
 var parseEraPatterns74 = {
-  any: [/^[bB]/i, /^(^[aA]|ค\.?ศ\.?|คริสตกาล|คริสต์ศักราช|)/i]
+  any: [/^[bB]/i, /^(^[aA]|ค\.?ศ\.?|คริสตกาล|คริสต์ศักราช|)/i],
 };
 var matchQuarterPatterns74 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^ไตรมาส(ที่)? ?[1234]/i
+  wide: /^ไตรมาส(ที่)? ?[1234]/i,
 };
 var parseQuarterPatterns74 = {
-  any: [/(1|แรก|หนึ่ง)/i, /(2|สอง)/i, /(3|สาม)/i, /(4|สี่)/i]
+  any: [/(1|แรก|หนึ่ง)/i, /(2|สอง)/i, /(3|สาม)/i, /(4|สี่)/i],
 };
 var matchMonthPatterns74 = {
-  narrow: /^(ม\.?ค\.?|ก\.?พ\.?|มี\.?ค\.?|เม\.?ย\.?|พ\.?ค\.?|มิ\.?ย\.?|ก\.?ค\.?|ส\.?ค\.?|ก\.?ย\.?|ต\.?ค\.?|พ\.?ย\.?|ธ\.?ค\.?)/i,
-  abbreviated: /^(ม\.?ค\.?|ก\.?พ\.?|มี\.?ค\.?|เม\.?ย\.?|พ\.?ค\.?|มิ\.?ย\.?|ก\.?ค\.?|ส\.?ค\.?|ก\.?ย\.?|ต\.?ค\.?|พ\.?ย\.?|ธ\.?ค\.?')/i,
-  wide: /^(มกราคม|กุมภาพันธ์|มีนาคม|เมษายน|พฤษภาคม|มิถุนายน|กรกฎาคม|สิงหาคม|กันยายน|ตุลาคม|พฤศจิกายน|ธันวาคม)/i
+  narrow:
+    /^(ม\.?ค\.?|ก\.?พ\.?|มี\.?ค\.?|เม\.?ย\.?|พ\.?ค\.?|มิ\.?ย\.?|ก\.?ค\.?|ส\.?ค\.?|ก\.?ย\.?|ต\.?ค\.?|พ\.?ย\.?|ธ\.?ค\.?)/i,
+  abbreviated:
+    /^(ม\.?ค\.?|ก\.?พ\.?|มี\.?ค\.?|เม\.?ย\.?|พ\.?ค\.?|มิ\.?ย\.?|ก\.?ค\.?|ส\.?ค\.?|ก\.?ย\.?|ต\.?ค\.?|พ\.?ย\.?|ธ\.?ค\.?')/i,
+  wide: /^(มกราคม|กุมภาพันธ์|มีนาคม|เมษายน|พฤษภาคม|มิถุนายน|กรกฎาคม|สิงหาคม|กันยายน|ตุลาคม|พฤศจิกายน|ธันวาคม)/i,
 };
 var parseMonthPatterns74 = {
   wide: [
@@ -24793,7 +24881,7 @@ var parseMonthPatterns74 = {
     /^กัน/i,
     /^ต/i,
     /^พฤศ/i,
-    /^ธ/i
+    /^ธ/i,
   ],
   any: [
     /^ม\.?ค\.?/i,
@@ -24807,21 +24895,21 @@ var parseMonthPatterns74 = {
     /^ก\.?ย\.?/i,
     /^ต\.?ค\.?/i,
     /^พ\.?ย\.?/i,
-    /^ธ\.?ค\.?/i
-  ]
+    /^ธ\.?ค\.?/i,
+  ],
 };
 var matchDayPatterns74 = {
   narrow: /^(อา\.?|จ\.?|อ\.?|พฤ\.?|พ\.?|ศ\.?|ส\.?)/i,
   short: /^(อา\.?|จ\.?|อ\.?|พฤ\.?|พ\.?|ศ\.?|ส\.?)/i,
   abbreviated: /^(อา\.?|จ\.?|อ\.?|พฤ\.?|พ\.?|ศ\.?|ส\.?)/i,
-  wide: /^(อาทิตย์|จันทร์|อังคาร|พุธ|พฤหัสบดี|ศุกร์|เสาร์)/i
+  wide: /^(อาทิตย์|จันทร์|อังคาร|พุธ|พฤหัสบดี|ศุกร์|เสาร์)/i,
 };
 var parseDayPatterns74 = {
   wide: [/^อา/i, /^จั/i, /^อั/i, /^พุธ/i, /^พฤ/i, /^ศ/i, /^เส/i],
-  any: [/^อา/i, /^จ/i, /^อ/i, /^พ(?!ฤ)/i, /^พฤ/i, /^ศ/i, /^ส/i]
+  any: [/^อา/i, /^จ/i, /^อ/i, /^พ(?!ฤ)/i, /^พฤ/i, /^ศ/i, /^ส/i],
 };
 var matchDayPeriodPatterns74 = {
-  any: /^(ก่อนเที่ยง|หลังเที่ยง|เที่ยงคืน|เที่ยง|(ตอน.*?)?.*(เที่ยง|เช้า|บ่าย|เย็น|กลางคืน))/i
+  any: /^(ก่อนเที่ยง|หลังเที่ยง|เที่ยงคืน|เที่ยง|(ตอน.*?)?.*(เที่ยง|เช้า|บ่าย|เย็น|กลางคืน))/i,
 };
 var parseDayPeriodPatterns74 = {
   any: {
@@ -24832,46 +24920,46 @@ var parseDayPeriodPatterns74 = {
     morning: /เช้า/i,
     afternoon: /บ่าย/i,
     evening: /เย็น/i,
-    night: /กลางคืน/i
-  }
+    night: /กลางคืน/i,
+  },
 };
 var match75 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern74,
     parsePattern: parseOrdinalNumberPattern74,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns74,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns74,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns74,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns74,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns74,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns74,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns74,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns74,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns74,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns74,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/tr/_lib/formatLong.js
@@ -24879,45 +24967,45 @@ var dateFormats84 = {
   full: "d MMMM y EEEE",
   long: "d MMMM y",
   medium: "d MMM y",
-  short: "dd.MM.yyyy"
+  short: "dd.MM.yyyy",
 };
 var timeFormats84 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats84 = {
   full: "{{date}} 'saat' {{time}}",
   long: "{{date}} 'saat' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong84 = {
   date: buildFormatLongFn({
     formats: dateFormats84,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats84,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats84,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/tr/_lib/localize.js
 var eraValues76 = {
   narrow: ["MÖ", "MS"],
   abbreviated: ["MÖ", "MS"],
-  wide: ["Milattan Önce", "Milattan Sonra"]
+  wide: ["Milattan Önce", "Milattan Sonra"],
 };
 var quarterValues76 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1Ç", "2Ç", "3Ç", "4Ç"],
-  wide: ["İlk çeyrek", "İkinci Çeyrek", "Üçüncü çeyrek", "Son çeyrek"]
+  wide: ["İlk çeyrek", "İkinci Çeyrek", "Üçüncü çeyrek", "Son çeyrek"],
 };
 var monthValues76 = {
   narrow: ["O", "Ş", "M", "N", "M", "H", "T", "A", "E", "E", "K", "A"],
@@ -24933,7 +25021,7 @@ var monthValues76 = {
     "Eyl",
     "Eki",
     "Kas",
-    "Ara"
+    "Ara",
   ],
   wide: [
     "Ocak",
@@ -24947,8 +25035,8 @@ var monthValues76 = {
     "Eylül",
     "Ekim",
     "Kasım",
-    "Aralık"
-  ]
+    "Aralık",
+  ],
 };
 var dayValues76 = {
   narrow: ["P", "P", "S", "Ç", "P", "C", "C"],
@@ -24961,8 +25049,8 @@ var dayValues76 = {
     "Çarşamba",
     "Perşembe",
     "Cuma",
-    "Cumartesi"
-  ]
+    "Cumartesi",
+  ],
 };
 var dayPeriodValues76 = {
   narrow: {
@@ -24973,7 +25061,7 @@ var dayPeriodValues76 = {
     morning: "sa",
     afternoon: "ös",
     evening: "ak",
-    night: "ge"
+    night: "ge",
   },
   abbreviated: {
     am: "ÖÖ",
@@ -24983,7 +25071,7 @@ var dayPeriodValues76 = {
     morning: "sabah",
     afternoon: "öğleden sonra",
     evening: "akşam",
-    night: "gece"
+    night: "gece",
   },
   wide: {
     am: "Ö.Ö.",
@@ -24993,8 +25081,8 @@ var dayPeriodValues76 = {
     morning: "sabah",
     afternoon: "öğleden sonra",
     evening: "akşam",
-    night: "gece"
-  }
+    night: "gece",
+  },
 };
 var formattingDayPeriodValues60 = {
   narrow: {
@@ -25005,7 +25093,7 @@ var formattingDayPeriodValues60 = {
     morning: "sa",
     afternoon: "ös",
     evening: "ak",
-    night: "ge"
+    night: "ge",
   },
   abbreviated: {
     am: "ÖÖ",
@@ -25015,7 +25103,7 @@ var formattingDayPeriodValues60 = {
     morning: "sabahleyin",
     afternoon: "öğleden sonra",
     evening: "akşamleyin",
-    night: "geceleyin"
+    night: "geceleyin",
   },
   wide: {
     am: "ö.ö.",
@@ -25025,8 +25113,8 @@ var formattingDayPeriodValues60 = {
     morning: "sabahleyin",
     afternoon: "öğleden sonra",
     evening: "akşamleyin",
-    night: "geceleyin"
-  }
+    night: "geceleyin",
+  },
 };
 var ordinalNumber76 = (dirtyNumber, _options) => {
   const number = Number(dirtyNumber);
@@ -25036,27 +25124,27 @@ var localize77 = {
   ordinalNumber: ordinalNumber76,
   era: buildLocalizeFn({
     values: eraValues76,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues76,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => Number(quarter) - 1
+    argumentCallback: (quarter) => Number(quarter) - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues76,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues76,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues76,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues60,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/tr/_lib/match.js
@@ -25065,15 +25153,15 @@ var parseOrdinalNumberPattern75 = /\d+/i;
 var matchEraPatterns75 = {
   narrow: /^(mö|ms)/i,
   abbreviated: /^(mö|ms)/i,
-  wide: /^(milattan önce|milattan sonra)/i
+  wide: /^(milattan önce|milattan sonra)/i,
 };
 var parseEraPatterns75 = {
-  any: [/(^mö|^milattan önce)/i, /(^ms|^milattan sonra)/i]
+  any: [/(^mö|^milattan önce)/i, /(^ms|^milattan sonra)/i],
 };
 var matchQuarterPatterns75 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]ç/i,
-  wide: /^((i|İ)lk|(i|İ)kinci|üçüncü|son) çeyrek/i
+  wide: /^((i|İ)lk|(i|İ)kinci|üçüncü|son) çeyrek/i,
 };
 var parseQuarterPatterns75 = {
   any: [/1/i, /2/i, /3/i, /4/i],
@@ -25082,13 +25170,13 @@ var parseQuarterPatterns75 = {
     /^(i|İ)lk çeyrek/i,
     /(i|İ)kinci çeyrek/i,
     /üçüncü çeyrek/i,
-    /son çeyrek/i
-  ]
+    /son çeyrek/i,
+  ],
 };
 var matchMonthPatterns75 = {
   narrow: /^[oşmnhtaek]/i,
   abbreviated: /^(oca|şub|mar|nis|may|haz|tem|ağu|eyl|eki|kas|ara)/i,
-  wide: /^(ocak|şubat|mart|nisan|mayıs|haziran|temmuz|ağustos|eylül|ekim|kasım|aralık)/i
+  wide: /^(ocak|şubat|mart|nisan|mayıs|haziran|temmuz|ağustos|eylül|ekim|kasım|aralık)/i,
 };
 var parseMonthPatterns75 = {
   narrow: [
@@ -25103,7 +25191,7 @@ var parseMonthPatterns75 = {
     /^e/i,
     /^e/i,
     /^k/i,
-    /^a/i
+    /^a/i,
   ],
   any: [
     /^o/i,
@@ -25117,14 +25205,14 @@ var parseMonthPatterns75 = {
     /^ey/i,
     /^ek/i,
     /^k/i,
-    /^ar/i
-  ]
+    /^ar/i,
+  ],
 };
 var matchDayPatterns75 = {
   narrow: /^[psçc]/i,
   short: /^(pz|pt|sa|ça|pe|cu|ct)/i,
   abbreviated: /^(paz|pzt|sal|çar|per|cum|cts)/i,
-  wide: /^(pazar(?!tesi)|pazartesi|salı|çarşamba|perşembe|cuma(?!rtesi)|cumartesi)/i
+  wide: /^(pazar(?!tesi)|pazartesi|salı|çarşamba|perşembe|cuma(?!rtesi)|cumartesi)/i,
 };
 var parseDayPatterns75 = {
   narrow: [/^p/i, /^p/i, /^s/i, /^ç/i, /^p/i, /^c/i, /^c/i],
@@ -25136,12 +25224,12 @@ var parseDayPatterns75 = {
     /^çarşamba/i,
     /^perşembe/i,
     /^cuma(?!rtesi)/i,
-    /^cumartesi/i
-  ]
+    /^cumartesi/i,
+  ],
 };
 var matchDayPeriodPatterns75 = {
   narrow: /^(öö|ös|gy|ö|sa|ös|ak|ge)/i,
-  any: /^(ö\.?\s?[ös]\.?|öğleden sonra|gece yarısı|öğle|(sabah|öğ|akşam|gece)(leyin))/i
+  any: /^(ö\.?\s?[ös]\.?|öğleden sonra|gece yarısı|öğle|(sabah|öğ|akşam|gece)(leyin))/i,
 };
 var parseDayPeriodPatterns75 = {
   any: {
@@ -25152,48 +25240,48 @@ var parseDayPeriodPatterns75 = {
     morning: /^sa/i,
     afternoon: /^öğleden sonra/i,
     evening: /^ak/i,
-    night: /^ge/i
-  }
+    night: /^ge/i,
+  },
 };
 var match76 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern75,
     parsePattern: parseOrdinalNumberPattern75,
-    valueCallback: function(value) {
+    valueCallback: function (value) {
       return parseInt(value, 10);
-    }
+    },
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns75,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns75,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns75,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns75,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns75,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns75,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns75,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns75,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns75,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns75,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/ug/_lib/formatLong.js
@@ -25201,45 +25289,45 @@ var dateFormats85 = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
-  short: "MM/dd/yyyy"
+  short: "MM/dd/yyyy",
 };
 var timeFormats85 = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
-  short: "h:mm a"
+  short: "h:mm a",
 };
 var dateTimeFormats85 = {
   full: "{{date}} 'دە' {{time}}",
   long: "{{date}} 'دە' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong85 = {
   date: buildFormatLongFn({
     formats: dateFormats85,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats85,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats85,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/ug/_lib/localize.js
 var eraValues77 = {
   narrow: ["ب", "ك"],
   abbreviated: ["ب", "ك"],
-  wide: ["مىيلادىدىن بۇرۇن", "مىيلادىدىن كىيىن"]
+  wide: ["مىيلادىدىن بۇرۇن", "مىيلادىدىن كىيىن"],
 };
 var quarterValues77 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1", "2", "3", "4"],
-  wide: ["بىرىنجى چارەك", "ئىككىنجى چارەك", "ئۈچىنجى چارەك", "تۆتىنجى چارەك"]
+  wide: ["بىرىنجى چارەك", "ئىككىنجى چارەك", "ئۈچىنجى چارەك", "تۆتىنجى چارەك"],
 };
 var monthValues77 = {
   narrow: ["ي", "ف", "م", "ا", "م", "ى", "ى", "ا", "س", "ۆ", "ن", "د"],
@@ -25255,7 +25343,7 @@ var monthValues77 = {
     "سىنتەبىر",
     "ئۆكتەبىر",
     "نويابىر",
-    "دىكابىر"
+    "دىكابىر",
   ],
   wide: [
     "يانۋار",
@@ -25269,8 +25357,8 @@ var monthValues77 = {
     "سىنتەبىر",
     "ئۆكتەبىر",
     "نويابىر",
-    "دىكابىر"
-  ]
+    "دىكابىر",
+  ],
 };
 var dayValues77 = {
   narrow: ["ي", "د", "س", "چ", "پ", "ج", "ش"],
@@ -25282,7 +25370,7 @@ var dayValues77 = {
     "چارشەنبە",
     "پەيشەنبە",
     "جۈمە",
-    "شەنبە"
+    "شەنبە",
   ],
   wide: [
     "يەكشەنبە",
@@ -25291,8 +25379,8 @@ var dayValues77 = {
     "چارشەنبە",
     "پەيشەنبە",
     "جۈمە",
-    "شەنبە"
-  ]
+    "شەنبە",
+  ],
 };
 var dayPeriodValues77 = {
   narrow: {
@@ -25303,7 +25391,7 @@ var dayPeriodValues77 = {
     morning: "ئەتىگەن",
     afternoon: "چۈشتىن كىيىن",
     evening: "ئاخشىم",
-    night: "كىچە"
+    night: "كىچە",
   },
   abbreviated: {
     am: "ئە",
@@ -25313,7 +25401,7 @@ var dayPeriodValues77 = {
     morning: "ئەتىگەن",
     afternoon: "چۈشتىن كىيىن",
     evening: "ئاخشىم",
-    night: "كىچە"
+    night: "كىچە",
   },
   wide: {
     am: "ئە",
@@ -25323,8 +25411,8 @@ var dayPeriodValues77 = {
     morning: "ئەتىگەن",
     afternoon: "چۈشتىن كىيىن",
     evening: "ئاخشىم",
-    night: "كىچە"
-  }
+    night: "كىچە",
+  },
 };
 var formattingDayPeriodValues61 = {
   narrow: {
@@ -25335,7 +25423,7 @@ var formattingDayPeriodValues61 = {
     morning: "ئەتىگەندە",
     afternoon: "چۈشتىن كىيىن",
     evening: "ئاخشامدا",
-    night: "كىچىدە"
+    night: "كىچىدە",
   },
   abbreviated: {
     am: "ئە",
@@ -25345,7 +25433,7 @@ var formattingDayPeriodValues61 = {
     morning: "ئەتىگەندە",
     afternoon: "چۈشتىن كىيىن",
     evening: "ئاخشامدا",
-    night: "كىچىدە"
+    night: "كىچىدە",
   },
   wide: {
     am: "ئە",
@@ -25355,8 +25443,8 @@ var formattingDayPeriodValues61 = {
     morning: "ئەتىگەندە",
     afternoon: "چۈشتىن كىيىن",
     evening: "ئاخشامدا",
-    night: "كىچىدە"
-  }
+    night: "كىچىدە",
+  },
 };
 var ordinalNumber77 = (dirtyNumber, _options) => {
   return String(dirtyNumber);
@@ -25365,27 +25453,27 @@ var localize78 = {
   ordinalNumber: ordinalNumber77,
   era: buildLocalizeFn({
     values: eraValues77,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues77,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues77,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues77,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues77,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues61,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/ug/_lib/match.js
@@ -25393,24 +25481,25 @@ var matchOrdinalNumberPattern76 = /^(\d+)(th|st|nd|rd)?/i;
 var parseOrdinalNumberPattern76 = /\d+/i;
 var matchEraPatterns76 = {
   narrow: /^(ب|ك)/i,
-  wide: /^(مىيلادىدىن بۇرۇن|مىيلادىدىن كىيىن)/i
+  wide: /^(مىيلادىدىن بۇرۇن|مىيلادىدىن كىيىن)/i,
 };
 var parseEraPatterns76 = {
-  any: [/^بۇرۇن/i, /^كىيىن/i]
+  any: [/^بۇرۇن/i, /^كىيىن/i],
 };
 var matchQuarterPatterns76 = {
   narrow: /^[1234]/i,
   abbreviated: /^چ[1234]/i,
-  wide: /^چارەك [1234]/i
+  wide: /^چارەك [1234]/i,
 };
 var parseQuarterPatterns76 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns76 = {
   // eslint-disable-next-line no-misleading-character-class
   narrow: /^[يفمئامئ‍ئاسۆند]/i,
-  abbreviated: /^(يانۋار|فېۋىرال|مارت|ئاپرىل|ماي|ئىيۇن|ئىيول|ئاۋغۇست|سىنتەبىر|ئۆكتەبىر|نويابىر|دىكابىر)/i,
-  wide: /^(يانۋار|فېۋىرال|مارت|ئاپرىل|ماي|ئىيۇن|ئىيول|ئاۋغۇست|سىنتەبىر|ئۆكتەبىر|نويابىر|دىكابىر)/i
+  abbreviated:
+    /^(يانۋار|فېۋىرال|مارت|ئاپرىل|ماي|ئىيۇن|ئىيول|ئاۋغۇست|سىنتەبىر|ئۆكتەبىر|نويابىر|دىكابىر)/i,
+  wide: /^(يانۋار|فېۋىرال|مارت|ئاپرىل|ماي|ئىيۇن|ئىيول|ئاۋغۇست|سىنتەبىر|ئۆكتەبىر|نويابىر|دىكابىر)/i,
 };
 var parseMonthPatterns76 = {
   narrow: [
@@ -25425,7 +25514,7 @@ var parseMonthPatterns76 = {
     /^س/i,
     /^ۆ/i,
     /^ن/i,
-    /^د/i
+    /^د/i,
   ],
   any: [
     /^يان/i,
@@ -25439,22 +25528,22 @@ var parseMonthPatterns76 = {
     /^سىن/i,
     /^ئۆك/i,
     /^نوي/i,
-    /^دىك/i
-  ]
+    /^دىك/i,
+  ],
 };
 var matchDayPatterns76 = {
   narrow: /^[دسچپجشي]/i,
   short: /^(يە|دۈ|سە|چا|پە|جۈ|شە)/i,
   abbreviated: /^(يە|دۈ|سە|چا|پە|جۈ|شە)/i,
-  wide: /^(يەكشەنبە|دۈشەنبە|سەيشەنبە|چارشەنبە|پەيشەنبە|جۈمە|شەنبە)/i
+  wide: /^(يەكشەنبە|دۈشەنبە|سەيشەنبە|چارشەنبە|پەيشەنبە|جۈمە|شەنبە)/i,
 };
 var parseDayPatterns76 = {
   narrow: [/^ي/i, /^د/i, /^س/i, /^چ/i, /^پ/i, /^ج/i, /^ش/i],
-  any: [/^ي/i, /^د/i, /^س/i, /^چ/i, /^پ/i, /^ج/i, /^ش/i]
+  any: [/^ي/i, /^د/i, /^س/i, /^چ/i, /^پ/i, /^ج/i, /^ش/i],
 };
 var matchDayPeriodPatterns76 = {
   narrow: /^(ئە|چ|ك|چ|(دە|ئەتىگەن) ( ئە‍|چۈشتىن كىيىن|ئاخشىم|كىچە))/i,
-  any: /^(ئە|چ|ك|چ|(دە|ئەتىگەن) ( ئە‍|چۈشتىن كىيىن|ئاخشىم|كىچە))/i
+  any: /^(ئە|چ|ك|چ|(دە|ئەتىگەن) ( ئە‍|چۈشتىن كىيىن|ئاخشىم|كىچە))/i,
 };
 var parseDayPeriodPatterns76 = {
   any: {
@@ -25465,46 +25554,46 @@ var parseDayPeriodPatterns76 = {
     morning: /ئەتىگەن/i,
     afternoon: /چۈشتىن كىيىن/i,
     evening: /ئاخشىم/i,
-    night: /كىچە/i
-  }
+    night: /كىچە/i,
+  },
 };
 var match77 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern76,
     parsePattern: parseOrdinalNumberPattern76,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns76,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns76,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns76,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns76,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns76,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns76,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns76,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns76,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns76,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns76,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/uk/_lib/formatDistance.js
@@ -25559,31 +25648,31 @@ var formatDistanceLocale5 = {
       one: "менше секунди",
       singularNominative: "менше {{count}} секунди",
       singularGenitive: "менше {{count}} секунд",
-      pluralGenitive: "менше {{count}} секунд"
+      pluralGenitive: "менше {{count}} секунд",
     },
     future: {
       one: "менше, ніж за секунду",
       singularNominative: "менше, ніж за {{count}} секунду",
       singularGenitive: "менше, ніж за {{count}} секунди",
-      pluralGenitive: "менше, ніж за {{count}} секунд"
-    }
+      pluralGenitive: "менше, ніж за {{count}} секунд",
+    },
   }),
   xSeconds: buildLocalizeTokenFn5({
     regular: {
       singularNominative: "{{count}} секунда",
       singularGenitive: "{{count}} секунди",
-      pluralGenitive: "{{count}} секунд"
+      pluralGenitive: "{{count}} секунд",
     },
     past: {
       singularNominative: "{{count}} секунду тому",
       singularGenitive: "{{count}} секунди тому",
-      pluralGenitive: "{{count}} секунд тому"
+      pluralGenitive: "{{count}} секунд тому",
     },
     future: {
       singularNominative: "за {{count}} секунду",
       singularGenitive: "за {{count}} секунди",
-      pluralGenitive: "за {{count}} секунд"
-    }
+      pluralGenitive: "за {{count}} секунд",
+    },
   }),
   halfAMinute: halfAtMinute,
   lessThanXMinutes: buildLocalizeTokenFn5({
@@ -25591,139 +25680,139 @@ var formatDistanceLocale5 = {
       one: "менше хвилини",
       singularNominative: "менше {{count}} хвилини",
       singularGenitive: "менше {{count}} хвилин",
-      pluralGenitive: "менше {{count}} хвилин"
+      pluralGenitive: "менше {{count}} хвилин",
     },
     future: {
       one: "менше, ніж за хвилину",
       singularNominative: "менше, ніж за {{count}} хвилину",
       singularGenitive: "менше, ніж за {{count}} хвилини",
-      pluralGenitive: "менше, ніж за {{count}} хвилин"
-    }
+      pluralGenitive: "менше, ніж за {{count}} хвилин",
+    },
   }),
   xMinutes: buildLocalizeTokenFn5({
     regular: {
       singularNominative: "{{count}} хвилина",
       singularGenitive: "{{count}} хвилини",
-      pluralGenitive: "{{count}} хвилин"
+      pluralGenitive: "{{count}} хвилин",
     },
     past: {
       singularNominative: "{{count}} хвилину тому",
       singularGenitive: "{{count}} хвилини тому",
-      pluralGenitive: "{{count}} хвилин тому"
+      pluralGenitive: "{{count}} хвилин тому",
     },
     future: {
       singularNominative: "за {{count}} хвилину",
       singularGenitive: "за {{count}} хвилини",
-      pluralGenitive: "за {{count}} хвилин"
-    }
+      pluralGenitive: "за {{count}} хвилин",
+    },
   }),
   aboutXHours: buildLocalizeTokenFn5({
     regular: {
       singularNominative: "близько {{count}} години",
       singularGenitive: "близько {{count}} годин",
-      pluralGenitive: "близько {{count}} годин"
+      pluralGenitive: "близько {{count}} годин",
     },
     future: {
       singularNominative: "приблизно за {{count}} годину",
       singularGenitive: "приблизно за {{count}} години",
-      pluralGenitive: "приблизно за {{count}} годин"
-    }
+      pluralGenitive: "приблизно за {{count}} годин",
+    },
   }),
   xHours: buildLocalizeTokenFn5({
     regular: {
       singularNominative: "{{count}} годину",
       singularGenitive: "{{count}} години",
-      pluralGenitive: "{{count}} годин"
-    }
+      pluralGenitive: "{{count}} годин",
+    },
   }),
   xDays: buildLocalizeTokenFn5({
     regular: {
       singularNominative: "{{count}} день",
       singularGenitive: "{{count}} днi",
-      pluralGenitive: "{{count}} днів"
-    }
+      pluralGenitive: "{{count}} днів",
+    },
   }),
   aboutXWeeks: buildLocalizeTokenFn5({
     regular: {
       singularNominative: "близько {{count}} тижня",
       singularGenitive: "близько {{count}} тижнів",
-      pluralGenitive: "близько {{count}} тижнів"
+      pluralGenitive: "близько {{count}} тижнів",
     },
     future: {
       singularNominative: "приблизно за {{count}} тиждень",
       singularGenitive: "приблизно за {{count}} тижні",
-      pluralGenitive: "приблизно за {{count}} тижнів"
-    }
+      pluralGenitive: "приблизно за {{count}} тижнів",
+    },
   }),
   xWeeks: buildLocalizeTokenFn5({
     regular: {
       singularNominative: "{{count}} тиждень",
       singularGenitive: "{{count}} тижні",
-      pluralGenitive: "{{count}} тижнів"
-    }
+      pluralGenitive: "{{count}} тижнів",
+    },
   }),
   aboutXMonths: buildLocalizeTokenFn5({
     regular: {
       singularNominative: "близько {{count}} місяця",
       singularGenitive: "близько {{count}} місяців",
-      pluralGenitive: "близько {{count}} місяців"
+      pluralGenitive: "близько {{count}} місяців",
     },
     future: {
       singularNominative: "приблизно за {{count}} місяць",
       singularGenitive: "приблизно за {{count}} місяці",
-      pluralGenitive: "приблизно за {{count}} місяців"
-    }
+      pluralGenitive: "приблизно за {{count}} місяців",
+    },
   }),
   xMonths: buildLocalizeTokenFn5({
     regular: {
       singularNominative: "{{count}} місяць",
       singularGenitive: "{{count}} місяці",
-      pluralGenitive: "{{count}} місяців"
-    }
+      pluralGenitive: "{{count}} місяців",
+    },
   }),
   aboutXYears: buildLocalizeTokenFn5({
     regular: {
       singularNominative: "близько {{count}} року",
       singularGenitive: "близько {{count}} років",
-      pluralGenitive: "близько {{count}} років"
+      pluralGenitive: "близько {{count}} років",
     },
     future: {
       singularNominative: "приблизно за {{count}} рік",
       singularGenitive: "приблизно за {{count}} роки",
-      pluralGenitive: "приблизно за {{count}} років"
-    }
+      pluralGenitive: "приблизно за {{count}} років",
+    },
   }),
   xYears: buildLocalizeTokenFn5({
     regular: {
       singularNominative: "{{count}} рік",
       singularGenitive: "{{count}} роки",
-      pluralGenitive: "{{count}} років"
-    }
+      pluralGenitive: "{{count}} років",
+    },
   }),
   overXYears: buildLocalizeTokenFn5({
     regular: {
       singularNominative: "більше {{count}} року",
       singularGenitive: "більше {{count}} років",
-      pluralGenitive: "більше {{count}} років"
+      pluralGenitive: "більше {{count}} років",
     },
     future: {
       singularNominative: "більше, ніж за {{count}} рік",
       singularGenitive: "більше, ніж за {{count}} роки",
-      pluralGenitive: "більше, ніж за {{count}} років"
-    }
+      pluralGenitive: "більше, ніж за {{count}} років",
+    },
   }),
   almostXYears: buildLocalizeTokenFn5({
     regular: {
       singularNominative: "майже {{count}} рік",
       singularGenitive: "майже {{count}} роки",
-      pluralGenitive: "майже {{count}} років"
+      pluralGenitive: "майже {{count}} років",
     },
     future: {
       singularNominative: "майже за {{count}} рік",
       singularGenitive: "майже за {{count}} роки",
-      pluralGenitive: "майже за {{count}} років"
-    }
-  })
+      pluralGenitive: "майже за {{count}} років",
+    },
+  }),
 };
 
 // node_modules/date-fns/locale/uk/_lib/formatLong.js
@@ -25731,45 +25820,45 @@ var dateFormats86 = {
   full: "EEEE, do MMMM y 'р.'",
   long: "do MMMM y 'р.'",
   medium: "d MMM y 'р.'",
-  short: "dd.MM.y"
+  short: "dd.MM.y",
 };
 var timeFormats86 = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats86 = {
   full: "{{date}} 'о' {{time}}",
   long: "{{date}} 'о' {{time}}",
   medium: "{{date}}, {{time}}",
-  short: "{{date}}, {{time}}"
+  short: "{{date}}, {{time}}",
 };
 var formatLong86 = {
   date: buildFormatLongFn({
     formats: dateFormats86,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats86,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats86,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/uk/_lib/localize.js
 var eraValues78 = {
   narrow: ["до н.е.", "н.е."],
   abbreviated: ["до н. е.", "н. е."],
-  wide: ["до нашої ери", "нашої ери"]
+  wide: ["до нашої ери", "нашої ери"],
 };
 var quarterValues78 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-й кв.", "2-й кв.", "3-й кв.", "4-й кв."],
-  wide: ["1-й квартал", "2-й квартал", "3-й квартал", "4-й квартал"]
+  wide: ["1-й квартал", "2-й квартал", "3-й квартал", "4-й квартал"],
 };
 var monthValues78 = {
   // ДСТУ 3582:2013
@@ -25786,7 +25875,7 @@ var monthValues78 = {
     "верес.",
     "жовт.",
     "листоп.",
-    "груд."
+    "груд.",
   ],
   wide: [
     "січень",
@@ -25800,8 +25889,8 @@ var monthValues78 = {
     "вересень",
     "жовтень",
     "листопад",
-    "грудень"
-  ]
+    "грудень",
+  ],
 };
 var formattingMonthValues18 = {
   narrow: ["С", "Л", "Б", "К", "Т", "Ч", "Л", "С", "В", "Ж", "Л", "Г"],
@@ -25817,7 +25906,7 @@ var formattingMonthValues18 = {
     "верес.",
     "жовт.",
     "листоп.",
-    "груд."
+    "груд.",
   ],
   wide: [
     "січня",
@@ -25831,8 +25920,8 @@ var formattingMonthValues18 = {
     "вересня",
     "жовтня",
     "листопада",
-    "грудня"
-  ]
+    "грудня",
+  ],
 };
 var dayValues78 = {
   narrow: ["Н", "П", "В", "С", "Ч", "П", "С"],
@@ -25845,8 +25934,8 @@ var dayValues78 = {
     "середа",
     "четвер",
     "п’ятниця",
-    "субота"
-  ]
+    "субота",
+  ],
 };
 var dayPeriodValues78 = {
   narrow: {
@@ -25857,7 +25946,7 @@ var dayPeriodValues78 = {
     morning: "ранок",
     afternoon: "день",
     evening: "веч.",
-    night: "ніч"
+    night: "ніч",
   },
   abbreviated: {
     am: "ДП",
@@ -25867,7 +25956,7 @@ var dayPeriodValues78 = {
     morning: "ранок",
     afternoon: "день",
     evening: "веч.",
-    night: "ніч"
+    night: "ніч",
   },
   wide: {
     am: "ДП",
@@ -25877,8 +25966,8 @@ var dayPeriodValues78 = {
     morning: "ранок",
     afternoon: "день",
     evening: "вечір",
-    night: "ніч"
-  }
+    night: "ніч",
+  },
 };
 var formattingDayPeriodValues62 = {
   narrow: {
@@ -25889,7 +25978,7 @@ var formattingDayPeriodValues62 = {
     morning: "ранку",
     afternoon: "дня",
     evening: "веч.",
-    night: "ночі"
+    night: "ночі",
   },
   abbreviated: {
     am: "ДП",
@@ -25899,7 +25988,7 @@ var formattingDayPeriodValues62 = {
     morning: "ранку",
     afternoon: "дня",
     evening: "веч.",
-    night: "ночі"
+    night: "ночі",
   },
   wide: {
     am: "ДП",
@@ -25909,8 +25998,8 @@ var formattingDayPeriodValues62 = {
     morning: "ранку",
     afternoon: "дня",
     evening: "веч.",
-    night: "ночі"
-  }
+    night: "ночі",
+  },
 };
 var ordinalNumber78 = (dirtyNumber, options) => {
   const unit = String(options == null ? void 0 : options.unit);
@@ -25933,29 +26022,29 @@ var localize79 = {
   ordinalNumber: ordinalNumber78,
   era: buildLocalizeFn({
     values: eraValues78,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues78,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues78,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues18,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues78,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues78,
     defaultWidth: "any",
     formattingValues: formattingDayPeriodValues62,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/uk/_lib/match.js
@@ -25964,23 +26053,24 @@ var parseOrdinalNumberPattern77 = /\d+/i;
 var matchEraPatterns77 = {
   narrow: /^((до )?н\.?\s?е\.?)/i,
   abbreviated: /^((до )?н\.?\s?е\.?)/i,
-  wide: /^(до нашої ери|нашої ери|наша ера)/i
+  wide: /^(до нашої ери|нашої ери|наша ера)/i,
 };
 var parseEraPatterns77 = {
-  any: [/^д/i, /^н/i]
+  any: [/^д/i, /^н/i],
 };
 var matchQuarterPatterns77 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?[иі]?й?)? кв.?/i,
-  wide: /^[1234](-?[иі]?й?)? квартал/i
+  wide: /^[1234](-?[иі]?й?)? квартал/i,
 };
 var parseQuarterPatterns77 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns77 = {
   narrow: /^[слбктчвжг]/i,
-  abbreviated: /^(січ|лют|бер(ез)?|квіт|трав|черв|лип|серп|вер(ес)?|жовт|лис(топ)?|груд)\.?/i,
-  wide: /^(січень|січня|лютий|лютого|березень|березня|квітень|квітня|травень|травня|червня|червень|липень|липня|серпень|серпня|вересень|вересня|жовтень|жовтня|листопад[а]?|грудень|грудня)/i
+  abbreviated:
+    /^(січ|лют|бер(ез)?|квіт|трав|черв|лип|серп|вер(ес)?|жовт|лис(топ)?|груд)\.?/i,
+  wide: /^(січень|січня|лютий|лютого|березень|березня|квітень|квітня|травень|травня|червня|червень|липень|липня|серпень|серпня|вересень|вересня|жовтень|жовтня|листопад[а]?|грудень|грудня)/i,
 };
 var parseMonthPatterns77 = {
   narrow: [
@@ -25995,7 +26085,7 @@ var parseMonthPatterns77 = {
     /^в/i,
     /^ж/i,
     /^л/i,
-    /^г/i
+    /^г/i,
   ],
   any: [
     /^сі/i,
@@ -26009,23 +26099,23 @@ var parseMonthPatterns77 = {
     /^в/i,
     /^ж/i,
     /^лис/i,
-    /^г/i
-  ]
+    /^г/i,
+  ],
 };
 var matchDayPatterns77 = {
   narrow: /^[нпвсч]/i,
   short: /^(нд|пн|вт|ср|чт|пт|сб)\.?/i,
   abbreviated: /^(нед|пон|вів|сер|че?тв|птн?|суб)\.?/i,
-  wide: /^(неділ[яі]|понеділ[ок][ка]|вівтор[ок][ка]|серед[аи]|четвер(га)?|п\W*?ятниц[яі]|субот[аи])/i
+  wide: /^(неділ[яі]|понеділ[ок][ка]|вівтор[ок][ка]|серед[аи]|четвер(га)?|п\W*?ятниц[яі]|субот[аи])/i,
 };
 var parseDayPatterns77 = {
   narrow: [/^н/i, /^п/i, /^в/i, /^с/i, /^ч/i, /^п/i, /^с/i],
-  any: [/^н/i, /^п[он]/i, /^в/i, /^с[ер]/i, /^ч/i, /^п\W*?[ят]/i, /^с[уб]/i]
+  any: [/^н/i, /^п[он]/i, /^в/i, /^с[ер]/i, /^ч/i, /^п\W*?[ят]/i, /^с[уб]/i],
 };
 var matchDayPeriodPatterns77 = {
   narrow: /^([дп]п|півн\.?|пол\.?|ранок|ранку|день|дня|веч\.?|ніч|ночі)/i,
   abbreviated: /^([дп]п|півн\.?|пол\.?|ранок|ранку|день|дня|веч\.?|ніч|ночі)/i,
-  wide: /^([дп]п|північ|полудень|ранок|ранку|день|дня|вечір|вечора|ніч|ночі)/i
+  wide: /^([дп]п|північ|полудень|ранок|ранку|день|дня|вечір|вечора|ніч|ночі)/i,
 };
 var parseDayPeriodPatterns77 = {
   any: {
@@ -26036,46 +26126,46 @@ var parseDayPeriodPatterns77 = {
     morning: /^р/i,
     afternoon: /^д[ен]/i,
     evening: /^в/i,
-    night: /^н/i
-  }
+    night: /^н/i,
+  },
 };
 var match78 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern77,
     parsePattern: parseOrdinalNumberPattern77,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns77,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns77,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns77,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns77,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns77,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns77,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns77,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns77,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns77,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPeriodPatterns77,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/uz/_lib/formatLong.js
@@ -26083,42 +26173,42 @@ var dateFormats87 = {
   full: "EEEE, do MMMM, y",
   long: "do MMMM, y",
   medium: "d MMM, y",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats87 = {
   full: "h:mm:ss zzzz",
   long: "h:mm:ss z",
   medium: "h:mm:ss",
-  short: "h:mm"
+  short: "h:mm",
 };
 var dateTimeFormats87 = {
-  any: "{{date}}, {{time}}"
+  any: "{{date}}, {{time}}",
 };
 var formatLong87 = {
   date: buildFormatLongFn({
     formats: dateFormats87,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats87,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats87,
-    defaultWidth: "any"
-  })
+    defaultWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/uz/_lib/localize.js
 var eraValues79 = {
   narrow: ["M.A", "M."],
   abbreviated: ["M.A", "M."],
-  wide: ["Miloddan Avvalgi", "Milodiy"]
+  wide: ["Miloddan Avvalgi", "Milodiy"],
 };
 var quarterValues79 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["CH.1", "CH.2", "CH.3", "CH.4"],
-  wide: ["1-chi chorak", "2-chi chorak", "3-chi chorak", "4-chi chorak"]
+  wide: ["1-chi chorak", "2-chi chorak", "3-chi chorak", "4-chi chorak"],
 };
 var monthValues79 = {
   narrow: ["Y", "F", "M", "A", "M", "I", "I", "A", "S", "O", "N", "D"],
@@ -26134,7 +26224,7 @@ var monthValues79 = {
     "Sen",
     "Okt",
     "Noy",
-    "Dek"
+    "Dek",
   ],
   wide: [
     "Yanvar",
@@ -26148,8 +26238,8 @@ var monthValues79 = {
     "Sentabr",
     "Oktabr",
     "Noyabr",
-    "Dekabr"
-  ]
+    "Dekabr",
+  ],
 };
 var dayValues79 = {
   narrow: ["Y", "D", "S", "CH", "P", "J", "SH"],
@@ -26162,8 +26252,8 @@ var dayValues79 = {
     "Chorshanba",
     "Payshanba",
     "Juma",
-    "Shanba"
-  ]
+    "Shanba",
+  ],
 };
 var dayPeriodValues79 = {
   narrow: {
@@ -26174,7 +26264,7 @@ var dayPeriodValues79 = {
     morning: "ertalab",
     afternoon: "tushdan keyin",
     evening: "kechqurun",
-    night: "tun"
+    night: "tun",
   },
   abbreviated: {
     am: "AM",
@@ -26184,7 +26274,7 @@ var dayPeriodValues79 = {
     morning: "ertalab",
     afternoon: "tushdan keyin",
     evening: "kechqurun",
-    night: "tun"
+    night: "tun",
   },
   wide: {
     am: "a.m.",
@@ -26194,8 +26284,8 @@ var dayPeriodValues79 = {
     morning: "ertalab",
     afternoon: "tushdan keyin",
     evening: "kechqurun",
-    night: "tun"
-  }
+    night: "tun",
+  },
 };
 var formattingDayPeriodValues63 = {
   narrow: {
@@ -26206,7 +26296,7 @@ var formattingDayPeriodValues63 = {
     morning: "ertalab",
     afternoon: "tushdan keyin",
     evening: "kechqurun",
-    night: "tun"
+    night: "tun",
   },
   abbreviated: {
     am: "AM",
@@ -26216,7 +26306,7 @@ var formattingDayPeriodValues63 = {
     morning: "ertalab",
     afternoon: "tushdan keyin",
     evening: "kechqurun",
-    night: "tun"
+    night: "tun",
   },
   wide: {
     am: "a.m.",
@@ -26226,8 +26316,8 @@ var formattingDayPeriodValues63 = {
     morning: "ertalab",
     afternoon: "tushdan keyin",
     evening: "kechqurun",
-    night: "tun"
-  }
+    night: "tun",
+  },
 };
 var ordinalNumber79 = (dirtyNumber, _options) => {
   return String(dirtyNumber);
@@ -26236,27 +26326,27 @@ var localize80 = {
   ordinalNumber: ordinalNumber79,
   era: buildLocalizeFn({
     values: eraValues79,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues79,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues79,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues79,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues79,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues63,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/uz/_lib/match.js
@@ -26265,23 +26355,23 @@ var parseOrdinalNumberPattern78 = /\d+/i;
 var matchEraPatterns78 = {
   narrow: /^(m\.a|m\.)/i,
   abbreviated: /^(m\.a\.?\s?m\.?)/i,
-  wide: /^(miloddan avval|miloddan keyin)/i
+  wide: /^(miloddan avval|miloddan keyin)/i,
 };
 var parseEraPatterns78 = {
-  any: [/^b/i, /^(a|c)/i]
+  any: [/^b/i, /^(a|c)/i],
 };
 var matchQuarterPatterns78 = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234](chi)? chorak/i
+  wide: /^[1234](chi)? chorak/i,
 };
 var parseQuarterPatterns78 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns78 = {
   narrow: /^[yfmasond]/i,
   abbreviated: /^(yan|fev|mar|apr|may|iyun|iyul|avg|sen|okt|noy|dek)/i,
-  wide: /^(yanvar|fevral|mart|aprel|may|iyun|iyul|avgust|sentabr|oktabr|noyabr|dekabr)/i
+  wide: /^(yanvar|fevral|mart|aprel|may|iyun|iyul|avgust|sentabr|oktabr|noyabr|dekabr)/i,
 };
 var parseMonthPatterns78 = {
   narrow: [
@@ -26296,7 +26386,7 @@ var parseMonthPatterns78 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
+    /^d/i,
   ],
   any: [
     /^ya/i,
@@ -26310,22 +26400,22 @@ var parseMonthPatterns78 = {
     /^s/i,
     /^o/i,
     /^n/i,
-    /^d/i
-  ]
+    /^d/i,
+  ],
 };
 var matchDayPatterns78 = {
   narrow: /^[ydschj]/i,
   short: /^(ya|du|se|cho|pa|ju|sha)/i,
   abbreviated: /^(yak|dush|sesh|chor|pay|jum|shan)/i,
-  wide: /^(yakshanba|dushanba|seshanba|chorshanba|payshanba|juma|shanba)/i
+  wide: /^(yakshanba|dushanba|seshanba|chorshanba|payshanba|juma|shanba)/i,
 };
 var parseDayPatterns78 = {
   narrow: [/^y/i, /^d/i, /^s/i, /^ch/i, /^p/i, /^j/i, /^sh/i],
-  any: [/^ya/i, /^d/i, /^se/i, /^ch/i, /^p/i, /^j/i, /^sh/i]
+  any: [/^ya/i, /^d/i, /^se/i, /^ch/i, /^p/i, /^j/i, /^sh/i],
 };
 var matchDayPeriodPatterns78 = {
   narrow: /^(a|p|y\.t|p| (ertalab|tushdan keyin|kechqurun|tun))/i,
-  any: /^([ap]\.?\s?m\.?|yarim tun|peshin| (ertalab|tushdan keyin|kechqurun|tun))/i
+  any: /^([ap]\.?\s?m\.?|yarim tun|peshin| (ertalab|tushdan keyin|kechqurun|tun))/i,
 };
 var parseDayPeriodPatterns78 = {
   any: {
@@ -26336,46 +26426,46 @@ var parseDayPeriodPatterns78 = {
     morning: /ertalab/i,
     afternoon: /tushdan keyin/i,
     evening: /kechqurun/i,
-    night: /tun/i
-  }
+    night: /tun/i,
+  },
 };
 var match79 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern78,
     parsePattern: parseOrdinalNumberPattern78,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns78,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns78,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns78,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns78,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns78,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns78,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns78,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns78,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns78,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns78,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/uz-Cyrl/_lib/formatLong.js
@@ -26383,42 +26473,42 @@ var dateFormats88 = {
   full: "EEEE, do MMMM, y",
   long: "do MMMM, y",
   medium: "d MMM, y",
-  short: "dd/MM/yyyy"
+  short: "dd/MM/yyyy",
 };
 var timeFormats88 = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
-  short: "H:mm"
+  short: "H:mm",
 };
 var dateTimeFormats88 = {
-  any: "{{date}}, {{time}}"
+  any: "{{date}}, {{time}}",
 };
 var formatLong88 = {
   date: buildFormatLongFn({
     formats: dateFormats88,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats88,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats88,
-    defaultWidth: "any"
-  })
+    defaultWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/uz-Cyrl/_lib/localize.js
 var eraValues80 = {
   narrow: ["М.А", "М"],
   abbreviated: ["М.А", "М"],
-  wide: ["Милоддан Аввалги", "Милодий"]
+  wide: ["Милоддан Аввалги", "Милодий"],
 };
 var quarterValues80 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-чор.", "2-чор.", "3-чор.", "4-чор."],
-  wide: ["1-чорак", "2-чорак", "3-чорак", "4-чорак"]
+  wide: ["1-чорак", "2-чорак", "3-чорак", "4-чорак"],
 };
 var monthValues80 = {
   narrow: ["Я", "Ф", "М", "А", "М", "И", "И", "А", "С", "О", "Н", "Д"],
@@ -26434,7 +26524,7 @@ var monthValues80 = {
     "сен",
     "окт",
     "ноя",
-    "дек"
+    "дек",
   ],
   wide: [
     "январ",
@@ -26448,8 +26538,8 @@ var monthValues80 = {
     "сентабр",
     "октабр",
     "ноябр",
-    "декабр"
-  ]
+    "декабр",
+  ],
 };
 var dayValues80 = {
   narrow: ["Я", "Д", "С", "Ч", "П", "Ж", "Ш"],
@@ -26462,8 +26552,8 @@ var dayValues80 = {
     "чоршанба",
     "пайшанба",
     "жума",
-    "шанба"
-  ]
+    "шанба",
+  ],
 };
 var dayPeriodValues80 = {
   any: {
@@ -26474,8 +26564,8 @@ var dayPeriodValues80 = {
     morning: "эрталаб",
     afternoon: "пешиндан кейин",
     evening: "кечаси",
-    night: "тун"
-  }
+    night: "тун",
+  },
 };
 var formattingDayPeriodValues64 = {
   any: {
@@ -26486,8 +26576,8 @@ var formattingDayPeriodValues64 = {
     morning: "эрталаб",
     afternoon: "пешиндан кейин",
     evening: "кечаси",
-    night: "тун"
-  }
+    night: "тун",
+  },
 };
 var ordinalNumber80 = (dirtyNumber, _options) => {
   return String(dirtyNumber);
@@ -26496,27 +26586,27 @@ var localize81 = {
   ordinalNumber: ordinalNumber80,
   era: buildLocalizeFn({
     values: eraValues80,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues80,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues80,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues80,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues80,
     defaultWidth: "any",
     formattingValues: formattingDayPeriodValues64,
-    defaultFormattingWidth: "any"
-  })
+    defaultFormattingWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/uz-Cyrl/_lib/match.js
@@ -26525,23 +26615,23 @@ var parseOrdinalNumberPattern79 = /\d+/i;
 var matchEraPatterns79 = {
   narrow: /^(м\.а|м\.)/i,
   abbreviated: /^(м\.а|м\.)/i,
-  wide: /^(милоддан аввал|милоддан кейин)/i
+  wide: /^(милоддан аввал|милоддан кейин)/i,
 };
 var parseEraPatterns79 = {
-  any: [/^м/i, /^а/i]
+  any: [/^м/i, /^а/i],
 };
 var matchQuarterPatterns79 = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]-чор./i,
-  wide: /^[1234]-чорак/i
+  wide: /^[1234]-чорак/i,
 };
 var parseQuarterPatterns79 = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
 var matchMonthPatterns79 = {
   narrow: /^[яфмамииасонд]/i,
   abbreviated: /^(янв|фев|мар|апр|май|июн|июл|авг|сен|окт|ноя|дек)/i,
-  wide: /^(январ|феврал|март|апрел|май|июн|июл|август|сентабр|октабр|ноябр|декабр)/i
+  wide: /^(январ|феврал|март|апрел|май|июн|июл|август|сентабр|октабр|ноябр|декабр)/i,
 };
 var parseMonthPatterns79 = {
   narrow: [
@@ -26556,7 +26646,7 @@ var parseMonthPatterns79 = {
     /^с/i,
     /^о/i,
     /^н/i,
-    /^д/i
+    /^д/i,
   ],
   any: [
     /^я/i,
@@ -26570,21 +26660,21 @@ var parseMonthPatterns79 = {
     /^с/i,
     /^о/i,
     /^н/i,
-    /^д/i
-  ]
+    /^д/i,
+  ],
 };
 var matchDayPatterns79 = {
   narrow: /^[ядсчпжш]/i,
   short: /^(як|ду|се|чо|па|жу|ша)/i,
   abbreviated: /^(якш|душ|сеш|чор|пай|жум|шан)/i,
-  wide: /^(якшанба|душанба|сешанба|чоршанба|пайшанба|жума|шанба)/i
+  wide: /^(якшанба|душанба|сешанба|чоршанба|пайшанба|жума|шанба)/i,
 };
 var parseDayPatterns79 = {
   narrow: [/^я/i, /^д/i, /^с/i, /^ч/i, /^п/i, /^ж/i, /^ш/i],
-  any: [/^як/i, /^ду/i, /^се/i, /^чор/i, /^пай/i, /^жу/i, /^шан/i]
+  any: [/^як/i, /^ду/i, /^се/i, /^чор/i, /^пай/i, /^жу/i, /^шан/i],
 };
 var matchDayPeriodPatterns79 = {
-  any: /^(п\.о\.|п\.к\.|ярим тун|пешиндан кейин|(эрталаб|пешиндан кейин|кечаси|тун))/i
+  any: /^(п\.о\.|п\.к\.|ярим тун|пешиндан кейин|(эрталаб|пешиндан кейин|кечаси|тун))/i,
 };
 var parseDayPeriodPatterns79 = {
   any: {
@@ -26595,46 +26685,46 @@ var parseDayPeriodPatterns79 = {
     morning: /эрталаб/i,
     afternoon: /пешиндан кейин/i,
     evening: /кечаси/i,
-    night: /тун/i
-  }
+    night: /тун/i,
+  },
 };
 var match80 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern79,
     parsePattern: parseOrdinalNumberPattern79,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns79,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns79,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns79,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns79,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns79,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns79,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns79,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns79,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns79,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns79,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/vi/_lib/formatLong.js
@@ -26646,13 +26736,13 @@ var dateFormats89 = {
   // 25 thg 08 năm 2017
   medium: "d MMM 'năm' y",
   // 25/08/2017
-  short: "dd/MM/y"
+  short: "dd/MM/y",
 };
 var timeFormats89 = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
-  short: "HH:mm"
+  short: "HH:mm",
 };
 var dateTimeFormats89 = {
   // thứ Sáu, ngày 25 tháng 08 năm 2017 23:25:59
@@ -26660,39 +26750,39 @@ var dateTimeFormats89 = {
   // ngày 25 tháng 08 năm 2017 23:25
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong89 = {
   date: buildFormatLongFn({
     formats: dateFormats89,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats89,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats89,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/vi/_lib/localize.js
 var eraValues81 = {
   narrow: ["TCN", "SCN"],
   abbreviated: ["trước CN", "sau CN"],
-  wide: ["trước Công Nguyên", "sau Công Nguyên"]
+  wide: ["trước Công Nguyên", "sau Công Nguyên"],
 };
 var quarterValues81 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
-  wide: ["Quý 1", "Quý 2", "Quý 3", "Quý 4"]
+  wide: ["Quý 1", "Quý 2", "Quý 3", "Quý 4"],
 };
 var formattingQuarterValues4 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   // I notice many news outlet use this "quý II/2018"
-  wide: ["quý I", "quý II", "quý III", "quý IV"]
+  wide: ["quý I", "quý II", "quý III", "quý IV"],
 };
 var monthValues81 = {
   narrow: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
@@ -26708,7 +26798,7 @@ var monthValues81 = {
     "Thg 9",
     "Thg 10",
     "Thg 11",
-    "Thg 12"
+    "Thg 12",
   ],
   wide: [
     "Tháng Một",
@@ -26722,8 +26812,8 @@ var monthValues81 = {
     "Tháng Chín",
     "Tháng Mười",
     "Tháng Mười Một",
-    "Tháng Mười Hai"
-  ]
+    "Tháng Mười Hai",
+  ],
 };
 var formattingMonthValues19 = {
   narrow: [
@@ -26738,7 +26828,7 @@ var formattingMonthValues19 = {
     "09",
     "10",
     "11",
-    "12"
+    "12",
   ],
   abbreviated: [
     "thg 1",
@@ -26752,7 +26842,7 @@ var formattingMonthValues19 = {
     "thg 9",
     "thg 10",
     "thg 11",
-    "thg 12"
+    "thg 12",
   ],
   wide: [
     "tháng 01",
@@ -26766,8 +26856,8 @@ var formattingMonthValues19 = {
     "tháng 09",
     "tháng 10",
     "tháng 11",
-    "tháng 12"
-  ]
+    "tháng 12",
+  ],
 };
 var dayValues81 = {
   narrow: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
@@ -26780,8 +26870,8 @@ var dayValues81 = {
     "Thứ Tư",
     "Thứ Năm",
     "Thứ Sáu",
-    "Thứ Bảy"
-  ]
+    "Thứ Bảy",
+  ],
 };
 var dayPeriodValues81 = {
   // narrow date period is extremely rare in Vietnamese
@@ -26795,7 +26885,7 @@ var dayPeriodValues81 = {
     morning: "sg",
     afternoon: "ch",
     evening: "tối",
-    night: "đêm"
+    night: "đêm",
   },
   abbreviated: {
     am: "AM",
@@ -26805,7 +26895,7 @@ var dayPeriodValues81 = {
     morning: "sáng",
     afternoon: "chiều",
     evening: "tối",
-    night: "đêm"
+    night: "đêm",
   },
   wide: {
     am: "SA",
@@ -26815,8 +26905,8 @@ var dayPeriodValues81 = {
     morning: "sáng",
     afternoon: "chiều",
     evening: "tối",
-    night: "đêm"
-  }
+    night: "đêm",
+  },
 };
 var formattingDayPeriodValues65 = {
   narrow: {
@@ -26827,7 +26917,7 @@ var formattingDayPeriodValues65 = {
     morning: "sg",
     afternoon: "ch",
     evening: "tối",
-    night: "đêm"
+    night: "đêm",
   },
   abbreviated: {
     am: "AM",
@@ -26837,7 +26927,7 @@ var formattingDayPeriodValues65 = {
     morning: "sáng",
     afternoon: "chiều",
     evening: "tối",
-    night: "đêm"
+    night: "đêm",
   },
   wide: {
     am: "SA",
@@ -26847,8 +26937,8 @@ var formattingDayPeriodValues65 = {
     morning: "vào buổi sáng",
     afternoon: "vào buổi chiều",
     evening: "vào buổi tối",
-    night: "vào ban đêm"
-  }
+    night: "vào ban đêm",
+  },
 };
 var ordinalNumber81 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
@@ -26900,31 +26990,31 @@ var localize82 = {
   ordinalNumber: ordinalNumber81,
   era: buildLocalizeFn({
     values: eraValues81,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues81,
     defaultWidth: "wide",
     formattingValues: formattingQuarterValues4,
     defaultFormattingWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues81,
     defaultWidth: "wide",
     formattingValues: formattingMonthValues19,
-    defaultFormattingWidth: "wide"
+    defaultFormattingWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues81,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues81,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues65,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/vi/_lib/match.js
@@ -26933,18 +27023,18 @@ var parseOrdinalNumberPattern80 = /\d+/i;
 var matchEraPatterns80 = {
   narrow: /^(tcn|scn)/i,
   abbreviated: /^(trước CN|sau CN)/i,
-  wide: /^(trước Công Nguyên|sau Công Nguyên)/i
+  wide: /^(trước Công Nguyên|sau Công Nguyên)/i,
 };
 var parseEraPatterns80 = {
-  any: [/^t/i, /^s/i]
+  any: [/^t/i, /^s/i],
 };
 var matchQuarterPatterns80 = {
   narrow: /^([1234]|i{1,3}v?)/i,
   abbreviated: /^q([1234]|i{1,3}v?)/i,
-  wide: /^quý ([1234]|i{1,3}v?)/i
+  wide: /^quý ([1234]|i{1,3}v?)/i,
 };
 var parseQuarterPatterns80 = {
-  any: [/(1|i)$/i, /(2|ii)$/i, /(3|iii)$/i, /(4|iv)$/i]
+  any: [/(1|i)$/i, /(2|ii)$/i, /(3|iii)$/i, /(4|iv)$/i],
 };
 var matchMonthPatterns80 = {
   // month number may contain leading 0, 'thg' prefix may have space, underscore or empty before number
@@ -26953,7 +27043,7 @@ var matchMonthPatterns80 = {
   // note the order of 'thg 1' since it is sub-string of 'thg 10', so must be lower priority
   abbreviated: /^thg[ _]?(0?[1-9](?!\d)|10|11|12)/i,
   // note the order of 'Mười' since it is sub-string of Mười Một, so must be lower priority
-  wide: /^tháng ?(Một|Hai|Ba|Tư|Năm|Sáu|Bảy|Tám|Chín|Mười|Mười ?Một|Mười ?Hai|0?[1-9](?!\d)|10|11|12)/i
+  wide: /^tháng ?(Một|Hai|Ba|Tư|Năm|Sáu|Bảy|Tám|Chín|Mười|Mười ?Một|Mười ?Hai|0?[1-9](?!\d)|10|11|12)/i,
 };
 var parseMonthPatterns80 = {
   narrow: [
@@ -26968,7 +27058,7 @@ var parseMonthPatterns80 = {
     /9/,
     /10/,
     /11/,
-    /12/
+    /12/,
   ],
   abbreviated: [
     /^thg[ _]?0?1(?!\d)/i,
@@ -26982,7 +27072,7 @@ var parseMonthPatterns80 = {
     /^thg[ _]?0?9/i,
     /^thg[ _]?10/i,
     /^thg[ _]?11/i,
-    /^thg[ _]?12/i
+    /^thg[ _]?12/i,
   ],
   wide: [
     /^tháng ?(Một|0?1(?!\d))/i,
@@ -26996,25 +27086,25 @@ var parseMonthPatterns80 = {
     /^tháng ?(Chín|0?9)/i,
     /^tháng ?(Mười|10)/i,
     /^tháng ?(Mười ?Một|11)/i,
-    /^tháng ?(Mười ?Hai|12)/i
-  ]
+    /^tháng ?(Mười ?Hai|12)/i,
+  ],
 };
 var matchDayPatterns80 = {
   narrow: /^(CN|T2|T3|T4|T5|T6|T7)/i,
   short: /^(CN|Th ?2|Th ?3|Th ?4|Th ?5|Th ?6|Th ?7)/i,
   abbreviated: /^(CN|Th ?2|Th ?3|Th ?4|Th ?5|Th ?6|Th ?7)/i,
-  wide: /^(Chủ ?Nhật|Chúa ?Nhật|thứ ?Hai|thứ ?Ba|thứ ?Tư|thứ ?Năm|thứ ?Sáu|thứ ?Bảy)/i
+  wide: /^(Chủ ?Nhật|Chúa ?Nhật|thứ ?Hai|thứ ?Ba|thứ ?Tư|thứ ?Năm|thứ ?Sáu|thứ ?Bảy)/i,
 };
 var parseDayPatterns80 = {
   narrow: [/CN/i, /2/i, /3/i, /4/i, /5/i, /6/i, /7/i],
   short: [/CN/i, /2/i, /3/i, /4/i, /5/i, /6/i, /7/i],
   abbreviated: [/CN/i, /2/i, /3/i, /4/i, /5/i, /6/i, /7/i],
-  wide: [/(Chủ|Chúa) ?Nhật/i, /Hai/i, /Ba/i, /Tư/i, /Năm/i, /Sáu/i, /Bảy/i]
+  wide: [/(Chủ|Chúa) ?Nhật/i, /Hai/i, /Ba/i, /Tư/i, /Năm/i, /Sáu/i, /Bảy/i],
 };
 var matchDayPeriodPatterns80 = {
   narrow: /^(a|p|nửa đêm|trưa|(giờ) (sáng|chiều|tối|đêm))/i,
   abbreviated: /^(am|pm|nửa đêm|trưa|(giờ) (sáng|chiều|tối|đêm))/i,
-  wide: /^(ch[^i]*|sa|nửa đêm|trưa|(giờ) (sáng|chiều|tối|đêm))/i
+  wide: /^(ch[^i]*|sa|nửa đêm|trưa|(giờ) (sáng|chiều|tối|đêm))/i,
 };
 var parseDayPeriodPatterns80 = {
   any: {
@@ -27025,46 +27115,46 @@ var parseDayPeriodPatterns80 = {
     morning: /sáng/i,
     afternoon: /chiều/i,
     evening: /tối/i,
-    night: /^đêm/i
-  }
+    night: /^đêm/i,
+  },
 };
 var match81 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern80,
     parsePattern: parseOrdinalNumberPattern80,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns80,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns80,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns80,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns80,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns80,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns80,
-    defaultParseWidth: "wide"
+    defaultParseWidth: "wide",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns80,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns80,
-    defaultParseWidth: "wide"
+    defaultParseWidth: "wide",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns80,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPeriodPatterns80,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/zh-CN/_lib/formatLong.js
@@ -27072,45 +27162,45 @@ var dateFormats90 = {
   full: "y'年'M'月'd'日' EEEE",
   long: "y'年'M'月'd'日'",
   medium: "yyyy-MM-dd",
-  short: "yy-MM-dd"
+  short: "yy-MM-dd",
 };
 var timeFormats90 = {
   full: "zzzz a h:mm:ss",
   long: "z a h:mm:ss",
   medium: "a h:mm:ss",
-  short: "a h:mm"
+  short: "a h:mm",
 };
 var dateTimeFormats90 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong90 = {
   date: buildFormatLongFn({
     formats: dateFormats90,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats90,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats90,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/zh-CN/_lib/localize.js
 var eraValues82 = {
   narrow: ["前", "公元"],
   abbreviated: ["前", "公元"],
-  wide: ["公元前", "公元"]
+  wide: ["公元前", "公元"],
 };
 var quarterValues82 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["第一季", "第二季", "第三季", "第四季"],
-  wide: ["第一季度", "第二季度", "第三季度", "第四季度"]
+  wide: ["第一季度", "第二季度", "第三季度", "第四季度"],
 };
 var monthValues82 = {
   narrow: [
@@ -27125,7 +27215,7 @@ var monthValues82 = {
     "九",
     "十",
     "十一",
-    "十二"
+    "十二",
   ],
   abbreviated: [
     "1月",
@@ -27139,7 +27229,7 @@ var monthValues82 = {
     "9月",
     "10月",
     "11月",
-    "12月"
+    "12月",
   ],
   wide: [
     "一月",
@@ -27153,14 +27243,14 @@ var monthValues82 = {
     "九月",
     "十月",
     "十一月",
-    "十二月"
-  ]
+    "十二月",
+  ],
 };
 var dayValues82 = {
   narrow: ["日", "一", "二", "三", "四", "五", "六"],
   short: ["日", "一", "二", "三", "四", "五", "六"],
   abbreviated: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
-  wide: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+  wide: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
 };
 var dayPeriodValues82 = {
   narrow: {
@@ -27171,7 +27261,7 @@ var dayPeriodValues82 = {
     morning: "早",
     afternoon: "下午",
     evening: "晚",
-    night: "夜"
+    night: "夜",
   },
   abbreviated: {
     am: "上午",
@@ -27181,7 +27271,7 @@ var dayPeriodValues82 = {
     morning: "早晨",
     afternoon: "中午",
     evening: "晚上",
-    night: "夜间"
+    night: "夜间",
   },
   wide: {
     am: "上午",
@@ -27191,8 +27281,8 @@ var dayPeriodValues82 = {
     morning: "早晨",
     afternoon: "中午",
     evening: "晚上",
-    night: "夜间"
-  }
+    night: "夜间",
+  },
 };
 var formattingDayPeriodValues66 = {
   narrow: {
@@ -27203,7 +27293,7 @@ var formattingDayPeriodValues66 = {
     morning: "早",
     afternoon: "下午",
     evening: "晚",
-    night: "夜"
+    night: "夜",
   },
   abbreviated: {
     am: "上午",
@@ -27213,7 +27303,7 @@ var formattingDayPeriodValues66 = {
     morning: "早晨",
     afternoon: "中午",
     evening: "晚上",
-    night: "夜间"
+    night: "夜间",
   },
   wide: {
     am: "上午",
@@ -27223,8 +27313,8 @@ var formattingDayPeriodValues66 = {
     morning: "早晨",
     afternoon: "中午",
     evening: "晚上",
-    night: "夜间"
-  }
+    night: "夜间",
+  },
 };
 var ordinalNumber82 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
@@ -27245,27 +27335,27 @@ var localize83 = {
   ordinalNumber: ordinalNumber82,
   era: buildLocalizeFn({
     values: eraValues82,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues82,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues82,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues82,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues82,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues66,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/zh-CN/_lib/match.js
@@ -27274,23 +27364,23 @@ var parseOrdinalNumberPattern81 = /\d+/i;
 var matchEraPatterns81 = {
   narrow: /^(前)/i,
   abbreviated: /^(前)/i,
-  wide: /^(公元前|公元)/i
+  wide: /^(公元前|公元)/i,
 };
 var parseEraPatterns81 = {
-  any: [/^(前)/i, /^(公元)/i]
+  any: [/^(前)/i, /^(公元)/i],
 };
 var matchQuarterPatterns81 = {
   narrow: /^[1234]/i,
   abbreviated: /^第[一二三四]刻/i,
-  wide: /^第[一二三四]刻钟/i
+  wide: /^第[一二三四]刻钟/i,
 };
 var parseQuarterPatterns81 = {
-  any: [/(1|一)/i, /(2|二)/i, /(3|三)/i, /(4|四)/i]
+  any: [/(1|一)/i, /(2|二)/i, /(3|三)/i, /(4|四)/i],
 };
 var matchMonthPatterns81 = {
   narrow: /^(一|二|三|四|五|六|七|八|九|十[二一])/i,
   abbreviated: /^(一|二|三|四|五|六|七|八|九|十[二一]|\d|1[12])月/i,
-  wide: /^(一|二|三|四|五|六|七|八|九|十[二一])月/i
+  wide: /^(一|二|三|四|五|六|七|八|九|十[二一])月/i,
 };
 var parseMonthPatterns81 = {
   narrow: [
@@ -27305,7 +27395,7 @@ var parseMonthPatterns81 = {
     /^九/i,
     /^十(?!(一|二))/i,
     /^十一/i,
-    /^十二/i
+    /^十二/i,
   ],
   any: [
     /^一|1/i,
@@ -27319,20 +27409,20 @@ var parseMonthPatterns81 = {
     /^九|9/i,
     /^十(?!(一|二))|10/i,
     /^十一|11/i,
-    /^十二|12/i
-  ]
+    /^十二|12/i,
+  ],
 };
 var matchDayPatterns81 = {
   narrow: /^[一二三四五六日]/i,
   short: /^[一二三四五六日]/i,
   abbreviated: /^周[一二三四五六日]/i,
-  wide: /^星期[一二三四五六日]/i
+  wide: /^星期[一二三四五六日]/i,
 };
 var parseDayPatterns81 = {
-  any: [/日/i, /一/i, /二/i, /三/i, /四/i, /五/i, /六/i]
+  any: [/日/i, /一/i, /二/i, /三/i, /四/i, /五/i, /六/i],
 };
 var matchDayPeriodPatterns81 = {
-  any: /^(上午?|下午?|午夜|[中正]午|早上?|下午|晚上?|凌晨|)/i
+  any: /^(上午?|下午?|午夜|[中正]午|早上?|下午|晚上?|凌晨|)/i,
 };
 var parseDayPeriodPatterns81 = {
   any: {
@@ -27343,46 +27433,46 @@ var parseDayPeriodPatterns81 = {
     morning: /^早上/i,
     afternoon: /^下午/i,
     evening: /^晚上?/i,
-    night: /^凌晨/i
-  }
+    night: /^凌晨/i,
+  },
 };
 var match82 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern81,
     parsePattern: parseOrdinalNumberPattern81,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns81,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns81,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns81,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns81,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns81,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns81,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns81,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns81,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns81,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns81,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/zh-HK/_lib/formatLong.js
@@ -27390,45 +27480,45 @@ var dateFormats91 = {
   full: "y'年'M'月'd'日' EEEE",
   long: "y'年'M'月'd'日'",
   medium: "yyyy-MM-dd",
-  short: "yy-MM-dd"
+  short: "yy-MM-dd",
 };
 var timeFormats91 = {
   full: "zzzz a h:mm:ss",
   long: "z a h:mm:ss",
   medium: "a h:mm:ss",
-  short: "a h:mm"
+  short: "a h:mm",
 };
 var dateTimeFormats91 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong91 = {
   date: buildFormatLongFn({
     formats: dateFormats91,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats91,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats91,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/zh-HK/_lib/localize.js
 var eraValues83 = {
   narrow: ["前", "公元"],
   abbreviated: ["前", "公元"],
-  wide: ["公元前", "公元"]
+  wide: ["公元前", "公元"],
 };
 var quarterValues83 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["第一季", "第二季", "第三季", "第四季"],
-  wide: ["第一季度", "第二季度", "第三季度", "第四季度"]
+  wide: ["第一季度", "第二季度", "第三季度", "第四季度"],
 };
 var monthValues83 = {
   narrow: [
@@ -27443,7 +27533,7 @@ var monthValues83 = {
     "九",
     "十",
     "十一",
-    "十二"
+    "十二",
   ],
   abbreviated: [
     "1月",
@@ -27457,7 +27547,7 @@ var monthValues83 = {
     "9月",
     "10月",
     "11月",
-    "12月"
+    "12月",
   ],
   wide: [
     "一月",
@@ -27471,14 +27561,14 @@ var monthValues83 = {
     "九月",
     "十月",
     "十一月",
-    "十二月"
-  ]
+    "十二月",
+  ],
 };
 var dayValues83 = {
   narrow: ["日", "一", "二", "三", "四", "五", "六"],
   short: ["日", "一", "二", "三", "四", "五", "六"],
   abbreviated: ["週日", "週一", "週二", "週三", "週四", "週五", "週六"],
-  wide: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+  wide: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
 };
 var dayPeriodValues83 = {
   narrow: {
@@ -27489,7 +27579,7 @@ var dayPeriodValues83 = {
     morning: "早",
     afternoon: "午",
     evening: "晚",
-    night: "夜"
+    night: "夜",
   },
   abbreviated: {
     am: "上午",
@@ -27499,7 +27589,7 @@ var dayPeriodValues83 = {
     morning: "上午",
     afternoon: "下午",
     evening: "晚上",
-    night: "夜晚"
+    night: "夜晚",
   },
   wide: {
     am: "上午",
@@ -27509,8 +27599,8 @@ var dayPeriodValues83 = {
     morning: "上午",
     afternoon: "下午",
     evening: "晚上",
-    night: "夜晚"
-  }
+    night: "夜晚",
+  },
 };
 var formattingDayPeriodValues67 = {
   narrow: {
@@ -27521,7 +27611,7 @@ var formattingDayPeriodValues67 = {
     morning: "早",
     afternoon: "午",
     evening: "晚",
-    night: "夜"
+    night: "夜",
   },
   abbreviated: {
     am: "上午",
@@ -27531,7 +27621,7 @@ var formattingDayPeriodValues67 = {
     morning: "上午",
     afternoon: "下午",
     evening: "晚上",
-    night: "夜晚"
+    night: "夜晚",
   },
   wide: {
     am: "上午",
@@ -27541,8 +27631,8 @@ var formattingDayPeriodValues67 = {
     morning: "上午",
     afternoon: "下午",
     evening: "晚上",
-    night: "夜晚"
-  }
+    night: "夜晚",
+  },
 };
 var ordinalNumber83 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
@@ -27563,27 +27653,27 @@ var localize84 = {
   ordinalNumber: ordinalNumber83,
   era: buildLocalizeFn({
     values: eraValues83,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues83,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues83,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues83,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues83,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues67,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/zh-HK/_lib/match.js
@@ -27592,23 +27682,23 @@ var parseOrdinalNumberPattern82 = /\d+/i;
 var matchEraPatterns82 = {
   narrow: /^(前)/i,
   abbreviated: /^(前)/i,
-  wide: /^(公元前|公元)/i
+  wide: /^(公元前|公元)/i,
 };
 var parseEraPatterns82 = {
-  any: [/^(前)/i, /^(公元)/i]
+  any: [/^(前)/i, /^(公元)/i],
 };
 var matchQuarterPatterns82 = {
   narrow: /^[1234]/i,
   abbreviated: /^第[一二三四]季/i,
-  wide: /^第[一二三四]季度/i
+  wide: /^第[一二三四]季度/i,
 };
 var parseQuarterPatterns82 = {
-  any: [/(1|一)/i, /(2|二)/i, /(3|三)/i, /(4|四)/i]
+  any: [/(1|一)/i, /(2|二)/i, /(3|三)/i, /(4|四)/i],
 };
 var matchMonthPatterns82 = {
   narrow: /^(一|二|三|四|五|六|七|八|九|十[二一])/i,
   abbreviated: /^(一|二|三|四|五|六|七|八|九|十[二一]|\d|1[12])月/i,
-  wide: /^(一|二|三|四|五|六|七|八|九|十[二一])月/i
+  wide: /^(一|二|三|四|五|六|七|八|九|十[二一])月/i,
 };
 var parseMonthPatterns82 = {
   narrow: [
@@ -27623,7 +27713,7 @@ var parseMonthPatterns82 = {
     /^九/i,
     /^十(?!(一|二))/i,
     /^十一/i,
-    /^十二/i
+    /^十二/i,
   ],
   any: [
     /^一|1/i,
@@ -27637,20 +27727,20 @@ var parseMonthPatterns82 = {
     /^九|9/i,
     /^十(?!(一|二))|10/i,
     /^十一|11/i,
-    /^十二|12/i
-  ]
+    /^十二|12/i,
+  ],
 };
 var matchDayPatterns82 = {
   narrow: /^[一二三四五六日]/i,
   short: /^[一二三四五六日]/i,
   abbreviated: /^週[一二三四五六日]/i,
-  wide: /^星期[一二三四五六日]/i
+  wide: /^星期[一二三四五六日]/i,
 };
 var parseDayPatterns82 = {
-  any: [/日/i, /一/i, /二/i, /三/i, /四/i, /五/i, /六/i]
+  any: [/日/i, /一/i, /二/i, /三/i, /四/i, /五/i, /六/i],
 };
 var matchDayPeriodPatterns82 = {
-  any: /^(上午?|下午?|午夜|[中正]午|早上?|下午|晚上?|凌晨)/i
+  any: /^(上午?|下午?|午夜|[中正]午|早上?|下午|晚上?|凌晨)/i,
 };
 var parseDayPeriodPatterns82 = {
   any: {
@@ -27661,46 +27751,46 @@ var parseDayPeriodPatterns82 = {
     morning: /^早上/i,
     afternoon: /^下午/i,
     evening: /^晚上?/i,
-    night: /^凌晨/i
-  }
+    night: /^凌晨/i,
+  },
 };
 var match83 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern82,
     parsePattern: parseOrdinalNumberPattern82,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns82,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns82,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns82,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns82,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns82,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns82,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns82,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns82,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns82,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns82,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/date-fns/locale/zh-TW/_lib/formatLong.js
@@ -27708,45 +27798,45 @@ var dateFormats92 = {
   full: "y'年'M'月'd'日' EEEE",
   long: "y'年'M'月'd'日'",
   medium: "yyyy-MM-dd",
-  short: "yy-MM-dd"
+  short: "yy-MM-dd",
 };
 var timeFormats92 = {
   full: "zzzz a h:mm:ss",
   long: "z a h:mm:ss",
   medium: "a h:mm:ss",
-  short: "a h:mm"
+  short: "a h:mm",
 };
 var dateTimeFormats92 = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
-  short: "{{date}} {{time}}"
+  short: "{{date}} {{time}}",
 };
 var formatLong92 = {
   date: buildFormatLongFn({
     formats: dateFormats92,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   time: buildFormatLongFn({
     formats: timeFormats92,
-    defaultWidth: "full"
+    defaultWidth: "full",
   }),
   dateTime: buildFormatLongFn({
     formats: dateTimeFormats92,
-    defaultWidth: "full"
-  })
+    defaultWidth: "full",
+  }),
 };
 
 // node_modules/date-fns/locale/zh-TW/_lib/localize.js
 var eraValues84 = {
   narrow: ["前", "公元"],
   abbreviated: ["前", "公元"],
-  wide: ["公元前", "公元"]
+  wide: ["公元前", "公元"],
 };
 var quarterValues84 = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["第一刻", "第二刻", "第三刻", "第四刻"],
-  wide: ["第一刻鐘", "第二刻鐘", "第三刻鐘", "第四刻鐘"]
+  wide: ["第一刻鐘", "第二刻鐘", "第三刻鐘", "第四刻鐘"],
 };
 var monthValues84 = {
   narrow: [
@@ -27761,7 +27851,7 @@ var monthValues84 = {
     "九",
     "十",
     "十一",
-    "十二"
+    "十二",
   ],
   abbreviated: [
     "1月",
@@ -27775,7 +27865,7 @@ var monthValues84 = {
     "9月",
     "10月",
     "11月",
-    "12月"
+    "12月",
   ],
   wide: [
     "一月",
@@ -27789,14 +27879,14 @@ var monthValues84 = {
     "九月",
     "十月",
     "十一月",
-    "十二月"
-  ]
+    "十二月",
+  ],
 };
 var dayValues84 = {
   narrow: ["日", "一", "二", "三", "四", "五", "六"],
   short: ["日", "一", "二", "三", "四", "五", "六"],
   abbreviated: ["週日", "週一", "週二", "週三", "週四", "週五", "週六"],
-  wide: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+  wide: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
 };
 var dayPeriodValues84 = {
   narrow: {
@@ -27807,7 +27897,7 @@ var dayPeriodValues84 = {
     morning: "早",
     afternoon: "下午",
     evening: "晚",
-    night: "夜"
+    night: "夜",
   },
   abbreviated: {
     am: "上午",
@@ -27817,7 +27907,7 @@ var dayPeriodValues84 = {
     morning: "早晨",
     afternoon: "中午",
     evening: "晚上",
-    night: "夜間"
+    night: "夜間",
   },
   wide: {
     am: "上午",
@@ -27827,8 +27917,8 @@ var dayPeriodValues84 = {
     morning: "早晨",
     afternoon: "中午",
     evening: "晚上",
-    night: "夜間"
-  }
+    night: "夜間",
+  },
 };
 var formattingDayPeriodValues68 = {
   narrow: {
@@ -27839,7 +27929,7 @@ var formattingDayPeriodValues68 = {
     morning: "早",
     afternoon: "下午",
     evening: "晚",
-    night: "夜"
+    night: "夜",
   },
   abbreviated: {
     am: "上午",
@@ -27849,7 +27939,7 @@ var formattingDayPeriodValues68 = {
     morning: "早晨",
     afternoon: "中午",
     evening: "晚上",
-    night: "夜間"
+    night: "夜間",
   },
   wide: {
     am: "上午",
@@ -27859,8 +27949,8 @@ var formattingDayPeriodValues68 = {
     morning: "早晨",
     afternoon: "中午",
     evening: "晚上",
-    night: "夜間"
-  }
+    night: "夜間",
+  },
 };
 var ordinalNumber84 = (dirtyNumber, options) => {
   const number = Number(dirtyNumber);
@@ -27881,27 +27971,27 @@ var localize85 = {
   ordinalNumber: ordinalNumber84,
   era: buildLocalizeFn({
     values: eraValues84,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   quarter: buildLocalizeFn({
     values: quarterValues84,
     defaultWidth: "wide",
-    argumentCallback: (quarter) => quarter - 1
+    argumentCallback: (quarter) => quarter - 1,
   }),
   month: buildLocalizeFn({
     values: monthValues84,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   day: buildLocalizeFn({
     values: dayValues84,
-    defaultWidth: "wide"
+    defaultWidth: "wide",
   }),
   dayPeriod: buildLocalizeFn({
     values: dayPeriodValues84,
     defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues68,
-    defaultFormattingWidth: "wide"
-  })
+    defaultFormattingWidth: "wide",
+  }),
 };
 
 // node_modules/date-fns/locale/zh-TW/_lib/match.js
@@ -27910,23 +28000,23 @@ var parseOrdinalNumberPattern83 = /\d+/i;
 var matchEraPatterns83 = {
   narrow: /^(前)/i,
   abbreviated: /^(前)/i,
-  wide: /^(公元前|公元)/i
+  wide: /^(公元前|公元)/i,
 };
 var parseEraPatterns83 = {
-  any: [/^(前)/i, /^(公元)/i]
+  any: [/^(前)/i, /^(公元)/i],
 };
 var matchQuarterPatterns83 = {
   narrow: /^[1234]/i,
   abbreviated: /^第[一二三四]刻/i,
-  wide: /^第[一二三四]刻鐘/i
+  wide: /^第[一二三四]刻鐘/i,
 };
 var parseQuarterPatterns83 = {
-  any: [/(1|一)/i, /(2|二)/i, /(3|三)/i, /(4|四)/i]
+  any: [/(1|一)/i, /(2|二)/i, /(3|三)/i, /(4|四)/i],
 };
 var matchMonthPatterns83 = {
   narrow: /^(一|二|三|四|五|六|七|八|九|十[二一])/i,
   abbreviated: /^(一|二|三|四|五|六|七|八|九|十[二一]|\d|1[12])月/i,
-  wide: /^(一|二|三|四|五|六|七|八|九|十[二一])月/i
+  wide: /^(一|二|三|四|五|六|七|八|九|十[二一])月/i,
 };
 var parseMonthPatterns83 = {
   narrow: [
@@ -27941,7 +28031,7 @@ var parseMonthPatterns83 = {
     /^九/i,
     /^十(?!(一|二))/i,
     /^十一/i,
-    /^十二/i
+    /^十二/i,
   ],
   any: [
     /^一|1/i,
@@ -27955,20 +28045,20 @@ var parseMonthPatterns83 = {
     /^九|9/i,
     /^十(?!(一|二))|10/i,
     /^十一|11/i,
-    /^十二|12/i
-  ]
+    /^十二|12/i,
+  ],
 };
 var matchDayPatterns83 = {
   narrow: /^[一二三四五六日]/i,
   short: /^[一二三四五六日]/i,
   abbreviated: /^週[一二三四五六日]/i,
-  wide: /^星期[一二三四五六日]/i
+  wide: /^星期[一二三四五六日]/i,
 };
 var parseDayPatterns83 = {
-  any: [/日/i, /一/i, /二/i, /三/i, /四/i, /五/i, /六/i]
+  any: [/日/i, /一/i, /二/i, /三/i, /四/i, /五/i, /六/i],
 };
 var matchDayPeriodPatterns83 = {
-  any: /^(上午?|下午?|午夜|[中正]午|早上?|下午|晚上?|凌晨)/i
+  any: /^(上午?|下午?|午夜|[中正]午|早上?|下午|晚上?|凌晨)/i,
 };
 var parseDayPeriodPatterns83 = {
   any: {
@@ -27979,46 +28069,46 @@ var parseDayPeriodPatterns83 = {
     morning: /^早上/i,
     afternoon: /^下午/i,
     evening: /^晚上?/i,
-    night: /^凌晨/i
-  }
+    night: /^凌晨/i,
+  },
 };
 var match84 = {
   ordinalNumber: buildMatchPatternFn({
     matchPattern: matchOrdinalNumberPattern83,
     parsePattern: parseOrdinalNumberPattern83,
-    valueCallback: (value) => parseInt(value, 10)
+    valueCallback: (value) => parseInt(value, 10),
   }),
   era: buildMatchFn({
     matchPatterns: matchEraPatterns83,
     defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns83,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   quarter: buildMatchFn({
     matchPatterns: matchQuarterPatterns83,
     defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns83,
     defaultParseWidth: "any",
-    valueCallback: (index) => index + 1
+    valueCallback: (index) => index + 1,
   }),
   month: buildMatchFn({
     matchPatterns: matchMonthPatterns83,
     defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns83,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   day: buildMatchFn({
     matchPatterns: matchDayPatterns83,
     defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns83,
-    defaultParseWidth: "any"
+    defaultParseWidth: "any",
   }),
   dayPeriod: buildMatchFn({
     matchPatterns: matchDayPeriodPatterns83,
     defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns83,
-    defaultParseWidth: "any"
-  })
+    defaultParseWidth: "any",
+  }),
 };
 
 // node_modules/react-day-picker/dist/esm/helpers/getBroadcastWeeksInMonth.js
@@ -28026,10 +28116,17 @@ var FIVE_WEEKS = 5;
 var FOUR_WEEKS = 4;
 function getBroadcastWeeksInMonth(month, dateLib2) {
   const firstDayOfMonth = dateLib2.startOfMonth(month);
-  const firstDayOfWeek = firstDayOfMonth.getDay() > 0 ? firstDayOfMonth.getDay() : 7;
+  const firstDayOfWeek =
+    firstDayOfMonth.getDay() > 0 ? firstDayOfMonth.getDay() : 7;
   const broadcastStartDate = dateLib2.addDays(month, -firstDayOfWeek + 1);
-  const lastDateOfLastWeek = dateLib2.addDays(broadcastStartDate, FIVE_WEEKS * 7 - 1);
-  const numberOfWeeks = month.getMonth() === lastDateOfLastWeek.getMonth() ? FIVE_WEEKS : FOUR_WEEKS;
+  const lastDateOfLastWeek = dateLib2.addDays(
+    broadcastStartDate,
+    FIVE_WEEKS * 7 - 1,
+  );
+  const numberOfWeeks =
+    month.getMonth() === lastDateOfLastWeek.getMonth()
+      ? FIVE_WEEKS
+      : FOUR_WEEKS;
   return numberOfWeeks;
 }
 
@@ -28066,123 +28163,187 @@ var DateLib = class {
     this.Date = Date;
     this.addDays = (date, amount) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.addDays) ? this.overrides.addDays(date, amount) : addDays(date, amount);
+      return ((_a = this.overrides) == null ? void 0 : _a.addDays)
+        ? this.overrides.addDays(date, amount)
+        : addDays(date, amount);
     };
     this.addMonths = (date, amount) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.addMonths) ? this.overrides.addMonths(date, amount) : addMonths(date, amount);
+      return ((_a = this.overrides) == null ? void 0 : _a.addMonths)
+        ? this.overrides.addMonths(date, amount)
+        : addMonths(date, amount);
     };
     this.addWeeks = (date, amount) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.addWeeks) ? this.overrides.addWeeks(date, amount) : addWeeks(date, amount);
+      return ((_a = this.overrides) == null ? void 0 : _a.addWeeks)
+        ? this.overrides.addWeeks(date, amount)
+        : addWeeks(date, amount);
     };
     this.addYears = (date, amount) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.addYears) ? this.overrides.addYears(date, amount) : addYears(date, amount);
+      return ((_a = this.overrides) == null ? void 0 : _a.addYears)
+        ? this.overrides.addYears(date, amount)
+        : addYears(date, amount);
     };
     this.differenceInCalendarDays = (dateLeft, dateRight) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.differenceInCalendarDays) ? this.overrides.differenceInCalendarDays(dateLeft, dateRight) : differenceInCalendarDays(dateLeft, dateRight);
+      return (
+        (_a = this.overrides) == null ? void 0 : _a.differenceInCalendarDays
+      )
+        ? this.overrides.differenceInCalendarDays(dateLeft, dateRight)
+        : differenceInCalendarDays(dateLeft, dateRight);
     };
     this.differenceInCalendarMonths = (dateLeft, dateRight) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.differenceInCalendarMonths) ? this.overrides.differenceInCalendarMonths(dateLeft, dateRight) : differenceInCalendarMonths(dateLeft, dateRight);
+      return (
+        (_a = this.overrides) == null ? void 0 : _a.differenceInCalendarMonths
+      )
+        ? this.overrides.differenceInCalendarMonths(dateLeft, dateRight)
+        : differenceInCalendarMonths(dateLeft, dateRight);
     };
     this.endOfBroadcastWeek = (date) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.endOfBroadcastWeek) ? this.overrides.endOfBroadcastWeek(date, this) : endOfBroadcastWeek(date, this);
+      return ((_a = this.overrides) == null ? void 0 : _a.endOfBroadcastWeek)
+        ? this.overrides.endOfBroadcastWeek(date, this)
+        : endOfBroadcastWeek(date, this);
     };
     this.endOfISOWeek = (date) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.endOfISOWeek) ? this.overrides.endOfISOWeek(date) : endOfISOWeek(date);
+      return ((_a = this.overrides) == null ? void 0 : _a.endOfISOWeek)
+        ? this.overrides.endOfISOWeek(date)
+        : endOfISOWeek(date);
     };
     this.endOfMonth = (date) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.endOfMonth) ? this.overrides.endOfMonth(date) : endOfMonth(date);
+      return ((_a = this.overrides) == null ? void 0 : _a.endOfMonth)
+        ? this.overrides.endOfMonth(date)
+        : endOfMonth(date);
     };
     this.endOfWeek = (date) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.endOfWeek) ? this.overrides.endOfWeek(date, this.options) : endOfWeek(date, this.options);
+      return ((_a = this.overrides) == null ? void 0 : _a.endOfWeek)
+        ? this.overrides.endOfWeek(date, this.options)
+        : endOfWeek(date, this.options);
     };
     this.endOfYear = (date) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.endOfYear) ? this.overrides.endOfYear(date) : endOfYear(date);
+      return ((_a = this.overrides) == null ? void 0 : _a.endOfYear)
+        ? this.overrides.endOfYear(date)
+        : endOfYear(date);
     };
     this.format = (date, formatStr) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.format) ? this.overrides.format(date, formatStr, this.options) : format(date, formatStr, this.options);
+      return ((_a = this.overrides) == null ? void 0 : _a.format)
+        ? this.overrides.format(date, formatStr, this.options)
+        : format(date, formatStr, this.options);
     };
     this.getISOWeek = (date) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.getISOWeek) ? this.overrides.getISOWeek(date) : getISOWeek(date);
+      return ((_a = this.overrides) == null ? void 0 : _a.getISOWeek)
+        ? this.overrides.getISOWeek(date)
+        : getISOWeek(date);
     };
     this.getWeek = (date) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.getWeek) ? this.overrides.getWeek(date, this.options) : getWeek(date, this.options);
+      return ((_a = this.overrides) == null ? void 0 : _a.getWeek)
+        ? this.overrides.getWeek(date, this.options)
+        : getWeek(date, this.options);
     };
     this.isAfter = (date, dateToCompare) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.isAfter) ? this.overrides.isAfter(date, dateToCompare) : isAfter(date, dateToCompare);
+      return ((_a = this.overrides) == null ? void 0 : _a.isAfter)
+        ? this.overrides.isAfter(date, dateToCompare)
+        : isAfter(date, dateToCompare);
     };
     this.isBefore = (date, dateToCompare) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.isBefore) ? this.overrides.isBefore(date, dateToCompare) : isBefore(date, dateToCompare);
+      return ((_a = this.overrides) == null ? void 0 : _a.isBefore)
+        ? this.overrides.isBefore(date, dateToCompare)
+        : isBefore(date, dateToCompare);
     };
     this.isDate = (value) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.isDate) ? this.overrides.isDate(value) : isDate(value);
+      return ((_a = this.overrides) == null ? void 0 : _a.isDate)
+        ? this.overrides.isDate(value)
+        : isDate(value);
     };
     this.isSameDay = (dateLeft, dateRight) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.isSameDay) ? this.overrides.isSameDay(dateLeft, dateRight) : isSameDay(dateLeft, dateRight);
+      return ((_a = this.overrides) == null ? void 0 : _a.isSameDay)
+        ? this.overrides.isSameDay(dateLeft, dateRight)
+        : isSameDay(dateLeft, dateRight);
     };
     this.isSameMonth = (dateLeft, dateRight) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.isSameMonth) ? this.overrides.isSameMonth(dateLeft, dateRight) : isSameMonth(dateLeft, dateRight);
+      return ((_a = this.overrides) == null ? void 0 : _a.isSameMonth)
+        ? this.overrides.isSameMonth(dateLeft, dateRight)
+        : isSameMonth(dateLeft, dateRight);
     };
     this.isSameYear = (dateLeft, dateRight) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.isSameYear) ? this.overrides.isSameYear(dateLeft, dateRight) : isSameYear(dateLeft, dateRight);
+      return ((_a = this.overrides) == null ? void 0 : _a.isSameYear)
+        ? this.overrides.isSameYear(dateLeft, dateRight)
+        : isSameYear(dateLeft, dateRight);
     };
     this.max = (dates) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.max) ? this.overrides.max(dates) : max(dates);
+      return ((_a = this.overrides) == null ? void 0 : _a.max)
+        ? this.overrides.max(dates)
+        : max(dates);
     };
     this.min = (dates) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.min) ? this.overrides.min(dates) : min(dates);
+      return ((_a = this.overrides) == null ? void 0 : _a.min)
+        ? this.overrides.min(dates)
+        : min(dates);
     };
     this.setMonth = (date, month) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.setMonth) ? this.overrides.setMonth(date, month) : setMonth(date, month);
+      return ((_a = this.overrides) == null ? void 0 : _a.setMonth)
+        ? this.overrides.setMonth(date, month)
+        : setMonth(date, month);
     };
     this.setYear = (date, year) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.setYear) ? this.overrides.setYear(date, year) : setYear(date, year);
+      return ((_a = this.overrides) == null ? void 0 : _a.setYear)
+        ? this.overrides.setYear(date, year)
+        : setYear(date, year);
     };
     this.startOfBroadcastWeek = (date) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.startOfBroadcastWeek) ? this.overrides.startOfBroadcastWeek(date, this) : startOfBroadcastWeek(date, this);
+      return ((_a = this.overrides) == null ? void 0 : _a.startOfBroadcastWeek)
+        ? this.overrides.startOfBroadcastWeek(date, this)
+        : startOfBroadcastWeek(date, this);
     };
     this.startOfDay = (date) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.startOfDay) ? this.overrides.startOfDay(date) : startOfDay(date);
+      return ((_a = this.overrides) == null ? void 0 : _a.startOfDay)
+        ? this.overrides.startOfDay(date)
+        : startOfDay(date);
     };
     this.startOfISOWeek = (date) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.startOfISOWeek) ? this.overrides.startOfISOWeek(date) : startOfISOWeek(date);
+      return ((_a = this.overrides) == null ? void 0 : _a.startOfISOWeek)
+        ? this.overrides.startOfISOWeek(date)
+        : startOfISOWeek(date);
     };
     this.startOfMonth = (date) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.startOfMonth) ? this.overrides.startOfMonth(date) : startOfMonth(date);
+      return ((_a = this.overrides) == null ? void 0 : _a.startOfMonth)
+        ? this.overrides.startOfMonth(date)
+        : startOfMonth(date);
     };
     this.startOfWeek = (date) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.startOfWeek) ? this.overrides.startOfWeek(date, this.options) : startOfWeek(date, this.options);
+      return ((_a = this.overrides) == null ? void 0 : _a.startOfWeek)
+        ? this.overrides.startOfWeek(date, this.options)
+        : startOfWeek(date, this.options);
     };
     this.startOfYear = (date) => {
       var _a;
-      return ((_a = this.overrides) == null ? void 0 : _a.startOfYear) ? this.overrides.startOfYear(date) : startOfYear(date);
+      return ((_a = this.overrides) == null ? void 0 : _a.startOfYear)
+        ? this.overrides.startOfYear(date)
+        : startOfYear(date);
     };
     this.options = { locale: enUS, ...options };
     this.overrides = overrides;
@@ -28192,17 +28353,26 @@ var defaultDateLib = new DateLib();
 var dateLib = defaultDateLib;
 
 // node_modules/react-day-picker/dist/esm/helpers/getClassNamesForModifiers.js
-function getClassNamesForModifiers(modifiers, classNames, modifiersClassNames = {}) {
-  const modifierClassNames = Object.entries(modifiers).filter(([, active]) => active === true).reduce((previousValue, [key]) => {
-    if (modifiersClassNames[key]) {
-      previousValue.push(modifiersClassNames[key]);
-    } else if (classNames[DayFlag[key]]) {
-      previousValue.push(classNames[DayFlag[key]]);
-    } else if (classNames[SelectionState[key]]) {
-      previousValue.push(classNames[SelectionState[key]]);
-    }
-    return previousValue;
-  }, [classNames[UI.Day]]);
+function getClassNamesForModifiers(
+  modifiers,
+  classNames,
+  modifiersClassNames = {},
+) {
+  const modifierClassNames = Object.entries(modifiers)
+    .filter(([, active]) => active === true)
+    .reduce(
+      (previousValue, [key]) => {
+        if (modifiersClassNames[key]) {
+          previousValue.push(modifiersClassNames[key]);
+        } else if (classNames[DayFlag[key]]) {
+          previousValue.push(classNames[DayFlag[key]]);
+        } else if (classNames[SelectionState[key]]) {
+          previousValue.push(classNames[SelectionState[key]]);
+        }
+        return previousValue;
+      },
+      [classNames[UI.Day]],
+    );
   return modifierClassNames;
 }
 
@@ -28234,7 +28404,7 @@ __export(custom_components_exports, {
   Weekday: () => Weekday,
   Weekdays: () => Weekdays,
   Weeks: () => Weeks,
-  YearsDropdown: () => YearsDropdown
+  YearsDropdown: () => YearsDropdown,
 });
 
 // node_modules/react-day-picker/dist/esm/components/Button.js
@@ -28256,10 +28426,24 @@ function Chevron(props) {
   return import_react3.default.createElement(
     "svg",
     { className, width: size, height: size, viewBox: "0 0 24 24" },
-    orientation === "up" && import_react3.default.createElement("polygon", { points: "6.77 17 12.5 11.43 18.24 17 20 15.28 12.5 8 5 15.28" }),
-    orientation === "down" && import_react3.default.createElement("polygon", { points: "6.77 8 12.5 13.57 18.24 8 20 9.72 12.5 17 5 9.72" }),
-    orientation === "left" && import_react3.default.createElement("polygon", { points: "16 18.112 9.81111111 12 16 5.87733333 14.0888889 4 6 12 14.0888889 20" }),
-    orientation === "right" && import_react3.default.createElement("polygon", { points: "8 18.612 14.1888889 12.5 8 6.37733333 9.91111111 4.5 18 12.5 9.91111111 20.5" })
+    orientation === "up" &&
+      import_react3.default.createElement("polygon", {
+        points: "6.77 17 12.5 11.43 18.24 17 20 15.28 12.5 8 5 15.28",
+      }),
+    orientation === "down" &&
+      import_react3.default.createElement("polygon", {
+        points: "6.77 8 12.5 13.57 18.24 8 20 9.72 12.5 17 5 9.72",
+      }),
+    orientation === "left" &&
+      import_react3.default.createElement("polygon", {
+        points:
+          "16 18.112 9.81111111 12 16 5.87733333 14.0888889 4 6 12 14.0888889 20",
+      }),
+    orientation === "right" &&
+      import_react3.default.createElement("polygon", {
+        points:
+          "8 18.612 14.1888889 12.5 8 6.37733333 9.91111111 4.5 18 12.5 9.91111111 20.5",
+      }),
   );
 }
 
@@ -28277,8 +28461,7 @@ function DayButton(props) {
   const ref = import_react5.default.useRef(null);
   import_react5.default.useEffect(() => {
     var _a;
-    if (modifiers.focused)
-      (_a = ref.current) == null ? void 0 : _a.focus();
+    if (modifiers.focused) (_a = ref.current) == null ? void 0 : _a.focus();
   }, [modifiers.focused]);
   return import_react5.default.createElement("button", { ref, ...buttonProps });
 }
@@ -28288,17 +28471,39 @@ var import_react6 = __toESM(require_react(), 1);
 function Dropdown(props) {
   const { options, className, components, classNames, ...selectProps } = props;
   const cssClassSelect = [classNames[UI.Dropdown], className].join(" ");
-  const selectedOption = options == null ? void 0 : options.find(({ value }) => value === selectProps.value);
+  const selectedOption =
+    options == null
+      ? void 0
+      : options.find(({ value }) => value === selectProps.value);
   return import_react6.default.createElement(
     "span",
-    { "data-disabled": selectProps.disabled, className: classNames[UI.DropdownRoot] },
-    import_react6.default.createElement(components.Select, { className: cssClassSelect, ...selectProps }, options == null ? void 0 : options.map(({ value, label, disabled }) => import_react6.default.createElement(components.Option, { key: value, value, disabled }, label))),
+    {
+      "data-disabled": selectProps.disabled,
+      className: classNames[UI.DropdownRoot],
+    },
+    import_react6.default.createElement(
+      components.Select,
+      { className: cssClassSelect, ...selectProps },
+      options == null
+        ? void 0
+        : options.map(({ value, label, disabled }) =>
+            import_react6.default.createElement(
+              components.Option,
+              { key: value, value, disabled },
+              label,
+            ),
+          ),
+    ),
     import_react6.default.createElement(
       "span",
       { className: classNames[UI.CaptionLabel], "aria-hidden": true },
       selectedOption == null ? void 0 : selectedOption.label,
-      import_react6.default.createElement(components.Chevron, { orientation: "down", size: 18, className: classNames[UI.Chevron] })
-    )
+      import_react6.default.createElement(components.Chevron, {
+        orientation: "down",
+        size: 18,
+        className: classNames[UI.Chevron],
+      }),
+    ),
   );
 }
 
@@ -28318,7 +28523,11 @@ function Footer(props) {
 var import_react9 = __toESM(require_react(), 1);
 function Month(props) {
   const { calendarMonth, displayIndex, ...divProps } = props;
-  return import_react9.default.createElement("div", { ...divProps }, props.children);
+  return import_react9.default.createElement(
+    "div",
+    { ...divProps },
+    props.children,
+  );
 }
 
 // node_modules/react-day-picker/dist/esm/components/MonthCaption.js
@@ -28357,27 +28566,61 @@ function useDayPicker() {
 // node_modules/react-day-picker/dist/esm/components/MonthsDropdown.js
 function MonthsDropdown(props) {
   const { components } = useDayPicker();
-  return import_react14.default.createElement(components.Dropdown, { ...props });
+  return import_react14.default.createElement(components.Dropdown, {
+    ...props,
+  });
 }
 
 // node_modules/react-day-picker/dist/esm/components/Nav.js
 var import_react15 = __toESM(require_react(), 1);
 function Nav(props) {
-  const { onPreviousClick, onNextClick, previousMonth, nextMonth, ...navProps } = props;
-  const { components, classNames, labels: { labelPrevious: labelPrevious2, labelNext: labelNext2 } } = useDayPicker();
+  const {
+    onPreviousClick,
+    onNextClick,
+    previousMonth,
+    nextMonth,
+    ...navProps
+  } = props;
+  const {
+    components,
+    classNames,
+    labels: { labelPrevious: labelPrevious2, labelNext: labelNext2 },
+  } = useDayPicker();
   return import_react15.default.createElement(
     "nav",
     { ...navProps },
     import_react15.default.createElement(
       components.PreviousMonthButton,
-      { type: "button", className: classNames[UI.PreviousMonthButton], tabIndex: previousMonth ? void 0 : -1, disabled: previousMonth ? void 0 : true, "aria-label": labelPrevious2(previousMonth), onClick: props.onPreviousClick },
-      import_react15.default.createElement(components.Chevron, { disabled: previousMonth ? void 0 : true, className: classNames[UI.Chevron], orientation: "left" })
+      {
+        type: "button",
+        className: classNames[UI.PreviousMonthButton],
+        tabIndex: previousMonth ? void 0 : -1,
+        disabled: previousMonth ? void 0 : true,
+        "aria-label": labelPrevious2(previousMonth),
+        onClick: props.onPreviousClick,
+      },
+      import_react15.default.createElement(components.Chevron, {
+        disabled: previousMonth ? void 0 : true,
+        className: classNames[UI.Chevron],
+        orientation: "left",
+      }),
     ),
     import_react15.default.createElement(
       components.NextMonthButton,
-      { type: "button", className: classNames[UI.NextMonthButton], tabIndex: nextMonth ? void 0 : -1, disabled: nextMonth ? void 0 : true, "aria-label": labelNext2(nextMonth), onClick: props.onNextClick },
-      import_react15.default.createElement(components.Chevron, { disabled: nextMonth ? void 0 : true, orientation: "right", className: classNames[UI.Chevron] })
-    )
+      {
+        type: "button",
+        className: classNames[UI.NextMonthButton],
+        tabIndex: nextMonth ? void 0 : -1,
+        disabled: nextMonth ? void 0 : true,
+        "aria-label": labelNext2(nextMonth),
+        onClick: props.onNextClick,
+      },
+      import_react15.default.createElement(components.Chevron, {
+        disabled: nextMonth ? void 0 : true,
+        orientation: "right",
+        className: classNames[UI.Chevron],
+      }),
+    ),
   );
 }
 
@@ -28432,7 +28675,7 @@ function Weekdays(props) {
   return import_react23.default.createElement(
     "thead",
     null,
-    import_react23.default.createElement("tr", { ...props })
+    import_react23.default.createElement("tr", { ...props }),
   );
 }
 
@@ -28459,14 +28702,16 @@ function Weeks(props) {
 var import_react27 = __toESM(require_react(), 1);
 function YearsDropdown(props) {
   const { components } = useDayPicker();
-  return import_react27.default.createElement(components.Dropdown, { ...props });
+  return import_react27.default.createElement(components.Dropdown, {
+    ...props,
+  });
 }
 
 // node_modules/react-day-picker/dist/esm/helpers/getComponents.js
 function getComponents(customComponents) {
   return {
     ...custom_components_exports,
-    ...customComponents
+    ...customComponents,
   };
 }
 
@@ -28475,9 +28720,10 @@ function getDataAttributes(props) {
   const dataAttributes = {
     "data-mode": props.mode ?? void 0,
     "data-required": "required" in props ? props.required : void 0,
-    "data-multiple-months": props.numberOfMonths && props.numberOfMonths > 1 || void 0,
+    "data-multiple-months":
+      (props.numberOfMonths && props.numberOfMonths > 1) || void 0,
     "data-week-numbers": props.showWeekNumber || void 0,
-    "data-broadcast-calendar": props.broadcastCalendar || void 0
+    "data-broadcast-calendar": props.broadcastCalendar || void 0,
   };
   Object.entries(props).forEach(([key, val]) => {
     if (key.startsWith("data-")) {
@@ -28513,7 +28759,7 @@ __export(formatters_exports, {
   formatWeekNumberHeader: () => formatWeekNumberHeader,
   formatWeekdayName: () => formatWeekdayName,
   formatYearCaption: () => formatYearCaption,
-  formatYearDropdown: () => formatYearDropdown
+  formatYearDropdown: () => formatYearDropdown,
 });
 
 // node_modules/react-day-picker/dist/esm/formatters/formatCaption.js
@@ -28559,25 +28805,33 @@ var formatYearCaption = formatYearDropdown;
 
 // node_modules/react-day-picker/dist/esm/helpers/getFormatters.js
 function getFormatters(customFormatters) {
-  if ((customFormatters == null ? void 0 : customFormatters.formatMonthCaption) && !customFormatters.formatCaption) {
+  if (
+    (customFormatters == null ? void 0 : customFormatters.formatMonthCaption) &&
+    !customFormatters.formatCaption
+  ) {
     customFormatters.formatCaption = customFormatters.formatMonthCaption;
   }
-  if ((customFormatters == null ? void 0 : customFormatters.formatYearCaption) && !customFormatters.formatYearDropdown) {
+  if (
+    (customFormatters == null ? void 0 : customFormatters.formatYearCaption) &&
+    !customFormatters.formatYearDropdown
+  ) {
     customFormatters.formatYearDropdown = customFormatters.formatYearCaption;
   }
   return {
     ...formatters_exports,
-    ...customFormatters
+    ...customFormatters,
   };
 }
 
 // node_modules/react-day-picker/dist/esm/helpers/getMonthOptions.js
 function getMonthOptions(displayMonth, navStart, navEnd, formatters, dateLib2) {
-  if (!navStart)
-    return void 0;
-  if (!navEnd)
-    return void 0;
-  const { addMonths: addMonths2, startOfMonth: startOfMonth2, isBefore: isBefore2 } = dateLib2;
+  if (!navStart) return void 0;
+  if (!navEnd) return void 0;
+  const {
+    addMonths: addMonths2,
+    startOfMonth: startOfMonth2,
+    isBefore: isBefore2,
+  } = dateLib2;
   const year = displayMonth.getFullYear();
   const months = [];
   let month = navStart;
@@ -28589,9 +28843,17 @@ function getMonthOptions(displayMonth, navStart, navEnd, formatters, dateLib2) {
     return a - b;
   });
   const options = sortedMonths.map((value) => {
-    const label = formatters.formatMonthDropdown(value, dateLib2.options.locale ?? enUS);
-    const month2 = dateLib2.Date ? new dateLib2.Date(year, value) : new Date(year, value);
-    const disabled = navStart && month2 < startOfMonth2(navStart) || navEnd && month2 > startOfMonth2(navEnd) || false;
+    const label = formatters.formatMonthDropdown(
+      value,
+      dateLib2.options.locale ?? enUS,
+    );
+    const month2 = dateLib2.Date
+      ? new dateLib2.Date(year, value)
+      : new Date(year, value);
+    const disabled =
+      (navStart && month2 < startOfMonth2(navStart)) ||
+      (navEnd && month2 > startOfMonth2(navEnd)) ||
+      false;
     return { value, label, disabled };
   });
   return options;
@@ -28599,13 +28861,15 @@ function getMonthOptions(displayMonth, navStart, navEnd, formatters, dateLib2) {
 
 // node_modules/react-day-picker/dist/esm/helpers/getStyleForModifiers.js
 function getStyleForModifiers(dayModifiers, styles = {}, modifiersStyles = {}) {
-  let style = { ...styles == null ? void 0 : styles[UI.Day] };
-  Object.entries(dayModifiers).filter(([, active]) => active === true).forEach(([modifier]) => {
-    style = {
-      ...style,
-      ...modifiersStyles == null ? void 0 : modifiersStyles[modifier]
-    };
-  });
+  let style = { ...(styles == null ? void 0 : styles[UI.Day]) };
+  Object.entries(dayModifiers)
+    .filter(([, active]) => active === true)
+    .forEach(([modifier]) => {
+      style = {
+        ...style,
+        ...(modifiersStyles == null ? void 0 : modifiersStyles[modifier]),
+      };
+    });
   return style;
 }
 
@@ -28617,11 +28881,13 @@ var offsetFormatCache = {};
 var offsetCache = {};
 function tzOffset(timeZone, date) {
   try {
-    const format2 = offsetFormatCache[timeZone] || (offsetFormatCache[timeZone] = new Intl.DateTimeFormat("en-GB", {
-      timeZone,
-      hour: "numeric",
-      timeZoneName: "longOffset"
-    }).format);
+    const format2 =
+      offsetFormatCache[timeZone] ||
+      (offsetFormatCache[timeZone] = new Intl.DateTimeFormat("en-GB", {
+        timeZone,
+        hour: "numeric",
+        timeZoneName: "longOffset",
+      }).format);
     const offsetStr = format2(date).split("GMT")[1] || "";
     if (offsetStr in offsetCache) return offsetCache[offsetStr];
     return calcOffset(offsetStr, offsetStr.split(":"));
@@ -28636,7 +28902,8 @@ var offsetRe = /([+-]\d\d):?(\d\d)?/;
 function calcOffset(cacheStr, values) {
   const hours = +values[0];
   const minutes = +(values[1] || 0);
-  return offsetCache[cacheStr] = hours > 0 ? hours * 60 + minutes : hours * 60 - minutes;
+  return (offsetCache[cacheStr] =
+    hours > 0 ? hours * 60 + minutes : hours * 60 - minutes);
 }
 
 // node_modules/@date-fns/tz/date/mini.js
@@ -28653,7 +28920,11 @@ var TZDateMini = class _TZDateMini extends Date {
     } else {
       if (!args.length) {
         this.setTime(Date.now());
-      } else if (typeof args[0] === "number" && (args.length === 1 || args.length === 2 && typeof args[1] !== "number")) {
+      } else if (
+        typeof args[0] === "number" &&
+        (args.length === 1 ||
+          (args.length === 2 && typeof args[1] !== "number"))
+      ) {
         this.setTime(args[0]);
       } else if (typeof args[0] === "string") {
         this.setTime(+new Date(args[0]));
@@ -28667,7 +28938,9 @@ var TZDateMini = class _TZDateMini extends Date {
     }
   }
   static tz(tz, ...args) {
-    return args.length ? new _TZDateMini(...args, tz) : new _TZDateMini(Date.now(), tz);
+    return args.length
+      ? new _TZDateMini(...args, tz)
+      : new _TZDateMini(Date.now(), tz);
   }
   //#endregion
   //#region time zone
@@ -28697,16 +28970,16 @@ Object.getOwnPropertyNames(Date.prototype).forEach((method) => {
   const utcMethod = method.replace(re, "$1UTC");
   if (!TZDateMini.prototype[utcMethod]) return;
   if (method.startsWith("get")) {
-    TZDateMini.prototype[method] = function() {
+    TZDateMini.prototype[method] = function () {
       return this.internal[utcMethod]();
     };
   } else {
-    TZDateMini.prototype[method] = function() {
+    TZDateMini.prototype[method] = function () {
       Date.prototype[utcMethod].apply(this.internal, arguments);
       syncFromInternal(this);
       return +this;
     };
-    TZDateMini.prototype[utcMethod] = function() {
+    TZDateMini.prototype[utcMethod] = function () {
       Date.prototype[utcMethod].apply(this, arguments);
       syncToInternal(this);
       return +this;
@@ -28715,36 +28988,65 @@ Object.getOwnPropertyNames(Date.prototype).forEach((method) => {
 });
 function syncToInternal(date) {
   date.internal.setTime(+date);
-  date.internal.setUTCMinutes(date.internal.getUTCMinutes() - date.getTimezoneOffset());
+  date.internal.setUTCMinutes(
+    date.internal.getUTCMinutes() - date.getTimezoneOffset(),
+  );
 }
 function syncFromInternal(date) {
-  Date.prototype.setFullYear.call(date, date.internal.getUTCFullYear(), date.internal.getUTCMonth(), date.internal.getUTCDate());
-  Date.prototype.setHours.call(date, date.internal.getUTCHours(), date.internal.getUTCMinutes(), date.internal.getUTCSeconds(), date.internal.getUTCMilliseconds());
+  Date.prototype.setFullYear.call(
+    date,
+    date.internal.getUTCFullYear(),
+    date.internal.getUTCMonth(),
+    date.internal.getUTCDate(),
+  );
+  Date.prototype.setHours.call(
+    date,
+    date.internal.getUTCHours(),
+    date.internal.getUTCMinutes(),
+    date.internal.getUTCSeconds(),
+    date.internal.getUTCMilliseconds(),
+  );
   adjustToSystemTZ(date);
 }
 function adjustToSystemTZ(date) {
   const offset = tzOffset(date.timeZone, date);
   const prevHour = /* @__PURE__ */ new Date(+date);
   prevHour.setUTCHours(prevHour.getUTCHours() - 1);
-  const systemOffset = -(/* @__PURE__ */ new Date(+date)).getTimezoneOffset();
-  const prevHourSystemOffset = -(/* @__PURE__ */ new Date(+prevHour)).getTimezoneOffset();
+  const systemOffset = -/* @__PURE__ */ new Date(+date).getTimezoneOffset();
+  const prevHourSystemOffset = -/* @__PURE__ */ new Date(
+    +prevHour,
+  ).getTimezoneOffset();
   const systemDSTChange = systemOffset - prevHourSystemOffset;
-  const dstShift = Date.prototype.getHours.apply(date) !== date.internal.getUTCHours();
-  if (systemDSTChange && dstShift) date.internal.setUTCMinutes(date.internal.getUTCMinutes() + systemDSTChange);
+  const dstShift =
+    Date.prototype.getHours.apply(date) !== date.internal.getUTCHours();
+  if (systemDSTChange && dstShift)
+    date.internal.setUTCMinutes(
+      date.internal.getUTCMinutes() + systemDSTChange,
+    );
   const offsetDiff = systemOffset - offset;
-  if (offsetDiff) Date.prototype.setUTCMinutes.call(date, Date.prototype.getUTCMinutes.call(date) + offsetDiff);
+  if (offsetDiff)
+    Date.prototype.setUTCMinutes.call(
+      date,
+      Date.prototype.getUTCMinutes.call(date) + offsetDiff,
+    );
   const postOffset = tzOffset(date.timeZone, date);
-  const postSystemOffset = -(/* @__PURE__ */ new Date(+date)).getTimezoneOffset();
+  const postSystemOffset = -/* @__PURE__ */ new Date(+date).getTimezoneOffset();
   const postOffsetDiff = postSystemOffset - postOffset;
   const offsetChanged = postOffset !== offset;
   const postDiff = postOffsetDiff - offsetDiff;
   if (offsetChanged && postDiff) {
-    Date.prototype.setUTCMinutes.call(date, Date.prototype.getUTCMinutes.call(date) + postDiff);
+    Date.prototype.setUTCMinutes.call(
+      date,
+      Date.prototype.getUTCMinutes.call(date) + postDiff,
+    );
     const newOffset = tzOffset(date.timeZone, date);
     const offsetChange = postOffset - newOffset;
     if (offsetChange) {
       date.internal.setUTCMinutes(date.internal.getUTCMinutes() + offsetChange);
-      Date.prototype.setUTCMinutes.call(date, Date.prototype.getUTCMinutes.call(date) + offsetChange);
+      Date.prototype.setUTCMinutes.call(
+        date,
+        Date.prototype.getUTCMinutes.call(date) + offsetChange,
+      );
     }
   }
 }
@@ -28777,19 +29079,19 @@ var TZDate = class _TZDate extends TZDateMini {
   toLocaleString(locales, options) {
     return Date.prototype.toLocaleString.call(this, locales, {
       ...options,
-      timeZone: (options == null ? void 0 : options.timeZone) || this.timeZone
+      timeZone: (options == null ? void 0 : options.timeZone) || this.timeZone,
     });
   }
   toLocaleDateString(locales, options) {
     return Date.prototype.toLocaleDateString.call(this, locales, {
       ...options,
-      timeZone: (options == null ? void 0 : options.timeZone) || this.timeZone
+      timeZone: (options == null ? void 0 : options.timeZone) || this.timeZone,
     });
   }
   toLocaleTimeString(locales, options) {
     return Date.prototype.toLocaleTimeString.call(this, locales, {
       ...options,
-      timeZone: (options == null ? void 0 : options.timeZone) || this.timeZone
+      timeZone: (options == null ? void 0 : options.timeZone) || this.timeZone,
     });
   }
   //#endregion
@@ -28814,14 +29116,24 @@ var TZDate = class _TZDate extends TZDateMini {
 function tzName(tz, date) {
   return new Intl.DateTimeFormat("en-GB", {
     timeZone: tz,
-    timeZoneName: "long"
-  }).format(date).slice(12);
+    timeZoneName: "long",
+  })
+    .format(date)
+    .slice(12);
 }
 
 // node_modules/react-day-picker/dist/esm/helpers/getWeekdays.js
 function getWeekdays(dateLib2, ISOWeek, timeZone, broadcastCalendar) {
-  const date = timeZone ? TZDate.tz(timeZone) : dateLib2.Date ? new dateLib2.Date() : /* @__PURE__ */ new Date();
-  const start = broadcastCalendar ? dateLib2.startOfBroadcastWeek(date, dateLib2) : ISOWeek ? dateLib2.startOfISOWeek(date) : dateLib2.startOfWeek(date);
+  const date = timeZone
+    ? TZDate.tz(timeZone)
+    : dateLib2.Date
+      ? new dateLib2.Date()
+      : /* @__PURE__ */ new Date();
+  const start = broadcastCalendar
+    ? dateLib2.startOfBroadcastWeek(date, dateLib2)
+    : ISOWeek
+      ? dateLib2.startOfISOWeek(date)
+      : dateLib2.startOfWeek(date);
   const days = [];
   for (let i = 0; i < 7; i++) {
     const day = dateLib2.addDays(start, i);
@@ -28831,12 +29143,23 @@ function getWeekdays(dateLib2, ISOWeek, timeZone, broadcastCalendar) {
 }
 
 // node_modules/react-day-picker/dist/esm/helpers/getYearOptions.js
-function getYearOptions(displayMonth, calendarStart, calendarEnd, formatters, dateLib2) {
-  if (!calendarStart)
-    return void 0;
-  if (!calendarEnd)
-    return void 0;
-  const { startOfMonth: startOfMonth2, startOfYear: startOfYear2, endOfYear: endOfYear2, addYears: addYears2, isBefore: isBefore2, isSameYear: isSameYear2 } = dateLib2;
+function getYearOptions(
+  displayMonth,
+  calendarStart,
+  calendarEnd,
+  formatters,
+  dateLib2,
+) {
+  if (!calendarStart) return void 0;
+  if (!calendarEnd) return void 0;
+  const {
+    startOfMonth: startOfMonth2,
+    startOfYear: startOfYear2,
+    endOfYear: endOfYear2,
+    addYears: addYears2,
+    isBefore: isBefore2,
+    isSameYear: isSameYear2,
+  } = dateLib2;
   const month = displayMonth.getMonth();
   const firstNavYear = startOfYear2(calendarStart);
   const lastNavYear = endOfYear2(calendarEnd);
@@ -28847,13 +29170,18 @@ function getYearOptions(displayMonth, calendarStart, calendarEnd, formatters, da
     year = addYears2(year, 1);
   }
   return years.map((value) => {
-    const year2 = dateLib2.Date ? new dateLib2.Date(value, month) : new Date(value, month);
-    const disabled = calendarStart && year2 < startOfMonth2(calendarStart) || month && calendarEnd && year2 > startOfMonth2(calendarEnd) || false;
+    const year2 = dateLib2.Date
+      ? new dateLib2.Date(value, month)
+      : new Date(value, month);
+    const disabled =
+      (calendarStart && year2 < startOfMonth2(calendarStart)) ||
+      (month && calendarEnd && year2 > startOfMonth2(calendarEnd)) ||
+      false;
     const label = formatters.formatYearDropdown(value);
     return {
       value,
       label,
-      disabled
+      disabled,
     };
   });
 }
@@ -28873,7 +29201,7 @@ __export(labels_exports, {
   labelWeekNumber: () => labelWeekNumber,
   labelWeekNumberHeader: () => labelWeekNumberHeader,
   labelWeekday: () => labelWeekday,
-  labelYearDropdown: () => labelYearDropdown
+  labelYearDropdown: () => labelYearDropdown,
 });
 
 // node_modules/react-day-picker/dist/esm/labels/labelGrid.js
@@ -28894,10 +29222,8 @@ function labelGridcell(date, modifiers, options, dateLib2) {
 // node_modules/react-day-picker/dist/esm/labels/labelDayButton.js
 function labelDayButton(date, modifiers, options, dateLib2) {
   let label = (dateLib2 ?? new DateLib(options)).format(date, "PPPP");
-  if (modifiers.today)
-    label = `Today, ${label}`;
-  if (modifiers.selected)
-    label = `${label}, selected`;
+  if (modifiers.today) label = `Today, ${label}`;
+  if (modifiers.selected) label = `${label}, selected`;
   return label;
 }
 var labelDay = labelDayButton;
@@ -28950,10 +29276,33 @@ function getDates(displayMonths, maxDate, props, dateLib2) {
   const firstMonth = displayMonths[0];
   const lastMonth = displayMonths[displayMonths.length - 1];
   const { ISOWeek, fixedWeeks, broadcastCalendar } = props ?? {};
-  const { addDays: addDays2, differenceInCalendarDays: differenceInCalendarDays2, differenceInCalendarMonths: differenceInCalendarMonths2, endOfBroadcastWeek: endOfBroadcastWeek2, endOfISOWeek: endOfISOWeek2, endOfMonth: endOfMonth2, endOfWeek: endOfWeek2, isAfter: isAfter2, startOfBroadcastWeek: startOfBroadcastWeek2, startOfISOWeek: startOfISOWeek2, startOfWeek: startOfWeek2 } = dateLib2;
-  const startWeekFirstDate = broadcastCalendar ? startOfBroadcastWeek2(firstMonth, dateLib2) : ISOWeek ? startOfISOWeek2(firstMonth) : startOfWeek2(firstMonth);
-  const endWeekLastDate = broadcastCalendar ? endOfBroadcastWeek2(lastMonth, dateLib2) : ISOWeek ? endOfISOWeek2(endOfMonth2(lastMonth)) : endOfWeek2(endOfMonth2(lastMonth));
-  const nOfDays = differenceInCalendarDays2(endWeekLastDate, startWeekFirstDate);
+  const {
+    addDays: addDays2,
+    differenceInCalendarDays: differenceInCalendarDays2,
+    differenceInCalendarMonths: differenceInCalendarMonths2,
+    endOfBroadcastWeek: endOfBroadcastWeek2,
+    endOfISOWeek: endOfISOWeek2,
+    endOfMonth: endOfMonth2,
+    endOfWeek: endOfWeek2,
+    isAfter: isAfter2,
+    startOfBroadcastWeek: startOfBroadcastWeek2,
+    startOfISOWeek: startOfISOWeek2,
+    startOfWeek: startOfWeek2,
+  } = dateLib2;
+  const startWeekFirstDate = broadcastCalendar
+    ? startOfBroadcastWeek2(firstMonth, dateLib2)
+    : ISOWeek
+      ? startOfISOWeek2(firstMonth)
+      : startOfWeek2(firstMonth);
+  const endWeekLastDate = broadcastCalendar
+    ? endOfBroadcastWeek2(lastMonth, dateLib2)
+    : ISOWeek
+      ? endOfISOWeek2(endOfMonth2(lastMonth))
+      : endOfWeek2(endOfMonth2(lastMonth));
+  const nOfDays = differenceInCalendarDays2(
+    endWeekLastDate,
+    startWeekFirstDate,
+  );
   const nOfMonths = differenceInCalendarMonths2(lastMonth, firstMonth) + 1;
   const dates = [];
   for (let i = 0; i <= nOfDays; i++) {
@@ -28988,7 +29337,12 @@ function getDays(calendarMonths) {
 }
 
 // node_modules/react-day-picker/dist/esm/helpers/getDisplayMonths.js
-function getDisplayMonths(firstDisplayedMonth, calendarEndMonth, props, dateLib2) {
+function getDisplayMonths(
+  firstDisplayedMonth,
+  calendarEndMonth,
+  props,
+  dateLib2,
+) {
   const { numberOfMonths = 1 } = props;
   const months = [];
   for (let i = 0; i < numberOfMonths; i++) {
@@ -29003,9 +29357,24 @@ function getDisplayMonths(firstDisplayedMonth, calendarEndMonth, props, dateLib2
 
 // node_modules/react-day-picker/dist/esm/helpers/getInitialMonth.js
 function getInitialMonth(props, dateLib2) {
-  const { month, defaultMonth, today = props.timeZone ? TZDate.tz(props.timeZone) : dateLib2.Date ? new dateLib2.Date() : /* @__PURE__ */ new Date(), numberOfMonths = 1, endMonth, startMonth } = props;
+  const {
+    month,
+    defaultMonth,
+    today = props.timeZone
+      ? TZDate.tz(props.timeZone)
+      : dateLib2.Date
+        ? new dateLib2.Date()
+        : /* @__PURE__ */ new Date(),
+    numberOfMonths = 1,
+    endMonth,
+    startMonth,
+  } = props;
   let initialMonth = month || defaultMonth || today;
-  const { differenceInCalendarMonths: differenceInCalendarMonths2, addMonths: addMonths2, startOfMonth: startOfMonth2 } = dateLib2;
+  const {
+    differenceInCalendarMonths: differenceInCalendarMonths2,
+    addMonths: addMonths2,
+    startOfMonth: startOfMonth2,
+  } = dateLib2;
   if (endMonth && differenceInCalendarMonths2(endMonth, initialMonth) < 0) {
     const offset = -1 * (numberOfMonths - 1);
     initialMonth = addMonths2(endMonth, offset);
@@ -29021,7 +29390,9 @@ var CalendarDay = class {
   constructor(date, displayMonth, dateLib2 = defaultDateLib) {
     this.date = date;
     this.displayMonth = displayMonth;
-    this.outside = Boolean(displayMonth && !dateLib2.isSameMonth(date, displayMonth));
+    this.outside = Boolean(
+      displayMonth && !dateLib2.isSameMonth(date, displayMonth),
+    );
     this.dateLib = dateLib2;
   }
   /**
@@ -29029,7 +29400,10 @@ var CalendarDay = class {
    * same display month.
    */
   isEqualTo(day) {
-    return this.dateLib.isSameDay(day.date, this.date) && this.dateLib.isSameMonth(day.displayMonth, this.displayMonth);
+    return (
+      this.dateLib.isSameDay(day.date, this.date) &&
+      this.dateLib.isSameMonth(day.displayMonth, this.displayMonth)
+    );
   }
 };
 
@@ -29051,10 +29425,29 @@ var CalendarWeek = class {
 
 // node_modules/react-day-picker/dist/esm/helpers/getMonths.js
 function getMonths(displayMonths, dates, props, dateLib2) {
-  const { addDays: addDays2, endOfBroadcastWeek: endOfBroadcastWeek2, endOfISOWeek: endOfISOWeek2, endOfMonth: endOfMonth2, endOfWeek: endOfWeek2, getISOWeek: getISOWeek2, getWeek: getWeek2, startOfBroadcastWeek: startOfBroadcastWeek2, startOfISOWeek: startOfISOWeek2, startOfWeek: startOfWeek2 } = dateLib2;
+  const {
+    addDays: addDays2,
+    endOfBroadcastWeek: endOfBroadcastWeek2,
+    endOfISOWeek: endOfISOWeek2,
+    endOfMonth: endOfMonth2,
+    endOfWeek: endOfWeek2,
+    getISOWeek: getISOWeek2,
+    getWeek: getWeek2,
+    startOfBroadcastWeek: startOfBroadcastWeek2,
+    startOfISOWeek: startOfISOWeek2,
+    startOfWeek: startOfWeek2,
+  } = dateLib2;
   const dayPickerMonths = displayMonths.reduce((months, month) => {
-    const firstDateOfFirstWeek = props.broadcastCalendar ? startOfBroadcastWeek2(month, dateLib2) : props.ISOWeek ? startOfISOWeek2(month) : startOfWeek2(month);
-    const lastDateOfLastWeek = props.broadcastCalendar ? endOfBroadcastWeek2(month, dateLib2) : props.ISOWeek ? endOfISOWeek2(endOfMonth2(month)) : endOfWeek2(endOfMonth2(month));
+    const firstDateOfFirstWeek = props.broadcastCalendar
+      ? startOfBroadcastWeek2(month, dateLib2)
+      : props.ISOWeek
+        ? startOfISOWeek2(month)
+        : startOfWeek2(month);
+    const lastDateOfLastWeek = props.broadcastCalendar
+      ? endOfBroadcastWeek2(month, dateLib2)
+      : props.ISOWeek
+        ? endOfISOWeek2(endOfMonth2(month))
+        : endOfWeek2(endOfMonth2(month));
     const monthDates = dates.filter((date) => {
       return date >= firstDateOfFirstWeek && date <= lastDateOfLastWeek;
     });
@@ -29062,7 +29455,10 @@ function getMonths(displayMonths, dates, props, dateLib2) {
     if (props.fixedWeeks && monthDates.length < nrOfDaysWithFixedWeeks) {
       const extraDates = dates.filter((date) => {
         const daysToAdd = nrOfDaysWithFixedWeeks - monthDates.length;
-        return date > lastDateOfLastWeek && date <= addDays2(lastDateOfLastWeek, daysToAdd);
+        return (
+          date > lastDateOfLastWeek &&
+          date <= addDays2(lastDateOfLastWeek, daysToAdd)
+        );
       });
       monthDates.push(...extraDates);
     }
@@ -29092,7 +29488,14 @@ function getMonths(displayMonths, dates, props, dateLib2) {
 function getNavMonths(props, dateLib2) {
   var _a;
   let { startMonth, endMonth } = props;
-  const { startOfYear: startOfYear2, startOfDay: startOfDay2, startOfMonth: startOfMonth2, endOfMonth: endOfMonth2, addYears: addYears2, endOfYear: endOfYear2 } = dateLib2;
+  const {
+    startOfYear: startOfYear2,
+    startOfDay: startOfDay2,
+    startOfMonth: startOfMonth2,
+    endOfMonth: endOfMonth2,
+    addYears: addYears2,
+    endOfYear: endOfYear2,
+  } = dateLib2;
   const { fromYear, toYear, fromMonth, toMonth } = props;
   if (!startMonth && fromMonth) {
     startMonth = fromMonth;
@@ -29106,13 +29509,20 @@ function getNavMonths(props, dateLib2) {
   if (!endMonth && toYear) {
     endMonth = new Date(toYear, 11, 31);
   }
-  const hasDropdowns = (_a = props.captionLayout) == null ? void 0 : _a.startsWith("dropdown");
+  const hasDropdowns =
+    (_a = props.captionLayout) == null ? void 0 : _a.startsWith("dropdown");
   if (startMonth) {
     startMonth = startOfMonth2(startMonth);
   } else if (fromYear) {
     startMonth = new Date(fromYear, 0, 1);
   } else if (!startMonth && hasDropdowns) {
-    const today = props.today ?? (props.timeZone ? TZDate.tz(props.timeZone) : dateLib2.Date ? new dateLib2.Date() : /* @__PURE__ */ new Date());
+    const today =
+      props.today ??
+      (props.timeZone
+        ? TZDate.tz(props.timeZone)
+        : dateLib2.Date
+          ? new dateLib2.Date()
+          : /* @__PURE__ */ new Date());
     startMonth = startOfYear2(addYears2(today, -100));
   }
   if (endMonth) {
@@ -29120,28 +29530,46 @@ function getNavMonths(props, dateLib2) {
   } else if (toYear) {
     endMonth = new Date(toYear, 11, 31);
   } else if (!endMonth && hasDropdowns) {
-    const today = props.today ?? (props.timeZone ? TZDate.tz(props.timeZone) : dateLib2.Date ? new dateLib2.Date() : /* @__PURE__ */ new Date());
+    const today =
+      props.today ??
+      (props.timeZone
+        ? TZDate.tz(props.timeZone)
+        : dateLib2.Date
+          ? new dateLib2.Date()
+          : /* @__PURE__ */ new Date());
     endMonth = endOfYear2(today);
   }
   return [
     startMonth ? startOfDay2(startMonth) : startMonth,
-    endMonth ? startOfDay2(endMonth) : endMonth
+    endMonth ? startOfDay2(endMonth) : endMonth,
   ];
 }
 
 // node_modules/react-day-picker/dist/esm/helpers/getNextMonth.js
-function getNextMonth(firstDisplayedMonth, calendarEndMonth, options, dateLib2) {
+function getNextMonth(
+  firstDisplayedMonth,
+  calendarEndMonth,
+  options,
+  dateLib2,
+) {
   if (options.disableNavigation) {
     return void 0;
   }
   const { pagedNavigation, numberOfMonths = 1 } = options;
-  const { startOfMonth: startOfMonth2, addMonths: addMonths2, differenceInCalendarMonths: differenceInCalendarMonths2 } = dateLib2;
+  const {
+    startOfMonth: startOfMonth2,
+    addMonths: addMonths2,
+    differenceInCalendarMonths: differenceInCalendarMonths2,
+  } = dateLib2;
   const offset = pagedNavigation ? numberOfMonths : 1;
   const month = startOfMonth2(firstDisplayedMonth);
   if (!calendarEndMonth) {
     return addMonths2(month, offset);
   }
-  const monthsDiff = differenceInCalendarMonths2(calendarEndMonth, firstDisplayedMonth);
+  const monthsDiff = differenceInCalendarMonths2(
+    calendarEndMonth,
+    firstDisplayedMonth,
+  );
   if (monthsDiff < numberOfMonths) {
     return void 0;
   }
@@ -29149,13 +29577,22 @@ function getNextMonth(firstDisplayedMonth, calendarEndMonth, options, dateLib2) 
 }
 
 // node_modules/react-day-picker/dist/esm/helpers/getPreviousMonth.js
-function getPreviousMonth(firstDisplayedMonth, calendarStartMonth, options, dateLib2) {
+function getPreviousMonth(
+  firstDisplayedMonth,
+  calendarStartMonth,
+  options,
+  dateLib2,
+) {
   if (options.disableNavigation) {
     return void 0;
   }
   const { pagedNavigation, numberOfMonths } = options;
-  const { startOfMonth: startOfMonth2, addMonths: addMonths2, differenceInCalendarMonths: differenceInCalendarMonths2 } = dateLib2;
-  const offset = pagedNavigation ? numberOfMonths ?? 1 : 1;
+  const {
+    startOfMonth: startOfMonth2,
+    addMonths: addMonths2,
+    differenceInCalendarMonths: differenceInCalendarMonths2,
+  } = dateLib2;
+  const offset = pagedNavigation ? (numberOfMonths ?? 1) : 1;
   const month = startOfMonth2(firstDisplayedMonth);
   if (!calendarStartMonth) {
     return addMonths2(month, -offset);
@@ -29178,8 +29615,11 @@ function getWeeks(months) {
 // node_modules/react-day-picker/dist/esm/helpers/useControlledValue.js
 var import_react28 = __toESM(require_react(), 1);
 function useControlledValue(defaultValue, controlledValue) {
-  const [uncontrolledValue, setValue] = (0, import_react28.useState)(defaultValue);
-  const value = controlledValue === void 0 ? uncontrolledValue : controlledValue;
+  const [uncontrolledValue, setValue] = (0, import_react28.useState)(
+    defaultValue,
+  );
+  const value =
+    controlledValue === void 0 ? uncontrolledValue : controlledValue;
   return [value, setValue];
 }
 
@@ -29188,20 +29628,29 @@ function useCalendar(props, dateLib2) {
   const [navStart, navEnd] = getNavMonths(props, dateLib2);
   const { startOfMonth: startOfMonth2, endOfMonth: endOfMonth2 } = dateLib2;
   const initialMonth = getInitialMonth(props, dateLib2);
-  const [firstMonth, setFirstMonth] = useControlledValue(initialMonth, props.month ? startOfMonth2(props.month) : void 0);
+  const [firstMonth, setFirstMonth] = useControlledValue(
+    initialMonth,
+    props.month ? startOfMonth2(props.month) : void 0,
+  );
   (0, import_react29.useEffect)(() => {
     const newInitialMonth = getInitialMonth(props, dateLib2);
     setFirstMonth(newInitialMonth);
   }, [props.timeZone]);
   const displayMonths = getDisplayMonths(firstMonth, navEnd, props, dateLib2);
-  const dates = getDates(displayMonths, props.endMonth ? endOfMonth2(props.endMonth) : void 0, props, dateLib2);
+  const dates = getDates(
+    displayMonths,
+    props.endMonth ? endOfMonth2(props.endMonth) : void 0,
+    props,
+    dateLib2,
+  );
   const months = getMonths(displayMonths, dates, props, dateLib2);
   const weeks = getWeeks(months);
   const days = getDays(months);
   const previousMonth = getPreviousMonth(firstMonth, navStart, props, dateLib2);
   const nextMonth = getNextMonth(firstMonth, navEnd, props, dateLib2);
   const { disableNavigation, onMonthChange } = props;
-  const isDayInCalendar = (day) => weeks.some((week2) => week2.days.some((d) => d.isEqualTo(day)));
+  const isDayInCalendar = (day) =>
+    weeks.some((week2) => week2.days.some((d) => d.isEqualTo(day)));
   const goToMonth = (date) => {
     if (disableNavigation) {
       return;
@@ -29231,7 +29680,7 @@ function useCalendar(props, dateLib2) {
     previousMonth,
     nextMonth,
     goToMonth,
-    goToDay
+    goToDay,
   };
   return calendar;
 }
@@ -29247,7 +29696,11 @@ function calculateFocusTarget(days, getModifiers, isSelected, lastFocused) {
   while (index < days.length && !found) {
     const day = days[index];
     const modifiers = getModifiers(day);
-    if (!modifiers[DayFlag.disabled] && !modifiers[DayFlag.hidden] && !modifiers[DayFlag.outside]) {
+    if (
+      !modifiers[DayFlag.disabled] &&
+      !modifiers[DayFlag.hidden] &&
+      !modifiers[DayFlag.outside]
+    ) {
       if (modifiers[DayFlag.focused]) {
         focusTarget = day;
         found = true;
@@ -29274,15 +29727,25 @@ function calculateFocusTarget(days, getModifiers, isSelected, lastFocused) {
 }
 
 // node_modules/react-day-picker/dist/esm/utils/rangeIncludesDate.js
-function rangeIncludesDate(range, date, excludeEnds = false, dateLib2 = defaultDateLib) {
+function rangeIncludesDate(
+  range,
+  date,
+  excludeEnds = false,
+  dateLib2 = defaultDateLib,
+) {
   let { from, to } = range;
-  const { differenceInCalendarDays: differenceInCalendarDays2, isSameDay: isSameDay2 } = dateLib2;
+  const {
+    differenceInCalendarDays: differenceInCalendarDays2,
+    isSameDay: isSameDay2,
+  } = dateLib2;
   if (from && to) {
     const isRangeInverted = differenceInCalendarDays2(to, from) < 0;
     if (isRangeInverted) {
       [from, to] = [to, from];
     }
-    const isInRange = differenceInCalendarDays2(date, from) >= (excludeEnds ? 1 : 0) && differenceInCalendarDays2(to, date) >= (excludeEnds ? 1 : 0);
+    const isInRange =
+      differenceInCalendarDays2(date, from) >= (excludeEnds ? 1 : 0) &&
+      differenceInCalendarDays2(to, date) >= (excludeEnds ? 1 : 0);
     return isInRange;
   }
   if (!excludeEnds && to) {
@@ -29293,11 +29756,17 @@ function rangeIncludesDate(range, date, excludeEnds = false, dateLib2 = defaultD
   }
   return false;
 }
-var isDateInRange = (range, date) => rangeIncludesDate(range, date, false, defaultDateLib);
+var isDateInRange = (range, date) =>
+  rangeIncludesDate(range, date, false, defaultDateLib);
 
 // node_modules/react-day-picker/dist/esm/utils/typeguards.js
 function isDateInterval(matcher) {
-  return Boolean(matcher && typeof matcher === "object" && "before" in matcher && "after" in matcher);
+  return Boolean(
+    matcher &&
+      typeof matcher === "object" &&
+      "before" in matcher &&
+      "after" in matcher,
+  );
 }
 function isDateRange(value) {
   return Boolean(value && typeof value === "object" && "from" in value);
@@ -29318,7 +29787,11 @@ function isDatesArray(value, dateLib2) {
 // node_modules/react-day-picker/dist/esm/utils/dateMatchModifiers.js
 function dateMatchModifiers(date, matchers, dateLib2 = defaultDateLib) {
   const matchersArr = !Array.isArray(matchers) ? [matchers] : matchers;
-  const { isSameDay: isSameDay2, differenceInCalendarDays: differenceInCalendarDays2, isAfter: isAfter2 } = dateLib2;
+  const {
+    isSameDay: isSameDay2,
+    differenceInCalendarDays: differenceInCalendarDays2,
+    isAfter: isAfter2,
+  } = dateLib2;
   return matchersArr.some((matcher) => {
     if (typeof matcher === "boolean") {
       return matcher;
@@ -29365,16 +29838,47 @@ function dateMatchModifiers(date, matchers, dateLib2 = defaultDateLib) {
 var isMatch = dateMatchModifiers;
 
 // node_modules/react-day-picker/dist/esm/helpers/getFocusableDate.js
-function getFocusableDate(moveBy, moveDir, refDate, navStart, navEnd, props, dateLib2) {
+function getFocusableDate(
+  moveBy,
+  moveDir,
+  refDate,
+  navStart,
+  navEnd,
+  props,
+  dateLib2,
+) {
   const { ISOWeek, broadcastCalendar } = props;
-  const { addDays: addDays2, addMonths: addMonths2, addWeeks: addWeeks2, addYears: addYears2, endOfBroadcastWeek: endOfBroadcastWeek2, endOfISOWeek: endOfISOWeek2, endOfWeek: endOfWeek2, max: max2, min: min2, startOfBroadcastWeek: startOfBroadcastWeek2, startOfISOWeek: startOfISOWeek2, startOfWeek: startOfWeek2 } = dateLib2;
+  const {
+    addDays: addDays2,
+    addMonths: addMonths2,
+    addWeeks: addWeeks2,
+    addYears: addYears2,
+    endOfBroadcastWeek: endOfBroadcastWeek2,
+    endOfISOWeek: endOfISOWeek2,
+    endOfWeek: endOfWeek2,
+    max: max2,
+    min: min2,
+    startOfBroadcastWeek: startOfBroadcastWeek2,
+    startOfISOWeek: startOfISOWeek2,
+    startOfWeek: startOfWeek2,
+  } = dateLib2;
   const moveFns = {
     day: addDays2,
     week: addWeeks2,
     month: addMonths2,
     year: addYears2,
-    startOfWeek: (date) => broadcastCalendar ? startOfBroadcastWeek2(date, dateLib2) : ISOWeek ? startOfISOWeek2(date) : startOfWeek2(date),
-    endOfWeek: (date) => broadcastCalendar ? endOfBroadcastWeek2(date, dateLib2) : ISOWeek ? endOfISOWeek2(date) : endOfWeek2(date)
+    startOfWeek: (date) =>
+      broadcastCalendar
+        ? startOfBroadcastWeek2(date, dateLib2)
+        : ISOWeek
+          ? startOfISOWeek2(date)
+          : startOfWeek2(date),
+    endOfWeek: (date) =>
+      broadcastCalendar
+        ? endOfBroadcastWeek2(date, dateLib2)
+        : ISOWeek
+          ? endOfISOWeek2(date)
+          : endOfWeek2(date),
   };
   let focusableDate = moveFns[moveBy](refDate, moveDir === "after" ? 1 : -1);
   if (moveDir === "before" && navStart) {
@@ -29386,7 +29890,16 @@ function getFocusableDate(moveBy, moveDir, refDate, navStart, navEnd, props, dat
 }
 
 // node_modules/react-day-picker/dist/esm/helpers/getNextFocus.js
-function getNextFocus(moveBy, moveDir, refDay, calendarStartMonth, calendarEndMonth, props, dateLib2, attempt = 0) {
+function getNextFocus(
+  moveBy,
+  moveDir,
+  refDay,
+  calendarStartMonth,
+  calendarEndMonth,
+  props,
+  dateLib2,
+  attempt = 0,
+) {
   if (attempt > 365) {
     return void 0;
   }
@@ -29398,34 +29911,61 @@ function getNextFocus(moveBy, moveDir, refDay, calendarStartMonth, calendarEndMo
     calendarStartMonth,
     calendarEndMonth,
     props,
-    dateLib2
+    dateLib2,
   );
-  const isDisabled = Boolean(props.disabled && dateMatchModifiers(focusableDate, props.disabled, dateLib2));
-  const isHidden = Boolean(props.hidden && dateMatchModifiers(focusableDate, props.hidden, dateLib2));
+  const isDisabled = Boolean(
+    props.disabled &&
+      dateMatchModifiers(focusableDate, props.disabled, dateLib2),
+  );
+  const isHidden = Boolean(
+    props.hidden && dateMatchModifiers(focusableDate, props.hidden, dateLib2),
+  );
   const targetMonth = focusableDate;
   const focusDay = new CalendarDay(focusableDate, targetMonth, dateLib2);
   if (!isDisabled && !isHidden) {
     return focusDay;
   }
-  return getNextFocus(moveBy, moveDir, focusDay, calendarStartMonth, calendarEndMonth, props, dateLib2, attempt + 1);
+  return getNextFocus(
+    moveBy,
+    moveDir,
+    focusDay,
+    calendarStartMonth,
+    calendarEndMonth,
+    props,
+    dateLib2,
+    attempt + 1,
+  );
 }
 
 // node_modules/react-day-picker/dist/esm/useFocus.js
 function useFocus(props, calendar, getModifiers, isSelected, dateLib2) {
   const { autoFocus } = props;
   const [lastFocused, setLastFocused] = (0, import_react30.useState)();
-  const focusTarget = calculateFocusTarget(calendar.days, getModifiers, isSelected || (() => false), lastFocused);
-  const [focusedDay, setFocused] = (0, import_react30.useState)(autoFocus ? focusTarget : void 0);
+  const focusTarget = calculateFocusTarget(
+    calendar.days,
+    getModifiers,
+    isSelected || (() => false),
+    lastFocused,
+  );
+  const [focusedDay, setFocused] = (0, import_react30.useState)(
+    autoFocus ? focusTarget : void 0,
+  );
   const blur = () => {
     setLastFocused(focusedDay);
     setFocused(void 0);
   };
   const moveFocus = (moveBy, moveDir) => {
-    if (!focusedDay)
-      return;
-    const nextFocus = getNextFocus(moveBy, moveDir, focusedDay, calendar.navStart, calendar.navEnd, props, dateLib2);
-    if (!nextFocus)
-      return;
+    if (!focusedDay) return;
+    const nextFocus = getNextFocus(
+      moveBy,
+      moveDir,
+      focusedDay,
+      calendar.navStart,
+      calendar.navEnd,
+      props,
+      dateLib2,
+    );
+    if (!nextFocus) return;
     calendar.goToDay(nextFocus);
     setFocused(nextFocus);
   };
@@ -29437,15 +29977,29 @@ function useFocus(props, calendar, getModifiers, isSelected, dateLib2) {
     setFocused,
     focused: focusedDay,
     blur,
-    moveFocus
+    moveFocus,
   };
   return useFocus2;
 }
 
 // node_modules/react-day-picker/dist/esm/useGetModifiers.js
 function useGetModifiers(days, props, dateLib2) {
-  const { disabled, hidden, modifiers, showOutsideDays, broadcastCalendar, today } = props;
-  const { isSameDay: isSameDay2, isSameMonth: isSameMonth2, startOfMonth: startOfMonth2, isBefore: isBefore2, endOfMonth: endOfMonth2, isAfter: isAfter2 } = dateLib2;
+  const {
+    disabled,
+    hidden,
+    modifiers,
+    showOutsideDays,
+    broadcastCalendar,
+    today,
+  } = props;
+  const {
+    isSameDay: isSameDay2,
+    isSameMonth: isSameMonth2,
+    startOfMonth: startOfMonth2,
+    isBefore: isBefore2,
+    endOfMonth: endOfMonth2,
+    isAfter: isAfter2,
+  } = dateLib2;
   const startMonth = props.startMonth && startOfMonth2(props.startMonth);
   const endMonth = props.endMonth && endOfMonth2(props.endMonth);
   const internalModifiersMap = {
@@ -29453,32 +30007,47 @@ function useGetModifiers(days, props, dateLib2) {
     [DayFlag.outside]: [],
     [DayFlag.disabled]: [],
     [DayFlag.hidden]: [],
-    [DayFlag.today]: []
+    [DayFlag.today]: [],
   };
   const customModifiersMap = {};
   for (const day of days) {
     const { date, displayMonth } = day;
-    const isOutside = Boolean(displayMonth && !isSameMonth2(date, displayMonth));
-    const isBeforeStartMonth = Boolean(startMonth && isBefore2(date, startMonth));
+    const isOutside = Boolean(
+      displayMonth && !isSameMonth2(date, displayMonth),
+    );
+    const isBeforeStartMonth = Boolean(
+      startMonth && isBefore2(date, startMonth),
+    );
     const isAfterEndMonth = Boolean(endMonth && isAfter2(date, endMonth));
-    const isDisabled = Boolean(disabled && dateMatchModifiers(date, disabled, dateLib2));
-    const isHidden = Boolean(hidden && dateMatchModifiers(date, hidden, dateLib2)) || isBeforeStartMonth || isAfterEndMonth || // Broadcast calendar will show outside days as default
-    !broadcastCalendar && !showOutsideDays && isOutside || broadcastCalendar && showOutsideDays === false && isOutside;
-    const isToday = isSameDay2(date, today ?? (props.timeZone ? TZDate.tz(props.timeZone) : dateLib2.Date ? new dateLib2.Date() : /* @__PURE__ */ new Date()));
-    if (isOutside)
-      internalModifiersMap.outside.push(day);
-    if (isDisabled)
-      internalModifiersMap.disabled.push(day);
-    if (isHidden)
-      internalModifiersMap.hidden.push(day);
-    if (isToday)
-      internalModifiersMap.today.push(day);
+    const isDisabled = Boolean(
+      disabled && dateMatchModifiers(date, disabled, dateLib2),
+    );
+    const isHidden =
+      Boolean(hidden && dateMatchModifiers(date, hidden, dateLib2)) ||
+      isBeforeStartMonth ||
+      isAfterEndMonth || // Broadcast calendar will show outside days as default
+      (!broadcastCalendar && !showOutsideDays && isOutside) ||
+      (broadcastCalendar && showOutsideDays === false && isOutside);
+    const isToday = isSameDay2(
+      date,
+      today ??
+        (props.timeZone
+          ? TZDate.tz(props.timeZone)
+          : dateLib2.Date
+            ? new dateLib2.Date()
+            : /* @__PURE__ */ new Date()),
+    );
+    if (isOutside) internalModifiersMap.outside.push(day);
+    if (isDisabled) internalModifiersMap.disabled.push(day);
+    if (isHidden) internalModifiersMap.hidden.push(day);
+    if (isToday) internalModifiersMap.today.push(day);
     if (modifiers) {
       Object.keys(modifiers).forEach((name) => {
         const modifierValue = modifiers == null ? void 0 : modifiers[name];
-        const isMatch2 = modifierValue ? dateMatchModifiers(date, modifierValue, dateLib2) : false;
-        if (!isMatch2)
-          return;
+        const isMatch2 = modifierValue
+          ? dateMatchModifiers(date, modifierValue, dateLib2)
+          : false;
+        if (!isMatch2) return;
         if (customModifiersMap[name]) {
           customModifiersMap[name].push(day);
         } else {
@@ -29493,7 +30062,7 @@ function useGetModifiers(days, props, dateLib2) {
       [DayFlag.disabled]: false,
       [DayFlag.hidden]: false,
       [DayFlag.outside]: false,
-      [DayFlag.today]: false
+      [DayFlag.today]: false,
     };
     const customModifiers = {};
     for (const name in internalModifiersMap) {
@@ -29506,7 +30075,7 @@ function useGetModifiers(days, props, dateLib2) {
     return {
       ...dayFlags,
       // custom modifiers should override all the previous ones
-      ...customModifiers
+      ...customModifiers,
     };
   };
 }
@@ -29514,15 +30083,21 @@ function useGetModifiers(days, props, dateLib2) {
 // node_modules/react-day-picker/dist/esm/selection/useMulti.js
 function useMulti(props, dateLib2) {
   const { selected: initiallySelected, required, onSelect } = props;
-  const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
+  const [internallySelected, setSelected] = useControlledValue(
+    initiallySelected,
+    onSelect ? initiallySelected : void 0,
+  );
   const selected = !onSelect ? internallySelected : initiallySelected;
   const { isSameDay: isSameDay2 } = dateLib2;
   const isSelected = (date) => {
-    return (selected == null ? void 0 : selected.some((d) => isSameDay2(d, date))) ?? false;
+    return (
+      (selected == null ? void 0 : selected.some((d) => isSameDay2(d, date))) ??
+      false
+    );
   };
   const { min: min2, max: max2 } = props;
   const select = (triggerDate, modifiers, e) => {
-    let newDates = [...selected ?? []];
+    let newDates = [...(selected ?? [])];
     if (isSelected(triggerDate)) {
       if ((selected == null ? void 0 : selected.length) === min2) {
         return;
@@ -29530,7 +30105,10 @@ function useMulti(props, dateLib2) {
       if (required && (selected == null ? void 0 : selected.length) === 1) {
         return;
       }
-      newDates = selected == null ? void 0 : selected.filter((d) => !isSameDay2(d, triggerDate));
+      newDates =
+        selected == null
+          ? void 0
+          : selected.filter((d) => !isSameDay2(d, triggerDate));
     } else {
       if ((selected == null ? void 0 : selected.length) === max2) {
         newDates = [triggerDate];
@@ -29547,14 +30125,25 @@ function useMulti(props, dateLib2) {
   return {
     selected,
     select,
-    isSelected
+    isSelected,
   };
 }
 
 // node_modules/react-day-picker/dist/esm/utils/addToRange.js
-function addToRange(date, initialRange, min2 = 0, max2 = 0, required = false, dateLib2 = defaultDateLib) {
+function addToRange(
+  date,
+  initialRange,
+  min2 = 0,
+  max2 = 0,
+  required = false,
+  dateLib2 = defaultDateLib,
+) {
   const { from, to } = initialRange || {};
-  const { isSameDay: isSameDay2, isAfter: isAfter2, isBefore: isBefore2 } = dateLib2;
+  const {
+    isSameDay: isSameDay2,
+    isAfter: isAfter2,
+    isBefore: isBefore2,
+  } = dateLib2;
   let range;
   if (!from && !to) {
     range = { from: date, to: min2 > 0 ? void 0 : date };
@@ -29591,7 +30180,10 @@ function addToRange(date, initialRange, min2 = 0, max2 = 0, required = false, da
       throw new Error("Invalid range");
     }
   }
-  if ((range == null ? void 0 : range.from) && (range == null ? void 0 : range.to)) {
+  if (
+    (range == null ? void 0 : range.from) &&
+    (range == null ? void 0 : range.to)
+  ) {
     const diff = dateLib2.differenceInCalendarDays(range.to, range.from);
     if (max2 > 0 && diff > max2) {
       range = { from: date, to: void 0 };
@@ -29619,25 +30211,37 @@ function rangeContainsDayOfWeek(range, dayOfWeek, dateLib2 = defaultDateLib) {
 
 // node_modules/react-day-picker/dist/esm/utils/rangeOverlaps.js
 function rangeOverlaps(rangeLeft, rangeRight, dateLib2 = defaultDateLib) {
-  return rangeIncludesDate(rangeLeft, rangeRight.from, false, dateLib2) || rangeIncludesDate(rangeLeft, rangeRight.to, false, dateLib2) || rangeIncludesDate(rangeRight, rangeLeft.from, false, dateLib2) || rangeIncludesDate(rangeRight, rangeLeft.to, false, dateLib2);
+  return (
+    rangeIncludesDate(rangeLeft, rangeRight.from, false, dateLib2) ||
+    rangeIncludesDate(rangeLeft, rangeRight.to, false, dateLib2) ||
+    rangeIncludesDate(rangeRight, rangeLeft.from, false, dateLib2) ||
+    rangeIncludesDate(rangeRight, rangeLeft.to, false, dateLib2)
+  );
 }
 
 // node_modules/react-day-picker/dist/esm/utils/rangeContainsModifiers.js
 function rangeContainsModifiers(range, modifiers, dateLib2 = defaultDateLib) {
   const matchers = Array.isArray(modifiers) ? modifiers : [modifiers];
-  const nonFunctionMatchers = matchers.filter((matcher) => typeof matcher !== "function");
+  const nonFunctionMatchers = matchers.filter(
+    (matcher) => typeof matcher !== "function",
+  );
   const nonFunctionMatchersResult = nonFunctionMatchers.some((matcher) => {
-    if (typeof matcher === "boolean")
-      return matcher;
+    if (typeof matcher === "boolean") return matcher;
     if (dateLib2.isDate(matcher)) {
       return rangeIncludesDate(range, matcher, false, dateLib2);
     }
     if (isDatesArray(matcher, dateLib2)) {
-      return matcher.some((date) => rangeIncludesDate(range, date, false, dateLib2));
+      return matcher.some((date) =>
+        rangeIncludesDate(range, date, false, dateLib2),
+      );
     }
     if (isDateRange(matcher)) {
       if (matcher.from && matcher.to) {
-        return rangeOverlaps(range, { from: matcher.from, to: matcher.to }, dateLib2);
+        return rangeOverlaps(
+          range,
+          { from: matcher.from, to: matcher.to },
+          dateLib2,
+        );
       }
       return false;
     }
@@ -29647,22 +30251,34 @@ function rangeContainsModifiers(range, modifiers, dateLib2 = defaultDateLib) {
     if (isDateInterval(matcher)) {
       const isClosedInterval = dateLib2.isAfter(matcher.before, matcher.after);
       if (isClosedInterval) {
-        return rangeOverlaps(range, {
-          from: dateLib2.addDays(matcher.after, 1),
-          to: dateLib2.addDays(matcher.before, -1)
-        }, dateLib2);
+        return rangeOverlaps(
+          range,
+          {
+            from: dateLib2.addDays(matcher.after, 1),
+            to: dateLib2.addDays(matcher.before, -1),
+          },
+          dateLib2,
+        );
       }
-      return dateMatchModifiers(range.from, matcher, dateLib2) || dateMatchModifiers(range.to, matcher, dateLib2);
+      return (
+        dateMatchModifiers(range.from, matcher, dateLib2) ||
+        dateMatchModifiers(range.to, matcher, dateLib2)
+      );
     }
     if (isDateAfterType(matcher) || isDateBeforeType(matcher)) {
-      return dateMatchModifiers(range.from, matcher, dateLib2) || dateMatchModifiers(range.to, matcher, dateLib2);
+      return (
+        dateMatchModifiers(range.from, matcher, dateLib2) ||
+        dateMatchModifiers(range.to, matcher, dateLib2)
+      );
     }
     return false;
   });
   if (nonFunctionMatchersResult) {
     return true;
   }
-  const functionMatchers = matchers.filter((matcher) => typeof matcher === "function");
+  const functionMatchers = matchers.filter(
+    (matcher) => typeof matcher === "function",
+  );
   if (functionMatchers.length) {
     let date = range.from;
     const totalDays = dateLib2.differenceInCalendarDays(range.to, range.from);
@@ -29678,15 +30294,38 @@ function rangeContainsModifiers(range, modifiers, dateLib2 = defaultDateLib) {
 
 // node_modules/react-day-picker/dist/esm/selection/useRange.js
 function useRange(props, dateLib2) {
-  const { disabled, excludeDisabled, selected: initiallySelected, required, onSelect } = props;
-  const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
+  const {
+    disabled,
+    excludeDisabled,
+    selected: initiallySelected,
+    required,
+    onSelect,
+  } = props;
+  const [internallySelected, setSelected] = useControlledValue(
+    initiallySelected,
+    onSelect ? initiallySelected : void 0,
+  );
   const selected = !onSelect ? internallySelected : initiallySelected;
-  const isSelected = (date) => selected && rangeIncludesDate(selected, date, false, dateLib2);
+  const isSelected = (date) =>
+    selected && rangeIncludesDate(selected, date, false, dateLib2);
   const select = (triggerDate, modifiers, e) => {
     const { min: min2, max: max2 } = props;
-    const newRange = triggerDate ? addToRange(triggerDate, selected, min2, max2, required, dateLib2) : void 0;
-    if (excludeDisabled && disabled && (newRange == null ? void 0 : newRange.from) && newRange.to) {
-      if (rangeContainsModifiers({ from: newRange.from, to: newRange.to }, disabled, dateLib2)) {
+    const newRange = triggerDate
+      ? addToRange(triggerDate, selected, min2, max2, required, dateLib2)
+      : void 0;
+    if (
+      excludeDisabled &&
+      disabled &&
+      (newRange == null ? void 0 : newRange.from) &&
+      newRange.to
+    ) {
+      if (
+        rangeContainsModifiers(
+          { from: newRange.from, to: newRange.to },
+          disabled,
+          dateLib2,
+        )
+      ) {
         newRange.from = triggerDate;
         newRange.to = void 0;
       }
@@ -29700,14 +30339,17 @@ function useRange(props, dateLib2) {
   return {
     selected,
     select,
-    isSelected
+    isSelected,
   };
 }
 
 // node_modules/react-day-picker/dist/esm/selection/useSingle.js
 function useSingle(props, dateLib2) {
   const { selected: initiallySelected, required, onSelect } = props;
-  const [internallySelected, setSelected] = useControlledValue(initiallySelected, onSelect ? initiallySelected : void 0);
+  const [internallySelected, setSelected] = useControlledValue(
+    initiallySelected,
+    onSelect ? initiallySelected : void 0,
+  );
   const selected = !onSelect ? internallySelected : initiallySelected;
   const { isSameDay: isSameDay2 } = dateLib2;
   const isSelected = (compareDate) => {
@@ -29715,7 +30357,12 @@ function useSingle(props, dateLib2) {
   };
   const select = (triggerDate, modifiers, e) => {
     let newDate = triggerDate;
-    if (!required && selected && selected && isSameDay2(triggerDate, selected)) {
+    if (
+      !required &&
+      selected &&
+      selected &&
+      isSameDay2(triggerDate, selected)
+    ) {
       newDate = void 0;
     }
     if (!onSelect) {
@@ -29731,7 +30378,7 @@ function useSingle(props, dateLib2) {
   return {
     selected,
     select,
-    isSelected
+    isSelected,
   };
 }
 
@@ -29754,22 +30401,32 @@ function useSelection(props, dateLib2) {
 
 // node_modules/react-day-picker/dist/esm/DayPicker.js
 function DayPicker(props) {
-  const { components, formatters, labels, dateLib: dateLib2, locale, classNames } = (0, import_react31.useMemo)(() => {
+  const {
+    components,
+    formatters,
+    labels,
+    dateLib: dateLib2,
+    locale,
+    classNames,
+  } = (0, import_react31.useMemo)(() => {
     const locale2 = { ...enUS, ...props.locale };
-    const dateLib3 = new DateLib({
-      locale: locale2,
-      weekStartsOn: props.broadcastCalendar ? 1 : props.weekStartsOn,
-      firstWeekContainsDate: props.firstWeekContainsDate,
-      useAdditionalWeekYearTokens: props.useAdditionalWeekYearTokens,
-      useAdditionalDayOfYearTokens: props.useAdditionalDayOfYearTokens
-    }, props.dateLib);
+    const dateLib3 = new DateLib(
+      {
+        locale: locale2,
+        weekStartsOn: props.broadcastCalendar ? 1 : props.weekStartsOn,
+        firstWeekContainsDate: props.firstWeekContainsDate,
+        useAdditionalWeekYearTokens: props.useAdditionalWeekYearTokens,
+        useAdditionalDayOfYearTokens: props.useAdditionalDayOfYearTokens,
+      },
+      props.dateLib,
+    );
     return {
       dateLib: dateLib3,
       components: getComponents(props.components),
       formatters: getFormatters(props.formatters),
       labels: { ...labels_exports, ...props.labels },
       locale: locale2,
-      classNames: { ...getDefaultClassNames(), ...props.classNames }
+      classNames: { ...getDefaultClassNames(), ...props.classNames },
     };
   }, [
     props.classNames,
@@ -29782,74 +30439,151 @@ function DayPicker(props) {
     props.useAdditionalDayOfYearTokens,
     props.useAdditionalWeekYearTokens,
     props.weekStartsOn,
-    props.broadcastCalendar
+    props.broadcastCalendar,
   ]);
-  const { captionLayout, mode, onDayBlur, onDayClick, onDayFocus, onDayKeyDown, onDayMouseEnter, onDayMouseLeave, onNextClick, onPrevClick, showWeekNumber, styles } = props;
-  const { formatCaption: formatCaption2, formatDay: formatDay2, formatMonthDropdown: formatMonthDropdown2, formatWeekNumber: formatWeekNumber2, formatWeekNumberHeader: formatWeekNumberHeader2, formatWeekdayName: formatWeekdayName2, formatYearDropdown: formatYearDropdown2 } = formatters;
+  const {
+    captionLayout,
+    mode,
+    onDayBlur,
+    onDayClick,
+    onDayFocus,
+    onDayKeyDown,
+    onDayMouseEnter,
+    onDayMouseLeave,
+    onNextClick,
+    onPrevClick,
+    showWeekNumber,
+    styles,
+  } = props;
+  const {
+    formatCaption: formatCaption2,
+    formatDay: formatDay2,
+    formatMonthDropdown: formatMonthDropdown2,
+    formatWeekNumber: formatWeekNumber2,
+    formatWeekNumberHeader: formatWeekNumberHeader2,
+    formatWeekdayName: formatWeekdayName2,
+    formatYearDropdown: formatYearDropdown2,
+  } = formatters;
   const calendar = useCalendar(props, dateLib2);
-  const { days, months, navStart, navEnd, previousMonth, nextMonth, goToMonth } = calendar;
+  const {
+    days,
+    months,
+    navStart,
+    navEnd,
+    previousMonth,
+    nextMonth,
+    goToMonth,
+  } = calendar;
   const getModifiers = useGetModifiers(days, props, dateLib2);
-  const { isSelected, select, selected: selectedValue } = useSelection(props, dateLib2) ?? {};
-  const { blur, focused, isFocusTarget, moveFocus, setFocused } = useFocus(props, calendar, getModifiers, isSelected ?? (() => false), dateLib2);
-  const { labelDayButton: labelDayButton2, labelGridcell: labelGridcell2, labelGrid: labelGrid2, labelMonthDropdown: labelMonthDropdown2, labelNav: labelNav2, labelWeekday: labelWeekday2, labelWeekNumber: labelWeekNumber2, labelWeekNumberHeader: labelWeekNumberHeader2, labelYearDropdown: labelYearDropdown2 } = labels;
-  const weekdays = (0, import_react31.useMemo)(() => getWeekdays(dateLib2, props.ISOWeek, props.timeZone), [dateLib2, props.ISOWeek, props.timeZone]);
+  const {
+    isSelected,
+    select,
+    selected: selectedValue,
+  } = useSelection(props, dateLib2) ?? {};
+  const { blur, focused, isFocusTarget, moveFocus, setFocused } = useFocus(
+    props,
+    calendar,
+    getModifiers,
+    isSelected ?? (() => false),
+    dateLib2,
+  );
+  const {
+    labelDayButton: labelDayButton2,
+    labelGridcell: labelGridcell2,
+    labelGrid: labelGrid2,
+    labelMonthDropdown: labelMonthDropdown2,
+    labelNav: labelNav2,
+    labelWeekday: labelWeekday2,
+    labelWeekNumber: labelWeekNumber2,
+    labelWeekNumberHeader: labelWeekNumberHeader2,
+    labelYearDropdown: labelYearDropdown2,
+  } = labels;
+  const weekdays = (0, import_react31.useMemo)(
+    () => getWeekdays(dateLib2, props.ISOWeek, props.timeZone),
+    [dateLib2, props.ISOWeek, props.timeZone],
+  );
   const isInteractive = mode !== void 0 || onDayClick !== void 0;
   const handlePreviousClick = (0, import_react31.useCallback)(() => {
-    if (!previousMonth)
-      return;
+    if (!previousMonth) return;
     goToMonth(previousMonth);
     onPrevClick == null ? void 0 : onPrevClick(previousMonth);
   }, [previousMonth, goToMonth, onPrevClick]);
   const handleNextClick = (0, import_react31.useCallback)(() => {
-    if (!nextMonth)
-      return;
+    if (!nextMonth) return;
     goToMonth(nextMonth);
     onNextClick == null ? void 0 : onNextClick(nextMonth);
   }, [goToMonth, nextMonth, onNextClick]);
-  const handleDayClick = (0, import_react31.useCallback)((day, m) => (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setFocused(day);
-    select == null ? void 0 : select(day.date, m, e);
-    onDayClick == null ? void 0 : onDayClick(day.date, m, e);
-  }, [select, onDayClick, setFocused]);
-  const handleDayFocus = (0, import_react31.useCallback)((day, m) => (e) => {
-    setFocused(day);
-    onDayFocus == null ? void 0 : onDayFocus(day.date, m, e);
-  }, [onDayFocus, setFocused]);
-  const handleDayBlur = (0, import_react31.useCallback)((day, m) => (e) => {
-    blur();
-    onDayBlur == null ? void 0 : onDayBlur(day.date, m, e);
-  }, [blur, onDayBlur]);
-  const handleDayKeyDown = (0, import_react31.useCallback)((day, modifiers) => (e) => {
-    const keyMap = {
-      ArrowLeft: ["day", props.dir === "rtl" ? "after" : "before"],
-      ArrowRight: ["day", props.dir === "rtl" ? "before" : "after"],
-      ArrowDown: ["week", "after"],
-      ArrowUp: ["week", "before"],
-      PageUp: [e.shiftKey ? "year" : "month", "before"],
-      PageDown: [e.shiftKey ? "year" : "month", "after"],
-      Home: ["startOfWeek", "before"],
-      End: ["endOfWeek", "after"]
-    };
-    if (keyMap[e.key]) {
+  const handleDayClick = (0, import_react31.useCallback)(
+    (day, m) => (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const [moveBy, moveDir] = keyMap[e.key];
-      moveFocus(moveBy, moveDir);
-    }
-    onDayKeyDown == null ? void 0 : onDayKeyDown(day.date, modifiers, e);
-  }, [moveFocus, onDayKeyDown, props.dir]);
-  const handleDayMouseEnter = (0, import_react31.useCallback)((day, modifiers) => (e) => {
-    onDayMouseEnter == null ? void 0 : onDayMouseEnter(day.date, modifiers, e);
-  }, [onDayMouseEnter]);
-  const handleDayMouseLeave = (0, import_react31.useCallback)((day, modifiers) => (e) => {
-    onDayMouseLeave == null ? void 0 : onDayMouseLeave(day.date, modifiers, e);
-  }, [onDayMouseLeave]);
-  const { className, style } = (0, import_react31.useMemo)(() => ({
-    className: [classNames[UI.Root], props.className].filter(Boolean).join(" "),
-    style: { ...styles == null ? void 0 : styles[UI.Root], ...props.style }
-  }), [classNames, props.className, props.style, styles]);
+      setFocused(day);
+      select == null ? void 0 : select(day.date, m, e);
+      onDayClick == null ? void 0 : onDayClick(day.date, m, e);
+    },
+    [select, onDayClick, setFocused],
+  );
+  const handleDayFocus = (0, import_react31.useCallback)(
+    (day, m) => (e) => {
+      setFocused(day);
+      onDayFocus == null ? void 0 : onDayFocus(day.date, m, e);
+    },
+    [onDayFocus, setFocused],
+  );
+  const handleDayBlur = (0, import_react31.useCallback)(
+    (day, m) => (e) => {
+      blur();
+      onDayBlur == null ? void 0 : onDayBlur(day.date, m, e);
+    },
+    [blur, onDayBlur],
+  );
+  const handleDayKeyDown = (0, import_react31.useCallback)(
+    (day, modifiers) => (e) => {
+      const keyMap = {
+        ArrowLeft: ["day", props.dir === "rtl" ? "after" : "before"],
+        ArrowRight: ["day", props.dir === "rtl" ? "before" : "after"],
+        ArrowDown: ["week", "after"],
+        ArrowUp: ["week", "before"],
+        PageUp: [e.shiftKey ? "year" : "month", "before"],
+        PageDown: [e.shiftKey ? "year" : "month", "after"],
+        Home: ["startOfWeek", "before"],
+        End: ["endOfWeek", "after"],
+      };
+      if (keyMap[e.key]) {
+        e.preventDefault();
+        e.stopPropagation();
+        const [moveBy, moveDir] = keyMap[e.key];
+        moveFocus(moveBy, moveDir);
+      }
+      onDayKeyDown == null ? void 0 : onDayKeyDown(day.date, modifiers, e);
+    },
+    [moveFocus, onDayKeyDown, props.dir],
+  );
+  const handleDayMouseEnter = (0, import_react31.useCallback)(
+    (day, modifiers) => (e) => {
+      onDayMouseEnter == null
+        ? void 0
+        : onDayMouseEnter(day.date, modifiers, e);
+    },
+    [onDayMouseEnter],
+  );
+  const handleDayMouseLeave = (0, import_react31.useCallback)(
+    (day, modifiers) => (e) => {
+      onDayMouseLeave == null
+        ? void 0
+        : onDayMouseLeave(day.date, modifiers, e);
+    },
+    [onDayMouseLeave],
+  );
+  const { className, style } = (0, import_react31.useMemo)(
+    () => ({
+      className: [classNames[UI.Root], props.className]
+        .filter(Boolean)
+        .join(" "),
+      style: { ...(styles == null ? void 0 : styles[UI.Root]), ...props.style },
+    }),
+    [classNames, props.className, props.style, styles],
+  );
   const dataAttributes = getDataAttributes(props);
   const contextValue = {
     dayPickerProps: props,
@@ -29865,79 +30599,362 @@ function DayPicker(props) {
     classNames,
     styles,
     labels,
-    formatters
+    formatters,
   };
   return import_react31.default.createElement(
     dayPickerContext.Provider,
     { value: contextValue },
     import_react31.default.createElement(
       components.Root,
-      { className, style, dir: props.dir, id: props.id, lang: props.lang, nonce: props.nonce, title: props.title, ...dataAttributes },
+      {
+        className,
+        style,
+        dir: props.dir,
+        id: props.id,
+        lang: props.lang,
+        nonce: props.nonce,
+        title: props.title,
+        ...dataAttributes,
+      },
       import_react31.default.createElement(
         components.Months,
-        { className: classNames[UI.Months], style: styles == null ? void 0 : styles[UI.Months] },
-        !props.hideNavigation && import_react31.default.createElement(components.Nav, { className: classNames[UI.Nav], style: styles == null ? void 0 : styles[UI.Nav], "aria-label": labelNav2(), onPreviousClick: handlePreviousClick, onNextClick: handleNextClick, previousMonth, nextMonth }),
+        {
+          className: classNames[UI.Months],
+          style: styles == null ? void 0 : styles[UI.Months],
+        },
+        !props.hideNavigation &&
+          import_react31.default.createElement(components.Nav, {
+            className: classNames[UI.Nav],
+            style: styles == null ? void 0 : styles[UI.Nav],
+            "aria-label": labelNav2(),
+            onPreviousClick: handlePreviousClick,
+            onNextClick: handleNextClick,
+            previousMonth,
+            nextMonth,
+          }),
         months.map((calendarMonth, displayIndex) => {
           const handleMonthChange = (e) => {
             const selectedMonth = Number(e.target.value);
-            const month = dateLib2.setMonth(dateLib2.startOfMonth(calendarMonth.date), selectedMonth);
+            const month = dateLib2.setMonth(
+              dateLib2.startOfMonth(calendarMonth.date),
+              selectedMonth,
+            );
             goToMonth(month);
           };
           const handleYearChange = (e) => {
-            const month = dateLib2.setYear(dateLib2.startOfMonth(calendarMonth.date), Number(e.target.value));
+            const month = dateLib2.setYear(
+              dateLib2.startOfMonth(calendarMonth.date),
+              Number(e.target.value),
+            );
             goToMonth(month);
           };
-          const dropdownMonths = getMonthOptions(calendarMonth.date, navStart, navEnd, formatters, dateLib2);
-          const dropdownYears = getYearOptions(months[0].date, navStart, navEnd, formatters, dateLib2);
+          const dropdownMonths = getMonthOptions(
+            calendarMonth.date,
+            navStart,
+            navEnd,
+            formatters,
+            dateLib2,
+          );
+          const dropdownYears = getYearOptions(
+            months[0].date,
+            navStart,
+            navEnd,
+            formatters,
+            dateLib2,
+          );
           return import_react31.default.createElement(
             components.Month,
-            { className: classNames[UI.Month], style: styles == null ? void 0 : styles[UI.Month], key: displayIndex, displayIndex, calendarMonth },
-            import_react31.default.createElement(components.MonthCaption, { className: classNames[UI.MonthCaption], style: styles == null ? void 0 : styles[UI.MonthCaption], calendarMonth, displayIndex }, (captionLayout == null ? void 0 : captionLayout.startsWith("dropdown")) ? import_react31.default.createElement(
-              components.DropdownNav,
-              { className: classNames[UI.Dropdowns], style: styles == null ? void 0 : styles[UI.Dropdowns] },
-              captionLayout === "dropdown" || captionLayout === "dropdown-months" ? import_react31.default.createElement(components.MonthsDropdown, { className: classNames[UI.MonthsDropdown], "aria-label": labelMonthDropdown2(), classNames, components, disabled: Boolean(props.disableNavigation), onChange: handleMonthChange, options: dropdownMonths, style: styles == null ? void 0 : styles[UI.Dropdown], value: calendarMonth.date.getMonth() }) : import_react31.default.createElement("span", { role: "status", "aria-live": "polite" }, formatMonthDropdown2(calendarMonth.date.getMonth(), locale)),
-              captionLayout === "dropdown" || captionLayout === "dropdown-years" ? import_react31.default.createElement(components.YearsDropdown, { className: classNames[UI.YearsDropdown], "aria-label": labelYearDropdown2(dateLib2.options), classNames, components, disabled: Boolean(props.disableNavigation), onChange: handleYearChange, options: dropdownYears, style: styles == null ? void 0 : styles[UI.Dropdown], value: calendarMonth.date.getFullYear() }) : import_react31.default.createElement("span", { role: "status", "aria-live": "polite" }, formatYearDropdown2(calendarMonth.date.getFullYear()))
-            ) : import_react31.default.createElement(components.CaptionLabel, { className: classNames[UI.CaptionLabel], role: "status", "aria-live": "polite" }, formatCaption2(calendarMonth.date, dateLib2.options, dateLib2))),
+            {
+              className: classNames[UI.Month],
+              style: styles == null ? void 0 : styles[UI.Month],
+              key: displayIndex,
+              displayIndex,
+              calendarMonth,
+            },
+            import_react31.default.createElement(
+              components.MonthCaption,
+              {
+                className: classNames[UI.MonthCaption],
+                style: styles == null ? void 0 : styles[UI.MonthCaption],
+                calendarMonth,
+                displayIndex,
+              },
+              (
+                captionLayout == null
+                  ? void 0
+                  : captionLayout.startsWith("dropdown")
+              )
+                ? import_react31.default.createElement(
+                    components.DropdownNav,
+                    {
+                      className: classNames[UI.Dropdowns],
+                      style: styles == null ? void 0 : styles[UI.Dropdowns],
+                    },
+                    captionLayout === "dropdown" ||
+                      captionLayout === "dropdown-months"
+                      ? import_react31.default.createElement(
+                          components.MonthsDropdown,
+                          {
+                            className: classNames[UI.MonthsDropdown],
+                            "aria-label": labelMonthDropdown2(),
+                            classNames,
+                            components,
+                            disabled: Boolean(props.disableNavigation),
+                            onChange: handleMonthChange,
+                            options: dropdownMonths,
+                            style:
+                              styles == null ? void 0 : styles[UI.Dropdown],
+                            value: calendarMonth.date.getMonth(),
+                          },
+                        )
+                      : import_react31.default.createElement(
+                          "span",
+                          { role: "status", "aria-live": "polite" },
+                          formatMonthDropdown2(
+                            calendarMonth.date.getMonth(),
+                            locale,
+                          ),
+                        ),
+                    captionLayout === "dropdown" ||
+                      captionLayout === "dropdown-years"
+                      ? import_react31.default.createElement(
+                          components.YearsDropdown,
+                          {
+                            className: classNames[UI.YearsDropdown],
+                            "aria-label": labelYearDropdown2(dateLib2.options),
+                            classNames,
+                            components,
+                            disabled: Boolean(props.disableNavigation),
+                            onChange: handleYearChange,
+                            options: dropdownYears,
+                            style:
+                              styles == null ? void 0 : styles[UI.Dropdown],
+                            value: calendarMonth.date.getFullYear(),
+                          },
+                        )
+                      : import_react31.default.createElement(
+                          "span",
+                          { role: "status", "aria-live": "polite" },
+                          formatYearDropdown2(calendarMonth.date.getFullYear()),
+                        ),
+                  )
+                : import_react31.default.createElement(
+                    components.CaptionLabel,
+                    {
+                      className: classNames[UI.CaptionLabel],
+                      role: "status",
+                      "aria-live": "polite",
+                    },
+                    formatCaption2(
+                      calendarMonth.date,
+                      dateLib2.options,
+                      dateLib2,
+                    ),
+                  ),
+            ),
             import_react31.default.createElement(
               components.MonthGrid,
-              { role: "grid", "aria-multiselectable": mode === "multiple" || mode === "range", "aria-label": labelGrid2(calendarMonth.date, dateLib2.options, dateLib2) || void 0, className: classNames[UI.MonthGrid], style: styles == null ? void 0 : styles[UI.MonthGrid] },
-              !props.hideWeekdays && import_react31.default.createElement(
-                components.Weekdays,
-                { className: classNames[UI.Weekdays], style: styles == null ? void 0 : styles[UI.Weekdays] },
-                showWeekNumber && import_react31.default.createElement(components.WeekNumberHeader, { "aria-label": labelWeekNumberHeader2(dateLib2.options), className: classNames[UI.WeekNumberHeader], style: styles == null ? void 0 : styles[UI.WeekNumberHeader], scope: "col" }, formatWeekNumberHeader2()),
-                weekdays.map((weekday, i) => import_react31.default.createElement(components.Weekday, { "aria-label": labelWeekday2(weekday, dateLib2.options, dateLib2), className: classNames[UI.Weekday], key: i, style: styles == null ? void 0 : styles[UI.Weekday], scope: "col" }, formatWeekdayName2(weekday, dateLib2.options, dateLib2)))
+              {
+                role: "grid",
+                "aria-multiselectable": mode === "multiple" || mode === "range",
+                "aria-label":
+                  labelGrid2(calendarMonth.date, dateLib2.options, dateLib2) ||
+                  void 0,
+                className: classNames[UI.MonthGrid],
+                style: styles == null ? void 0 : styles[UI.MonthGrid],
+              },
+              !props.hideWeekdays &&
+                import_react31.default.createElement(
+                  components.Weekdays,
+                  {
+                    className: classNames[UI.Weekdays],
+                    style: styles == null ? void 0 : styles[UI.Weekdays],
+                  },
+                  showWeekNumber &&
+                    import_react31.default.createElement(
+                      components.WeekNumberHeader,
+                      {
+                        "aria-label": labelWeekNumberHeader2(dateLib2.options),
+                        className: classNames[UI.WeekNumberHeader],
+                        style:
+                          styles == null ? void 0 : styles[UI.WeekNumberHeader],
+                        scope: "col",
+                      },
+                      formatWeekNumberHeader2(),
+                    ),
+                  weekdays.map((weekday, i) =>
+                    import_react31.default.createElement(
+                      components.Weekday,
+                      {
+                        "aria-label": labelWeekday2(
+                          weekday,
+                          dateLib2.options,
+                          dateLib2,
+                        ),
+                        className: classNames[UI.Weekday],
+                        key: i,
+                        style: styles == null ? void 0 : styles[UI.Weekday],
+                        scope: "col",
+                      },
+                      formatWeekdayName2(weekday, dateLib2.options, dateLib2),
+                    ),
+                  ),
+                ),
+              import_react31.default.createElement(
+                components.Weeks,
+                {
+                  className: classNames[UI.Weeks],
+                  style: styles == null ? void 0 : styles[UI.Weeks],
+                },
+                calendarMonth.weeks.map((week2, weekIndex) => {
+                  return import_react31.default.createElement(
+                    components.Week,
+                    {
+                      className: classNames[UI.Week],
+                      key: week2.weekNumber,
+                      style: styles == null ? void 0 : styles[UI.Week],
+                      week: week2,
+                    },
+                    showWeekNumber &&
+                      import_react31.default.createElement(
+                        components.WeekNumber,
+                        {
+                          week: week2,
+                          style:
+                            styles == null ? void 0 : styles[UI.WeekNumber],
+                          "aria-label": labelWeekNumber2(week2.weekNumber, {
+                            locale,
+                          }),
+                          className: classNames[UI.WeekNumber],
+                          scope: "row",
+                        },
+                        formatWeekNumber2(week2.weekNumber),
+                      ),
+                    week2.days.map((day) => {
+                      const { date } = day;
+                      const modifiers = getModifiers(day);
+                      modifiers[DayFlag.focused] =
+                        !modifiers.hidden &&
+                        Boolean(
+                          focused == null ? void 0 : focused.isEqualTo(day),
+                        );
+                      modifiers[SelectionState.selected] =
+                        !modifiers.disabled &&
+                        ((isSelected == null ? void 0 : isSelected(date)) ||
+                          modifiers.selected);
+                      if (isDateRange(selectedValue)) {
+                        const { from, to } = selectedValue;
+                        modifiers[SelectionState.range_start] = Boolean(
+                          from && to && dateLib2.isSameDay(date, from),
+                        );
+                        modifiers[SelectionState.range_end] = Boolean(
+                          from && to && dateLib2.isSameDay(date, to),
+                        );
+                        modifiers[SelectionState.range_middle] =
+                          rangeIncludesDate(
+                            selectedValue,
+                            date,
+                            true,
+                            dateLib2,
+                          );
+                      }
+                      const style2 = getStyleForModifiers(
+                        modifiers,
+                        styles,
+                        props.modifiersStyles,
+                      );
+                      const className2 = getClassNamesForModifiers(
+                        modifiers,
+                        classNames,
+                        props.modifiersClassNames,
+                      );
+                      const ariaLabel = !isInteractive
+                        ? labelGridcell2(
+                            date,
+                            modifiers,
+                            dateLib2.options,
+                            dateLib2,
+                          )
+                        : void 0;
+                      return import_react31.default.createElement(
+                        components.Day,
+                        {
+                          key: `${dateLib2.format(date, "yyyy-MM-dd")}_${dateLib2.format(day.displayMonth, "yyyy-MM")}`,
+                          day,
+                          modifiers,
+                          className: className2.join(" "),
+                          style: style2,
+                          "aria-hidden": modifiers.hidden || void 0,
+                          "aria-selected": modifiers.selected || void 0,
+                          "aria-label": ariaLabel,
+                          "data-day": dateLib2.format(date, "yyyy-MM-dd"),
+                          "data-month": day.outside
+                            ? dateLib2.format(date, "yyyy-MM")
+                            : void 0,
+                          "data-selected": modifiers.selected || void 0,
+                          "data-disabled": modifiers.disabled || void 0,
+                          "data-hidden": modifiers.hidden || void 0,
+                          "data-outside": day.outside || void 0,
+                          "data-focused": modifiers.focused || void 0,
+                          "data-today": modifiers.today || void 0,
+                        },
+                        isInteractive
+                          ? import_react31.default.createElement(
+                              components.DayButton,
+                              {
+                                className: classNames[UI.DayButton],
+                                style:
+                                  styles == null
+                                    ? void 0
+                                    : styles[UI.DayButton],
+                                type: "button",
+                                day,
+                                modifiers,
+                                disabled: modifiers.disabled || void 0,
+                                tabIndex: isFocusTarget(day) ? 0 : -1,
+                                "aria-label": labelDayButton2(
+                                  date,
+                                  modifiers,
+                                  dateLib2.options,
+                                  dateLib2,
+                                ),
+                                onClick: handleDayClick(day, modifiers),
+                                onBlur: handleDayBlur(day, modifiers),
+                                onFocus: handleDayFocus(day, modifiers),
+                                onKeyDown: handleDayKeyDown(day, modifiers),
+                                onMouseEnter: handleDayMouseEnter(
+                                  day,
+                                  modifiers,
+                                ),
+                                onMouseLeave: handleDayMouseLeave(
+                                  day,
+                                  modifiers,
+                                ),
+                              },
+                              formatDay2(date, dateLib2.options, dateLib2),
+                            )
+                          : formatDay2(day.date, dateLib2.options, dateLib2),
+                      );
+                    }),
+                  );
+                }),
               ),
-              import_react31.default.createElement(components.Weeks, { className: classNames[UI.Weeks], style: styles == null ? void 0 : styles[UI.Weeks] }, calendarMonth.weeks.map((week2, weekIndex) => {
-                return import_react31.default.createElement(
-                  components.Week,
-                  { className: classNames[UI.Week], key: week2.weekNumber, style: styles == null ? void 0 : styles[UI.Week], week: week2 },
-                  showWeekNumber && import_react31.default.createElement(components.WeekNumber, { week: week2, style: styles == null ? void 0 : styles[UI.WeekNumber], "aria-label": labelWeekNumber2(week2.weekNumber, {
-                    locale
-                  }), className: classNames[UI.WeekNumber], scope: "row" }, formatWeekNumber2(week2.weekNumber)),
-                  week2.days.map((day) => {
-                    const { date } = day;
-                    const modifiers = getModifiers(day);
-                    modifiers[DayFlag.focused] = !modifiers.hidden && Boolean(focused == null ? void 0 : focused.isEqualTo(day));
-                    modifiers[SelectionState.selected] = !modifiers.disabled && ((isSelected == null ? void 0 : isSelected(date)) || modifiers.selected);
-                    if (isDateRange(selectedValue)) {
-                      const { from, to } = selectedValue;
-                      modifiers[SelectionState.range_start] = Boolean(from && to && dateLib2.isSameDay(date, from));
-                      modifiers[SelectionState.range_end] = Boolean(from && to && dateLib2.isSameDay(date, to));
-                      modifiers[SelectionState.range_middle] = rangeIncludesDate(selectedValue, date, true, dateLib2);
-                    }
-                    const style2 = getStyleForModifiers(modifiers, styles, props.modifiersStyles);
-                    const className2 = getClassNamesForModifiers(modifiers, classNames, props.modifiersClassNames);
-                    const ariaLabel = !isInteractive ? labelGridcell2(date, modifiers, dateLib2.options, dateLib2) : void 0;
-                    return import_react31.default.createElement(components.Day, { key: `${dateLib2.format(date, "yyyy-MM-dd")}_${dateLib2.format(day.displayMonth, "yyyy-MM")}`, day, modifiers, className: className2.join(" "), style: style2, "aria-hidden": modifiers.hidden || void 0, "aria-selected": modifiers.selected || void 0, "aria-label": ariaLabel, "data-day": dateLib2.format(date, "yyyy-MM-dd"), "data-month": day.outside ? dateLib2.format(date, "yyyy-MM") : void 0, "data-selected": modifiers.selected || void 0, "data-disabled": modifiers.disabled || void 0, "data-hidden": modifiers.hidden || void 0, "data-outside": day.outside || void 0, "data-focused": modifiers.focused || void 0, "data-today": modifiers.today || void 0 }, isInteractive ? import_react31.default.createElement(components.DayButton, { className: classNames[UI.DayButton], style: styles == null ? void 0 : styles[UI.DayButton], type: "button", day, modifiers, disabled: modifiers.disabled || void 0, tabIndex: isFocusTarget(day) ? 0 : -1, "aria-label": labelDayButton2(date, modifiers, dateLib2.options, dateLib2), onClick: handleDayClick(day, modifiers), onBlur: handleDayBlur(day, modifiers), onFocus: handleDayFocus(day, modifiers), onKeyDown: handleDayKeyDown(day, modifiers), onMouseEnter: handleDayMouseEnter(day, modifiers), onMouseLeave: handleDayMouseLeave(day, modifiers) }, formatDay2(date, dateLib2.options, dateLib2)) : formatDay2(day.date, dateLib2.options, dateLib2));
-                  })
-                );
-              }))
-            )
+            ),
           );
-        })
+        }),
       ),
-      props.footer && import_react31.default.createElement(components.Footer, { className: classNames[UI.Footer], style: styles == null ? void 0 : styles[UI.Footer], role: "status", "aria-live": "polite" }, props.footer)
-    )
+      props.footer &&
+        import_react31.default.createElement(
+          components.Footer,
+          {
+            className: classNames[UI.Footer],
+            style: styles == null ? void 0 : styles[UI.Footer],
+            role: "status",
+            "aria-live": "polite",
+          },
+          props.footer,
+        ),
+    ),
   );
 }
 
@@ -30025,6 +31042,6 @@ export {
   rangeIncludesDate,
   rangeOverlaps,
   useDayPicker,
-  useNavigation
+  useNavigation,
 };
 //# sourceMappingURL=react-day-picker.js.map

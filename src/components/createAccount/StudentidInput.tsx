@@ -46,7 +46,9 @@ function StudentidInput() {
     e.preventDefault();
 
     try {
-      const response = await customAxios.get(`/user/check-id?studentId=${studentID}`);
+      const response = await customAxios.get(
+        `/user/check-id?studentId=${studentID}`,
+      );
       //중복 확인 검사 성공했을 경우에만 (result 값이 false여야 함)
       if (response.data.result === false) {
         // alert("학번이 유효합니다! 다음 단계로 넘어갑니다.");
@@ -55,14 +57,16 @@ function StudentidInput() {
         navigate("/password-input"); //'/next-step'라는 값을 가진 컴포넌트로 이동한다 (navigating)
       } else {
         //중복 검사 실패 (겹치는 놈 있음)
-        alert("이미 가입된 학번입니다. 다른 학번으로 가입을 다시 시도해 주세요.");
+        alert(
+          "이미 가입된 학번입니다. 다른 학번으로 가입을 다시 시도해 주세요.",
+        );
       }
     } catch (error) {
       // 오류가 발생한 경우 처리
       if (axios.isAxiosError(error)) {
         alert(
           "An error occurred while validating the Login ID: " +
-            (error.response?.data?.message || error.message)
+            (error.response?.data?.message || error.message),
         );
       } else {
         alert("An unexpected error occurred");
@@ -84,7 +88,9 @@ function StudentidInput() {
       <form onSubmit={handleSubmit} className="w-full max-w-sm mt-16">
         {/* '아이디를 입력해 주세요' 텍스트 */}
         <div className="w-full max-w-sm">
-          <h1 className="text-left font-bold text-2xl text-black mb-12">학번을 입력해 주세요.</h1>
+          <h1 className="text-left font-bold text-2xl text-black mb-12">
+            학번을 입력해 주세요.
+          </h1>
         </div>
 
         {/* 학번 입력 필드 */}

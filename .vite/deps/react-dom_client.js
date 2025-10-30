@@ -1,10 +1,6 @@
-import {
-  require_react_dom
-} from "./chunk-JMVEG3FK.js";
+import { require_react_dom } from "./chunk-JMVEG3FK.js";
 import "./chunk-TWJRYSII.js";
-import {
-  __commonJS
-} from "./chunk-DC5AMYBS.js";
+import { __commonJS } from "./chunk-DC5AMYBS.js";
 
 // node_modules/react-dom/client.js
 var require_client = __commonJS({
@@ -15,7 +11,7 @@ var require_client = __commonJS({
       exports.hydrateRoot = m.hydrateRoot;
     } else {
       i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-      exports.createRoot = function(c, o) {
+      exports.createRoot = function (c, o) {
         i.usingClientEntryPoint = true;
         try {
           return m.createRoot(c, o);
@@ -23,7 +19,7 @@ var require_client = __commonJS({
           i.usingClientEntryPoint = false;
         }
       };
-      exports.hydrateRoot = function(c, h, o) {
+      exports.hydrateRoot = function (c, h, o) {
         i.usingClientEntryPoint = true;
         try {
           return m.hydrateRoot(c, h, o);
@@ -33,7 +29,7 @@ var require_client = __commonJS({
       };
     }
     var i;
-  }
+  },
 });
 export default require_client();
 //# sourceMappingURL=react-dom_client.js.map

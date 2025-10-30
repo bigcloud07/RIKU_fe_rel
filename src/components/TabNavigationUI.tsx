@@ -7,11 +7,9 @@ import RankingPage from "./Main/RankingPage";
 import NewMain from "./MainPage/NewMain";
 import ActionBar from "../components/ActionBar";
 
-//하단의 탭을 이용해서 오고가는 TabNavigationUI
 function TabNavigationUI() {
   return (
     <div>
-      {/* 상단 액션 바 */}
       <ActionBar />
       <Routes>
         <Route path="/main" element={<NewMain />} />
@@ -19,7 +17,6 @@ function TabNavigationUI() {
         <Route path="/ranking-page" element={<RankingPage />} />
         <Route path="/my-page" element={<MyPage />} />
       </Routes>
-      {/* 하단 네비게이션 */}
       <NavBar />
     </div>
   );

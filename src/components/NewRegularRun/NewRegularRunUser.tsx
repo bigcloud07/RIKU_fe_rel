@@ -19,10 +19,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { motion } from "framer-motion";
 
-import checkedicon from "../../assets/checkedicon.svg"
+import checkedicon from "../../assets/checkedicon.svg";
 
 import TabNavigationUI_detail from "../TabNavigationUI_detail";
-
 
 interface FlashRunUserData {
   postId?: string;
@@ -53,10 +52,11 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const [refreshComments, setRefreshComments] = useState(false);
   const [userStatus, setUserStatus] = useState("");
 
-  const [buttonText, setButtonText] = useState("참여하기"); // 기본값만
-
+  const [buttonText, setButtonText] = useState("참여하기"); 
   const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
-  const [groupList, setGroupList] = useState<{ group: string; pace: string }[]>([]);
+  const [groupList, setGroupList] = useState<{ group: string; pace: string }[]>(
+    [],
+  );
   const [selectedGroup, setSelectedGroup] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [code, setCode] = useState("");
@@ -71,7 +71,9 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   const dotButtonRef = useRef<HTMLDivElement>(null);
 
   const [isEditMode, setIsEditMode] = useState(false);
-  const [editedAttendance, setEditedAttendance] = useState<{ [userId: number]: boolean }>({});
+  const [editedAttendance, setEditedAttendance] = useState<{
+    [userId: number]: boolean;
+  }>({});
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -99,8 +101,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
         if (response.data.isSuccess) {
           const result = response.data.result;
 
-          // 기존 상태 세팅
-          setTitle(result.title);
+                    setTitle(result.title);
           setLocation(result.location);
           setDate(result.date);
           setContent(result.content);
@@ -122,12 +123,12 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
           const myInfo = result.userInfo;
           const foundGroup = result.groupedParticipants?.find((group) =>
-            group.participants?.some((p: any) => p.userId === myInfo.userId)
+            group.participants?.some((p: any) => p.userId === myInfo.userId),
           );
           if (foundGroup) {
             setSelectedGroup(foundGroup.group);
             const matchedUser = foundGroup.participants.find(
-              (p: any) => p.userId === myInfo.userId
+              (p: any) => p.userId === myInfo.userId,
             );
             setUserStatus(matchedUser?.status || "");
             setButtonText(
@@ -135,12 +136,11 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                 ? "출석완료"
                 : matchedUser?.status === "PENDING"
                   ? "출석하기"
-                  : "참여하기"
+                  : "참여하기",
             );
             setIsGroupModalOpen(false);
           }
-          console.log(result.attachmentUrls); // 1장인지, 여러 장인지
-        }
+          console.log(result.attachmentUrls);         }
       } catch {
         setError("데이터 로딩 실패");
       }
@@ -163,7 +163,10 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
         setGroupedParticipants(result.groupedParticipants || []);
 
         console.log("📦 Fetched participants:", result.participants);
-        console.log("👥 Fetched grouped participants:", result.groupedParticipants);
+        console.log(
+          "👥 Fetched grouped participants:",
+          result.groupedParticipants,
+        );
       }
     } catch (error: any) {
       console.error("❌ 참여/취소 요청 실패:", error);
@@ -210,25 +213,20 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
       const res = await customAxios.patch(
         `/run/regular/post/${postId}/join${!isCancel ? `?group=${selectedGroup}` : ""}`,
         {},
-        { headers: { Authorization: `${token}` } }
+        { headers: { Authorization: `${token}` } },
       );
 
       if (res.data.isSuccess) {
         if (isCancel) {
-          //  참여 취소 처리
-          setUserStatus("");
+                    setUserStatus("");
           setButtonText("참여하기");
           setSelectedGroup("");
           setIsGroupModalOpen(false);
           return;
         }
 
-        //  그룹 참여 성공
-        setUserStatus("PENDING"); // 무조건 직접 세팅
-        setButtonText("출석하기");
-        setSelectedGroup(selectedGroup); // 선택했던 그룹
-        setIsGroupModalOpen(false);
-
+                setUserStatus("PENDING");         setButtonText("출석하기");
+        setSelectedGroup(selectedGroup);         setIsGroupModalOpen(false);
       } else {
         setError(res.data.responseMessage);
       }
@@ -242,15 +240,14 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
     }
   };
 
-  // 변경된 handleAttendanceClick 함수:
-  const handleAttendanceClick = async () => {
+    const handleAttendanceClick = async () => {
     if (!code) return setError("출석 코드를 입력해주세요.");
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
         `/run/regular/post/${postId}/attend`,
         { code },
-        { headers: { Authorization: `${token}` } }
+        { headers: { Authorization: `${token}` } },
       );
       if (response.data.isSuccess) {
         setUserStatus("ATTENDED");
@@ -275,56 +272,51 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   };
 
   const toggleAttendance = (userId: number, originalStatus: string) => {
-    setEditedAttendance(prev => {
-      const current = userId in prev ? prev[userId] : originalStatus === "ATTENDED";
+    setEditedAttendance((prev) => {
+      const current =
+        userId in prev ? prev[userId] : originalStatus === "ATTENDED";
       return { ...prev, [userId]: !current };
     });
   };
 
   const handleEditAttempt = () => {
-    const now = new Date(); // 현재 로컬 시간
-    const postDateKST = new Date(new Date(date).getTime() + 9 * 60 * 60 * 1000);
-
+    const now = new Date();     const postDateKST = new Date(new Date(date).getTime() + 9 * 60 * 60 * 1000);
 
     if (now < postDateKST) {
       alert("아직 명단 수정을 할 수 없습니다.");
       return;
     }
-    // 취소 글은 누구도 편집 불가
-    if (postStatus === "CANCELED") {
+        if (postStatus === "CANCELED") {
       alert("취소된 러닝은 명단을 수정할 수 없습니다.");
       return;
     }
 
-    // ADMIN 은 CLOSED 여도 편집 허용
-    if (userInfo.userRole === "ADMIN") {
+        if (userInfo.userRole === "ADMIN") {
       setIsEditMode(true);
       return;
     }
 
-    // 일반 작성자/유저는 기존 정책 유지
-    if (postStatus === "CLOSED") {
+        if (postStatus === "CLOSED") {
       alert("출석이 종료되어 명단 수정이 불가능합니다.");
       return;
     }
-
 
     setIsEditMode(true);
   };
 
   const saveAttendanceChanges = async () => {
     const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-    const payload = Object.entries(editedAttendance).map(([userId, isAttend]) => ({
-      userId: Number(userId),
-      isAttend,
-    }));
+    const payload = Object.entries(editedAttendance).map(
+      ([userId, isAttend]) => ({
+        userId: Number(userId),
+        isAttend,
+      }),
+    );
 
     try {
       const endpoint =
         postStatus === "CLOSED" && userInfo.userRole === "ADMIN"
-          ? `/run/regular/post/${postId}/fix-attendance`      // ✅ 종료 후 ADMIN 전용
-          : `/run/regular/post/${postId}/manual-attendance`;  // 기존 경로
-
+          ? `/run/regular/post/${postId}/fix-attendance`           : `/run/regular/post/${postId}/manual-attendance`; 
       await customAxios.patch(endpoint, payload, {
         headers: { Authorization: `${token}` },
       });
@@ -332,8 +324,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
       alert("출석 정보가 저장되었습니다.");
       setIsEditMode(false);
       setEditedAttendance({});
-      await fetchParticipantsInfo(); // 목록 최신화
-    } catch {
+      await fetchParticipantsInfo();     } catch {
       alert("저장에 실패했습니다.");
     }
   };
@@ -348,8 +339,6 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
             onClick={handleBack}
           />
           정규런
-
-
           {userInfo.userRole === "ADMIN" && (
             <div
               ref={dotButtonRef}
@@ -361,13 +350,14 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
             >
               <div className="w-6 h-6 flex flex-col justify-center items-center gap-y-[4px]">
                 {[...Array(3)].map((_, i) => (
-                  <span key={i} className="w-[4px] h-[4px] bg-white rounded-full" />
+                  <span
+                    key={i}
+                    className="w-[4px] h-[4px] bg-white rounded-full"
+                  />
                 ))}
               </div>
             </div>
           )}
-
-
           {userInfo.userRole === "ADMIN" && showMenu && (
             <motion.div
               ref={menuRef}
@@ -385,20 +375,23 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                 transition={{ duration: 0.2 }}
                 className="w-[100px] py-2 px-3 rounded-tl-xl rounded-b-xl bg-white shadow-md text-black text-sm"
                 onClick={async () => {
-                  const confirmDelete = window.confirm("정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.");
+                  const confirmDelete = window.confirm(
+                    "정말 게시글을 삭제하시겠습니까? 삭제 후 복구할 수 없습니다.",
+                  );
                   if (!confirmDelete) return;
 
                   try {
-                    const token = JSON.parse(localStorage.getItem("accessToken") || "null");
+                    const token = JSON.parse(
+                      localStorage.getItem("accessToken") || "null",
+                    );
                     if (!token) {
                       alert("로그인이 필요합니다.");
                       return;
                     }
 
-
                     const { data } = await customAxios.delete(
                       `/run/regular/post/${postId}`,
-                      { headers: { Authorization: `${token}` } }
+                      { headers: { Authorization: `${token}` } },
                     );
 
                     if (data.isSuccess) {
@@ -418,7 +411,6 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
               </motion.button>
             </motion.div>
           )}
-
         </div>
 
         <div className="relative w-full pb-[90px]">
@@ -430,7 +422,9 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
             {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
               <div className="absolute inset-0 flex justify-center items-center bg-opacity-40 bg-black">
                 <div className="text-white text-lg font-bold bg-opacity-60 px-4 py-2 rounded">
-                  {postStatus === "CANCELED" ? "취소된 러닝입니다." : "마감된 러닝입니다."}
+                  {postStatus === "CANCELED"
+                    ? "취소된 러닝입니다."
+                    : "마감된 러닝입니다."}
                 </div>
               </div>
             )}
@@ -439,7 +433,9 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           <div className="absolute top-[230px] w-full px-5 rounded-t-[20px] bg-white">
             <div className="flex flex-col items-center mt-[14px]">
               <object data={RegularRunlogo} className="w-[60px] h-[24px]" />
-              <div className="text-lg font-semibold mt-2 text-[24px]">{title}</div>
+              <div className="text-lg font-semibold mt-2 text-[24px]">
+                {title}
+              </div>
             </div>
             <div className="flex flex-col items-start w-full max-w-[360px] mt-5">
               <div className="flex items-center my-1.5">
@@ -452,14 +448,20 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
               </div>
               <div className="flex items-center my-1.5">
                 <object data={people} className="w-[24px] h-[24px] mr-2" />
-                <span className="font-bold text-kuDarkGreen">{participantsNum}</span>
+                <span className="font-bold text-kuDarkGreen">
+                  {participantsNum}
+                </span>
               </div>
             </div>
           </div>
         </div>
 
         <div className="mt-[70px]">
-          <TabButton leftLabel="소개" rightLabel="명단" onTabChange={setActiveTab} />
+          <TabButton
+            leftLabel="소개"
+            rightLabel="명단"
+            onTabChange={setActiveTab}
+          />
         </div>
 
         {activeTab === "소개" && (
@@ -513,7 +515,9 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                     {postCreatorName.charAt(0)}
                   </div>
                 )}
-                <span className="text-sm font-medium text-black">{postCreatorName}</span>
+                <span className="text-sm font-medium text-black">
+                  {postCreatorName}
+                </span>
               </div>
               <div className="text-black p-3 text-sm text-left whitespace-pre-wrap">
                 {content}
@@ -526,28 +530,28 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           <AttendanceList
             key={JSON.stringify(groupedParticipants)}
             groupedParticipants={groupedParticipants}
-            // 🔽 편집 모드 관련 props 전달
-            isEditMode={isEditMode}
+                        isEditMode={isEditMode}
             editedAttendance={editedAttendance}
             toggleAttendance={toggleAttendance}
             onSaveAttendance={saveAttendanceChanges}
             onToggleEditMode={handleEditAttempt}
-            // 표시용
-            userInfoName={userInfo.userName}
+                        userInfoName={userInfo.userName}
             postCreatorName={postCreatorName}
-            // 🔽 ADMIN이면 버튼 노출
-            canEdit={userInfo.userRole === "ADMIN"}
+                        canEdit={userInfo.userRole === "ADMIN"}
           />
         )}
 
-        <CommentSection postId={postId!} postType="regular" userInfo={userInfo} refreshTrigger={refreshComments} />
+        <CommentSection
+          postId={postId!}
+          postType="regular"
+          userInfo={userInfo}
+          refreshTrigger={refreshComments}
+        />
 
         {/* 참여 상태에 따른 버튼 렌더링 */}
 
         <div key={buttonRefreshKey} className="mb-[100px]">
-          {(postStatus === "CANCELED" || postStatus === "CLOSED") ? (
-
-
+          {postStatus === "CANCELED" || postStatus === "CLOSED" ? (
             <div className="w-[327px] h-14 rounded-lg bg-[#ECEBE4] text-[#757575] font-bold mt-6 flex justify-center items-center cursor-not-allowed">
               모집 종료
             </div>
@@ -559,7 +563,8 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
             <>
               {selectedGroup && (
                 <div className="text-sm text-left text-kuDarkGray w-full max-w-[327px] mt-4 pl-6">
-                  내가 선택한 그룹 : <span className="font-semibold">{selectedGroup}</span>
+                  내가 선택한 그룹 :{" "}
+                  <span className="font-semibold">{selectedGroup}</span>
                 </div>
               )}
               <div className="flex gap-2 mt-[8px] mb-6">
@@ -609,31 +614,34 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
                     const handleSelect = () => {
                       if (isSelected) {
-                        setSelectedGroup(""); // 다시 누르면 해제
-                      } else {
-                        setSelectedGroup(group.group); // 선택
-                      }
+                        setSelectedGroup("");                       } else {
+                        setSelectedGroup(group.group);                       }
                     };
 
                     return (
                       <button
                         key={index}
-                        className={`rounded-lg border flex items-center justify-between w-[230px] h-[48px] ${isSelected ? "bg-[#F3F8E8]" : "bg-gray-100 hover:bg-gray-200"
-                          }`}
+                        className={`rounded-lg border flex items-center justify-between w-[230px] h-[48px] ${
+                          isSelected
+                            ? "bg-[#F3F8E8]"
+                            : "bg-gray-100 hover:bg-gray-200"
+                        }`}
                         onClick={handleSelect}
                       >
                         {/* 왼쪽: 그룹명 | 페이스 */}
                         <div className="flex items-center text-left">
                           <span
-                            className={`my-[16px] ml-[16px] font-bold text-base ${isSelected ? "text-black" : "text-gray-400"
-                              }`}
+                            className={`my-[16px] ml-[16px] font-bold text-base ${
+                              isSelected ? "text-black" : "text-gray-400"
+                            }`}
                           >
                             {group.group}
                           </span>
                           <div className="w-px h-[42px] ml-[16px] bg-gray-400" />
                           <span
-                            className={`text-[16px] font-semibold ml-[10px] ${isSelected ? "text-kuDarkGreen" : "text-gray-400"
-                              }`}
+                            className={`text-[16px] font-semibold ml-[10px] ${
+                              isSelected ? "text-kuDarkGreen" : "text-gray-400"
+                            }`}
                           >
                             {group.pace}
                           </span>
@@ -661,12 +669,14 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
               </button>
 
               {/* 에러 메시지 */}
-              {error && <div className="text-red-500 mt-2 text-sm">{error}</div>}
+              {error && (
+                <div className="text-red-500 mt-2 text-sm">{error}</div>
+              )}
             </div>
           </div>
         )}
 
-        {/* // 출석 모달 구조 */}
+       
         {isModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
             <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
@@ -676,7 +686,9 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
               >
                 ×
               </button>
-              <h2 className="text-lg font-semibold">참여 코드를 입력해주세요.</h2>
+              <h2 className="text-lg font-semibold">
+                참여 코드를 입력해주세요.
+              </h2>
               <input
                 type="text"
                 className="w-full p-2 border-b border-gray-300 text-center text-lg mt-5"

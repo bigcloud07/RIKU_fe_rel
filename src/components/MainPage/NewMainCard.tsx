@@ -6,9 +6,8 @@ interface CardProps {
   title: string;
   date: string;
   imageUrl: string;
-  statusImg?: string; // status -> statusImg로 변경
-  event_type: string;
-  
+  statusImg?: string; event_type: string;
+
   path: string;
 }
 
@@ -22,7 +21,6 @@ const NewMainCard: React.FC<CardProps> = ({
 }) => {
   const navigate = useNavigate();
   const handleClick = () => navigate(path);
-  //줄바꿈 처리 함수
   const renderMultilineTitle = (text: string) => {
     return text.split("\n").map((line, idx) => (
       <React.Fragment key={idx}>
@@ -31,7 +29,6 @@ const NewMainCard: React.FC<CardProps> = ({
       </React.Fragment>
     ));
   };
-  //러닝이 없을 때
   const isEmptyContent = title.includes("없습니다");
 
   return (
@@ -76,11 +73,8 @@ const NewMainCard: React.FC<CardProps> = ({
           {renderMultilineTitle(title)}
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 
 export default NewMainCard;
-
-
-

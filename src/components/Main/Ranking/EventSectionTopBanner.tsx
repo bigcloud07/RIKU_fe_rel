@@ -4,7 +4,11 @@ import eventTypo from "../../../assets/RankingPage/eventTypo.png";
 import arrow from "../../../assets/RankingPage/arrow.png";
 
 // 이벤트 랭킹 페이지 맨 상단에 위치한 EventSectionTopBanner
-const EventSectionTopBanner = ({ onShowDetailModal }: { onShowDetailModal: () => void }) => {
+const EventSectionTopBanner = ({
+  onShowDetailModal,
+}: {
+  onShowDetailModal: () => void;
+}) => {
   return (
     <div className="w-full h-auto flex flex-col items-center bg-gradient-to-br from-white to-lime-300 pt-[72px]">
       <img
@@ -27,7 +31,11 @@ const EventSectionTopBanner = ({ onShowDetailModal }: { onShowDetailModal: () =>
           className="bg-kuLightBlack flex flex-row justify-between gap-2 items-center py-2 px-4 mt-8 my-20"
         >
           <span className="font-normal text-kuWhite">자세히 보기</span>
-          <img src={arrow} alt="화살표" className="w-[16px] h-auto object-cover" />
+          <img
+            src={arrow}
+            alt="화살표"
+            className="w-[16px] h-auto object-cover"
+          />
         </div>
       </div>
     </div>

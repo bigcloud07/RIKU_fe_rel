@@ -4,8 +4,6 @@ import customAxios from "../../apis/customAxios";
 import ActionBar from "../../components/ActionBar";
 import defaultProfileImg from "../../assets/default_profile.png";
 
-
-
 interface points {
   date: string;
   tag: string;
@@ -75,7 +73,7 @@ function ActivityDetailPage() {
         },
       });
       setUserData(response.data.result); //불러온 값(response.data.result)으로 userData를 세팅!
-      console.log(response.data.result)
+      console.log(response.data.result);
     } catch (error) {
       console.error("프로필 불러오기 실패:", error);
       alert("프로필 불러오기 실패!");
@@ -95,7 +93,6 @@ function ActivityDetailPage() {
     const day = String(kstDate.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   }
-  
 
   return (
     <>
@@ -120,12 +117,16 @@ function ActivityDetailPage() {
           <div className="bg-kuLightGray w-full pt-16 pb-4 pl-8 pr-8 mb-8">
             <div className="w-full flex flex-col gap-1 justify-center items-center">
               <span className="text-2xl font-bold">{userData?.userName}</span>
-              <span className="text-xs text-kuBlack">{getUserRole(userData?.userRole)}</span>
+              <span className="text-xs text-kuBlack">
+                {getUserRole(userData?.userRole)}
+              </span>
             </div>
             {/* 포인트, 활동 내역, 순위를 나타내는 박스 */}
             <div className="flex flex-row justify-center items-center py-3 px-0 bg-kuWhite rounded-lg mt-6 mb-10">
               <div className="w-1/3 flex flex-col justify-center items-center gap-1">
-                <span className="text-2xl font-bold text-kuDarkGreen">{userData?.totalPoint}</span>
+                <span className="text-2xl font-bold text-kuDarkGreen">
+                  {userData?.totalPoint}
+                </span>
                 <span className="text-xs text-kuDarkGray">포인트</span>
               </div>
               <div className="w-1/3 flex flex-col justify-center items-center gap-1 border-x-[1px] border-kuCoolGray ">
@@ -135,7 +136,9 @@ function ActivityDetailPage() {
                 <span className="text-xs text-kuDarkGray">활동 내역</span>
               </div>
               <div className="w-1/3 flex flex-col justify-center items-center gap-1">
-                <span className="text-2xl font-bold text-kuDarkGreen">{userData?.rank}</span>
+                <span className="text-2xl font-bold text-kuDarkGreen">
+                  {userData?.rank}
+                </span>
                 <span className="text-xs text-kuDarkGray">순위</span>
               </div>
             </div>
@@ -149,10 +152,10 @@ function ActivityDetailPage() {
                   {/* 좌측 정보 영역 */}
                   <div className="flex flex-col justify-center gap-1 px-4 py-3 bg-white w-4/5">
                     <div className="flex items-center gap-2 text-xs text-gray-500">
-                    <span>{toKST_YMD(participationDetail.date)}</span>
+                      <span>{toKST_YMD(participationDetail.date)}</span>
                       <span
                         className={`${setMarkerColor(
-                          participationDetail.tag
+                          participationDetail.tag,
                         )} text-white px-2 py-0.5 rounded-lg text-[10px] font-semibold`}
                       >
                         {participationDetail.tag}
@@ -163,7 +166,8 @@ function ActivityDetailPage() {
                       {participationDetail.tag === "출석" //tag가 "출석"인 경우에는 type만 띄워준다
                         ? participationDetail.type
                         : (participationDetail.tag, participationDetail.type)}
-                      ] {participationDetail.postTitle} {/*postTitle(게시글 제목 등)을 띄워준다*/}
+                      ] {participationDetail.postTitle}{" "}
+                      {/*postTitle(게시글 제목 등)을 띄워준다*/}
                     </div>
                   </div>
 

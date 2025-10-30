@@ -34,7 +34,7 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
             ...user,
             status: user.status === "ATTENDED" ? "PENDING" : "ATTENDED",
           }
-        : user
+        : user,
     );
     onUsersChange(updated);
   };
@@ -56,7 +56,7 @@ const EditableAttendanceList: React.FC<EditableAttendanceListProps> = ({
           headers: {
             Authorization: `${token}`,
           },
-        }
+        },
       );
 
       if (response.data.isSuccess) {

@@ -56,9 +56,12 @@ function LoginPage() {
 
         localStorage.setItem(
           "accessToken",
-          JSON.stringify(response.data.result.jwtInfo.accessToken)
+          JSON.stringify(response.data.result.jwtInfo.accessToken),
         );
-        localStorage.setItem("MyId", JSON.stringify(response.data.result.userId));
+        localStorage.setItem(
+          "MyId",
+          JSON.stringify(response.data.result.userId),
+        );
         navigate("/tab/main"); // 로그인 성공 시 메인 페이지로 이동
       } else {
         // 요청 실패 처리
@@ -73,12 +76,14 @@ function LoginPage() {
           if (responseCode === 2020 && result?.errors?.length > 0) {
             let errorMessages = "유효하지 않은 입력입니다:\n";
 
-            result.errors.forEach((err: { fieldName: any; rejectValue: any; message: any }) => {
-              console.warn(
-                `오류 필드: ${err.fieldName}, 거부 값: ${err.rejectValue}, 메시지: ${err.message}`
-              );
-              errorMessages += `- ${err.fieldName}: ${err.message} (입력 값: ${err.rejectValue})\n`;
-            });
+            result.errors.forEach(
+              (err: { fieldName: any; rejectValue: any; message: any }) => {
+                console.warn(
+                  `오류 필드: ${err.fieldName}, 거부 값: ${err.rejectValue}, 메시지: ${err.message}`,
+                );
+                errorMessages += `- ${err.fieldName}: ${err.message} (입력 값: ${err.rejectValue})\n`;
+              },
+            );
 
             alert(errorMessages); // 모든 오류를 한 번에 출력
             return;
@@ -94,7 +99,9 @@ function LoginPage() {
           alert(`서버 오류 발생! 상태 코드: ${error.response.status}`);
         } else if (error.request) {
           // 요청이 전송되었지만 응답이 없는 경우
-          alert("서버에서 응답이 없습니다. 네트워크 상태를 확인하고 다시 시도해 주세요.");
+          alert(
+            "서버에서 응답이 없습니다. 네트워크 상태를 확인하고 다시 시도해 주세요.",
+          );
         } else {
           // 기타 Axios 요청 관련 에러
           alert(`예상치 못한 오류 발생: ${error.message}`);
@@ -117,7 +124,11 @@ function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-whiteSmoke p-4">
       <div className="bg-whiteSmoke p-6 rounded-lg w-full max-w-sm">
-        <img src={riku_logo} alt="Riku_Logo" className="mx-auto mb-12 mt-8 w-auto h-auto" />{" "}
+        <img
+          src={riku_logo}
+          alt="Riku_Logo"
+          className="mx-auto mb-12 mt-8 w-auto h-auto"
+        />{" "}
         {/* 원본 크기 유지 */}
         {/* 학번 입력 */}
         <div className="mb-4">

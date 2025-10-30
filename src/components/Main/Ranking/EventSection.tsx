@@ -10,7 +10,11 @@ import EventSectionTopBanner from "./EventSectionTopBanner";
 import star1 from "../../../assets/RankingPage/star1.png";
 import star2 from "../../../assets/RankingPage/star2.png";
 
-export default function EventSection({ onShowDetailModal }: { onShowDetailModal: () => void }) {
+export default function EventSection({
+  onShowDetailModal,
+}: {
+  onShowDetailModal: () => void;
+}) {
   const [eventTop20, setEventTop20] = useState<SimpleUserInfo[]>([]);
   const [isLoaded, setIsLoaded] = useState(false); // 로딩이 다 되었는지에 대한 boolean 값
 
@@ -51,19 +55,21 @@ export default function EventSection({ onShowDetailModal }: { onShowDetailModal:
             Authorization: accessToken,
             "Content-Type": "application/json", // 일반적으로 명시해줌
           },
-        }
+        },
       );
 
       //공동 순위 처리에 용이하도록 userId는 서버에서 받아온 정보가 아닌 순위대로 ++하는 idx로 선언(추후 공동 순위 처리 로직이 추가로 삽입됨)
       let idx: number = 1;
 
       //상위 10명의 정보를 넣어둘 배열 top20 (response.data.result의 "top20"에서 정보를 가져온다)
-      let top20: SimpleUserInfo[] = response.data.result.top20?.map((user: SimpleUserInfo) => ({
-        userId: idx++,
-        userName: user.userName,
-        userProfileImg: user.userProfileImg || null,
-        totalPoints: user.totalPoints,
-      }));
+      let top20: SimpleUserInfo[] = response.data.result.top20?.map(
+        (user: SimpleUserInfo) => ({
+          userId: idx++,
+          userName: user.userName,
+          userProfileImg: user.userProfileImg || null,
+          totalPoints: user.totalPoints,
+        }),
+      );
 
       //공동 순위 처리해야 함
       for (let i: number = 0; i < top20.length; i++) {
@@ -104,7 +110,9 @@ export default function EventSection({ onShowDetailModal }: { onShowDetailModal:
           <div className="flex flex-row justify-between items-end my-4 gap-3">
             {/* 2nd 섹션 */}
             <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-600 opacity-0">
-              <span className="block text-center text-2xl font-bold mb-1 text-whiteSmoke">2nd</span>
+              <span className="block text-center text-2xl font-bold mb-1 text-whiteSmoke">
+                2nd
+              </span>
               {/* 프로필 이미지 (userProfileImg 값이 null일 경우 기본 프사 url을, 아닐 경우 불러온 url을 src로 삼는다) */}
               <div className="w-full aspect-square bg-gray-300 rounded-full flex items-center justify-center border-kuBeige overflow-hidden z-10">
                 <img
@@ -129,11 +137,19 @@ export default function EventSection({ onShowDetailModal }: { onShowDetailModal:
             <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-1000 opacity-0">
               {/* 1st 섹션에는 라이쿠 뿔이 양옆으로 들어가야 한다, 따라서 따로 div를 판다 */}
               <div className="flex flex-row items-end justify-between space-x-1 mb-1">
-                <img src={eventStar} alt="eventStar" className="w-[28px] h-[28px] object-cover" />
+                <img
+                  src={eventStar}
+                  alt="eventStar"
+                  className="w-[28px] h-[28px] object-cover"
+                />
                 <span className="inline-block text-center text-2xl font-bold text-yellow-200">
                   1st
                 </span>
-                <img src={eventStar} alt="eventStar" className="w-[28px] h-[28px] object-cover" />
+                <img
+                  src={eventStar}
+                  alt="eventStar"
+                  className="w-[28px] h-[28px] object-cover"
+                />
               </div>
               <div className="flex flex-col items-center -space-y-4">
                 {/* 프로필 이미지 */}
@@ -159,7 +175,9 @@ export default function EventSection({ onShowDetailModal }: { onShowDetailModal:
 
             {/* 3rd 섹션 */}
             <div className="flex flex-1 flex-col items-center animate-fade-up animation-delay-300 opacity-0">
-              <span className="block text-center text-2xl font-bold text-whiteSmoke mb-1">3rd</span>
+              <span className="block text-center text-2xl font-bold text-whiteSmoke mb-1">
+                3rd
+              </span>
               {/* 프로필 이미지 */}
               <div className="w-full aspect-square bg-gray-300 rounded-full flex items-center justify-center border-kuBeige overflow-hidden z-10">
                 <img
@@ -188,21 +206,29 @@ export default function EventSection({ onShowDetailModal }: { onShowDetailModal:
         <div className="animate-fade-in w-full flex flex-col items-center px-4">
           {/* "이번달 내 순위" 내용을 표현하는 부분 */}
           <div className="w-full max-w-sm text-left m-4">
-            <span className="text-xl font-bold pr-4 text-whiteSmoke">이벤트 기간 내 순위</span>
+            <span className="text-xl font-bold pr-4 text-whiteSmoke">
+              이벤트 기간 내 순위
+            </span>
             <span className="text-xl font-bold pr-4 text-whiteSmoke">|</span>
-            <span className="text-xl font-bold text-kuLightGreen">{myRankingInfo}</span>
+            <span className="text-xl font-bold text-kuLightGreen">
+              {myRankingInfo}
+            </span>
           </div>
 
           {/* 자신의 랭킹을 표시하는 카드 섹션 */}
           <div className="w-full max-w-sm bg-kuLightGray rounded-xl flex flex-row justify-between items-center px-3 py-2 mb-6">
             <div className="flex flex-row flex-start items-center">
-              <span className="text-kuDarkGray text-base font-bold mr-4">{myRankingInfo}</span>
+              <span className="text-kuDarkGray text-base font-bold mr-4">
+                {myRankingInfo}
+              </span>
               <img
                 src={eventMyInfo.userProfileImg ?? defaultProfileImg}
                 alt="myProfileImg"
                 className="w-16 h-16 rounded-full mr-4 object-cover"
               />
-              <span className="text-black text-xl font-bold">{eventMyInfo.userName}</span>
+              <span className="text-black text-xl font-bold">
+                {eventMyInfo.userName}
+              </span>
             </div>
             <span className="text-kuDarkGreen text-xl font-bold mr-3">
               {eventMyInfo.totalPoints}P
@@ -217,7 +243,9 @@ export default function EventSection({ onShowDetailModal }: { onShowDetailModal:
             >
               {/* 왼쪽 영역: 순위, 프로필 이미지, 이름 */}
               <div className="flex flex-row items-center">
-                <span className="text-kuDarkGray text-sm font-bold mr-4">{user.userId}</span>
+                <span className="text-kuDarkGray text-sm font-bold mr-4">
+                  {user.userId}
+                </span>
                 <img
                   src={user.userProfileImg ?? defaultProfileImg}
                   alt={`${user.userName} Profile`}

@@ -61,11 +61,17 @@ function SchedulePage() {
   const [pointDate, setPointDate] = useState(new Date());
   const [pointDateInModal, setPointDateInModal] = useState(new Date());
   const [selectedDateInModal, setSelectedDateInModal] = useState(new Date());
-  const [monthlyPlan, setMonthlyPlan] = useState<{ date: string; eventCount: number }[]>([]);
+  const [monthlyPlan, setMonthlyPlan] = useState<
+    { date: string; eventCount: number }[]
+  >([]);
   const [selectedDateEvent, setSelectedDateEvent] = useState<
-
-    { postId: number; postType: string; title: string; date: string; location: string }[]
-
+    {
+      postId: number;
+      postType: string;
+      title: string;
+      date: string;
+      location: string;
+    }[]
   >([]);
   const [userRole, setUserRole] = useState("");
 
@@ -75,7 +81,7 @@ function SchedulePage() {
   useEffect(() => {
     const fetchMain = async () => {
       try {
-        const token = JSON.parse(localStorage.getItem('accessToken') || 'null');
+        const token = JSON.parse(localStorage.getItem("accessToken") || "null");
         const response = await customAxios.get(`/run`, {
           headers: { Authorization: `${token}` },
         });
@@ -83,19 +89,19 @@ function SchedulePage() {
         if (response.data.isSuccess) {
           const result = response.data.result;
           setUserRole(result.userRole || null);
-          console.log("userRole성공")
-
+          console.log("userRole성공");
         } else {
-          console.error("데이터를 불러오지 못했습니다.", response.data.responseMessage);
+          console.error(
+            "데이터를 불러오지 못했습니다.",
+            response.data.responseMessage,
+          );
         }
       } catch (error) {
         console.error("API 요청 오류", error);
       }
     };
     fetchMain();
-  }, [])
-
-
+  }, []);
 
   //캘린더 월별 조회 메소드
   async function fetchMonthlyData() {
@@ -112,10 +118,9 @@ function SchedulePage() {
           headers: {
             Authorization: accessToken, //accessToken을 헤더로 추가해서 요청 보냄
           },
-        }
+        },
       );
       setMonthlyPlan(response.data.result.schedules); //불러온 data의 result 값으로 monthlyPlan 값 저장
-
     } catch (error) {
       alert("서버 요청 중 오류 발생!");
       console.error("요청 실패: ", error);
@@ -150,7 +155,7 @@ function SchedulePage() {
           headers: {
             Authorization: accessToken, //accessToken을 헤더로 추가해서 요청 보냄
           },
-        }
+        },
       );
       setSelectedDateEvent(response.data.result); //불러온 data의 result 값으로 selectedDateEvent 값 저장
     } catch (error) {
@@ -283,7 +288,9 @@ function SchedulePage() {
     <div className="min-h-screen flex flex-col items-center bg-white pt-20 px-6 py-10 pb-16">
       {/* 캘린더 상단의 화살표로 월을 조절하는 부분 */}
       <div className="flex flex-col items-center justify-center space-y-0 mb-4">
-        <span className="text-xs font-light text-black">{pointDate.getFullYear()}</span>
+        <span className="text-xs font-light text-black">
+          {pointDate.getFullYear()}
+        </span>
         <div className="flex items-center justify-center space-x-4 mb-4">
           <button
             onClick={prevMonth}
@@ -346,14 +353,18 @@ function SchedulePage() {
 
       {/* 중첩 map 함수를 사용해서 달력을 출력할 것이다 */}
       {weeks.map((week, index) => (
-        <div key={index} className="grid grid-cols-7 mb-2 text-center w-full max-w-sm">
+        <div
+          key={index}
+          className="grid grid-cols-7 mb-2 text-center w-full max-w-sm"
+        >
           {week.map((day, subIndex) => {
-            let isSelected = format(day, "yyyy-MM-dd") === format(selectedDate, "yyyy-MM-dd");
+            let isSelected =
+              format(day, "yyyy-MM-dd") === format(selectedDate, "yyyy-MM-dd");
 
             let planCounts =
               monthlyPlan?.find(
                 (item: { date: string; eventCount: number }) =>
-                  item.date === format(day, "yyyy-MM-dd")
+                  item.date === format(day, "yyyy-MM-dd"),
               )?.eventCount || 0;
 
             let isCurrentMonth = day.getMonth() === pointDate.getMonth();
@@ -372,34 +383,51 @@ function SchedulePage() {
                   <span className="text-base font-normal">{day.getDate()}</span>
                   {/* marker를 날짜 아래에 배치하여 하나의 요소처럼 보이게 함 */}
                   {isCurrentMonth ? (
-                    <div className={"flex flex-col items-center justify-center"}>
+                    <div
+                      className={"flex flex-col items-center justify-center"}
+                    >
                       {planCounts > 0 ? (
                         <div className="flex items-center justify-center gap-0.5">
-
                           <span
-                            className={`font-bold text-xs mt-2 ${isSelected ? "text-kuWhite" : "text-kuDarkGray"
-                              }`}
-
+                            className={`font-bold text-xs mt-2 ${
+                              isSelected ? "text-kuWhite" : "text-kuDarkGray"
+                            }`}
                           >
                             +{planCounts}
                           </span>
                         </div>
                       ) : (
                         <div className="flex items-center justify-center gap-1">
-                          <div className={`w-1.5 h-1.5 mt-2 rounded-full bg-transparent`} />
-                          <span className={"font-bold text-xs mt-2 text-transparent"}>0</span>
+                          <div
+                            className={`w-1.5 h-1.5 mt-2 rounded-full bg-transparent`}
+                          />
+                          <span
+                            className={
+                              "font-bold text-xs mt-2 text-transparent"
+                            }
+                          >
+                            0
+                          </span>
                         </div>
                       )}
                     </div>
                   ) : (
                     <div className="flex items-center justify-center gap-1">
-                      <div className={`w-1.5 h-1.5 mt-2 rounded-full bg-transparent`} />
-                      <span className={"font-bold text-xs mt-2 text-transparent"}>0</span>
+                      <div
+                        className={`w-1.5 h-1.5 mt-2 rounded-full bg-transparent`}
+                      />
+                      <span
+                        className={"font-bold text-xs mt-2 text-transparent"}
+                      >
+                        0
+                      </span>
                     </div>
                   )}
                 </button>
                 {/* 마지막 줄이 아닌 경우에만 선을 추가 */}
-                {index < weeks.length - 1 && <div className="w-full h-px bg-gray-200 mt-2" />}
+                {index < weeks.length - 1 && (
+                  <div className="w-full h-px bg-gray-200 mt-2" />
+                )}
               </div>
             );
           })}
@@ -416,14 +444,19 @@ function SchedulePage() {
             //일정을 표현하는 카드 섹션
             <div
               key={index}
-              onClick={() => handleNavigateToNotice(event.postId, event.postType)}
+              onClick={() =>
+                handleNavigateToNotice(event.postId, event.postType)
+              }
               className="w-full max-w-sm bg-white border border-gray-300 rounded-lg p-2 shadow-sm mb-4 flex flex-row items-center"
             >
-              <div className={`w-2 h-2 ml-2 ${setMarkerColor(event.postType)} rounded-full`} />
+              <div
+                className={`w-2 h-2 ml-2 ${setMarkerColor(event.postType)} rounded-full`}
+              />
               <div className="pl-4 flex flex-col items-start">
                 <p className="text-gray-800 font-medium">{event.title}</p>
                 <p className="text-gray-500 text-sm">
-                  {format(addHours(parseISO(event.date), 9), "HH:mm")} {event.location}
+                  {format(addHours(parseISO(event.date), 9), "HH:mm")}{" "}
+                  {event.location}
                 </p>
               </div>
             </div>
@@ -433,7 +466,6 @@ function SchedulePage() {
           <span className="text-xl font-bold mb-4">일정이 없습니다.</span>
         )}
       </div>
-      
 
       {/* 연/월을 선택하는 모달창이 열렸을 때 나타나는 옵션들 */}
       {isModalOpen && (
@@ -442,7 +474,10 @@ function SchedulePage() {
           className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-500 ease-in-out flex justify-center items-center p-8 z-50"
         >
           {/* 날짜를 선택하는 모달 본체 */}
-          <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-xl p-8">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-xl p-8"
+          >
             {/* 연도 선택하는 선택창 */}
             <div className="flex items-center justify-center space-x-4 mb-8">
               <button
@@ -495,15 +530,17 @@ function SchedulePage() {
                 //조건부 렌더링을 위한 변수 선언
                 const isSelected =
                   month === selectedDateInModal.getMonth() + 1 &&
-                  pointDateInModal.getFullYear() === selectedDateInModal.getFullYear();
+                  pointDateInModal.getFullYear() ===
+                    selectedDateInModal.getFullYear();
                 return (
                   <button
                     key={month}
                     onClick={() => selectMonthInModal(month)}
                     className={`py-2 px-6 rounded-md text-sm font-semibold transition
-                      ${isSelected
-                        ? "bg-kuDarkGreen text-white"
-                        : "bg-whiteSmoke hover:bg-kuDarkGreen hover:text-white text-kuDarkGray"
+                      ${
+                        isSelected
+                          ? "bg-kuDarkGreen text-white"
+                          : "bg-whiteSmoke hover:bg-kuDarkGreen hover:text-white text-kuDarkGray"
                       }
                     `}
                   >
@@ -571,9 +608,11 @@ function SchedulePage() {
             <button
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform 
           ${showSecondButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
-          ${userRole === "ADMIN" || userRole === "PACER"
-                  ? "bg-white text-black hover:bg-gray-100"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+          ${
+            userRole === "ADMIN" || userRole === "PACER"
+              ? "bg-white text-black hover:bg-gray-100"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
               onClick={
                 userRole === "ADMIN" || userRole === "PACER"
                   ? handleRegularRunMake
@@ -587,9 +626,11 @@ function SchedulePage() {
             <button
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform 
           ${showThirdButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
-          ${userRole === "ADMIN" || userRole === "PACER"
-                  ? "bg-white text-black hover:bg-gray-100"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+          ${
+            userRole === "ADMIN" || userRole === "PACER"
+              ? "bg-white text-black hover:bg-gray-100"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
               onClick={
                 userRole === "ADMIN" || userRole === "PACER"
                   ? handleTrainingtMake
@@ -603,9 +644,11 @@ function SchedulePage() {
             <button
               className={`w-auto h-auto rounded-tl-xl rounded-tr-xl rounded-bl-xl font-semibold shadow-lg py-2 px-4 transition-all duration-300 ease-out transform 
           ${showFourthButton ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
-          ${userRole === "ADMIN"
-                  ? "bg-white text-black hover:bg-gray-100"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+          ${
+            userRole === "ADMIN"
+              ? "bg-white text-black hover:bg-gray-100"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
               onClick={
                 userRole === "ADMIN"
                   ? handleEventMake
@@ -617,7 +660,6 @@ function SchedulePage() {
           </div>
         </div>
       )}
-
     </div>
   );
 }
