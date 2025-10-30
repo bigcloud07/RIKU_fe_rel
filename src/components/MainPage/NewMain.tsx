@@ -7,10 +7,10 @@ import regularImg from "../../assets/default_regular.jpeg";
 import eventImg from "../../assets/default_event.jpeg";
 import TabNavigationUI from "../TabNavigationUI";
 import plusBtn from "../../assets/plus_Icon.svg";
-import img1 from "../../assets/Main-img/main-moving-images/1.jpg";
-import img2 from "../../assets/main_new.jpg";
-import img3 from "../../assets/Main-img/main-moving-images/1.png";
-import img4 from "../../assets/Main-img/main-moving-images/2.png";
+import img1 from "../../assets/Main-img/main-moving-images/1.png";
+import img2 from "../../assets/Main-img/main-moving-images/2.png";
+import img3 from "../../assets/Main-img/main-moving-images/3.jpg";
+import img4 from "../../assets/Main-img/main-moving-images/4.jpg";
 
 import customAxios from "../../apis/customAxios";
 import NOWimg from "../../assets/Main-img/NewOpenStatus.svg";
@@ -250,11 +250,6 @@ const NewMain: React.FC = () => {
           <div className="max-w-[430px] w-full h-[300px] mx-auto relative overflow-hidden">
             <picture
               className="block w-full h-full"
-              onClick={() => {
-                if (currentIndex === 0) {
-                  navigate("/Record");
-                }
-              }}
             >
               <source srcSet={images[currentIndex]} type="image/webp" />
               <img
