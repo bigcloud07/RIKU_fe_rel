@@ -22,7 +22,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/users": {
-        target: "https://riku-server.shop",
+        target: "https://test.riku-server.shop",
         changeOrigin: true,
         secure: false,
       },
