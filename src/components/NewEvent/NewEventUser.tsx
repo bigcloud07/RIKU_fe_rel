@@ -34,7 +34,7 @@ interface FlashRunUserData {
   content: string;
   userName: string;
   code?: string;
-  postId?: string;   userStatus?: string;   postimgurl?: string;
+  postId?: string; userStatus?: string; postimgurl?: string;
   attachmentUrls?: string[];
 }
 
@@ -52,36 +52,42 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"소개" | "명단">("소개");
   const [buttonText, setButtonText] = useState(() => {
-        return (
+    return (
       localStorage.getItem(`buttonText-${postId}`) ||
       (localStorage.getItem(`userStatus-${postId}`) === "ATTENDED"
         ? "출석완료"
         : "참여하기")
     );
   });
-  const [code, setCode] = useState("");   const [currentParticipants, setCurrentParticipants] =
+  const [code, setCode] = useState(""); const [currentParticipants, setCurrentParticipants] =
     useState<Participant[]>(participants);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [error, setError] = useState<string | null>(null);   const [userStatus, setUserStatus] = useState("");
+  const [error, setError] = useState<string | null>(null); const [userStatus, setUserStatus] = useState("");
   const [eventtype, setEventtype] = useState("");
   const [date, setDate] = useState("");
   const [currentParticipantsNum, setCurrentParticipantsNum] =
-    useState<number>(participantsNum);   const [postCreatorId, setPostCreatorId] = useState<number | null>(null);
+    useState<number>(participantsNum); const [postCreatorId, setPostCreatorId] = useState<number | null>(null);
   const [postStatus, setPostStatus] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
     if (buttonText) {
       localStorage.setItem(`buttonText-${postId}`, buttonText);
     }
   }, [buttonText, postId]);
 
-    useEffect(() => {
+  useEffect(() => {
     if (userStatus) {
       localStorage.setItem(`userStatus-${postId}`, userStatus);
     }
   }, [userStatus, postId]);
 
+
   const handleStartClick = async () => {
+
+    if (isLoading) return;
+    setIsLoading(true);
+
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.patch(
@@ -99,7 +105,8 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
         setButtonText("출석하기");
         setError(null);
 
-        await fetchParticipants();       } else {
+        await fetchParticipants();
+      } else {
         if (response.data.responseMessage === "이미 참여한 유저입니다.") {
           alert("이미 참여했습니다.");
         } else {
@@ -108,11 +115,14 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
       }
     } catch (error: any) {
       setError("러닝 참여에 실패했습니다.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleOpenAttendanceModal = () => {
-    setIsModalOpen(true);   };
+    setIsModalOpen(true);
+  };
 
   const handleAttendanceClick = async () => {
     if (!code) {
@@ -133,8 +143,9 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
       );
 
       if (response.data.isSuccess) {
-        setUserStatus(response.data.result.status);         setButtonText("출석완료");         setError(null);
-        setIsModalOpen(false);       } else {
+        setUserStatus(response.data.result.status); setButtonText("출석완료"); setError(null);
+        setIsModalOpen(false);
+      } else {
         setError(response.data.responseMessage);
       }
     } catch (error: any) {
@@ -158,15 +169,15 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
       if (response.data.isSuccess) {
         const result = response.data.result;
 
-                setUserInfo({
+        setUserInfo({
           userId: result.userInfo?.userId || 0,
           userName: result.userInfo?.userName || "",
           userProfileImg: result.userInfo?.userProfileImg || "",
           userRole: result.userInfo?.userRole || "",
         });
         setPostCreatorImg(result.postCreatorInfo?.userProfileImg || null);
-        setCurrentParticipantsNum(result.participantsNum);         setDate(result.date); 
-                if (tab === "명단") {
+        setCurrentParticipantsNum(result.participantsNum); setDate(result.date);
+        if (tab === "명단") {
           setCurrentParticipants(result.participants);
         }
 
@@ -175,7 +186,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
           setCreatorName(result.postCreatorInfo?.userName || "");
         }
 
-                setRefreshComments((prev) => !prev);
+        setRefreshComments((prev) => !prev);
       } else {
         setError(response.data.responseMessage);
       }
@@ -227,7 +238,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
             (p: any) => p.userId === result.userInfo.userId,
           );
           if (currentUser) {
-            setUserStatus(currentUser.status);             setButtonText(
+            setUserStatus(currentUser.status); setButtonText(
               currentUser.status === "ATTENDED"
                 ? "출석완료"
                 : currentUser.status === "PENDING"
@@ -245,7 +256,7 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
     fetchPostData();
   }, [postId]);
 
-  const [creatorName, setCreatorName] = useState("");   const [postCreatorName, setPostCreatorName] = useState("");
+  const [creatorName, setCreatorName] = useState(""); const [postCreatorName, setPostCreatorName] = useState("");
 
   const formatDateTime = (iso: string) => {
     const utcDate = new Date(iso);
@@ -593,13 +604,14 @@ const NewEventUser: React.FC<FlashRunUserData> = ({
               >
                 참여 취소
               </button>
-          
+
             </div>
           </div>
         ) : userStatus === "" ? (
           <button
             className="flex justify-center items-center w-[327px] h-14 rounded-lg bg-kuGreen text-white text-lg font-bold mt-20 mb-2"
             onClick={handleStartClick}
+            disabled={isLoading}
           >
             참여하기
           </button>

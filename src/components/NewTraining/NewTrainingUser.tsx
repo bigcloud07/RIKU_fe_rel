@@ -96,7 +96,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
 
   const [postStatus, setPostStatus] = useState("");
 
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggleAttendance = (userId: number, originalStatus: string) => {
     setEditedAttendance((prev) => {
@@ -129,7 +129,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
       alert("출석 정보가 저장되었습니다.");
       setIsEditMode(false);
       setEditedAttendance({});
-      await fetchParticipantsInfo(); // ✅ 저장 후 재조회
+      await fetchParticipantsInfo();
     } catch {
       alert("저장에 실패했습니다.");
     }
@@ -150,7 +150,6 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
             약자로, 장거리 달리기 훈련입니다.
           </>
         );
-      // 다른 trainingtype에 대한 설명을 추가할 수 있습니다.
       case "인터벌":
         return (
           <>
@@ -183,7 +182,6 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         if (response.data.isSuccess) {
           const result = response.data.result;
 
-          // 기존 상태 세팅
           setTitle(result.title);
           setLocation(result.location);
           setDate(result.date);
@@ -252,7 +250,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         );
       }
     } catch (error: any) {
-      console.error("❌ 참여/취소 요청 실패:", error);
+      console.error("참여/취소 요청 실패:", error);
 
       if (error?.response?.data) {
         const serverError = error.response.data;
@@ -289,6 +287,10 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
   };
 
   const handleJoinConfirm = async () => {
+
+    if (isLoading) return;
+    setIsLoading(true);
+
     const isCancel = selectedGroup === "";
 
     try {
@@ -322,38 +324,17 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         setError(res.data.responseMessage);
       }
     } catch (error: any) {
-      console.error("❌ 참여/취소 요청 실패:", error);
+      console.error("참여/취소 요청 실패:", error);
       if (error?.response?.data) {
         setError(error.response.data.responseMessage || "참여 요청 실패");
       } else {
         setError("참여 요청 실패");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleStartClick = async () => {
-    try {
-      const token = JSON.parse(localStorage.getItem("accessToken") || "null");
-      const response = await customAxios.post(
-        `/run/training/post/${postId}/join`,
-        {},
-        {
-          headers: { Authorization: `${token}` },
-        },
-      );
-      if (response.data.isSuccess) {
-        setUserStatus(response.data.result.status);
-        setButtonText("출석하기");
-        setError(null);
-      } else {
-        setError(response.data.responseMessage);
-      }
-    } catch {
-      setError("러닝 참여에 실패했습니다.");
-    }
-  };
-
-  const handleOpenAttendanceModal = () => setIsModalOpen(true);
 
   const handleAttendanceClick = async () => {
     if (!code) return setError("출석 코드를 입력해주세요.");
@@ -410,7 +391,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
           userRole: result.userInfo?.userRole || "",
         });
 
-        // 댓글도 항상 최신화
+
         setRefreshComments((prev) => !prev);
       } else {
         setError(response.data.responseMessage);
@@ -542,7 +523,6 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
                   if (data.isSuccess) {
                     alert("게시글이 삭제되었습니다.");
                     setShowMenu(false);
-                    // 목록으로 이동
                     window.location.href = "/training";
                   } else {
                     alert(data.responseMessage || "삭제에 실패했습니다.");
@@ -563,11 +543,10 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         <div className="relative w-full h-[308px] overflow-hidden">
           <img
             src={postImageUrl || flashrunimage}
-            className={`w-full h-full object-cover transition-all duration-300 ${
-              postStatus === "CANCELED" || postStatus === "CLOSED"
+            className={`w-full h-full object-cover transition-all duration-300 ${postStatus === "CANCELED" || postStatus === "CLOSED"
                 ? "brightness-75"
                 : ""
-            }`}
+              }`}
           />
           {(postStatus === "CANCELED" || postStatus === "CLOSED") && (
             <div className="absolute inset-0 flex justify-center items-center z-1 pointer-events-none bg-opacity-40 bg-black">
@@ -581,14 +560,14 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
         </div>
         <div className="absolute top-[243px] w-full rounded-t-[20px] bg-white">
           <div className="flex flex-col items-center mt-[8px]">
-            
+
             <div className="relative w-full max-w-[430px]  flex flex-col items-center mt-[4px]">
-              
+
               <div className="flex bg-[#FFC002] h-[24px] px-[10px] mt-[4px] text-[14px] rounded-[8px] font-bold w-fit items-center">
                 {trainingtype}
               </div>
 
-              
+
               {getTrainingDescription(trainingtype) && (
                 <>
                   <img
@@ -780,7 +759,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
             </button>
             <h2 className="text-[16px] mb-4">훈련 그룹을 선택해주세요.</h2>
 
-            
+
             <div className="flex justify-center">
               <div
                 className="flex flex-col gap-3 max-h-[500px] overflow-y-auto w-full"
@@ -800,14 +779,13 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
                   return (
                     <button
                       key={index}
-                      className={`rounded-lg border flex items-center justify-between w-[230px] h-[48px] ${
-                        isSelected
+                      className={`rounded-lg border flex items-center justify-between w-[230px] h-[48px] ${isSelected
                           ? "bg-[#F3F8E8]"
                           : "bg-gray-100 hover:bg-gray-200"
-                      }`}
+                        }`}
                       onClick={handleSelect}
                     >
-                      
+
                       <div className="flex items-center text-left">
                         <span
                           className={`my-[16px] ml-[16px] font-bold text-base ${isSelected ? "text-black" : "text-gray-400"}`}
@@ -822,7 +800,7 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
                         </span>
                       </div>
 
-                      
+
                       {isSelected && (
                         <img
                           src={checkedicon}
@@ -835,21 +813,22 @@ const NewTrainingUser: React.FC<FlashRunUserData> = ({ postId }) => {
                 })}
               </div>
             </div>
-            
+
             <button
               className="mt-5 w-full py-3 bg-kuDarkGreen text-white rounded-lg"
               onClick={handleJoinConfirm}
+              disabled={isLoading}
             >
               확인
             </button>
 
-            
+
             {error && <div className="text-red-500 mt-2 text-sm">{error}</div>}
           </div>
         </div>
       )}
 
-      
+
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
           <div className="bg-white p-5 rounded-lg w-[280px] text-center relative">
