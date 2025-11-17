@@ -36,14 +36,13 @@ interface FlashRunUserData {
   content: string;
   userName: string;
   code?: string;
-  postId?: string;   userStatus?: string;   postimgurl?: string;
+  postId?: string; userStatus?: string; postimgurl?: string;
   attachmentUrls?: string[];
 }
 
 const FlashRunUser: React.FC<FlashRunUserData> = ({
   title,
   location,
-
   participants,
   participantsNum,
   content,
@@ -53,14 +52,14 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
 }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"소개" | "명단">("소개");
-  const [code, setCode] = useState("");   const [currentParticipants, setCurrentParticipants] =
+  const [code, setCode] = useState(""); const [currentParticipants, setCurrentParticipants] =
     useState<Participant[]>(participants);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [error, setError] = useState<string | null>(null);   const [buttonText, setButtonText] = useState("참여하기");
+  const [error, setError] = useState<string | null>(null); const [buttonText, setButtonText] = useState("참여하기");
   const [userStatus, setUserStatus] = useState("");
   const [date, setDate] = useState("");
   const [currentParticipantsNum, setCurrentParticipantsNum] =
-    useState<number>(participantsNum);   const [postCreatorId, setPostCreatorId] = useState<number | null>(null);
+    useState<number>(participantsNum); const [postCreatorId, setPostCreatorId] = useState<number | null>(null);
   const [postStatus, setPostStatus] = useState("");
 
   const handleStartClick = async () => {
@@ -77,7 +76,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       );
 
       if (response.data.isSuccess) {
-        const newStatus = response.data.result.status;         setUserStatus(newStatus);         setButtonText(newStatus === "PENDING" ? "출석하기" : "참여하기");         setError(null);
+        const newStatus = response.data.result.status; setUserStatus(newStatus); setButtonText(newStatus === "PENDING" ? "출석하기" : "참여하기"); setError(null);
       } else {
         setError(response.data.responseMessage);
       }
@@ -87,7 +86,8 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
   };
 
   const handleOpenAttendanceModal = () => {
-    setIsModalOpen(true);   };
+    setIsModalOpen(true);
+  };
 
   const handleAttendanceClick = async () => {
     if (!code.trim()) {
@@ -98,7 +98,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.post(
-        `/run/flash/post/${postId}/attend`,         { code },
+        `/run/flash/post/${postId}/attend`, { code },
         {
           headers: {
             Authorization: `${token}`,
@@ -107,7 +107,8 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       );
 
       if (response.data.isSuccess) {
-        setUserStatus("ATTENDED");         setButtonText("출석완료");
+        setUserStatus("ATTENDED"); 
+        setButtonText("출석완료");
         setError(null);
         setIsModalOpen(false);
       } else {
@@ -134,15 +135,15 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       if (response.data.isSuccess) {
         const result = response.data.result;
 
-                setUserInfo({
+        setUserInfo({
           userId: result.userInfo?.userId || 0,
           userName: result.userInfo?.userName || "",
           userProfileImg: result.userInfo?.userProfileImg || "",
           userRole: result.userInfo?.userRole || "",
         });
         setPostCreatorImg(result.postCreatorInfo?.userProfileImg || null);
-        setCurrentParticipantsNum(result.participantsNum);         setDate(result.date); 
-                if (tab === "명단") {
+        setCurrentParticipantsNum(result.participantsNum); setDate(result.date);
+        if (tab === "명단") {
           setCurrentParticipants(result.participants);
         }
 
@@ -151,7 +152,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           setCreatorName(result.postCreatorInfo?.userName || "");
         }
 
-                setRefreshComments((prev) => !prev);
+        setRefreshComments((prev) => !prev);
       } else {
         setError(response.data.responseMessage);
       }
@@ -197,7 +198,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
           setPostCreatorImg(result.postCreatorInfo.userProfileImg || null);
           setPostCreatorName(result.postCreatorInfo.userName);
 
-                    const currentUser = result.participants.find(
+          const currentUser = result.participants.find(
             (participant: any) => participant.userId === result.userInfo.userId,
           );
           setPostCreatorId(result.postCreatorInfo.userId);
@@ -227,7 +228,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
     fetchPostData();
   }, [postId]);
 
-  const [creatorName, setCreatorName] = useState("");   const [postCreatorName, setPostCreatorName] = useState("");
+  const [creatorName, setCreatorName] = useState(""); const [postCreatorName, setPostCreatorName] = useState("");
 
   const formatDateTime = (iso: string) => {
     const utcDate = new Date(iso);
@@ -257,7 +258,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       );
 
       if (response.data.isSuccess) {
-        setUserStatus("");         setButtonText("참여하기");
+        setUserStatus(""); setButtonText("참여하기");
         setError(null);
       } else {
         setError(response.data.responseMessage);
@@ -294,7 +295,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       });
       if (data.isSuccess) {
         const r = data.result;
-        setCurrentParticipants(r.participants);         setCurrentParticipantsNum(r.participantsNum);
+        setCurrentParticipants(r.participants); setCurrentParticipantsNum(r.participantsNum);
         setPostStatus(r.postStatus);
         setDate(r.date);
         setRefreshComments((prev) => !prev);

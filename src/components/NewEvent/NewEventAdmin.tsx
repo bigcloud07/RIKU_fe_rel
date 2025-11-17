@@ -110,9 +110,7 @@ const NewEventAdmin: React.FC<FlashRunUserData> = ({
     } catch (error) {
       alert("출석 종료 중 오류가 발생했습니다.");
       console.error(error);
-    } finally {
-      setIsClosing(false);
-    }
+    } 
   };
 
   useEffect(() => {
