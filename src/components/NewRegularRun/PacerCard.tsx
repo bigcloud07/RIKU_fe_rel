@@ -17,7 +17,7 @@ const PacerCard: React.FC<PacerCardProps> = ({ pacers }) => {
     <div className="w-[335px] rounded-xl space-y-1">
       {/* 헤더 */}
       <div className="flex">
-        {/* 그룹 셀 (헤더용 더미 블럭) */}
+        {/* 그룹 셀 */}
         <div className="w-[52px] h-[52px] bg-[#F5F5F5] rounded-[10px]" />
 
         {/* 헤더 셀들 */}
@@ -38,14 +38,16 @@ const PacerCard: React.FC<PacerCardProps> = ({ pacers }) => {
 
       {/* 페이서 목록 */}
       {pacers.map((pacer, idx) => {
-        const opacity =
-          idx === 0
-            ? "bg-opacity-100"
-            : idx === 1
-              ? "bg-opacity-75"
-              : idx === 2
-                ? "bg-opacity-50"
-                : "bg-opacity-30";
+        const opacityMap = [
+          "bg-opacity-100",
+          "bg-opacity-80",
+          "bg-opacity-60",
+          "bg-opacity-40",
+          "bg-opacity-20",
+        ];
+
+        const opacity = opacityMap[idx] || "bg-opacity-20";
+
 
         return (
           <div key={idx} className="flex gap-x-[4px] items-center">
