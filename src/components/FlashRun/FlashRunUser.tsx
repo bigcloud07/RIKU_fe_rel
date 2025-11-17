@@ -61,8 +61,13 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
   const [currentParticipantsNum, setCurrentParticipantsNum] =
     useState<number>(participantsNum); const [postCreatorId, setPostCreatorId] = useState<number | null>(null);
   const [postStatus, setPostStatus] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleStartClick = async () => {
+
+    if (isLoading) return;
+    setIsLoading(true);
+
     try {
       const token = JSON.parse(localStorage.getItem("accessToken") || "null");
       const response = await customAxios.patch(
@@ -82,6 +87,8 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       }
     } catch (error) {
       setError("러닝 참여에 실패했습니다.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -107,7 +114,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
       );
 
       if (response.data.isSuccess) {
-        setUserStatus("ATTENDED"); 
+        setUserStatus("ATTENDED");
         setButtonText("출석완료");
         setError(null);
         setIsModalOpen(false);
@@ -601,6 +608,7 @@ const FlashRunUser: React.FC<FlashRunUserData> = ({
             <button
               className="w-full py-3 rounded-lg bg-[#366943] text-white text-lg mt-5"
               onClick={handleAttendanceClick}
+              disabled={isLoading}
             >
               확인
             </button>

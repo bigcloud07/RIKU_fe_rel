@@ -75,6 +75,9 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
     [userId: number]: boolean;
   }>({});
 
+  const [isLoading, setIsLoading] = useState(false);
+
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -207,6 +210,10 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
   };
 
   const handleJoinConfirm = async () => {
+    if (isLoading) return;
+
+    setIsLoading(true);
+
     const isCancel = selectedGroup === "";
 
     try {
@@ -226,8 +233,10 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
           return;
         }
 
-        setUserStatus("PENDING"); setButtonText("출석하기");
-        setSelectedGroup(selectedGroup); setIsGroupModalOpen(false);
+        setUserStatus("PENDING");
+        setButtonText("출석하기");
+        setSelectedGroup(selectedGroup);
+        setIsGroupModalOpen(false);
       } else {
         setError(res.data.responseMessage);
       }
@@ -238,6 +247,8 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
       } else {
         setError("참여 요청 실패");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -626,8 +637,8 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
                       <button
                         key={index}
                         className={`rounded-lg border flex items-center justify-between w-[230px] h-[48px] ${isSelected
-                            ? "bg-[#F3F8E8]"
-                            : "bg-gray-100 hover:bg-gray-200"
+                          ? "bg-[#F3F8E8]"
+                          : "bg-gray-100 hover:bg-gray-200"
                           }`}
                         onClick={handleSelect}
                       >
@@ -665,6 +676,7 @@ const NewRegularRunUser: React.FC<FlashRunUserData> = ({ postId }) => {
               <button
                 className="mt-5 w-full py-3 bg-kuDarkGreen text-white rounded-lg"
                 onClick={handleJoinConfirm}
+                disabled={isLoading}
               >
                 확인
               </button>
