@@ -46,7 +46,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <div className="min-w-{375px} max-w-full font-AppleSDGothicNeo overflow-y-auto">
+        <div className="min-w-{375px} max-w-full h-screen font-AppleSDGothicNeo overflow-y-auto">
           <Routes>
             <Route path="/" element={<OnbordingPage />} />
             <Route path="/login" element={<LoginPage />} />
